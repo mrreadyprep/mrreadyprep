@@ -77,13 +77,13 @@ function App() {
     <div style={{ display: 'flex', height: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#f4f6fa', overflow: 'hidden', boxSizing: 'border-box' }}>
 
       {/* SIDEBAR */}
-      <div style={{ width: '180px', flexShrink: 0, backgroundColor: '#11162d', padding: '16px 10px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+      <div style={{ width: '200px', flexShrink: 0, backgroundColor: '#11162d', padding: '20px 14px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
         <div>
-          <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-            <div style={{ color: '#b67bfb', fontSize: '15px', fontWeight: '600' }}>mrreadyprep</div>
-            <div style={{ fontSize: '8px', color: '#7b809a', letterSpacing: '1px' }}>TOEFL IBT PREP</div>
+          <div style={{ marginBottom: '24px', textAlign: 'center' }}>
+            <div style={{ color: '#b67bfb', fontSize: '17px', fontWeight: '600' }}>mrreadyprep</div>
+            <div style={{ fontSize: '9px', color: '#7b809a', letterSpacing: '1px' }}>TOEFL IBT PREP</div>
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
             {sb('dashboard', '📊', 'Dashboard')}
             {sb('reading',   '📖', 'Reading')}
             {sb('listening', '🎧', 'Listening')}
@@ -92,22 +92,22 @@ function App() {
             {sb('vocab',     '📚', 'Vocabulary')}
           </div>
         </div>
-        <div onClick={() => setCurrentTab('settings')} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', padding: '8px 4px', borderTop: '1px solid #252a44' }}>
-          <div style={{ width: '26px', height: '26px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '10px', flexShrink: 0 }}>M</div>
+        <div onClick={() => setCurrentTab('settings')} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px', borderTop: '1px solid #252a44' }}>
+          <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px' }}>M</div>
           <div>
-            <div style={{ fontSize: '10px', fontWeight: '500', color: '#fff' }}>mehmetdisbudak</div>
-            <div style={{ fontSize: '9px', color: '#7b809a' }}>⚙️ Settings</div>
+            <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff' }}>mehmetdisbudak</div>
+            <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
           </div>
         </div>
       </div>
 
       {/* MAIN */}
-      <div style={{ flex: 1, minWidth: 0, padding: '14px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
+      <div style={{ flex: 1, minWidth: 0, padding: '20px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
 
         {currentTab !== 'dashboard' && (
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
             <span onClick={() => setCurrentTab('dashboard')} style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
-            <h2 style={{ margin: '0 0 0 14px', fontSize: '17px', fontWeight: '700' }}>
+            <h2 style={{ margin: '0 0 0 14px', fontSize: '18px', fontWeight: '700' }}>
               {currentTab === 'reading' && '📖 Reading Practice'}
               {currentTab === 'listening' && '🎧 Listening Practice'}
               {currentTab === 'writing' && '✍️ Writing Practice'}
@@ -120,12 +120,12 @@ function App() {
 
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
-          <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: 'hidden', width: '100%', boxSizing: 'border-box' }}>
+          <div style={{ display: 'flex', gap: '16px', flex: 1, minHeight: 0, overflow: 'hidden' }}>
 
             {/* SOL - esnek */}
-            <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', overflow: 'hidden' }}>
-              <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '14px' }}>Section scores vs targets</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
+            <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: '12px', padding: '20px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
+              <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '18px' }}>Section scores vs targets</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '18px', flex: 1 }}>
                 {[
                   { name: 'Reading practice',   current: userData.reading_score,   target: 5.5 },
                   { name: 'Listening practice', current: userData.listening_score, target: 5.0 },
@@ -137,9 +137,9 @@ function App() {
                   const gap = s.target - s.current
                   return (
                     <div key={s.name}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '5px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', marginBottom: '6px' }}>
                         <span style={{ color: '#616473' }}>{s.name}</span>
-                        <span style={{ fontWeight: '600', whiteSpace: 'nowrap' }}>{s.current} <span style={{ color: '#999', fontWeight: '400' }}>/ {s.target}</span></span>
+                        <span style={{ fontWeight: '600' }}>{s.current} <span style={{ color: '#999', fontWeight: '400' }}>/ {s.target}</span></span>
                       </div>
                       <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px', position: 'relative' }}>
                         <div style={{ width: curPct + '%', height: '100%', background: gap >= 1 ? '#e85555' : '#2ac56c', borderRadius: '4px' }} />
@@ -149,52 +149,52 @@ function App() {
                   )
                 })}
               </div>
-              <div style={{ display: 'flex', gap: '14px', marginTop: '14px' }}>
+              <div style={{ display: 'flex', gap: '16px', marginTop: '16px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '10px', height: '3px', background: '#2ac56c', borderRadius: '2px' }} /> Current</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
               </div>
             </div>
 
-            {/* SAĞ - sabit 280px */}
-            <div style={{ width: '280px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden', boxSizing: 'border-box' }}>
+            {/* SAĞ - sabit genişlik */}
+            <div style={{ width: '260px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '10px', boxSizing: 'border-box' }}>
 
               {/* Exam date */}
-              <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flexShrink: 0, boxSizing: 'border-box' }}>
-                <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Exam date</div>
+              <div style={{ background: '#fff', borderRadius: '12px', padding: '14px', border: '0.5px solid #e1e4ed', boxSizing: 'border-box' }}>
+                <div style={{ fontSize: '12px', fontWeight: '600', marginBottom: '10px' }}>Exam date</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ background: '#11162d', borderRadius: '8px', padding: '6px 10px', textAlign: 'center', flexShrink: 0 }}>
-                    <div style={{ fontSize: '18px', fontWeight: '600', color: '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : '—'}</div>
-                    <div style={{ fontSize: '8px', color: '#7b809a' }}>days left</div>
+                  <div style={{ background: '#11162d', borderRadius: '8px', padding: '8px 12px', textAlign: 'center', flexShrink: 0 }}>
+                    <div style={{ fontSize: '20px', fontWeight: '600', color: '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : '—'}</div>
+                    <div style={{ fontSize: '9px', color: '#7b809a' }}>days left</div>
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: '11px', fontWeight: '500', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '12px', fontWeight: '500', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}
                     </div>
-                    <input type="date" value={examDate} onChange={e => setExamDate(e.target.value)} style={{ marginTop: '4px', fontSize: '10px', padding: '2px 5px', borderRadius: '5px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d', width: '100%', boxSizing: 'border-box' }} />
+                    <input type="date" value={examDate} onChange={e => setExamDate(e.target.value)} style={{ marginTop: '5px', fontSize: '10px', padding: '3px 6px', borderRadius: '6px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                 </div>
               </div>
 
-              {/* Score cards */}
-              {[
-                { name: 'Reading practice',   score: userData.reading_score,   note: '+0.5 this week', color: '#2ac56c' },
-                { name: 'Listening practice', score: userData.listening_score, note: '+0.5 this week', color: '#2ac56c' },
-                { name: 'Writing practice',   score: userData.writing_score,   note: 'No change',      color: '#999' },
-                { name: 'Speaking practice',  score: userData.speaking_score,  note: 'Needs focus',    color: '#e85555' },
-              ].map(item => (
-                <div key={item.name} style={{ background: '#fff', borderRadius: '10px', padding: '8px 12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, boxSizing: 'border-box' }}>
-                  <div style={{ fontSize: '11px', color: '#616473' }}>{item.name}</div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '15px', fontWeight: '600' }}>{item.score}</div>
-                    <div style={{ fontSize: '9px', color: item.color }}>{item.note}</div>
+              {/* Score cards 2x2 */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                {[
+                  { name: 'Reading',   score: userData.reading_score,   note: '+0.5 this week', color: '#2ac56c' },
+                  { name: 'Listening', score: userData.listening_score, note: '+0.5 this week', color: '#2ac56c' },
+                  { name: 'Writing',   score: userData.writing_score,   note: 'No change',      color: '#999' },
+                  { name: 'Speaking',  score: userData.speaking_score,  note: 'Needs focus',    color: '#e85555' },
+                ].map(item => (
+                  <div key={item.name} style={{ background: '#fff', borderRadius: '10px', padding: '10px 12px', border: '0.5px solid #e1e4ed', boxSizing: 'border-box' }}>
+                    <div style={{ fontSize: '10px', color: '#616473', marginBottom: '3px' }}>{item.name}</div>
+                    <div style={{ fontSize: '18px', fontWeight: '600' }}>{item.score}</div>
+                    <div style={{ fontSize: '9px', color: item.color, marginTop: '2px' }}>{item.note}</div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
 
               {/* Goals */}
-              <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flex: 1, boxSizing: 'border-box', overflow: 'hidden' }}>
-                <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Today's goals</div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <div style={{ background: '#fff', borderRadius: '12px', padding: '14px', border: '0.5px solid #e1e4ed', flex: 1, boxSizing: 'border-box' }}>
+                <div style={{ fontSize: '12px', fontWeight: '600', marginBottom: '10px' }}>Today's goals</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                   {examDaysLeft === null ? (
                     <div style={{ fontSize: '11px', color: '#999' }}>Select an exam date to generate your daily goals.</div>
                   ) : generateGoals(examDaysLeft, userData).map((g, i) => (
@@ -211,18 +211,18 @@ function App() {
 
         {/* READING */}
         {currentTab === 'reading' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
               { title: 'Part 1: Complete the Sentence', desc: 'Fill in missing parts within texts using keyboard precision.' },
               { title: 'Part 2: Read in Daily Life', desc: 'Analyze announcements, emails, and notifications from campus life.' },
               { title: 'Part 3: Academic Passage', desc: 'Read scientific or historical essays and answer comprehension queries.' }
             ].map((p, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ maxWidth: '70%' }}>
-                  <h4 style={{ margin: '0 0 5px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: 0, fontSize: '12px', color: '#616473' }}>{p.desc}</p>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
                 </div>
-                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '9px 16px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '12px', flexShrink: 0 }}>Open Module</button>
+                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
               </div>
             ))}
           </div>
@@ -230,11 +230,11 @@ function App() {
 
         {/* LISTENING */}
         {currentTab === 'listening' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {["Part 1: Choose a Response", "Part 2: Conversation", "Part 3: Announcement", "Part 4: Academic Talk"].map((title, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '700' }}>{title}</h4>
-                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '9px 16px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '12px', flexShrink: 0 }}>Open Module</button>
+                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
               </div>
             ))}
           </div>
@@ -242,18 +242,18 @@ function App() {
 
         {/* WRITING */}
         {currentTab === 'writing' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
               { title: 'Part 1: Build a Sentence', desc: 'Assemble and restructure diverse academic clause structures.' },
               { title: 'Part 2: Write an Email', desc: 'Draft formal requests or academic inquiries with contextual formatting.' },
               { title: 'Part 3: Academic Discussion', desc: 'Contribute opinions and critical analysis to an interactive lecture forum.' }
             ].map((p, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ maxWidth: '70%' }}>
-                  <h4 style={{ margin: '0 0 5px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: 0, fontSize: '12px', color: '#616473' }}>{p.desc}</p>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
                 </div>
-                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '9px 16px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '12px', flexShrink: 0 }}>Open Module</button>
+                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
               </div>
             ))}
           </div>
@@ -261,17 +261,17 @@ function App() {
 
         {/* SPEAKING */}
         {currentTab === 'speaking' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
               { title: 'Part 1: Listen and Repeat', desc: 'Sharpen intonation and vocal stress through audio response capture.' },
               { title: 'Part 2: Take an Interview', desc: 'Deliver clear multi-turn answers facing real-time audio inquiry scenarios.' }
             ].map((p, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '20px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ maxWidth: '70%' }}>
-                  <h4 style={{ margin: '0 0 5px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: 0, fontSize: '12px', color: '#616473' }}>{p.desc}</p>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
                 </div>
-                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '9px 16px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '12px', flexShrink: 0 }}>Open Module</button>
+                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
               </div>
             ))}
           </div>
@@ -279,17 +279,17 @@ function App() {
 
         {/* VOCABULARY */}
         {currentTab === 'vocab' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {vocabWords.map(item => (
-              <div key={item.id} style={{ backgroundColor: '#fff', padding: '16px 20px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={item.id} style={{ backgroundColor: '#fff', padding: '18px 22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '700' }}>{item.word}</h4>
+                    <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '700' }}>{item.word}</h4>
                     <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
                   </div>
-                  <p style={{ margin: 0, fontSize: '12px', color: '#616473' }}>{item.meaning}</p>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
                 </div>
-                <button style={{ backgroundColor: '#fff', color: '#11162d', border: '1px solid #d1d5db', padding: '7px 12px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '11px', flexShrink: 0 }}>Mark as Learned</button>
+                <button style={{ backgroundColor: '#fff', color: '#11162d', border: '1px solid #d1d5db', padding: '8px 14px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '12px', flexShrink: 0 }}>Mark as Learned</button>
               </div>
             ))}
           </div>
@@ -297,37 +297,37 @@ function App() {
 
         {/* SETTINGS */}
         {currentTab === 'settings' && (
-          <div style={{ display: 'flex', gap: '16px' }}>
-            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: '22px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
-              <h3 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: '700' }}>🎯 Target & Profile</h3>
-              <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>Username</label>
-                  <input type="text" value={profileName} onChange={e => setProfileName(e.target.value)} style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+          <div style={{ display: 'flex', gap: '20px' }}>
+            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
+              <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🎯 Target & Profile</h3>
+              <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Username</label>
+                  <input type="text" value={profileName} onChange={e => setProfileName(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>Target Score (0.0 - 6.0)</label>
-                  <input type="number" min="0" max="6" step="0.5" value={targetScore} onChange={e => setTargetScore(e.target.value)} style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Target Score (0.0 - 6.0)</label>
+                  <input type="number" min="0" max="6" step="0.5" value={targetScore} onChange={e => setTargetScore(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
-                <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
+                <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
               </form>
             </div>
-            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: '22px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
-              <h3 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: '700' }}>🔒 Account Security</h3>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>Current Password</label>
-                  <input type="password" value="••••••••" readOnly style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
+            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
+              <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🔒 Account Security</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Current Password</label>
+                  <input type="password" value="••••••••" readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>New Password</label>
-                  <input type="password" placeholder="Enter new password" style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>New Password</label>
+                  <input type="password" placeholder="Enter new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>Confirm New Password</label>
-                  <input type="password" placeholder="Confirm new password" style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Confirm New Password</label>
+                  <input type="password" placeholder="Confirm new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
-                <button style={{ backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
+                <button style={{ backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
               </div>
             </div>
           </div>
