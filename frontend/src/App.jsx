@@ -105,7 +105,7 @@ function App() {
       </div>
 
       {/* MAIN */}
-      <div style={{ flex: 1, padding: '18px 20px', overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, padding: '18px 20px', overflow: 'hidden', display: 'flex', flexDirection: 'column', maxWidth: '100%' }}>
 
         {currentTab !== 'dashboard' && (
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
@@ -184,7 +184,7 @@ function App() {
               )}
 
               {/* Score cards - 2x2 grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', overflow: 'hidden' }}>
                 {[
                   { name: 'Reading practice',   score: userData.reading_score,   note: '+0.5 this week', color: '#2ac56c' },
                   { name: 'Listening practice', score: userData.listening_score, note: '+0.5 this week', color: '#2ac56c' },
