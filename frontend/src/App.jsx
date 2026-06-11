@@ -72,6 +72,10 @@ function App() {
     </button>
   )
 
+  const card = (children, style = {}) => (
+    <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', ...style }}>{children}</div>
+  )
+
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw', fontFamily: 'sans-serif', backgroundColor: '#f4f6fa', overflow: 'hidden' }}>
 
@@ -119,89 +123,99 @@ function App() {
 
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr', gap: '14px', flex: 1, minHeight: 0 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '16px', flex: 1, minHeight: 0 }}>
 
             {/* SOL: Scores */}
-            <div style={{ background: '#fff', borderRadius: '12px', padding: '18px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '16px' }}>Section scores vs targets</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
+            {card(
+              <>
+                <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '16px' }}>Section scores vs targets</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                  {[
+                    { name: 'Reading practice',   current: userData.reading_score,   target: 5.5 },
+                    { name: 'Listening practice', current: userData.listening_score, target: 5.0 },
+                    { name: 'Writing practice',   current: userData.writing_score,   target: 5.0 },
+                    { name: 'Speaking practice',  current: userData.speaking_score,  target: 5.0 },
+                  ].map(s => {
+                    const curPct = Math.round((s.current / 6) * 100)
+                    const tgtPct = Math.round((s.target / 6) * 100)
+                    const gap = s.target - s.current
+                    return (
+                      <div key={s.name}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '6px' }}>
+                          <span style={{ color: '#616473' }}>{s.name}</span>
+                          <span style={{ fontWeight: '600' }}>{s.current} <span style={{ color: '#999', fontWeight: '400' }}>/ {s.target}</span></span>
+                        </div>
+                        <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px', position: 'relative' }}>
+                          <div style={{ width: curPct + '%', height: '100%', background: gap >= 1 ? '#e85555' : '#2ac56c', borderRadius: '4px' }} />
+                          <div style={{ position: 'absolute', top: '-3px', left: tgtPct + '%', width: '2px', height: '14px', background: '#701fa1', borderRadius: '2px' }} />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div style={{ display: 'flex', gap: '14px', marginTop: '20px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '10px', height: '3px', background: '#2ac56c', borderRadius: '2px' }} /> Current</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
+                </div>
+              </>,
+              { display: 'flex', flexDirection: 'column' }
+            )}
+
+            {/* SAĞ: Exam date + Score cards + Goals */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', overflow: 'hidden' }}>
+
+              {/* Exam date */}
+              {card(
+                <>
+                  <div style={{ fontSize: '12px', fontWeight: '600', marginBottom: '10px' }}>Exam date</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ background: '#11162d', borderRadius: '8px', padding: '8px 12px', textAlign: 'center', minWidth: '50px' }}>
+                      <div style={{ fontSize: '20px', fontWeight: '600', color: '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : '—'}</div>
+                      <div style={{ fontSize: '9px', color: '#7b809a' }}>days left</div>
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '12px', fontWeight: '500' }}>
+                        {examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}
+                      </div>
+                      <input type="date" value={examDate} onChange={e => setExamDate(e.target.value)} style={{ marginTop: '5px', fontSize: '11px', padding: '3px 6px', borderRadius: '6px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d' }} />
+                    </div>
+                  </div>
+                </>
+              )}
+
+              {/* Score cards - 2x2 grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                 {[
-                  { name: 'Reading practice',   current: userData.reading_score,   target: 5.5 },
-                  { name: 'Listening practice', current: userData.listening_score, target: 5.0 },
-                  { name: 'Writing practice',   current: userData.writing_score,   target: 5.0 },
-                  { name: 'Speaking practice',  current: userData.speaking_score,  target: 5.0 },
-                ].map(s => {
-                  const curPct = Math.round((s.current / 6) * 100)
-                  const tgtPct = Math.round((s.target / 6) * 100)
-                  const gap = s.target - s.current
-                  return (
-                    <div key={s.name}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '6px' }}>
-                        <span style={{ color: '#616473' }}>{s.name}</span>
-                        <span style={{ fontWeight: '600' }}>{s.current} <span style={{ color: '#999', fontWeight: '400' }}>/ {s.target}</span></span>
-                      </div>
-                      <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px', position: 'relative' }}>
-                        <div style={{ width: curPct + '%', height: '100%', background: gap >= 1 ? '#e85555' : '#2ac56c', borderRadius: '4px' }} />
-                        <div style={{ position: 'absolute', top: '-3px', left: tgtPct + '%', width: '2px', height: '14px', background: '#701fa1', borderRadius: '2px' }} />
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-              <div style={{ display: 'flex', gap: '14px', marginTop: '16px' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '10px', height: '3px', background: '#2ac56c', borderRadius: '2px' }} /> Current</div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
-              </div>
-            </div>
-
-            {/* ORTA: Exam date + Score cards */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', minHeight: 0 }}>
-              <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed' }}>
-                <div style={{ fontSize: '12px', fontWeight: '600', marginBottom: '10px' }}>Exam date</div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div style={{ background: '#11162d', borderRadius: '8px', padding: '8px 12px', textAlign: 'center', minWidth: '50px' }}>
-                    <div style={{ fontSize: '20px', fontWeight: '600', color: '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : '—'}</div>
-                    <div style={{ fontSize: '9px', color: '#7b809a' }}>days left</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: '12px', fontWeight: '500' }}>
-                      {examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}
-                    </div>
-                    <input type="date" value={examDate} onChange={e => setExamDate(e.target.value)} style={{ marginTop: '6px', fontSize: '11px', padding: '3px 6px', borderRadius: '6px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d' }} />
-                  </div>
-                </div>
-              </div>
-
-              {[
-                { name: 'Reading practice',   score: userData.reading_score,   note: '+0.5 this week', color: '#2ac56c' },
-                { name: 'Listening practice', score: userData.listening_score, note: '+0.5 this week', color: '#2ac56c' },
-                { name: 'Writing practice',   score: userData.writing_score,   note: 'No change',      color: '#999' },
-                { name: 'Speaking practice',  score: userData.speaking_score,  note: 'Needs focus',    color: '#e85555' },
-              ].map(item => (
-                <div key={item.name} style={{ background: '#fff', borderRadius: '10px', padding: '12px 14px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ fontSize: '11px', color: '#616473' }}>{item.name}</div>
-                  <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontSize: '17px', fontWeight: '600' }}>{item.score}</div>
-                    <div style={{ fontSize: '10px', color: item.color }}>{item.note}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* SAĞ: Goals */}
-            <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column' }}>
-              <div style={{ fontSize: '12px', fontWeight: '600', marginBottom: '12px' }}>Today's goals</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', flex: 1 }}>
-                {examDaysLeft === null ? (
-                  <div style={{ fontSize: '12px', color: '#999', lineHeight: '1.5' }}>Select an exam date to generate your personalized daily goals.</div>
-                ) : generateGoals(examDaysLeft, userData).map((g, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12px', color: '#444', lineHeight: '1.5' }}>
-                    <span style={{ color: '#701fa1', marginTop: '1px', flexShrink: 0 }}>○</span> {g}
+                  { name: 'Reading practice',   score: userData.reading_score,   note: '+0.5 this week', color: '#2ac56c' },
+                  { name: 'Listening practice', score: userData.listening_score, note: '+0.5 this week', color: '#2ac56c' },
+                  { name: 'Writing practice',   score: userData.writing_score,   note: 'No change',      color: '#999' },
+                  { name: 'Speaking practice',  score: userData.speaking_score,  note: 'Needs focus',    color: '#e85555' },
+                ].map(item => (
+                  <div key={item.name} style={{ background: '#fff', borderRadius: '10px', padding: '12px', border: '0.5px solid #e1e4ed' }}>
+                    <div style={{ fontSize: '10px', color: '#616473', marginBottom: '4px' }}>{item.name}</div>
+                    <div style={{ fontSize: '18px', fontWeight: '600' }}>{item.score}</div>
+                    <div style={{ fontSize: '10px', color: item.color, marginTop: '2px' }}>{item.note}</div>
                   </div>
                 ))}
               </div>
-            </div>
 
+              {/* Goals */}
+              {card(
+                <>
+                  <div style={{ fontSize: '12px', fontWeight: '600', marginBottom: '10px' }}>Today's goals</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {examDaysLeft === null ? (
+                      <div style={{ fontSize: '12px', color: '#999' }}>Select an exam date to generate your daily goals.</div>
+                    ) : generateGoals(examDaysLeft, userData).map((g, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12px', color: '#444' }}>
+                        <span style={{ color: '#701fa1', flexShrink: 0 }}>○</span> {g}
+                      </div>
+                    ))}
+                  </div>
+                </>,
+                { flex: 1 }
+              )}
+            </div>
           </div>
         )}
 
