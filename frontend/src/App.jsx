@@ -64,7 +64,7 @@ function App() {
   }
 
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100vw', fontFamily: 'sans-serif', backgroundColor: '#fdfdfd', color: '#111827', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', height: '100vh', width: '100vw', fontFamily: 'sans-serif', backgroundColor: '#fdfdfd', color: '#111827', overflow: "hidden" }}>
       
       {/* SIDEBAR NAVIGATION */}
       <div style={{ width: '270px', minWidth: '270px', backgroundColor: '#11162d', color: '#ffffff', padding: '35px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -94,7 +94,7 @@ function App() {
       </div>
 
       {/* WORKSPACE CONTENT */}
-      <div style={{ flex: 1, padding: '40px 50px', overflowY: 'auto', height: '100vh', backgroundColor: '#f4f6fa' }}>
+      <div style={{ flex: 1, padding: '40px 50px', overflowY: 'hidden', height: '100vh', backgroundColor: '#f4f6fa' }}>
         
         {/* TOP COMPONENT HEADER FOR MODULES */}
         {currentTab !== 'dashboard' && (
@@ -182,7 +182,7 @@ function App() {
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: '700', marginBottom: '4px' }}>
                         <span>{item.s}</span> <span style={{ color: '#701fa1' }}>{item.sc} / 6.0</span>
                       </div>
-                      <div style={{ width: '100%', height: '8px', backgroundColor: '#eee', borderRadius: '4px', overflow: 'hidden' }}>
+                      <div style={{ width: '100%', height: '8px', backgroundColor: '#eee', borderRadius: '4px', overflow: "hidden" }}>
                         <div style={{ width: `${item.p}%`, height: '100%', backgroundColor: '#701fa1' }} />
                       </div>
                     </div>
