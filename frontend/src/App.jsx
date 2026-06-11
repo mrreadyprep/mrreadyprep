@@ -136,7 +136,7 @@ function App() {
 
         {currentTab === 'dashboard' && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1, overflow: 'hidden' }}>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', flex: 1, minHeight: 0 }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr 0.8fr', gap: '14px', flex: 1, minHeight: 0 }}>
 
               <div style={{ background: '#ffffff', borderRadius: '12px', padding: '18px', border: '0.5px solid #e1e4ed' }}>
                 <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '14px' }}>Section scores vs targets</div>
@@ -204,7 +204,7 @@ function App() {
               </div>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
+            <div style={{ display: 'none' }}>
               {[
                 { name: 'Reading practice',   score: userData.reading_score,   note: '+0.5 this week', color: '#2ac56c' },
                 { name: 'Listening practice', score: userData.listening_score, note: '+0.5 this week', color: '#2ac56c' },
