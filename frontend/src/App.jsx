@@ -102,7 +102,7 @@ function App() {
       </div>
 
       {/* MAIN */}
-      <div style={{ flex: 1, minWidth: 0, padding: '18px 20px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
+      <div style={{ flex: 1, minWidth: 0, padding: '12px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
 
         {currentTab !== 'dashboard' && (
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '16px' }}>
@@ -120,7 +120,7 @@ function App() {
 
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '55% 45%', gap: '16px', flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '55% 45%', gap: '10px', flex: 1, minHeight: 0, minWidth: 0, overflow: 'hidden' }}>
 
             {/* SOL: Scores */}
             <div style={{ background: '#fff', borderRadius: '12px', padding: '18px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', minWidth: 0, overflow: 'hidden' }}>
