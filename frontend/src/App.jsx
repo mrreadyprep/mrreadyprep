@@ -74,10 +74,10 @@ function App() {
   )
 
   return (
-    <div style={{ display: 'flex', height: '100vh', width: '100vw', fontFamily: 'sans-serif', backgroundColor: '#f4f6fa', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', height: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#f4f6fa', overflow: 'hidden', boxSizing: 'border-box' }}>
 
-      {/* SIDEBAR - sabit 180px */}
-      <div style={{ width: '180px', flexShrink: 0, backgroundColor: '#11162d', padding: '16px 10px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+      {/* SIDEBAR */}
+      <div style={{ width: '180px', flexShrink: 0, backgroundColor: '#11162d', padding: '16px 10px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
         <div>
           <div style={{ marginBottom: '20px', textAlign: 'center' }}>
             <div style={{ color: '#b67bfb', fontSize: '15px', fontWeight: '600' }}>mrreadyprep</div>
@@ -94,18 +94,18 @@ function App() {
         </div>
         <div onClick={() => setCurrentTab('settings')} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', padding: '8px 4px', borderTop: '1px solid #252a44' }}>
           <div style={{ width: '26px', height: '26px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '10px', flexShrink: 0 }}>M</div>
-          <div style={{ overflow: 'hidden' }}>
-            <div style={{ fontSize: '10px', fontWeight: '500', color: '#fff', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>mehmetdisbudak</div>
+          <div>
+            <div style={{ fontSize: '10px', fontWeight: '500', color: '#fff' }}>mehmetdisbudak</div>
             <div style={{ fontSize: '9px', color: '#7b809a' }}>⚙️ Settings</div>
           </div>
         </div>
       </div>
 
-      {/* MAIN - kalan tüm alan */}
-      <div style={{ flex: 1, minWidth: 0, padding: '14px', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+      {/* MAIN */}
+      <div style={{ flex: 1, minWidth: 0, padding: '14px', overflow: 'hidden', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
 
         {currentTab !== 'dashboard' && (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '14px' }}>
             <span onClick={() => setCurrentTab('dashboard')} style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
             <h2 style={{ margin: '0 0 0 14px', fontSize: '17px', fontWeight: '700' }}>
               {currentTab === 'reading' && '📖 Reading Practice'}
@@ -120,10 +120,10 @@ function App() {
 
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
-          <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+          <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: 'hidden', width: '100%', boxSizing: 'border-box' }}>
 
-            {/* SOL %58 */}
-            <div style={{ flex: '1 1 0', minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            {/* SOL - esnek */}
+            <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', boxSizing: 'border-box', overflow: 'hidden' }}>
               <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '14px' }}>Section scores vs targets</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
                 {[
@@ -139,7 +139,7 @@ function App() {
                     <div key={s.name}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '5px' }}>
                         <span style={{ color: '#616473' }}>{s.name}</span>
-                        <span style={{ fontWeight: '600' }}>{s.current} <span style={{ color: '#999', fontWeight: '400' }}>/ {s.target}</span></span>
+                        <span style={{ fontWeight: '600', whiteSpace: 'nowrap' }}>{s.current} <span style={{ color: '#999', fontWeight: '400' }}>/ {s.target}</span></span>
                       </div>
                       <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px', position: 'relative' }}>
                         <div style={{ width: curPct + '%', height: '100%', background: gap >= 1 ? '#e85555' : '#2ac56c', borderRadius: '4px' }} />
@@ -155,18 +155,18 @@ function App() {
               </div>
             </div>
 
-            {/* SAĞ %42 - flex column */}
-            <div style={{ flex: '0 0 320px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden', minWidth: 0 }}>
+            {/* SAĞ - sabit 280px */}
+            <div style={{ width: '280px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden', boxSizing: 'border-box' }}>
 
               {/* Exam date */}
-              <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flexShrink: 0 }}>
+              <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flexShrink: 0, boxSizing: 'border-box' }}>
                 <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Exam date</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                   <div style={{ background: '#11162d', borderRadius: '8px', padding: '6px 10px', textAlign: 'center', flexShrink: 0 }}>
                     <div style={{ fontSize: '18px', fontWeight: '600', color: '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : '—'}</div>
                     <div style={{ fontSize: '8px', color: '#7b809a' }}>days left</div>
                   </div>
-                  <div style={{ minWidth: 0, flex: 1 }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: '11px', fontWeight: '500', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}
                     </div>
@@ -182,7 +182,7 @@ function App() {
                 { name: 'Writing practice',   score: userData.writing_score,   note: 'No change',      color: '#999' },
                 { name: 'Speaking practice',  score: userData.speaking_score,  note: 'Needs focus',    color: '#e85555' },
               ].map(item => (
-                <div key={item.name} style={{ background: '#fff', borderRadius: '10px', padding: '8px 12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
+                <div key={item.name} style={{ background: '#fff', borderRadius: '10px', padding: '8px 12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, boxSizing: 'border-box' }}>
                   <div style={{ fontSize: '11px', color: '#616473' }}>{item.name}</div>
                   <div style={{ textAlign: 'right' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600' }}>{item.score}</div>
@@ -192,7 +192,7 @@ function App() {
               ))}
 
               {/* Goals */}
-              <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flex: 1, overflow: 'hidden' }}>
+              <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flex: 1, boxSizing: 'border-box', overflow: 'hidden' }}>
                 <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Today's goals</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
                   {examDaysLeft === null ? (
@@ -298,34 +298,34 @@ function App() {
         {/* SETTINGS */}
         {currentTab === 'settings' && (
           <div style={{ display: 'flex', gap: '16px' }}>
-            <div style={{ flex: 1, backgroundColor: '#fff', padding: '22px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: '22px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
               <h3 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: '700' }}>🎯 Target & Profile</h3>
               <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>Username</label>
-                  <input type="text" value={profileName} onChange={e => setProfileName(e.target.value)} style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }} />
+                  <input type="text" value={profileName} onChange={e => setProfileName(e.target.value)} style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>Target Score (0.0 - 6.0)</label>
-                  <input type="number" min="0" max="6" step="0.5" value={targetScore} onChange={e => setTargetScore(e.target.value)} style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }} />
+                  <input type="number" min="0" max="6" step="0.5" value={targetScore} onChange={e => setTargetScore(e.target.value)} style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
               </form>
             </div>
-            <div style={{ flex: 1, backgroundColor: '#fff', padding: '22px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: '22px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
               <h3 style={{ margin: '0 0 16px 0', fontSize: '14px', fontWeight: '700' }}>🔒 Account Security</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>Current Password</label>
-                  <input type="password" value="••••••••" readOnly style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888' }} />
+                  <input type="password" value="••••••••" readOnly style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>New Password</label>
-                  <input type="password" placeholder="Enter new password" style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }} />
+                  <input type="password" placeholder="Enter new password" style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '11px' }}>Confirm New Password</label>
-                  <input type="password" placeholder="Confirm new password" style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px' }} />
+                  <input type="password" placeholder="Confirm new password" style={{ padding: '9px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <button style={{ backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '10px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
               </div>
