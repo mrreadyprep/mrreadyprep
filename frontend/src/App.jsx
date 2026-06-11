@@ -23,7 +23,7 @@ function App() {
   ])
 
   const fetchDashboardData = () => {
-    fetch('http://127.0.0.1:8000/api/dashboard')
+    fetch('https://mrreadyprep.onrender.com/api/dashboard')
       .then(res => res.json())
       .then(data => {
         setUserData(data)
@@ -40,7 +40,7 @@ function App() {
 
   const handleProfileSave = (e) => {
     e.preventDefault()
-    fetch('http://127.0.0.1:8000/api/profile/update', {
+    fetch('https://mrreadyprep.onrender.com/api/profile/update', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: profileName, target_score: Number(targetScore) }),
