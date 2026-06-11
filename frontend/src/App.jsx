@@ -123,7 +123,7 @@ function App() {
           <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: 'hidden' }}>
 
             {/* SOL %58 */}
-            <div style={{ flex: '0 0 58%', background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <div style={{ flex: '1 1 0', minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
               <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '14px' }}>Section scores vs targets</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', flex: 1 }}>
                 {[
@@ -156,7 +156,7 @@ function App() {
             </div>
 
             {/* SAĞ %42 - flex column */}
-            <div style={{ flex: '0 0 calc(42% - 12px)', display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden', minWidth: 0 }}>
+            <div style={{ flex: '0 0 320px', minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', overflow: 'hidden', minWidth: 0 }}>
 
               {/* Exam date */}
               <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flexShrink: 0 }}>
