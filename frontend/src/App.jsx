@@ -6,14 +6,7 @@ function App() {
   const [profileName, setProfileName] = useState('')
   const [targetScore, setTargetScore] = useState(5.5)
   const [vocabLevel, setVocabLevel] = useState(3)
-  const [currentPassword, setCurrentPassword] = useState('')
-  const [newPassword, setNewPassword] = useState('')
-
-  const [goals, setGoals] = useState([
-    { id: 1, text: "Complete 1 Reading Sentence Practice", completed: false },
-    { id: 2, text: "Listen to 1 Academic Talk or Conversation", completed: false },
-    { id: 3, text: "Review 5 New Vocabulary Words", completed: false }
-  ])
+  const [examDate, setExamDate] = useState('')
 
   const [vocabWords, setVocabWords] = useState([
     { id: 1, word: "Proponent", type: "NOUN", meaning: "A person who advocates a theory, proposal, or project.", learned: false },
@@ -21,6 +14,40 @@ function App() {
     { id: 3, word: "Ambiguous", type: "ADJECTIVE", meaning: "Open to more than one interpretation; having a double meaning.", learned: false },
     { id: 4, word: "Prohibit", type: "VERB", meaning: "Formally forbid something by law, rule, or other authority.", learned: false }
   ])
+
+  const getExamDaysLeft = () => {
+    if (!examDate) return null
+    const today = new Date(); today.setHours(0,0,0,0)
+    const exam = new Date(examDate + 'T00:00:00'); exam.setHours(0,0,0,0)
+    const diff = Math.round((exam - today) / 86400000)
+    return diff < 0 ? null : diff
+  }
+
+  const generateGoals = (daysLeft, data) => {
+    const sections = [
+      { name: 'Reading practice',   gap: 5.5 - data.reading_score },
+      { name: 'Listening practice', gap: 5.0 - data.listening_score },
+      { name: 'Writing practice',   gap: 5.0 - data.writing_score },
+      { name: 'Speaking practice',  gap: 5.0 - data.speaking_score },
+    ].sort((a, b) => b.gap - a.gap)
+    const goals = []
+    sections.forEach(s => {
+      if (s.gap <= 0) return
+      if (daysLeft > 60) goals.push('Practice 1 ' + s.name + ' (gap: ' + s.gap.toFixed(1) + ')')
+      else if (daysLeft > 30) {
+        if (s.gap >= 1.0) goals.push('Do 2 ' + s.name + ' exercises — urgent!')
+        else goals.push('Do 1 ' + s.name + ' exercise')
+      } else if (daysLeft > 14) {
+        if (s.gap >= 0.5) goals.push('Complete full ' + s.name + ' mock test')
+      } else {
+        if (s.gap >= 0.5) goals.push('Review ' + s.name + ' weak points — exam soon!')
+      }
+    })
+    if (daysLeft <= 60) goals.push('Review 10 vocabulary words')
+    if (daysLeft <= 30) goals.push('Take a full timed practice test')
+    if (daysLeft <= 7)  goals.push('Rest, review notes, sleep early')
+    return goals.slice(0, 5)
+  }
 
   const fetchDashboardData = () => {
     fetch('https://mrreadyprep.onrender.com/api/dashboard')
@@ -34,9 +61,7 @@ function App() {
       .catch(err => console.error("Data load error:", err))
   }
 
-  useEffect(() => {
-    fetchDashboardData()
-  }, [])
+  useEffect(() => { fetchDashboardData() }, [])
 
   const handleProfileSave = (e) => {
     e.preventDefault()
@@ -46,318 +71,269 @@ function App() {
       body: JSON.stringify({ username: profileName, target_score: Number(targetScore) }),
     })
     .then(res => res.json())
-    .then(data => {
-      if (data.status === "success") {
-        alert("Changes saved successfully! 🎉")
-        fetchDashboardData()
-      }
-    })
+    .then(data => { if (data.status === "success") { alert("Saved!"); fetchDashboardData() } })
     .catch(err => console.error(err))
   }
 
   if (!userData) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', backgroundColor: '#ffffff', color: '#111827' }}>
-        <h2 style={{ fontWeight: '600' }}>Loading mrreadyprep...</h2>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}>
+        <h2>Loading mrreadyprep...</h2>
       </div>
     )
   }
 
-  return (
-    <div style={{ display: 'flex', height: '100vh', width: '100vw', fontFamily: 'sans-serif', backgroundColor: '#fdfdfd', color: '#111827', overflow: "hidden" }}>
-      
-      {/* SIDEBAR NAVIGATION */}
-      <div style={{ width: '270px', minWidth: '270px', backgroundColor: '#11162d', color: '#ffffff', padding: '35px 24px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-        <div>
-          <div style={{ marginBottom: '40px', textAlign: 'center' }}>
-            <h1 style={{ color: '#b67bfb', margin: '0', fontSize: '28px', fontWeight: '800', letterSpacing: '-0.5px' }}>mrreadyprep</h1>
-            <span style={{ fontSize: '10px', color: '#7b809a', fontWeight: '700', letterSpacing: '1px' }}>TOEFL IBT PREP PLATFORM</span>
-          </div>
+  const examDaysLeft = getExamDaysLeft()
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            <button onClick={() => setCurrentTab('dashboard')} style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: 'none', textAlign: 'left', cursor: 'pointer', fontWeight: '600', fontSize: '14px', backgroundColor: currentTab === 'dashboard' ? '#701fa1' : 'transparent', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '12px' }}>📊 Dashboard</button>
-            <button onClick={() => setCurrentTab('reading')} style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: 'none', textAlign: 'left', cursor: 'pointer', fontWeight: '600', fontSize: '14px', backgroundColor: currentTab === 'reading' ? '#701fa1' : 'transparent', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '12px' }}>📖 Reading Module</button>
-            <button onClick={() => setCurrentTab('listening')} style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: 'none', textAlign: 'left', cursor: 'pointer', fontWeight: '600', fontSize: '14px', backgroundColor: currentTab === 'listening' ? '#701fa1' : 'transparent', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '12px' }}>🎧 Listening Module</button>
-            <button onClick={() => setCurrentTab('writing')} style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: 'none', textAlign: 'left', cursor: 'pointer', fontWeight: '600', fontSize: '14px', backgroundColor: currentTab === 'writing' ? '#701fa1' : 'transparent', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '12px' }}>✍️ Writing Module</button>
-            <button onClick={() => setCurrentTab('speaking')} style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: 'none', textAlign: 'left', cursor: 'pointer', fontWeight: '600', fontSize: '14px', backgroundColor: currentTab === 'speaking' ? '#701fa1' : 'transparent', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '12px' }}>🎙️ Speaking Module</button>
-            <button onClick={() => setCurrentTab('vocab')} style={{ width: '100%', padding: '12px 16px', borderRadius: '12px', border: 'none', textAlign: 'left', cursor: 'pointer', fontWeight: '600', fontSize: '14px', backgroundColor: currentTab === 'vocab' ? '#701fa1' : 'transparent', color: '#ffffff', display: 'flex', alignItems: 'center', gap: '12px' }}>📚 Vocab Practice</button>
+  const sidebarBtn = (tab, icon, label) => (
+    <button onClick={() => setCurrentTab(tab)} style={{ width: '100%', padding: '10px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontWeight: '500', fontSize: '13px', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#ffffff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+      {icon} {label}
+    </button>
+  )
+
+  return (
+    <div style={{ display: 'flex', height: '100vh', width: '100vw', fontFamily: 'sans-serif', backgroundColor: '#f4f6fa', color: '#111827', overflow: 'hidden' }}>
+
+      <div style={{ width: '210px', minWidth: '210px', backgroundColor: '#11162d', padding: '20px 14px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+        <div>
+          <div style={{ marginBottom: '28px', textAlign: 'center' }}>
+            <h1 style={{ color: '#b67bfb', margin: '0', fontSize: '18px', fontWeight: '500' }}>mrreadyprep</h1>
+            <span style={{ fontSize: '9px', color: '#7b809a', letterSpacing: '1px' }}>TOEFL IBT PREP</span>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
+            {sidebarBtn('dashboard', '📊', 'Dashboard')}
+            {sidebarBtn('reading', '📖', 'Reading')}
+            {sidebarBtn('listening', '🎧', 'Listening')}
+            {sidebarBtn('writing', '✍️', 'Writing')}
+            {sidebarBtn('speaking', '🎙️', 'Speaking')}
+            {sidebarBtn('vocab', '📚', 'Vocabulary')}
           </div>
         </div>
-
-        <div onClick={() => setCurrentTab('settings')} style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', padding: '10px 4px', borderTop: '1px solid #252a44' }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#ffffff' }}>M</div>
+        <div onClick={() => setCurrentTab('settings')} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px', borderTop: '1px solid #252a44' }}>
+          <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#ffffff', fontSize: '12px' }}>M</div>
           <div>
-            <div style={{ fontSize: '14px', fontWeight: '600', color: '#ffffff' }}>mehmetdisbudak</div>
-            <div style={{ fontSize: '11px', color: '#7b809a' }}>⚙️ Account Settings</div>
+            <div style={{ fontSize: '12px', fontWeight: '500', color: '#ffffff' }}>mehmetdisbudak</div>
+            <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
           </div>
         </div>
       </div>
 
-      {/* WORKSPACE CONTENT */}
-      <div style={{ flex: 1, padding: '20px 30px', overflowY: 'hidden', height: '100vh', backgroundColor: '#f4f6fa' }}>
-        
-        {/* TOP COMPONENT HEADER FOR MODULES */}
+      <div style={{ flex: 1, padding: '20px 24px', overflow: 'hidden', height: '100vh', display: 'flex', flexDirection: 'column' }}>
+
         {currentTab !== 'dashboard' && (
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '30px' }}>
-            <div>
-              <span onClick={() => setCurrentTab('dashboard')} style={{ fontSize: '13px', fontWeight: '700', color: '#9047f5', cursor: 'pointer' }}>← Back to Dashboard</span>
-              <h2 style={{ margin: '8px 0 0 0', fontSize: '26px', fontWeight: '800' }}>
-                {currentTab === 'reading' && '📖 Reading Practice Workspace'}
-                {currentTab === 'listening' && '🎧 Listening Practice Workspace'}
-                {currentTab === 'writing' && '✍️ Writing Practice Workspace'}
-                {currentTab === 'speaking' && '🎙️ Speaking Practice Workspace'}
-                {currentTab === 'vocab' && '📚 Academic Vocabulary Flashcards'}
-                {currentTab === 'settings' && '⚙️ Account Profile Settings'}
-              </h2>
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#ffffff', padding: '8px 16px', borderRadius: '20px', border: '1px solid #e1e4ed', fontWeight: '600', fontSize: '13px' }}>👤 mehmetdisbudak</div>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+            <span onClick={() => setCurrentTab('dashboard')} style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
+            <h2 style={{ margin: '0 0 0 16px', fontSize: '20px', fontWeight: '700' }}>
+              {currentTab === 'reading' && '📖 Reading Practice'}
+              {currentTab === 'listening' && '🎧 Listening Practice'}
+              {currentTab === 'writing' && '✍️ Writing Practice'}
+              {currentTab === 'speaking' && '🎙️ Speaking Practice'}
+              {currentTab === 'vocab' && '📚 Vocabulary'}
+              {currentTab === 'settings' && '⚙️ Settings'}
+            </h2>
           </div>
         )}
 
-        {/* DASHBOARD TAB VIEW */}
         {currentTab === 'dashboard' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '30px' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-              <div style={{ backgroundColor: '#ffffff', padding: '24px 30px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '24px', borderLeft: '6px solid #b67bfb', boxShadow: '0 4px 12px rgba(0,0,0,0.01)' }}>
-                <span style={{ fontSize: '24px' }}>🎯</span>
-                <div>
-                  <div style={{ color: '#8a8d9f', fontSize: '11px', fontWeight: '700' }}>TARGET SCORE</div>
-                  <div style={{ fontSize: '24px', fontWeight: '800', marginTop: '2px' }}>{targetScore} <span style={{ fontSize: '14px', color: '#b5b7c4', fontWeight: '500' }}>/ 6.0</span></div>
-                </div>
-              </div>
-              <div style={{ backgroundColor: '#ffffff', padding: '24px 30px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '24px', borderLeft: '6px solid #2ac56c', boxShadow: '0 4px 12px rgba(0,0,0,0.01)' }}>
-                <span style={{ fontSize: '24px' }}>🔥</span>
-                <div>
-                  <div style={{ color: '#8a8d9f', fontSize: '11px', fontWeight: '700' }}>DAILY STREAK</div>
-                  <div style={{ fontSize: '24px', fontWeight: '800', marginTop: '2px', color: '#2ac56c' }}>{userData.current_streak} <span style={{ fontSize: '14px', color: '#b5b7c4', fontWeight: '500' }}>Days</span></div>
-                </div>
-              </div>
-              <div style={{ backgroundColor: '#ffffff', padding: '24px 30px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '24px', borderLeft: '6px solid #11162d', boxShadow: '0 4px 12px rgba(0,0,0,0.01)' }}>
-                <span style={{ fontSize: '24px' }}>💡</span>
-                <div>
-                  <div style={{ color: '#8a8d9f', fontSize: '11px', fontWeight: '700' }}>VOCAB TIER</div>
-                  <div style={{ fontSize: '24px', fontWeight: '800', marginTop: '2px' }}>Lvl {vocabLevel}</div>
-                </div>
-              </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1, overflow: 'hidden' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px', flex: 1, minHeight: 0 }}>
 
-              <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '24px', boxShadow: '0 4px 15px rgba(0,0,0,0.01)', border: '1px solid #e9ecf2' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '800', margin: '0 0 20px 0', textAlign: 'center' }}>TOEFL iBT 2026 Strategy Cards</h3>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  {[
-                    { tag: 'READING', color: '#b67bfb', title: 'Sentence Completion Precision', desc: 'Pay close attention to word prefixes and suffixes. Keyboard spelling accuracy determines your score points.' },
-                    { tag: 'LISTENING', color: '#2ac56c', title: 'Focus on Spoken Signals', desc: "Listen for transition words like 'however', 'consequently', or 'on the other hand' to capture the professor's true intent." },
-                    { tag: 'WRITING', color: '#b67bfb', title: 'Academic Discussion Cohesion', desc: 'State your opinion clearly in the online forum task. Support it with clear examples and maintain rigorous grammatical depth within the 6.0 grading scale.' },
-                    { tag: 'SPEAKING', color: '#11162d', title: 'Integrated Campus Timing', desc: 'When summarizing campus situations or lectures, optimize your preparation time to structure cause-and-effect relationships seamlessly without pausing.' }
-                  ].map((tip, i) => (
-                    <div key={i} style={{ border: '1px solid #ebdfff', borderRadius: '16px', padding: '20px', backgroundColor: '#fcfaff', borderLeft: `5px solid ${tip.color}` }}>
-                      <span style={{ fontSize: '10px', fontWeight: '800', color: tip.color, letterSpacing: '0.5px' }}>{tip.tag}</span>
-                      <h4 style={{ margin: '4px 0 8px 0', fontSize: '15px', fontWeight: '800' }}>{tip.title}</h4>
-                      <p style={{ margin: 0, fontSize: '13px', color: '#616473', lineHeight: '1.5' }}>{tip.desc}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-              <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '24px', border: '1px solid #e9ecf2' }}>
-                <h4 style={{ margin: '0 0 4px 0', fontSize: '16px', fontWeight: '800', textAlign: 'center' }}>Intelligent Preparation Tracker</h4>
-                <p style={{ fontSize: '13px', color: '#616473', lineHeight: '1.5', textAlign: 'center' }}>Your calculated cross-skill average is <strong style={{ color: '#9047f5' }}>4.5 / 6.0</strong>. You are currently <strong style={{ color: '#ff4d4d' }}>1.0 points</strong> away from your target goal. We suggest reviewing your lowest-performing skill matrix below to optimize efficiency.</p>
-                <div style={{ backgroundColor: '#f2ecff', color: '#701fa1', padding: '12px', borderRadius: '12px', textAlign: 'center', marginTop: '15px' }}>
-                  <div style={{ fontSize: '10px', fontWeight: '800' }}>SCORE GAP</div>
-                  <div style={{ fontSize: '22px', fontWeight: '900' }}>-1.0</div>
-                </div>
-              </div>
-
-              <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '24px', border: '1px solid #e9ecf2' }}>
-                <h4 style={{ margin: '0 0 20px 0', fontSize: '16px', fontWeight: '800', textAlign: 'center' }}>Performance Overview</h4>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                  {[
-                    { s: 'Reading', sc: userData.reading_score, p: 83 },
-                    { s: 'Listening', sc: userData.listening_score, p: 75 },
-                    { s: 'Writing', sc: userData.writing_score, p: 75 },
-                    { s: 'Speaking', sc: userData.speaking_score, p: 66 }
-                  ].map(item => (
-                    <div key={item.s}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', fontWeight: '700', marginBottom: '4px' }}>
-                        <span>{item.s}</span> <span style={{ color: '#701fa1' }}>{item.sc} / 6.0</span>
-                      </div>
-                      <div style={{ width: '100%', height: '8px', backgroundColor: '#eee', borderRadius: '4px', overflow: "hidden" }}>
-                        <div style={{ width: `${item.p}%`, height: '100%', backgroundColor: '#701fa1' }} />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '24px', border: '1px solid #e9ecf2' }}>
-                <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '800', textAlign: 'center' }}>Today's Tasklist</h4>
+              <div style={{ background: '#ffffff', borderRadius: '12px', padding: '18px', border: '0.5px solid #e1e4ed' }}>
+                <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '14px' }}>Section scores vs targets</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                  {goals.map(g => (
-                    <div key={g.id} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '14px', borderRadius: '16px', border: '1px solid #ebdfff', backgroundColor: '#fcfaff' }}>
-                      <input type="checkbox" style={{ width: '18px', height: '18px', accentColor: '#2ac56c' }} />
-                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#11162d' }}>{g.text}</span>
+                  {[
+                    { name: 'Reading practice',   current: userData.reading_score,   target: 5.5 },
+                    { name: 'Listening practice', current: userData.listening_score, target: 5.0 },
+                    { name: 'Writing practice',   current: userData.writing_score,   target: 5.0 },
+                    { name: 'Speaking practice',  current: userData.speaking_score,  target: 5.0 },
+                  ].map(s => {
+                    const curPct = Math.round((s.current / 6) * 100)
+                    const tgtPct = Math.round((s.target / 6) * 100)
+                    const gap = s.target - s.current
+                    const barColor = gap >= 1 ? '#e85555' : '#2ac56c'
+                    return (
+                      <div key={s.name}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '4px' }}>
+                          <span style={{ color: '#616473' }}>{s.name}</span>
+                          <span style={{ fontWeight: '500' }}>{s.current} <span style={{ color: '#616473', fontWeight: '400' }}>/ target {s.target}</span></span>
+                        </div>
+                        <div style={{ height: '7px', background: '#f0f2f5', borderRadius: '4px', position: 'relative' }}>
+                          <div style={{ width: curPct + '%', height: '100%', background: barColor, borderRadius: '4px' }} />
+                          <div style={{ position: 'absolute', top: '-2px', left: tgtPct + '%', width: '2px', height: '11px', background: '#701fa1', borderRadius: '2px' }} />
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <div style={{ display: 'flex', gap: '14px', marginTop: '14px' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#616473' }}><div style={{ width: '10px', height: '3px', background: '#2ac56c', borderRadius: '2px' }} /> Current</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#616473' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', minHeight: 0 }}>
+                <div style={{ background: '#ffffff', borderRadius: '12px', padding: '18px', border: '0.5px solid #e1e4ed' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '12px' }}>Exam date</div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ background: '#11162d', borderRadius: '8px', padding: '10px 14px', textAlign: 'center', minWidth: '56px' }}>
+                      <div style={{ fontSize: '22px', fontWeight: '500', color: '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : '—'}</div>
+                      <div style={{ fontSize: '10px', color: '#7b809a' }}>days left</div>
                     </div>
-                  ))}
+                    <div>
+                      <div style={{ fontSize: '13px', fontWeight: '500' }}>
+                        {examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : 'Select a date'}
+                      </div>
+                      <div style={{ fontSize: '11px', color: '#616473', marginTop: '2px' }}>TOEFL iBT</div>
+                      <input type="date" value={examDate} onChange={e => setExamDate(e.target.value)} style={{ marginTop: '8px', fontSize: '11px', padding: '4px 8px', borderRadius: '6px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d' }} />
+                    </div>
+                  </div>
+                </div>
+
+                <div style={{ background: '#ffffff', borderRadius: '12px', padding: '18px', border: '0.5px solid #e1e4ed', flex: 1 }}>
+                  <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '10px' }}>Today's goals</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {examDaysLeft === null ? (
+                      <div style={{ fontSize: '12px', color: '#616473' }}>Select an exam date to generate your daily goals.</div>
+                    ) : generateGoals(examDaysLeft, userData).map((g, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#616473' }}>
+                        <span style={{ color: '#701fa1' }}>○</span> {g}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
+              {[
+                { name: 'Reading practice',   score: userData.reading_score,   note: '+0.5 this week', color: '#2ac56c' },
+                { name: 'Listening practice', score: userData.listening_score, note: '+0.5 this week', color: '#2ac56c' },
+                { name: 'Writing practice',   score: userData.writing_score,   note: 'No change',      color: '#616473' },
+                { name: 'Speaking practice',  score: userData.speaking_score,  note: 'Needs focus',    color: '#e85555' },
+              ].map(item => (
+                <div key={item.name} style={{ background: '#ffffff', borderRadius: '12px', padding: '14px 16px', border: '0.5px solid #e1e4ed' }}>
+                  <div style={{ fontSize: '11px', color: '#616473', marginBottom: '4px' }}>{item.name}</div>
+                  <div style={{ fontSize: '20px', fontWeight: '600' }}>{item.score}</div>
+                  <div style={{ fontSize: '10px', color: item.color, marginTop: '2px' }}>{item.note}</div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
-        {/* READING TAB VIEW */}
         {currentTab === 'reading' && (
-          <div>
-            <p style={{ color: '#616473', marginBottom: '30px', fontSize: '14px' }}>Practice with 3 different reading question types designed for the updated 2026 format.</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {[
-                { title: 'Part 1: Complete the Sentence', desc: 'Fill in the missing parts of letters/words within texts using your keyboard precision.' },
-                { title: 'Part 2: Read in Daily Life', desc: 'Analyze announcements, emails, and institutional notifications from everyday campus life.' },
-                { title: 'Part 3: Academic Passage', desc: 'Read highly specialized scientific or historical essays and answer comprehension queries.' }
-              ].map((p, i) => (
-                <div key={i} style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '20px', border: '1px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ maxWidth: '70%' }}>
-                    <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '800' }}>{p.title}</h4>
-                    <p style={{ margin: 0, fontSize: '13px', color: '#616473', lineHeight: '1.5' }}>{p.desc}</p>
-                  </div>
-                  <button style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '12px 24px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer' }}>Open Module</button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* LISTENING TAB VIEW */}
-        {currentTab === 'listening' && (
-          <div>
-            <p style={{ color: '#616473', marginBottom: '30px', fontSize: '14px' }}>Enhance your listening comprehension with 4 question styles updated for the 2026 exam requirements.</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {["Part 1: Choose a Response", "Part 2: Conversation", "Part 3: Announcement", "Part 4: Academic Talk"].map((title, i) => (
-                <div key={i} style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '20px', border: '1px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <h4 style={{ margin: 0, fontSize: '16px', fontWeight: '800' }}>{title}</h4>
-                  <button style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '12px 24px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer' }}>Open Module</button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* WRITING TAB VIEW */}
-        {currentTab === 'writing' && (
-          <div>
-            <p style={{ color: '#616473', marginBottom: '30px', fontSize: '14px' }}>Practice your composition workflow with 3 custom task formats built for your preparation blueprint.</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {[
-                { title: 'Part 1: Build a Sentence', desc: 'Demonstrate syntactic command by assembling and restructuring diverse academic clause structures seamlessly.' },
-                { title: 'Part 2: Write an Email', desc: 'Draft high-quality workspace notifications, formal requests, or academic inquiries with contextual formatting precision.' },
-                { title: 'Part 3: Academic Discussion', desc: 'Contribute advanced opinions, supporting synthesis data, and critical analysis to an interactive lecture forum thread.' }
-              ].map((p, i) => (
-                <div key={i} style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '20px', border: '1px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div style={{ maxWidth: '70%' }}>
-                    <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '800' }}>{p.title}</h4>
-                    <p style={{ margin: 0, fontSize: '13px', color: '#616473', lineHeight: '1.5' }}>{p.desc}</p>
-                  </div>
-                  <button style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '12px 24px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer' }}>Open Module</button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* SPEAKING TAB VIEW */}
-        {currentTab === 'speaking' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
-            <p style={{ color: '#616473', margin: '0 0 5px 0', fontSize: '14px' }}>Master active phonetic outputs across 2 specialized oral proficiency training workflows.</p>
-            
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
             {[
-              { title: 'Part 1: Listen and Repeat', desc: 'Sharpen intonation tracking, vocal stress precision, and word delivery accuracy through close audio response capture.' },
-              { title: 'Part 2: Take an Interview', desc: 'Deliver quick, clear multi-turn answers and academic arguments facing real-time audio inquiry scenarios.' }
+              { title: 'Part 1: Complete the Sentence', desc: 'Fill in missing parts within texts using keyboard precision.' },
+              { title: 'Part 2: Read in Daily Life', desc: 'Analyze announcements, emails, and notifications from campus life.' },
+              { title: 'Part 3: Academic Passage', desc: 'Read scientific or historical essays and answer comprehension queries.' }
             ].map((p, i) => (
-              <div key={i} style={{ backgroundColor: '#ffffff', padding: '30px', borderRadius: '20px', border: '1px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div key={i} style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ maxWidth: '70%' }}>
-                  <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '800' }}>{p.title}</h4>
-                  <p style={{ margin: 0, fontSize: '13px', color: '#616473', lineHeight: '1.5' }}>{p.desc}</p>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700' }}>{p.title}</h4>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
                 </div>
-                <button style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '12px 24px', borderRadius: '12px', fontWeight: '700', cursor: 'pointer' }}>Open Module</button>
+                <button style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer' }}>Open Module</button>
               </div>
             ))}
-
-            {/* FULL SPEAKING MOCK TEST COMPONENT CARD */}
-            <div style={{ background: '#11162d', padding: '35px', borderRadius: '24px', color: '#ffffff', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
-                  <span style={{ backgroundColor: '#701fa1', padding: '4px 10px', borderRadius: '6px', fontSize: '11px', fontWeight: '800' }}>OFFICIAL PROVA</span>
-                  <span style={{ fontSize: '12px', color: '#a5a7b4', fontWeight: '600' }}>⏱️ Süre: ~15 Dakika</span>
-                </div>
-                <h3 style={{ margin: '0 0 10px 0', fontSize: '20px', fontWeight: '800' }}>Full Speaking Mock Test</h3>
-                <p style={{ margin: 0, fontSize: '13px', color: '#a5a7b4', lineHeight: '1.5', maxWidth: '450px' }}>Sırasıyla tüm 'Listen and Repeat' ve 'Take an Interview' aşamalarını süre kısıtlamalı ve ardışık olarak simüle edin. Yapay zeka motoru sesinizi kaydederek 6.0 skalasında anında analiz sunar.</p>
-              </div>
-              <button onClick={() => alert("Mock test simulation initiated!")} style={{ backgroundColor: '#ffffff', color: '#11162d', border: 'none', padding: '14px 28px', borderRadius: '12px', fontWeight: '800', cursor: 'pointer' }}>Start Test</button>
-            </div>
           </div>
         )}
 
-        {/* VOCABULARY TAB VIEW */}
+        {currentTab === 'listening' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {["Part 1: Choose a Response", "Part 2: Conversation", "Part 3: Announcement", "Part 4: Academic Talk"].map((title, i) => (
+              <div key={i} style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '700' }}>{title}</h4>
+                <button style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer' }}>Open Module</button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {currentTab === 'writing' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {[
+              { title: 'Part 1: Build a Sentence', desc: 'Assemble and restructure diverse academic clause structures.' },
+              { title: 'Part 2: Write an Email', desc: 'Draft formal requests or academic inquiries with contextual formatting.' },
+              { title: 'Part 3: Academic Discussion', desc: 'Contribute opinions and critical analysis to an interactive lecture forum.' }
+            ].map((p, i) => (
+              <div key={i} style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ maxWidth: '70%' }}>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700' }}>{p.title}</h4>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                </div>
+                <button style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer' }}>Open Module</button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {currentTab === 'speaking' && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {[
+              { title: 'Part 1: Listen and Repeat', desc: 'Sharpen intonation and vocal stress through audio response capture.' },
+              { title: 'Part 2: Take an Interview', desc: 'Deliver clear multi-turn answers facing real-time audio inquiry scenarios.' }
+            ].map((p, i) => (
+              <div key={i} style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ maxWidth: '70%' }}>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '15px', fontWeight: '700' }}>{p.title}</h4>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                </div>
+                <button style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '10px 20px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer' }}>Open Module</button>
+              </div>
+            ))}
+          </div>
+        )}
+
         {currentTab === 'vocab' && (
-          <div>
-            <p style={{ color: '#616473', marginBottom: '30px', fontSize: '14px' }}>Master high-frequency TOEFL iBT academic vocabulary words.</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              {vocabWords.map(item => (
-                <div key={item.id} style={{ backgroundColor: '#ffffff', padding: '25px 30px', borderRadius: '20px', border: '1px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-                      <h4 style={{ margin: 0, fontSize: '18px', fontWeight: '800' }}>{item.word}</h4>
-                      <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
-                    </div>
-                    <p style={{ margin: 0, fontSize: '14px', color: '#616473' }}>{item.meaning}</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {vocabWords.map(item => (
+              <div key={item.id} style={{ backgroundColor: '#ffffff', padding: '20px 24px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '4px' }}>
+                    <h4 style={{ margin: 0, fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
+                    <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
                   </div>
-                  <button style={{ backgroundColor: '#ffffff', color: '#11162d', border: '1px solid #d1d5db', padding: '10px 18px', borderRadius: '10px', fontWeight: '700', cursor: 'pointer' }}>Mark as Learned</button>
+                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
                 </div>
-              ))}
-            </div>
+                <button style={{ backgroundColor: '#ffffff', color: '#11162d', border: '1px solid #d1d5db', padding: '8px 16px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer' }}>Mark as Learned</button>
+              </div>
+            ))}
           </div>
         )}
 
-        {/* SETTINGS TAB VIEW */}
         {currentTab === 'settings' && (
-          <div style={{ display: 'flex', gap: '30px', alignItems: 'flex-start' }}>
-            <div style={{ flex: 1, backgroundColor: '#ffffff', padding: '35px', borderRadius: '24px', border: '1px solid #e9ecf2' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '30px' }}>
-                <span style={{ fontSize: '20px' }}>🎯</span>
-                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800' }}>Target & Profile Info</h3>
-              </div>
-              <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '700', color: '#616473', fontSize: '13px' }}>Username / Student Name</label>
-                  <input type="text" value={profileName} onChange={(e) => setProfileName(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }} />
+          <div style={{ display: 'flex', gap: '24px' }}>
+            <div style={{ flex: 1, backgroundColor: '#ffffff', padding: '28px', borderRadius: '16px', border: '0.5px solid #e1e4ed' }}>
+              <h3 style={{ margin: '0 0 20px 0', fontSize: '16px', fontWeight: '700' }}>🎯 Target & Profile</h3>
+              <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Username</label>
+                  <input type="text" value={profileName} onChange={(e) => setProfileName(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '700', color: '#616473', fontSize: '13px' }}>TOEFL iBT Target Score (0.0 - 6.0)</label>
-                  <input type="number" min="0" max="6.0" step="0.5" value={targetScore} onChange={(e) => setTargetScore(e.target.value)} style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', fontWeight: '600' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Target Score (0.0 - 6.0)</label>
+                  <input type="number" min="0" max="6.0" step="0.5" value={targetScore} onChange={(e) => setTargetScore(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px' }} />
                 </div>
-                <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '14px', borderRadius: '12px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', marginTop: '10px' }}>Save Changes</button>
+                <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#ffffff', border: 'none', padding: '12px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
               </form>
             </div>
-
-            <div style={{ flex: 1, backgroundColor: '#ffffff', padding: '35px', borderRadius: '24px', border: '1px solid #e9ecf2' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '30px' }}>
-                <span style={{ fontSize: '20px' }}>🔒</span>
-                <h3 style={{ margin: 0, fontSize: '18px', fontWeight: '800' }}>Account Security</h3>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '700', color: '#616473', fontSize: '13px' }}>Current Password</label>
-                  <input type="password" value="••••••••" readOnly style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px', color: '#888' }} />
+            <div style={{ flex: 1, backgroundColor: '#ffffff', padding: '28px', borderRadius: '16px', border: '0.5px solid #e1e4ed' }}>
+              <h3 style={{ margin: '0 0 20px 0', fontSize: '16px', fontWeight: '700' }}>🔒 Account Security</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Current Password</label>
+                  <input type="password" value="••••••••" readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px', color: '#888' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '700', color: '#616473', fontSize: '13px' }}>New SaaS Password</label>
-                  <input type="password" placeholder="Enter new password" style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>New Password</label>
+                  <input type="password" placeholder="Enter new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px' }} />
                 </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                  <label style={{ fontWeight: '700', color: '#616473', fontSize: '13px' }}>Confirm New Password</label>
-                  <input type="password" placeholder="Confirm new password" style={{ width: '100%', padding: '12px', borderRadius: '10px', border: '1px solid #cbd5e1', fontSize: '14px' }} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Confirm New Password</label>
+                  <input type="password" placeholder="Confirm new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '14px' }} />
                 </div>
-                <button style={{ backgroundColor: '#11162d', color: '#ffffff', border: 'none', padding: '14px', borderRadius: '12px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', marginTop: '10px' }}>Update Password</button>
+                <button style={{ backgroundColor: '#11162d', color: '#ffffff', border: 'none', padding: '12px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
               </div>
             </div>
           </div>
