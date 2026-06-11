@@ -94,7 +94,7 @@ function App() {
       </div>
 
       {/* WORKSPACE CONTENT */}
-      <div style={{ flex: 1, padding: '40px 50px', overflowY: 'hidden', height: '100vh', backgroundColor: '#f4f6fa' }}>
+      <div style={{ flex: 1, padding: '20px 30px', overflowY: 'hidden', height: '100vh', backgroundColor: '#f4f6fa' }}>
         
         {/* TOP COMPONENT HEADER FOR MODULES */}
         {currentTab !== 'dashboard' && (
@@ -116,7 +116,7 @@ function App() {
 
         {/* DASHBOARD TAB VIEW */}
         {currentTab === 'dashboard' && (
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '30px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '30px' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '25px' }}>
               <div style={{ backgroundColor: '#ffffff', padding: '24px 30px', borderRadius: '20px', display: 'flex', alignItems: 'center', gap: '24px', borderLeft: '6px solid #b67bfb', boxShadow: '0 4px 12px rgba(0,0,0,0.01)' }}>
                 <span style={{ fontSize: '24px' }}>🎯</span>
