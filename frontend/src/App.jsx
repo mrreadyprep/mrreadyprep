@@ -391,6 +391,12 @@ function App() {
                   medium: { bg: '#dbeafe', text: '#1e40af' },
                   hard: { bg: '#fce7f3', text: '#9d174d' }
                 };
+                const difficultyBorderColors = {
+                  easy: '#16a34a',
+                  medium: '#2563eb',
+                  hard: '#dc2626'
+                };
+                const borderColor = difficultyBorderColors[item.difficulty] || difficultyBorderColors.medium;
                 const diffStyle = difficultyStyles[item.difficulty] || difficultyStyles.medium;
                 const isFlipped = !!flippedCards[item.id];
 
@@ -398,6 +404,7 @@ function App() {
                   <div key={item.id} onClick={() => setFlippedCards(prev => ({ ...prev, [item.id]: !prev[item.id] }))} style={{
                     backgroundColor: isFlipped ? diffStyle.bg : '#fff',
                     border: '0.5px solid #e1e4ed',
+                    borderLeft: '4px solid ' + borderColor,
                     borderRadius: '12px',
                     padding: '18px',
                     minHeight: '140px',
@@ -406,8 +413,24 @@ function App() {
                     justifyContent: 'space-between',
                     cursor: 'pointer',
                     opacity: item.learned ? 0.6 : 1,
+                    position: 'relative',
                     transition: 'background-color 0.2s ease'
                   }}>
+                  <div style={{
+                    position: 'absolute',
+                    top: '14px',
+                    right: '14px',
+                    backgroundColor: '#fff',
+                    color: borderColor,
+                    padding: '4px 10px',
+                    borderRadius: '999px',
+                    fontSize: '10px',
+                    fontWeight: '700',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.4px'
+                  }}>
+                    {item.difficulty?.toUpperCase()}
+                  </div>
 
                     {!isFlipped ? (
                       <div>
