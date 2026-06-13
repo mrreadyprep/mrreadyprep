@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import json
+import os
 
 app = FastAPI(title="mrreadyprep API", version="2026")
 
@@ -30,19 +32,10 @@ student_profile = {
     "speaking_score": 4.0
 }
 
-# Vocabulary verisi (geçici - bellekte tutuluyor)
-vocab_words = [
-    {"id": 1, "word": "Proponent", "type": "NOUN", "meaning": "A person who advocates a theory, proposal, or project.", "learned": False},
-    {"id": 2, "word": "Substantiate", "type": "VERB", "meaning": "Provide evidence to support or prove the truth of.", "learned": False},
-    {"id": 3, "word": "Ambiguous", "type": "ADJECTIVE", "meaning": "Open to more than one interpretation.", "learned": False},
-    {"id": 4, "word": "Prohibit", "type": "VERB", "meaning": "Formally forbid something by law or rule.", "learned": False},
-    {"id": 5, "word": "Enhance", "type": "VERB", "meaning": "To intensify, increase, or further improve the quality, value, or extent of something.", "learned": False},
-    {"id": 6, "word": "Inevitable", "type": "ADJECTIVE", "meaning": "Certain to happen; unable to be avoided or prevented.", "learned": False},
-    {"id": 7, "word": "Hypothesis", "type": "NOUN", "meaning": "A proposed explanation made on the basis of limited evidence as a starting point for investigation.", "learned": False},
-    {"id": 8, "word": "Derive", "type": "VERB", "meaning": "To obtain something from a specified source.", "learned": False},
-    {"id": 9, "word": "Coherent", "type": "ADJECTIVE", "meaning": "Logical and consistent, forming a unified whole.", "learned": False},
-    {"id": 10, "word": "Mitigate", "type": "VERB", "meaning": "To make less severe, serious, or painful.", "learned": False},
-]
+# Vocabulary verisi - JSON dosyasından yükleniyor
+VOCAB_FILE = os.path.join(os.path.dirname(__file__), "toefl_vocab_list.json")
+with open(VOCAB_FILE, "r", encoding="utf-8") as f:
+    vocab_words = json.load(f)
 
 @app.get("/api/dashboard")
 def get_dashboard():
