@@ -8,6 +8,7 @@ function App() {
   const [examDate, setExamDate] = useState('')
   const [vocabWords, setVocabWords] = useState([])
   const [vocabFilter, setVocabFilter] = useState('all')
+  const [flippedCards, setFlippedCards] = useState({})
 
   const getExamDaysLeft = () => {
     if (!examDate) return null
@@ -378,33 +379,66 @@ function App() {
               ))}
             </div>
 
-            {/* Word list */}
+            {/* Word list - Flashcards */}
+
             {vocabWords
               .filter(item => vocabFilter === 'all' ? true : vocabFilter === 'learned' ? item.learned : !item.learned)
-              .map(item => (
-                <div key={item.id} style={{
-                  backgroundColor: '#fff', padding: '18px 22px', borderRadius: '12px',
-                  border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between',
-                  alignItems: 'center', opacity: item.learned ? 0.6 : 1
-                }}>
-                  <div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                      <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '700' }}>{item.word}</h4>
-                      <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
-                    </div>
-                    <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
-                  </div>
-                  <button onClick={() => toggleLearned(item.id)} style={{
-                    backgroundColor: item.learned ? '#2ac56c' : '#fff',
-                    color: item.learned ? '#fff' : '#11162d',
-                    border: '1px solid ' + (item.learned ? '#2ac56c' : '#d1d5db'),
-                    padding: '8px 14px', borderRadius: '8px', fontWeight: '700',
-                    cursor: 'pointer', fontSize: '12px', flexShrink: 0
+              .map(item => {
+                const vibrantColors = ['#701fa1', '#2563eb', '#dc2626', '#16a34a', '#ea580c', '#0891b2', '#c026d3', '#ca8a04'];
+                const wordColor = vibrantColors[item.id % vibrantColors.length];
+                const difficultyStyles = {
+                  easy: { bg: '#dcfce7', text: '#15803d' },
+                  medium: { bg: '#dbeafe', text: '#1e40af' },
+                  hard: { bg: '#fce7f3', text: '#9d174d' }
+                };
+                const diffStyle = difficultyStyles[item.difficulty] || difficultyStyles.medium;
+                const isFlipped = !!flippedCards[item.id];
+
+                return (
+                  <div key={item.id} onClick={() => setFlippedCards(prev => ({ ...prev, [item.id]: !prev[item.id] }))} style={{
+                    backgroundColor: isFlipped ? diffStyle.bg : '#fff',
+                    border: '0.5px solid #e1e4ed',
+                    borderRadius: '12px',
+                    padding: '18px',
+                    minHeight: '140px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+                    cursor: 'pointer',
+                    opacity: item.learned ? 0.6 : 1,
+                    transition: 'background-color 0.2s ease'
                   }}>
-                    {item.learned ? '✅ Learned' : 'Mark as Learned'}
-                  </button>
-                </div>
-              ))}
+
+                    {!isFlipped ? (
+                      <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                          <span style={{ width: '10px', height: '10px', background: wordColor, borderRadius: '4px', display: 'inline-block' }} />
+                          <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
+                        <div style={{ fontSize: '13px', color: '#616473' }}>Tap to reveal meaning</div>
+                      </div>
+                    ) : (
+                      <div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
+                        <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
+                        {item.example && <p style={{ marginTop: '8px', fontSize: '12px', color: '#7b809a' }}>&quot;{item.example}&quot;</p>}
+                      </div>
+                    )}
+
+                    <button onClick={(e) => { e.stopPropagation(); toggleLearned(item.id); }} style={{
+                      backgroundColor: item.learned ? '#2ac56c' : '#fff',
+                      color: item.learned ? '#fff' : '#11162d',
+                      border: '1px solid ' + (item.learned ? '#2ac56c' : '#d1d5db'),
+                      padding: '6px 10px', borderRadius: '8px', fontWeight: '700',
+                      cursor: 'pointer', fontSize: '11px', marginTop: '10px', alignSelf: 'flex-start'
+                    }}>
+                      {item.learned ? '✅ Learned' : 'Mark as Learned'}
+                    </button>
+
+                  </div>
+                )
+              })}
           </div>
         )}
 
