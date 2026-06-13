@@ -6,12 +6,8 @@ function App() {
   const [profileName, setProfileName] = useState('')
   const [targetScore, setTargetScore] = useState(5.5)
   const [examDate, setExamDate] = useState('')
-  const [vocabWords] = useState([
-    { id: 1, word: "Proponent", type: "NOUN", meaning: "A person who advocates a theory, proposal, or project." },
-    { id: 2, word: "Substantiate", type: "VERB", meaning: "Provide evidence to support or prove the truth of." },
-    { id: 3, word: "Ambiguous", type: "ADJECTIVE", meaning: "Open to more than one interpretation." },
-    { id: 4, word: "Prohibit", type: "VERB", meaning: "Formally forbid something by law or rule." }
-  ])
+  const [vocabWords, setVocabWords] = useState([])
+  const [vocabFilter, setVocabFilter] = useState('all')
 
   const getExamDaysLeft = () => {
     if (!examDate) return null
@@ -27,19 +23,47 @@ function App() {
       { name: 'Listening practice', gap: 5.0 - data.listening_score },
       { name: 'Writing practice',   gap: 5.0 - data.writing_score },
       { name: 'Speaking practice',  gap: 5.0 - data.speaking_score },
-    ].sort((a, b) => b.gap - a.gap)
+    ].filter(s => s.gap > 0).sort((a, b) => b.gap - a.gap)
     const goals = []
-    sections.forEach(s => {
-      if (s.gap <= 0) return
-      if (daysLeft > 60) goals.push('Practice 1 ' + s.name + ' (gap: ' + s.gap.toFixed(1) + ')')
-      else if (daysLeft > 30) { if (s.gap >= 1.0) goals.push('Do 2 ' + s.name + ' — urgent!'); else goals.push('Do 1 ' + s.name) }
-      else if (daysLeft > 14) { if (s.gap >= 0.5) goals.push('Full ' + s.name + ' mock test') }
-      else { if (s.gap >= 0.5) goals.push('Review ' + s.name + ' — exam soon!') }
+    const today = new Date().getDate()
+    sections.forEach((s, i) => {
+      if (daysLeft > 60) {
+        goals.push(`Practice ${s.name} (gap: ${s.gap.toFixed(1)})`)
+      } else if (daysLeft > 30) {
+        goals.push(s.gap >= 1.0 ? `Do 2 ${s.name} sessions — urgent` : `Do 1 ${s.name} session`)
+      } else if (daysLeft > 14) {
+        if (s.gap >= 0.5) goals.push(`Full ${s.name} mock test`)
+      } else {
+        if (s.gap >= 1.0) {
+          goals.push(`${s.name}: full focus session — biggest gap (${s.gap.toFixed(1)})`)
+        } else if (s.gap >= 0.5 && i === today % sections.length) {
+          goals.push(`${s.name}: quick review — exam soon`)
+        }
+      }
     })
     if (daysLeft <= 60) goals.push('Review 10 vocabulary words')
     if (daysLeft <= 30) goals.push('Take a full timed practice test')
-    if (daysLeft <= 7)  goals.push('Rest, review notes, sleep early')
+    if (daysLeft <= 1)  goals.push('Rest, review notes, sleep early')
     return goals.slice(0, 5)
+  }
+
+  const fetchVocabData = () => {
+    fetch('https://mrreadyprep.onrender.com/api/vocab')
+      .then(res => res.json())
+      .then(data => setVocabWords(data))
+      .catch(err => console.error(err))
+  }
+
+  const toggleLearned = (id) => {
+    fetch('https://mrreadyprep.onrender.com/api/vocab/toggle/' + id, { method: 'POST' })
+      .then(res => res.json())
+      .then(() => {
+        setVocabWords(prev => prev.map(item =>
+          item.id === id ? { ...item, learned: !item.learned } : item
+        ))
+        fetchDashboardData()
+      })
+      .catch(err => console.error(err))
   }
 
   const fetchDashboardData = () => {
@@ -49,7 +73,7 @@ function App() {
       .catch(err => console.error(err))
   }
 
-  useEffect(() => { fetchDashboardData() }, [])
+  useEffect(() => { fetchDashboardData(); fetchVocabData() }, [])
 
   const handleProfileSave = (e) => {
     e.preventDefault()
@@ -316,20 +340,71 @@ function App() {
         )}
 
         {/* VOCABULARY */}
-        {currentTab === 'vocab' && (
+        {currentTab === 'vocab' && vocabWords.length === 0 && (
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }}>
+            <p style={{ color: '#616473', fontSize: '13px' }}>Loading vocabulary...</p>
+          </div>
+        )}
+        {currentTab === 'vocab' && vocabWords.length > 0 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {vocabWords.map(item => (
-              <div key={item.id} style={{ backgroundColor: '#fff', padding: '18px 22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
-                    <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '700' }}>{item.word}</h4>
-                    <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
-                  </div>
-                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
-                </div>
-                <button style={{ backgroundColor: '#fff', color: '#11162d', border: '1px solid #d1d5db', padding: '8px 14px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '12px', flexShrink: 0 }}>Mark as Learned</button>
+
+            {/* Progress bar */}
+            <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px' }}>
+                <span style={{ fontWeight: '600' }}>Progress</span>
+                <span style={{ color: '#616473' }}>
+                  {vocabWords.filter(w => w.learned).length} / {vocabWords.length} learned
+                </span>
               </div>
-            ))}
+              <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px' }}>
+                <div style={{
+                  width: (vocabWords.filter(w => w.learned).length / vocabWords.length * 100) + '%',
+                  height: '100%', background: '#2ac56c', borderRadius: '4px', transition: 'width 0.3s ease'
+                }} />
+              </div>
+            </div>
+
+            {/* Filter buttons */}
+            <div style={{ display: 'flex', gap: '8px' }}>
+              {['all', 'learned', 'unlearned'].map(f => (
+                <button key={f} onClick={() => setVocabFilter(f)} style={{
+                  padding: '7px 14px', borderRadius: '8px', border: '1px solid #d1d5db',
+                  backgroundColor: vocabFilter === f ? '#701fa1' : '#fff',
+                  color: vocabFilter === f ? '#fff' : '#616473',
+                  fontSize: '12px', fontWeight: '600', cursor: 'pointer'
+                }}>
+                  {f === 'all' ? 'All' : f === 'learned' ? 'Learned' : 'Not Learned'}
+                </button>
+              ))}
+            </div>
+
+            {/* Word list */}
+            {vocabWords
+              .filter(item => vocabFilter === 'all' ? true : vocabFilter === 'learned' ? item.learned : !item.learned)
+              .map(item => (
+                <div key={item.id} style={{
+                  backgroundColor: '#fff', padding: '18px 22px', borderRadius: '12px',
+                  border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between',
+                  alignItems: 'center', opacity: item.learned ? 0.6 : 1
+                }}>
+                  <div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      <h4 style={{ margin: 0, fontSize: '15px', fontWeight: '700' }}>{item.word}</h4>
+                      <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
+                  </div>
+                  <button onClick={() => toggleLearned(item.id)} style={{
+                    backgroundColor: item.learned ? '#2ac56c' : '#fff',
+                    color: item.learned ? '#fff' : '#11162d',
+                    border: '1px solid ' + (item.learned ? '#2ac56c' : '#d1d5db'),
+                    padding: '8px 14px', borderRadius: '8px', fontWeight: '700',
+                    cursor: 'pointer', fontSize: '12px', flexShrink: 0
+                  }}>
+                    {item.learned ? '✅ Learned' : 'Mark as Learned'}
+                  </button>
+                </div>
+              ))}
           </div>
         )}
 
