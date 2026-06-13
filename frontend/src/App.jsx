@@ -129,7 +129,7 @@ function App() {
       </div>
 
       {/* MAIN */}
-      <div style={{ flex: 1, minWidth: 0, padding: '16px', overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '12px', boxSizing: 'border-box' }}>
+      <div style={{ flex: 1, minWidth: 0, padding: '16px', overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column', gap: '12px', boxSizing: 'border-box' }}>
 
         {currentTab !== 'dashboard' && (
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
