@@ -226,35 +226,29 @@ function App() {
                   {!expandedFormat ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       {[
-                        { label: 'Reading', time: '~23 min', color: '#2563eb' },
-                        { label: 'Listening', time: '~27 min', color: '#16a34a' },
-                        { label: 'Writing', time: '~27 min', color: '#ea580c' },
-                        { label: 'Speaking', time: '~8 min', color: '#9333ea' },
+                        { label: 'Reading', color: '#2563eb' },
+                        { label: 'Listening', color: '#16a34a' },
+                        { label: 'Writing', color: '#ea580c' },
+                        { label: 'Speaking', color: '#9333ea' },
                       ].map(item => (
-                        <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '8px', borderBottom: '0.5px solid #f0f2f5' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
-                            <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
-                          </div>
-                          <span style={{ fontSize: '11px', color: '#6b7280' }}>{item.time}</span>
+                        <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '8px', borderBottom: '0.5px solid #f0f2f5' }}>
+                          <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
+                          <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
                         </div>
                       ))}
                     </div>
                   ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                       {[
-                        { label: 'Reading', time: '~23 min', color: '#2563eb', tasks: ['Complete the Words', 'Read in Daily Life', 'Read an Academic Passage'] },
-                        { label: 'Listening', time: '~27 min', color: '#16a34a', tasks: ['Listen and Choose a Response', 'Listen to a Conversation', 'Listen to an Announcement', 'Listen to an Academic Talk'] },
-                        { label: 'Writing', time: '~27 min', color: '#ea580c', tasks: ['Build a Sentence', 'Write an Email', 'Write for an Academic Discussion'] },
-                        { label: 'Speaking', time: '~8 min', color: '#9333ea', tasks: ['Listen and Repeat', 'Take an Interview'] },
+                        { label: 'Reading', color: '#2563eb', tasks: ['Complete the Words', 'Read in Daily Life', 'Read an Academic Passage'] },
+                        { label: 'Listening', color: '#16a34a', tasks: ['Listen and Choose a Response', 'Listen to a Conversation', 'Listen to an Announcement', 'Listen to an Academic Talk'] },
+                        { label: 'Writing', color: '#ea580c', tasks: ['Build a Sentence', 'Write an Email', 'Write for an Academic Discussion'] },
+                        { label: 'Speaking', color: '#9333ea', tasks: ['Listen and Repeat', 'Take an Interview'] },
                       ].map(item => (
                         <div key={item.label} style={{ paddingBottom: '10px', borderBottom: '0.5px solid #f0f2f5' }}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                              <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
-                              <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
-                            </div>
-                            <span style={{ fontSize: '11px', color: '#6b7280' }}>{item.time}</span>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                            <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
+                            <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
                           </div>
                           <div style={{ marginLeft: '8px', fontSize: '11px', color: '#616473', display: 'flex', flexDirection: 'column', gap: '3px' }}>
                             {item.tasks.map(task => (
@@ -266,7 +260,7 @@ function App() {
                     </div>
                   )}
                   <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '0.5px solid #e1e4ed', fontSize: '11px', fontWeight: '600', color: '#616473', textAlign: 'center' }}>
-                    Total ~85 min · Score: 1–6 (bands of 0.5)
+                    Score: 1–6 (bands of 0.5)
                   </div>
                 </div>
 
