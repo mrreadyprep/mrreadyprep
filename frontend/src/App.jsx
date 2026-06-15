@@ -215,6 +215,24 @@ function App() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '10px', height: '3px', background: '#2ac56c', borderRadius: '2px' }} /> Current</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
                 </div>
+
+                {/* Günlük TOEFL Stratejisi */}
+                <div style={{ background: 'linear-gradient(135deg, #701fa1 0%, #2563eb 100%)', borderRadius: '12px', padding: '16px', marginTop: '16px' }}>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    💡 Today's Strategy
+                  </div>
+                  <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff', lineHeight: '1.5' }}>
+                    {[
+                      "In Reading, look for transition words (however, therefore, moreover) — they signal the author's main point.",
+                      "For Listening, focus on the first and last sentences of each speaker's turn — key info is usually there.",
+                      "In Speaking Task 1, spend 15 seconds planning, then speak clearly for 45 seconds without stopping.",
+                      "For Writing, always start with a clear thesis in your first sentence — graders look for it immediately.",
+                      "Unknown vocab in Reading? Look at the surrounding sentences — context clues reveal the meaning.",
+                      "In Listening, don't panic if you miss something — keep listening and catch the next point.",
+                      "For Speaking, use simple connectors: 'First... Second... Finally...' — structure impresses graders.",
+                    ][new Date().getDay() % 7]}
+                  </div>
+                </div>
               </div>
 
               {/* Sağ Kolon */}
@@ -264,61 +282,6 @@ function App() {
                         <span style={{ color: '#701fa1', flexShrink: 0 }}>○</span> {g}
                       </div>
                     ))}
-                  </div>
-                </div>
-
-                {/* Haftalık İlerleme Grafiği */}
-                <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed' }}>
-                  <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '14px' }}>Weekly Progress</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {[
-                      { label: 'Reading', score: userData?.reading_score || 0, target: 5.5, color: '#2563eb' },
-                      { label: 'Listening', score: userData?.listening_score || 0, target: 5.0, color: '#16a34a' },
-                      { label: 'Writing', score: userData?.writing_score || 0, target: 5.0, color: '#ea580c' },
-                      { label: 'Speaking', score: userData?.speaking_score || 0, target: 5.0, color: '#9333ea' },
-                    ].map(item => (
-                      <div key={item.label}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', marginBottom: '4px' }}>
-                          <span style={{ fontWeight: '600', color: '#374151' }}>{item.label}</span>
-                          <span style={{ color: '#6b7280' }}>{item.score} / {item.target}</span>
-                        </div>
-                        <div style={{ height: '6px', background: '#f0f2f5', borderRadius: '3px', position: 'relative' }}>
-                          <div style={{
-                            width: (item.score / 6 * 100) + '%',
-                            height: '100%', background: item.color,
-                            borderRadius: '3px', transition: 'width 0.4s ease'
-                          }} />
-                          <div style={{
-                            position: 'absolute', top: '-2px',
-                            left: (item.target / 6 * 100) + '%',
-                            width: '2px', height: '10px',
-                            background: '#701fa1', borderRadius: '1px'
-                          }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '10px', fontSize: '10px', color: '#9ca3af' }}>
-                    <span>━ Current</span>
-                    <span style={{ color: '#701fa1' }}>┃ Target</span>
-                  </div>
-                </div>
-
-                {/* Günlük TOEFL Stratejisi */}
-                <div style={{ background: 'linear-gradient(135deg, #701fa1 0%, #2563eb 100%)', borderRadius: '12px', padding: '16px', marginTop: '10px' }}>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    💡 Today's Strategy
-                  </div>
-                  <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff', lineHeight: '1.5' }}>
-                    {[
-                      "In Reading, look for transition words (however, therefore, moreover) — they signal the author's main point.",
-                      "For Listening, focus on the first and last sentences of each speaker's turn — key info is usually there.",
-                      "In Speaking Task 1, spend 15 seconds planning, then speak clearly for 45 seconds without stopping.",
-                      "For Writing, always start with a clear thesis in your first sentence — graders look for it immediately.",
-                      "Unknown vocab in Reading? Look at the surrounding sentences — context clues reveal the meaning.",
-                      "In Listening, don't panic if you miss something — keep listening and catch the next point.",
-                      "For Speaking, use simple connectors: 'First... Second... Finally...' — structure impresses graders.",
-                    ][new Date().getDay() % 7]}
                   </div>
                 </div>
 
