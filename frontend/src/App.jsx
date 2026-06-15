@@ -9,6 +9,7 @@ function App() {
   const [vocabWords, setVocabWords] = useState([])
   const [vocabFilter, setVocabFilter] = useState('all')
   const [flippedCards, setFlippedCards] = useState({})
+  const [expandedFormat, setExpandedFormat] = useState(false)
 
   const getExamDaysLeft = () => {
     if (!examDate) return null
@@ -216,27 +217,56 @@ function App() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
                 </div>
 
-                {/* TOEFL 2026 Format */}
-                <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '16px' }}>
-                  <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}>📋 TOEFL 2026 Format</div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                    {[
-                      { section: 'Reading', detail: '2 passages · 20 min', color: '#2563eb' },
-                      { section: 'Listening', detail: '3 sets · 36 min', color: '#16a34a' },
-                      { section: 'Speaking', detail: '4 tasks · 17 min', color: '#9333ea' },
-                      { section: 'Writing', detail: '2 tasks · 29 min', color: '#ea580c' },
-                    ].map(item => (
-                      <div key={item.section} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '8px', borderBottom: '0.5px solid #f0f2f5' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                          <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
-                          <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.section}</span>
-                        </div>
-                        <span style={{ fontSize: '11px', color: '#6b7280' }}>{item.detail}</span>
-                      </div>
-                    ))}
+                {/* TOEFL 2026 Format Card */}
+                <div onClick={() => setExpandedFormat(!expandedFormat)} style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '16px', cursor: 'pointer', transition: 'all 0.3s ease' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                    <div style={{ fontSize: '13px', fontWeight: '700' }}>📋 TOEFL 2026 Format</div>
+                    <span style={{ fontSize: '11px', color: '#701fa1', fontWeight: '600' }}>{expandedFormat ? '▲ Less' : '▼ Details'}</span>
                   </div>
-                  <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '0.5px solid #e1e4ed', fontSize: '11px', fontWeight: '600', color: '#616473' }}>
-                    Total: ~102 min · Score: 0–120
+                  {!expandedFormat ? (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {[
+                        { label: 'Reading', time: '~23 min', color: '#2563eb' },
+                        { label: 'Listening', time: '~27 min', color: '#16a34a' },
+                        { label: 'Writing', time: '~27 min', color: '#ea580c' },
+                        { label: 'Speaking', time: '~8 min', color: '#9333ea' },
+                      ].map(item => (
+                        <div key={item.label} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '8px', borderBottom: '0.5px solid #f0f2f5' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
+                            <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
+                          </div>
+                          <span style={{ fontSize: '11px', color: '#6b7280' }}>{item.time}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {[
+                        { label: 'Reading', time: '~23 min', color: '#2563eb', tasks: ['Complete the Words', 'Read in Daily Life', 'Read an Academic Passage'] },
+                        { label: 'Listening', time: '~27 min', color: '#16a34a', tasks: ['Listen and Choose a Response', 'Listen to a Conversation', 'Listen to an Announcement', 'Listen to an Academic Talk'] },
+                        { label: 'Writing', time: '~27 min', color: '#ea580c', tasks: ['Build a Sentence', 'Write an Email', 'Write for an Academic Discussion'] },
+                        { label: 'Speaking', time: '~8 min', color: '#9333ea', tasks: ['Listen and Repeat', 'Take an Interview'] },
+                      ].map(item => (
+                        <div key={item.label} style={{ paddingBottom: '10px', borderBottom: '0.5px solid #f0f2f5' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
+                              <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
+                            </div>
+                            <span style={{ fontSize: '11px', color: '#6b7280' }}>{item.time}</span>
+                          </div>
+                          <div style={{ marginLeft: '8px', fontSize: '11px', color: '#616473', display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                            {item.tasks.map(task => (
+                              <div key={task}>· {task}</div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '0.5px solid #e1e4ed', fontSize: '11px', fontWeight: '600', color: '#616473', textAlign: 'center' }}>
+                    Total ~85 min · Score: 1–6 (bands of 0.5)
                   </div>
                 </div>
 
