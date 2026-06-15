@@ -216,6 +216,48 @@ function App() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
                 </div>
 
+                {/* TOEFL 2026 Format */}
+                <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '16px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}>📋 TOEFL 2026 Format</div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {[
+                      { section: 'Reading', detail: '2 passages · 20 min', color: '#2563eb' },
+                      { section: 'Listening', detail: '3 sets · 36 min', color: '#16a34a' },
+                      { section: 'Speaking', detail: '4 tasks · 17 min', color: '#9333ea' },
+                      { section: 'Writing', detail: '2 tasks · 29 min', color: '#ea580c' },
+                    ].map(item => (
+                      <div key={item.section} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '8px', borderBottom: '0.5px solid #f0f2f5' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
+                          <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.section}</span>
+                        </div>
+                        <span style={{ fontSize: '11px', color: '#6b7280' }}>{item.detail}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '0.5px solid #e1e4ed', fontSize: '11px', fontWeight: '600', color: '#616473' }}>
+                    Total: ~102 min · Score: 0–120
+                  </div>
+                </div>
+
+                {/* Motivasyon */}
+                <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '12px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}>🎯 Keep Going</div>
+                  <div style={{ fontSize: '12px', lineHeight: '1.6', color: '#616473' }}>
+                    {examDaysLeft === null
+                      ? "Set your exam date and start your journey. Every day of practice counts!"
+                      : examDaysLeft > 30
+                      ? `You have ${examDaysLeft} days ahead — build strong habits now. Consistency beats cramming every time.`
+                      : examDaysLeft > 14
+                      ? `${examDaysLeft} days to go — you're in the final stretch. Focus on your weakest section daily.`
+                      : examDaysLeft > 7
+                      ? `Only ${examDaysLeft} days left — go full intensity. Mock tests every day from here.`
+                      : examDaysLeft > 1
+                      ? `${examDaysLeft} days to exam day — review your notes, rest well, and trust your preparation.`
+                      : "Tomorrow is the day — you've put in the work. Stay calm, sleep early, and believe in yourself. 💪"}
+                  </div>
+                </div>
+
                 {/* Günlük TOEFL Stratejisi */}
                 <div style={{ background: 'linear-gradient(135deg, #701fa1 0%, #2563eb 100%)', borderRadius: '12px', padding: '16px', marginTop: '16px' }}>
                   <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
