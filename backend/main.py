@@ -62,3 +62,12 @@ def toggle_vocab(word_id: int):
             student_profile["vocab_level"] = 1 + learned_count // 5
             return {"status": "success", "learned": w["learned"]}
     return {"status": "error", "message": "Word not found"}
+# Complete the Words verisi
+import pathlib
+CTW_FILE = pathlib.Path(__file__).parent / "complete_the_words_1.json"
+with open(CTW_FILE, "r", encoding="utf-8") as f:
+    ctw_exercises = json.load(f)
+
+@app.get("/api/reading/complete-the-words")
+def get_ctw_exercises():
+    return ctw_exercises

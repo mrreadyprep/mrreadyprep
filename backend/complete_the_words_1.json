@@ -1,0 +1,2902 @@
+[
+  {
+    "id": 1,
+    "topic": "Extraterrestrial Geology",
+    "category": "Natural Science",
+    "paragraph": "Extraterrestrial geology involves studying the geological features of planets and moons beyond Earth. Scientists analyze the composition of planet surfaces, tectonic activities, and volcanic formations to better understand planets' potential for supporting life and to learn more about their histories. Space missions and advanced imaging technologies have provided detailed data, enhancing our knowledge of these distant worlds. This research is crucial for comparative planetology and exploring the possibilities of life elsewhere in the universe.",
+    "blanks": [
+      {
+        "word": "composition",
+        "visible": "compo",
+        "hidden": "sition"
+      },
+      {
+        "word": "planet",
+        "visible": "pla",
+        "hidden": "net"
+      },
+      {
+        "word": "activities",
+        "visible": "acti",
+        "hidden": "vities"
+      },
+      {
+        "word": "volcanic",
+        "visible": "volc",
+        "hidden": "anic"
+      },
+      {
+        "word": "understand",
+        "visible": "unde",
+        "hidden": "rstand"
+      },
+      {
+        "word": "potential",
+        "visible": "pote",
+        "hidden": "ntial"
+      },
+      {
+        "word": "supporting",
+        "visible": "supp",
+        "hidden": "orting"
+      },
+      {
+        "word": "and",
+        "visible": "a",
+        "hidden": "nd"
+      },
+      {
+        "word": "learn",
+        "visible": "le",
+        "hidden": "arn"
+      },
+      {
+        "word": "elsewhere",
+        "visible": "else",
+        "hidden": "where"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "topic": "Photoperiodism",
+    "category": "Natural Science",
+    "paragraph": "Photoperiodism refers to the physiological response of organisms to the length of day and night. By sensing changes in the duration of light and dark periods, plants can time their growth stages to occur when environmental conditions are favorable. This phenomenon affects the timing of flowering, seed germination, and other developmental processes. Understanding photoperiodism is important for agriculture, as it helps optimize planting schedules and crop yields. Animals are also affected by day length, which affects the onset of migration and hibernation among other things.",
+    "blanks": [
+      {
+        "word": "sensing",
+        "visible": "sen",
+        "hidden": "sing"
+      },
+      {
+        "word": "duration",
+        "visible": "dura",
+        "hidden": "tion"
+      },
+      {
+        "word": "lives",
+        "visible": "li",
+        "hidden": "ves"
+      },
+      {
+        "word": "data",
+        "visible": "da",
+        "hidden": "ta"
+      },
+      {
+        "word": "places",
+        "visible": "pla",
+        "hidden": "ces"
+      },
+      {
+        "word": "time",
+        "visible": "ti",
+        "hidden": "me"
+      },
+      {
+        "word": "growth",
+        "visible": "gro",
+        "hidden": "wth"
+      },
+      {
+        "word": "to",
+        "visible": "t",
+        "hidden": "o"
+      },
+      {
+        "word": "when",
+        "visible": "wh",
+        "hidden": "en"
+      },
+      {
+        "word": "en",
+        "visible": "e",
+        "hidden": "n"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "topic": "Oceanography",
+    "category": "Natural Science",
+    "paragraph": "The study of oceanography is not just about the ocean's physical properties like currents and waves. Researchers also investigate marine life and how various species interact with their environment. This knowledge is critical for managing marine resources and assessing the consequences of human activities in the ocean. Oceanographers use various tools, including buoys, sonars, satellites, and submersibles, to explore the depths of the ocean and gather data for their studies.",
+    "blanks": [
+      {
+        "word": "also",
+        "visible": "al",
+        "hidden": "so"
+      },
+      {
+        "word": "life",
+        "visible": "li",
+        "hidden": "fe"
+      },
+      {
+        "word": "how",
+        "visible": "h",
+        "hidden": "ow"
+      },
+      {
+        "word": "species",
+        "visible": "spe",
+        "hidden": "cies"
+      },
+      {
+        "word": "with",
+        "visible": "wi",
+        "hidden": "th"
+      },
+      {
+        "word": "environment",
+        "visible": "envir",
+        "hidden": "onment"
+      },
+      {
+        "word": "knowledge",
+        "visible": "know",
+        "hidden": "ledge"
+      },
+      {
+        "word": "critical",
+        "visible": "crit",
+        "hidden": "ical"
+      },
+      {
+        "word": "managing",
+        "visible": "mana",
+        "hidden": "ging"
+      },
+      {
+        "word": "resources",
+        "visible": "reso",
+        "hidden": "urces"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "topic": "Photosynthesis",
+    "category": "Natural Science",
+    "paragraph": "Photosynthesis is the process by which green plants and some other organisms use sunlight to synthesize nutrients from carbon dioxide and water. Chlorophyll, the green pigment found in plant cells, absorbs light energy and converts it into chemical energy. This process produces oxygen as a byproduct, which is essential for most living organisms on Earth. Without photosynthesis, the oxygen in our atmosphere would be depleted, and life as we know it could not exist.",
+    "blanks": [
+      {
+        "word": "process",
+        "visible": "pro",
+        "hidden": "cess"
+      },
+      {
+        "word": "plants",
+        "visible": "pla",
+        "hidden": "nts"
+      },
+      {
+        "word": "other",
+        "visible": "ot",
+        "hidden": "her"
+      },
+      {
+        "word": "sunlight",
+        "visible": "sunl",
+        "hidden": "ight"
+      },
+      {
+        "word": "nutrients",
+        "visible": "nutr",
+        "hidden": "ients"
+      },
+      {
+        "word": "carbon",
+        "visible": "car",
+        "hidden": "bon"
+      },
+      {
+        "word": "Chlorophyll",
+        "visible": "Chlor",
+        "hidden": "ophyll"
+      },
+      {
+        "word": "absorbs",
+        "visible": "abs",
+        "hidden": "orbs"
+      },
+      {
+        "word": "chemical",
+        "visible": "chem",
+        "hidden": "ical"
+      },
+      {
+        "word": "oxygen",
+        "visible": "oxy",
+        "hidden": "gen"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "topic": "Tectonic Plates",
+    "category": "Natural Science",
+    "paragraph": "The theory of plate tectonics explains how Earth's outer shell is divided into several plates that glide over the mantle. These plates move very slowly, driven by convection currents in the mantle below. Where plates collide, they can form mountain ranges or deep ocean trenches. Volcanic activity and earthquakes are most common along plate boundaries. Understanding plate tectonics helps scientists predict geological hazards and explains the distribution of fossils and natural resources across continents.",
+    "blanks": [
+      {
+        "word": "theory",
+        "visible": "the",
+        "hidden": "ory"
+      },
+      {
+        "word": "Earth",
+        "visible": "Ea",
+        "hidden": "rth"
+      },
+      {
+        "word": "several",
+        "visible": "sev",
+        "hidden": "eral"
+      },
+      {
+        "word": "glide",
+        "visible": "gl",
+        "hidden": "ide"
+      },
+      {
+        "word": "convection",
+        "visible": "conv",
+        "hidden": "ection"
+      },
+      {
+        "word": "below",
+        "visible": "be",
+        "hidden": "low"
+      },
+      {
+        "word": "mountain",
+        "visible": "moun",
+        "hidden": "tain"
+      },
+      {
+        "word": "trenches",
+        "visible": "tren",
+        "hidden": "ches"
+      },
+      {
+        "word": "boundaries",
+        "visible": "boun",
+        "hidden": "daries"
+      },
+      {
+        "word": "distribution",
+        "visible": "distr",
+        "hidden": "ibution"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "topic": "Ecosystems",
+    "category": "Natural Science",
+    "paragraph": "An ecosystem consists of all the living organisms in an area along with the nonliving components of their environment. Energy flows through an ecosystem via food chains and food webs, starting with producers such as plants that convert sunlight into food. Consumers then feed on producers or on other consumers. Decomposers break down dead organic matter and return nutrients to the soil. The balance of an ecosystem depends on the interactions among all its components, and disruptions can have far-reaching consequences.",
+    "blanks": [
+      {
+        "word": "consists",
+        "visible": "cons",
+        "hidden": "ists"
+      },
+      {
+        "word": "living",
+        "visible": "liv",
+        "hidden": "ing"
+      },
+      {
+        "word": "nonliving",
+        "visible": "nonl",
+        "hidden": "iving"
+      },
+      {
+        "word": "environment",
+        "visible": "envir",
+        "hidden": "onment"
+      },
+      {
+        "word": "producers",
+        "visible": "prod",
+        "hidden": "ucers"
+      },
+      {
+        "word": "plants",
+        "visible": "pla",
+        "hidden": "nts"
+      },
+      {
+        "word": "Consumers",
+        "visible": "Cons",
+        "hidden": "umers"
+      },
+      {
+        "word": "Decomposers",
+        "visible": "Decom",
+        "hidden": "posers"
+      },
+      {
+        "word": "nutrients",
+        "visible": "nutr",
+        "hidden": "ients"
+      },
+      {
+        "word": "interactions",
+        "visible": "inter",
+        "hidden": "actions"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "topic": "Genetics",
+    "category": "Natural Science",
+    "paragraph": "Genetics is the branch of biology concerned with the study of genes, genetic variation, and heredity in organisms. Genes are segments of DNA that encode the instructions for building proteins, which carry out most of the functions in a cell. Mutations in genes can lead to changes in protein structure and function, sometimes resulting in disease. Advances in genetic sequencing technology have allowed scientists to map entire genomes and identify genes associated with specific traits and disorders.",
+    "blanks": [
+      {
+        "word": "branch",
+        "visible": "bra",
+        "hidden": "nch"
+      },
+      {
+        "word": "study",
+        "visible": "st",
+        "hidden": "udy"
+      },
+      {
+        "word": "genetic",
+        "visible": "gen",
+        "hidden": "etic"
+      },
+      {
+        "word": "heredity",
+        "visible": "here",
+        "hidden": "dity"
+      },
+      {
+        "word": "segments",
+        "visible": "segm",
+        "hidden": "ents"
+      },
+      {
+        "word": "instructions",
+        "visible": "instr",
+        "hidden": "uctions"
+      },
+      {
+        "word": "proteins",
+        "visible": "prot",
+        "hidden": "eins"
+      },
+      {
+        "word": "Mutations",
+        "visible": "Muta",
+        "hidden": "tions"
+      },
+      {
+        "word": "structure",
+        "visible": "stru",
+        "hidden": "cture"
+      },
+      {
+        "word": "sequencing",
+        "visible": "sequ",
+        "hidden": "encing"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "topic": "Climate Change",
+    "category": "Natural Science",
+    "paragraph": "Significant shifts in global weather patterns have occurred in the past several decades. These changes are primarily driven by human activities, such as the burning of fossil fuels, agriculture, and other industrial processes, all of which increase greenhouse gas concentrations in the atmosphere. As a result, average temperatures rise, glaciers melt, and sea levels increase. Scientists use climate models to predict future impacts, which include more frequent extreme weather events and shifts in ecosystems.",
+    "blanks": [
+      {
+        "word": "primarily",
+        "visible": "prim",
+        "hidden": "arily"
+      },
+      {
+        "word": "activities",
+        "visible": "acti",
+        "hidden": "vities"
+      },
+      {
+        "word": "such",
+        "visible": "su",
+        "hidden": "ch"
+      },
+      {
+        "word": "burning",
+        "visible": "bur",
+        "hidden": "ning"
+      },
+      {
+        "word": "fossil",
+        "visible": "fos",
+        "hidden": "sil"
+      },
+      {
+        "word": "agriculture",
+        "visible": "agric",
+        "hidden": "ulture"
+      },
+      {
+        "word": "other",
+        "visible": "ot",
+        "hidden": "her"
+      },
+      {
+        "word": "processes",
+        "visible": "proc",
+        "hidden": "esses"
+      },
+      {
+        "word": "greenhouse",
+        "visible": "gree",
+        "hidden": "nhouse"
+      },
+      {
+        "word": "atmosphere",
+        "visible": "atmo",
+        "hidden": "sphere"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "topic": "Animal Migration",
+    "category": "Natural Science",
+    "paragraph": "Animal migration is the regular, large-scale movement of animals from one place to another in search of food, better climate, or breeding grounds. Many species, including birds, fish, and mammals, undertake extraordinary journeys spanning thousands of kilometers. Navigation during migration relies on various cues such as the position of the sun, stars, magnetic fields, and even smells. Understanding migration patterns is essential for conservation efforts, as human development increasingly disrupts traditional routes.",
+    "blanks": [
+      {
+        "word": "regular",
+        "visible": "reg",
+        "hidden": "ular"
+      },
+      {
+        "word": "movement",
+        "visible": "move",
+        "hidden": "ment"
+      },
+      {
+        "word": "another",
+        "visible": "ano",
+        "hidden": "ther"
+      },
+      {
+        "word": "climate",
+        "visible": "cli",
+        "hidden": "mate"
+      },
+      {
+        "word": "species",
+        "visible": "spe",
+        "hidden": "cies"
+      },
+      {
+        "word": "undertake",
+        "visible": "unde",
+        "hidden": "rtake"
+      },
+      {
+        "word": "spanning",
+        "visible": "span",
+        "hidden": "ning"
+      },
+      {
+        "word": "Navigation",
+        "visible": "Navi",
+        "hidden": "gation"
+      },
+      {
+        "word": "magnetic",
+        "visible": "magn",
+        "hidden": "etic"
+      },
+      {
+        "word": "conservation",
+        "visible": "conse",
+        "hidden": "rvation"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "topic": "The Water Cycle",
+    "category": "Natural Science",
+    "paragraph": "The water cycle describes the continuous movement of water on, above, and below the surface of the Earth. Water evaporates from oceans, lakes, and rivers when heated by the sun, rising into the atmosphere as vapor. As it cools, vapor condenses to form clouds, which eventually release precipitation in the form of rain or snow. This water collects in bodies of water or soaks into the ground, replenishing groundwater supplies and beginning the cycle again.",
+    "blanks": [
+      {
+        "word": "continuous",
+        "visible": "cont",
+        "hidden": "inuous"
+      },
+      {
+        "word": "movement",
+        "visible": "move",
+        "hidden": "ment"
+      },
+      {
+        "word": "above",
+        "visible": "ab",
+        "hidden": "ove"
+      },
+      {
+        "word": "Earth",
+        "visible": "Ea",
+        "hidden": "rth"
+      },
+      {
+        "word": "evaporates",
+        "visible": "evap",
+        "hidden": "orates"
+      },
+      {
+        "word": "atmosphere",
+        "visible": "atmo",
+        "hidden": "sphere"
+      },
+      {
+        "word": "condenses",
+        "visible": "cond",
+        "hidden": "enses"
+      },
+      {
+        "word": "precipitation",
+        "visible": "preci",
+        "hidden": "pitation"
+      },
+      {
+        "word": "replenishing",
+        "visible": "reple",
+        "hidden": "nishing"
+      },
+      {
+        "word": "groundwater",
+        "visible": "groun",
+        "hidden": "dwater"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "topic": "Sleep Science",
+    "category": "Social Science",
+    "paragraph": "Sleep is essential for maintaining overall health and well-being. It supports cognitive functions, emotional stability, and physical health. Circadian rhythms, which are natural cycles of sleep and wakefulness, help regulate the timing of sleep. Disruptions to these rhythms, such as those caused by shift work or travel, can lead to sleep disorders and negatively impact health. Consistently getting enough quality sleep is crucial for the body to repair itself and operate at its best.",
+    "blanks": [
+      {
+        "word": "supports",
+        "visible": "supp",
+        "hidden": "orts"
+      },
+      {
+        "word": "functions",
+        "visible": "func",
+        "hidden": "tions"
+      },
+      {
+        "word": "stability",
+        "visible": "stab",
+        "hidden": "ility"
+      },
+      {
+        "word": "physical",
+        "visible": "phys",
+        "hidden": "ical"
+      },
+      {
+        "word": "which",
+        "visible": "wh",
+        "hidden": "ich"
+      },
+      {
+        "word": "natural",
+        "visible": "nat",
+        "hidden": "ural"
+      },
+      {
+        "word": "regulate",
+        "visible": "regu",
+        "hidden": "late"
+      },
+      {
+        "word": "timing",
+        "visible": "tim",
+        "hidden": "ing"
+      },
+      {
+        "word": "disorders",
+        "visible": "diso",
+        "hidden": "rders"
+      },
+      {
+        "word": "crucial",
+        "visible": "cru",
+        "hidden": "cial"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "topic": "Animal Behavior",
+    "category": "Social Science",
+    "paragraph": "Researchers in the field of animal behavior frequently observe animals in the wild to understand how they interact with each other and with their environment. Keeping systematic records of behaviors such as feeding and mating helps inform wildlife management practices. Some animals, like primates, demonstrate complex social communication and cooperation, which are essential for their survival. Other animals might exhibit unique adaptations to their environments, such as specialized hunting techniques or migratory patterns.",
+    "blanks": [
+      {
+        "word": "systematic",
+        "visible": "syst",
+        "hidden": "ematic"
+      },
+      {
+        "word": "of",
+        "visible": "o",
+        "hidden": "f"
+      },
+      {
+        "word": "such",
+        "visible": "su",
+        "hidden": "ch"
+      },
+      {
+        "word": "feeding",
+        "visible": "fee",
+        "hidden": "ding"
+      },
+      {
+        "word": "mating",
+        "visible": "mat",
+        "hidden": "ing"
+      },
+      {
+        "word": "inform",
+        "visible": "inf",
+        "hidden": "orm"
+      },
+      {
+        "word": "management",
+        "visible": "mana",
+        "hidden": "gement"
+      },
+      {
+        "word": "Some",
+        "visible": "So",
+        "hidden": "me"
+      },
+      {
+        "word": "like",
+        "visible": "li",
+        "hidden": "ke"
+      },
+      {
+        "word": "demonstrate",
+        "visible": "demon",
+        "hidden": "strate"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "topic": "Urban Sociology",
+    "category": "Social Science",
+    "paragraph": "Urban sociology examines the social structures, processes, and problems that arise in cities. As populations grow and urbanization accelerates, sociologists study how people adapt to dense living conditions, changing neighborhoods, and limited resources. Social inequality often becomes more visible in urban settings, where disparities in income, housing, and access to services can be extreme. Urban planners and policymakers rely on sociological research to design more equitable and sustainable cities for the future.",
+    "blanks": [
+      {
+        "word": "examines",
+        "visible": "exam",
+        "hidden": "ines"
+      },
+      {
+        "word": "structures",
+        "visible": "stru",
+        "hidden": "ctures"
+      },
+      {
+        "word": "urbanization",
+        "visible": "urban",
+        "hidden": "ization"
+      },
+      {
+        "word": "sociologists",
+        "visible": "socio",
+        "hidden": "logists"
+      },
+      {
+        "word": "conditions",
+        "visible": "cond",
+        "hidden": "itions"
+      },
+      {
+        "word": "neighborhoods",
+        "visible": "neigh",
+        "hidden": "borhoods"
+      },
+      {
+        "word": "inequality",
+        "visible": "ineq",
+        "hidden": "uality"
+      },
+      {
+        "word": "disparities",
+        "visible": "dispa",
+        "hidden": "rities"
+      },
+      {
+        "word": "planners",
+        "visible": "plan",
+        "hidden": "ners"
+      },
+      {
+        "word": "sustainable",
+        "visible": "susta",
+        "hidden": "inable"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "topic": "Memory and Learning",
+    "category": "Social Science",
+    "paragraph": "Memory is the cognitive ability that allows humans and animals to encode, store, and retrieve information. There are different types of memory, including short-term and long-term memory, each serving distinct functions. The hippocampus, a region of the brain, plays a critical role in forming new memories and connecting emotions with them. Research shows that sleep, repetition, and emotional significance all enhance memory consolidation. Understanding how memory works helps educators design more effective teaching strategies.",
+    "blanks": [
+      {
+        "word": "cognitive",
+        "visible": "cogn",
+        "hidden": "itive"
+      },
+      {
+        "word": "ability",
+        "visible": "abi",
+        "hidden": "lity"
+      },
+      {
+        "word": "encode",
+        "visible": "enc",
+        "hidden": "ode"
+      },
+      {
+        "word": "retrieve",
+        "visible": "retr",
+        "hidden": "ieve"
+      },
+      {
+        "word": "including",
+        "visible": "incl",
+        "hidden": "uding"
+      },
+      {
+        "word": "distinct",
+        "visible": "dist",
+        "hidden": "inct"
+      },
+      {
+        "word": "hippocampus",
+        "visible": "hippo",
+        "hidden": "campus"
+      },
+      {
+        "word": "critical",
+        "visible": "crit",
+        "hidden": "ical"
+      },
+      {
+        "word": "consolidation",
+        "visible": "conso",
+        "hidden": "lidation"
+      },
+      {
+        "word": "educators",
+        "visible": "educ",
+        "hidden": "ators"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "topic": "Economic Inequality",
+    "category": "Social Science",
+    "paragraph": "Economic inequality refers to the unequal distribution of income and wealth across a population. It is measured using tools such as the Gini coefficient, which assigns a score based on how evenly resources are distributed. High levels of inequality can limit social mobility, reduce access to education and healthcare, and increase social tension. Economists and policymakers debate the most effective ways to address inequality, with proposals ranging from progressive taxation to expanded public services.",
+    "blanks": [
+      {
+        "word": "unequal",
+        "visible": "une",
+        "hidden": "qual"
+      },
+      {
+        "word": "distribution",
+        "visible": "distr",
+        "hidden": "ibution"
+      },
+      {
+        "word": "population",
+        "visible": "popu",
+        "hidden": "lation"
+      },
+      {
+        "word": "coefficient",
+        "visible": "coeff",
+        "hidden": "icient"
+      },
+      {
+        "word": "assigns",
+        "visible": "ass",
+        "hidden": "igns"
+      },
+      {
+        "word": "resources",
+        "visible": "reso",
+        "hidden": "urces"
+      },
+      {
+        "word": "mobility",
+        "visible": "mobi",
+        "hidden": "lity"
+      },
+      {
+        "word": "healthcare",
+        "visible": "heal",
+        "hidden": "thcare"
+      },
+      {
+        "word": "policymakers",
+        "visible": "polic",
+        "hidden": "ymakers"
+      },
+      {
+        "word": "progressive",
+        "visible": "progr",
+        "hidden": "essive"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "topic": "Language Acquisition",
+    "category": "Social Science",
+    "paragraph": "Language acquisition is the process by which humans develop the ability to perceive, produce, and use words to understand and communicate. Children acquire their first language naturally through exposure and interaction, without formal instruction. Researchers have identified a critical period in early childhood during which language learning occurs most easily. Bilingualism, or the ability to speak two languages, has been shown to offer cognitive benefits, including improved attention and problem-solving skills.",
+    "blanks": [
+      {
+        "word": "process",
+        "visible": "pro",
+        "hidden": "cess"
+      },
+      {
+        "word": "perceive",
+        "visible": "perc",
+        "hidden": "eive"
+      },
+      {
+        "word": "produce",
+        "visible": "pro",
+        "hidden": "duce"
+      },
+      {
+        "word": "communicate",
+        "visible": "commu",
+        "hidden": "nicate"
+      },
+      {
+        "word": "naturally",
+        "visible": "natu",
+        "hidden": "rally"
+      },
+      {
+        "word": "exposure",
+        "visible": "expo",
+        "hidden": "sure"
+      },
+      {
+        "word": "critical",
+        "visible": "crit",
+        "hidden": "ical"
+      },
+      {
+        "word": "childhood",
+        "visible": "chil",
+        "hidden": "dhood"
+      },
+      {
+        "word": "Bilingualism",
+        "visible": "Bilin",
+        "hidden": "gualism"
+      },
+      {
+        "word": "cognitive",
+        "visible": "cogn",
+        "hidden": "itive"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "topic": "Behavioral Economics",
+    "category": "Social Science",
+    "paragraph": "Behavioral economics combines insights from psychology and economics to understand how people make decisions. Unlike traditional economic models that assume rational behavior, behavioral economists recognize that people are often influenced by biases, emotions, and social factors. Concepts such as loss aversion, anchoring, and the availability heuristic explain why people sometimes make choices that seem irrational. This field has important applications in public policy, where nudge theory is used to guide individuals toward better decisions.",
+    "blanks": [
+      {
+        "word": "combines",
+        "visible": "comb",
+        "hidden": "ines"
+      },
+      {
+        "word": "psychology",
+        "visible": "psyc",
+        "hidden": "hology"
+      },
+      {
+        "word": "decisions",
+        "visible": "deci",
+        "hidden": "sions"
+      },
+      {
+        "word": "traditional",
+        "visible": "tradi",
+        "hidden": "tional"
+      },
+      {
+        "word": "rational",
+        "visible": "rati",
+        "hidden": "onal"
+      },
+      {
+        "word": "biases",
+        "visible": "bia",
+        "hidden": "ses"
+      },
+      {
+        "word": "anchoring",
+        "visible": "anch",
+        "hidden": "oring"
+      },
+      {
+        "word": "availability",
+        "visible": "avail",
+        "hidden": "ability"
+      },
+      {
+        "word": "irrational",
+        "visible": "irra",
+        "hidden": "tional"
+      },
+      {
+        "word": "applications",
+        "visible": "appli",
+        "hidden": "cations"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "topic": "Social Media and Society",
+    "category": "Social Science",
+    "paragraph": "Social media platforms have transformed the way people communicate, share information, and form communities. While they offer unprecedented opportunities for connection and self-expression, they also raise concerns about privacy, misinformation, and mental health. Studies suggest that excessive use of social media is associated with increased anxiety and reduced attention spans, particularly among young people. Researchers and governments are increasingly examining how to regulate these platforms to protect users while preserving freedom of expression.",
+    "blanks": [
+      {
+        "word": "transformed",
+        "visible": "trans",
+        "hidden": "formed"
+      },
+      {
+        "word": "communicate",
+        "visible": "commu",
+        "hidden": "nicate"
+      },
+      {
+        "word": "unprecedented",
+        "visible": "unpre",
+        "hidden": "cedented"
+      },
+      {
+        "word": "expression",
+        "visible": "expr",
+        "hidden": "ession"
+      },
+      {
+        "word": "privacy",
+        "visible": "pri",
+        "hidden": "vacy"
+      },
+      {
+        "word": "misinformation",
+        "visible": "misin",
+        "hidden": "formation"
+      },
+      {
+        "word": "excessive",
+        "visible": "exce",
+        "hidden": "ssive"
+      },
+      {
+        "word": "associated",
+        "visible": "asso",
+        "hidden": "ciated"
+      },
+      {
+        "word": "attention",
+        "visible": "atte",
+        "hidden": "ntion"
+      },
+      {
+        "word": "regulate",
+        "visible": "regu",
+        "hidden": "late"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "topic": "Cultural Anthropology",
+    "category": "Social Science",
+    "paragraph": "Cultural anthropology is the study of human cultures, their beliefs, practices, values, and social organization. Anthropologists conduct fieldwork by living among the communities they study, using participant observation to gain an insider perspective. This approach reveals how cultural practices are shaped by historical, environmental, and economic forces. Cross-cultural comparisons help researchers identify universal human behaviors as well as the remarkable diversity of ways in which people organize their social lives.",
+    "blanks": [
+      {
+        "word": "cultures",
+        "visible": "cult",
+        "hidden": "ures"
+      },
+      {
+        "word": "beliefs",
+        "visible": "bel",
+        "hidden": "iefs"
+      },
+      {
+        "word": "practices",
+        "visible": "prac",
+        "hidden": "tices"
+      },
+      {
+        "word": "organization",
+        "visible": "organ",
+        "hidden": "ization"
+      },
+      {
+        "word": "fieldwork",
+        "visible": "fiel",
+        "hidden": "dwork"
+      },
+      {
+        "word": "communities",
+        "visible": "commu",
+        "hidden": "nities"
+      },
+      {
+        "word": "participant",
+        "visible": "parti",
+        "hidden": "cipant"
+      },
+      {
+        "word": "perspective",
+        "visible": "persp",
+        "hidden": "ective"
+      },
+      {
+        "word": "universal",
+        "visible": "univ",
+        "hidden": "ersal"
+      },
+      {
+        "word": "diversity",
+        "visible": "dive",
+        "hidden": "rsity"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "topic": "Child Development",
+    "category": "Social Science",
+    "paragraph": "Child development encompasses the biological, psychological, and educational changes that occur in children from birth to adolescence. Developmental psychologists study milestones in areas such as motor skills, language, cognition, and social interaction. Early experiences, including the quality of attachment to caregivers, have lasting effects on emotional and intellectual development. Providing enriched environments with stimulating activities and consistent emotional support is known to promote healthy development and academic achievement.",
+    "blanks": [
+      {
+        "word": "encompasses",
+        "visible": "encom",
+        "hidden": "passes"
+      },
+      {
+        "word": "biological",
+        "visible": "biol",
+        "hidden": "ogical"
+      },
+      {
+        "word": "psychological",
+        "visible": "psych",
+        "hidden": "ological"
+      },
+      {
+        "word": "adolescence",
+        "visible": "adole",
+        "hidden": "scence"
+      },
+      {
+        "word": "milestones",
+        "visible": "mile",
+        "hidden": "stones"
+      },
+      {
+        "word": "cognition",
+        "visible": "cogn",
+        "hidden": "ition"
+      },
+      {
+        "word": "attachment",
+        "visible": "atta",
+        "hidden": "chment"
+      },
+      {
+        "word": "caregivers",
+        "visible": "care",
+        "hidden": "givers"
+      },
+      {
+        "word": "enriched",
+        "visible": "enri",
+        "hidden": "ched"
+      },
+      {
+        "word": "stimulating",
+        "visible": "stimu",
+        "hidden": "lating"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "topic": "Prehistoric Tools",
+    "category": "History",
+    "paragraph": "Prehistoric humans used a variety of stone and bone tools for cutting meat, shaping wood, sewing, and fishing. Artifacts like these provide evidence about how early humans lived and interacted with their surroundings. Because stone is more durable than bone, stone tools typically offer the best insight into the daily lives and technological advancements of prehistoric communities. These tools reveal not only the practical aspects of survival but also the ingenuity and adaptability of prehistoric societies in their quest to thrive in diverse environments.",
+    "blanks": [
+      {
+        "word": "variety",
+        "visible": "var",
+        "hidden": "iety"
+      },
+      {
+        "word": "Artifacts",
+        "visible": "Arti",
+        "hidden": "facts"
+      },
+      {
+        "word": "provide",
+        "visible": "pro",
+        "hidden": "vide"
+      },
+      {
+        "word": "evidence",
+        "visible": "evid",
+        "hidden": "ence"
+      },
+      {
+        "word": "early",
+        "visible": "ea",
+        "hidden": "rly"
+      },
+      {
+        "word": "lived",
+        "visible": "li",
+        "hidden": "ved"
+      },
+      {
+        "word": "interacted",
+        "visible": "inte",
+        "hidden": "racted"
+      },
+      {
+        "word": "surroundings",
+        "visible": "surro",
+        "hidden": "undings"
+      },
+      {
+        "word": "Because",
+        "visible": "Bec",
+        "hidden": "ause"
+      },
+      {
+        "word": "durable",
+        "visible": "dur",
+        "hidden": "able"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "topic": "Prehistoric Societies",
+    "category": "History",
+    "paragraph": "The structure and organization of prehistoric societies is a subject of much archaeological interest. Early human societies developed various forms of social structures to manage resources and ensure group survival. Evidence from dwellings and burial sites provides clues about the roles and hierarchies in these communities. For instance, excavations of kurgans, burial mounds in Central Asia, reveal a range of burial types, from simple graves to elaborate tombs. This differentiation indicates a stratified and hierarchical society.",
+    "blanks": [
+      {
+        "word": "organization",
+        "visible": "organ",
+        "hidden": "ization"
+      },
+      {
+        "word": "societies",
+        "visible": "soci",
+        "hidden": "eties"
+      },
+      {
+        "word": "developed",
+        "visible": "deve",
+        "hidden": "loped"
+      },
+      {
+        "word": "forms",
+        "visible": "fo",
+        "hidden": "rms"
+      },
+      {
+        "word": "structures",
+        "visible": "stru",
+        "hidden": "ctures"
+      },
+      {
+        "word": "manage",
+        "visible": "man",
+        "hidden": "age"
+      },
+      {
+        "word": "resources",
+        "visible": "reso",
+        "hidden": "urces"
+      },
+      {
+        "word": "ensure",
+        "visible": "ens",
+        "hidden": "ure"
+      },
+      {
+        "word": "survival",
+        "visible": "surv",
+        "hidden": "ival"
+      },
+      {
+        "word": "Evidence",
+        "visible": "Evid",
+        "hidden": "ence"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "topic": "Ancient Greek Theater",
+    "category": "History",
+    "paragraph": "One of the most iconic examples of ancient Greek theater is the Theater of Epidaurus, located in the Sanctuary of Asklepios in modern-day southern Greece. It was built in the fourth century B.C.E. and hosted plays and religious ceremonies. With a semi-circular layout, the theater had excellent acoustics. In ancient Greece, areas with hot springs were considered ideal for building large healing centers, and the Sanctuary of Asklepios was one of them. The Theater of Epidaurus was intended as a place of entertainment for the patients and carers of the sanctuary.",
+    "blanks": [
+      {
+        "word": "iconic",
+        "visible": "ico",
+        "hidden": "nic"
+      },
+      {
+        "word": "located",
+        "visible": "loc",
+        "hidden": "ated"
+      },
+      {
+        "word": "Sanctuary",
+        "visible": "Sanc",
+        "hidden": "tuary"
+      },
+      {
+        "word": "built",
+        "visible": "bu",
+        "hidden": "ilt"
+      },
+      {
+        "word": "fourth",
+        "visible": "fou",
+        "hidden": "rth"
+      },
+      {
+        "word": "hosted",
+        "visible": "hos",
+        "hidden": "ted"
+      },
+      {
+        "word": "religious",
+        "visible": "reli",
+        "hidden": "gious"
+      },
+      {
+        "word": "semi-circular",
+        "visible": "semi-",
+        "hidden": "circular"
+      },
+      {
+        "word": "acoustics",
+        "visible": "acou",
+        "hidden": "stics"
+      },
+      {
+        "word": "healing",
+        "visible": "hea",
+        "hidden": "ling"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "topic": "The Silk Road",
+    "category": "History",
+    "paragraph": "The Silk Road was an ancient network of trade routes that connected China with Central Asia, the Middle East, and eventually Europe. Merchants transported not only silk but also spices, precious metals, glassware, and other luxury goods across vast distances. The exchange along these routes facilitated not just economic transactions but also the spread of religions, technologies, and cultural practices. Cities like Samarkand and Kashgar became thriving centers of commerce and intellectual exchange during the height of Silk Road trade.",
+    "blanks": [
+      {
+        "word": "ancient",
+        "visible": "anc",
+        "hidden": "ient"
+      },
+      {
+        "word": "network",
+        "visible": "net",
+        "hidden": "work"
+      },
+      {
+        "word": "connected",
+        "visible": "conn",
+        "hidden": "ected"
+      },
+      {
+        "word": "Merchants",
+        "visible": "Merc",
+        "hidden": "hants"
+      },
+      {
+        "word": "transported",
+        "visible": "trans",
+        "hidden": "ported"
+      },
+      {
+        "word": "precious",
+        "visible": "prec",
+        "hidden": "ious"
+      },
+      {
+        "word": "facilitated",
+        "visible": "facil",
+        "hidden": "itated"
+      },
+      {
+        "word": "religions",
+        "visible": "reli",
+        "hidden": "gions"
+      },
+      {
+        "word": "technologies",
+        "visible": "techn",
+        "hidden": "ologies"
+      },
+      {
+        "word": "intellectual",
+        "visible": "intel",
+        "hidden": "lectual"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "topic": "The Industrial Revolution",
+    "category": "History",
+    "paragraph": "The Industrial Revolution, which began in Britain in the late eighteenth century, fundamentally transformed the way goods were produced and societies were organized. The invention of steam-powered machinery enabled factories to produce goods at unprecedented speed and scale. This shift from agricultural to industrial economies drew millions of workers to cities, creating new social classes and labor movements. The Revolution also accelerated technological innovation, laying the groundwork for modern transportation, communication, and manufacturing systems.",
+    "blanks": [
+      {
+        "word": "began",
+        "visible": "be",
+        "hidden": "gan"
+      },
+      {
+        "word": "eighteenth",
+        "visible": "eigh",
+        "hidden": "teenth"
+      },
+      {
+        "word": "fundamentally",
+        "visible": "funda",
+        "hidden": "mentally"
+      },
+      {
+        "word": "transformed",
+        "visible": "trans",
+        "hidden": "formed"
+      },
+      {
+        "word": "invention",
+        "visible": "inve",
+        "hidden": "ntion"
+      },
+      {
+        "word": "machinery",
+        "visible": "mach",
+        "hidden": "inery"
+      },
+      {
+        "word": "unprecedented",
+        "visible": "unpre",
+        "hidden": "cedented"
+      },
+      {
+        "word": "agricultural",
+        "visible": "agric",
+        "hidden": "ultural"
+      },
+      {
+        "word": "innovation",
+        "visible": "inno",
+        "hidden": "vation"
+      },
+      {
+        "word": "manufacturing",
+        "visible": "manuf",
+        "hidden": "acturing"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "topic": "Ancient Egypt",
+    "category": "History",
+    "paragraph": "Ancient Egypt is one of the most studied civilizations in history, renowned for its monumental architecture, writing system, and complex religious beliefs. The pharaohs, who were considered divine rulers, oversaw the construction of massive pyramids and temples as symbols of their power and connection to the gods. The Nile River was central to Egyptian civilization, providing fertile land for agriculture, transportation routes, and a reliable water supply. Egyptian art and hieroglyphics offer invaluable insights into the daily lives and beliefs of its people.",
+    "blanks": [
+      {
+        "word": "civilizations",
+        "visible": "civil",
+        "hidden": "izations"
+      },
+      {
+        "word": "renowned",
+        "visible": "reno",
+        "hidden": "wned"
+      },
+      {
+        "word": "monumental",
+        "visible": "monu",
+        "hidden": "mental"
+      },
+      {
+        "word": "architecture",
+        "visible": "archi",
+        "hidden": "tecture"
+      },
+      {
+        "word": "pharaohs",
+        "visible": "phar",
+        "hidden": "aohs"
+      },
+      {
+        "word": "divine",
+        "visible": "div",
+        "hidden": "ine"
+      },
+      {
+        "word": "construction",
+        "visible": "const",
+        "hidden": "ruction"
+      },
+      {
+        "word": "pyramids",
+        "visible": "pyra",
+        "hidden": "mids"
+      },
+      {
+        "word": "hieroglyphics",
+        "visible": "hiero",
+        "hidden": "glyphics"
+      },
+      {
+        "word": "invaluable",
+        "visible": "inva",
+        "hidden": "luable"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "topic": "The Renaissance",
+    "category": "History",
+    "paragraph": "The Renaissance was a cultural and intellectual movement that began in Italy during the fourteenth century and gradually spread across Europe. It marked a renewed interest in the art, literature, and philosophy of ancient Greece and Rome. Renaissance thinkers, known as humanists, emphasized the importance of individual achievement and the study of classical texts. This period produced extraordinary artists such as Leonardo da Vinci and Michelangelo, whose works continue to inspire admiration and influence artistic traditions worldwide.",
+    "blanks": [
+      {
+        "word": "cultural",
+        "visible": "cult",
+        "hidden": "ural"
+      },
+      {
+        "word": "intellectual",
+        "visible": "intel",
+        "hidden": "lectual"
+      },
+      {
+        "word": "fourteenth",
+        "visible": "four",
+        "hidden": "teenth"
+      },
+      {
+        "word": "gradually",
+        "visible": "grad",
+        "hidden": "ually"
+      },
+      {
+        "word": "renewed",
+        "visible": "ren",
+        "hidden": "ewed"
+      },
+      {
+        "word": "literature",
+        "visible": "lite",
+        "hidden": "rature"
+      },
+      {
+        "word": "philosophy",
+        "visible": "phil",
+        "hidden": "osophy"
+      },
+      {
+        "word": "humanists",
+        "visible": "huma",
+        "hidden": "nists"
+      },
+      {
+        "word": "individual",
+        "visible": "indi",
+        "hidden": "vidual"
+      },
+      {
+        "word": "classical",
+        "visible": "clas",
+        "hidden": "sical"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "topic": "The Cold War",
+    "category": "History",
+    "paragraph": "The Cold War was a period of geopolitical tension between the United States and the Soviet Union that lasted from the end of World War Two until the early nineteen nineties. Although the two superpowers never engaged in direct military conflict, they competed intensely through proxy wars, arms races, and ideological propaganda. The development of nuclear weapons created a doctrine of mutually assured destruction, which paradoxically helped prevent direct confrontation. The Cold War shaped international relations, alliances, and domestic policies across the globe for decades.",
+    "blanks": [
+      {
+        "word": "geopolitical",
+        "visible": "geopo",
+        "hidden": "litical"
+      },
+      {
+        "word": "tension",
+        "visible": "ten",
+        "hidden": "sion"
+      },
+      {
+        "word": "superpowers",
+        "visible": "super",
+        "hidden": "powers"
+      },
+      {
+        "word": "engaged",
+        "visible": "eng",
+        "hidden": "aged"
+      },
+      {
+        "word": "competed",
+        "visible": "comp",
+        "hidden": "eted"
+      },
+      {
+        "word": "ideological",
+        "visible": "ideol",
+        "hidden": "ogical"
+      },
+      {
+        "word": "propaganda",
+        "visible": "prop",
+        "hidden": "aganda"
+      },
+      {
+        "word": "mutually",
+        "visible": "mutu",
+        "hidden": "ally"
+      },
+      {
+        "word": "paradoxically",
+        "visible": "parad",
+        "hidden": "oxically"
+      },
+      {
+        "word": "confrontation",
+        "visible": "confr",
+        "hidden": "ontation"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "topic": "The French Revolution",
+    "category": "History",
+    "paragraph": "The French Revolution, which began in 1789, was a period of radical political and societal transformation in France. Driven by widespread discontent over economic inequality, food shortages, and the privileges of the aristocracy, the revolution dismantled the monarchy and established a republic. The Declaration of the Rights of Man and Citizen proclaimed the principles of liberty, equality, and popular sovereignty. However, the Revolution also led to a period of violent repression known as the Reign of Terror, during which thousands were executed.",
+    "blanks": [
+      {
+        "word": "radical",
+        "visible": "rad",
+        "hidden": "ical"
+      },
+      {
+        "word": "societal",
+        "visible": "soci",
+        "hidden": "etal"
+      },
+      {
+        "word": "transformation",
+        "visible": "trans",
+        "hidden": "formation"
+      },
+      {
+        "word": "widespread",
+        "visible": "wide",
+        "hidden": "spread"
+      },
+      {
+        "word": "discontent",
+        "visible": "disc",
+        "hidden": "ontent"
+      },
+      {
+        "word": "aristocracy",
+        "visible": "arist",
+        "hidden": "ocracy"
+      },
+      {
+        "word": "dismantled",
+        "visible": "dism",
+        "hidden": "antled"
+      },
+      {
+        "word": "sovereignty",
+        "visible": "sover",
+        "hidden": "eignty"
+      },
+      {
+        "word": "repression",
+        "visible": "repr",
+        "hidden": "ession"
+      },
+      {
+        "word": "executed",
+        "visible": "exec",
+        "hidden": "uted"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "topic": "The Age of Exploration",
+    "category": "History",
+    "paragraph": "The Age of Exploration, spanning roughly the fifteenth to the seventeenth century, was a period during which European navigators charted previously unknown seas and continents. Motivated by the desire for new trade routes, wealth, and territorial expansion, explorers such as Columbus, Vasco da Gama, and Magellan made voyages that permanently altered world geography and history. These expeditions led to the establishment of colonial empires, the exchange of goods and diseases between continents, and profound transformations in indigenous societies.",
+    "blanks": [
+      {
+        "word": "spanning",
+        "visible": "span",
+        "hidden": "ning"
+      },
+      {
+        "word": "fifteenth",
+        "visible": "fift",
+        "hidden": "eenth"
+      },
+      {
+        "word": "European",
+        "visible": "Euro",
+        "hidden": "pean"
+      },
+      {
+        "word": "navigators",
+        "visible": "navi",
+        "hidden": "gators"
+      },
+      {
+        "word": "charted",
+        "visible": "cha",
+        "hidden": "rted"
+      },
+      {
+        "word": "territorial",
+        "visible": "terri",
+        "hidden": "torial"
+      },
+      {
+        "word": "expansion",
+        "visible": "expa",
+        "hidden": "nsion"
+      },
+      {
+        "word": "expeditions",
+        "visible": "exped",
+        "hidden": "itions"
+      },
+      {
+        "word": "colonial",
+        "visible": "colo",
+        "hidden": "nial"
+      },
+      {
+        "word": "transformations",
+        "visible": "trans",
+        "hidden": "formations"
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "topic": "Conservation Ecology",
+    "category": "Arts & Humanities",
+    "paragraph": "There have been many exciting developments in the field of conservation ecology, which involves the study of ecosystems and the development of strategies that mitigate human impact on the environment. A tool called horizon scanning, for instance, generates a list of non-native plants or animals that may soon enter a particular region. Early identification of potential threats is especially valuable in conservation ecology because it allows experts to implement preventive measures before the threats become widespread.",
+    "blanks": [
+      {
+        "word": "developments",
+        "visible": "devel",
+        "hidden": "opments"
+      },
+      {
+        "word": "involves",
+        "visible": "invo",
+        "hidden": "lves"
+      },
+      {
+        "word": "ecosystems",
+        "visible": "ecos",
+        "hidden": "ystems"
+      },
+      {
+        "word": "strategies",
+        "visible": "stra",
+        "hidden": "tegies"
+      },
+      {
+        "word": "mitigate",
+        "visible": "miti",
+        "hidden": "gate"
+      },
+      {
+        "word": "generates",
+        "visible": "gene",
+        "hidden": "rates"
+      },
+      {
+        "word": "non-native",
+        "visible": "non-",
+        "hidden": "native"
+      },
+      {
+        "word": "particular",
+        "visible": "part",
+        "hidden": "icular"
+      },
+      {
+        "word": "identification",
+        "visible": "ident",
+        "hidden": "ification"
+      },
+      {
+        "word": "preventive",
+        "visible": "prev",
+        "hidden": "entive"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "topic": "Architecture and Society",
+    "category": "Arts & Humanities",
+    "paragraph": "Architecture reflects the values, beliefs, and aspirations of the societies that produce it. From the towering cathedrals of medieval Europe to the glass skyscrapers of modern cities, buildings serve both practical and symbolic purposes. Architects must balance aesthetic considerations with structural requirements, environmental sustainability, and the needs of the communities they serve. The study of architectural history reveals how changing technologies, materials, and social priorities have shaped the built environment across different cultures and time periods.",
+    "blanks": [
+      {
+        "word": "reflects",
+        "visible": "refl",
+        "hidden": "ects"
+      },
+      {
+        "word": "aspirations",
+        "visible": "aspir",
+        "hidden": "ations"
+      },
+      {
+        "word": "cathedrals",
+        "visible": "cath",
+        "hidden": "edrals"
+      },
+      {
+        "word": "medieval",
+        "visible": "medi",
+        "hidden": "eval"
+      },
+      {
+        "word": "skyscrapers",
+        "visible": "skysc",
+        "hidden": "rapers"
+      },
+      {
+        "word": "symbolic",
+        "visible": "symb",
+        "hidden": "olic"
+      },
+      {
+        "word": "aesthetic",
+        "visible": "aest",
+        "hidden": "hetic"
+      },
+      {
+        "word": "sustainability",
+        "visible": "susta",
+        "hidden": "inability"
+      },
+      {
+        "word": "architectural",
+        "visible": "archi",
+        "hidden": "tectural"
+      },
+      {
+        "word": "priorities",
+        "visible": "prio",
+        "hidden": "rities"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "topic": "Music and Emotion",
+    "category": "Arts & Humanities",
+    "paragraph": "Music has the remarkable ability to evoke powerful emotional responses in listeners across cultures and throughout history. Researchers have found that certain musical features, such as tempo, pitch, and harmony, consistently trigger specific emotional states. The relationship between music and emotion is explored not only in psychology but also in neuroscience, where brain imaging studies reveal how music activates reward centers and areas associated with memory. Music therapy harnesses these effects to support emotional well-being and recovery from various conditions.",
+    "blanks": [
+      {
+        "word": "remarkable",
+        "visible": "rema",
+        "hidden": "rkable"
+      },
+      {
+        "word": "ability",
+        "visible": "abi",
+        "hidden": "lity"
+      },
+      {
+        "word": "powerful",
+        "visible": "powe",
+        "hidden": "rful"
+      },
+      {
+        "word": "cultures",
+        "visible": "cult",
+        "hidden": "ures"
+      },
+      {
+        "word": "features",
+        "visible": "feat",
+        "hidden": "ures"
+      },
+      {
+        "word": "consistently",
+        "visible": "consi",
+        "hidden": "stently"
+      },
+      {
+        "word": "neuroscience",
+        "visible": "neuro",
+        "hidden": "science"
+      },
+      {
+        "word": "activates",
+        "visible": "acti",
+        "hidden": "vates"
+      },
+      {
+        "word": "harnesses",
+        "visible": "harn",
+        "hidden": "esses"
+      },
+      {
+        "word": "recovery",
+        "visible": "reco",
+        "hidden": "very"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "topic": "Literature and Identity",
+    "category": "Arts & Humanities",
+    "paragraph": "Literature has long served as a medium through which individuals and communities explore questions of identity, belonging, and cultural memory. Novels, poetry, and drama allow writers to give voice to experiences that might otherwise remain unheard. Postcolonial literature, in particular, examines the lasting effects of colonial rule on language, culture, and self-perception. By engaging with diverse literary traditions, readers develop empathy and a deeper understanding of perspectives that differ from their own.",
+    "blanks": [
+      {
+        "word": "medium",
+        "visible": "med",
+        "hidden": "ium"
+      },
+      {
+        "word": "individuals",
+        "visible": "indiv",
+        "hidden": "iduals"
+      },
+      {
+        "word": "communities",
+        "visible": "commu",
+        "hidden": "nities"
+      },
+      {
+        "word": "belonging",
+        "visible": "belo",
+        "hidden": "nging"
+      },
+      {
+        "word": "cultural",
+        "visible": "cult",
+        "hidden": "ural"
+      },
+      {
+        "word": "Postcolonial",
+        "visible": "Postc",
+        "hidden": "olonial"
+      },
+      {
+        "word": "examines",
+        "visible": "exam",
+        "hidden": "ines"
+      },
+      {
+        "word": "colonial",
+        "visible": "colo",
+        "hidden": "nial"
+      },
+      {
+        "word": "traditions",
+        "visible": "trad",
+        "hidden": "itions"
+      },
+      {
+        "word": "empathy",
+        "visible": "emp",
+        "hidden": "athy"
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "topic": "Philosophy of Ethics",
+    "category": "Arts & Humanities",
+    "paragraph": "Ethics is the branch of philosophy concerned with questions of right and wrong, virtue and vice, and the principles that should govern human conduct. Major ethical frameworks include consequentialism, which evaluates actions based on their outcomes, and deontology, which focuses on the inherent rightness or wrongness of actions regardless of consequences. Virtue ethics, associated with Aristotle, emphasizes the development of good character traits as the foundation of moral behavior. Applied ethics extends these theories to real-world issues such as medical decision-making and environmental responsibility.",
+    "blanks": [
+      {
+        "word": "philosophy",
+        "visible": "phil",
+        "hidden": "osophy"
+      },
+      {
+        "word": "concerned",
+        "visible": "conc",
+        "hidden": "erned"
+      },
+      {
+        "word": "virtue",
+        "visible": "vir",
+        "hidden": "tue"
+      },
+      {
+        "word": "principles",
+        "visible": "prin",
+        "hidden": "ciples"
+      },
+      {
+        "word": "consequentialism",
+        "visible": "conse",
+        "hidden": "quentialism"
+      },
+      {
+        "word": "evaluates",
+        "visible": "eval",
+        "hidden": "uates"
+      },
+      {
+        "word": "deontology",
+        "visible": "deon",
+        "hidden": "tology"
+      },
+      {
+        "word": "inherent",
+        "visible": "inhe",
+        "hidden": "rent"
+      },
+      {
+        "word": "Aristotle",
+        "visible": "Aris",
+        "hidden": "totle"
+      },
+      {
+        "word": "environmental",
+        "visible": "envir",
+        "hidden": "onmental"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "topic": "Film as Art",
+    "category": "Arts & Humanities",
+    "paragraph": "Cinema emerged in the late nineteenth century as a technological novelty before evolving into one of the most powerful art forms of the modern era. Filmmakers use a combination of visual composition, sound, editing, and narrative to create immersive experiences that can educate, entertain, and provoke thought. Film theory explores the grammar of cinema, including how camera angles, lighting, and montage techniques construct meaning. The global reach of film has made it an influential vehicle for cultural exchange and the exploration of universal human themes.",
+    "blanks": [
+      {
+        "word": "emerged",
+        "visible": "eme",
+        "hidden": "rged"
+      },
+      {
+        "word": "nineteenth",
+        "visible": "nine",
+        "hidden": "teenth"
+      },
+      {
+        "word": "technological",
+        "visible": "techn",
+        "hidden": "ological"
+      },
+      {
+        "word": "evolving",
+        "visible": "evol",
+        "hidden": "ving"
+      },
+      {
+        "word": "composition",
+        "visible": "compo",
+        "hidden": "sition"
+      },
+      {
+        "word": "narrative",
+        "visible": "narr",
+        "hidden": "ative"
+      },
+      {
+        "word": "immersive",
+        "visible": "imme",
+        "hidden": "rsive"
+      },
+      {
+        "word": "grammar",
+        "visible": "gra",
+        "hidden": "mmar"
+      },
+      {
+        "word": "montage",
+        "visible": "mon",
+        "hidden": "tage"
+      },
+      {
+        "word": "influential",
+        "visible": "influ",
+        "hidden": "ential"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "topic": "Folklore and Mythology",
+    "category": "Arts & Humanities",
+    "paragraph": "Folklore and mythology represent the oral and written traditions through which cultures transmit their values, beliefs, and collective wisdom across generations. Myths often explain natural phenomena, the origins of the world, or the nature of human existence through stories involving gods, heroes, and supernatural forces. Comparative mythology reveals striking similarities between the stories of cultures with no historical contact, suggesting that certain narrative archetypes may be universal. The study of folklore also illuminates social norms, gender roles, and power structures within communities.",
+    "blanks": [
+      {
+        "word": "represent",
+        "visible": "repr",
+        "hidden": "esent"
+      },
+      {
+        "word": "traditions",
+        "visible": "trad",
+        "hidden": "itions"
+      },
+      {
+        "word": "cultures",
+        "visible": "cult",
+        "hidden": "ures"
+      },
+      {
+        "word": "transmit",
+        "visible": "tran",
+        "hidden": "smit"
+      },
+      {
+        "word": "collective",
+        "visible": "coll",
+        "hidden": "ective"
+      },
+      {
+        "word": "phenomena",
+        "visible": "phen",
+        "hidden": "omena"
+      },
+      {
+        "word": "supernatural",
+        "visible": "super",
+        "hidden": "natural"
+      },
+      {
+        "word": "Comparative",
+        "visible": "Compa",
+        "hidden": "rative"
+      },
+      {
+        "word": "archetypes",
+        "visible": "arch",
+        "hidden": "etypes"
+      },
+      {
+        "word": "illuminates",
+        "visible": "illum",
+        "hidden": "inates"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "topic": "Photography as Documentation",
+    "category": "Arts & Humanities",
+    "paragraph": "Since its invention in the early nineteenth century, photography has served as both an art form and a powerful documentary tool. Images captured during conflicts, social movements, and natural disasters have shaped public opinion and influenced historical memory. The ethical dimensions of documentary photography raise important questions about representation, consent, and the responsibility of the photographer. In the digital age, the widespread availability of photographic technology has democratized image-making while also raising concerns about manipulation and authenticity.",
+    "blanks": [
+      {
+        "word": "invention",
+        "visible": "inve",
+        "hidden": "ntion"
+      },
+      {
+        "word": "documentary",
+        "visible": "docum",
+        "hidden": "entary"
+      },
+      {
+        "word": "conflicts",
+        "visible": "conf",
+        "hidden": "licts"
+      },
+      {
+        "word": "movements",
+        "visible": "move",
+        "hidden": "ments"
+      },
+      {
+        "word": "influenced",
+        "visible": "infl",
+        "hidden": "uenced"
+      },
+      {
+        "word": "ethical",
+        "visible": "eth",
+        "hidden": "ical"
+      },
+      {
+        "word": "representation",
+        "visible": "repre",
+        "hidden": "sentation"
+      },
+      {
+        "word": "responsibility",
+        "visible": "respo",
+        "hidden": "nsibility"
+      },
+      {
+        "word": "availability",
+        "visible": "avail",
+        "hidden": "ability"
+      },
+      {
+        "word": "democratized",
+        "visible": "democ",
+        "hidden": "ratized"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "topic": "Linguistics",
+    "category": "Arts & Humanities",
+    "paragraph": "Linguistics is the scientific study of language, encompassing its structure, use, history, and the cognitive processes involved in its acquisition and production. Phonology, syntax, semantics, and pragmatics are among the core subfields that examine different aspects of language. Historical linguistics investigates how languages change over time and how they are related to one another. The documentation of endangered languages is a pressing concern, as the loss of a language represents the irreversible disappearance of a unique worldview and cultural heritage.",
+    "blanks": [
+      {
+        "word": "scientific",
+        "visible": "scie",
+        "hidden": "ntific"
+      },
+      {
+        "word": "encompassing",
+        "visible": "encom",
+        "hidden": "passing"
+      },
+      {
+        "word": "structure",
+        "visible": "stru",
+        "hidden": "cture"
+      },
+      {
+        "word": "cognitive",
+        "visible": "cogn",
+        "hidden": "itive"
+      },
+      {
+        "word": "acquisition",
+        "visible": "acqui",
+        "hidden": "sition"
+      },
+      {
+        "word": "phonology",
+        "visible": "phon",
+        "hidden": "ology"
+      },
+      {
+        "word": "semantics",
+        "visible": "sema",
+        "hidden": "ntics"
+      },
+      {
+        "word": "investigates",
+        "visible": "inves",
+        "hidden": "tigates"
+      },
+      {
+        "word": "documentation",
+        "visible": "docum",
+        "hidden": "entation"
+      },
+      {
+        "word": "irreversible",
+        "visible": "irrev",
+        "hidden": "ersible"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "topic": "Visual Art and Perception",
+    "category": "Arts & Humanities",
+    "paragraph": "Visual art engages the viewer's perception, imagination, and emotional responses through the use of color, form, line, and space. Artists throughout history have experimented with these elements to create works that challenge conventional ways of seeing. The development of perspective during the Renaissance transformed the representation of three-dimensional space on flat surfaces, revolutionizing European painting. In the twentieth century, movements such as Cubism and Abstract Expressionism rejected traditional representational forms in favor of exploring the subjective experience of reality.",
+    "blanks": [
+      {
+        "word": "perception",
+        "visible": "perc",
+        "hidden": "eption"
+      },
+      {
+        "word": "imagination",
+        "visible": "imagi",
+        "hidden": "nation"
+      },
+      {
+        "word": "conventional",
+        "visible": "conve",
+        "hidden": "ntional"
+      },
+      {
+        "word": "perspective",
+        "visible": "persp",
+        "hidden": "ective"
+      },
+      {
+        "word": "transformed",
+        "visible": "trans",
+        "hidden": "formed"
+      },
+      {
+        "word": "representation",
+        "visible": "repre",
+        "hidden": "sentation"
+      },
+      {
+        "word": "revolutionizing",
+        "visible": "revol",
+        "hidden": "utionizing"
+      },
+      {
+        "word": "movements",
+        "visible": "move",
+        "hidden": "ments"
+      },
+      {
+        "word": "Cubism",
+        "visible": "Cub",
+        "hidden": "ism"
+      },
+      {
+        "word": "subjective",
+        "visible": "subj",
+        "hidden": "ective"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "topic": "The Immune System",
+    "category": "Health & Biology",
+    "paragraph": "The immune system is a complex network of cells, tissues, and organs that work together to defend the body against pathogens such as bacteria, viruses, and fungi. When a pathogen enters the body, the immune system recognizes it as foreign and mounts a response to neutralize or eliminate it. Memory cells allow the immune system to respond more rapidly and effectively to pathogens encountered before. Vaccines exploit this memory function by introducing harmless versions of pathogens to prepare the immune system for future infections.",
+    "blanks": [
+      {
+        "word": "complex",
+        "visible": "com",
+        "hidden": "plex"
+      },
+      {
+        "word": "network",
+        "visible": "net",
+        "hidden": "work"
+      },
+      {
+        "word": "tissues",
+        "visible": "tis",
+        "hidden": "sues"
+      },
+      {
+        "word": "pathogens",
+        "visible": "path",
+        "hidden": "ogens"
+      },
+      {
+        "word": "bacteria",
+        "visible": "bact",
+        "hidden": "eria"
+      },
+      {
+        "word": "recognizes",
+        "visible": "reco",
+        "hidden": "gnizes"
+      },
+      {
+        "word": "neutralize",
+        "visible": "neut",
+        "hidden": "ralize"
+      },
+      {
+        "word": "Memory",
+        "visible": "Mem",
+        "hidden": "ory"
+      },
+      {
+        "word": "encountered",
+        "visible": "encou",
+        "hidden": "ntered"
+      },
+      {
+        "word": "harmless",
+        "visible": "harm",
+        "hidden": "less"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "topic": "Nutrition and Health",
+    "category": "Health & Biology",
+    "paragraph": "Nutrition science examines the relationship between the food people eat and their physical and mental health. A balanced diet that includes adequate amounts of proteins, carbohydrates, fats, vitamins, and minerals is essential for maintaining bodily functions and preventing disease. Micronutrients such as iron, calcium, and vitamin D play specialized roles in supporting bone health, oxygen transport, and immune function. Nutritional deficiencies can impair cognitive development, weaken immunity, and increase susceptibility to chronic diseases.",
+    "blanks": [
+      {
+        "word": "examines",
+        "visible": "exam",
+        "hidden": "ines"
+      },
+      {
+        "word": "relationship",
+        "visible": "relat",
+        "hidden": "ionship"
+      },
+      {
+        "word": "physical",
+        "visible": "phys",
+        "hidden": "ical"
+      },
+      {
+        "word": "balanced",
+        "visible": "bala",
+        "hidden": "nced"
+      },
+      {
+        "word": "adequate",
+        "visible": "adeq",
+        "hidden": "uate"
+      },
+      {
+        "word": "proteins",
+        "visible": "prot",
+        "hidden": "eins"
+      },
+      {
+        "word": "carbohydrates",
+        "visible": "carbo",
+        "hidden": "hydrates"
+      },
+      {
+        "word": "Micronutrients",
+        "visible": "Micro",
+        "hidden": "nutrients"
+      },
+      {
+        "word": "specialized",
+        "visible": "speci",
+        "hidden": "alized"
+      },
+      {
+        "word": "susceptibility",
+        "visible": "susce",
+        "hidden": "ptibility"
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "topic": "Mental Health",
+    "category": "Health & Biology",
+    "paragraph": "Mental health encompasses emotional, psychological, and social well-being, influencing how individuals think, feel, and act in their daily lives. Conditions such as depression, anxiety, and schizophrenia affect millions of people worldwide and can significantly impair functioning and quality of life. Advances in neuroscience have improved our understanding of the biological basis of mental illness, leading to more targeted treatments. Reducing the stigma associated with mental health conditions is essential for encouraging individuals to seek help and support recovery.",
+    "blanks": [
+      {
+        "word": "encompasses",
+        "visible": "encom",
+        "hidden": "passes"
+      },
+      {
+        "word": "psychological",
+        "visible": "psych",
+        "hidden": "ological"
+      },
+      {
+        "word": "individuals",
+        "visible": "indiv",
+        "hidden": "iduals"
+      },
+      {
+        "word": "depression",
+        "visible": "depr",
+        "hidden": "ession"
+      },
+      {
+        "word": "schizophrenia",
+        "visible": "schiz",
+        "hidden": "ophrenia"
+      },
+      {
+        "word": "significantly",
+        "visible": "signi",
+        "hidden": "ficantly"
+      },
+      {
+        "word": "neuroscience",
+        "visible": "neuro",
+        "hidden": "science"
+      },
+      {
+        "word": "biological",
+        "visible": "biol",
+        "hidden": "ogical"
+      },
+      {
+        "word": "treatments",
+        "visible": "trea",
+        "hidden": "tments"
+      },
+      {
+        "word": "stigma",
+        "visible": "sti",
+        "hidden": "gma"
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "topic": "Cell Biology",
+    "category": "Health & Biology",
+    "paragraph": "Cells are the fundamental units of life, and all living organisms are composed of one or more cells. Each cell contains a nucleus, which houses the genetic material in the form of DNA, as well as organelles that perform specialized functions. The cell membrane regulates what enters and exits the cell, maintaining a stable internal environment. Cell division, occurring through processes called mitosis and meiosis, allows organisms to grow and reproduce. Disruptions in cell division can lead to uncontrolled growth and the development of cancer.",
+    "blanks": [
+      {
+        "word": "fundamental",
+        "visible": "funda",
+        "hidden": "mental"
+      },
+      {
+        "word": "organisms",
+        "visible": "orga",
+        "hidden": "nisms"
+      },
+      {
+        "word": "composed",
+        "visible": "comp",
+        "hidden": "osed"
+      },
+      {
+        "word": "nucleus",
+        "visible": "nuc",
+        "hidden": "leus"
+      },
+      {
+        "word": "genetic",
+        "visible": "gen",
+        "hidden": "etic"
+      },
+      {
+        "word": "organelles",
+        "visible": "orga",
+        "hidden": "nelles"
+      },
+      {
+        "word": "specialized",
+        "visible": "speci",
+        "hidden": "alized"
+      },
+      {
+        "word": "membrane",
+        "visible": "memb",
+        "hidden": "rane"
+      },
+      {
+        "word": "maintaining",
+        "visible": "maint",
+        "hidden": "aining"
+      },
+      {
+        "word": "disruptions",
+        "visible": "disru",
+        "hidden": "ptions"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "topic": "Epidemiology",
+    "category": "Health & Biology",
+    "paragraph": "Epidemiology is the study of how diseases occur and spread in populations. Epidemiologists collect and analyze data to identify risk factors, track the progression of outbreaks, and evaluate the effectiveness of public health interventions. The field played a crucial role in controlling infectious diseases such as smallpox and polio through the development and distribution of vaccines. Modern epidemiology also addresses chronic diseases such as diabetes and cardiovascular conditions, examining lifestyle, genetic, and environmental contributors to disease risk.",
+    "blanks": [
+      {
+        "word": "diseases",
+        "visible": "dise",
+        "hidden": "ases"
+      },
+      {
+        "word": "populations",
+        "visible": "popul",
+        "hidden": "ations"
+      },
+      {
+        "word": "Epidemiologists",
+        "visible": "Epide",
+        "hidden": "miologists"
+      },
+      {
+        "word": "analyze",
+        "visible": "ana",
+        "hidden": "lyze"
+      },
+      {
+        "word": "outbreaks",
+        "visible": "outb",
+        "hidden": "reaks"
+      },
+      {
+        "word": "effectiveness",
+        "visible": "effec",
+        "hidden": "tiveness"
+      },
+      {
+        "word": "infectious",
+        "visible": "infe",
+        "hidden": "ctious"
+      },
+      {
+        "word": "smallpox",
+        "visible": "smal",
+        "hidden": "lpox"
+      },
+      {
+        "word": "cardiovascular",
+        "visible": "cardi",
+        "hidden": "ovascular"
+      },
+      {
+        "word": "environmental",
+        "visible": "envir",
+        "hidden": "onmental"
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "topic": "Evolution",
+    "category": "Health & Biology",
+    "paragraph": "The theory of evolution by natural selection, proposed by Charles Darwin in the nineteenth century, explains how species change over time in response to environmental pressures. Individuals with traits that improve their chances of survival and reproduction pass those traits on to future generations, gradually shifting the characteristics of a population. Fossil records, comparative anatomy, and genetic analysis provide compelling evidence for the shared ancestry of living organisms. Evolution is the unifying principle of modern biology, explaining the diversity of life on Earth.",
+    "blanks": [
+      {
+        "word": "natural",
+        "visible": "nat",
+        "hidden": "ural"
+      },
+      {
+        "word": "proposed",
+        "visible": "prop",
+        "hidden": "osed"
+      },
+      {
+        "word": "nineteenth",
+        "visible": "nine",
+        "hidden": "teenth"
+      },
+      {
+        "word": "environmental",
+        "visible": "envir",
+        "hidden": "onmental"
+      },
+      {
+        "word": "Individuals",
+        "visible": "Indiv",
+        "hidden": "iduals"
+      },
+      {
+        "word": "reproduction",
+        "visible": "repro",
+        "hidden": "duction"
+      },
+      {
+        "word": "gradually",
+        "visible": "grad",
+        "hidden": "ually"
+      },
+      {
+        "word": "characteristics",
+        "visible": "chara",
+        "hidden": "cteristics"
+      },
+      {
+        "word": "comparative",
+        "visible": "compa",
+        "hidden": "rative"
+      },
+      {
+        "word": "unifying",
+        "visible": "unif",
+        "hidden": "ying"
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "topic": "Neuroplasticity",
+    "category": "Health & Biology",
+    "paragraph": "Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life. This capacity allows the brain to adapt to new experiences, learning, and injuries. Research has shown that activities such as learning a musical instrument, practicing a second language, or engaging in regular physical exercise can stimulate neuroplastic changes. Understanding neuroplasticity has important implications for rehabilitation after brain injury and for the development of educational strategies that maximize learning potential.",
+    "blanks": [
+      {
+        "word": "remarkable",
+        "visible": "rema",
+        "hidden": "rkable"
+      },
+      {
+        "word": "reorganize",
+        "visible": "reor",
+        "hidden": "ganize"
+      },
+      {
+        "word": "neural",
+        "visible": "neu",
+        "hidden": "ral"
+      },
+      {
+        "word": "connections",
+        "visible": "conne",
+        "hidden": "ctions"
+      },
+      {
+        "word": "capacity",
+        "visible": "capa",
+        "hidden": "city"
+      },
+      {
+        "word": "experiences",
+        "visible": "exper",
+        "hidden": "iences"
+      },
+      {
+        "word": "instrument",
+        "visible": "inst",
+        "hidden": "rument"
+      },
+      {
+        "word": "stimulate",
+        "visible": "stim",
+        "hidden": "ulate"
+      },
+      {
+        "word": "rehabilitation",
+        "visible": "rehab",
+        "hidden": "ilitation"
+      },
+      {
+        "word": "educational",
+        "visible": "educa",
+        "hidden": "tional"
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "topic": "Hormones and the Endocrine System",
+    "category": "Health & Biology",
+    "paragraph": "The endocrine system is a network of glands that produce and secrete hormones directly into the bloodstream to regulate various bodily functions. Hormones act as chemical messengers, traveling to target organs and tissues to trigger specific responses. The thyroid gland, for example, produces hormones that regulate metabolism, energy levels, and growth. Imbalances in hormone production can lead to conditions such as diabetes, hypothyroidism, and infertility. The endocrine system works in close coordination with the nervous system to maintain homeostasis.",
+    "blanks": [
+      {
+        "word": "network",
+        "visible": "net",
+        "hidden": "work"
+      },
+      {
+        "word": "produce",
+        "visible": "pro",
+        "hidden": "duce"
+      },
+      {
+        "word": "secrete",
+        "visible": "sec",
+        "hidden": "rete"
+      },
+      {
+        "word": "bloodstream",
+        "visible": "blood",
+        "hidden": "stream"
+      },
+      {
+        "word": "chemical",
+        "visible": "chem",
+        "hidden": "ical"
+      },
+      {
+        "word": "messengers",
+        "visible": "mess",
+        "hidden": "engers"
+      },
+      {
+        "word": "metabolism",
+        "visible": "meta",
+        "hidden": "bolism"
+      },
+      {
+        "word": "Imbalances",
+        "visible": "Imba",
+        "hidden": "lances"
+      },
+      {
+        "word": "hypothyroidism",
+        "visible": "hypot",
+        "hidden": "hyroidism"
+      },
+      {
+        "word": "homeostasis",
+        "visible": "homeo",
+        "hidden": "stasis"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "topic": "Microbiology",
+    "category": "Health & Biology",
+    "paragraph": "Microbiology is the study of microorganisms, including bacteria, viruses, fungi, protozoa, and algae. These organisms are invisible to the naked eye yet play crucial roles in ecosystems, human health, and industry. Beneficial bacteria in the human gut assist with digestion, produce vitamins, and protect against harmful pathogens. However, pathogenic microorganisms are responsible for a wide range of infectious diseases. Advances in microbiology have led to the development of antibiotics, vaccines, and other treatments that have dramatically reduced mortality from infectious diseases.",
+    "blanks": [
+      {
+        "word": "microorganisms",
+        "visible": "micro",
+        "hidden": "organisms"
+      },
+      {
+        "word": "including",
+        "visible": "incl",
+        "hidden": "uding"
+      },
+      {
+        "word": "invisible",
+        "visible": "invi",
+        "hidden": "sible"
+      },
+      {
+        "word": "crucial",
+        "visible": "cru",
+        "hidden": "cial"
+      },
+      {
+        "word": "Beneficial",
+        "visible": "Bene",
+        "hidden": "ficial"
+      },
+      {
+        "word": "digestion",
+        "visible": "dige",
+        "hidden": "stion"
+      },
+      {
+        "word": "vitamins",
+        "visible": "vita",
+        "hidden": "mins"
+      },
+      {
+        "word": "pathogenic",
+        "visible": "path",
+        "hidden": "ogenic"
+      },
+      {
+        "word": "antibiotics",
+        "visible": "antib",
+        "hidden": "iotics"
+      },
+      {
+        "word": "dramatically",
+        "visible": "drama",
+        "hidden": "tically"
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "topic": "Human Anatomy",
+    "category": "Health & Biology",
+    "paragraph": "The human body is an intricate system composed of numerous organs, tissues, and cells that work in coordination to sustain life. The skeletal system provides structural support and protects vital organs, while the muscular system enables movement and maintains posture. The circulatory system transports oxygen, nutrients, and waste products through a network of blood vessels. The nervous system coordinates responses to internal and external stimuli, processing information received by sensory organs and directing appropriate reactions throughout the body.",
+    "blanks": [
+      {
+        "word": "intricate",
+        "visible": "intr",
+        "hidden": "icate"
+      },
+      {
+        "word": "composed",
+        "visible": "comp",
+        "hidden": "osed"
+      },
+      {
+        "word": "coordination",
+        "visible": "coord",
+        "hidden": "ination"
+      },
+      {
+        "word": "skeletal",
+        "visible": "skel",
+        "hidden": "etal"
+      },
+      {
+        "word": "structural",
+        "visible": "stru",
+        "hidden": "ctural"
+      },
+      {
+        "word": "muscular",
+        "visible": "musc",
+        "hidden": "ular"
+      },
+      {
+        "word": "circulatory",
+        "visible": "circu",
+        "hidden": "latory"
+      },
+      {
+        "word": "transports",
+        "visible": "tran",
+        "hidden": "sports"
+      },
+      {
+        "word": "nervous",
+        "visible": "ner",
+        "hidden": "vous"
+      },
+      {
+        "word": "coordinates",
+        "visible": "coord",
+        "hidden": "inates"
+      }
+    ]
+  }
+]
