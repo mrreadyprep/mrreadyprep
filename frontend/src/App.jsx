@@ -296,7 +296,7 @@ function App() {
                       "Unknown vocab in Reading? Look at the surrounding sentences — context clues reveal the meaning.",
                       "In Listening, don't panic if you miss something — keep listening and catch the next point.",
                       "For Speaking, use simple connectors: 'First... Second... Finally...' — structure impresses graders.",
-      Math.floor((Date.now() + 3 * 3600000) / 86400000) % 7
+][Math.floor((Date.now() + 3 * 3600000) / 86400000) % 7]}
                   </div>
                 </div>
               </div>
