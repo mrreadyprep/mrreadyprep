@@ -650,7 +650,7 @@ function ReadInDailyLife({ onBack }) {
             </button>
           ) : (
             <div style={{ marginTop: 'auto', padding: '12px 16px', background: selected === question.answer ? '#edfbf3' : '#fff8ec', border: '1px solid ' + (selected === question.answer ? '#a7e9c3' : '#f5d08a'), borderRadius: '8px', fontSize: '13px', fontWeight: '600', color: selected === question.answer ? '#1a7a44' : '#c07000' }}>
-              {selected === null ? '⏱ Time's up!' : selected === question.answer ? '🎯 Correct!' : '❌ Incorrect'}
+              {selected === null ? "⏱ Time's up!" : selected === question.answer ? '🎯 Correct!' : '❌ Incorrect'}
             </div>
           )}
         </div>
