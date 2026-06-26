@@ -1,4 +1,667 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
+
+// ─── Complete the Words Module ────────────────────────────────────────────────
+const QUESTION_TIME = 180 // 3 minutes per question
+
+function CompleteTheWords({ onBack }) {
+  const [exercises, setExercises] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [answers, setAnswers] = useState({})
+  const [checked, setChecked] = useState(false)
+  const [finished, setFinished] = useState(false)
+  const [totalCorrect, setTotalCorrect] = useState(0)
+  const [timeLeft, setTimeLeft] = useState(QUESTION_TIME)
+  const inputRefs = useRef({})
+  const timerRef = useRef(null)
+  const answersRef = useRef({})
+  const exercisesRef = useRef([])
+  const currentIndexRef = useRef(0)
+  const checkedRef = useRef(false)
+
+  // keep refs in sync
+  useEffect(() => { answersRef.current = answers }, [answers])
+  useEffect(() => { exercisesRef.current = exercises }, [exercises])
+  useEffect(() => { currentIndexRef.current = currentIndex }, [currentIndex])
+  useEffect(() => { checkedRef.current = checked }, [checked])
+
+  useEffect(() => {
+    fetch('https://mrreadyprep.onrender.com/api/reading/complete-the-words')
+      .then(r => r.json())
+      .then(data => { setExercises(data); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
+
+  // countdown per question
+  useEffect(() => {
+    if (loading || finished || checked) return
+    setTimeLeft(QUESTION_TIME)
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          // auto-submit using refs (no stale closure)
+          if (!checkedRef.current) {
+            const ex = exercisesRef.current[currentIndexRef.current]
+            let correct = 0
+            let globalIdx = 0
+            ex.blanks.forEach((blank) => {
+              const hiddenChars = blank.hidden.split('')
+              const isCorrect = hiddenChars.every((ch, i) =>
+                (answersRef.current[globalIdx + i] || '').toLowerCase() === ch.toLowerCase()
+              )
+              if (isCorrect) correct++
+              globalIdx += hiddenChars.length
+            })
+            setTotalCorrect(t => t + correct)
+            setChecked(true)
+            checkedRef.current = true
+          }
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+  }, [currentIndex, loading, finished, checked])
+
+  const formatTime = (s) => {
+    const mm = String(Math.floor(s / 60)).padStart(2, '0')
+    const ss = String(s % 60).padStart(2, '0')
+    return `${mm}:${ss}`
+  }
+
+  if (loading) return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>
+      Loading exercises...
+    </div>
+  )
+  if (!exercises.length) return (
+    <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>
+      No exercises found. Make sure the backend is running.
+    </div>
+  )
+
+  const ex = exercises[currentIndex]
+  const totalQ = exercises.length
+  const isLowTime = timeLeft <= 30
+
+  const renderParagraph = () => {
+    const parts = []
+    let remaining = ex.paragraph
+    let globalIdx = 0
+
+    ex.blanks.forEach((blank, blankIdx) => {
+      const wordPos = remaining.indexOf(blank.word)
+      if (wordPos === -1) return
+
+      if (wordPos > 0) parts.push(
+        <span key={`text-${blankIdx}`}>{remaining.slice(0, wordPos)}</span>
+      )
+
+      const startIdx = globalIdx
+      const isBlankCorrect = checked
+        ? blank.hidden.split('').every((ch, i) => (answers[startIdx + i] || '').toLowerCase() === ch.toLowerCase())
+        : null
+
+      const charInputs = blank.hidden.split('').map((ch, i) => {
+        const gIdx = startIdx + i
+        const val = answers[gIdx] || ''
+        const charCorrect = checked ? val.toLowerCase() === ch.toLowerCase() : null
+
+        return (
+          <span key={gIdx} style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', width: '11px' }}>
+            <input
+              ref={el => inputRefs.current[gIdx] = el}
+              value={val}
+              maxLength={1}
+              onChange={e => {
+                if (checked) return
+                const newVal = e.target.value.slice(-1)
+                setAnswers(prev => ({ ...prev, [gIdx]: newVal }))
+                if (newVal && inputRefs.current[gIdx + 1]) inputRefs.current[gIdx + 1].focus()
+              }}
+              onKeyDown={e => {
+                if (e.key === 'Backspace' && !val) {
+                  if (inputRefs.current[gIdx - 1]) inputRefs.current[gIdx - 1].focus()
+                }
+                if (e.key === 'Tab') { e.preventDefault(); if (inputRefs.current[gIdx + 1]) inputRefs.current[gIdx + 1].focus() }
+              }}
+              disabled={checked}
+              style={{
+                width: '11px',
+                height: '14px',
+                border: 'none',
+                borderBottom: checked
+                  ? charCorrect ? '1.5px solid #2a9d5c' : '1.5px solid #d94040'
+                  : '1.5px solid #555',
+                outline: 'none',
+                background: 'transparent',
+                textAlign: 'center',
+                fontSize: '13px',
+                fontFamily: 'Georgia, serif',
+                color: checked ? (charCorrect ? '#1a7a44' : '#b03030') : '#1a1a1a',
+                padding: 0,
+                margin: 0,
+                caretColor: '#701fa1',
+                cursor: 'text',
+                boxSizing: 'border-box',
+                lineHeight: '14px',
+              }}
+            />
+          </span>
+        )
+      })
+
+      globalIdx += blank.hidden.length
+
+      parts.push(
+        <span key={`blank-${blankIdx}`} style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
+          <span style={{ fontSize: '15px', fontFamily: 'Georgia, serif', color: '#1a1a1a' }}>{blank.visible}</span>
+          <span
+            style={{
+              display: 'inline-flex',
+              alignItems: 'flex-end',
+              gap: '2px',
+              background: checked
+                ? isBlankCorrect ? '#edfbf3' : '#fff2f2'
+                : '#d6d8db',
+              padding: '1px 3px',
+              borderRadius: '2px',
+              marginLeft: '1px',
+              cursor: 'text',
+            }}
+            onClick={() => {
+              const firstEmpty = blank.hidden.split('').findIndex((_, i) => !answers[startIdx + i])
+              const focusIdx = firstEmpty === -1 ? startIdx + blank.hidden.length - 1 : startIdx + firstEmpty
+              if (inputRefs.current[focusIdx]) inputRefs.current[focusIdx].focus()
+            }}
+          >
+            {charInputs}
+          </span>
+          {checked && !isBlankCorrect && (
+            <span style={{ fontSize: '11px', color: '#2a9d5c', fontWeight: '700', marginLeft: '4px', fontFamily: 'sans-serif', whiteSpace: 'nowrap' }}>
+              → {blank.hidden}
+            </span>
+          )}
+        </span>
+      )
+
+      remaining = remaining.slice(wordPos + blank.word.length)
+    })
+
+    if (remaining) parts.push(<span key="tail">{remaining}</span>)
+    return parts
+  }
+
+  const handleSubmit = () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    let correct = 0
+    let gIdx = 0
+    ex.blanks.forEach((blank) => {
+      const ok = blank.hidden.split('').every((ch, i) => (answers[gIdx + i] || '').toLowerCase() === ch.toLowerCase())
+      if (ok) correct++
+      gIdx += blank.hidden.length
+    })
+    setTotalCorrect(prev => prev + correct)
+    setChecked(true)
+  }
+
+  const handleNext = () => {
+    if (currentIndex + 1 >= totalQ) {
+      setFinished(true)
+    } else {
+      setCurrentIndex(i => i + 1)
+      setAnswers({})
+      setChecked(false)
+      inputRefs.current = {}
+      setTimeout(() => { if (inputRefs.current[0]) inputRefs.current[0].focus() }, 100)
+    }
+  }
+
+  const handleRestart = () => {
+    setCurrentIndex(0)
+    setAnswers({})
+    setChecked(false)
+    setFinished(false)
+    setTotalCorrect(0)
+    inputRefs.current = {}
+  }
+
+  // ── Score Screen ──
+  if (finished) {
+    const maxScore = totalQ * 10
+    const pct = Math.round((totalCorrect / maxScore) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!',    color: '#2a9d5c', emoji: '🏆' }
+                : pct >= 70 ? { label: 'Good job!',     color: '#701fa1', emoji: '🎉' }
+                : pct >= 50 ? { label: 'Keep going',    color: '#e07b00', emoji: '💪' }
+                :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+    return (
+      <div style={{
+        position: 'fixed', inset: 0, background: '#f2f3f5',
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+        zIndex: 10, fontFamily: 'Georgia, serif',
+      }}>
+        <div style={{ background: '#fff', borderRadius: '16px', padding: '48px 56px', textAlign: 'center', maxWidth: '420px', width: '90%', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+          <div style={{ fontSize: '52px', marginBottom: '12px' }}>{grade.emoji}</div>
+          <div style={{ fontSize: '26px', fontWeight: '700', color: grade.color, marginBottom: '8px' }}>{grade.label}</div>
+          <div style={{ fontSize: '13px', color: '#888', marginBottom: '24px', fontFamily: 'sans-serif' }}>You completed all {totalQ} questions</div>
+          <div style={{ fontSize: '52px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1', fontFamily: 'sans-serif' }}>
+            {totalCorrect}
+            <span style={{ fontSize: '20px', color: '#aaa', fontWeight: '400' }}>/{maxScore}</span>
+          </div>
+          <div style={{ margin: '20px 0 8px', height: '8px', background: '#efefef', borderRadius: '4px' }}>
+            <div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px', transition: 'width 0.8s ease' }} />
+          </div>
+          <div style={{ fontSize: '13px', color: '#777', marginBottom: '32px', fontFamily: 'sans-serif' }}>{pct}% correct</div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button onClick={handleRestart} style={{ flex: 1, padding: '13px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', letterSpacing: '0.5px', fontFamily: 'sans-serif' }}>
+              TRY AGAIN
+            </button>
+            <button onClick={onBack} style={{ flex: 1, padding: '13px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '14px', cursor: 'pointer', fontFamily: 'sans-serif' }}>
+              Back
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const questionScore = (() => {
+    if (!checked) return null
+    let correct = 0
+    let gIdx = 0
+    ex.blanks.forEach((blank) => {
+      const ok = blank.hidden.split('').every((ch, i) => (answers[gIdx + i] || '').toLowerCase() === ch.toLowerCase())
+      if (ok) correct++
+      gIdx += blank.hidden.length
+    })
+    return correct
+  })()
+
+  return (
+    <div style={{
+      position: 'fixed', inset: 0,
+      background: '#f2f3f5',
+      display: 'flex', flexDirection: 'column',
+      fontFamily: 'Georgia, "Times New Roman", serif',
+      zIndex: 10,
+      overflowY: 'auto',
+    }}>
+      {/* Top bar */}
+      <div style={{
+        background: '#fff',
+        borderBottom: '1px solid #e0e0e0',
+        padding: '12px 24px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexShrink: 0,
+        position: 'sticky',
+        top: 0,
+        zIndex: 20,
+      }}>
+        <button onClick={onBack} style={{
+          position: 'absolute', left: '20px',
+          background: 'none', border: 'none', cursor: 'pointer',
+          fontSize: '13px', color: '#888', fontFamily: 'sans-serif',
+        }}>
+          ← Exit
+        </button>
+
+        {/* Timer */}
+        <span style={{
+          fontSize: '20px',
+          fontWeight: '700',
+          color: isLowTime ? '#d94040' : '#1a1a1a',
+          letterSpacing: '2px',
+          fontFamily: 'sans-serif',
+          transition: 'color 0.3s',
+        }}>
+          ⏱ {formatTime(timeLeft)}
+        </span>
+
+        <span style={{
+          position: 'absolute', right: '24px',
+          fontSize: '12px', color: '#888', fontFamily: 'sans-serif',
+        }}>
+          {currentIndex + 1} / {totalQ}
+        </span>
+      </div>
+
+      {/* Body */}
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 20px 120px' }}>
+
+        <h1 style={{
+          fontSize: '22px', fontWeight: '700', color: '#1a1a1a',
+          textAlign: 'center', margin: '0 0 28px',
+          fontFamily: 'Georgia, serif',
+          maxWidth: '700px',
+        }}>
+          Fill in the missing letters in the paragraph
+        </h1>
+
+        {/* Passage card */}
+        <div style={{
+          background: '#fff',
+          borderRadius: '12px',
+          padding: '36px 44px',
+          maxWidth: '700px',
+          width: '100%',
+          boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
+          boxSizing: 'border-box',
+          marginBottom: checked ? '20px' : '32px',
+        }}>
+          <p style={{
+            fontSize: '16px',
+            lineHeight: '2.6',
+            color: '#1a1a1a',
+            margin: 0,
+          }}>
+            {renderParagraph()}
+          </p>
+        </div>
+
+        {/* Result feedback */}
+        {checked && (
+          <div style={{
+            maxWidth: '700px', width: '100%',
+            background: questionScore === ex.blanks.length ? '#edfbf3' : '#fff8ec',
+            border: '1px solid ' + (questionScore === ex.blanks.length ? '#a7e9c3' : '#f5d08a'),
+            borderRadius: '10px',
+            padding: '14px 20px',
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+            marginBottom: '24px',
+            fontFamily: 'sans-serif',
+            boxSizing: 'border-box',
+          }}>
+            <span style={{ fontSize: '14px', fontWeight: '700', color: questionScore === ex.blanks.length ? '#1a7a44' : '#c07000' }}>
+              {timeLeft === 0 ? '⏱ Time\'s up! ' : ''}{questionScore === ex.blanks.length ? '🎯 Perfect score!' : `${questionScore} / ${ex.blanks.length} correct`}
+            </span>
+            <span style={{ fontSize: '12px', color: '#888' }}>
+              Correct answers in <span style={{ color: '#2a9d5c', fontWeight: '700' }}>green</span>
+            </span>
+          </div>
+        )}
+
+        {/* Button */}
+        {!checked ? (
+          <button onClick={handleSubmit} style={{
+            background: '#2a9d5c',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '8px',
+            padding: '16px 56px',
+            fontSize: '15px',
+            fontWeight: '700',
+            letterSpacing: '1.5px',
+            cursor: 'pointer',
+            fontFamily: 'sans-serif',
+            boxShadow: '0 2px 8px rgba(42,157,92,0.25)',
+          }}>
+            SUBMIT ANSWERS
+          </button>
+        ) : (
+          <button onClick={handleNext} style={{
+            background: currentIndex + 1 >= totalQ ? '#701fa1' : '#2a9d5c',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '8px',
+            padding: '16px 56px',
+            fontSize: '15px',
+            fontWeight: '700',
+            letterSpacing: '1.5px',
+            cursor: 'pointer',
+            fontFamily: 'sans-serif',
+          }}>
+            {currentIndex + 1 >= totalQ ? 'FINISH →' : 'NEXT QUESTION →'}
+          </button>
+        )}
+
+      </div>
+    </div>
+  )
+}
+// ─── Read in Daily Life Module ───────────────────────────────────────────────
+const RIDL_TIME = 90 // 90 seconds per question
+
+function ReadInDailyLife({ onBack }) {
+  const [passages, setPassages] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [passageIdx, setPassageIdx] = useState(0)
+  const [questionIdx, setQuestionIdx] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [submitted, setSubmitted] = useState(false)
+  const [score, setScore] = useState(0)
+  const [finished, setFinished] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(RIDL_TIME)
+  const timerRef = useRef(null)
+  const totalAnsweredRef = useRef(0)
+  const scoreRef = useRef(0)
+
+  useEffect(() => {
+    fetch('https://mrreadyprep.onrender.com/api/reading/read-in-daily-life')
+      .then(r => r.json())
+      .then(data => { setPassages(data); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
+
+  // Timer per question
+  useEffect(() => {
+    if (loading || finished || submitted) return
+    setTimeLeft(RIDL_TIME)
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          handleSubmit(null, true)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+  }, [passageIdx, questionIdx, loading, finished, submitted])
+
+  const formatTime = (s) => {
+    const mm = String(Math.floor(s / 60)).padStart(2, '0')
+    const ss = String(s % 60).padStart(2, '0')
+    return mm + ':' + ss
+  }
+
+  if (loading) return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>
+      Loading passages...
+    </div>
+  )
+  if (!passages.length) return (
+    <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No passages found.</div>
+  )
+
+  const passage = passages[passageIdx]
+  const question = passage.questions[questionIdx]
+  const totalQuestions = passages.reduce((s, p) => s + p.questions.length, 0)
+  const isLowTime = timeLeft <= 20
+
+  // Calculate global question number
+  let globalQ = 0
+  for (let i = 0; i < passageIdx; i++) globalQ += passages[i].questions.length
+  globalQ += questionIdx + 1
+
+  const handleSubmit = (sel, autoSubmit = false) => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    const answer = sel !== null ? sel : selected
+    const correct = answer === question.answer
+    if (correct) {
+      scoreRef.current += 1
+      setScore(s => s + 1)
+    }
+    totalAnsweredRef.current += 1
+    setSubmitted(true)
+  }
+
+  const handleNext = () => {
+    const nextQIdx = questionIdx + 1
+    if (nextQIdx < passage.questions.length) {
+      setQuestionIdx(nextQIdx)
+      setSelected(null)
+      setSubmitted(false)
+    } else {
+      const nextPIdx = passageIdx + 1
+      if (nextPIdx < passages.length) {
+        setPassageIdx(nextPIdx)
+        setQuestionIdx(0)
+        setSelected(null)
+        setSubmitted(false)
+      } else {
+        setFinished(true)
+      }
+    }
+  }
+
+  const handleRestart = () => {
+    setPassageIdx(0)
+    setQuestionIdx(0)
+    setSelected(null)
+    setSubmitted(false)
+    setFinished(false)
+    setScore(0)
+    scoreRef.current = 0
+    totalAnsweredRef.current = 0
+  }
+
+  // Type label
+  const typeLabels = {
+    email: 'Email', message: 'Message Exchange', sign: 'Sign / Notice',
+    poster: 'Poster', receipt: 'Receipt', advertisement: 'Advertisement',
+    schedule: 'Schedule / Agenda', article: 'Article'
+  }
+
+  // Score Screen
+  if (finished) {
+    const pct = Math.round((scoreRef.current / totalQuestions) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2a9d5c', emoji: '🏆' }
+                : pct >= 70 ? { label: 'Good job!',  color: '#701fa1', emoji: '🎉' }
+                : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' }
+                :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10, fontFamily: 'sans-serif' }}>
+        <div style={{ background: '#fff', borderRadius: '16px', padding: '48px 56px', textAlign: 'center', maxWidth: '420px', width: '90%', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+          <div style={{ fontSize: '52px', marginBottom: '12px' }}>{grade.emoji}</div>
+          <div style={{ fontSize: '26px', fontWeight: '700', color: grade.color, marginBottom: '8px' }}>{grade.label}</div>
+          <div style={{ fontSize: '13px', color: '#888', marginBottom: '24px' }}>You completed all {totalQuestions} questions</div>
+          <div style={{ fontSize: '52px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>
+            {scoreRef.current}<span style={{ fontSize: '20px', color: '#aaa', fontWeight: '400' }}>/{totalQuestions}</span>
+          </div>
+          <div style={{ margin: '20px 0 8px', height: '8px', background: '#efefef', borderRadius: '4px' }}>
+            <div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px', transition: 'width 0.8s ease' }} />
+          </div>
+          <div style={{ fontSize: '13px', color: '#777', marginBottom: '32px' }}>{pct}% correct</div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button onClick={handleRestart} style={{ flex: 1, padding: '13px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>TRY AGAIN</button>
+            <button onClick={onBack} style={{ flex: 1, padding: '13px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Back</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10 }}>
+
+      {/* Header */}
+      <div style={{ background: '#fff', borderBottom: '1px solid #e0e0e0', padding: '0 24px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+        <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px', color: '#888', padding: '8px 0' }}>← BACK</button>
+        <span style={{ fontSize: '18px', fontWeight: '700', color: isLowTime ? '#d94040' : '#1a1a1a', letterSpacing: '2px', transition: 'color 0.3s' }}>
+          ⏱ {formatTime(timeLeft)}
+        </span>
+        <button onClick={handleNext} disabled={!submitted} style={{ background: submitted ? '#2a9d5c' : '#e5e7eb', color: submitted ? '#fff' : '#aaa', border: 'none', borderRadius: '6px', padding: '8px 16px', fontSize: '13px', fontWeight: '700', cursor: submitted ? 'pointer' : 'not-allowed', transition: 'background 0.2s' }}>
+          NEXT →
+        </button>
+      </div>
+
+      {/* Progress bar */}
+      <div style={{ height: '3px', background: '#e5e7eb', flexShrink: 0 }}>
+        <div style={{ width: (globalQ / totalQuestions * 100) + '%', height: '100%', background: '#701fa1', transition: 'width 0.3s' }} />
+      </div>
+
+      {/* Body */}
+      <div style={{ flex: 1, display: 'flex', gap: '20px', padding: '20px 24px', overflow: 'hidden', minHeight: 0 }}>
+
+        {/* Left: Passage */}
+        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', minWidth: 0 }}>
+          <div style={{ fontSize: '11px', color: '#701fa1', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+            {passage.instruction}
+          </div>
+          <div style={{ flex: 1, background: '#fff', borderRadius: '10px', border: '2px solid #2a9d5c', padding: '20px', overflowY: 'auto', boxSizing: 'border-box' }}>
+            {passage.title && (
+              <div style={{ fontWeight: '700', fontSize: '14px', textAlign: 'center', marginBottom: '4px', color: '#1a1a1a' }}>{passage.title}</div>
+            )}
+            {passage.subtitle && (
+              <div style={{ fontSize: '12px', textAlign: 'center', color: '#616473', marginBottom: '12px', fontStyle: 'italic' }}>{passage.subtitle}</div>
+            )}
+            <div style={{ fontSize: '13px', lineHeight: '1.8', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
+          </div>
+          <div style={{ fontSize: '11px', color: '#9ca3af', textAlign: 'center' }}>
+            {globalQ} / {totalQuestions} · {typeLabels[passage.type] || passage.type}
+          </div>
+        </div>
+
+        {/* Right: Question */}
+        <div style={{ width: '420px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>
+            {question.question}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {question.options.map((opt, i) => {
+              let bg = '#fff', border = '1px solid #d1d5db', color = '#1a1a1a'
+              if (submitted) {
+                if (i === question.answer) { bg = '#edfbf3'; border = '2px solid #2a9d5c'; color = '#1a7a44' }
+                else if (i === selected && i !== question.answer) { bg = '#fff2f2'; border = '2px solid #d94040'; color = '#b03030' }
+              } else if (i === selected) {
+                bg = '#f4ecff'; border = '2px solid #701fa1'; color = '#701fa1'
+              }
+              return (
+                <div
+                  key={i}
+                  onClick={() => { if (!submitted) setSelected(i) }}
+                  style={{ background: bg, border, borderRadius: '8px', padding: '12px 16px', cursor: submitted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px', transition: 'all 0.15s', boxSizing: 'border-box' }}
+                >
+                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', border: submitted && i === question.answer ? '2px solid #2a9d5c' : submitted && i === selected ? '2px solid #d94040' : i === selected ? '2px solid #701fa1' : '1.5px solid #d1d5db', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    {submitted && i === question.answer && <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#2a9d5c', display: 'block' }} />}
+                    {!submitted && i === selected && <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#701fa1', display: 'block' }} />}
+                  </span>
+                  <span style={{ fontSize: '13px', color, lineHeight: '1.4' }}>{opt}</span>
+                </div>
+              )
+            })}
+          </div>
+
+          {/* Submit button */}
+          {!submitted ? (
+            <button
+              onClick={() => { if (selected !== null) handleSubmit(selected) }}
+              disabled={selected === null}
+              style={{ marginTop: 'auto', padding: '13px', background: selected !== null ? '#701fa1' : '#e5e7eb', color: selected !== null ? '#fff' : '#aaa', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: selected !== null ? 'pointer' : 'not-allowed', transition: 'background 0.2s' }}
+            >
+              SUBMIT
+            </button>
+          ) : (
+            <div style={{ marginTop: 'auto', padding: '12px 16px', background: selected === question.answer ? '#edfbf3' : '#fff8ec', border: '1px solid ' + (selected === question.answer ? '#a7e9c3' : '#f5d08a'), borderRadius: '8px', fontSize: '13px', fontWeight: '600', color: selected === question.answer ? '#1a7a44' : '#c07000' }}>
+              {selected === null ? '⏱ Time's up!' : selected === question.answer ? '🎯 Correct!' : '❌ Incorrect'}
+            </div>
+          )}
+        </div>
+
+      </div>
+    </div>
+  )
+}
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 function App() {
   const [userData, setUserData] = useState(null)
@@ -10,6 +673,7 @@ function App() {
   const [vocabFilter, setVocabFilter] = useState('all')
   const [flippedCards, setFlippedCards] = useState({})
   const [expandedFormat, setExpandedFormat] = useState(false)
+  const [readingSubTab, setReadingSubTab] = useState(null)  // null | 'ctw' | 'ridl'
 
   const getExamDaysLeft = () => {
     if (!examDate) return null
@@ -96,7 +760,7 @@ function App() {
   const dayLabels = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
   const sb = (tab, icon, label) => (
-    <button onClick={() => setCurrentTab(tab)} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <button onClick={() => { setCurrentTab(tab); setReadingSubTab(null) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
       {icon} {label}
     </button>
   )
@@ -134,9 +798,18 @@ function App() {
 
         {currentTab !== 'dashboard' && (
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
-            <span onClick={() => setCurrentTab('dashboard')} style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
+            <span
+              onClick={() => {
+                if (readingSubTab) { setReadingSubTab(null) }
+                else { setCurrentTab('dashboard') }
+              }}
+              style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>
+              ← Back
+            </span>
             <h2 style={{ margin: '0 0 0 14px', fontSize: '18px', fontWeight: '700' }}>
-              {currentTab === 'reading' && '📖 Reading Practice'}
+              {currentTab === 'reading' && !readingSubTab && '📖 Reading Practice'}
+              {currentTab === 'reading' && readingSubTab === 'ctw' && '📖 Complete the Words'}
+              {currentTab === 'reading' && readingSubTab === 'ridl' && '📖 Read in Daily Life'}
               {currentTab === 'listening' && '🎧 Listening Practice'}
               {currentTab === 'writing' && '✍️ Writing Practice'}
               {currentTab === 'speaking' && '🎙️ Speaking Practice'}
@@ -296,7 +969,7 @@ function App() {
                       "Unknown vocab in Reading? Look at the surrounding sentences — context clues reveal the meaning.",
                       "In Listening, don't panic if you miss something — keep listening and catch the next point.",
                       "For Speaking, use simple connectors: 'First... Second... Finally...' — structure impresses graders.",
-][Math.floor((Date.now() + 3 * 3600000) / 86400000) % 7]}
+                    ][Math.floor((Date.now() + 3 * 3600000) / 86400000) % 7]}
                   </div>
                 </div>
               </div>
@@ -357,22 +1030,67 @@ function App() {
         )}
 
         {/* READING */}
-        {currentTab === 'reading' && (
+        {currentTab === 'reading' && !readingSubTab && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
-              { title: 'Part 1: Complete the Sentence', desc: 'Fill in missing parts within texts using keyboard precision.' },
-              { title: 'Part 2: Read in Daily Life', desc: 'Analyze announcements, emails, and notifications from campus life.' },
-              { title: 'Part 3: Academic Passage', desc: 'Read scientific or historical essays and answer comprehension queries.' }
+              {
+                key: 'ctw',
+                title: 'Part 1: Complete the Words',
+                desc: 'Read academic passages and type the missing letters to complete key vocabulary words.',
+                count: '50 questions · 5 categories',
+                color: '#701fa1',
+              },
+              {
+                key: 'ridl',
+                title: 'Part 2: Read in Daily Life',
+                desc: 'Read emails, messages, signs, schedules, and articles. Answer comprehension questions.',
+                count: '48 passages · 124 questions',
+                color: '#701fa1',
+              },
+              {
+                key: null,
+                title: 'Part 3: Academic Passage',
+                desc: 'Read scientific or historical essays and answer comprehension queries.',
+                count: 'Coming soon',
+                color: '#9ca3af',
+              },
             ].map((p, i) => (
               <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ maxWidth: '70%' }}>
-                  <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
+                  </div>
+                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                  <span style={{ fontSize: '11px', color: p.key ? '#701fa1' : '#9ca3af', fontWeight: '600' }}>{p.count}</span>
                 </div>
-                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
+                <button
+                  onClick={() => p.key && setReadingSubTab(p.key)}
+                  style={{
+                    backgroundColor: p.key ? '#701fa1' : '#e5e7eb',
+                    color: p.key ? '#fff' : '#9ca3af',
+                    border: 'none',
+                    padding: '10px 18px',
+                    borderRadius: '8px',
+                    fontWeight: '700',
+                    cursor: p.key ? 'pointer' : 'not-allowed',
+                    fontSize: '13px',
+                    flexShrink: 0,
+                  }}>
+                  {p.key ? 'Open Module' : 'Coming Soon'}
+                </button>
               </div>
             ))}
           </div>
+        )}
+
+        {/* READING → Complete the Words */}
+        {currentTab === 'reading' && readingSubTab === 'ctw' && (
+          <CompleteTheWords onBack={() => setReadingSubTab(null)} />
+        )}
+
+        {/* READING → Read in Daily Life */}
+        {currentTab === 'reading' && readingSubTab === 'ridl' && (
+          <ReadInDailyLife onBack={() => setReadingSubTab(null)} />
         )}
 
         {/* LISTENING */}
@@ -462,8 +1180,6 @@ function App() {
                 </button>
               ))}
             </div>
-
-            {/* Word list - Flashcards */}
 
             {vocabWords
               .filter(item => vocabFilter === 'all' ? true : vocabFilter === 'learned' ? item.learned : !item.learned)

@@ -1,0 +1,1722 @@
+[
+  {
+    "id": 1,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Neighborhood Clean-Up",
+    "subtitle": "Dear Mr. Collins,",
+    "text": "I am writing to let you know that our annual neighborhood clean-up event has been rescheduled to Saturday, April 26, starting at 9:00 a.m. The event will take place at Maplewood Park, near the north entrance. Gloves, bags, and refreshments will be provided. We recommend wearing comfortable clothes and sturdy shoes. If you are unable to attend, please reply to this email so we can arrange for materials to be sent to you. We hope to see you there!\n\nBest regards,\nSarah Lin",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To invite Mr. Collins to a park opening",
+          "To reschedule a community clean-up event",
+          "To ask Mr. Collins to bring supplies",
+          "To announce the cancellation of an event"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are participants advised to wear?",
+        "options": [
+          "Waterproof clothing",
+          "Formal attire",
+          "Comfortable clothes and sturdy shoes",
+          "Bright-colored jackets"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What should Mr. Collins do if he cannot attend?",
+        "options": [
+          "Call the park office",
+          "Bring a replacement volunteer",
+          "Reply to the email",
+          "Visit the north entrance on the day"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Library Card Renewal",
+    "subtitle": "Dear Ms. Yildiz,",
+    "text": "This is a reminder that your Greenfield Public Library card will expire on May 31. To renew it, please visit the library in person and bring a valid photo ID and proof of address. Alternatively, you may renew online at greenfieldlibrary.org. Renewing your card will allow you to continue borrowing books, accessing digital resources, and attending library events. Please note that renewals take up to two business days to process.\n\nKind regards,\nGreenfield Public Library",
+    "questions": [
+      {
+        "question": "What is the email mainly about?",
+        "options": [
+          "A new library opening nearby",
+          "A reminder to renew a library card",
+          "A fine for overdue books",
+          "A change in library opening hours"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What must Ms. Yildiz bring if she renews in person?",
+        "options": [
+          "Her library card and a passport photo",
+          "A photo ID and proof of address",
+          "A completed renewal form and payment",
+          "Her student ID and a utility bill"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is indicated about the renewal process?",
+        "options": [
+          "It is only available online",
+          "It takes effect immediately",
+          "It can take up to two business days",
+          "It requires a fee"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Internship Offer",
+    "subtitle": "Dear Mr. Nakamura,",
+    "text": "Following our recent interview, I am pleased to offer you a summer internship position in our Marketing department, beginning June 2. The internship will run for twelve weeks and is based at our central office at 44 Commerce Street. Please report to Reception on your first day at 8:30 a.m. and bring your passport and an updated resume. Professor Aydin spoke highly of your analytical skills and creativity. We look forward to welcoming you.\n\nSincerely,\nClara Hofmann, HR Manager",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To schedule a final interview",
+          "To request work samples",
+          "To inform Mr. Nakamura he has been selected for a role",
+          "To ask Mr. Nakamura to submit references"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What can be inferred about Professor Aydin?",
+        "options": [
+          "She works in the Marketing department",
+          "She recommended Mr. Nakamura for the internship",
+          "She is the HR Manager at the company",
+          "She will supervise Mr. Nakamura daily"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is Mr. Nakamura NOT asked to bring on his first day?",
+        "options": [
+          "A passport",
+          "An updated resume",
+          "A reference letter",
+          "A student ID"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Team Meeting",
+    "subtitle": "Dear Ms. Ferreira,",
+    "text": "I am writing to inform you that the quarterly team meeting will be held on Wednesday, October 9, at 3:00 p.m. in Meeting Room A on the second floor. We will be reviewing project timelines, budget updates, and upcoming client presentations. Please come prepared with a brief summary of your current projects. As you are relatively new to the department, this will be a great opportunity to meet everyone. If you cannot attend, please notify me in advance.\n\nBest,\nThomas Reid",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To discuss Ms. Ferreira's project performance",
+          "To notify a colleague about a meeting",
+          "To outline the team's annual goals",
+          "To request a report from Ms. Ferreira"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be concluded about Ms. Ferreira?",
+        "options": [
+          "She has worked in the department for several years",
+          "She requested a meeting with Thomas Reid",
+          "She has recently joined the department",
+          "She is responsible for the budget updates"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What should Ms. Ferreira bring to the meeting?",
+        "options": [
+          "A list of client contacts",
+          "A copy of the budget report",
+          "A brief summary of her current projects",
+          "Her annual performance review"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Office Renovation Notice",
+    "subtitle": "All Staff,",
+    "text": "Please be advised that the third floor of our building will undergo renovation work from Monday, March 10 to Friday, March 14. During this period, all staff currently based on the third floor will be temporarily relocated to the fifth floor. Access to the third floor will be restricted for safety reasons. IT equipment will be moved by our facilities team on Sunday, March 9. Employees are asked to pack their personal belongings in the boxes provided before leaving on Friday, March 7.\n\nFacilities Management",
+    "questions": [
+      {
+        "question": "What is the email informing staff about?",
+        "options": [
+          "A permanent change to office locations",
+          "Upcoming renovation work on the third floor",
+          "New safety regulations in the building",
+          "The installation of new IT equipment"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where will third-floor staff work during the renovation?",
+        "options": [
+          "On the ground floor",
+          "In a nearby office building",
+          "On the fifth floor",
+          "At home"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What are employees asked to do before March 7?",
+        "options": [
+          "Submit a work-from-home request",
+          "Collect their IT equipment from facilities",
+          "Pack their personal belongings in provided boxes",
+          "Confirm their new seating arrangements"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Gym Membership Cancellation",
+    "subtitle": "Dear Mr. Okafor,",
+    "text": "We have received your request to cancel your FitLife gym membership. Your membership will remain active until the end of your current billing cycle on August 31. After this date, you will no longer have access to our facilities. Please note that any unused personal training sessions must be used before August 31, as they cannot be refunded or transferred. If you change your mind, you are welcome to reactivate your membership at any time by contacting our front desk.\n\nBest regards,\nFitLife Membership Team",
+    "questions": [
+      {
+        "question": "What is the purpose of the email?",
+        "options": [
+          "To offer Mr. Okafor a discounted membership",
+          "To confirm the cancellation of a gym membership",
+          "To inform Mr. Okafor of new gym facilities",
+          "To request payment for outstanding fees"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Until when will Mr. Okafor have access to the gym?",
+        "options": [
+          "Immediately after the email",
+          "July 31",
+          "August 31",
+          "The end of the following month"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is indicated about unused personal training sessions?",
+        "options": [
+          "They will be automatically refunded",
+          "They can be transferred to another member",
+          "They must be used before August 31",
+          "They will be extended for one month"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Apartment Viewing",
+    "subtitle": "Dear Ms. Huang,",
+    "text": "Thank you for your enquiry regarding the two-bedroom apartment at 18 Birchwood Avenue. I am pleased to confirm a viewing appointment for Thursday, September 4, at 4:30 p.m. The apartment is located on the second floor and includes a fully equipped kitchen, two bathrooms, and a private balcony. Monthly rent is $1,450, and a two-month deposit is required upon signing. Please bring a valid photo ID and proof of income to the viewing. I look forward to meeting you.\n\nKind regards,\nDavid Park, Property Agent",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To advertise a new apartment listing",
+          "To confirm a property viewing appointment",
+          "To request a deposit payment from Ms. Huang",
+          "To notify Ms. Huang of a rent increase"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is indicated about the apartment?",
+        "options": [
+          "It is located on the ground floor",
+          "It has one bathroom and a shared kitchen",
+          "It includes a private balcony",
+          "It is available for short-term rental only"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What must Ms. Huang bring to the viewing?",
+        "options": [
+          "A completed rental application form",
+          "A photo ID and proof of income",
+          "Two months' rent in cash",
+          "A reference letter from her employer"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Course Registration",
+    "subtitle": "Dear Mr. Santos,",
+    "text": "I am writing to confirm your registration for the Advanced Business Communication course, which begins on Tuesday, October 7. Classes are held every Tuesday and Thursday from 6:00 p.m. to 8:00 p.m. in Room 204 of the Langford Learning Centre. Please ensure that you have purchased the required textbook before the first session. A list of recommended materials has been attached to this email. If you have any questions about the course, do not hesitate to contact the administration office.\n\nRegards,\nCourse Administration Team",
+    "questions": [
+      {
+        "question": "What is the email mainly about?",
+        "options": [
+          "A change to the course schedule",
+          "A confirmation of course registration",
+          "An invitation to attend an open day",
+          "A reminder to pay course fees"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How often are classes held?",
+        "options": [
+          "Once a week",
+          "Every Monday and Wednesday",
+          "Twice a week on Tuesdays and Thursdays",
+          "Every weekday evening"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What should Mr. Santos do before the first session?",
+        "options": [
+          "Contact the course instructor directly",
+          "Purchase the required textbook",
+          "Submit an essay for assessment",
+          "Confirm his attendance by email"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Live Chat",
+    "subtitle": "",
+    "text": "Anna Berg (9:00 a.m.)\nHi everyone! Quick reminder - the client presentation is on Friday at 2:00 p.m. We need to finalize the report and the slide deck.\n\nCarlos Diaz (9:04 a.m.)\nI've finished writing the report. I'll send it to you for review by noon today.\n\nMia Tanaka (9:07 a.m.)\nI'm still working on the slides. I'll have them ready by Thursday evening and upload them to the shared drive.\n\nAnna Berg (9:10 a.m.)\nGreat. Mia, you always do such a brilliant job with the visuals. Carlos, could you also prepare a one-page summary of the key findings?\n\nCarlos Diaz (9:13 a.m.)\nSure, no problem. I'll add that to the report document.",
+    "questions": [
+      {
+        "question": "What is the main purpose of Anna's first message?",
+        "options": [
+          "To assign new tasks to the team",
+          "To remind the team about an upcoming deadline",
+          "To tell the team the presentation has been postponed",
+          "To ask Carlos to rewrite the report"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about Mia Tanaka?",
+        "options": [
+          "She is responsible for writing the report",
+          "She will present the slides to the client",
+          "She is in charge of creating the visual content",
+          "She has already uploaded all files"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What additional task does Anna ask Carlos to complete?",
+        "options": [
+          "Prepare a full new presentation",
+          "Review Mia's slides",
+          "Write a brief summary of the main findings",
+          "Send the report directly to the client"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Group Chat",
+    "subtitle": "",
+    "text": "Priya Nair (3:00 p.m.)\nHey, is anyone free this weekend? I was thinking we could visit the new science museum downtown. It has a great space exhibition.\n\nJames Wu (3:05 p.m.)\nSounds fun! Does it require advance booking?\n\nPriya Nair (3:08 p.m.)\nTickets can be bought online or at the door. Online is cheaper though.\n\nElena Moser (3:12 p.m.)\nI'll be visiting my parents in Hamburg this weekend, so I can't join. Have fun!\n\nJames Wu (3:15 p.m.)\nPriya, let's meet at the main entrance at 10:30 a.m. Saturday.",
+    "questions": [
+      {
+        "question": "What does Priya suggest doing this weekend?",
+        "options": [
+          "Visiting a new restaurant",
+          "Attending a space exhibition at a museum",
+          "Watching a film at the cinema",
+          "Going for a walk in the park"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Elena Moser imply by mentioning Hamburg?",
+        "options": [
+          "She will not be able to join the group",
+          "She wants the group to visit Hamburg",
+          "She recommends a museum in Hamburg",
+          "She will meet the group later in the day"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What is indicated about museum tickets?",
+        "options": [
+          "They are only available at the door",
+          "They must be booked one week in advance",
+          "Buying them online is less expensive",
+          "They are free for students"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Work Chat",
+    "subtitle": "",
+    "text": "Rachel Kim (10:00 a.m.)\nTeam, our supplier says material costs are rising by 12% next quarter. We need to decide how to respond.\n\nOmar Hassan (10:04 a.m.)\nPassing all of it on to customers could hurt our sales. Our margins are already tight.\n\nRachel Kim (10:07 a.m.)\nI've contacted two alternative suppliers. One has better rates, but their delivery times are slower.\n\nOmar Hassan (10:10 a.m.)\nUnreliable delivery would be worse than the cost increase. We can't miss deadlines.\n\nRachel Kim (10:14 a.m.)\nAgreed. I'll stay with the current supplier but negotiate better payment terms.",
+    "questions": [
+      {
+        "question": "What is the main topic of the conversation?",
+        "options": [
+          "A delay in product delivery",
+          "A rise in supplier material costs",
+          "A complaint from a customer",
+          "A change in payment policy"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why does Omar advise against switching suppliers?",
+        "options": [
+          "The new supplier is more expensive",
+          "The new supplier does not deliver to their area",
+          "Slower delivery could cause missed deadlines",
+          "The current supplier offers better quality"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What does Rachel decide to do?",
+        "options": [
+          "Switch to the cheaper alternative supplier",
+          "Raise prices for all customers immediately",
+          "Keep the current supplier and negotiate payment terms",
+          "Stop ordering until prices drop"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Student Chat",
+    "subtitle": "",
+    "text": "Leo Park (7:00 p.m.)\nHey, has anyone started the history essay? It's due Friday and I haven't even chosen a topic yet.\n\nYara Saleh (7:05 p.m.)\nI started mine yesterday. I'm writing about the Industrial Revolution's impact on urban growth.\n\nLeo Park (7:08 p.m.)\nThat sounds great. I was thinking about the causes of World War I but I'm not sure where to begin.\n\nYara Saleh (7:11 p.m.)\nProfessor Chen shared some reference articles in the course folder on the university portal. Did you check?\n\nLeo Park (7:14 p.m.)\nI forgot about those! I'll look them up now. Thanks, Yara.",
+    "questions": [
+      {
+        "question": "Why does Leo initiate the conversation?",
+        "options": [
+          "To ask Yara to share her essay",
+          "To discuss concerns about an upcoming assignment",
+          "To remind Yara about a class deadline",
+          "To suggest a topic for Yara's essay"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about Leo?",
+        "options": [
+          "He has already submitted his essay",
+          "He has not yet started working on his essay",
+          "He plans to write about urban growth",
+          "He does not need to submit the essay on Friday"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Yara suggest Leo do?",
+        "options": [
+          "Ask Professor Chen directly for help",
+          "Choose a different essay topic",
+          "Check the course folder on the university portal",
+          "Submit the essay a day early"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Project Chat",
+    "subtitle": "",
+    "text": "Sofia Reyes (11:00 a.m.)\nHi team, we need to discuss the timeline for the new product launch. Marketing wants everything ready by the end of next month.\n\nKevin Lam (11:04 a.m.)\nThat's quite tight. The design phase alone usually takes three weeks.\n\nSofia Reyes (11:07 a.m.)\nI know. Let's prioritise the core features and delay the optional ones for the second release.\n\nNadia Volkov (11:10 a.m.)\nThat makes sense. I can have the technical specs ready by Wednesday if that helps.\n\nKevin Lam (11:13 a.m.)\nGreat. Let's meet tomorrow morning to align on priorities before we confirm anything with Marketing.",
+    "questions": [
+      {
+        "question": "What problem does Sofia raise at 11:00 a.m.?",
+        "options": [
+          "A budget cut for the product launch",
+          "A tight deadline set by the Marketing team",
+          "A disagreement with the design team",
+          "A delay caused by a technical issue"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Sofia suggest doing to meet the deadline?",
+        "options": [
+          "Hiring additional team members",
+          "Postponing the entire product launch",
+          "Focusing on core features and delaying optional ones",
+          "Asking Marketing to extend the deadline"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What will the team do tomorrow morning?",
+        "options": [
+          "Present their work to Marketing",
+          "Meet to agree on priorities",
+          "Submit the technical specifications",
+          "Begin the design phase"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Flatmate Chat",
+    "subtitle": "",
+    "text": "Tom Bridges (6:00 p.m.)\nHey everyone, the kitchen tap is leaking again. Has anyone contacted the landlord yet?\n\nAisha Nwosu (6:05 p.m.)\nI sent him a message this morning but haven't heard back. I'll try calling him tonight.\n\nTom Bridges (6:08 p.m.)\nThanks. In the meantime, maybe we should put a bowl under the tap so the floor doesn't get damaged.\n\nChloe Martin (6:12 p.m.)\nGood idea. I'll do that now. Also, it might be worth keeping a record of when we reported it, just in case.\n\nAisha Nwosu (6:15 p.m.)\nAgreed. I'll take a photo of the leak and note the date in our shared document.",
+    "questions": [
+      {
+        "question": "What problem does Tom raise at 6:00 p.m.?",
+        "options": [
+          "The heating in the apartment is broken",
+          "The kitchen tap is leaking",
+          "The landlord has not paid the water bill",
+          "A window in the kitchen is damaged"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Chloe suggest doing?",
+        "options": [
+          "Contacting a plumber directly",
+          "Moving out of the apartment temporarily",
+          "Keeping a record of when the issue was reported",
+          "Asking the landlord to reduce the rent"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What will Aisha do to document the problem?",
+        "options": [
+          "Write a formal letter to the landlord",
+          "Take a photo of the leak and note the date",
+          "Call a repair service immediately",
+          "Post about the issue on the building's notice board"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Travel Chat",
+    "subtitle": "",
+    "text": "Maya Cruz (2:00 p.m.)\nHey! I'm planning a trip to Lisbon next month. Has anyone been there? Any recommendations?\n\nFinn O'Brien (2:05 p.m.)\nYes! I went last year. Definitely visit Alfama - it's the oldest district and has amazing views.\n\nMaya Cruz (2:08 p.m.)\nThat sounds perfect. What about food?\n\nFinn O'Brien (2:11 p.m.)\nTry the pastel de nata - a custard tart. You'll find them everywhere but the ones in Belem are the best.\n\nLeila Hasan (2:14 p.m.)\nAlso, get a transit card for the trams and metro. It's much cheaper than buying individual tickets.",
+    "questions": [
+      {
+        "question": "Why does Maya initiate the conversation?",
+        "options": [
+          "To share photos from a recent trip to Lisbon",
+          "To ask for travel recommendations for Lisbon",
+          "To invite her friends to join her on a trip",
+          "To ask about visa requirements for Portugal"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Finn recommend about food?",
+        "options": [
+          "Trying a local seafood restaurant in Alfama",
+          "Visiting the food market in central Lisbon",
+          "Trying pastel de nata, especially in Belem",
+          "Booking a food tour in advance"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What does Leila suggest to save money on transport?",
+        "options": [
+          "Renting a bicycle for the whole trip",
+          "Walking instead of using public transport",
+          "Getting a transit card for trams and the metro",
+          "Booking airport transfers in advance"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Neighbour Chat",
+    "subtitle": "",
+    "text": "Grace Kim (9:00 a.m.)\nHi neighbours! Just a reminder that the building's annual general meeting is this Saturday at 10:00 a.m. in the community room.\n\nDaniel Ortiz (9:06 a.m.)\nThanks for the reminder. Will the parking issue be discussed? It's been a real problem lately.\n\nGrace Kim (9:09 a.m.)\nYes, it's on the agenda. There are also topics about the roof repair and the recycling area.\n\nFatima Al-Rashid (9:13 a.m.)\nI won't be able to attend in person. Is there a way to submit questions or votes in advance?\n\nGrace Kim (9:16 a.m.)\nYes - you can email your points to the building manager before Friday noon and he'll raise them at the meeting.",
+    "questions": [
+      {
+        "question": "What is the main purpose of Grace's first message?",
+        "options": [
+          "To report a parking problem to neighbours",
+          "To remind neighbours about an upcoming meeting",
+          "To ask for volunteers to help organise an event",
+          "To announce changes to the building's recycling policy"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Fatima ask about?",
+        "options": [
+          "Whether the meeting will be recorded",
+          "How to participate without attending in person",
+          "Who will be chairing the annual general meeting",
+          "Whether the parking issue has already been resolved"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should Fatima do if she wants her questions raised at the meeting?",
+        "options": [
+          "Call the building manager on Saturday morning",
+          "Attend the meeting in person",
+          "Email her points to the building manager before Friday noon",
+          "Post her questions in the group chat"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Swimming Pool Closure",
+    "subtitle": "",
+    "text": "The outdoor swimming pool at Riverside Sports Centre will be closed for maintenance from Monday, July 7 to Wednesday, July 9.\n\nDuring this period, members are welcome to use the indoor pool on the lower ground floor.\n\nWe apologize for any inconvenience.",
+    "questions": [
+      {
+        "question": "What is the purpose of the sign?",
+        "options": [
+          "To announce a new sports centre opening",
+          "To inform members of a temporary pool closure",
+          "To advertise swimming lessons",
+          "To notify members of a fee change"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can members do during the closure?",
+        "options": [
+          "Use the outdoor pool at a different location",
+          "Request a refund for their membership",
+          "Use the indoor pool in the same building",
+          "Wait until July 10 to swim"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Elevator Maintenance",
+    "subtitle": "",
+    "text": "The elevator in the north building will be out of service on Thursday, November 6, from 7:00 a.m. to 12:00 p.m.\n\nPlease use the staircase during this time.\n\nWe apologize for the inconvenience and thank you for your understanding.",
+    "questions": [
+      {
+        "question": "What is indicated about the elevator maintenance?",
+        "options": [
+          "It will take place in the south building",
+          "It will last the entire day",
+          "It will be completed by noon",
+          "It will affect all elevators in the building"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What should people do during the maintenance period?",
+        "options": [
+          "Take a break",
+          "Avoid the building",
+          "Use the staircase",
+          "Wait in the lobby"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE TO TENANTS",
+    "subtitle": "",
+    "text": "Hot water will be unavailable at Cedar Court on Saturday, February 22, from 9:00 a.m. to 1:00 p.m. due to scheduled boiler maintenance.\n\nManagement recommends storing water in advance.\n\nCold water will remain available throughout.\nThank you for your cooperation.",
+    "questions": [
+      {
+        "question": "What is the purpose of the sign?",
+        "options": [
+          "To notify tenants of a building closure",
+          "To inform tenants of a hot water interruption",
+          "To announce new building management",
+          "To warn tenants of a water quality issue"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is indicated about cold water?",
+        "options": [
+          "It will also be unavailable on Saturday",
+          "It will be available during the maintenance period",
+          "It will only be available in common areas",
+          "It will be supplied by bottled water"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "ROAD CLOSURE NOTICE",
+    "subtitle": "",
+    "text": "Pine Street between Oak Avenue and Maple Road will be closed to traffic from Monday, June 2 to Friday, June 6 for road resurfacing work.\n\nPedestrian access will be maintained.\nPlease use the diversion via Elm Street.\n\nWe apologize for any disruption.",
+    "questions": [
+      {
+        "question": "What is the main reason for the road closure?",
+        "options": [
+          "A water pipe repair",
+          "A local festival",
+          "Road resurfacing work",
+          "A building demolition"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What can people still do during the closure?",
+        "options": [
+          "Drive through Pine Street",
+          "Park on Pine Street",
+          "Walk along Pine Street",
+          "Use Pine Street for deliveries"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "LIBRARY QUIET ZONE",
+    "subtitle": "",
+    "text": "This area is designated as a quiet study zone.\n\nPlease keep noise to a minimum.\nMobile phones must be switched to silent mode.\nFood and drinks are not permitted.\n\nGroup discussions may take place in Meeting Rooms 1-4 on the second floor.",
+    "questions": [
+      {
+        "question": "What are visitors to the quiet zone NOT permitted to do?",
+        "options": [
+          "Use a laptop",
+          "Read books",
+          "Eat or drink",
+          "Sit at a desk"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Where should visitors go for group discussions?",
+        "options": [
+          "The ground floor reading area",
+          "The cafe on the first floor",
+          "Meeting Rooms 1-4 on the second floor",
+          "Outside the library building"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "GYM NOTICE",
+    "subtitle": "",
+    "text": "The weight room will be closed for deep cleaning every Sunday from 8:00 a.m. to 10:00 a.m.\n\nMembers may use the cardio area and swimming pool during this time.\n\nThank you for your patience.",
+    "questions": [
+      {
+        "question": "When is the weight room closed for cleaning?",
+        "options": [
+          "Every Saturday morning",
+          "Every Sunday afternoon",
+          "Every Sunday from 8:00 a.m. to 10:00 a.m.",
+          "Every weekday morning"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What can members use while the weight room is closed?",
+        "options": [
+          "Only the swimming pool",
+          "The cardio area and swimming pool",
+          "The weight room on a different floor",
+          "No facilities are available during cleaning"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "type": "poster",
+    "instruction": "Read a poster.",
+    "title": "ANNUAL CHARITY RUN",
+    "subtitle": "",
+    "text": "Join us on Sunday, September 14, from 8:00 a.m. to 12:00 p.m. at Greenview Park!\n\nDistances: 5 km - 10 km - Half-marathon\nAll fitness levels welcome.\n\nRegistration fee: $15 (includes T-shirt and medal).\nAll proceeds go to the City Children's Hospital.\n\nRegister online at charityrun.org by September 7.",
+    "questions": [
+      {
+        "question": "What is indicated about the charity run?",
+        "options": [
+          "It is only for experienced runners",
+          "It takes place every month",
+          "It is open to participants of all fitness levels",
+          "It requires medical clearance"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is mentioned about the registration fee?",
+        "options": [
+          "It covers accommodation",
+          "It includes a T-shirt and a medal",
+          "It must be paid in cash",
+          "It is free for children under 12"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is NOT listed as a distance option?",
+        "options": [
+          "5 km",
+          "10 km",
+          "15 km",
+          "Half-marathon"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "type": "poster",
+    "instruction": "Read a poster.",
+    "title": "COMMUNITY PHOTOGRAPHY EXHIBITION",
+    "subtitle": "",
+    "text": "The Westside Arts Centre invites you to our annual photography exhibition.\n\nOpening Night: Friday, May 9, 7:00 p.m.\nExhibition runs: May 10 - May 31\n\nFree entry. All welcome.\nLight refreshments will be served on opening night.\n\nSubmit your photos at wsartscentre.org\nDeadline: April 25",
+    "questions": [
+      {
+        "question": "What is the purpose of the poster?",
+        "options": [
+          "To sell photography equipment",
+          "To advertise a community photography exhibition",
+          "To recruit professional photographers",
+          "To announce the opening of a new arts centre"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will happen on opening night?",
+        "options": [
+          "A photography competition will be judged",
+          "Light refreshments will be served",
+          "Free photography workshops will be held",
+          "Entry tickets will be sold at the door"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should people do if they want to submit photos?",
+        "options": [
+          "Visit the arts centre in person before April 25",
+          "Email their photos directly to the exhibition team",
+          "Submit their photos on the website by April 25",
+          "Bring printed photos to the opening night"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "The Corner Cafe",
+    "subtitle": "Date: March 3, 2025 | Time: 11:45 a.m. | Server: Tom H. | Table: 7 | Guests: 2",
+    "text": "Americano (x2) ............. $4.50 ........ $9.00\nBlueberry Muffin (x1) ..... $3.50 ........ $3.50\nAvocado Toast (x1) ......... $8.00 ........ $8.00\n\nSubtotal: $20.50\nTax (8%): $1.64\nService Charge (15%): $3.08\nTotal: $25.22\n\nPayment: Credit Card\n\nThank you! Visit us at cornercafe.com",
+    "questions": [
+      {
+        "question": "What is indicated about the service charge?",
+        "options": [
+          "Customers choose how much to leave",
+          "It is paid in cash only",
+          "It is automatically added to the bill",
+          "It is waived for parties of two"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What are customers encouraged to do?",
+        "options": [
+          "Tell their friends about the cafe",
+          "Visit the cafe's website",
+          "Complete a printed feedback form",
+          "Sign up for a loyalty card"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Parkside Pharmacy",
+    "subtitle": "Date: April 18, 2025 | Time: 3:20 p.m. | Cashier: Emma D.",
+    "text": "Vitamin C Tablets (x1) .................. $6.99\nCough Syrup (x1) .......................... $8.50\nHand Sanitiser (x2) ...... $3.25 ........ $6.50\n\nSubtotal: $21.99\nDiscount (10% loyalty): -$2.20\nTotal: $19.79\n\nPayment: Cash | Change: $0.21\n\nLoyalty points earned: 19\nTotal points: 240",
+    "questions": [
+      {
+        "question": "What type of discount did the customer receive?",
+        "options": [
+          "A student discount",
+          "A seasonal promotion discount",
+          "A loyalty programme discount",
+          "A first-visit discount"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is indicated about the payment method?",
+        "options": [
+          "The customer paid by credit card",
+          "The customer paid by cash",
+          "The customer paid using a loyalty card",
+          "The customer paid online in advance"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "type": "advertisement",
+    "instruction": "Read an advertisement.",
+    "title": "Sale at Blue Wave Surf Shop!",
+    "subtitle": "",
+    "text": "From July 1 to July 31, enjoy up to 40% off surfboards, wetsuits, and beach accessories.\n\nOpen daily: 9:00 a.m. - 8:00 p.m.\nLocation: 22 Shoreline Drive\n\nNew arrivals updated every week.\nVisit bluewavesurf.com for the full range.",
+    "questions": [
+      {
+        "question": "What is indicated about Blue Wave Surf Shop?",
+        "options": [
+          "It is open only on weekdays",
+          "It sells equipment for water sports",
+          "It offers discounts throughout the year",
+          "It is a family-owned business"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is NOT listed as being on sale?",
+        "options": [
+          "Surfboards",
+          "Wetsuits",
+          "Kayaks",
+          "Beach accessories"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is mentioned about new arrivals?",
+        "options": [
+          "They are available only online",
+          "They are added to the store each week",
+          "They are discounted by 40%",
+          "They are limited to summer items only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "type": "advertisement",
+    "instruction": "Read an advertisement.",
+    "title": "Grand Opening - FreshFit Gym!",
+    "subtitle": "",
+    "text": "Join us on September 1 for our grand opening at 78 Lakeview Avenue!\n\nEnjoy a FREE trial class and 20% off all monthly memberships when you sign up on opening day.\n\nWe offer: yoga - cycling - strength training - swimming\n\nOpen Monday-Saturday, 6:00 a.m. - 10:00 p.m.\nVisit freshfitgym.com to learn more.",
+    "questions": [
+      {
+        "question": "What special offer is available on opening day?",
+        "options": [
+          "A free one-month membership for everyone",
+          "A free trial class and 20% off monthly memberships",
+          "Free gym equipment for the first 50 members",
+          "A 50% discount on all annual memberships"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is NOT offered at FreshFit Gym?",
+        "options": [
+          "Yoga",
+          "Swimming",
+          "Running classes",
+          "Cycling"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is indicated about the gym's opening hours?",
+        "options": [
+          "It is open seven days a week",
+          "It is closed on Sundays",
+          "It is only open in the evenings",
+          "It opens at 8:00 a.m. on weekdays"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Community Health Fair - August 24",
+    "subtitle": "",
+    "text": "9:00 a.m. — Registration and Welcome\n9:30 a.m. — Opening Speech - Dr. Maya Osei\n10:00 a.m. — Health Screenings (blood pressure, vision, BMI)\n11:30 a.m. — Nutrition Workshop - Healthy Eating on a Budget\n1:00 p.m. — Lunch Break\n2:00 p.m. — Panel Discussion - Mental Health Awareness\n3:30 p.m. — Raffle Draw and Closing Remarks",
+    "questions": [
+      {
+        "question": "What will take place immediately before the lunch break?",
+        "options": [
+          "A panel discussion",
+          "A nutrition workshop",
+          "Health screenings",
+          "The opening speech"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When will the raffle draw occur?",
+        "options": [
+          "At 10:00 a.m.",
+          "At 2:00 p.m.",
+          "At 3:30 p.m.",
+          "At 9:30 a.m."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "type": "schedule",
+    "instruction": "Read an agenda.",
+    "title": "Staff Development Day - November 5",
+    "subtitle": "",
+    "text": "8:30 a.m. — Arrival and Coffee\n9:00 a.m. — Welcome Address - CEO Laura Stein\n10:00 a.m. — Workshop A: Leadership Skills\n11:30 a.m. — Workshop B: Digital Tools for the Workplace\n1:00 p.m. — Lunch\n2:00 p.m. — Team Building Activities\n4:00 p.m. — Feedback Session and Closing",
+    "questions": [
+      {
+        "question": "What will be discussed at 11:30 a.m.?",
+        "options": [
+          "Leadership skills",
+          "Team building strategies",
+          "Digital tools for the workplace",
+          "Company financial targets"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "When will an executive speak at the event?",
+        "options": [
+          "At 8:30 a.m.",
+          "At 9:00 a.m.",
+          "At 10:00 a.m.",
+          "At 2:00 p.m."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Science Conference - February 20",
+    "subtitle": "",
+    "text": "9:00 a.m. — Registration and Welcome Pack\n10:00 a.m. — Keynote: 'Advances in Renewable Energy'\n11:30 a.m. — Breakout Sessions: Climate, AI, Biotech\n1:00 p.m. — Lunch\n2:00 p.m. — Expert Panel: Future of Scientific Research\n4:00 p.m. — Networking Reception",
+    "questions": [
+      {
+        "question": "When can attendees interact informally with other professionals?",
+        "options": [
+          "At 2:00 p.m.",
+          "At 4:00 p.m.",
+          "At 9:00 a.m.",
+          "At 11:30 a.m."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will the keynote speech discuss?",
+        "options": [
+          "Advances in artificial intelligence",
+          "Future trends in biotech",
+          "Advances in renewable energy",
+          "Climate change policy"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "type": "schedule",
+    "instruction": "Read an agenda.",
+    "title": "Writing Workshop - October 12",
+    "subtitle": "",
+    "text": "10:00 a.m. — Welcome and Program Overview\n10:30 a.m. — Session 1: Elements of Effective Writing\n11:30 a.m. — Session 2: Interactive Peer Review Exercise\n12:30 p.m. — Lunch Break\n1:30 p.m. — Session 3: Writing for Different Audiences\n3:00 p.m. — Q&A and Closing Feedback",
+    "questions": [
+      {
+        "question": "What is suggested about the 11:30 a.m. session?",
+        "options": [
+          "It will focus on grammar rules",
+          "It will involve participants reviewing each other's work",
+          "It will be led by a guest speaker",
+          "It will test the morning's lecture content"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will take place immediately after the lunch break?",
+        "options": [
+          "A session on writing for different audiences",
+          "The welcome and overview",
+          "A peer review exercise",
+          "A Q&A session"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Music Festival - July 4",
+    "subtitle": "",
+    "text": "12:00 p.m. — Gates Open\n1:00 p.m. — Opening Act - The Riverside Band\n2:30 p.m. — Acoustic Session - Clara Moon\n4:00 p.m. — DJ Set - Neon Pulse\n5:30 p.m. — Food & Craft Market\n7:00 p.m. — Headliner - Echo Valley\n9:30 p.m. — Fireworks Display and Closing",
+    "questions": [
+      {
+        "question": "What will take place immediately before the headliner?",
+        "options": [
+          "A DJ set",
+          "A food and craft market",
+          "A fireworks display",
+          "An acoustic session"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When do the gates open?",
+        "options": [
+          "At 11:00 a.m.",
+          "At 12:00 p.m.",
+          "At 1:00 p.m.",
+          "At 2:30 p.m."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "type": "schedule",
+    "instruction": "Read an agenda.",
+    "title": "Annual General Meeting - March 15",
+    "subtitle": "",
+    "text": "9:00 a.m. — Opening and Attendance\n9:15 a.m. — Review of Last Year's Minutes\n9:45 a.m. — Financial Report - Treasurer\n10:30 a.m. — Election of New Board Members\n11:30 a.m. — Discussion: Future Projects and Goals\n12:30 p.m. — Lunch Break\n1:30 p.m. — Closing Remarks and Next Steps",
+    "questions": [
+      {
+        "question": "What will be discussed at 9:45 a.m.?",
+        "options": [
+          "The election of new board members",
+          "Future projects and goals",
+          "The organisation's finances",
+          "A review of last year's minutes"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What will take place immediately after the lunch break?",
+        "options": [
+          "The financial report",
+          "Closing remarks and next steps",
+          "A discussion of future projects",
+          "The election of board members"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "School Open Day - April 10",
+    "subtitle": "",
+    "text": "9:00 a.m. — Welcome by Principal - Ms. Rivera\n9:30 a.m. — Campus Tour\n10:30 a.m. — Classroom Demonstrations\n11:30 a.m. — Student Performance - Choir and Drama\n12:30 p.m. — Lunch with Teachers\n1:30 p.m. — Q&A Session for Prospective Families\n2:30 p.m. — Individual Meetings with Department Heads",
+    "questions": [
+      {
+        "question": "What will take place at 11:30 a.m.?",
+        "options": [
+          "A campus tour",
+          "A Q&A session for families",
+          "A student performance",
+          "Individual meetings with teachers"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "When can prospective families ask questions?",
+        "options": [
+          "At 9:30 a.m.",
+          "At 10:30 a.m.",
+          "At 1:30 p.m.",
+          "At 2:30 p.m."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "type": "schedule",
+    "instruction": "Read an agenda.",
+    "title": "Product Launch Meeting - May 22",
+    "subtitle": "",
+    "text": "2:00 p.m. — Welcome and Introduction\n2:10 p.m. — Market Research Findings - Sales Team\n2:40 p.m. — Product Design Overview - Design Lead\n3:10 p.m. — Pricing and Distribution Strategy\n3:40 p.m. — Marketing Campaign Proposal\n4:10 p.m. — Q&A and Open Discussion\n4:40 p.m. — Summary and Action Points",
+    "questions": [
+      {
+        "question": "What will be presented at 2:40 p.m.?",
+        "options": [
+          "The marketing campaign proposal",
+          "The pricing and distribution strategy",
+          "The product design overview",
+          "The market research findings"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What will happen immediately after the marketing proposal?",
+        "options": [
+          "A summary of action points",
+          "A review of the pricing strategy",
+          "A product design presentation",
+          "A Q&A and open discussion"
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Language Learning Seminar - June 8",
+    "subtitle": "",
+    "text": "9:00 a.m. — Registration and Coffee\n9:30 a.m. — Opening Talk: Why Language Learning Matters\n10:30 a.m. — Workshop 1: Vocabulary Building Techniques\n12:00 p.m. — Lunch\n1:00 p.m. — Workshop 2: Listening and Speaking Skills\n2:30 p.m. — Panel: Language Learning in the Digital Age\n3:30 p.m. — Closing and Networking",
+    "questions": [
+      {
+        "question": "What will take place immediately after lunch?",
+        "options": [
+          "A panel discussion",
+          "A vocabulary workshop",
+          "A listening and speaking skills workshop",
+          "The opening talk"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "When will participants have a chance to network?",
+        "options": [
+          "At 9:00 a.m.",
+          "At 10:30 a.m.",
+          "At 2:30 p.m.",
+          "At 3:30 p.m."
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "type": "schedule",
+    "instruction": "Read an agenda.",
+    "title": "Charity Fundraiser Gala - December 6",
+    "subtitle": "",
+    "text": "6:00 p.m. — Doors Open and Welcome Drinks\n6:30 p.m. — Opening Remarks - Charity Director\n7:00 p.m. — Dinner\n8:00 p.m. — Live Auction\n9:00 p.m. — Entertainment - Jazz Quartet\n10:00 p.m. — Raffle Draw and Prize Giving\n10:30 p.m. — Closing Speech and Thank You",
+    "questions": [
+      {
+        "question": "What will take place at 8:00 p.m.?",
+        "options": [
+          "A raffle draw",
+          "A jazz performance",
+          "A live auction",
+          "The closing speech"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What will happen immediately after the entertainment?",
+        "options": [
+          "The doors will open",
+          "A raffle draw and prize giving will take place",
+          "The charity director will give opening remarks",
+          "Dinner will be served"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "City Marathon - October 19",
+    "subtitle": "",
+    "text": "6:30 a.m. — Registration Check-In and Bib Collection\n7:00 a.m. — Warm-Up Session with Fitness Coach\n7:30 a.m. — Race Start - Full Marathon\n8:00 a.m. — Race Start - Half Marathon\n11:00 a.m. — Finish Line Opens\n1:00 p.m. — Award Ceremony\n2:00 p.m. — Post-Race Refreshments and Music",
+    "questions": [
+      {
+        "question": "What will take place at 7:00 a.m.?",
+        "options": [
+          "The full marathon will start",
+          "Bibs will be collected",
+          "A warm-up session with a fitness coach",
+          "The award ceremony will begin"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "When does the finish line open?",
+        "options": [
+          "At 7:30 a.m.",
+          "At 8:00 a.m.",
+          "At 11:00 a.m.",
+          "At 1:00 p.m."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "type": "schedule",
+    "instruction": "Read an agenda.",
+    "title": "Board Strategy Meeting - January 14",
+    "subtitle": "",
+    "text": "10:00 a.m. — Welcome and Agenda Overview\n10:15 a.m. — Q4 Performance Review\n11:00 a.m. — Discussion: Expansion Plans for Next Year\n12:00 p.m. — Lunch Break\n1:00 p.m. — Budget Allocation for New Projects\n2:00 p.m. — Risk Assessment and Mitigation\n3:00 p.m. — Summary, Decisions and Next Steps",
+    "questions": [
+      {
+        "question": "What will be discussed at 11:00 a.m.?",
+        "options": [
+          "The Q4 performance review",
+          "Budget allocation for new projects",
+          "Expansion plans for the following year",
+          "Risk assessment and mitigation"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What will take place immediately after the lunch break?",
+        "options": [
+          "A risk assessment discussion",
+          "Budget allocation for new projects",
+          "A summary of decisions",
+          "The Q4 performance review"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "type": "article",
+    "instruction": "Read a newspaper article.",
+    "title": "City Opens New Riverside Cycling Path",
+    "subtitle": "LAKEFIELD (March 10)",
+    "text": "The city of Lakefield officially opened a new 8-kilometre cycling path along the Riverside District on Saturday. The project, funded through a combination of municipal grants and local business sponsorship, aims to reduce traffic congestion and encourage sustainable transport. Mayor Diana Cross attended the ribbon-cutting ceremony and praised community volunteers who helped design the route. The path is equipped with rest areas, water stations, and bicycle repair kiosks. Residents are encouraged to use the path and share feedback on the city's website.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the article?",
+        "options": [
+          "To announce the closure of a city road",
+          "To report on the opening of a new cycling path",
+          "To describe a new public transport system",
+          "To advertise a cycling event in Lakefield"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'congestion' in the article is closest in meaning to",
+        "options": [
+          "noise",
+          "pollution",
+          "overcrowding",
+          "construction"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What are residents encouraged to do?",
+        "options": [
+          "Donate to the city's cycling fund",
+          "Volunteer to maintain the path",
+          "Provide feedback on the city's website",
+          "Attend the next ribbon-cutting ceremony"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "type": "article",
+    "instruction": "Read a magazine article.",
+    "title": "The Rise of Urban Gardening",
+    "subtitle": "",
+    "text": "Urban gardening has grown significantly in recent years, with more city residents choosing to grow their own vegetables and herbs on balconies, rooftops, and in community plots. Experts suggest that urban gardening offers numerous benefits, including reducing food costs, improving mental well-being, and fostering a sense of community. Many cities are now providing financial support and free workshops to encourage residents to take up the practice. Participants report feeling more connected to their neighbourhoods and more conscious of their dietary choices.",
+    "questions": [
+      {
+        "question": "What is one benefit of urban gardening mentioned in the article?",
+        "options": [
+          "Reducing air pollution",
+          "Lowering food costs",
+          "Improving physical fitness",
+          "Increasing property values"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'fostering' in the article is closest in meaning to",
+        "options": [
+          "reducing",
+          "replacing",
+          "encouraging",
+          "measuring"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What are many cities doing to support urban gardening?",
+        "options": [
+          "Providing free land to all residents",
+          "Offering funding and free workshops",
+          "Building large community gardens in every district",
+          "Making urban gardening a legal requirement"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "type": "article",
+    "instruction": "Read a newspaper article.",
+    "title": "Local Theatre Group Marks 25th Anniversary",
+    "subtitle": "CRESTWOOD (May 5)",
+    "text": "The Crestwood Community Theatre celebrated its 25th anniversary this weekend with a special performance of its most beloved productions. Founded in 2000 by a group of six friends, the theatre has grown to include over 80 active members from diverse backgrounds. The anniversary show was attended by more than 300 audience members, and all ticket proceeds will be donated to the local youth arts programme. Director Helena Park thanked volunteers and supporters for their dedication over the years.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the article?",
+        "options": [
+          "To advertise upcoming theatre performances",
+          "To report on a theatre group's anniversary celebration",
+          "To announce the founding of a new theatre",
+          "To describe changes in the local arts programme"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will happen to the money raised from ticket sales?",
+        "options": [
+          "It will fund the theatre's new building",
+          "It will be used to pay the performers",
+          "It will be donated to a youth arts programme",
+          "It will cover the anniversary event costs"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What can be concluded about the Crestwood Community Theatre?",
+        "options": [
+          "It was founded by a large organisation",
+          "It has grown considerably since it was established",
+          "It only accepts professional actors",
+          "It has been running for more than 30 years"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "type": "article",
+    "instruction": "Read a magazine article.",
+    "title": "Benefits of Regular Walking",
+    "subtitle": "",
+    "text": "Walking is one of the simplest and most accessible forms of exercise available to people of all ages. Research shows that walking for at least 30 minutes a day can improve cardiovascular health, strengthen muscles, and reduce the risk of chronic diseases. In addition to its physical benefits, walking has been shown to reduce stress and improve mood. Health experts recommend incorporating a daily walk into your routine for a more balanced and fulfilling lifestyle.",
+    "questions": [
+      {
+        "question": "What is one physical benefit of walking mentioned in the article?",
+        "options": [
+          "Improved vision",
+          "Better cardiovascular health",
+          "Increased flexibility",
+          "Faster metabolism"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "According to the article, how often should people walk?",
+        "options": [
+          "Once a week",
+          "Three times a week",
+          "Every day",
+          "Twice a month"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What mental benefit of walking is mentioned?",
+        "options": [
+          "Better memory",
+          "Increased creativity",
+          "Reduced stress and improved mood",
+          "Improved concentration"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "type": "article",
+    "instruction": "Read a newspaper article.",
+    "title": "New Community Centre to Open in Westfield",
+    "subtitle": "WESTFIELD (September 3)",
+    "text": "A new community centre will open its doors to residents of Westfield next month, offering a wide range of facilities including a gymnasium, meeting rooms, a children's play area, and a cafe. The centre, which was funded through a combination of local government investment and public donations, is located at 55 Elm Road. It will be open seven days a week from 7:00 a.m. to 9:00 p.m. Residents are invited to attend a free open day on October 5 to explore the facilities before the official launch.",
+    "questions": [
+      {
+        "question": "What is the article mainly about?",
+        "options": [
+          "The renovation of an existing community building",
+          "The opening of a new community centre",
+          "A fundraising campaign for local sports facilities",
+          "Changes to Westfield's local government"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How was the community centre funded?",
+        "options": [
+          "Entirely through government investment",
+          "Through local government investment and public donations",
+          "Through a national charity grant",
+          "Through private business sponsorship only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are residents invited to do on October 5?",
+        "options": [
+          "Volunteer at the community centre",
+          "Attend a free open day to explore the facilities",
+          "Apply for membership before the official launch",
+          "Take part in a fundraising event"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "type": "article",
+    "instruction": "Read a magazine article.",
+    "title": "The Importance of Sleep",
+    "subtitle": "",
+    "text": "Sleep is essential for maintaining good physical and mental health. According to health experts, adults should aim for between seven and nine hours of sleep per night. During sleep, the body repairs tissues, strengthens the immune system, and consolidates memories. Lack of adequate sleep has been linked to a range of health problems, including increased stress levels, reduced concentration, and a higher risk of chronic illness. Experts recommend establishing a regular sleep schedule and avoiding screens before bedtime to improve sleep quality.",
+    "questions": [
+      {
+        "question": "What is one function of sleep mentioned in the article?",
+        "options": [
+          "Improving physical coordination",
+          "Strengthening the immune system",
+          "Increasing energy levels during exercise",
+          "Reducing appetite"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'consolidates' in the article is closest in meaning to",
+        "options": [
+          "creates",
+          "loses",
+          "strengthens",
+          "transfers"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What do experts recommend to improve sleep quality?",
+        "options": [
+          "Taking short naps during the day",
+          "Exercising immediately before bedtime",
+          "Following a regular sleep schedule and avoiding screens before bed",
+          "Sleeping fewer hours but more deeply"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "type": "article",
+    "instruction": "Read a newspaper article.",
+    "title": "Farmers Market Celebrates Ten Years",
+    "subtitle": "CARTONBURG (May 22)",
+    "text": "The farmers market at Briggley Square celebrates ten years of continuous operation this Saturday. The event will feature live music, cooking demonstrations, and ample local produce. Residents are encouraged to attend and support local farmers. The market will be open from 8:00 a.m. to 6:00 p.m. A special anniversary cake will be shared with visitors at noon, and local schoolchildren will perform traditional songs during the afternoon.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the article?",
+        "options": [
+          "To encourage residents to buy local produce",
+          "To provide information about an anniversary celebration",
+          "To announce the restoration of Briggley Square",
+          "To describe a new entertainment venue in Cartonburg"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'ample' in the article is closest in meaning to",
+        "options": [
+          "fresh",
+          "plentiful",
+          "organic",
+          "discounted"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What special activity is planned for noon?",
+        "options": [
+          "A cooking demonstration",
+          "A live music performance",
+          "An anniversary cake will be shared with visitors",
+          "A parade through the market"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "type": "article",
+    "instruction": "Read a magazine article.",
+    "title": "Screen Time and Children",
+    "subtitle": "",
+    "text": "Many parents today are concerned about the amount of time their children spend in front of screens. Research suggests that excessive screen time can negatively affect children's sleep, concentration, and social skills. However, experts point out that not all screen time is equal — educational programmes and interactive activities can have positive effects on learning. Parents are advised to set clear limits on recreational screen time, encourage outdoor play, and watch programmes together with their children when possible.",
+    "questions": [
+      {
+        "question": "What is one negative effect of excessive screen time mentioned in the article?",
+        "options": [
+          "Reduced physical strength",
+          "Poorer sleep quality",
+          "Decreased appetite",
+          "Lower academic grades"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What do experts say about educational screen time?",
+        "options": [
+          "It should be completely avoided",
+          "It has the same effect as recreational screen time",
+          "It can have positive effects on learning",
+          "It is only suitable for older children"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What are parents advised to do?",
+        "options": [
+          "Remove all screens from the home",
+          "Allow unlimited screen time on weekends",
+          "Set clear limits on recreational screen time",
+          "Only allow children to use screens at school"
+        ],
+        "answer": 2
+      }
+    ]
+  }
+]

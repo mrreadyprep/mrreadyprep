@@ -57,11 +57,11 @@ def toggle_vocab(word_id: int):
     for w in vocab_words:
         if w["id"] == word_id:
             w["learned"] = not w["learned"]
-            # vocab_level'i öğrenilen kelime sayısına göre güncelle
             learned_count = sum(1 for v in vocab_words if v["learned"])
             student_profile["vocab_level"] = 1 + learned_count // 5
             return {"status": "success", "learned": w["learned"]}
     return {"status": "error", "message": "Word not found"}
+
 # Complete the Words verisi
 import pathlib
 CTW_FILE = pathlib.Path(__file__).parent / "complete_the_words_1.json"
@@ -71,3 +71,12 @@ with open(CTW_FILE, "r", encoding="utf-8") as f:
 @app.get("/api/reading/complete-the-words")
 def get_ctw_exercises():
     return ctw_exercises
+
+# Read in Daily Life verisi
+RIDL_FILE = pathlib.Path(__file__).parent / "read_in_daily_life_1.json"
+with open(RIDL_FILE, "r", encoding="utf-8") as f:
+    ridl_passages = json.load(f)
+
+@app.get("/api/reading/read-in-daily-life")
+def get_ridl_passages():
+    return ridl_passages
