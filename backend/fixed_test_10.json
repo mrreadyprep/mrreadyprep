@@ -1,0 +1,1772 @@
+{
+  "id": 10,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 28,
+          "topic": "The Byzantine Empire's Legacy",
+          "category": "History",
+          "paragraph": "When the western half of the Roman Empire collapsed in the fifth century, its eastern half survived for nearly a thousand additional years as what historians now call the Byzantine Empire. Centered on the city of Constantinople, this empire preserved much of Roman law, administration, and classical learning throughout the medieval period, even as much of Western Europe experienced significant political fragmentation. Byzantine scholars carefully preserved countless ancient Greek texts that might otherwise have been lost entirely, later transmitting this knowledge back to Western Europe and helping spark renewed interest in classical learning. The empire also developed a distinctive artistic and architectural tradition, exemplified by the famous domed cathedral of Hagia Sophia. Constantinople's eventual conquest in 1453 marked the definitive end of this remarkable civilization.",
+          "blanks": [
+            {
+              "word": "preserved",
+              "visible": "pres",
+              "hidden": "erved"
+            },
+            {
+              "word": "administration",
+              "visible": "admin",
+              "hidden": "istration"
+            },
+            {
+              "word": "fragmentation",
+              "visible": "fragm",
+              "hidden": "entation"
+            },
+            {
+              "word": "scholars",
+              "visible": "scho",
+              "hidden": "lars"
+            },
+            {
+              "word": "transmitting",
+              "visible": "trans",
+              "hidden": "mitting"
+            },
+            {
+              "word": "renewed",
+              "visible": "ren",
+              "hidden": "ewed"
+            },
+            {
+              "word": "distinctive",
+              "visible": "disti",
+              "hidden": "nctive"
+            },
+            {
+              "word": "exemplified",
+              "visible": "exemp",
+              "hidden": "lified"
+            },
+            {
+              "word": "definitive",
+              "visible": "defin",
+              "hidden": "itive"
+            },
+            {
+              "word": "civilization",
+              "visible": "civil",
+              "hidden": "ization"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 46,
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Campus Print Center",
+          "subtitle": "",
+          "text": "25 Color Copies — $0.50 each\n10 Black & White Copies — $0.10 each\nBinding — $2.00\nSubtotal: $15.50\nStudent Discount: -$1.55\nTotal: $13.95",
+          "questions": [
+            {
+              "question": "How much did the color copies cost in total?",
+              "options": [
+                "$1.00",
+                "$2.50",
+                "$12.50",
+                "$15.50"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "What discount was applied?",
+              "options": [
+                "A bulk order discount",
+                "A student discount",
+                "A first-time customer discount",
+                "No discount was applied"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Sunrise Pharmacy",
+          "subtitle": "",
+          "text": "1x Allergy Medication — $12.99\n1x Vitamin C Tablets — $8.49\n1x Reusable Water Bottle — $6.00\nSubtotal: $27.48\nTax: $2.20\nTotal: $29.68\nPayment: Insurance + Card",
+          "questions": [
+            {
+              "question": "What was the total after tax?",
+              "options": [
+                "$27.48",
+                "$29.68",
+                "$2.20",
+                "$12.99"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How was the purchase paid for?",
+              "options": [
+                "Cash only",
+                "Insurance and card",
+                "Store gift card",
+                "Check"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 48,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Weekend Hiking Plans",
+          "subtitle": "",
+          "text": "Maya (5:02 p.m.)\nAre we still doing the trail this Saturday?\n\nJon (5:05 p.m.)\nI think so, but the forecast says rain in the morning.\n\nMaya (5:07 p.m.)\nMaybe we should push it to the afternoon instead.\n\nJon (5:09 p.m.)\nGood idea. Let's meet at the trailhead at 1 instead of 9.\n\nMaya (5:10 p.m.)\nWorks for me. I'll bring extra water this time.",
+          "questions": [
+            {
+              "question": "What is the main topic of this conversation?",
+              "options": [
+                "Canceling a hiking trip",
+                "Adjusting the time of a hiking trip due to weather",
+                "Choosing a new hiking trail",
+                "Buying hiking equipment"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What time will they now meet?",
+              "options": [
+                "9 a.m.",
+                "1 p.m.",
+                "5 p.m.",
+                "They decided not to meet"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Maya say she will do?",
+              "options": [
+                "Check the weather again",
+                "Bring extra water",
+                "Invite another friend",
+                "Reserve a campsite"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 19,
+          "title": "Photosynthesis and the Evolution of Plant Life",
+          "passage": "Photosynthesis, the process by which plants convert sunlight into chemical energy, is often taken for granted as a simple biological function, yet its evolutionary history spans billions of years and fundamentally reshaped the composition of Earth's atmosphere.\n\nThe earliest photosynthetic organisms were not plants at all, but single-celled cyanobacteria that emerged in ancient oceans roughly three and a half billion years ago. These microorganisms used sunlight to convert carbon dioxide and water into energy, releasing oxygen as a byproduct in a process nearly identical to that used by modern plants today.\n\nOver an immense span of time, the oxygen released by these early organisms gradually accumulated in the atmosphere, eventually triggering what scientists call the Great Oxidation Event. This dramatic shift in atmospheric chemistry proved catastrophic for many existing anaerobic life forms unable to tolerate oxygen, while simultaneously opening the door for entirely new forms of oxygen-dependent life to evolve.\n\nLand plants did not appear until much later, evolving from aquatic algae that gradually adapted to life outside of water. This transition required significant evolutionary innovations, including structures to prevent water loss and support upright growth away from the buoyant support once provided by an aquatic environment.",
+          "passage_marked": "Photosynthesis, the process by which plants convert sunlight into chemical energy, is often taken for granted as a simple biological function, yet its evolutionary history spans billions of years and fundamentally reshaped the composition of Earth's atmosphere. [A]\n\nThe earliest photosynthetic organisms were not plants at all, but single-celled cyanobacteria that emerged in ancient oceans roughly three and a half billion years ago. These microorganisms used sunlight to convert carbon dioxide and water into energy, releasing oxygen as a byproduct in a process nearly identical to that used by modern plants today. [B]\n\nOver an immense span of time, the oxygen released by these early organisms gradually accumulated in the atmosphere, eventually triggering what scientists call the Great Oxidation Event. This dramatic shift in atmospheric chemistry proved catastrophic for many existing anaerobic life forms unable to tolerate oxygen, while simultaneously opening the door for entirely new forms of oxygen-dependent life to evolve. [C]\n\nLand plants did not appear until much later, evolving from aquatic algae that gradually adapted to life outside of water. This transition required significant evolutionary innovations, including structures to prevent water loss and support upright growth away from the buoyant support once provided by an aquatic environment. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'accumulated' in the passage is closest in meaning to",
+              "options": [
+                "disappeared",
+                "built up",
+                "evaporated",
+                "separated"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what were the earliest photosynthetic organisms?",
+              "options": [
+                "Land plants",
+                "Cyanobacteria",
+                "Fungi",
+                "Insects"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What was one effect of the Great Oxidation Event?",
+              "options": [
+                "It eliminated all life on Earth",
+                "It was harmful to many existing anaerobic organisms",
+                "It had no effect on other life forms",
+                "It only affected ocean temperatures"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention structures to prevent water loss?",
+              "options": [
+                "To describe an adaptation plants needed to survive on land",
+                "To explain how fish breathe underwater",
+                "To argue that land plants evolved before ocean life",
+                "To compare plants with modern cyanobacteria"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This makes cyanobacteria, in a sense, responsible for making the modern, oxygen-rich atmosphere possible.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 29,
+          "topic": "Neural Networks and Deep Learning",
+          "category": "Technology",
+          "paragraph": "Modern artificial intelligence systems increasingly rely on a technique called deep learning, which is loosely inspired by the structure of the human brain. A neural network consists of layers of interconnected nodes, and during training, the network gradually adjusts the strength of connections between these nodes to improve its performance on a given task. Early neural networks were limited by insufficient computing power and relatively small amounts of training data, but rapid advances in both areas over the past two decades have dramatically expanded what these systems can accomplish. Deep learning models now power everything from image recognition software to language translation tools, often achieving accuracy that rivals or exceeds human performance on narrow tasks. Despite these impressive capabilities, researchers continue to investigate why these networks sometimes fail in unpredictable ways.",
+          "blanks": [
+            {
+              "word": "interconnected",
+              "visible": "inter",
+              "hidden": "connected"
+            },
+            {
+              "word": "gradually",
+              "visible": "grad",
+              "hidden": "ually"
+            },
+            {
+              "word": "connections",
+              "visible": "conne",
+              "hidden": "ctions"
+            },
+            {
+              "word": "insufficient",
+              "visible": "insuf",
+              "hidden": "ficient"
+            },
+            {
+              "word": "advances",
+              "visible": "adva",
+              "hidden": "nces"
+            },
+            {
+              "word": "dramatically",
+              "visible": "drama",
+              "hidden": "tically"
+            },
+            {
+              "word": "accomplish",
+              "visible": "accom",
+              "hidden": "plish"
+            },
+            {
+              "word": "recognition",
+              "visible": "recog",
+              "hidden": "nition"
+            },
+            {
+              "word": "achieving",
+              "visible": "achi",
+              "hidden": "eving"
+            },
+            {
+              "word": "unpredictable",
+              "visible": "unpre",
+              "hidden": "dictable"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 20,
+          "title": "The Discovery of X-rays",
+          "passage": "In 1895, physicist Wilhelm Röntgen made an accidental discovery that would transform both medicine and physics. While experimenting with a cathode ray tube in his laboratory, he noticed that a nearby screen coated with a fluorescent chemical began to glow, even though the tube itself was covered and no visible light could have caused the effect.\n\nIntrigued, Röntgen began systematically investigating this mysterious form of radiation, which could pass through many solid materials that ordinarily blocked visible light, including wood, thick books, and even the soft tissue of the human body. Because he did not yet understand the nature of this new radiation, he called it the X-ray, using the mathematical symbol for an unknown quantity.\n\nOne of Röntgen's earliest and most famous experiments involved capturing an image of his wife's hand, clearly revealing the bones beneath her skin along with her wedding ring. This striking image, among the first medical X-ray photographs ever produced, quickly captured public attention and demonstrated the technology's remarkable potential.\n\nWithin just a few months of the discovery being announced, doctors around the world began using X-rays to diagnose bone fractures and locate foreign objects lodged within the body, dramatically advancing the field of medical diagnostics. Röntgen refused to patent his discovery, believing it should remain freely available for the benefit of humanity.",
+          "passage_marked": "In 1895, physicist Wilhelm Röntgen made an accidental discovery that would transform both medicine and physics. While experimenting with a cathode ray tube in his laboratory, he noticed that a nearby screen coated with a fluorescent chemical began to glow, even though the tube itself was covered and no visible light could have caused the effect. [A]\n\nIntrigued, Röntgen began systematically investigating this mysterious form of radiation, which could pass through many solid materials that ordinarily blocked visible light, including wood, thick books, and even the soft tissue of the human body. Because he did not yet understand the nature of this new radiation, he called it the X-ray, using the mathematical symbol for an unknown quantity. [B]\n\nOne of Röntgen's earliest and most famous experiments involved capturing an image of his wife's hand, clearly revealing the bones beneath her skin along with her wedding ring. This striking image, among the first medical X-ray photographs ever produced, quickly captured public attention and demonstrated the technology's remarkable potential. [C]\n\nWithin just a few months of the discovery being announced, doctors around the world began using X-rays to diagnose bone fractures and locate foreign objects lodged within the body, dramatically advancing the field of medical diagnostics. Röntgen refused to patent his discovery, believing it should remain freely available for the benefit of humanity. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'intrigued' in the passage is closest in meaning to",
+              "options": [
+                "frightened",
+                "curious",
+                "annoyed",
+                "exhausted"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, why did Röntgen call the radiation 'X-rays'?",
+              "options": [
+                "Because it was discovered in a location starting with X",
+                "Because he used the mathematical symbol for an unknown quantity",
+                "Because it was named after a colleague",
+                "Because X stood for 'extra strong'"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What did Röntgen's famous early image reveal?",
+              "options": [
+                "A photograph of the sun",
+                "The bones in his wife's hand",
+                "A map of his laboratory",
+                "An X-ray of an animal"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What can be inferred about Röntgen's attitude toward his discovery?",
+              "options": [
+                "He wanted to profit from it exclusively",
+                "He believed it should be freely available to benefit humanity",
+                "He tried to keep it secret from other scientists",
+                "He regretted making the discovery public"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This unusual property immediately suggested a wide range of possible practical applications.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 30,
+          "topic": "The Physiology of Thirst",
+          "category": "Biology",
+          "paragraph": "Thirst is the body's primary mechanism for maintaining proper fluid balance, triggered by a combination of internal signals that monitor hydration levels continuously. When the body loses water through sweating, breathing, or urination, blood volume decreases and the concentration of dissolved particles in the blood rises correspondingly. Specialized sensors in the brain detect these changes and trigger the sensation of thirst, prompting an organism to seek out and consume fluids. Simultaneously, the body releases a hormone that signals the kidneys to conserve water by producing more concentrated urine, reducing further fluid loss until adequate hydration is restored. This tightly regulated feedback system usually keeps the body's water balance remarkably stable despite constantly changing conditions.",
+          "blanks": [
+            {
+              "word": "concentration",
+              "visible": "conce",
+              "hidden": "ntration"
+            },
+            {
+              "word": "dissolved",
+              "visible": "diss",
+              "hidden": "olved"
+            },
+            {
+              "word": "correspondingly",
+              "visible": "corre",
+              "hidden": "spondingly"
+            },
+            {
+              "word": "prompting",
+              "visible": "prom",
+              "hidden": "pting"
+            },
+            {
+              "word": "organism",
+              "visible": "orga",
+              "hidden": "nism"
+            },
+            {
+              "word": "releases",
+              "visible": "rele",
+              "hidden": "ases"
+            },
+            {
+              "word": "conserve",
+              "visible": "cons",
+              "hidden": "erve"
+            },
+            {
+              "word": "concentrated",
+              "visible": "conce",
+              "hidden": "ntrated"
+            },
+            {
+              "word": "hydration",
+              "visible": "hydr",
+              "hidden": "ation"
+            },
+            {
+              "word": "regulated",
+              "visible": "regu",
+              "hidden": "lated"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 49,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Splitting a Group Gift",
+          "subtitle": "",
+          "text": "Priya (2:14 p.m.)\nHey, are you in for chipping in on a gift for Mateo's graduation?\n\nSam (2:16 p.m.)\nDefinitely. What's the plan?\n\nPriya (2:18 p.m.)\nI was thinking we split a nice watch, maybe $30 each from five of us.\n\nSam (2:20 p.m.)\nSounds good. Should I send you the money now?\n\nPriya (2:21 p.m.)\nWhenever works, just before Friday so I can order it in time.",
+          "questions": [
+            {
+              "question": "What are Priya and Sam discussing?",
+              "options": [
+                "Planning a surprise party",
+                "Chipping in together on a graduation gift",
+                "Organizing a group trip",
+                "Splitting a restaurant bill"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How much does each person need to contribute?",
+              "options": [
+                "$5",
+                "$15",
+                "$30",
+                "$50"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "What deadline does Priya mention?",
+              "options": [
+                "Before Friday",
+                "Before Monday",
+                "By the end of the month",
+                "There is no deadline"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 50,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Car Trouble",
+          "subtitle": "",
+          "text": "Dana (8:01 a.m.)\nMy car won't start this morning. Any chance you can give me a ride to work?\n\nLee (8:03 a.m.)\nSure, I can swing by in about twenty minutes.\n\nDana (8:04 a.m.)\nThank you so much! I'll call a tow truck once I get to the office.\n\nLee (8:05 a.m.)\nNo problem. Text me your address so I know exactly where to go.\n\nDana (8:06 a.m.)\nSending it now.",
+          "questions": [
+            {
+              "question": "Why does Dana need a ride?",
+              "options": [
+                "She missed the bus",
+                "Her car won't start",
+                "She lost her car keys",
+                "Her car was towed already"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Dana plan to do once she reaches the office?",
+              "options": [
+                "Fix the car herself",
+                "Call a tow truck",
+                "Ask for the day off",
+                "Buy a new car"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Lee ask Dana to send?",
+              "options": [
+                "Her phone number",
+                "Her work schedule",
+                "Her address",
+                "A photo of the car"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 199,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/199.mp3",
+          "transcript": "Is the return policy the same for sale items?",
+          "context": "A customer asks a cashier about store policy.",
+          "options": [
+            "Sale items can be returned within two weeks.",
+            "The sale ends this Sunday.",
+            "Store credit is given for returns.",
+            "Receipts are required for all returns."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "25-199"
+        },
+        {
+          "id": 200,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/200.mp3",
+          "transcript": "Could you point me toward the nearest restroom?",
+          "context": "A visitor asks a museum guide.",
+          "options": [
+            "It's just down this hallway on the left.",
+            "The museum has four floors.",
+            "Guided tours start every hour.",
+            "The cafe is on the ground floor."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "25-200"
+        },
+        {
+          "id": 201,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/201.mp3",
+          "transcript": "Do you know if the farmers market is open today?",
+          "context": "A resident asks a neighbor about the local market.",
+          "options": [
+            "Yes, it runs until two this afternoon.",
+            "The market has fresh produce every week.",
+            "Parking near the market is limited.",
+            "Vendors set up early in the morning."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "26-201"
+        },
+        {
+          "id": 202,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/202.mp3",
+          "transcript": "Could I switch to a different insurance plan mid-year?",
+          "context": "An employee asks a human resources representative.",
+          "options": [
+            "That depends on whether you have a qualifying event.",
+            "Open enrollment is usually in the fall.",
+            "The company offers three insurance plans.",
+            "Premiums are deducted from each paycheck."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "26-202"
+        },
+        {
+          "id": 203,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/203.mp3",
+          "transcript": "Is there a late fee for returning this rental car a day late?",
+          "context": "A customer asks a rental car agent.",
+          "options": [
+            "Yes, there's a small daily late fee.",
+            "The car has a full tank of gas.",
+            "Rentals include unlimited mileage.",
+            "We accept major credit cards."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "26-203"
+        },
+        {
+          "id": 204,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/204.mp3",
+          "transcript": "Could you tell me if this trail is suitable for beginners?",
+          "context": "A hiker asks a park ranger.",
+          "options": [
+            "Yes, it's rated easy to moderate.",
+            "The trailhead has a parking lot.",
+            "This park covers a large area.",
+            "Wildlife sightings are common here."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "26-204"
+        },
+        {
+          "id": 205,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/205.mp3",
+          "transcript": "Do you have a vegetarian option for this dish?",
+          "context": "A customer asks a server about menu substitutions.",
+          "options": [
+            "Yes, we can swap in tofu instead.",
+            "This dish is a customer favorite.",
+            "The kitchen uses fresh ingredients daily.",
+            "We also offer gluten-free options."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "26-205"
+        },
+        {
+          "id": 206,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/206.mp3",
+          "transcript": "Could you check whether my order has shipped yet?",
+          "context": "A customer contacts an online store's support team.",
+          "options": [
+            "Let me look that up for you now.",
+            "Orders typically ship within two days.",
+            "We offer free returns on all items.",
+            "Shipping is free over fifty dollars."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "26-206"
+        },
+        {
+          "id": 207,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/207.mp3",
+          "transcript": "Is it possible to reschedule my dentist appointment?",
+          "context": "A patient calls a dental office.",
+          "options": [
+            "Sure, what day works better for you?",
+            "The office is closed on Sundays.",
+            "Cleanings are recommended twice a year.",
+            "We accept most insurance providers."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "26-207"
+        },
+        {
+          "id": 208,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/208.mp3",
+          "transcript": "Could you tell me if this coupon can be combined with the sale?",
+          "context": "A customer asks a cashier at checkout.",
+          "options": [
+            "Unfortunately, only one discount can be applied.",
+            "The sale ends this weekend.",
+            "Coupons are valid for thirty days.",
+            "This store offers a loyalty program."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "26-208"
+        }
+      ],
+      "conv": [
+        {
+          "id": 46,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/46.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I missed the train to my job interview downtown."
+            },
+            {
+              "speaker": "female",
+              "text": "Did you call to let them know?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not yet, I'm trying to figure out the next train first."
+            },
+            {
+              "speaker": "female",
+              "text": "Call them now anyway, they'll appreciate knowing right away."
+            },
+            {
+              "speaker": "male",
+              "text": "You're right, I'll call while I wait for the next train."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He missed the train to a job interview",
+                "He lost his interview outfit",
+                "He forgot the interview address",
+                "His interview was canceled"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Skip the interview entirely",
+                "Call the company right away",
+                "Wait until he arrives to explain",
+                "Reschedule for another week"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/47.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I got an internship, but I still need to find housing near the office."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you looked into short-term sublets?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not yet, I wasn't sure where to search."
+            },
+            {
+              "speaker": "male",
+              "text": "There's a housing board specifically for interns that the company might share."
+            },
+            {
+              "speaker": "female",
+              "text": "I'll ask my recruiter about that tomorrow."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She didn't get the internship",
+                "She needs housing near her internship",
+                "She missed the internship start date",
+                "She can't afford the internship"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Live at home and commute far",
+                "Look into the company's intern housing board",
+                "Cancel the internship",
+                "Ask a stranger online for housing"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 48,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/48.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "My roommate and I keep disagreeing about the thermostat setting."
+            },
+            {
+              "speaker": "female",
+              "text": "What temperature does each of you prefer?"
+            },
+            {
+              "speaker": "male",
+              "text": "I like it cooler, but he's always cold."
+            },
+            {
+              "speaker": "female",
+              "text": "Maybe compromise on a middle temperature and use extra blankets if needed."
+            },
+            {
+              "speaker": "male",
+              "text": "That's fair, I'll suggest that to him tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "His heater is broken",
+                "He and his roommate disagree about the thermostat",
+                "His electric bill is too high",
+                "His roommate controls the thermostat remotely"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "One person should always decide",
+                "Compromise on a middle temperature",
+                "Buy a second thermostat",
+                "Turn off the heat completely"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 46,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/46.mp3",
+          "speaker": "male",
+          "transcript": "The Office of International Programs will host its annual study abroad fair next Tuesday in the Student Union atrium from 11 a.m. to 3 p.m. Representatives from over thirty partner universities around the world will be available to answer questions about programs, application requirements, and scholarship opportunities. Students interested in studying abroad next year are strongly encouraged to attend, as several application deadlines fall shortly after the fair.",
+          "questions": [
+            {
+              "question": "What is the purpose of the study abroad fair?",
+              "options": [
+                "To recruit international students to the university",
+                "To provide information about study abroad programs",
+                "To celebrate international cultures with food",
+                "To announce new international faculty hires"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why are students encouraged to attend soon?",
+              "options": [
+                "Space is limited to the first fifty attendees",
+                "Several application deadlines fall shortly after the fair",
+                "The fair will not be held again this year",
+                "Only seniors are eligible to attend"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 47,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/47.mp3",
+          "speaker": "female",
+          "transcript": "This weekend, the university will host its annual alumni homecoming celebration, and several campus roads will be temporarily closed to accommodate increased pedestrian traffic and event setup. Students are asked to use the marked detour routes when walking or biking near the main quad on Saturday. Parking will also be limited in the central lots, so commuter students are encouraged to arrive earlier than usual or use the satellite parking areas.",
+          "questions": [
+            {
+              "question": "Why are some campus roads being closed?",
+              "options": [
+                "Ongoing construction",
+                "The alumni homecoming celebration",
+                "A campus safety drill",
+                "A film being shot on campus"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are commuter students advised to do?",
+              "options": [
+                "Avoid campus entirely on Saturday",
+                "Arrive earlier or use satellite parking",
+                "Take the day off from classes",
+                "Carpool with other students"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 48,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/48.mp3",
+          "speaker": "male",
+          "transcript": "Campus safety would like to remind all students about the free walking escort service available every night between dusk and 2 a.m. Students who feel uncomfortable walking alone across campus, especially after evening classes or study sessions, can call the campus safety hotline to request an escort to any location on campus grounds. The service typically arrives within ten minutes and is completely free of charge.",
+          "questions": [
+            {
+              "question": "What service is being advertised?",
+              "options": [
+                "A paid taxi service",
+                "A free nighttime walking escort service",
+                "A campus shuttle bus",
+                "A self-defense training class"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How long does the service typically take to arrive?",
+              "options": [
+                "About ten minutes",
+                "Thirty minutes",
+                "One hour",
+                "It varies with no estimate given"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 37,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/37.mp3",
+          "speaker": "female",
+          "subject": "Primatology",
+          "transcript": "Let's turn to tool use among non-human primates, a behavior that has significantly reshaped how scientists think about animal cognition. For a long time, tool use was considered a defining trait that separated humans from other animals, but decades of field observation have shown otherwise. Chimpanzees, for example, are well documented using stripped twigs to fish termites out of mounds, and in some regions, using stones as hammers and anvils to crack open hard nuts. What's particularly interesting is that different chimpanzee populations use different tools and techniques even when living in similar environments with access to the same resources, suggesting these behaviors are culturally transmitted, learned through observation and practice rather than being purely instinctive. Young chimpanzees spend years watching and imitating adults before mastering nut-cracking, much as human children take time to develop complex motor skills. Beyond chimpanzees, researchers have documented tool use in other primates too, including orangutans using leaves as makeshift umbrellas or gloves, and capuchin monkeys using stone tools to open seeds. These findings have pushed the scientific community to reconsider cognition and culture as existing on a spectrum across species, rather than being uniquely human capacities.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "The diet of wild chimpanzees",
+                "Tool use among non-human primates",
+                "The evolutionary history of the human hand",
+                "How primates communicate with each other"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention that different chimpanzee populations use different tools?",
+              "options": [
+                "To show that tool use is purely instinctive",
+                "To suggest that tool use is culturally transmitted",
+                "To argue that only some chimpanzees are intelligent",
+                "To prove that tool use is accidental"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor compare young chimpanzees learning to crack nuts to?",
+              "options": [
+                "Birds learning to fly",
+                "Human children developing motor skills",
+                "Fish learning to swim",
+                "Adult chimpanzees teaching language"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What conclusion does the professor draw from primate tool use research?",
+              "options": [
+                "Cognition and culture may exist on a spectrum across species",
+                "Only chimpanzees are capable of using tools",
+                "Tool use has no connection to intelligence",
+                "Humans are the only species with any cognitive ability"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 38,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/38.mp3",
+          "speaker": "male",
+          "subject": "Climatology",
+          "transcript": "Today we're discussing the El Niño Southern Oscillation, a natural climate pattern that has significant effects on weather around the globe. Under normal conditions, trade winds blow from east to west across the Pacific Ocean, pushing warm surface water toward Asia and allowing cold, nutrient-rich water to rise up along the coast of South America. During an El Niño event, these trade winds weaken or even reverse, causing warm water to pool near South America instead. This shift disrupts typical weather patterns worldwide; regions that are normally dry may experience heavy rainfall and flooding, while areas that usually get plenty of rain can face drought. El Niño also tends to suppress the formation of Atlantic hurricanes while sometimes increasing hurricane activity in the Pacific. The opposite pattern, called La Niña, involves stronger than normal trade winds and generally produces roughly opposite effects. These oscillations occur irregularly, typically every two to seven years, and each event can last anywhere from nine months to two years. Because of their widespread effects on agriculture, fishing, and disaster preparedness, meteorologists closely monitor ocean temperature data in the Pacific to predict the onset of these events months in advance.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "The formation of hurricanes in general",
+                "The El Niño Southern Oscillation and its global effects",
+                "The causes of long-term global warming",
+                "Ocean currents near the Arctic Circle"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens to trade winds during an El Niño event?",
+              "options": [
+                "They strengthen significantly",
+                "They weaken or reverse direction",
+                "They stop completely with no movement",
+                "They shift toward the Arctic"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what effect can El Niño have on hurricanes?",
+              "options": [
+                "It suppresses all hurricanes worldwide",
+                "It tends to suppress Atlantic hurricanes while sometimes boosting Pacific activity",
+                "It has no measurable effect on hurricanes",
+                "It only affects hurricanes in the Indian Ocean"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why do meteorologists monitor Pacific Ocean temperatures closely?",
+              "options": [
+                "To predict the onset of El Niño and La Niña events",
+                "To measure how fast the ocean is warming overall",
+                "To track fish migration patterns",
+                "To determine tsunami risk"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 209,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/209.mp3",
+          "transcript": "Do you know if the pool is heated this time of year?",
+          "context": "A guest asks a hotel staff member about amenities.",
+          "options": [
+            "Yes, it's heated year-round.",
+            "The pool closes at ten each night.",
+            "Towels are provided at the pool.",
+            "There's also a hot tub nearby."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "27-209"
+        },
+        {
+          "id": 210,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/210.mp3",
+          "transcript": "Could you check if this size is in stock in the back?",
+          "context": "A shopper asks a clothing store employee.",
+          "options": [
+            "Sure, give me just a moment.",
+            "This style comes in five colors.",
+            "The store just got a new shipment.",
+            "We're having a clearance sale."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "27-210"
+        },
+        {
+          "id": 211,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/211.mp3",
+          "transcript": "Is it possible to get a window seat on this flight?",
+          "context": "A traveler asks an airline check-in agent.",
+          "options": [
+            "Let me see what's still available.",
+            "The flight boards in an hour.",
+            "Seat selection can be done online too.",
+            "This flight is nearly full."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "27-211"
+        },
+        {
+          "id": 212,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/212.mp3",
+          "transcript": "Could you tell me how to get to the nearest subway station?",
+          "context": "A visitor asks a local resident for directions.",
+          "options": [
+            "It's about two blocks that way.",
+            "The subway runs until midnight.",
+            "Fares increased last year.",
+            "This neighborhood has several stations."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "27-212"
+        },
+        {
+          "id": 213,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/213.mp3",
+          "transcript": "Do you offer any student discounts on software subscriptions?",
+          "context": "A student asks a customer service representative.",
+          "options": [
+            "Yes, with a valid student email you qualify.",
+            "The subscription renews monthly.",
+            "We offer a free trial period.",
+            "Software updates are included automatically."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "27-213"
+        },
+        {
+          "id": 214,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/214.mp3",
+          "transcript": "Could you help me understand this error message on my computer?",
+          "context": "An employee asks a coworker familiar with computers.",
+          "options": [
+            "Sure, let me take a look at your screen.",
+            "This laptop model is fairly new.",
+            "The IT department handles major issues.",
+            "Restarting sometimes fixes small glitches."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "27-214"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 39,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/39.mp3",
+          "speaker": "female",
+          "subject": "Materials Science",
+          "transcript": "Let's look at shape-memory alloys, a fascinating class of materials that can return to a predetermined shape after being deformed, simply by heating them. The most common example is nitinol, an alloy of nickel and titanium. At lower temperatures, nitinol exists in a flexible crystal structure that allows it to be bent or twisted relatively easily. When heated past a certain transition temperature, the material's atomic structure shifts to a different configuration, and in doing so, the material forces itself back into its original, pre-set shape, generating significant force in the process. This property has led to a wide range of practical applications. In medicine, nitinol is used in stents, small mesh tubes that can be compressed into a narrow catheter, inserted into a blood vessel, and then expand back into their functional shape once they reach body temperature inside the patient. It's also used in eyeglass frames that can bend significantly without breaking, and in some robotics applications as compact, lightweight alternatives to traditional motors. Researchers continue exploring new shape-memory alloy compositions with different transition temperatures and mechanical properties, aiming to expand their use in aerospace and other industries where lightweight, self-actuating materials would be valuable.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "The manufacturing of standard steel alloys",
+                "Shape-memory alloys and their applications",
+                "The history of medical implants",
+                "How temperature affects all metals"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens to nitinol when it is heated past its transition temperature?",
+              "options": [
+                "It melts into liquid form",
+                "It returns to its original, pre-set shape",
+                "It becomes permanently brittle",
+                "It loses all flexibility forever"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention medical stents?",
+              "options": [
+                "To criticize their use in medicine",
+                "To give an example of a practical application of nitinol",
+                "To explain how blood vessels function",
+                "To describe an early failed experiment"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are researchers currently trying to do with shape-memory alloys, according to the lecture?",
+              "options": [
+                "Eliminate their use in medicine",
+                "Develop new compositions for use in aerospace and other industries",
+                "Make them permanently rigid",
+                "Replace them entirely with plastic"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/40.mp3",
+          "speaker": "male",
+          "subject": "Epidemiology",
+          "transcript": "Today we'll discuss herd immunity, a concept that describes how disease spread can be limited when a sufficient proportion of a population becomes immune, either through vaccination or prior infection. When enough people are immune, a contagious disease has fewer opportunities to pass from person to person, which indirectly protects even those who aren't immune, such as infants too young to be vaccinated or people with certain medical conditions that prevent vaccination. The exact percentage of a population that needs to be immune to achieve herd immunity, known as the herd immunity threshold, varies depending on how contagious a particular disease is. Highly contagious diseases like measles require a very high threshold, often above ninety percent, while less contagious diseases require lower thresholds. It's worth noting that herd immunity achieved through natural infection generally comes at a significant cost in terms of illness and death, which is why public health officials generally emphasize achieving these thresholds through vaccination rather than allowing diseases to spread unchecked. Another important consideration is that herd immunity isn't necessarily permanent; if immunity wanes over time or a new, more contagious variant of the disease emerges, the herd immunity threshold can shift, sometimes requiring booster vaccinations to maintain adequate community protection.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "How individual vaccines are manufactured",
+                "The concept of herd immunity",
+                "The symptoms of measles",
+                "How viruses mutate over time"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, who benefits indirectly from herd immunity?",
+              "options": [
+                "Only people who have been vaccinated",
+                "People who cannot be vaccinated, such as infants",
+                "Only people living in urban areas",
+                "No one benefits indirectly"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the herd immunity threshold vary between diseases?",
+              "options": [
+                "It depends on how contagious a specific disease is",
+                "It depends only on a country's population size",
+                "It is the same for every disease",
+                "It depends on the season of the year"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why might a herd immunity threshold need to be reassessed over time?",
+              "options": [
+                "Because thresholds are set randomly each year",
+                "Because immunity can wane or new variants can emerge",
+                "Because population size never changes",
+                "Because vaccines become illegal after several years"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 215,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/215.mp3",
+          "transcript": "Is breakfast included with the room, or is it extra?",
+          "context": "A guest asks about hotel amenities at check-in.",
+          "options": [
+            "It's included, served until ten each morning.",
+            "The hotel has a rooftop bar.",
+            "Rooms are cleaned daily.",
+            "Late check-out is available for a fee."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "27-215"
+        },
+        {
+          "id": 216,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/216.mp3",
+          "transcript": "Could you tell me if this train stops at the university?",
+          "context": "A passenger asks a conductor.",
+          "options": [
+            "Yes, it's the fourth stop from here.",
+            "This train runs every twenty minutes.",
+            "Tickets can be bought at any station.",
+            "The ride takes about fifteen minutes."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "27-216"
+        },
+        {
+          "id": 217,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/217.mp3",
+          "transcript": "Do you know if there's a discount for buying in bulk?",
+          "context": "A customer asks a store employee about pricing.",
+          "options": [
+            "Yes, orders over ten items get ten percent off.",
+            "This item just went on sale.",
+            "We restock every Tuesday.",
+            "Bulk orders require two days' notice."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "28-217"
+        },
+        {
+          "id": 218,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/218.mp3",
+          "transcript": "Could you look into why my package tracking hasn't updated?",
+          "context": "A customer contacts a shipping company's support line.",
+          "options": [
+            "Of course, let me check the tracking system.",
+            "Most packages update within a day.",
+            "Shipping delays are common during holidays.",
+            "You'll receive a confirmation once delivered."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "28-218"
+        },
+        {
+          "id": 219,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/219.mp3",
+          "transcript": "Is it okay to bring my own food into the stadium?",
+          "context": "A fan asks a stadium staff member about policies.",
+          "options": [
+            "Small snacks are fine, but no outside drinks.",
+            "The stadium opens two hours before kickoff.",
+            "Concession stands accept card payments.",
+            "Seating charts are posted online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "28-219"
+        },
+        {
+          "id": 220,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/220.mp3",
+          "transcript": "Could you tell me if my appointment is still on for today?",
+          "context": "A patient calls to confirm a medical appointment.",
+          "options": [
+            "Yes, you're still scheduled for two o'clock.",
+            "The clinic recently extended its hours.",
+            "Please arrive fifteen minutes early.",
+            "We accept walk-ins on weekdays."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "28-220"
+        }
+      ],
+      "conv": [
+        {
+          "id": 49,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/49.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "The laundry machine on my floor has been broken for a week."
+            },
+            {
+              "speaker": "male",
+              "text": "Did you report it to maintenance?"
+            },
+            {
+              "speaker": "female",
+              "text": "I did, but nothing has happened yet."
+            },
+            {
+              "speaker": "male",
+              "text": "You could try the machines on a different floor in the meantime."
+            },
+            {
+              "speaker": "female",
+              "text": "I didn't think of that, thanks, I'll head up there tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She lost her laundry card",
+                "The laundry machine on her floor is broken",
+                "She has too much laundry to do",
+                "Her clothes were stolen from the machine"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Wait longer for maintenance",
+                "Use machines on a different floor",
+                "Do laundry by hand",
+                "Buy a personal washing machine"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 50,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/50.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I want to bring my cat when I move into the dorm, but I'm not sure it's allowed."
+            },
+            {
+              "speaker": "female",
+              "text": "Have you checked the housing policy?"
+            },
+            {
+              "speaker": "male",
+              "text": "I looked briefly, but it wasn't totally clear."
+            },
+            {
+              "speaker": "female",
+              "text": "You should contact the housing office directly to confirm before moving in."
+            },
+            {
+              "speaker": "male",
+              "text": "Good call, I'll email them this week."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man unsure about?",
+              "options": [
+                "Whether he can bring his cat to the dorm",
+                "Whether he can move in early",
+                "Whether he needs a roommate",
+                "Whether pets require a deposit"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Bring the cat without checking",
+                "Contact the housing office directly",
+                "Leave the cat at home permanently",
+                "Ask another student for advice"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 49,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/49.mp3",
+          "speaker": "female",
+          "transcript": "All students who bring bicycles to campus are reminded to register them with campus security before the end of the month. Registration is free and only takes a few minutes, requiring the bike's serial number and a brief description. Registered bicycles are significantly more likely to be recovered if stolen, and campus security has noted a rise in bike theft reports over the past semester.",
+          "questions": [
+            {
+              "question": "What are bicycle owners being asked to do?",
+              "options": [
+                "Purchase a new bike lock",
+                "Register their bicycles with campus security",
+                "Store bicycles in a designated garage",
+                "Pay an annual bicycle fee"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why has campus security emphasized this reminder?",
+              "options": [
+                "A new bike lane is being built",
+                "There has been a rise in bike theft reports",
+                "Bicycles will soon be banned from campus",
+                "A bike-sharing program is launching"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 50,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/50.mp3",
+          "speaker": "male",
+          "transcript": "The campus lost and found office, located in the Student Union information desk, would like to remind students that unclaimed items are donated to local charities at the end of each semester. Students who have lost items such as water bottles, umbrellas, textbooks, or electronics are encouraged to check with the office before the semester ends. A list of some larger unclaimed items is also posted on the university's website.",
+          "questions": [
+            {
+              "question": "What happens to unclaimed items at the end of the semester?",
+              "options": [
+                "They are sold at auction",
+                "They are donated to local charities",
+                "They are kept in storage indefinitely",
+                "They are returned to the manufacturer"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where can students find a list of larger unclaimed items?",
+              "options": [
+                "The campus newspaper",
+                "The university's website",
+                "The dining hall bulletin board",
+                "The academic advising office"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 91,
+        "promptGender": "female",
+        "prompt": "Are the dorms open during winter break?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the dorms",
+          "were open during winter break"
+        ],
+        "distractorChunks": [
+          "are open during winter break"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 92,
+        "promptGender": "male",
+        "prompt": "Why did the professor cancel office hours?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "wondered",
+          "why",
+          "the professor",
+          "had canceled office hours"
+        ],
+        "distractorChunks": [
+          "has canceled office hours"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 93,
+        "promptGender": "female",
+        "prompt": "Does the gym require a reservation for the pool?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the gym",
+          "required a reservation for the pool"
+        ],
+        "distractorChunks": [
+          "requires a reservation for the pool"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 94,
+        "promptGender": "male",
+        "prompt": "When did the committee make its final decision?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "when",
+          "the committee",
+          "had made its final decision"
+        ],
+        "distractorChunks": [
+          "has made its final decision"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 95,
+        "promptGender": "female",
+        "prompt": "Is the internship program accepting applications now?",
+        "responseGender": "male",
+        "responsePrefix": "Could you tell me",
+        "correctChunks": [
+          "whether",
+          "the internship program",
+          "was accepting applications now"
+        ],
+        "distractorChunks": [
+          "is accepting applications now"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 96,
+        "promptGender": "male",
+        "prompt": "Who left this umbrella in the classroom?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "am",
+          "not",
+          "sure",
+          "who",
+          "had left the umbrella in the classroom"
+        ],
+        "distractorChunks": [
+          "has left the umbrella in the classroom"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 97,
+        "promptGender": "female",
+        "prompt": "Does the clinic accept walk-in patients on Fridays?",
+        "responseGender": "male",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the clinic",
+          "accepted walk-in patients on Fridays"
+        ],
+        "distractorChunks": [
+          "accepts walk-in patients on Fridays"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 98,
+        "promptGender": "male",
+        "prompt": "Why is the elevator out of service today?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "why",
+          "the elevator",
+          "was out of service today"
+        ],
+        "distractorChunks": [
+          "is out of service today"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 99,
+        "promptGender": "female",
+        "prompt": "Has the committee reviewed our proposal yet?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the committee",
+          "had reviewed our proposal yet"
+        ],
+        "distractorChunks": [
+          "has reviewed our proposal yet"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 100,
+        "promptGender": "male",
+        "prompt": "Where will the graduation ceremony be held this year?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "where",
+          "the graduation ceremony",
+          "would be held this year"
+        ],
+        "distractorChunks": [
+          "will be held this year"
+        ],
+        "responseSuffix": "."
+      }
+    ],
+    "email": {
+      "id": 10,
+      "scenario": "You tried to register for a required course online, but the system shows it is full even though you were told there would be seats reserved for your major. You want to resolve this before the semester starts.",
+      "recipient": "Registrar's Office",
+      "subject": "Course registration issue",
+      "tasks": [
+        {
+          "description": "Explain that the course appears full despite reserved seats.",
+          "keywords": [
+            "full",
+            "closed",
+            "no seats",
+            "reserved"
+          ]
+        },
+        {
+          "description": "Mention that this course is required for your major.",
+          "keywords": [
+            "required",
+            "mandatory",
+            "major",
+            "degree"
+          ]
+        },
+        {
+          "description": "Ask for help enrolling before the semester begins.",
+          "keywords": [
+            "enroll",
+            "add me",
+            "before the semester",
+            "resolve"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Registrar's Office,\n\nI am writing about an issue with registering for BIO 210, a course required for my major. When I tried to enroll online this morning, the system showed the course as completely full, even though my advisor told me last month that seats would be reserved for Biology majors.\n\nThis course is mandatory for my degree, and it is only offered once a year, so being unable to register would significantly delay my graduation timeline.\n\nSince the semester begins in less than two weeks, I would greatly appreciate your help resolving this as soon as possible. Could you please check whether a reserved seat is still available for me, or let me know what steps I should take to be added to the course? Thank you very much for your time and assistance with this matter.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 10,
+      "subject": "theater studies",
+      "professor": "Dr. Okafor",
+      "professorGender": "male",
+      "prompt": "Your theater studies professor is leading a discussion on staging classic works. Write a post responding to the professor's question.\n\nDr. Okafor: This week we have been discussing how directors approach staging classic plays written centuries ago. Some directors choose to modernize these works, updating settings, costumes, and even language to make the themes feel more relevant and accessible to contemporary audiences. Others argue that classic plays should be performed as faithfully as possible to their original historical context, preserving the playwright's original vision and the cultural context in which the work was written. Both approaches have devoted supporters among theater professionals and audiences. Before our next class, please respond to this question: Should classic plays be modernized for contemporary audiences, or should they be staged in their original historical form?",
+      "classmates": [
+        {
+          "name": "Mateus",
+          "gender": "male",
+          "opinion": "I think modernizing classic plays is essential for keeping theater relevant and engaging. Many younger audience members find it difficult to connect with settings and language from centuries ago, no matter how powerful the underlying themes are. By updating the setting, costumes, or dialogue, directors can highlight how universal themes like ambition, jealousy, and love still apply to modern life. A modernized production of a Shakespeare play, for instance, can make audiences realize that these stories are not just historical artifacts but living, breathing commentary on human nature that remains relevant today. Without reinterpretation, I fear classic theater risks becoming inaccessible and eventually fading from public interest."
+        },
+        {
+          "name": "Yuki",
+          "gender": "female",
+          "opinion": "I believe classic plays should generally be staged in their original historical form to preserve the playwright's authentic vision. These works were written within specific cultural and historical contexts that shape their meaning in ways that can be lost or distorted through modernization. When directors change too much, they risk imposing their own interpretation onto the material rather than allowing audiences to engage with the original text as intended. Original staging also offers valuable educational insight into the historical period, helping audiences understand how people lived, thought, and expressed themselves at the time. I think theaters should offer modernized adaptations separately rather than replacing the traditional approach entirely."
+        }
+      ],
+      "exampleResponse": "Staging classic plays involves a genuine tension between accessibility and historical authenticity. Whether modernization or original staging better serves these works is worth considering carefully. While I see where Yuki is coming from when she argues that original staging preserves the playwright's authentic vision and offers valuable historical insight, I would argue that a play which fails to connect with contemporary audiences ultimately loses much of its cultural relevance and impact. In this respect, I am inclined to agree with Mateus, who emphasizes that modernized productions can reveal how universal certain themes truly are. For example, setting a tragedy about political ambition in a modern corporate boardroom can make its warnings about power feel immediate rather than distant. Ideally, theaters could offer both original and modernized productions, allowing audiences to appreciate a work's historical roots while also experiencing its enduring relevance."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 10,
+      "location": "Alpine Ski Rental Center",
+      "icon": "⛷️",
+      "speaker": "female",
+      "introText": "You are learning how to fit customers for ski equipment. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the ski rental shop.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "What is your boot size, please?",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "These skis are suited for beginners.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Poles and helmets are rented separately.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "Please try the boots before leaving the counter.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Equipment can be exchanged if the fit is not comfortable.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Return everything by five o'clock to avoid an extra rental fee.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 10,
+      "topic": "Board Games and Puzzles",
+      "icon": "🎲",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about board games and puzzles. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. Let's start with a simple question. Do you enjoy playing board games or solving puzzles in your free time?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer playing games alone, like solving a puzzle by yourself, or playing games with other people?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people think that board games and puzzles are good for developing problem-solving skills. What is your opinion on this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think traditional board games can still compete with video games today? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,3482 @@
+[
+  {
+    "id": 1,
+    "topic": "Coral Reef Ecosystems",
+    "category": "Natural Science",
+    "paragraph": "Coral reefs are among the most diverse ecosystems on the planet, supporting an enormous variety of marine species. These structures are built over centuries by tiny organisms called coral polyps, which secrete calcium carbonate to form protective skeletons. Reefs provide shelter and food for countless fish, mollusks, and other creatures, making them essential to ocean biodiversity. Unfortunately, rising sea temperatures and ocean acidification have caused widespread coral bleaching, threatening the survival of these fragile habitats. Conservation efforts now focus on reducing pollution and establishing protected marine areas to help reefs recover.",
+    "blanks": [
+      {
+        "word": "structures",
+        "visible": "struc",
+        "hidden": "tures"
+      },
+      {
+        "word": "organisms",
+        "visible": "orga",
+        "hidden": "nisms"
+      },
+      {
+        "word": "secrete",
+        "visible": "sec",
+        "hidden": "rete"
+      },
+      {
+        "word": "calcium",
+        "visible": "cal",
+        "hidden": "cium"
+      },
+      {
+        "word": "skeletons",
+        "visible": "skel",
+        "hidden": "etons"
+      },
+      {
+        "word": "shelter",
+        "visible": "she",
+        "hidden": "lter"
+      },
+      {
+        "word": "biodiversity",
+        "visible": "biodi",
+        "hidden": "versity"
+      },
+      {
+        "word": "acidification",
+        "visible": "acidi",
+        "hidden": "fication"
+      },
+      {
+        "word": "bleaching",
+        "visible": "blea",
+        "hidden": "ching"
+      },
+      {
+        "word": "protected",
+        "visible": "prot",
+        "hidden": "ected"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "topic": "The Invention of the Printing Press",
+    "category": "History",
+    "paragraph": "The invention of the printing press by Johannes Gutenberg in the fifteenth century transformed the way knowledge was distributed across Europe. Before this innovation, books were copied by hand, a slow and expensive process that limited literacy to a small elite. Gutenberg's press used movable metal type, allowing multiple copies of a text to be produced quickly and affordably. This breakthrough accelerated the spread of new ideas, fueling movements such as the Renaissance and the Reformation. As printed material became more accessible, literacy rates increased, and standardized spelling and grammar began to emerge across regions.",
+    "blanks": [
+      {
+        "word": "innovation",
+        "visible": "innov",
+        "hidden": "ation"
+      },
+      {
+        "word": "expensive",
+        "visible": "expe",
+        "hidden": "nsive"
+      },
+      {
+        "word": "literacy",
+        "visible": "lite",
+        "hidden": "racy"
+      },
+      {
+        "word": "movable",
+        "visible": "mov",
+        "hidden": "able"
+      },
+      {
+        "word": "affordably",
+        "visible": "affor",
+        "hidden": "dably"
+      },
+      {
+        "word": "breakthrough",
+        "visible": "break",
+        "hidden": "through"
+      },
+      {
+        "word": "accelerated",
+        "visible": "accel",
+        "hidden": "erated"
+      },
+      {
+        "word": "movements",
+        "visible": "move",
+        "hidden": "ments"
+      },
+      {
+        "word": "accessible",
+        "visible": "acces",
+        "hidden": "sible"
+      },
+      {
+        "word": "standardized",
+        "visible": "stand",
+        "hidden": "ardized"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "topic": "Circadian Rhythms in Humans",
+    "category": "Natural Science",
+    "paragraph": "Circadian rhythms are internal biological processes that follow a roughly twenty-four-hour cycle, regulating sleep, hormone release, and body temperature. These rhythms are controlled by a small region of the brain that responds primarily to light and darkness in the environment. When natural light exposure is disrupted, such as during travel across time zones, the body's internal clock can become misaligned, leading to fatigue and difficulty concentrating. Researchers have found that maintaining consistent sleep schedules and reducing exposure to artificial light in the evening can help regulate circadian rhythms and improve overall health.",
+    "blanks": [
+      {
+        "word": "controlled",
+        "visible": "contr",
+        "hidden": "olled"
+      },
+      {
+        "word": "responds",
+        "visible": "resp",
+        "hidden": "onds"
+      },
+      {
+        "word": "darkness",
+        "visible": "dark",
+        "hidden": "ness"
+      },
+      {
+        "word": "natural",
+        "visible": "nat",
+        "hidden": "ural"
+      },
+      {
+        "word": "disrupted",
+        "visible": "disr",
+        "hidden": "upted"
+      },
+      {
+        "word": "misaligned",
+        "visible": "misal",
+        "hidden": "igned"
+      },
+      {
+        "word": "difficulty",
+        "visible": "diffi",
+        "hidden": "culty"
+      },
+      {
+        "word": "concentrating",
+        "visible": "conce",
+        "hidden": "ntrating"
+      },
+      {
+        "word": "consistent",
+        "visible": "consi",
+        "hidden": "stent"
+      },
+      {
+        "word": "artificial",
+        "visible": "artif",
+        "hidden": "icial"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "topic": "The History of Cartography",
+    "category": "History",
+    "paragraph": "Long before satellites could photograph the planet from orbit, mapmakers relied on careful measurement and observation to represent the world on paper. Ancient Babylonian clay tablets show some of the earliest known attempts at cartography, depicting cities and rivers in simplified form. Greek scholars later calculated the circumference of the Earth and developed coordinate systems that could describe any location with precision. During the medieval period, European maps often prioritized religious symbolism over geographic accuracy. The Age of Exploration transformed cartography, as sailors demanded charts reliable enough to prevent shipwrecks. Modern cartography now combines satellite imagery with centuries of accumulated technique.",
+    "blanks": [
+      {
+        "word": "Babylonian",
+        "visible": "Babyl",
+        "hidden": "onian"
+      },
+      {
+        "word": "cartography",
+        "visible": "carto",
+        "hidden": "graphy"
+      },
+      {
+        "word": "circumference",
+        "visible": "circu",
+        "hidden": "mference"
+      },
+      {
+        "word": "coordinate",
+        "visible": "coord",
+        "hidden": "inate"
+      },
+      {
+        "word": "medieval",
+        "visible": "medi",
+        "hidden": "eval"
+      },
+      {
+        "word": "symbolism",
+        "visible": "symb",
+        "hidden": "olism"
+      },
+      {
+        "word": "geographic",
+        "visible": "geogr",
+        "hidden": "aphic"
+      },
+      {
+        "word": "Exploration",
+        "visible": "Explo",
+        "hidden": "ration"
+      },
+      {
+        "word": "reliable",
+        "visible": "reli",
+        "hidden": "able"
+      },
+      {
+        "word": "satellite",
+        "visible": "sate",
+        "hidden": "llite"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "topic": "Memory and the Brain",
+    "category": "Psychology",
+    "paragraph": "Human memory is a complex cognitive process that allows individuals to encode, store, and retrieve information over time. Short-term memory holds small amounts of information temporarily, while long-term memory can preserve knowledge for years. The hippocampus, a small structure deep within the brain, plays a crucial role in forming new memories and consolidating experiences during sleep. Emotional events are often remembered more vividly than neutral ones, a phenomenon linked to the amygdala. In addition, researchers have found that memory can be distorted by suggestion, bias, or time. Understanding these mechanisms has important implications for education and therapy.",
+    "blanks": [
+      {
+        "word": "temporarily",
+        "visible": "tempo",
+        "hidden": "rarily"
+      },
+      {
+        "word": "knowledge",
+        "visible": "know",
+        "hidden": "ledge"
+      },
+      {
+        "word": "hippocampus",
+        "visible": "hippo",
+        "hidden": "campus"
+      },
+      {
+        "word": "consolidating",
+        "visible": "conso",
+        "hidden": "lidating"
+      },
+      {
+        "word": "experiences",
+        "visible": "exper",
+        "hidden": "iences"
+      },
+      {
+        "word": "vividly",
+        "visible": "viv",
+        "hidden": "idly"
+      },
+      {
+        "word": "amygdala",
+        "visible": "amyg",
+        "hidden": "dala"
+      },
+      {
+        "word": "researchers",
+        "visible": "resea",
+        "hidden": "rchers"
+      },
+      {
+        "word": "distorted",
+        "visible": "dist",
+        "hidden": "orted"
+      },
+      {
+        "word": "implications",
+        "visible": "impli",
+        "hidden": "cations"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "topic": "The Formation of Stars",
+    "category": "Astronomy",
+    "paragraph": "Stars form within enormous clouds of gas and dust known as nebulae, where gravity gradually pulls matter together into dense clumps. As these clumps contract, the pressure and temperature at their core rise until nuclear fusion ignites, marking the birth of a new star. This process converts hydrogen into helium, releasing energy that stabilizes the star, and massive stars consume their fuel rapidly, often ending their lives in dramatic explosions called supernovae that scatter heavy elements through space. In recent decades, astronomers have studied these processes using telescopes that detect light across different wavelengths.",
+    "blanks": [
+      {
+        "word": "contract",
+        "visible": "cont",
+        "hidden": "ract"
+      },
+      {
+        "word": "temperature",
+        "visible": "tempe",
+        "hidden": "rature"
+      },
+      {
+        "word": "nuclear",
+        "visible": "nuc",
+        "hidden": "lear"
+      },
+      {
+        "word": "fusion",
+        "visible": "fus",
+        "hidden": "ion"
+      },
+      {
+        "word": "ignites",
+        "visible": "ign",
+        "hidden": "ites"
+      },
+      {
+        "word": "hydrogen",
+        "visible": "hydr",
+        "hidden": "ogen"
+      },
+      {
+        "word": "massive",
+        "visible": "mas",
+        "hidden": "sive"
+      },
+      {
+        "word": "supernovae",
+        "visible": "super",
+        "hidden": "novae"
+      },
+      {
+        "word": "astronomers",
+        "visible": "astro",
+        "hidden": "nomers"
+      },
+      {
+        "word": "wavelengths",
+        "visible": "wavel",
+        "hidden": "engths"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "topic": "Inflation and Monetary Policy",
+    "category": "Economics",
+    "paragraph": "Inflation refers to the general rise in prices across an economy, which gradually erodes the purchasing power of money. Central banks monitor inflation closely because extreme rates can destabilize economic growth. When inflation accelerates too quickly, consumers lose confidence in the currency. To counteract this, monetary authorities often raise interest rates, making borrowing more expensive, while during deflation they may lower rates instead. These policy decisions require careful calibration, since aggressive interventions can trigger recessions, and economists rely on indicators like the consumer price index to track price stability, one of the core objectives of economic governance.",
+    "blanks": [
+      {
+        "word": "destabilize",
+        "visible": "desta",
+        "hidden": "bilize"
+      },
+      {
+        "word": "accelerates",
+        "visible": "accel",
+        "hidden": "erates"
+      },
+      {
+        "word": "confidence",
+        "visible": "confi",
+        "hidden": "dence"
+      },
+      {
+        "word": "currency",
+        "visible": "curr",
+        "hidden": "ency"
+      },
+      {
+        "word": "authorities",
+        "visible": "autho",
+        "hidden": "rities"
+      },
+      {
+        "word": "borrowing",
+        "visible": "borr",
+        "hidden": "owing"
+      },
+      {
+        "word": "deflation",
+        "visible": "defl",
+        "hidden": "ation"
+      },
+      {
+        "word": "calibration",
+        "visible": "calib",
+        "hidden": "ration"
+      },
+      {
+        "word": "economists",
+        "visible": "econo",
+        "hidden": "mists"
+      },
+      {
+        "word": "objectives",
+        "visible": "objec",
+        "hidden": "tives"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "topic": "Artificial Intelligence and Machine Learning",
+    "category": "Technology",
+    "paragraph": "Artificial intelligence has rapidly transformed numerous industries by enabling machines to perform tasks that once required human intelligence. Machine learning allows algorithms to improve their performance by analyzing large datasets rather than following explicit instructions. Neural networks are particularly effective at recognizing patterns in images, speech, and text, but training them requires substantial computational resources, since biased datasets can lead to unreliable predictions. Despite impressive advances, AI systems still struggle with tasks that demand common sense reasoning. Researchers continue to debate accountability and the need for transparency as these systems become integrated into everyday decision-making.",
+    "blanks": [
+      {
+        "word": "algorithms",
+        "visible": "algor",
+        "hidden": "ithms"
+      },
+      {
+        "word": "performance",
+        "visible": "perfo",
+        "hidden": "rmance"
+      },
+      {
+        "word": "datasets",
+        "visible": "data",
+        "hidden": "sets"
+      },
+      {
+        "word": "networks",
+        "visible": "netw",
+        "hidden": "orks"
+      },
+      {
+        "word": "computational",
+        "visible": "compu",
+        "hidden": "tational"
+      },
+      {
+        "word": "biased",
+        "visible": "bia",
+        "hidden": "sed"
+      },
+      {
+        "word": "unreliable",
+        "visible": "unrel",
+        "hidden": "iable"
+      },
+      {
+        "word": "reasoning",
+        "visible": "reas",
+        "hidden": "oning"
+      },
+      {
+        "word": "accountability",
+        "visible": "accou",
+        "hidden": "ntability"
+      },
+      {
+        "word": "transparency",
+        "visible": "trans",
+        "hidden": "parency"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "topic": "Urbanization and Social Change",
+    "category": "Sociology",
+    "paragraph": "Urbanization refers to the process by which increasing proportions of a population come to live in cities. This demographic shift was driven historically by industrialization, as factories concentrated employment opportunities within urban centers, attracting migrants from diverse backgrounds despite growing overcrowding and strained infrastructure. Long interested in this shift, sociologists have studied how dense populations influence social behavior, noting that distinct identities often develop among neighborhoods shaped by the socioeconomic status of their residents. Meanwhile, policymakers face the ongoing challenge of designing cities that promote inclusivity while addressing issues such as inequality.",
+    "blanks": [
+      {
+        "word": "demographic",
+        "visible": "demog",
+        "hidden": "raphic"
+      },
+      {
+        "word": "industrialization",
+        "visible": "indus",
+        "hidden": "trialization"
+      },
+      {
+        "word": "opportunities",
+        "visible": "oppor",
+        "hidden": "tunities"
+      },
+      {
+        "word": "migrants",
+        "visible": "migr",
+        "hidden": "ants"
+      },
+      {
+        "word": "overcrowding",
+        "visible": "overc",
+        "hidden": "rowding"
+      },
+      {
+        "word": "sociologists",
+        "visible": "socio",
+        "hidden": "logists"
+      },
+      {
+        "word": "neighborhoods",
+        "visible": "neigh",
+        "hidden": "borhoods"
+      },
+      {
+        "word": "socioeconomic",
+        "visible": "socio",
+        "hidden": "economic"
+      },
+      {
+        "word": "policymakers",
+        "visible": "polic",
+        "hidden": "ymakers"
+      },
+      {
+        "word": "inequality",
+        "visible": "inequ",
+        "hidden": "ality"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "topic": "Language Acquisition in Children",
+    "category": "Linguistics",
+    "paragraph": "Language acquisition is the process through which children learn to understand and produce their native tongue, typically without formal instruction, since infants begin distinguishing speech sounds long before their first words, suggesting an innate sensitivity to linguistic patterns. Their vocabulary expands rapidly during the first year, while grammar develops in predictable stages. Some theorists argue that humans possess a specialized cognitive mechanism dedicated to grammar, while others emphasize imitation and social interaction. Children who are bilingual often reach similar developmental milestones as monolingual peers, which helps educators design effective strategies for supporting language development.",
+    "blanks": [
+      {
+        "word": "vocabulary",
+        "visible": "vocab",
+        "hidden": "ulary"
+      },
+      {
+        "word": "expands",
+        "visible": "exp",
+        "hidden": "ands"
+      },
+      {
+        "word": "during",
+        "visible": "dur",
+        "hidden": "ing"
+      },
+      {
+        "word": "grammar",
+        "visible": "gra",
+        "hidden": "mmar"
+      },
+      {
+        "word": "predictable",
+        "visible": "predi",
+        "hidden": "ctable"
+      },
+      {
+        "word": "theorists",
+        "visible": "theo",
+        "hidden": "rists"
+      },
+      {
+        "word": "specialized",
+        "visible": "speci",
+        "hidden": "alized"
+      },
+      {
+        "word": "imitation",
+        "visible": "imit",
+        "hidden": "ation"
+      },
+      {
+        "word": "bilingual",
+        "visible": "bili",
+        "hidden": "ngual"
+      },
+      {
+        "word": "developmental",
+        "visible": "devel",
+        "hidden": "opmental"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "topic": "The Renaissance and Artistic Innovation",
+    "category": "Art History",
+    "paragraph": "The Renaissance was a period of extraordinary artistic and intellectual achievement that began in Italy during the fourteenth century. Artists of this era sought to revive the ideals of classical antiquity, emphasizing realism and human emotion. The development of linear perspective allowed painters to create convincing illusions of depth on flat surfaces. Wealthy merchants acted as patrons, commissioning elaborate works and fueling unprecedented creative output. Figures such as Leonardo da Vinci, a prominent representative of this era, combined scientific curiosity with artistic mastery. A philosophical movement known as humanism influenced artistic themes, while innovations in technique expanded the expressive possibilities available to artists.",
+    "blanks": [
+      {
+        "word": "antiquity",
+        "visible": "anti",
+        "hidden": "quity"
+      },
+      {
+        "word": "perspective",
+        "visible": "persp",
+        "hidden": "ective"
+      },
+      {
+        "word": "patrons",
+        "visible": "pat",
+        "hidden": "rons"
+      },
+      {
+        "word": "commissioning",
+        "visible": "commi",
+        "hidden": "ssioning"
+      },
+      {
+        "word": "unprecedented",
+        "visible": "unpre",
+        "hidden": "cedented"
+      },
+      {
+        "word": "prominent",
+        "visible": "prom",
+        "hidden": "inent"
+      },
+      {
+        "word": "curiosity",
+        "visible": "curi",
+        "hidden": "osity"
+      },
+      {
+        "word": "humanism",
+        "visible": "huma",
+        "hidden": "nism"
+      },
+      {
+        "word": "innovations",
+        "visible": "innov",
+        "hidden": "ations"
+      },
+      {
+        "word": "expressive",
+        "visible": "expre",
+        "hidden": "ssive"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "topic": "Climate Change and Ecosystems",
+    "category": "Environmental Science",
+    "paragraph": "Climate change refers to long-term shifts in temperature and weather patterns, largely driven by human activities such as burning fossil fuels. Rising global temperatures have already begun altering ecosystems around the world, disrupting the balance between species and their habitats. Many organisms are shifting their geographic ranges, while coastal wetlands and coral reefs are particularly vulnerable to changing conditions. Extreme weather events, including droughts and heatwaves, have become more frequent. Many scientists warn that without significant emission reductions, species could face extinction. International cooperation remains essential for developing sustainable, coordinated policies that protect biodiversity for future generations.",
+    "blanks": [
+      {
+        "word": "temperatures",
+        "visible": "tempe",
+        "hidden": "ratures"
+      },
+      {
+        "word": "ecosystems",
+        "visible": "ecosy",
+        "hidden": "stems"
+      },
+      {
+        "word": "organisms",
+        "visible": "orga",
+        "hidden": "nisms"
+      },
+      {
+        "word": "wetlands",
+        "visible": "wetl",
+        "hidden": "ands"
+      },
+      {
+        "word": "vulnerable",
+        "visible": "vulne",
+        "hidden": "rable"
+      },
+      {
+        "word": "droughts",
+        "visible": "drou",
+        "hidden": "ghts"
+      },
+      {
+        "word": "scientists",
+        "visible": "scien",
+        "hidden": "tists"
+      },
+      {
+        "word": "extinction",
+        "visible": "extin",
+        "hidden": "ction"
+      },
+      {
+        "word": "sustainable",
+        "visible": "susta",
+        "hidden": "inable"
+      },
+      {
+        "word": "coordinated",
+        "visible": "coord",
+        "hidden": "inated"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "topic": "Cultural Anthropology and Kinship Systems",
+    "category": "Anthropology",
+    "paragraph": "Within the social sciences, anthropologists study the diverse ways human societies organize family relationships, a field known as kinship studies. These systems determine how individuals are related through blood, marriage, or social recognition, shaping inheritance and social identity across generations. Research has revealed remarkable variation in how cultures define family roles, some emphasizing strict hierarchies while others distribute authority equally. Marriage practices also vary, ranging from monogamous unions to arrangements involving multiple spouses, and rituals surrounding birth and marriage often reinforce communal identity, revealing the remarkable diversity of cultural adaptation worldwide.",
+    "blanks": [
+      {
+        "word": "systems",
+        "visible": "sys",
+        "hidden": "tems"
+      },
+      {
+        "word": "inheritance",
+        "visible": "inher",
+        "hidden": "itance"
+      },
+      {
+        "word": "generations",
+        "visible": "gener",
+        "hidden": "ations"
+      },
+      {
+        "word": "variation",
+        "visible": "vari",
+        "hidden": "ation"
+      },
+      {
+        "word": "hierarchies",
+        "visible": "hiera",
+        "hidden": "rchies"
+      },
+      {
+        "word": "monogamous",
+        "visible": "monog",
+        "hidden": "amous"
+      },
+      {
+        "word": "arrangements",
+        "visible": "arran",
+        "hidden": "gements"
+      },
+      {
+        "word": "rituals",
+        "visible": "rit",
+        "hidden": "uals"
+      },
+      {
+        "word": "communal",
+        "visible": "comm",
+        "hidden": "unal"
+      },
+      {
+        "word": "diversity",
+        "visible": "dive",
+        "hidden": "rsity"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "topic": "Plate Tectonics and Earthquakes",
+    "category": "Geology",
+    "paragraph": "The theory of plate tectonics explains how the Earth's rigid outer shell is divided into large fragments that move slowly over the underlying mantle. These plates interact along their boundaries by colliding, separating, or sliding past one another. Where oceanic plates meet continental plates, subduction often occurs, generating volcanic activity along the boundary, and earthquakes occur when accumulated stress along a fault suddenly releases. Using specialized instruments, seismologists measure these vibrations and estimate the magnitude of seismic events, helping governments prepare for potentially catastrophic geological hazards.",
+    "blanks": [
+      {
+        "word": "plates",
+        "visible": "pla",
+        "hidden": "tes"
+      },
+      {
+        "word": "interact",
+        "visible": "inte",
+        "hidden": "ract"
+      },
+      {
+        "word": "boundaries",
+        "visible": "bound",
+        "hidden": "aries"
+      },
+      {
+        "word": "colliding",
+        "visible": "coll",
+        "hidden": "iding"
+      },
+      {
+        "word": "subduction",
+        "visible": "subdu",
+        "hidden": "ction"
+      },
+      {
+        "word": "volcanic",
+        "visible": "volc",
+        "hidden": "anic"
+      },
+      {
+        "word": "earthquakes",
+        "visible": "earth",
+        "hidden": "quakes"
+      },
+      {
+        "word": "seismologists",
+        "visible": "seism",
+        "hidden": "ologists"
+      },
+      {
+        "word": "magnitude",
+        "visible": "magn",
+        "hidden": "itude"
+      },
+      {
+        "word": "catastrophic",
+        "visible": "catas",
+        "hidden": "trophic"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "topic": "Genetics and Heredity",
+    "category": "Biology",
+    "paragraph": "The science of genetics studies how traits are passed from parents to offspring through units of heredity called genes. During reproduction, offspring inherit a combination of genes from both parents, resulting in unique traits. Changes in the DNA sequence, known as mutations, can arise spontaneously or due to environmental exposure, sometimes producing traits that are beneficial, harmful, or neutral. Over long periods, beneficial mutations can spread through populations, driving evolutionary change. To study inheritance patterns and address genetic disorders, geneticists use techniques including sequencing and gene editing, transforming medicine and agriculture.",
+    "blanks": [
+      {
+        "word": "reproduction",
+        "visible": "repro",
+        "hidden": "duction"
+      },
+      {
+        "word": "offspring",
+        "visible": "offs",
+        "hidden": "pring"
+      },
+      {
+        "word": "sequence",
+        "visible": "sequ",
+        "hidden": "ence"
+      },
+      {
+        "word": "mutations",
+        "visible": "muta",
+        "hidden": "tions"
+      },
+      {
+        "word": "spontaneously",
+        "visible": "spont",
+        "hidden": "aneously"
+      },
+      {
+        "word": "exposure",
+        "visible": "expo",
+        "hidden": "sure"
+      },
+      {
+        "word": "beneficial",
+        "visible": "benef",
+        "hidden": "icial"
+      },
+      {
+        "word": "evolutionary",
+        "visible": "evolu",
+        "hidden": "tionary"
+      },
+      {
+        "word": "inheritance",
+        "visible": "inher",
+        "hidden": "itance"
+      },
+      {
+        "word": "geneticists",
+        "visible": "genet",
+        "hidden": "icists"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "topic": "Trade Networks of the Silk Road",
+    "category": "History",
+    "paragraph": "The Silk Road was not a single road but a sprawling network of trade routes connecting East Asia with the Mediterranean world for well over a thousand years. Merchants transported silk, spices, and precious metals across vast deserts and towering mountain ranges, often relying on caravans of camels to survive the harsh terrain. Along these routes, cities flourished as bustling hubs where travelers exchanged goods, languages, and religious beliefs. The constant circulation of ideas fostered remarkable cultural diffusion, spreading innovations like papermaking and gunpowder far beyond their places of origin. Despite the dangers of banditry and extreme weather, the network endured for centuries, fundamentally reshaping the economies and societies it touched.",
+    "blanks": [
+      {
+        "word": "transported",
+        "visible": "trans",
+        "hidden": "ported"
+      },
+      {
+        "word": "precious",
+        "visible": "prec",
+        "hidden": "ious"
+      },
+      {
+        "word": "towering",
+        "visible": "towe",
+        "hidden": "ring"
+      },
+      {
+        "word": "flourished",
+        "visible": "flour",
+        "hidden": "ished"
+      },
+      {
+        "word": "bustling",
+        "visible": "bust",
+        "hidden": "ling"
+      },
+      {
+        "word": "exchanged",
+        "visible": "exch",
+        "hidden": "anged"
+      },
+      {
+        "word": "circulation",
+        "visible": "circu",
+        "hidden": "lation"
+      },
+      {
+        "word": "diffusion",
+        "visible": "diff",
+        "hidden": "usion"
+      },
+      {
+        "word": "innovations",
+        "visible": "innov",
+        "hidden": "ations"
+      },
+      {
+        "word": "banditry",
+        "visible": "band",
+        "hidden": "itry"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "topic": "The Physiology of Animal Hibernation",
+    "category": "Biology",
+    "paragraph": "Hibernation is a remarkable survival strategy that allows certain mammals to endure long periods of extreme cold and food scarcity. During this dormant state, an animal's heart rate and body temperature drop dramatically, sometimes falling to just a few degrees above freezing, which conserves enormous amounts of energy. Changes in metabolism slow digestive processes almost to a standstill so that stored fat reserves can sustain the animal for months without eating. Researchers have discovered that certain proteins help protect cells from damage during these shifts, preventing the kind of tissue injury that would otherwise be fatal. Understanding these mechanisms could eventually inform medical treatments, including techniques for preserving organs before transplantation.",
+    "blanks": [
+      {
+        "word": "dormant",
+        "visible": "dor",
+        "hidden": "mant"
+      },
+      {
+        "word": "dramatically",
+        "visible": "drama",
+        "hidden": "tically"
+      },
+      {
+        "word": "conserves",
+        "visible": "cons",
+        "hidden": "erves"
+      },
+      {
+        "word": "metabolism",
+        "visible": "metab",
+        "hidden": "olism"
+      },
+      {
+        "word": "digestive",
+        "visible": "dige",
+        "hidden": "stive"
+      },
+      {
+        "word": "standstill",
+        "visible": "stand",
+        "hidden": "still"
+      },
+      {
+        "word": "sustain",
+        "visible": "sus",
+        "hidden": "tain"
+      },
+      {
+        "word": "discovered",
+        "visible": "disco",
+        "hidden": "vered"
+      },
+      {
+        "word": "proteins",
+        "visible": "prot",
+        "hidden": "eins"
+      },
+      {
+        "word": "preventing",
+        "visible": "preve",
+        "hidden": "nting"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "topic": "Group Conformity and Social Influence",
+    "category": "Psychology",
+    "paragraph": "Social psychologists have long been fascinated by the extent to which individuals adjust their behavior to match the expectations of a group, even when doing so contradicts their own private judgment. In a series of classic experiments during the 1950s, a researcher demonstrated that participants would frequently give obviously incorrect answers simply because everyone else in the room had already done so. This tendency toward conformity appears to stem from two separate psychological pressures: a desire to be accurate and a desire to be accepted by others. When individuals believe the group possesses superior knowledge, they may genuinely change their private opinion, a process known as informational influence.",
+    "blanks": [
+      {
+        "word": "experiments",
+        "visible": "exper",
+        "hidden": "iments"
+      },
+      {
+        "word": "demonstrated",
+        "visible": "demon",
+        "hidden": "strated"
+      },
+      {
+        "word": "frequently",
+        "visible": "frequ",
+        "hidden": "ently"
+      },
+      {
+        "word": "incorrect",
+        "visible": "inco",
+        "hidden": "rrect"
+      },
+      {
+        "word": "tendency",
+        "visible": "tend",
+        "hidden": "ency"
+      },
+      {
+        "word": "conformity",
+        "visible": "confo",
+        "hidden": "rmity"
+      },
+      {
+        "word": "psychological",
+        "visible": "psych",
+        "hidden": "ological"
+      },
+      {
+        "word": "accurate",
+        "visible": "accu",
+        "hidden": "rate"
+      },
+      {
+        "word": "possesses",
+        "visible": "poss",
+        "hidden": "esses"
+      },
+      {
+        "word": "superior",
+        "visible": "supe",
+        "hidden": "rior"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "topic": "The Domestication of Dogs",
+    "category": "Biology",
+    "paragraph": "Dogs were the first animal species domesticated by humans, likely tens of thousands of years before any other. Genetic evidence suggests that wolves and early humans developed a mutually beneficial relationship, with wolves scavenging near human settlements and gradually growing more tolerant of people. Over many generations, the friendliest and least aggressive wolves were more successful at surviving near humans, a process researchers call self-domestication. Physical changes accompanied this behavioral shift, including smaller skulls, floppier ears, and a reduced tendency toward aggression compared to wild wolves. Modern genetic studies continue to refine our understanding of exactly where and when this remarkable transformation first occurred.",
+    "blanks": [
+      {
+        "word": "scavenging",
+        "visible": "scave",
+        "hidden": "nging"
+      },
+      {
+        "word": "tolerant",
+        "visible": "tole",
+        "hidden": "rant"
+      },
+      {
+        "word": "generations",
+        "visible": "gener",
+        "hidden": "ations"
+      },
+      {
+        "word": "aggressive",
+        "visible": "aggre",
+        "hidden": "ssive"
+      },
+      {
+        "word": "successful",
+        "visible": "succe",
+        "hidden": "ssful"
+      },
+      {
+        "word": "domestication",
+        "visible": "domes",
+        "hidden": "tication"
+      },
+      {
+        "word": "accompanied",
+        "visible": "accom",
+        "hidden": "panied"
+      },
+      {
+        "word": "skulls",
+        "visible": "sku",
+        "hidden": "lls"
+      },
+      {
+        "word": "reduced",
+        "visible": "red",
+        "hidden": "uced"
+      },
+      {
+        "word": "aggression",
+        "visible": "aggre",
+        "hidden": "ssion"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "topic": "Volcanic Islands and Hotspot Formation",
+    "category": "Geology",
+    "paragraph": "Not all volcanic activity occurs at the boundaries between tectonic plates, and some of the most famous island chains on Earth owe their existence to a very different process. Deep beneath certain regions of the crust, unusually hot plumes of molten rock rise from the mantle, creating what geologists call a hotspot. As a tectonic plate slowly drifts over this stationary plume, magma periodically breaks through the crust, forming a volcano that eventually becomes an island. Because the plate keeps moving while the hotspot remains fixed, a chain of islands forms over millions of years, with the oldest islands farthest from the currently active hotspot. This process explains why island chains often show a clear age progression from one end to the other.",
+    "blanks": [
+      {
+        "word": "beneath",
+        "visible": "ben",
+        "hidden": "eath"
+      },
+      {
+        "word": "mantle",
+        "visible": "man",
+        "hidden": "tle"
+      },
+      {
+        "word": "geologists",
+        "visible": "geolo",
+        "hidden": "gists"
+      },
+      {
+        "word": "stationary",
+        "visible": "stati",
+        "hidden": "onary"
+      },
+      {
+        "word": "periodically",
+        "visible": "perio",
+        "hidden": "dically"
+      },
+      {
+        "word": "eventually",
+        "visible": "event",
+        "hidden": "ually"
+      },
+      {
+        "word": "farthest",
+        "visible": "fart",
+        "hidden": "hest"
+      },
+      {
+        "word": "currently",
+        "visible": "curr",
+        "hidden": "ently"
+      },
+      {
+        "word": "explains",
+        "visible": "expl",
+        "hidden": "ains"
+      },
+      {
+        "word": "progression",
+        "visible": "progr",
+        "hidden": "ession"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "topic": "The Gold Standard and Currency History",
+    "category": "Economics",
+    "paragraph": "For much of modern history, many national currencies were directly tied to a fixed quantity of gold, a system known as the gold standard. Under this arrangement, a country's central bank promised to exchange its paper currency for a specific amount of gold upon request, which limited how much money could be printed. Supporters argued this discipline prevented runaway inflation and provided long-term price stability across international trade relationships. Critics countered that the rigid system left governments with little flexibility to respond to economic downturns, since expanding the money supply during a recession was effectively impossible. Most countries abandoned the gold standard during the twentieth century, favoring more flexible monetary policy instead.",
+    "blanks": [
+      {
+        "word": "arrangement",
+        "visible": "arran",
+        "hidden": "gement"
+      },
+      {
+        "word": "exchange",
+        "visible": "exch",
+        "hidden": "ange"
+      },
+      {
+        "word": "discipline",
+        "visible": "disci",
+        "hidden": "pline"
+      },
+      {
+        "word": "inflation",
+        "visible": "infl",
+        "hidden": "ation"
+      },
+      {
+        "word": "stability",
+        "visible": "stab",
+        "hidden": "ility"
+      },
+      {
+        "word": "flexibility",
+        "visible": "flexi",
+        "hidden": "bility"
+      },
+      {
+        "word": "downturns",
+        "visible": "down",
+        "hidden": "turns"
+      },
+      {
+        "word": "effectively",
+        "visible": "effec",
+        "hidden": "tively"
+      },
+      {
+        "word": "abandoned",
+        "visible": "aban",
+        "hidden": "doned"
+      },
+      {
+        "word": "monetary",
+        "visible": "mone",
+        "hidden": "tary"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "topic": "Bilingualism and Cognitive Flexibility",
+    "category": "Psychology",
+    "paragraph": "Researchers have long been interested in how speaking more than one language affects the brain beyond simply enabling communication in different tongues. Studies suggest that bilingual individuals often develop stronger executive function skills, particularly the ability to switch attention between competing tasks efficiently. This advantage likely stems from constant practice suppressing one language while using another, a mental exercise that appears to strengthen broader cognitive control mechanisms. Some longitudinal research has even suggested that lifelong bilingualism may delay the onset of certain age-related cognitive declines by several years. However, researchers caution that not every study finds consistent evidence for these benefits, and the size of the effect remains debated.",
+    "blanks": [
+      {
+        "word": "bilingual",
+        "visible": "bili",
+        "hidden": "ngual"
+      },
+      {
+        "word": "executive",
+        "visible": "exec",
+        "hidden": "utive"
+      },
+      {
+        "word": "competing",
+        "visible": "comp",
+        "hidden": "eting"
+      },
+      {
+        "word": "efficiently",
+        "visible": "effic",
+        "hidden": "iently"
+      },
+      {
+        "word": "suppressing",
+        "visible": "suppr",
+        "hidden": "essing"
+      },
+      {
+        "word": "mechanisms",
+        "visible": "mecha",
+        "hidden": "nisms"
+      },
+      {
+        "word": "longitudinal",
+        "visible": "longi",
+        "hidden": "tudinal"
+      },
+      {
+        "word": "declines",
+        "visible": "decl",
+        "hidden": "ines"
+      },
+      {
+        "word": "consistent",
+        "visible": "consi",
+        "hidden": "stent"
+      },
+      {
+        "word": "debated",
+        "visible": "deb",
+        "hidden": "ated"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "topic": "The Physics of Superconductivity",
+    "category": "Physics",
+    "paragraph": "When certain materials are cooled below a specific critical temperature, they undergo a remarkable transformation and begin conducting electricity with absolutely zero resistance. This phenomenon, known as superconductivity, was first observed in 1911 and has since become one of the most actively researched areas of condensed matter physics. In a normal conductor, electrons collide with atoms in the material, losing energy as heat and creating resistance, but in a superconductor, electrons instead form pairs that move through the material without any scattering. This property allows superconducting materials to carry electrical current indefinitely without any loss of energy, an ability with enormous potential applications. Engineers already use superconductors in powerful magnets for medical imaging machines and experimental high-speed trains.",
+    "blanks": [
+      {
+        "word": "phenomenon",
+        "visible": "pheno",
+        "hidden": "menon"
+      },
+      {
+        "word": "observed",
+        "visible": "obse",
+        "hidden": "rved"
+      },
+      {
+        "word": "actively",
+        "visible": "acti",
+        "hidden": "vely"
+      },
+      {
+        "word": "researched",
+        "visible": "resea",
+        "hidden": "rched"
+      },
+      {
+        "word": "conductor",
+        "visible": "cond",
+        "hidden": "uctor"
+      },
+      {
+        "word": "collide",
+        "visible": "col",
+        "hidden": "lide"
+      },
+      {
+        "word": "scattering",
+        "visible": "scatt",
+        "hidden": "ering"
+      },
+      {
+        "word": "indefinitely",
+        "visible": "indef",
+        "hidden": "initely"
+      },
+      {
+        "word": "potential",
+        "visible": "pote",
+        "hidden": "ntial"
+      },
+      {
+        "word": "applications",
+        "visible": "appli",
+        "hidden": "cations"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "topic": "Medieval Guild Systems",
+    "category": "History",
+    "paragraph": "In medieval European towns, skilled craftsmen typically organized themselves into associations called guilds, which regulated nearly every aspect of a trade. Guilds controlled the training of new workers through a structured apprenticeship system, in which a young apprentice would work for years under a master craftsman before being allowed to practice independently. Beyond training, guilds also set strict quality standards for goods, fixed prices to prevent unfair competition among members, and represented their trade's interests before local governments. Membership offered considerable protection and status, but it also excluded many people, including most women and anyone unable to afford the required fees. As industrial production methods spread in later centuries, the influence of traditional guilds gradually declined across much of Europe.",
+    "blanks": [
+      {
+        "word": "controlled",
+        "visible": "contr",
+        "hidden": "olled"
+      },
+      {
+        "word": "structured",
+        "visible": "struc",
+        "hidden": "tured"
+      },
+      {
+        "word": "apprenticeship",
+        "visible": "appre",
+        "hidden": "nticeship"
+      },
+      {
+        "word": "independently",
+        "visible": "indep",
+        "hidden": "endently"
+      },
+      {
+        "word": "standards",
+        "visible": "stan",
+        "hidden": "dards"
+      },
+      {
+        "word": "competition",
+        "visible": "compe",
+        "hidden": "tition"
+      },
+      {
+        "word": "represented",
+        "visible": "repre",
+        "hidden": "sented"
+      },
+      {
+        "word": "excluded",
+        "visible": "excl",
+        "hidden": "uded"
+      },
+      {
+        "word": "influence",
+        "visible": "infl",
+        "hidden": "uence"
+      },
+      {
+        "word": "declined",
+        "visible": "decl",
+        "hidden": "ined"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "topic": "Ocean Acidification and Shellfish",
+    "category": "Natural Science",
+    "paragraph": "As the ocean absorbs a significant portion of the carbon dioxide released into the atmosphere by human activity, its chemistry is gradually shifting in ways that threaten marine life. This absorbed carbon dioxide reacts with seawater to form carbonic acid, a process that reduces the availability of carbonate ions needed by many marine organisms to build their shells. Shellfish such as oysters and mussels are particularly vulnerable, since their larvae struggle to form protective shells efficiently in increasingly acidic water. Laboratory experiments have shown that shellfish raised in more acidic conditions often display thinner, more fragile shells and reduced growth rates compared to those raised in normal seawater. Scientists warn that continued acidification could seriously disrupt coastal economies that depend heavily on shellfish harvesting.",
+    "blanks": [
+      {
+        "word": "reduces",
+        "visible": "red",
+        "hidden": "uces"
+      },
+      {
+        "word": "availability",
+        "visible": "avail",
+        "hidden": "ability"
+      },
+      {
+        "word": "carbonate",
+        "visible": "carb",
+        "hidden": "onate"
+      },
+      {
+        "word": "organisms",
+        "visible": "orga",
+        "hidden": "nisms"
+      },
+      {
+        "word": "vulnerable",
+        "visible": "vulne",
+        "hidden": "rable"
+      },
+      {
+        "word": "efficiently",
+        "visible": "effic",
+        "hidden": "iently"
+      },
+      {
+        "word": "fragile",
+        "visible": "fra",
+        "hidden": "gile"
+      },
+      {
+        "word": "reduced",
+        "visible": "red",
+        "hidden": "uced"
+      },
+      {
+        "word": "disrupt",
+        "visible": "dis",
+        "hidden": "rupt"
+      },
+      {
+        "word": "harvesting",
+        "visible": "harve",
+        "hidden": "sting"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "topic": "The Evolution of Feathers",
+    "category": "Biology",
+    "paragraph": "Feathers are often associated exclusively with birds, but fossil evidence has revealed that many non-avian dinosaurs also possessed feathers long before birds themselves evolved. Early feathers were likely simple, hollow filaments that served primarily for insulation, helping small dinosaurs regulate their body temperature rather than enabling flight. Over millions of years, these simple structures gradually became more complex, eventually developing the branching, asymmetrical shape needed to generate lift. This gradual transformation suggests that feathers evolved initially for reasons unrelated to flight, only later being co-opted for aerial locomotion once the right structural features happened to align. Paleontologists continue to debate exactly which lineage of feathered dinosaurs gave rise to modern birds.",
+    "blanks": [
+      {
+        "word": "filaments",
+        "visible": "fila",
+        "hidden": "ments"
+      },
+      {
+        "word": "insulation",
+        "visible": "insul",
+        "hidden": "ation"
+      },
+      {
+        "word": "regulate",
+        "visible": "regu",
+        "hidden": "late"
+      },
+      {
+        "word": "structures",
+        "visible": "struc",
+        "hidden": "tures"
+      },
+      {
+        "word": "gradually",
+        "visible": "grad",
+        "hidden": "ually"
+      },
+      {
+        "word": "eventually",
+        "visible": "event",
+        "hidden": "ually"
+      },
+      {
+        "word": "asymmetrical",
+        "visible": "asymm",
+        "hidden": "etrical"
+      },
+      {
+        "word": "unrelated",
+        "visible": "unre",
+        "hidden": "lated"
+      },
+      {
+        "word": "locomotion",
+        "visible": "locom",
+        "hidden": "otion"
+      },
+      {
+        "word": "lineage",
+        "visible": "lin",
+        "hidden": "eage"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "topic": "Desertification and Land Degradation",
+    "category": "Environmental Science",
+    "paragraph": "Desertification refers to the process by which fertile land gradually becomes desert-like, typically as a result of drought, deforestation, or unsustainable farming practices. Once vegetation is stripped from land, the soil becomes far more vulnerable to erosion, losing the organic matter needed to retain moisture and support new plant growth. In many affected regions, overgrazing by livestock further compounds the problem, preventing struggling vegetation from ever fully recovering between grazing cycles. Climate change is expected to accelerate desertification in numerous regions, as rising temperatures and shifting rainfall patterns place additional stress on already fragile ecosystems. Restoration efforts, including planting drought-resistant vegetation and rotating grazing areas, have shown some promise in slowing or even reversing this degradation.",
+    "blanks": [
+      {
+        "word": "vegetation",
+        "visible": "veget",
+        "hidden": "ation"
+      },
+      {
+        "word": "stripped",
+        "visible": "stri",
+        "hidden": "pped"
+      },
+      {
+        "word": "vulnerable",
+        "visible": "vulne",
+        "hidden": "rable"
+      },
+      {
+        "word": "erosion",
+        "visible": "ero",
+        "hidden": "sion"
+      },
+      {
+        "word": "overgrazing",
+        "visible": "overg",
+        "hidden": "razing"
+      },
+      {
+        "word": "compounds",
+        "visible": "comp",
+        "hidden": "ounds"
+      },
+      {
+        "word": "accelerate",
+        "visible": "accel",
+        "hidden": "erate"
+      },
+      {
+        "word": "fragile",
+        "visible": "fra",
+        "hidden": "gile"
+      },
+      {
+        "word": "reversing",
+        "visible": "reve",
+        "hidden": "rsing"
+      },
+      {
+        "word": "degradation",
+        "visible": "degra",
+        "hidden": "dation"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "topic": "The Byzantine Empire's Legacy",
+    "category": "History",
+    "paragraph": "When the western half of the Roman Empire collapsed in the fifth century, its eastern half survived for nearly a thousand additional years as what historians now call the Byzantine Empire. Centered on the city of Constantinople, this empire preserved much of Roman law, administration, and classical learning throughout the medieval period, even as much of Western Europe experienced significant political fragmentation. Byzantine scholars carefully preserved countless ancient Greek texts that might otherwise have been lost entirely, later transmitting this knowledge back to Western Europe and helping spark renewed interest in classical learning. The empire also developed a distinctive artistic and architectural tradition, exemplified by the famous domed cathedral of Hagia Sophia. Constantinople's eventual conquest in 1453 marked the definitive end of this remarkable civilization.",
+    "blanks": [
+      {
+        "word": "preserved",
+        "visible": "pres",
+        "hidden": "erved"
+      },
+      {
+        "word": "administration",
+        "visible": "admin",
+        "hidden": "istration"
+      },
+      {
+        "word": "fragmentation",
+        "visible": "fragm",
+        "hidden": "entation"
+      },
+      {
+        "word": "scholars",
+        "visible": "scho",
+        "hidden": "lars"
+      },
+      {
+        "word": "transmitting",
+        "visible": "trans",
+        "hidden": "mitting"
+      },
+      {
+        "word": "renewed",
+        "visible": "ren",
+        "hidden": "ewed"
+      },
+      {
+        "word": "distinctive",
+        "visible": "disti",
+        "hidden": "nctive"
+      },
+      {
+        "word": "exemplified",
+        "visible": "exemp",
+        "hidden": "lified"
+      },
+      {
+        "word": "definitive",
+        "visible": "defin",
+        "hidden": "itive"
+      },
+      {
+        "word": "civilization",
+        "visible": "civil",
+        "hidden": "ization"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "topic": "Neural Networks and Deep Learning",
+    "category": "Technology",
+    "paragraph": "Modern artificial intelligence systems increasingly rely on a technique called deep learning, which is loosely inspired by the structure of the human brain. A neural network consists of layers of interconnected nodes, and during training, the network gradually adjusts the strength of connections between these nodes to improve its performance on a given task. Early neural networks were limited by insufficient computing power and relatively small amounts of training data, but rapid advances in both areas over the past two decades have dramatically expanded what these systems can accomplish. Deep learning models now power everything from image recognition software to language translation tools, often achieving accuracy that rivals or exceeds human performance on narrow tasks. Despite these impressive capabilities, researchers continue to investigate why these networks sometimes fail in unpredictable ways.",
+    "blanks": [
+      {
+        "word": "interconnected",
+        "visible": "inter",
+        "hidden": "connected"
+      },
+      {
+        "word": "gradually",
+        "visible": "grad",
+        "hidden": "ually"
+      },
+      {
+        "word": "connections",
+        "visible": "conne",
+        "hidden": "ctions"
+      },
+      {
+        "word": "insufficient",
+        "visible": "insuf",
+        "hidden": "ficient"
+      },
+      {
+        "word": "advances",
+        "visible": "adva",
+        "hidden": "nces"
+      },
+      {
+        "word": "dramatically",
+        "visible": "drama",
+        "hidden": "tically"
+      },
+      {
+        "word": "accomplish",
+        "visible": "accom",
+        "hidden": "plish"
+      },
+      {
+        "word": "recognition",
+        "visible": "recog",
+        "hidden": "nition"
+      },
+      {
+        "word": "achieving",
+        "visible": "achi",
+        "hidden": "eving"
+      },
+      {
+        "word": "unpredictable",
+        "visible": "unpre",
+        "hidden": "dictable"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "topic": "The Physiology of Thirst",
+    "category": "Biology",
+    "paragraph": "Thirst is the body's primary mechanism for maintaining proper fluid balance, triggered by a combination of internal signals that monitor hydration levels continuously. When the body loses water through sweating, breathing, or urination, blood volume decreases and the concentration of dissolved particles in the blood rises correspondingly. Specialized sensors in the brain detect these changes and trigger the sensation of thirst, prompting an organism to seek out and consume fluids. Simultaneously, the body releases a hormone that signals the kidneys to conserve water by producing more concentrated urine, reducing further fluid loss until adequate hydration is restored. This tightly regulated feedback system usually keeps the body's water balance remarkably stable despite constantly changing conditions.",
+    "blanks": [
+      {
+        "word": "concentration",
+        "visible": "conce",
+        "hidden": "ntration"
+      },
+      {
+        "word": "dissolved",
+        "visible": "diss",
+        "hidden": "olved"
+      },
+      {
+        "word": "correspondingly",
+        "visible": "corre",
+        "hidden": "spondingly"
+      },
+      {
+        "word": "prompting",
+        "visible": "prom",
+        "hidden": "pting"
+      },
+      {
+        "word": "organism",
+        "visible": "orga",
+        "hidden": "nism"
+      },
+      {
+        "word": "releases",
+        "visible": "rele",
+        "hidden": "ases"
+      },
+      {
+        "word": "conserve",
+        "visible": "cons",
+        "hidden": "erve"
+      },
+      {
+        "word": "concentrated",
+        "visible": "conce",
+        "hidden": "ntrated"
+      },
+      {
+        "word": "hydration",
+        "visible": "hydr",
+        "hidden": "ation"
+      },
+      {
+        "word": "regulated",
+        "visible": "regu",
+        "hidden": "lated"
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "topic": "Colonial Trade and the Spice Islands",
+    "category": "History",
+    "paragraph": "During the sixteenth and seventeenth centuries, European powers competed fiercely for control over a small cluster of islands in present-day Indonesia known for producing valuable spices found nowhere else in the world. Nutmeg and cloves, both native exclusively to these islands, commanded extraordinarily high prices in European markets, since demand vastly exceeded the limited natural supply available. Trading companies established fortified outposts throughout the region, sometimes resorting to brutal tactics to maintain a monopoly over the lucrative spice trade. This intense competition eventually reshaped global commerce, encouraging the development of new shipping routes, financial institutions, and colonial administrative systems that would influence world trade for centuries. The spice trade's enormous profitability helped finance the rise of several major European trading empires.",
+    "blanks": [
+      {
+        "word": "exclusively",
+        "visible": "exclu",
+        "hidden": "sively"
+      },
+      {
+        "word": "extraordinarily",
+        "visible": "extra",
+        "hidden": "ordinarily"
+      },
+      {
+        "word": "exceeded",
+        "visible": "exce",
+        "hidden": "eded"
+      },
+      {
+        "word": "fortified",
+        "visible": "fort",
+        "hidden": "ified"
+      },
+      {
+        "word": "monopoly",
+        "visible": "mono",
+        "hidden": "poly"
+      },
+      {
+        "word": "lucrative",
+        "visible": "lucr",
+        "hidden": "ative"
+      },
+      {
+        "word": "reshaped",
+        "visible": "resh",
+        "hidden": "aped"
+      },
+      {
+        "word": "institutions",
+        "visible": "insti",
+        "hidden": "tutions"
+      },
+      {
+        "word": "administrative",
+        "visible": "admin",
+        "hidden": "istrative"
+      },
+      {
+        "word": "profitability",
+        "visible": "profi",
+        "hidden": "tability"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "topic": "Symbolic Interactionism in Sociology",
+    "category": "Sociology",
+    "paragraph": "Symbolic interactionism is a sociological perspective that focuses on how individuals create and interpret meaning through everyday social interaction rather than through large-scale social structures. According to this view, objects, gestures, and words do not carry inherent meaning on their own, but instead acquire significance through shared social agreement, which can shift depending on context. Sociologists working in this tradition often study how people negotiate their identities during face-to-face interactions, constantly adjusting their behavior based on subtle cues from others. This approach contrasts sharply with structural theories that emphasize how broad institutions and social forces shape individual behavior from above. Symbolic interactionism has proven especially influential in studies of deviance, identity formation, and small group dynamics.",
+    "blanks": [
+      {
+        "word": "inherent",
+        "visible": "inhe",
+        "hidden": "rent"
+      },
+      {
+        "word": "acquire",
+        "visible": "acq",
+        "hidden": "uire"
+      },
+      {
+        "word": "significance",
+        "visible": "signi",
+        "hidden": "ficance"
+      },
+      {
+        "word": "tradition",
+        "visible": "trad",
+        "hidden": "ition"
+      },
+      {
+        "word": "negotiate",
+        "visible": "nego",
+        "hidden": "tiate"
+      },
+      {
+        "word": "interactions",
+        "visible": "inter",
+        "hidden": "actions"
+      },
+      {
+        "word": "constantly",
+        "visible": "const",
+        "hidden": "antly"
+      },
+      {
+        "word": "contrasts",
+        "visible": "cont",
+        "hidden": "rasts"
+      },
+      {
+        "word": "structural",
+        "visible": "struc",
+        "hidden": "tural"
+      },
+      {
+        "word": "influential",
+        "visible": "influ",
+        "hidden": "ential"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "topic": "The Discovery of Antibiotics",
+    "category": "Biology",
+    "paragraph": "The discovery of the first widely used antibiotic occurred somewhat by accident, when a researcher noticed that a stray mold contaminating one of his bacterial cultures appeared to be killing the surrounding bacteria. Further investigation revealed that the mold produced a substance capable of destroying a wide range of harmful bacteria without significantly damaging human cells, a combination that made it remarkably valuable as a medical treatment. Producing this substance in large enough quantities for widespread medical use proved surprisingly difficult, requiring years of additional research before it could be manufactured on an industrial scale. Once mass production became possible, this discovery transformed medicine, dramatically reducing deaths from bacterial infections that had previously been nearly untreatable. Unfortunately, the widespread and sometimes excessive use of antibiotics has since led to growing concerns about bacterial resistance.",
+    "blanks": [
+      {
+        "word": "investigation",
+        "visible": "inves",
+        "hidden": "tigation"
+      },
+      {
+        "word": "destroying",
+        "visible": "destr",
+        "hidden": "oying"
+      },
+      {
+        "word": "significantly",
+        "visible": "signi",
+        "hidden": "ficantly"
+      },
+      {
+        "word": "quantities",
+        "visible": "quant",
+        "hidden": "ities"
+      },
+      {
+        "word": "surprisingly",
+        "visible": "surpr",
+        "hidden": "isingly"
+      },
+      {
+        "word": "manufactured",
+        "visible": "manuf",
+        "hidden": "actured"
+      },
+      {
+        "word": "transformed",
+        "visible": "trans",
+        "hidden": "formed"
+      },
+      {
+        "word": "dramatically",
+        "visible": "drama",
+        "hidden": "tically"
+      },
+      {
+        "word": "untreatable",
+        "visible": "untre",
+        "hidden": "atable"
+      },
+      {
+        "word": "resistance",
+        "visible": "resis",
+        "hidden": "tance"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "topic": "The Domestication of the Horse",
+    "category": "History",
+    "paragraph": "Horses were among the last major animals to be domesticated by early human societies. Archaeological evidence suggests that domestication first occurred on the grasslands of Central Asia, where wild herds were gradually tamed for both transportation and companionship. Once domesticated, horses fundamentally transformed human civilization by making long-distance travel and trade dramatically faster than walking ever allowed. Armies that incorporated cavalry units gained a substantial military advantage over opponents who still relied entirely on foot soldiers. The relationship between humans and horses continued evolving for thousands of years, eventually producing hundreds of specialized breeds suited to farming, racing, and warfare.",
+    "blanks": [
+      {
+        "word": "Archaeological",
+        "visible": "Archa",
+        "hidden": "eological"
+      },
+      {
+        "word": "domestication",
+        "visible": "domes",
+        "hidden": "tication"
+      },
+      {
+        "word": "Central",
+        "visible": "Cen",
+        "hidden": "tral"
+      },
+      {
+        "word": "fundamentally",
+        "visible": "funda",
+        "hidden": "mentally"
+      },
+      {
+        "word": "distance",
+        "visible": "dist",
+        "hidden": "ance"
+      },
+      {
+        "word": "cavalry",
+        "visible": "cav",
+        "hidden": "alry"
+      },
+      {
+        "word": "advantage",
+        "visible": "adva",
+        "hidden": "ntage"
+      },
+      {
+        "word": "evolving",
+        "visible": "evol",
+        "hidden": "ving"
+      },
+      {
+        "word": "hundreds",
+        "visible": "hund",
+        "hidden": "reds"
+      },
+      {
+        "word": "warfare",
+        "visible": "war",
+        "hidden": "fare"
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "topic": "Coral Bleaching",
+    "category": "Marine Biology",
+    "paragraph": "Coral reefs are among the most biologically diverse ecosystems on the planet. When ocean temperatures rise even slightly above normal, corals experience significant stress that disrupts their relationship with the tiny algae living inside their tissues. This disruption causes the coral to expel the algae entirely, resulting in a stark white appearance commonly known as bleaching. Without the nutrients these algae normally provide, bleached coral becomes considerably more vulnerable to disease and can eventually die if conditions do not improve quickly. Scientists worldwide are researching techniques to develop heat-resistant coral strains that might survive future ocean warming.",
+    "blanks": [
+      {
+        "word": "temperatures",
+        "visible": "tempe",
+        "hidden": "ratures"
+      },
+      {
+        "word": "significant",
+        "visible": "signi",
+        "hidden": "ficant"
+      },
+      {
+        "word": "disruption",
+        "visible": "disru",
+        "hidden": "ption"
+      },
+      {
+        "word": "commonly",
+        "visible": "comm",
+        "hidden": "only"
+      },
+      {
+        "word": "provide",
+        "visible": "pro",
+        "hidden": "vide"
+      },
+      {
+        "word": "considerably",
+        "visible": "consi",
+        "hidden": "derably"
+      },
+      {
+        "word": "improve",
+        "visible": "imp",
+        "hidden": "rove"
+      },
+      {
+        "word": "worldwide",
+        "visible": "worl",
+        "hidden": "dwide"
+      },
+      {
+        "word": "resistant",
+        "visible": "resi",
+        "hidden": "stant"
+      },
+      {
+        "word": "warming",
+        "visible": "war",
+        "hidden": "ming"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "topic": "The Invention of Movable Type",
+    "category": "History",
+    "paragraph": "Before the invention of movable type printing, books had to be copied entirely by hand, a laborious process that made written material extremely expensive and rare. The introduction of movable metal type revolutionized the production of books by allowing individual letters to be rearranged and reused for different pages. This innovation dramatically reduced the cost of printing and made written knowledge accessible to a much broader segment of the population than ever before. Literacy rates gradually increased across many regions as books became more affordable, and this technological advancement is often credited with accelerating the spread of scientific and philosophical ideas.",
+    "blanks": [
+      {
+        "word": "introduction",
+        "visible": "intro",
+        "hidden": "duction"
+      },
+      {
+        "word": "production",
+        "visible": "produ",
+        "hidden": "ction"
+      },
+      {
+        "word": "rearranged",
+        "visible": "rearr",
+        "hidden": "anged"
+      },
+      {
+        "word": "reduced",
+        "visible": "red",
+        "hidden": "uced"
+      },
+      {
+        "word": "knowledge",
+        "visible": "know",
+        "hidden": "ledge"
+      },
+      {
+        "word": "segment",
+        "visible": "seg",
+        "hidden": "ment"
+      },
+      {
+        "word": "increased",
+        "visible": "incr",
+        "hidden": "eased"
+      },
+      {
+        "word": "affordable",
+        "visible": "affor",
+        "hidden": "dable"
+      },
+      {
+        "word": "credited",
+        "visible": "cred",
+        "hidden": "ited"
+      },
+      {
+        "word": "philosophical",
+        "visible": "philo",
+        "hidden": "sophical"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "topic": "Bioluminescence in the Deep Sea",
+    "category": "Marine Biology",
+    "paragraph": "Many creatures living in the deepest parts of the ocean have evolved the remarkable ability to produce their own light. This biological phenomenon, called bioluminescence, occurs through a chemical reaction inside specialized cells within the organism's body. Deep-sea creatures use bioluminescence for several different purposes, including attracting prey, communicating with potential mates, and startling predators long enough to escape. Because sunlight cannot penetrate the deepest ocean depths, this self-generated light source has become an essential survival mechanism for numerous species living in complete darkness. Researchers continue studying these organisms to better understand how such complex chemical processes evolved independently across so many unrelated species.",
+    "blanks": [
+      {
+        "word": "biological",
+        "visible": "biolo",
+        "hidden": "gical"
+      },
+      {
+        "word": "reaction",
+        "visible": "reac",
+        "hidden": "tion"
+      },
+      {
+        "word": "organism",
+        "visible": "orga",
+        "hidden": "nism"
+      },
+      {
+        "word": "communicating",
+        "visible": "commu",
+        "hidden": "nicating"
+      },
+      {
+        "word": "sunlight",
+        "visible": "sunl",
+        "hidden": "ight"
+      },
+      {
+        "word": "generated",
+        "visible": "gene",
+        "hidden": "rated"
+      },
+      {
+        "word": "numerous",
+        "visible": "nume",
+        "hidden": "rous"
+      },
+      {
+        "word": "studying",
+        "visible": "stud",
+        "hidden": "ying"
+      },
+      {
+        "word": "complex",
+        "visible": "com",
+        "hidden": "plex"
+      },
+      {
+        "word": "unrelated",
+        "visible": "unre",
+        "hidden": "lated"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "topic": "The Fall of Constantinople",
+    "category": "History",
+    "paragraph": "Constantinople had served as the capital of the Byzantine Empire for over a thousand years before its eventual capture. The city's massive defensive walls had successfully repelled numerous invasions throughout its long history, earning it a reputation for being nearly impenetrable. However, the introduction of powerful new artillery capable of breaching even the strongest fortifications eventually shifted the balance of military technology. After a prolonged siege lasting nearly two months, the attacking forces finally overwhelmed the city's defenses and captured Constantinople, marking a significant turning point in world history. This dramatic event is often used by historians to symbolize the transition from the medieval period to the early modern era.",
+    "blanks": [
+      {
+        "word": "massive",
+        "visible": "mas",
+        "hidden": "sive"
+      },
+      {
+        "word": "numerous",
+        "visible": "nume",
+        "hidden": "rous"
+      },
+      {
+        "word": "earning",
+        "visible": "ear",
+        "hidden": "ning"
+      },
+      {
+        "word": "powerful",
+        "visible": "powe",
+        "hidden": "rful"
+      },
+      {
+        "word": "strongest",
+        "visible": "stro",
+        "hidden": "ngest"
+      },
+      {
+        "word": "technology",
+        "visible": "techn",
+        "hidden": "ology"
+      },
+      {
+        "word": "finally",
+        "visible": "fin",
+        "hidden": "ally"
+      },
+      {
+        "word": "significant",
+        "visible": "signi",
+        "hidden": "ficant"
+      },
+      {
+        "word": "dramatic",
+        "visible": "dram",
+        "hidden": "atic"
+      },
+      {
+        "word": "medieval",
+        "visible": "medi",
+        "hidden": "eval"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "topic": "Photosynthesis in Extreme Environments",
+    "category": "Botany",
+    "paragraph": "Plants have adapted to survive in an extraordinarily wide range of environmental conditions across the planet. In extremely dry environments, certain plant species have evolved specialized mechanisms that allow them to perform photosynthesis while minimizing water loss through their leaves. These adaptations often involve unusual structural modifications, such as thickened waxy coatings that dramatically reduce evaporation from the plant's surface. Some desert plants have also developed the remarkable capability to open their pores only during the cooler nighttime hours, further conserving precious water resources. Understanding these adaptations has become increasingly valuable as researchers search for ways to develop more drought-resistant agricultural crops.",
+    "blanks": [
+      {
+        "word": "extremely",
+        "visible": "extr",
+        "hidden": "emely"
+      },
+      {
+        "word": "specialized",
+        "visible": "speci",
+        "hidden": "alized"
+      },
+      {
+        "word": "photosynthesis",
+        "visible": "photo",
+        "hidden": "synthesis"
+      },
+      {
+        "word": "unusual",
+        "visible": "unu",
+        "hidden": "sual"
+      },
+      {
+        "word": "thickened",
+        "visible": "thic",
+        "hidden": "kened"
+      },
+      {
+        "word": "developed",
+        "visible": "deve",
+        "hidden": "loped"
+      },
+      {
+        "word": "nighttime",
+        "visible": "nigh",
+        "hidden": "ttime"
+      },
+      {
+        "word": "resources",
+        "visible": "reso",
+        "hidden": "urces"
+      },
+      {
+        "word": "researchers",
+        "visible": "resea",
+        "hidden": "rchers"
+      },
+      {
+        "word": "agricultural",
+        "visible": "agric",
+        "hidden": "ultural"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "topic": "The Origins of Democracy",
+    "category": "Political Science",
+    "paragraph": "Ancient Athens is frequently credited with developing one of the earliest known forms of democratic governance. Under this system, eligible citizens could participate directly in political decisions by attending assemblies and voting on important matters affecting their community. This arrangement differed dramatically from the monarchies and oligarchies that dominated most other ancient societies, where political power remained concentrated among a small ruling class. Although Athenian democracy excluded women, enslaved people, and foreigners from participation, it nevertheless established fundamental principles that continued influencing political philosophy for centuries afterward. Many modern democratic systems still incorporate concepts that trace their origins back to these early Athenian experiments in self-governance.",
+    "blanks": [
+      {
+        "word": "eligible",
+        "visible": "elig",
+        "hidden": "ible"
+      },
+      {
+        "word": "decisions",
+        "visible": "deci",
+        "hidden": "sions"
+      },
+      {
+        "word": "affecting",
+        "visible": "affe",
+        "hidden": "cting"
+      },
+      {
+        "word": "monarchies",
+        "visible": "monar",
+        "hidden": "chies"
+      },
+      {
+        "word": "remained",
+        "visible": "rema",
+        "hidden": "ined"
+      },
+      {
+        "word": "excluded",
+        "visible": "excl",
+        "hidden": "uded"
+      },
+      {
+        "word": "established",
+        "visible": "estab",
+        "hidden": "lished"
+      },
+      {
+        "word": "philosophy",
+        "visible": "philo",
+        "hidden": "sophy"
+      },
+      {
+        "word": "incorporate",
+        "visible": "incor",
+        "hidden": "porate"
+      },
+      {
+        "word": "experiments",
+        "visible": "exper",
+        "hidden": "iments"
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "topic": "The Physics of Rainbows",
+    "category": "Physics",
+    "paragraph": "Rainbows form through a fascinating combination of light refraction, reflection, and dispersion occurring within countless individual raindrops. As sunlight enters a raindrop, it bends slightly and separates into its different component wavelengths, each corresponding to a different color. This separation happens because different wavelengths of light travel through water at subtly different speeds, causing them to bend at slightly different angles. After reflecting off the inside surface of the raindrop, the separated light exits and travels toward an observer's eyes, creating the familiar arc of colors. Because every observer views a slightly different collection of raindrops, no two people ever technically see exactly the same rainbow.",
+    "blanks": [
+      {
+        "word": "sunlight",
+        "visible": "sunl",
+        "hidden": "ight"
+      },
+      {
+        "word": "slightly",
+        "visible": "slig",
+        "hidden": "htly"
+      },
+      {
+        "word": "wavelengths",
+        "visible": "wavel",
+        "hidden": "engths"
+      },
+      {
+        "word": "separation",
+        "visible": "separ",
+        "hidden": "ation"
+      },
+      {
+        "word": "causing",
+        "visible": "cau",
+        "hidden": "sing"
+      },
+      {
+        "word": "separated",
+        "visible": "sepa",
+        "hidden": "rated"
+      },
+      {
+        "word": "observer",
+        "visible": "obse",
+        "hidden": "rver"
+      },
+      {
+        "word": "familiar",
+        "visible": "fami",
+        "hidden": "liar"
+      },
+      {
+        "word": "technically",
+        "visible": "techn",
+        "hidden": "ically"
+      },
+      {
+        "word": "rainbow",
+        "visible": "rai",
+        "hidden": "nbow"
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "topic": "The Great Irish Famine",
+    "category": "History",
+    "paragraph": "Ireland experienced a devastating famine during the mid-nineteenth century that fundamentally altered the country's population and social structure. A fungal disease destroyed the potato crop that a large portion of the rural population depended on almost entirely for sustenance. As the crop failures continued for several consecutive years, widespread starvation and disease spread rapidly throughout the countryside, killing an enormous number of people. The catastrophe also triggered a massive wave of emigration, as desperate families sought better opportunities in other countries. This period permanently reshaped Irish society and left lasting demographic consequences that persisted for generations afterward.",
+    "blanks": [
+      {
+        "word": "disease",
+        "visible": "dis",
+        "hidden": "ease"
+      },
+      {
+        "word": "sustenance",
+        "visible": "suste",
+        "hidden": "nance"
+      },
+      {
+        "word": "consecutive",
+        "visible": "conse",
+        "hidden": "cutive"
+      },
+      {
+        "word": "rapidly",
+        "visible": "rap",
+        "hidden": "idly"
+      },
+      {
+        "word": "enormous",
+        "visible": "enor",
+        "hidden": "mous"
+      },
+      {
+        "word": "massive",
+        "visible": "mas",
+        "hidden": "sive"
+      },
+      {
+        "word": "opportunities",
+        "visible": "oppor",
+        "hidden": "tunities"
+      },
+      {
+        "word": "reshaped",
+        "visible": "resh",
+        "hidden": "aped"
+      },
+      {
+        "word": "consequences",
+        "visible": "conse",
+        "hidden": "quences"
+      },
+      {
+        "word": "afterward",
+        "visible": "afte",
+        "hidden": "rward"
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "topic": "Octopus Camouflage",
+    "category": "Zoology",
+    "paragraph": "Octopuses possess one of the most sophisticated camouflage systems found anywhere in the animal kingdom. Specialized cells embedded throughout their skin allow them to rapidly change both color and texture to match their surrounding environment. This remarkable ability helps octopuses avoid detection by predators while also allowing them to ambush unsuspecting prey without being noticed beforehand. Unlike many other camouflaging animals, octopuses can accomplish this transformation within a fraction of a second, an astonishingly fast response given the complexity of the process involved. Researchers studying this phenomenon hope that understanding the underlying mechanisms might eventually inspire new technologies in fields like adaptive materials and robotics.",
+    "blanks": [
+      {
+        "word": "Specialized",
+        "visible": "Speci",
+        "hidden": "alized"
+      },
+      {
+        "word": "texture",
+        "visible": "tex",
+        "hidden": "ture"
+      },
+      {
+        "word": "ability",
+        "visible": "abi",
+        "hidden": "lity"
+      },
+      {
+        "word": "unsuspecting",
+        "visible": "unsus",
+        "hidden": "pecting"
+      },
+      {
+        "word": "animals",
+        "visible": "ani",
+        "hidden": "mals"
+      },
+      {
+        "word": "fraction",
+        "visible": "frac",
+        "hidden": "tion"
+      },
+      {
+        "word": "process",
+        "visible": "pro",
+        "hidden": "cess"
+      },
+      {
+        "word": "phenomenon",
+        "visible": "pheno",
+        "hidden": "menon"
+      },
+      {
+        "word": "inspire",
+        "visible": "ins",
+        "hidden": "pire"
+      },
+      {
+        "word": "robotics",
+        "visible": "robo",
+        "hidden": "tics"
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "topic": "The Silk Road Trade Network",
+    "category": "History",
+    "paragraph": "The Silk Road was not a single road but rather an extensive network of interconnected trade routes spanning much of Asia and reaching into Europe and Africa. Merchants traveling these routes exchanged goods such as silk, spices, and precious metals across vast distances that would have taken months or even years to complete. Beyond material goods, this network also facilitated the exchange of ideas, religious beliefs, and technological innovations between distant civilizations that otherwise had little direct contact. Diseases unfortunately spread along these same routes as well, occasionally causing devastating epidemics in regions far from where an outbreak originally began. Historians consider the Silk Road one of the most significant factors connecting the ancient world together.",
+    "blanks": [
+      {
+        "word": "Merchants",
+        "visible": "Merc",
+        "hidden": "hants"
+      },
+      {
+        "word": "precious",
+        "visible": "prec",
+        "hidden": "ious"
+      },
+      {
+        "word": "facilitated",
+        "visible": "facil",
+        "hidden": "itated"
+      },
+      {
+        "word": "beliefs",
+        "visible": "bel",
+        "hidden": "iefs"
+      },
+      {
+        "word": "distant",
+        "visible": "dis",
+        "hidden": "tant"
+      },
+      {
+        "word": "unfortunately",
+        "visible": "unfor",
+        "hidden": "tunately"
+      },
+      {
+        "word": "devastating",
+        "visible": "devas",
+        "hidden": "tating"
+      },
+      {
+        "word": "outbreak",
+        "visible": "outb",
+        "hidden": "reak"
+      },
+      {
+        "word": "significant",
+        "visible": "signi",
+        "hidden": "ficant"
+      },
+      {
+        "word": "ancient",
+        "visible": "anc",
+        "hidden": "ient"
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "topic": "The Chemistry of Fireworks",
+    "category": "Chemistry",
+    "paragraph": "Fireworks produce their spectacular displays through carefully controlled chemical reactions involving specific combinations of metal compounds. Each color visible in a firework display results from a different metallic element being heated to extremely high temperatures during the explosive reaction. For example, compounds containing strontium typically produce vivid red colors, while copper compounds tend to generate striking shades of blue. Manufacturers must carefully calculate the precise proportions of these ingredients to achieve the desired visual effect without compromising the stability of the overall mixture. Understanding this underlying chemistry has allowed pyrotechnic designers to create increasingly elaborate and colorful displays for celebrations around the world.",
+    "blanks": [
+      {
+        "word": "visible",
+        "visible": "vis",
+        "hidden": "ible"
+      },
+      {
+        "word": "metallic",
+        "visible": "meta",
+        "hidden": "llic"
+      },
+      {
+        "word": "explosive",
+        "visible": "expl",
+        "hidden": "osive"
+      },
+      {
+        "word": "containing",
+        "visible": "conta",
+        "hidden": "ining"
+      },
+      {
+        "word": "generate",
+        "visible": "gene",
+        "hidden": "rate"
+      },
+      {
+        "word": "precise",
+        "visible": "pre",
+        "hidden": "cise"
+      },
+      {
+        "word": "desired",
+        "visible": "des",
+        "hidden": "ired"
+      },
+      {
+        "word": "Understanding",
+        "visible": "Under",
+        "hidden": "standing"
+      },
+      {
+        "word": "designers",
+        "visible": "desi",
+        "hidden": "gners"
+      },
+      {
+        "word": "celebrations",
+        "visible": "celeb",
+        "hidden": "rations"
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "topic": "The Development of Vaccines",
+    "category": "Immunology",
+    "paragraph": "Vaccines represent one of the most significant achievements in the history of medicine. Early vaccine development often involved exposing patients to a weakened or inactivated version of a pathogen, prompting their immune system to develop protective defenses without causing serious illness. This groundbreaking approach dramatically reduced deaths from diseases that had previously killed enormous numbers of people throughout human history. Modern vaccine technology has continued advancing considerably, incorporating new scientific techniques that allow researchers to develop protective treatments more quickly than ever before. Despite these remarkable achievements, convincing skeptical populations of a vaccine's safety and effectiveness remains an ongoing public health challenge worldwide.",
+    "blanks": [
+      {
+        "word": "vaccine",
+        "visible": "vac",
+        "hidden": "cine"
+      },
+      {
+        "word": "weakened",
+        "visible": "weak",
+        "hidden": "ened"
+      },
+      {
+        "word": "prompting",
+        "visible": "prom",
+        "hidden": "pting"
+      },
+      {
+        "word": "serious",
+        "visible": "ser",
+        "hidden": "ious"
+      },
+      {
+        "word": "diseases",
+        "visible": "dise",
+        "hidden": "ases"
+      },
+      {
+        "word": "throughout",
+        "visible": "throu",
+        "hidden": "ghout"
+      },
+      {
+        "word": "incorporating",
+        "visible": "incor",
+        "hidden": "porating"
+      },
+      {
+        "word": "quickly",
+        "visible": "qui",
+        "hidden": "ckly"
+      },
+      {
+        "word": "skeptical",
+        "visible": "skep",
+        "hidden": "tical"
+      },
+      {
+        "word": "worldwide",
+        "visible": "worl",
+        "hidden": "dwide"
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "topic": "Volcanic Ash and Climate",
+    "category": "Volcanology",
+    "paragraph": "Large volcanic eruptions can inject enormous quantities of ash and gas particles high into the atmosphere. When these particles reach the upper atmosphere, they can spread across vast distances, occasionally circling the entire planet within just a few weeks. This atmospheric material reflects a portion of incoming sunlight back into space, which can temporarily lower global temperatures following a particularly powerful eruption. Historical records indicate that several major volcanic eruptions have caused noticeable global cooling lasting one or two years afterward, sometimes disrupting agricultural harvests in distant regions. Scientists continue monitoring active volcanoes closely, hoping to better predict how future eruptions might influence weather patterns worldwide.",
+    "blanks": [
+      {
+        "word": "distances",
+        "visible": "dist",
+        "hidden": "ances"
+      },
+      {
+        "word": "circling",
+        "visible": "circ",
+        "hidden": "ling"
+      },
+      {
+        "word": "incoming",
+        "visible": "inco",
+        "hidden": "ming"
+      },
+      {
+        "word": "particularly",
+        "visible": "parti",
+        "hidden": "cularly"
+      },
+      {
+        "word": "records",
+        "visible": "rec",
+        "hidden": "ords"
+      },
+      {
+        "word": "cooling",
+        "visible": "coo",
+        "hidden": "ling"
+      },
+      {
+        "word": "disrupting",
+        "visible": "disru",
+        "hidden": "pting"
+      },
+      {
+        "word": "regions",
+        "visible": "reg",
+        "hidden": "ions"
+      },
+      {
+        "word": "predict",
+        "visible": "pre",
+        "hidden": "dict"
+      },
+      {
+        "word": "worldwide",
+        "visible": "worl",
+        "hidden": "dwide"
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "topic": "The Migration of Monarch Butterflies",
+    "category": "Zoology",
+    "paragraph": "Monarch butterflies undertake one of the most remarkable migrations found anywhere in the natural world. Each autumn, millions of monarchs travel thousands of miles from North America to specific overwintering sites in central Mexico, guided by mechanisms that scientists still do not fully understand. Astonishingly, no single butterfly completes the entire round-trip journey, since the return migration northward actually takes multiple generations to finish. Researchers have proposed that monarchs rely on a combination of environmental cues, including the position of the sun and possibly the Earth's magnetic field, to navigate correctly. Conservationists have grown increasingly concerned about declining monarch populations, largely attributing the decline to habitat loss and pesticide use.",
+    "blanks": [
+      {
+        "word": "millions",
+        "visible": "mill",
+        "hidden": "ions"
+      },
+      {
+        "word": "specific",
+        "visible": "spec",
+        "hidden": "ific"
+      },
+      {
+        "word": "scientists",
+        "visible": "scien",
+        "hidden": "tists"
+      },
+      {
+        "word": "journey",
+        "visible": "jou",
+        "hidden": "rney"
+      },
+      {
+        "word": "multiple",
+        "visible": "mult",
+        "hidden": "iple"
+      },
+      {
+        "word": "combination",
+        "visible": "combi",
+        "hidden": "nation"
+      },
+      {
+        "word": "possibly",
+        "visible": "poss",
+        "hidden": "ibly"
+      },
+      {
+        "word": "concerned",
+        "visible": "conc",
+        "hidden": "erned"
+      },
+      {
+        "word": "largely",
+        "visible": "lar",
+        "hidden": "gely"
+      },
+      {
+        "word": "pesticide",
+        "visible": "pest",
+        "hidden": "icide"
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "topic": "The Renaissance in Florence",
+    "category": "Art History",
+    "paragraph": "Florence emerged as one of the most influential centers of artistic and intellectual achievement during the Renaissance period. Wealthy merchant families in the city provided crucial financial support to talented painters, sculptors, and architects, enabling them to pursue ambitious creative projects. This generous patronage system allowed numerous artists to experiment with innovative techniques, including improved methods for creating realistic perspective and dramatic lighting effects. The concentration of artistic talent in Florence during this period produced an extraordinary collection of masterpieces that continue attracting visitors from around the world today. Historians frequently point to this remarkable flourishing of creativity as a defining example of how patronage can transform an entire cultural landscape.",
+    "blanks": [
+      {
+        "word": "Wealthy",
+        "visible": "Wea",
+        "hidden": "lthy"
+      },
+      {
+        "word": "financial",
+        "visible": "fina",
+        "hidden": "ncial"
+      },
+      {
+        "word": "enabling",
+        "visible": "enab",
+        "hidden": "ling"
+      },
+      {
+        "word": "patronage",
+        "visible": "patr",
+        "hidden": "onage"
+      },
+      {
+        "word": "including",
+        "visible": "incl",
+        "hidden": "uding"
+      },
+      {
+        "word": "perspective",
+        "visible": "persp",
+        "hidden": "ective"
+      },
+      {
+        "word": "extraordinary",
+        "visible": "extra",
+        "hidden": "ordinary"
+      },
+      {
+        "word": "attracting",
+        "visible": "attra",
+        "hidden": "cting"
+      },
+      {
+        "word": "creativity",
+        "visible": "creat",
+        "hidden": "ivity"
+      },
+      {
+        "word": "landscape",
+        "visible": "land",
+        "hidden": "scape"
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "topic": "Tectonic Plate Boundaries",
+    "category": "Geology",
+    "paragraph": "The Earth's outer shell is divided into several large sections known as tectonic plates that move slowly across the planet's surface. Where two plates collide directly against each other, tremendous pressure builds up gradually until it is eventually released, often generating powerful earthquakes. In other locations, plates slide past one another horizontally along transform boundaries, creating a different but equally significant type of geological stress. When plates instead move apart from each other, molten material rises upward from beneath the surface, gradually forming new crust along the resulting gap. Understanding these different boundary types has proven essential for predicting where earthquakes and volcanic activity are most likely to occur.",
+    "blanks": [
+      {
+        "word": "collide",
+        "visible": "col",
+        "hidden": "lide"
+      },
+      {
+        "word": "released",
+        "visible": "rele",
+        "hidden": "ased"
+      },
+      {
+        "word": "earthquakes",
+        "visible": "earth",
+        "hidden": "quakes"
+      },
+      {
+        "word": "horizontally",
+        "visible": "horiz",
+        "hidden": "ontally"
+      },
+      {
+        "word": "creating",
+        "visible": "crea",
+        "hidden": "ting"
+      },
+      {
+        "word": "geological",
+        "visible": "geolo",
+        "hidden": "gical"
+      },
+      {
+        "word": "material",
+        "visible": "mate",
+        "hidden": "rial"
+      },
+      {
+        "word": "resulting",
+        "visible": "resu",
+        "hidden": "lting"
+      },
+      {
+        "word": "essential",
+        "visible": "esse",
+        "hidden": "ntial"
+      },
+      {
+        "word": "activity",
+        "visible": "acti",
+        "hidden": "vity"
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "topic": "The Psychology of Procrastination",
+    "category": "Psychology",
+    "paragraph": "Procrastination is a remarkably common behavior that affects people across nearly every culture and profession. Contrary to popular belief, psychologists have found that procrastination is rarely caused simply by poor time management or laziness. Instead, researchers frequently identify underlying emotional factors, such as anxiety about failure or a strong desire for perfectionism, as significant contributors to chronic procrastination. Breaking large, intimidating tasks into smaller, more manageable steps has proven remarkably effective at reducing the emotional discomfort that often triggers procrastination in the first place. Understanding these psychological mechanisms has allowed researchers to develop targeted interventions that help people overcome persistent procrastination habits.",
+    "blanks": [
+      {
+        "word": "popular",
+        "visible": "pop",
+        "hidden": "ular"
+      },
+      {
+        "word": "laziness",
+        "visible": "lazi",
+        "hidden": "ness"
+      },
+      {
+        "word": "identify",
+        "visible": "iden",
+        "hidden": "tify"
+      },
+      {
+        "word": "anxiety",
+        "visible": "anx",
+        "hidden": "iety"
+      },
+      {
+        "word": "contributors",
+        "visible": "contr",
+        "hidden": "ibutors"
+      },
+      {
+        "word": "intimidating",
+        "visible": "intim",
+        "hidden": "idating"
+      },
+      {
+        "word": "effective",
+        "visible": "effe",
+        "hidden": "ctive"
+      },
+      {
+        "word": "Understanding",
+        "visible": "Under",
+        "hidden": "standing"
+      },
+      {
+        "word": "develop",
+        "visible": "dev",
+        "hidden": "elop"
+      },
+      {
+        "word": "persistent",
+        "visible": "persi",
+        "hidden": "stent"
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "topic": "The History of the Compass",
+    "category": "History",
+    "paragraph": "The magnetic compass was originally developed for purposes unrelated to navigation. Early versions of the device were primarily used for geomancy, a practice involving the arrangement of buildings and objects according to perceived spiritual harmony with the surrounding landscape. Eventually, sailors recognized that a magnetized needle could reliably indicate geographic direction regardless of weather conditions or visibility at sea. This crucial discovery transformed long-distance maritime travel by allowing navigators to maintain a consistent heading even when clouds obscured the stars and sun. The widespread adoption of compass technology is often credited with enabling many of the ambitious exploratory voyages that reshaped global trade and geography.",
+    "blanks": [
+      {
+        "word": "geomancy",
+        "visible": "geom",
+        "hidden": "ancy"
+      },
+      {
+        "word": "objects",
+        "visible": "obj",
+        "hidden": "ects"
+      },
+      {
+        "word": "harmony",
+        "visible": "har",
+        "hidden": "mony"
+      },
+      {
+        "word": "magnetized",
+        "visible": "magne",
+        "hidden": "tized"
+      },
+      {
+        "word": "weather",
+        "visible": "wea",
+        "hidden": "ther"
+      },
+      {
+        "word": "discovery",
+        "visible": "disc",
+        "hidden": "overy"
+      },
+      {
+        "word": "maintain",
+        "visible": "main",
+        "hidden": "tain"
+      },
+      {
+        "word": "adoption",
+        "visible": "adop",
+        "hidden": "tion"
+      },
+      {
+        "word": "enabling",
+        "visible": "enab",
+        "hidden": "ling"
+      },
+      {
+        "word": "geography",
+        "visible": "geog",
+        "hidden": "raphy"
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "topic": "Ant Colony Communication",
+    "category": "Entomology",
+    "paragraph": "Ant colonies function as remarkably coordinated societies despite lacking any centralized leadership directing their activities. Individual ants communicate primarily through chemical signals called pheromones, which they deposit along trails leading toward food sources or away from potential dangers. When an ant discovers a particularly abundant food source, it releases a stronger pheromone trail that attracts increasing numbers of nestmates to follow the same path. This decentralized communication system allows the colony to efficiently allocate its collective foraging effort without any single ant needing to understand the overall situation. Scientists studying this behavior have found striking similarities between ant colony organization and certain algorithms used in modern computer networking.",
+    "blanks": [
+      {
+        "word": "Individual",
+        "visible": "Indiv",
+        "hidden": "idual"
+      },
+      {
+        "word": "pheromones",
+        "visible": "phero",
+        "hidden": "mones"
+      },
+      {
+        "word": "potential",
+        "visible": "pote",
+        "hidden": "ntial"
+      },
+      {
+        "word": "abundant",
+        "visible": "abun",
+        "hidden": "dant"
+      },
+      {
+        "word": "attracts",
+        "visible": "attr",
+        "hidden": "acts"
+      },
+      {
+        "word": "communication",
+        "visible": "commu",
+        "hidden": "nication"
+      },
+      {
+        "word": "foraging",
+        "visible": "fora",
+        "hidden": "ging"
+      },
+      {
+        "word": "Scientists",
+        "visible": "Scien",
+        "hidden": "tists"
+      },
+      {
+        "word": "similarities",
+        "visible": "simil",
+        "hidden": "arities"
+      },
+      {
+        "word": "networking",
+        "visible": "netwo",
+        "hidden": "rking"
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "topic": "The Domestication of Rice",
+    "category": "Agricultural Science",
+    "paragraph": "Rice cultivation began independently in several different regions of Asia thousands of years ago. Early farmers gradually selected wild rice plants that produced larger seeds and remained attached to the stalk longer, making the grain considerably easier to harvest efficiently. Over many generations of careful selection, these modifications produced domesticated rice varieties that differed substantially from their wild ancestors in both appearance and productivity. The spread of rice cultivation eventually supported dramatically larger population densities across much of Asia, since a single field could reliably feed considerably more people than most alternative crops. Rice remains one of the most important staple foods worldwide, feeding billions of people every single day.",
+    "blanks": [
+      {
+        "word": "farmers",
+        "visible": "far",
+        "hidden": "mers"
+      },
+      {
+        "word": "remained",
+        "visible": "rema",
+        "hidden": "ined"
+      },
+      {
+        "word": "harvest",
+        "visible": "har",
+        "hidden": "vest"
+      },
+      {
+        "word": "careful",
+        "visible": "car",
+        "hidden": "eful"
+      },
+      {
+        "word": "domesticated",
+        "visible": "domes",
+        "hidden": "ticated"
+      },
+      {
+        "word": "ancestors",
+        "visible": "ance",
+        "hidden": "stors"
+      },
+      {
+        "word": "productivity",
+        "visible": "produ",
+        "hidden": "ctivity"
+      },
+      {
+        "word": "densities",
+        "visible": "dens",
+        "hidden": "ities"
+      },
+      {
+        "word": "important",
+        "visible": "impo",
+        "hidden": "rtant"
+      },
+      {
+        "word": "billions",
+        "visible": "bill",
+        "hidden": "ions"
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "topic": "The Construction of the Panama Canal",
+    "category": "History",
+    "paragraph": "Connecting the Atlantic and Pacific Oceans through a canal across Panama had been a long-standing ambition among engineers and political leaders. An earlier attempt by a different nation ultimately failed due to overwhelming engineering challenges and devastating outbreaks of tropical disease among the workforce. A subsequent construction effort succeeded partly because engineers developed effective methods for controlling mosquito populations, dramatically reducing disease transmission among workers. The completed canal fundamentally transformed global shipping by eliminating the need for ships to travel around the entire southern tip of South America. This engineering achievement remains widely regarded as one of the most impressive construction projects ever completed.",
+    "blanks": [
+      {
+        "word": "earlier",
+        "visible": "ear",
+        "hidden": "lier"
+      },
+      {
+        "word": "engineering",
+        "visible": "engin",
+        "hidden": "eering"
+      },
+      {
+        "word": "outbreaks",
+        "visible": "outb",
+        "hidden": "reaks"
+      },
+      {
+        "word": "subsequent",
+        "visible": "subse",
+        "hidden": "quent"
+      },
+      {
+        "word": "developed",
+        "visible": "deve",
+        "hidden": "loped"
+      },
+      {
+        "word": "controlling",
+        "visible": "contr",
+        "hidden": "olling"
+      },
+      {
+        "word": "transmission",
+        "visible": "trans",
+        "hidden": "mission"
+      },
+      {
+        "word": "shipping",
+        "visible": "ship",
+        "hidden": "ping"
+      },
+      {
+        "word": "America",
+        "visible": "Ame",
+        "hidden": "rica"
+      },
+      {
+        "word": "projects",
+        "visible": "proj",
+        "hidden": "ects"
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "topic": "The Chemistry of Sourdough Bread",
+    "category": "Chemistry",
+    "paragraph": "Sourdough bread relies on a fascinating natural fermentation process rather than commercial yeast to make the dough rise properly. A sourdough starter contains a stable community of wild yeast and beneficial bacteria that consume sugars present in the flour, producing carbon dioxide gas and organic acids as byproducts. This slower fermentation process gives sourdough its characteristically tangy flavor, which distinguishes it noticeably from bread made using standard commercial yeast. The acidic environment created during fermentation also appears to make certain nutrients within the bread more easily digestible for many people. Bakers must carefully maintain their starter through regular feeding to keep the microbial community healthy and consistently active over time.",
+    "blanks": [
+      {
+        "word": "sourdough",
+        "visible": "sour",
+        "hidden": "dough"
+      },
+      {
+        "word": "community",
+        "visible": "comm",
+        "hidden": "unity"
+      },
+      {
+        "word": "present",
+        "visible": "pre",
+        "hidden": "sent"
+      },
+      {
+        "word": "organic",
+        "visible": "org",
+        "hidden": "anic"
+      },
+      {
+        "word": "byproducts",
+        "visible": "bypro",
+        "hidden": "ducts"
+      },
+      {
+        "word": "standard",
+        "visible": "stan",
+        "hidden": "dard"
+      },
+      {
+        "word": "created",
+        "visible": "cre",
+        "hidden": "ated"
+      },
+      {
+        "word": "digestible",
+        "visible": "diges",
+        "hidden": "tible"
+      },
+      {
+        "word": "feeding",
+        "visible": "fee",
+        "hidden": "ding"
+      },
+      {
+        "word": "consistently",
+        "visible": "consi",
+        "hidden": "stently"
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "topic": "The Evolution of Whale Ancestors",
+    "category": "Paleontology",
+    "paragraph": "Whales evolved from land-dwelling mammalian ancestors that gradually transitioned toward an entirely aquatic lifestyle over millions of years. Fossil evidence reveals a remarkable sequence of intermediate species, each showing progressively more adaptations suited toward life in water rather than on land. Early whale ancestors likely resembled hoofed mammals with four functional legs, while later transitional species show gradually shrinking hind limbs and increasingly streamlined bodies. This transformation eventually produced fully aquatic whales possessing flippers instead of legs, along with specialized adaptations for underwater hearing and breathing. Paleontologists consider whale evolution one of the most compelling examples of how dramatically natural selection can reshape an entire lineage over evolutionary time.",
+    "blanks": [
+      {
+        "word": "evidence",
+        "visible": "evid",
+        "hidden": "ence"
+      },
+      {
+        "word": "intermediate",
+        "visible": "inter",
+        "hidden": "mediate"
+      },
+      {
+        "word": "adaptations",
+        "visible": "adapt",
+        "hidden": "ations"
+      },
+      {
+        "word": "mammals",
+        "visible": "mam",
+        "hidden": "mals"
+      },
+      {
+        "word": "streamlined",
+        "visible": "strea",
+        "hidden": "mlined"
+      },
+      {
+        "word": "possessing",
+        "visible": "posse",
+        "hidden": "ssing"
+      },
+      {
+        "word": "hearing",
+        "visible": "hea",
+        "hidden": "ring"
+      },
+      {
+        "word": "consider",
+        "visible": "cons",
+        "hidden": "ider"
+      },
+      {
+        "word": "natural",
+        "visible": "nat",
+        "hidden": "ural"
+      },
+      {
+        "word": "evolutionary",
+        "visible": "evolu",
+        "hidden": "tionary"
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "topic": "The Spread of Coffee Culture",
+    "category": "History",
+    "paragraph": "Coffee originated in the highlands of Ethiopia before gradually spreading throughout the Arabian Peninsula and eventually across the broader world. Coffeehouses became remarkably popular social gathering places in many cities, serving as important venues for intellectual discussion, business negotiations, and political debate. This distinctive social function earned coffeehouses the informal nickname of penny universities in some regions, since patrons could exchange valuable knowledge for the relatively modest price of a single cup. European colonial expansion eventually introduced coffee cultivation to numerous tropical regions worldwide, dramatically increasing global production and making coffee accessible to a much wider population. Today, coffee remains one of the most widely traded agricultural commodities on the planet.",
+    "blanks": [
+      {
+        "word": "Coffeehouses",
+        "visible": "Coffe",
+        "hidden": "ehouses"
+      },
+      {
+        "word": "serving",
+        "visible": "ser",
+        "hidden": "ving"
+      },
+      {
+        "word": "business",
+        "visible": "busi",
+        "hidden": "ness"
+      },
+      {
+        "word": "function",
+        "visible": "func",
+        "hidden": "tion"
+      },
+      {
+        "word": "regions",
+        "visible": "reg",
+        "hidden": "ions"
+      },
+      {
+        "word": "valuable",
+        "visible": "valu",
+        "hidden": "able"
+      },
+      {
+        "word": "colonial",
+        "visible": "colo",
+        "hidden": "nial"
+      },
+      {
+        "word": "numerous",
+        "visible": "nume",
+        "hidden": "rous"
+      },
+      {
+        "word": "production",
+        "visible": "produ",
+        "hidden": "ction"
+      },
+      {
+        "word": "commodities",
+        "visible": "commo",
+        "hidden": "dities"
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "topic": "The Discovery of DNA Structure",
+    "category": "Genetics",
+    "paragraph": "Understanding the physical structure of DNA represented a monumental breakthrough in the history of biological science. Researchers eventually determined that DNA consists of two intertwined strands forming a distinctive double helix shape, held together by pairs of chemical bases arranged in a specific and predictable pattern. This structural discovery immediately suggested a mechanism for how genetic information could be accurately copied and passed from one generation to the next. Building upon this foundational discovery, scientists gradually developed an increasingly sophisticated understanding of how genes actually direct the production of proteins within living cells. This breakthrough ultimately launched an entirely new scientific field dedicated to studying genetics at the molecular level.",
+    "blanks": [
+      {
+        "word": "Researchers",
+        "visible": "Resea",
+        "hidden": "rchers"
+      },
+      {
+        "word": "strands",
+        "visible": "str",
+        "hidden": "ands"
+      },
+      {
+        "word": "arranged",
+        "visible": "arra",
+        "hidden": "nged"
+      },
+      {
+        "word": "structural",
+        "visible": "struc",
+        "hidden": "tural"
+      },
+      {
+        "word": "mechanism",
+        "visible": "mech",
+        "hidden": "anism"
+      },
+      {
+        "word": "Building",
+        "visible": "Buil",
+        "hidden": "ding"
+      },
+      {
+        "word": "sophisticated",
+        "visible": "sophi",
+        "hidden": "sticated"
+      },
+      {
+        "word": "proteins",
+        "visible": "prot",
+        "hidden": "eins"
+      },
+      {
+        "word": "scientific",
+        "visible": "scien",
+        "hidden": "tific"
+      },
+      {
+        "word": "molecular",
+        "visible": "mole",
+        "hidden": "cular"
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "topic": "The Physics of Sound Waves",
+    "category": "Physics",
+    "paragraph": "Sound travels through the air as a wave created by rapid vibrations of an object, such as a musical instrument or a human vocal cord. These vibrations cause nearby air molecules to compress and expand in a repeating pattern, transmitting energy outward from the original source. The frequency of these vibrations determines the pitch that a listener perceives, with faster vibrations producing higher pitched sounds and slower vibrations producing lower ones. Sound waves also require a physical medium to travel through, which explains why astronauts cannot hear sounds while working in the vacuum of outer space. Engineers apply these fundamental acoustic principles when designing everything from concert halls to noise-canceling headphones.",
+    "blanks": [
+      {
+        "word": "molecules",
+        "visible": "mole",
+        "hidden": "cules"
+      },
+      {
+        "word": "repeating",
+        "visible": "repe",
+        "hidden": "ating"
+      },
+      {
+        "word": "outward",
+        "visible": "out",
+        "hidden": "ward"
+      },
+      {
+        "word": "determines",
+        "visible": "deter",
+        "hidden": "mines"
+      },
+      {
+        "word": "producing",
+        "visible": "prod",
+        "hidden": "ucing"
+      },
+      {
+        "word": "physical",
+        "visible": "phys",
+        "hidden": "ical"
+      },
+      {
+        "word": "working",
+        "visible": "wor",
+        "hidden": "king"
+      },
+      {
+        "word": "acoustic",
+        "visible": "acou",
+        "hidden": "stic"
+      },
+      {
+        "word": "everything",
+        "visible": "every",
+        "hidden": "thing"
+      },
+      {
+        "word": "headphones",
+        "visible": "headp",
+        "hidden": "hones"
+      }
+    ]
+  }
+]

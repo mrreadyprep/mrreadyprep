@@ -1,0 +1,2802 @@
+[
+  {
+    "id": 1,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/1.mp3",
+    "speaker": "male",
+    "transcript": "Attention residents: the building's water supply will be shut off tomorrow from 9 a.m. to 1 p.m. for scheduled pipe maintenance. Residents are encouraged to store water in advance if needed. The maintenance team will also be inspecting the fire alarm system on the same day, so please do not be alarmed if you hear brief testing sounds during the afternoon.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To inform residents of a scheduled water shutoff for maintenance",
+          "To announce a new fire alarm system installation",
+          "To ask residents to reduce their water usage",
+          "To warn residents about a water leak"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What should residents do if they hear alarm testing sounds?",
+        "options": [
+          "Evacuate the building immediately",
+          "Call the maintenance office",
+          "Not be alarmed, since it is part of scheduled testing",
+          "Report it to building security"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/2.mp3",
+    "speaker": "female",
+    "transcript": "Good morning, students. The Office of Student Affairs would like to remind everyone that course evaluation surveys are now open and will remain available until the end of next week. Completing the survey for each of your courses takes about five minutes, and your responses are completely anonymous. Departments use this feedback to improve courses for future semesters, so we strongly encourage full participation.",
+    "questions": [
+      {
+        "question": "What is this announcement mainly about?",
+        "options": [
+          "A change to the exam schedule",
+          "The opening of course evaluation surveys",
+          "New requirements for graduation",
+          "A reminder about tuition payments"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "According to the announcement, how are student responses handled?",
+        "options": [
+          "They are shared with instructors immediately",
+          "They are reviewed only by the Office of Student Affairs",
+          "They are kept completely anonymous",
+          "They are published on the university website"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/3.mp3",
+    "speaker": "male",
+    "transcript": "This is an announcement for all passengers waiting in Terminal B. Due to a temporary staffing shortage, security screening at checkpoint two will be closed for the next thirty minutes. Passengers with flights departing within the hour should proceed to checkpoint one instead, located near the main entrance. We apologize for any inconvenience this may cause and appreciate your patience as our staff work to resolve the situation as quickly as possible.",
+    "questions": [
+      {
+        "question": "Why is checkpoint two temporarily closed?",
+        "options": [
+          "A security threat was reported",
+          "There is a staffing shortage",
+          "The equipment is being repaired",
+          "It is being cleaned"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should passengers with flights leaving soon do?",
+        "options": [
+          "Wait thirty minutes at checkpoint two",
+          "Go to checkpoint one near the main entrance",
+          "Speak to a gate agent",
+          "Rebook their flight"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/4.mp3",
+    "speaker": "female",
+    "transcript": "Attention students: due to the upcoming final examination period, the main library will extend its operating hours starting this Monday. The building will now remain open until 2 a.m. on weekdays, and the third floor quiet study rooms will require a reservation through the online portal. Please note that food is still not permitted inside the building, though beverages in sealed containers are allowed. Students who need extended access to computer labs should check in at the front desk with their student identification card.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To advertise new library books",
+          "To inform students of extended library hours during exams",
+          "To announce the library's permanent closure",
+          "To recruit new library staff"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What must students do to use a quiet study room?",
+        "options": [
+          "Pay a small deposit",
+          "Bring their own chair",
+          "Make a reservation through the online portal",
+          "Sign up two weeks in advance"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/5.mp3",
+    "speaker": "male",
+    "transcript": "May I have your attention please. Flight 238 to Chicago, originally scheduled to depart from Gate 12, has been moved to Gate 27 due to a change in aircraft. Boarding will now begin at 4:45 p.m., thirty minutes later than planned. Passengers requiring wheelchair assistance are asked to speak with a representative at the check-in counter immediately. We apologize for any inconvenience this delay may cause and thank you for your patience and continued cooperation as our staff work to get you to your destination as quickly as possible.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To cancel flight 238 entirely",
+          "To inform passengers of a gate change and delay",
+          "To announce a new airline policy",
+          "To welcome passengers arriving from Chicago"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should passengers needing wheelchair assistance do?",
+        "options": [
+          "Wait at Gate 12",
+          "Call the airline's customer service line",
+          "Speak with a representative at the check-in counter",
+          "Board the plane first without notice"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/6.mp3",
+    "speaker": "female",
+    "transcript": "Attention shoppers: this is a reminder that our annual store-wide inventory count will take place this Sunday, and the store will close three hours early at 6 p.m. All returns and exchanges must be completed before closing time, as our systems will be temporarily offline for the count. Customers currently shopping in the electronics and home goods departments should proceed to checkout within the next twenty minutes. We appreciate your understanding and invite you to visit us again during our regular hours starting Monday morning.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To promote a weekend sale",
+          "To inform customers of an early closing for inventory",
+          "To announce a new store location",
+          "To warn customers about a security issue"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should customers in electronics and home goods do?",
+        "options": [
+          "Wait for a staff escort",
+          "Proceed to checkout within twenty minutes",
+          "Move to the customer service desk",
+          "Leave the store immediately without purchasing"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/7.mp3",
+    "speaker": "male",
+    "transcript": "Attention passengers: due to ongoing road construction on Maple Avenue, bus route 14 will be temporarily detoured beginning tomorrow morning. Buses will skip the Maple Avenue and Fifth Street stops and instead serve a temporary stop located in front of the community center on Oak Lane. This detour is expected to remain in effect for approximately two weeks. Riders who normally board at the affected stops should walk to the temporary location, and updated schedules are available on the transit authority's website and mobile application.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To announce a fare increase",
+          "To inform riders about a temporary route detour",
+          "To introduce a brand-new bus line",
+          "To report an accident on the highway"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should riders who use the Maple Avenue stop do?",
+        "options": [
+          "Take a taxi instead",
+          "Wait two weeks before traveling",
+          "Walk to the temporary stop on Oak Lane",
+          "Call the transit authority for a refund"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/8.mp3",
+    "speaker": "female",
+    "transcript": "Good afternoon, everyone. This is a reminder that tonight's guest lecture on renewable energy technology, originally scheduled for the Science Auditorium, has been relocated to the Performing Arts Center due to expected high attendance. The event will still begin at 7 p.m., and doors will open thirty minutes prior for seating. Students attending for extra credit must sign the attendance sheet at the entrance table before taking their seats. Light refreshments will be provided in the lobby following the question and answer session.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To cancel the guest lecture",
+          "To announce a change in the lecture's location",
+          "To introduce the guest speaker's biography",
+          "To reschedule the lecture to next week"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What must students do to receive extra credit?",
+        "options": [
+          "Submit a written summary the next day",
+          "Sign the attendance sheet at the entrance",
+          "Email the professor in advance",
+          "Arrive exactly at 7 p.m."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/9.mp3",
+    "speaker": "male",
+    "transcript": "Attention all occupants: this is an emergency notice. A gas odor has been detected on the second floor, and as a precaution, the entire building must be evacuated immediately. Please proceed calmly to the nearest stairwell; do not use the elevators under any circumstances. Once outside, gather in the designated assembly area located in the north parking lot, away from the building entrance. Maintenance and fire safety personnel are already on site investigating the source, and further instructions will be provided once the situation has been resolved.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To schedule a routine fire drill",
+          "To order an emergency evacuation due to a gas odor",
+          "To announce building renovations",
+          "To report a water leak on the second floor"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where should occupants gather after leaving the building?",
+        "options": [
+          "In the second-floor hallway",
+          "Near the building's main entrance",
+          "In the north parking lot assembly area",
+          "At the maintenance office"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/10.mp3",
+    "speaker": "male",
+    "transcript": "Attention residents of Hallway Hall: the building's water supply will be shut off tomorrow from 9 a.m. until approximately 1 p.m. so that maintenance crews can repair a broken pipe in the basement. Residents are encouraged to fill containers with water tonight for drinking and washing during the outage. The building's restrooms on the ground floor will remain open, as they are connected to a separate line. We apologize for the inconvenience and thank residents for their patience while repairs are completed.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To advertise a plumbing service",
+          "To inform residents of a scheduled water shutoff",
+          "To announce a rent increase",
+          "To report a flood in the basement"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are residents advised to do before the shutoff?",
+        "options": [
+          "Leave the building overnight",
+          "Fill containers with water in advance",
+          "Contact the front desk for bottled water",
+          "Move to a different floor"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/11.mp3",
+    "speaker": "female",
+    "transcript": "Good afternoon, visitors. Please note that due to overwhelming interest, the special exhibit on ancient Egyptian artifacts will now remain open one additional hour, until 6 p.m., every Friday this month. Timed tickets purchased for the earlier closing time will still be honored throughout the extended hours. Visitors are reminded that flash photography is not permitted near the fragile textile displays. The museum gift shop will also stay open to match the exhibit's new closing time, so please visit before you leave.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To announce the exhibit's permanent closure",
+          "To inform visitors of extended exhibit hours on Fridays",
+          "To introduce a new artifact collection",
+          "To announce a change in ticket prices"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are visitors reminded not to do near the textile displays?",
+        "options": [
+          "Touch the artifacts",
+          "Bring food or drinks",
+          "Use flash photography",
+          "Speak loudly in groups"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/12.mp3",
+    "speaker": "male",
+    "transcript": "Attention tenants: elevator number two will be out of service starting this evening for scheduled maintenance and is expected to reopen by Thursday morning. During this time, please use elevator number one or the stairwell located near the west entrance. Tenants on the upper floors who require mobility assistance should contact building security in advance so alternate arrangements can be made. We recognize this may cause some delay during peak hours and appreciate your patience while our technicians complete the necessary repairs.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To announce a new elevator installation",
+          "To inform tenants of temporary elevator maintenance",
+          "To report an elevator malfunction emergency",
+          "To introduce a new building security policy"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should tenants needing mobility assistance do?",
+        "options": [
+          "Wait until Thursday to leave",
+          "Use the stairwell near the west entrance",
+          "Contact building security in advance",
+          "File a complaint with management"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/13.mp3",
+    "speaker": "female",
+    "transcript": "Attention members: the recreation center's swimming pool will be closed for routine cleaning and chemical balancing this Wednesday and Thursday. All scheduled swim classes during this period will be moved to the auxiliary pool on the second floor, and instructors will contact registered members individually with updated times. The main pool is expected to reopen Friday morning at its regular hour. Members using the sauna and locker rooms will not be affected by this closure and may continue to use those facilities as usual.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To announce the pool's permanent closure",
+          "To inform members of a temporary pool closure for cleaning",
+          "To advertise new swim classes",
+          "To report a chemical spill accident"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where will swim classes be held during the closure?",
+        "options": [
+          "At a nearby community pool",
+          "In the auxiliary pool on the second floor",
+          "In the sauna area",
+          "Classes will be cancelled entirely"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/14.mp3",
+    "speaker": "male",
+    "transcript": "Attention park visitors: due to the severe thunderstorm warning currently in effect, this afternoon's guided nature tour has been cancelled for everyone's safety. Visitors who already registered will automatically be rescheduled for the same tour next Saturday at no additional cost. The visitor center remains open and offers a covered area where guests may wait out the storm. Please avoid open fields and tall trees until the warning has been lifted, and check the park's website later today for further updates.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To promote a new guided tour package",
+          "To announce the cancellation of a tour due to weather",
+          "To close the park for the entire day",
+          "To warn visitors about wildlife in the area"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should visitors avoid during the storm warning?",
+        "options": [
+          "The visitor center",
+          "Open fields and tall trees",
+          "The parking lot",
+          "The registration desk"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/15.mp3",
+    "speaker": "female",
+    "transcript": "Attention passengers waiting for the 3:15 express train to Riverside: due to a signal issue on Track 4, this train will now depart from Track 9 instead. Please make your way to Track 9 promptly, as boarding will begin in approximately ten minutes. Passengers with heavy luggage may use the elevator near the ticket counter to reach the new platform more easily. We apologize for this last-minute change and thank you for your understanding as our staff work to keep the schedule on time.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To cancel the express train to Riverside",
+          "To inform passengers of a platform change",
+          "To announce a ticket price change",
+          "To report a train delay of several hours"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can passengers with heavy luggage do?",
+        "options": [
+          "Ask staff to carry their bags",
+          "Use the elevator near the ticket counter",
+          "Store luggage at the ticket counter",
+          "Board through a different door"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/16.mp3",
+    "speaker": "female",
+    "transcript": "Attention students: the main library will be closed this coming Saturday and Sunday for scheduled floor renovations. During this time, the smaller branch library near the student center will remain open with extended hours to accommodate students who need a place to study. All items currently checked out will not be due until the library reopens on Monday, so there is no need to worry about late fees over the weekend.",
+    "questions": [
+      {
+        "question": "Why is the main library closing this weekend?",
+        "options": [
+          "For scheduled floor renovations",
+          "Because of a power outage",
+          "For a private event",
+          "Due to low staffing"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What is mentioned about items currently checked out?",
+        "options": [
+          "They must be returned before the closure",
+          "They will not be due until the library reopens",
+          "They can only be renewed online",
+          "They will be automatically extended by one semester"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/17.mp3",
+    "speaker": "male",
+    "transcript": "This is a notice for all commuter students. Starting next Monday, the campus shuttle route will be adjusted to include a new stop at the north parking structure. The change is being made in response to feedback about overcrowding at the current stops during peak morning hours. Shuttle schedules will otherwise remain the same, and updated route maps will be posted at every existing stop by the end of this week.",
+    "questions": [
+      {
+        "question": "What is the main purpose of this announcement?",
+        "options": [
+          "To announce a new shuttle stop",
+          "To cancel the shuttle service",
+          "To increase shuttle fares",
+          "To reduce the number of shuttle buses"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Why was the change made?",
+        "options": [
+          "To save fuel costs",
+          "In response to feedback about overcrowding",
+          "Because of road construction",
+          "To reduce the shuttle's operating hours"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/18.mp3",
+    "speaker": "female",
+    "transcript": "Members of the recreation center, please note that the weight room equipment will be temporarily unavailable this Wednesday from 6 a.m. to 10 a.m. for routine maintenance and safety inspections. The cardio machines and group fitness studios will remain open as usual during this time. We apologize for any inconvenience and appreciate your patience as we work to keep our equipment safe for everyone.",
+    "questions": [
+      {
+        "question": "What is the announcement mainly about?",
+        "options": [
+          "Temporary closure of the weight room for maintenance",
+          "A new fitness class schedule",
+          "Membership fee changes",
+          "The recreation center's summer hours"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What will remain open during the maintenance period?",
+        "options": [
+          "Nothing will be open",
+          "Only the swimming pool",
+          "The cardio machines and group fitness studios",
+          "Only the weight room"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/19.mp3",
+    "speaker": "male",
+    "transcript": "A reminder to all students: if your student ID card is lost, damaged, or stolen, replacement cards can now be issued at the campus services office on the ground floor of the administration building, rather than requiring an appointment at the main office across campus. Office hours for ID replacement are Monday through Friday, nine to four. A small processing fee applies for replacement cards issued due to loss or damage.",
+    "questions": [
+      {
+        "question": "What is this announcement mainly about?",
+        "options": [
+          "A new location for getting a replacement student ID",
+          "A change in tuition payment methods",
+          "New student orientation dates",
+          "A change to library card policies"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What is mentioned about the fee?",
+        "options": [
+          "There is never a fee",
+          "A small fee applies for lost or damaged cards",
+          "The fee was recently eliminated",
+          "The fee depends on the student's year"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/20.mp3",
+    "speaker": "female",
+    "transcript": "This is a scheduled fire drill notice for all residents of the north dormitory building. The drill will take place tomorrow at 2 p.m. and should last no more than fifteen minutes. When the alarm sounds, please exit the building immediately using the nearest stairwell and proceed to the designated meeting point in the courtyard. Elevators must not be used during the drill. Resident advisors will be present to answer any questions.",
+    "questions": [
+      {
+        "question": "What is the purpose of this announcement?",
+        "options": [
+          "To warn about an actual fire",
+          "To announce a scheduled fire drill",
+          "To cancel a planned event",
+          "To report a maintenance issue"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should residents avoid doing during the drill?",
+        "options": [
+          "Talking to resident advisors",
+          "Using the elevators",
+          "Leaving personal belongings behind",
+          "Going to the courtyard"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/21.mp3",
+    "speaker": "male",
+    "transcript": "Attention diners: starting next week, the main cafeteria will be introducing a new dedicated station offering plant-based meal options at every lunch and dinner service. This change comes after a survey last semester showed strong student interest in more vegetarian and vegan choices. The new station will be located near the salad bar, and a full rotating menu will be posted online each week.",
+    "questions": [
+      {
+        "question": "What change is being announced?",
+        "options": [
+          "The cafeteria is closing permanently",
+          "A new plant-based meal station is being added",
+          "Meal prices are increasing",
+          "The cafeteria's hours are being reduced"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why was this change made?",
+        "options": [
+          "Due to a shortage of meat products",
+          "Because of a survey showing student interest",
+          "Due to a new state regulation",
+          "Because the old station broke down"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/22.mp3",
+    "speaker": "female",
+    "transcript": "Please be advised that the west parking garage will be closed for repaving beginning this Friday and continuing through the following Tuesday. Vehicles currently parked in the garage must be relocated by Thursday evening, or they may be towed at the owner's expense. Displaced permit holders may park temporarily in the overflow lot behind the athletics building at no additional charge during the closure.",
+    "questions": [
+      {
+        "question": "What is the main purpose of this announcement?",
+        "options": [
+          "To announce the permanent closure of a parking garage",
+          "To inform drivers of a temporary closure for repaving",
+          "To announce new parking permit prices",
+          "To report a car accident in the garage"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should permit holders do if displaced?",
+        "options": [
+          "Find parking off campus",
+          "Park temporarily in the overflow lot at no charge",
+          "Pay for a new permit",
+          "Wait until the garage reopens to park anywhere"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/23.mp3",
+    "speaker": "male",
+    "transcript": "A reminder to all students that the campus bookstore will be extending its hours during final exam week. Starting Monday, the store will open at seven in the morning and remain open until midnight, seven days a week, to give students more flexibility for purchasing school supplies and study materials. Regular hours will resume the following Monday once exams have concluded.",
+    "questions": [
+      {
+        "question": "What is being announced?",
+        "options": [
+          "The bookstore is closing for the semester",
+          "The bookstore is extending its hours during finals week",
+          "The bookstore is offering discounts on textbooks",
+          "The bookstore is moving to a new building"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When will regular hours resume?",
+        "options": [
+          "Immediately after the announcement",
+          "The following Monday after exams conclude",
+          "At the start of next semester",
+          "They will not change back"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/24.mp3",
+    "speaker": "female",
+    "transcript": "This is a notice for all residents in campus housing. The wireless network will undergo a scheduled upgrade this Thursday night beginning at 11 p.m. and lasting approximately four hours. During this window, internet access in all residence halls will be intermittent or completely unavailable. We recommend downloading any materials you may need in advance and apologize for any disruption to your evening.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To announce a new wifi provider",
+          "To notify residents of a scheduled network upgrade",
+          "To report a permanent internet outage",
+          "To announce new internet fees"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are residents encouraged to do beforehand?",
+        "options": [
+          "Move to a different building",
+          "Download needed materials in advance",
+          "Contact technical support",
+          "Purchase a personal router"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/25.mp3",
+    "speaker": "male",
+    "transcript": "Attention students interested in tonight's guest lecture on renewable energy: due to higher than expected registration, the event has been moved from the small seminar room to the main auditorium in the science building. The start time remains unchanged at 6 p.m. Seating is available on a first-come, first-served basis, and the talk will be followed by a question and answer session.",
+    "questions": [
+      {
+        "question": "Why is this announcement being made?",
+        "options": [
+          "To cancel the lecture",
+          "To announce a change in the lecture's location",
+          "To change the speaker for the lecture",
+          "To reschedule the lecture to another day"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will happen after the lecture?",
+        "options": [
+          "A reception will be held",
+          "A question and answer session",
+          "The speaker will sign books",
+          "Students will submit written responses"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/26.mp3",
+    "speaker": "female",
+    "transcript": "This is a reminder to all residence hall students that a new recycling program is launching next week. Each floor will receive color-coded bins for paper, plastic, and glass, replacing the single shared bin currently located in the hallway. Resident advisors will hold a short information session this weekend to explain what materials belong in each bin, and attendance is strongly encouraged.",
+    "questions": [
+      {
+        "question": "What is the announcement mainly about?",
+        "options": [
+          "A new recycling program in the residence halls",
+          "A change in trash collection schedules",
+          "A ban on plastic containers",
+          "New rules about hallway decorations"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What are residents encouraged to do?",
+        "options": [
+          "Buy their own recycling bins",
+          "Attend an information session",
+          "Sort recycling into a single shared bin",
+          "Contact the housing office directly"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/27.mp3",
+    "speaker": "male",
+    "transcript": "The student health center will be holding a free flu shot clinic in the main lobby this Wednesday and Thursday from nine in the morning until four in the afternoon. No appointment is necessary, and students only need to bring their student ID. Faculty and staff are also welcome to attend, though a small fee will apply for non-students.",
+    "questions": [
+      {
+        "question": "What is the main purpose of this announcement?",
+        "options": [
+          "To announce a free flu shot clinic",
+          "To announce a new health insurance policy",
+          "To report a flu outbreak on campus",
+          "To close the health center temporarily"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What do students need to bring to the clinic?",
+        "options": [
+          "A doctor's note",
+          "Their student ID",
+          "Proof of insurance",
+          "A signed consent form only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/28.mp3",
+    "speaker": "female",
+    "transcript": "Please note that the campus mail room is changing its package pickup procedure starting next Monday. Instead of picking up packages at the front counter, students will now receive a text notification with a locker number and code to retrieve their package from the new self-service lockers outside the mail room. This change is designed to reduce wait times during peak pickup hours.",
+    "questions": [
+      {
+        "question": "What change is being announced?",
+        "options": [
+          "Packages will now be delivered to dorm rooms",
+          "Students will use self-service lockers to pick up packages",
+          "The mail room is closing permanently",
+          "Package fees are being introduced"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why was this change made?",
+        "options": [
+          "To reduce wait times during peak hours",
+          "Because the mail room lost its lease",
+          "To save on shipping costs",
+          "Because of a change in postal regulations"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/29.mp3",
+    "speaker": "male",
+    "transcript": "This is a notice for all members of the aquatics center. The main pool will be closed this Sunday for its scheduled quarterly deep cleaning and water quality testing. The smaller therapy pool will remain open during regular hours. We expect the main pool to reopen Monday morning, and we appreciate your understanding as we complete this routine maintenance.",
+    "questions": [
+      {
+        "question": "Why is the main pool closing on Sunday?",
+        "options": [
+          "For a swim competition",
+          "For quarterly deep cleaning and water testing",
+          "Because of a broken filter",
+          "Due to low attendance"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will remain open during the closure?",
+        "options": [
+          "Nothing will be open",
+          "The therapy pool",
+          "The main pool only",
+          "The locker rooms only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/30.mp3",
+    "speaker": "female",
+    "transcript": "A final reminder to all seniors and graduate students: registration for next month's career fair closes this Friday at midnight. Students who register in advance will receive priority scheduling for one-on-one sessions with recruiters from over fifty participating companies. Walk-in attendance will still be permitted on the day of the event, but scheduled sessions cannot be guaranteed for students who do not register beforehand.",
+    "questions": [
+      {
+        "question": "What is this announcement mainly about?",
+        "options": [
+          "A new career counseling service",
+          "The registration deadline for the career fair",
+          "A change in the career fair's date",
+          "New requirements for graduation"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What advantage do students get by registering early?",
+        "options": [
+          "A discount on parking",
+          "Priority scheduling for one-on-one sessions",
+          "Free professional headshots",
+          "Guaranteed job offers"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/31.mp3",
+    "speaker": "female",
+    "transcript": "Attention library patrons: starting next Monday, the main library will extend its weekday hours until 2 a.m. to accommodate students during final exam preparation. The extended hours will remain in effect for the next three weeks. Please note that the cafe on the first floor will continue to close at its regular time of 9 p.m., so students wishing to bring food or drinks after that hour should plan accordingly.",
+    "questions": [
+      {
+        "question": "What is the announcement mainly about?",
+        "options": [
+          "A new library cafe menu",
+          "Extended library hours during finals",
+          "A change in library staff",
+          "New library borrowing rules"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will NOT change according to the announcement?",
+        "options": [
+          "The library's closing time",
+          "The cafe's closing time",
+          "The number of study rooms",
+          "The library's location"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/32.mp3",
+    "speaker": "male",
+    "transcript": "This is a notice for all students living in campus housing. The dining hall in the North Residential Complex will be closed for renovations from next Monday through the end of the month. During this period, residents can use their meal plans at either the South Complex dining hall or the Student Union food court. Shuttle service between the North Complex and these locations will run every fifteen minutes during meal hours.",
+    "questions": [
+      {
+        "question": "Why is the North Complex dining hall closing?",
+        "options": [
+          "Staff shortages",
+          "Renovations",
+          "A health inspection failure",
+          "Low student attendance"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative is provided for affected students?",
+        "options": [
+          "A refund on their meal plan",
+          "Free food delivery",
+          "Access to other dining locations with shuttle service",
+          "A temporary outdoor dining tent"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/33.mp3",
+    "speaker": "female",
+    "transcript": "Attention all commuter students: due to ongoing road construction near the west entrance, the campus shuttle route will be temporarily rerouted beginning tomorrow. Shuttles will instead pick up and drop off passengers at the temporary stop near the science building. This change is expected to remain in place for approximately two weeks, and updated schedules have been posted on the transportation office's website.",
+    "questions": [
+      {
+        "question": "Why is the shuttle route changing?",
+        "options": [
+          "A shortage of drivers",
+          "Road construction near the west entrance",
+          "A new parking policy",
+          "Low ridership on the current route"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where can students find the updated shuttle schedule?",
+        "options": [
+          "On posters in the dining hall",
+          "On the transportation office's website",
+          "By calling campus security",
+          "In the student newspaper"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/34.mp3",
+    "speaker": "male",
+    "transcript": "This is a routine fire drill announcement. In approximately ten minutes, the fire alarm will sound in all academic buildings as part of the university's scheduled safety training. All students and staff are required to exit the building calmly through the nearest marked exit and gather at the designated assembly points outside. Please do not use the elevators during this drill, and do not re-enter the building until campus safety officials confirm it is clear.",
+    "questions": [
+      {
+        "question": "What is about to happen according to the announcement?",
+        "options": [
+          "An actual fire emergency",
+          "A scheduled fire drill",
+          "A building evacuation due to a gas leak",
+          "A power outage test"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are people instructed not to do?",
+        "options": [
+          "Use the stairs",
+          "Use the elevators",
+          "Bring their belongings",
+          "Talk during the drill"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/35.mp3",
+    "speaker": "female",
+    "transcript": "Due to a severe winter storm warning, the university will be closed tomorrow, and all classes, including evening sessions, are canceled. Non-essential staff should not report to campus. Students living in residence halls should remain inside unless absolutely necessary, and dining services will operate on a limited schedule with only the Student Union food court remaining open. Updates will be posted on the university's emergency alert website as conditions change.",
+    "questions": [
+      {
+        "question": "Why is the university closing tomorrow?",
+        "options": [
+          "A power outage",
+          "A severe winter storm warning",
+          "A campus-wide power renovation",
+          "A scheduled holiday"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will remain open during the closure?",
+        "options": [
+          "All dining halls",
+          "Only the Student Union food court",
+          "The main library",
+          "The gymnasium"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/36.mp3",
+    "speaker": "male",
+    "transcript": "A reminder to all undergraduate students: course registration for next semester opens this Wednesday at 8 a.m., organized by class standing, with seniors registering first. Students are encouraged to review their degree audit and meet with their academic advisor before their registration window opens to ensure they have an approved course plan. Registration holds due to unpaid balances or missing paperwork must be resolved before students will be able to register.",
+    "questions": [
+      {
+        "question": "What is this announcement mainly about?",
+        "options": [
+          "A change in tuition rates",
+          "The opening of course registration",
+          "New academic advising staff",
+          "A delay in the semester start date"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is recommended before a student's registration window opens?",
+        "options": [
+          "Paying next semester's tuition in full",
+          "Meeting with an academic advisor",
+          "Submitting a housing application",
+          "Attending an orientation session"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/37.mp3",
+    "speaker": "female",
+    "transcript": "The Student Health Center will be offering free flu vaccinations to all currently enrolled students beginning next Tuesday. No appointment is necessary, and students only need to bring their student ID. The clinic will be open extended hours, from 9 a.m. to 7 p.m., for the first week of the program to accommodate as many students as possible. Vaccinations will continue on a limited basis after that, by appointment only.",
+    "questions": [
+      {
+        "question": "What is being offered to students?",
+        "options": [
+          "Free eye exams",
+          "Free flu vaccinations",
+          "Free dental checkups",
+          "Free health insurance"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What do students need to bring to receive the service?",
+        "options": [
+          "A doctor's note",
+          "Their student ID",
+          "Proof of insurance",
+          "A parental consent form"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/38.mp3",
+    "speaker": "male",
+    "transcript": "Attention all residents of campus housing: the university's information technology department will be upgrading the wireless network in all residence halls this weekend. Internet access may be intermittent or unavailable between midnight Saturday and 6 a.m. Sunday while the new equipment is installed. Once complete, students should notice significantly faster connection speeds, especially during peak evening hours when the network has previously experienced slowdowns.",
+    "questions": [
+      {
+        "question": "What is the purpose of this announcement?",
+        "options": [
+          "To announce a new dining service",
+          "To inform students of a wireless network upgrade",
+          "To warn about a security breach",
+          "To announce new housing assignments"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When might students experience interrupted internet access?",
+        "options": [
+          "Every evening this week",
+          "Between midnight Saturday and 6 a.m. Sunday",
+          "During final exams",
+          "For the entire semester"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/39.mp3",
+    "speaker": "female",
+    "transcript": "This is a notice regarding parking lot C, located behind the engineering building. The lot will be closed for resurfacing starting next Monday and is expected to reopen in approximately five business days. Students and staff who normally park in lot C should use lot D instead, which is a short walk away, or the parking garage on Elm Street. Permit holders will not be charged for the temporary inconvenience.",
+    "questions": [
+      {
+        "question": "Why is parking lot C being closed?",
+        "options": [
+          "A special event is being held there",
+          "It is being resurfaced",
+          "It failed a safety inspection",
+          "It is being converted into a new building"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative parking options are mentioned?",
+        "options": [
+          "Lot D and the Elm Street garage",
+          "Street parking only",
+          "A shuttle to an off-campus lot",
+          "No alternative is provided"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/40.mp3",
+    "speaker": "male",
+    "transcript": "The Department of History is pleased to announce a guest lecture next Thursday evening by a visiting professor who will discuss recent archaeological discoveries in the Mediterranean region. The lecture is free and open to all students and faculty, and will be held in the main auditorium starting at 6:30 p.m. A brief question and answer session will follow the talk, and light refreshments will be served afterward in the lobby.",
+    "questions": [
+      {
+        "question": "What is the topic of the guest lecture?",
+        "options": [
+          "Modern European politics",
+          "Recent archaeological discoveries in the Mediterranean",
+          "Ancient Egyptian architecture",
+          "Climate change research"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will happen after the lecture?",
+        "options": [
+          "A film screening",
+          "A question and answer session with refreshments",
+          "A campus tour",
+          "A student debate"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/41.mp3",
+    "speaker": "female",
+    "transcript": "The campus blood drive, organized in partnership with the regional blood bank, will take place in the Student Union ballroom this Wednesday and Thursday from 10 a.m. to 4 p.m. Walk-ins are welcome, but donors are encouraged to schedule an appointment online to reduce waiting times. All donors will receive a free T-shirt and light snacks, and the blood bank has noted that donations are especially needed this time of year due to lower supply.",
+    "questions": [
+      {
+        "question": "What is the main purpose of this announcement?",
+        "options": [
+          "To promote a campus blood drive",
+          "To announce a new health policy",
+          "To recruit volunteers for a hospital",
+          "To advertise a fundraising event"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What is recommended to reduce waiting times?",
+        "options": [
+          "Arriving before 9 a.m.",
+          "Scheduling an appointment online",
+          "Bringing a friend",
+          "Donating on Thursday only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/42.mp3",
+    "speaker": "male",
+    "transcript": "As part of the university's new sustainability initiative, recycling bins will be installed in every classroom and office building starting this week. Students and staff are asked to separate paper, plastic, and general waste according to the labels on each bin. The sustainability office will also be hosting information sessions throughout the month to explain the new sorting guidelines and answer any questions about the program.",
+    "questions": [
+      {
+        "question": "What is being introduced this week?",
+        "options": [
+          "New parking regulations",
+          "Recycling bins in classrooms and offices",
+          "A campus-wide composting program",
+          "New building security measures"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will the sustainability office do this month?",
+        "options": [
+          "Distribute reusable water bottles",
+          "Host information sessions about sorting guidelines",
+          "Conduct a campus-wide cleanup",
+          "Launch a recycling competition"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/43.mp3",
+    "speaker": "female",
+    "transcript": "The main campus gymnasium will be closed for renovations beginning next week and is expected to reopen in approximately six weeks. During this time, students with gym memberships can use the recreation center on the east side of campus at no additional cost. Group fitness classes normally held in the gymnasium will continue but will be relocated to the recreation center's studio spaces, with a revised schedule posted online.",
+    "questions": [
+      {
+        "question": "Why is the gymnasium closing?",
+        "options": [
+          "A lack of funding",
+          "Renovations",
+          "Low student usage",
+          "A safety violation"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can gym members do during the closure?",
+        "options": [
+          "Receive a partial refund",
+          "Use the recreation center at no extra cost",
+          "Wait until the gym reopens",
+          "Use a nearby private gym for a fee"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/44.mp3",
+    "speaker": "male",
+    "transcript": "This is a reminder to all students that the deadline to replace a lost or damaged student ID card without an additional late fee is this Friday. After that date, replacement requests will incur a processing fee of fifteen dollars. Students can visit the ID card office in the administration building between 9 a.m. and 4 p.m. on weekdays, and should bring a valid photo identification such as a driver's license or passport.",
+    "questions": [
+      {
+        "question": "What is the deadline mentioned in the announcement for?",
+        "options": [
+          "Paying tuition without a late fee",
+          "Replacing a student ID without an extra fee",
+          "Submitting a housing application",
+          "Registering for classes"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What must students bring to the ID card office?",
+        "options": [
+          "Their class schedule",
+          "A valid photo identification",
+          "A letter from their advisor",
+          "Proof of enrollment"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/45.mp3",
+    "speaker": "female",
+    "transcript": "Attention all students applying for financial aid: the priority deadline to submit the annual financial aid application for next academic year is in two weeks. Students who submit their materials after this date may still be considered for aid, but funding is limited and awarded on a first-come, first-served basis. The financial aid office is holding walk-in help sessions every afternoon this week for students who have questions about the application.",
+    "questions": [
+      {
+        "question": "What is the announcement primarily about?",
+        "options": [
+          "A tuition increase",
+          "The financial aid application deadline",
+          "New scholarship opportunities",
+          "Changes to the payment plan system"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is happening this week to help students?",
+        "options": [
+          "Mandatory advising meetings",
+          "Walk-in help sessions at the financial aid office",
+          "An online webinar series",
+          "A financial aid lottery"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/46.mp3",
+    "speaker": "male",
+    "transcript": "The Office of International Programs will host its annual study abroad fair next Tuesday in the Student Union atrium from 11 a.m. to 3 p.m. Representatives from over thirty partner universities around the world will be available to answer questions about programs, application requirements, and scholarship opportunities. Students interested in studying abroad next year are strongly encouraged to attend, as several application deadlines fall shortly after the fair.",
+    "questions": [
+      {
+        "question": "What is the purpose of the study abroad fair?",
+        "options": [
+          "To recruit international students to the university",
+          "To provide information about study abroad programs",
+          "To celebrate international cultures with food",
+          "To announce new international faculty hires"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why are students encouraged to attend soon?",
+        "options": [
+          "Space is limited to the first fifty attendees",
+          "Several application deadlines fall shortly after the fair",
+          "The fair will not be held again this year",
+          "Only seniors are eligible to attend"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/47.mp3",
+    "speaker": "female",
+    "transcript": "This weekend, the university will host its annual alumni homecoming celebration, and several campus roads will be temporarily closed to accommodate increased pedestrian traffic and event setup. Students are asked to use the marked detour routes when walking or biking near the main quad on Saturday. Parking will also be limited in the central lots, so commuter students are encouraged to arrive earlier than usual or use the satellite parking areas.",
+    "questions": [
+      {
+        "question": "Why are some campus roads being closed?",
+        "options": [
+          "Ongoing construction",
+          "The alumni homecoming celebration",
+          "A campus safety drill",
+          "A film being shot on campus"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are commuter students advised to do?",
+        "options": [
+          "Avoid campus entirely on Saturday",
+          "Arrive earlier or use satellite parking",
+          "Take the day off from classes",
+          "Carpool with other students"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/48.mp3",
+    "speaker": "male",
+    "transcript": "Campus safety would like to remind all students about the free walking escort service available every night between dusk and 2 a.m. Students who feel uncomfortable walking alone across campus, especially after evening classes or study sessions, can call the campus safety hotline to request an escort to any location on campus grounds. The service typically arrives within ten minutes and is completely free of charge.",
+    "questions": [
+      {
+        "question": "What service is being advertised?",
+        "options": [
+          "A paid taxi service",
+          "A free nighttime walking escort service",
+          "A campus shuttle bus",
+          "A self-defense training class"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long does the service typically take to arrive?",
+        "options": [
+          "About ten minutes",
+          "Thirty minutes",
+          "One hour",
+          "It varies with no estimate given"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/49.mp3",
+    "speaker": "female",
+    "transcript": "All students who bring bicycles to campus are reminded to register them with campus security before the end of the month. Registration is free and only takes a few minutes, requiring the bike's serial number and a brief description. Registered bicycles are significantly more likely to be recovered if stolen, and campus security has noted a rise in bike theft reports over the past semester.",
+    "questions": [
+      {
+        "question": "What are bicycle owners being asked to do?",
+        "options": [
+          "Purchase a new bike lock",
+          "Register their bicycles with campus security",
+          "Store bicycles in a designated garage",
+          "Pay an annual bicycle fee"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why has campus security emphasized this reminder?",
+        "options": [
+          "A new bike lane is being built",
+          "There has been a rise in bike theft reports",
+          "Bicycles will soon be banned from campus",
+          "A bike-sharing program is launching"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/50.mp3",
+    "speaker": "male",
+    "transcript": "The campus lost and found office, located in the Student Union information desk, would like to remind students that unclaimed items are donated to local charities at the end of each semester. Students who have lost items such as water bottles, umbrellas, textbooks, or electronics are encouraged to check with the office before the semester ends. A list of some larger unclaimed items is also posted on the university's website.",
+    "questions": [
+      {
+        "question": "What happens to unclaimed items at the end of the semester?",
+        "options": [
+          "They are sold at auction",
+          "They are donated to local charities",
+          "They are kept in storage indefinitely",
+          "They are returned to the manufacturer"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where can students find a list of larger unclaimed items?",
+        "options": [
+          "The campus newspaper",
+          "The university's website",
+          "The dining hall bulletin board",
+          "The academic advising office"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/51.mp3",
+    "speaker": "female",
+    "transcript": "This is a reminder for graduating seniors that tickets for the spring commencement ceremony must be requested online by the end of next week. Each graduate will initially receive four guest tickets, with the possibility of requesting additional tickets later if space allows. Students who do not request tickets by the deadline may have difficulty securing seating for their guests, so early submission is strongly encouraged.",
+    "questions": [
+      {
+        "question": "What is this announcement about?",
+        "options": [
+          "Requesting commencement tickets",
+          "Ordering a cap and gown",
+          "Submitting final grades",
+          "Applying for a diploma"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "How many guest tickets does each graduate initially receive?",
+        "options": [
+          "Two",
+          "Four",
+          "Six",
+          "Unlimited"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/52.mp3",
+    "speaker": "male",
+    "transcript": "Registration for the summer session is now open for all currently enrolled students. This year, the university is offering an expanded selection of online courses in addition to the usual in-person offerings, making it easier for students who plan to work or intern over the summer to still make academic progress. Students should note that summer session financial aid is limited and processed separately from the regular academic year.",
+    "questions": [
+      {
+        "question": "What is new about this year's summer session?",
+        "options": [
+          "A shorter session length",
+          "An expanded selection of online courses",
+          "Free tuition for all students",
+          "A new campus location"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should students note about summer financial aid?",
+        "options": [
+          "It is unavailable this year",
+          "It is processed separately and is limited",
+          "It automatically carries over from the fall",
+          "It only applies to online courses"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/53.mp3",
+    "speaker": "female",
+    "transcript": "The campus mail room would like to inform students that, due to a recent increase in package volume, pickup hours will be extended on weekdays until 7 p.m. for the remainder of the semester. Students will continue to receive an email notification when a package arrives. Please note that packages not picked up within thirty days will be returned to the sender, so students are encouraged to collect their items promptly.",
+    "questions": [
+      {
+        "question": "Why are mail room hours being extended?",
+        "options": [
+          "A staffing increase",
+          "A recent increase in package volume",
+          "A change in campus policy",
+          "Complaints from students"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens to packages not picked up within thirty days?",
+        "options": [
+          "They are donated to charity",
+          "They are returned to the sender",
+          "They are held indefinitely",
+          "They are opened by staff"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/54.mp3",
+    "speaker": "male",
+    "transcript": "The Academic Success Center would like to remind students that free peer tutoring is available for most introductory courses, including math, chemistry, and writing. Sessions can be booked online or attended on a walk-in basis during posted hours. With midterms approaching, students are encouraged to book sessions early, as availability tends to fill up quickly during the two weeks before exams.",
+    "questions": [
+      {
+        "question": "What service is being promoted?",
+        "options": [
+          "Paid private tutoring",
+          "Free peer tutoring",
+          "Online course enrollment",
+          "Academic probation counseling"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why are students encouraged to book early?",
+        "options": [
+          "Tutors are leaving after this semester",
+          "Availability fills up quickly before exams",
+          "The service is ending soon",
+          "Only seniors can book sessions"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/55.mp3",
+    "speaker": "female",
+    "transcript": "Students are reminded that printing quotas for the semester will reset at the start of next month. Any unused pages from this month's allotment will not carry over. Students who need to print large volumes of material, such as thesis drafts or lab reports, are encouraged to do so before the reset if they wish to make full use of their current balance rather than losing the remaining pages.",
+    "questions": [
+      {
+        "question": "What is happening at the start of next month?",
+        "options": [
+          "Printing quotas will double",
+          "Printing quotas will reset",
+          "Printing services will be discontinued",
+          "Printing costs will increase"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is true about unused pages from this month?",
+        "options": [
+          "They will carry over automatically",
+          "They will not carry over",
+          "They can be exchanged for a refund",
+          "They can be donated to other students"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/56.mp3",
+    "speaker": "male",
+    "transcript": "Attention shoppers: our store will be closing one hour early today at eight o'clock for inventory count. We apologize for any inconvenience this may cause. All checkout lines will close at seven forty-five to allow enough time to process final purchases. Regular store hours will resume tomorrow morning at nine.",
+    "questions": [
+      {
+        "question": "What is the main purpose of this announcement?",
+        "options": [
+          "To announce a store closing for inventory",
+          "To advertise a store sale",
+          "To warn about a power outage",
+          "To announce new store hours permanently"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "When will checkout lines close?",
+        "options": [
+          "At seven o'clock",
+          "At seven forty-five",
+          "At eight o'clock",
+          "At nine o'clock"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/57.mp3",
+    "speaker": "female",
+    "transcript": "Good afternoon, passengers. This is your captain speaking. We are currently experiencing some turbulence ahead and will be keeping the seatbelt sign on for the remainder of the flight. We expect to land approximately fifteen minutes ahead of schedule. Flight attendants will be delayed in serving beverages until conditions improve. Thank you for your patience.",
+    "questions": [
+      {
+        "question": "Why is the seatbelt sign being kept on?",
+        "options": [
+          "Due to turbulence ahead",
+          "Because the flight is about to land",
+          "Due to a mechanical issue",
+          "Because of a delay in the schedule"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the captain say about the landing time?",
+        "options": [
+          "The flight will land late",
+          "The flight will land on time",
+          "The flight will land ahead of schedule",
+          "The landing time is unknown"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/58.mp3",
+    "speaker": "male",
+    "transcript": "Attention library patrons: the third floor study rooms will be unavailable this weekend due to carpet replacement. Patrons needing a quiet space are encouraged to use the reading room on the first floor instead. We expect the third floor to reopen by Monday morning. Thank you for your understanding as we work to improve our facilities.",
+    "questions": [
+      {
+        "question": "Why are the third floor study rooms unavailable?",
+        "options": [
+          "They are being used for an event",
+          "Carpet replacement is taking place",
+          "They are being cleaned for an inspection",
+          "New furniture is being delivered"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative is suggested?",
+        "options": [
+          "The computer lab",
+          "The reading room on the first floor",
+          "A different library branch",
+          "The building lobby"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/59.mp3",
+    "speaker": "female",
+    "transcript": "May I have your attention please. The 3:15 train to Lakeside has been delayed by approximately twenty minutes due to a signal issue further down the line. We apologize for the inconvenience and appreciate your patience. Updated arrival information will be posted on the departure boards as soon as it becomes available.",
+    "questions": [
+      {
+        "question": "Why has the train been delayed?",
+        "options": [
+          "A mechanical failure",
+          "A signal issue down the line",
+          "Heavy passenger traffic",
+          "Bad weather conditions"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long is the delay expected to be?",
+        "options": [
+          "Ten minutes",
+          "Twenty minutes",
+          "Thirty minutes",
+          "One hour"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/60.mp3",
+    "speaker": "male",
+    "transcript": "Attention all employees: the annual company picnic has been moved from this Saturday to the following Saturday due to the forecast of heavy rain. The location remains the same, Riverside Park, and the time will still be noon to four. Please update your calendars accordingly, and let the events team know if you have any questions.",
+    "questions": [
+      {
+        "question": "Why was the picnic rescheduled?",
+        "options": [
+          "The park was unavailable",
+          "Heavy rain is forecasted",
+          "Not enough employees signed up",
+          "A scheduling conflict with another event"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What stayed the same about the picnic?",
+        "options": [
+          "The date",
+          "The location and time",
+          "The guest list",
+          "The catering menu"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/61.mp3",
+    "speaker": "female",
+    "transcript": "Attention shoppers: for the next thirty minutes, all bakery items in aisle five are marked down by twenty-five percent as part of our end-of-day sale. Please see a bakery associate if you need assistance. This offer applies only to items currently on the shelf and cannot be combined with other coupons.",
+    "questions": [
+      {
+        "question": "What is being offered in this announcement?",
+        "options": [
+          "A discount on bakery items",
+          "Free samples in the bakery section",
+          "A new bakery product line",
+          "Extended bakery hours"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What is a restriction on the offer?",
+        "options": [
+          "It only applies to online orders",
+          "It cannot be combined with other coupons",
+          "It requires a minimum purchase",
+          "It is only for store members"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/62.mp3",
+    "speaker": "male",
+    "transcript": "Attention passengers waiting in Terminal B: due to a temporary equipment issue, boarding for flight 482 to Denver will begin fifteen minutes later than originally scheduled. We appreciate your patience and will provide updates as they become available. Please remain near the gate area for further announcements.",
+    "questions": [
+      {
+        "question": "What is causing the delay?",
+        "options": [
+          "Bad weather",
+          "A temporary equipment issue",
+          "A crew shortage",
+          "A security check"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are passengers asked to do?",
+        "options": [
+          "Move to a different terminal",
+          "Remain near the gate area",
+          "Check in online immediately",
+          "Proceed to a different gate"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/63.mp3",
+    "speaker": "female",
+    "transcript": "Good morning, students. This is a reminder that today's fire drill will take place at ten thirty. When the alarm sounds, please exit the building calmly through the nearest marked exit and proceed to the designated assembly area in the front parking lot. Teachers will take attendance once students have gathered outside.",
+    "questions": [
+      {
+        "question": "What is scheduled for ten thirty?",
+        "options": [
+          "A school assembly",
+          "A fire drill",
+          "A guest speaker event",
+          "A class photo session"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will teachers do once outside?",
+        "options": [
+          "Dismiss students for the day",
+          "Take attendance",
+          "Begin a new lesson",
+          "Collect assignments"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/64.mp3",
+    "speaker": "male",
+    "transcript": "Attention gym members: the pool area will be closed this afternoon from one to three for routine chemical testing. All other facilities, including the weight room and group fitness studio, will remain open as usual during this time. We apologize for any inconvenience and appreciate your understanding.",
+    "questions": [
+      {
+        "question": "What part of the gym is closing?",
+        "options": [
+          "The weight room",
+          "The pool area",
+          "The group fitness studio",
+          "The entire gym"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will remain open?",
+        "options": [
+          "Nothing else will be open",
+          "The weight room and fitness studio",
+          "Only the locker rooms",
+          "Only the front desk"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/65.mp3",
+    "speaker": "female",
+    "transcript": "Attention passengers on the 2 o'clock ferry to Harbor Island: due to strong winds, this sailing has been temporarily postponed. We expect to resume service within the hour, and updated departure times will be posted at the ticket counter. We apologize for any inconvenience this delay may cause.",
+    "questions": [
+      {
+        "question": "Why was the ferry postponed?",
+        "options": [
+          "Mechanical failure",
+          "Strong winds",
+          "A staffing shortage",
+          "High passenger volume"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where will updated times be posted?",
+        "options": [
+          "On the ferry itself",
+          "At the ticket counter",
+          "Sent by email",
+          "On the company website only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/66.mp3",
+    "speaker": "male",
+    "transcript": "Attention theater patrons: tonight's performance will begin ten minutes later than scheduled due to a brief technical delay backstage. We appreciate your patience and ask that you remain in the lobby until ushers direct you to your seats. Refreshments will remain available for purchase during this short delay.",
+    "questions": [
+      {
+        "question": "Why is the performance delayed?",
+        "options": [
+          "A technical delay backstage",
+          "A cast member is late",
+          "Ticketing issues at the door",
+          "Weather conditions"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What are patrons asked to do?",
+        "options": [
+          "Return to their cars",
+          "Remain in the lobby until directed",
+          "Find their own seats immediately",
+          "Wait outside the theater"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/67.mp3",
+    "speaker": "female",
+    "transcript": "Attention office staff: the parking garage elevator will be out of service this afternoon for scheduled repairs. Please use the stairwell near the north entrance in the meantime. We expect the elevator to be back in operation by tomorrow morning. Thank you for your patience during this repair work.",
+    "questions": [
+      {
+        "question": "What is out of service?",
+        "options": [
+          "The main building elevator",
+          "The parking garage elevator",
+          "The stairwell",
+          "The north entrance door"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When will the elevator be operational again?",
+        "options": [
+          "Later this afternoon",
+          "By tomorrow morning",
+          "Next week",
+          "It is unknown"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/68.mp3",
+    "speaker": "male",
+    "transcript": "Attention shoppers: we are pleased to announce that our garden center will now be open an additional two hours on weekends, from eight in the morning until seven in the evening. This change begins this Saturday and will continue throughout the spring season. We hope this extended schedule makes it easier to visit us.",
+    "questions": [
+      {
+        "question": "What change is being announced?",
+        "options": [
+          "A price reduction in the garden center",
+          "Extended weekend hours for the garden center",
+          "A new garden center location",
+          "A garden center closing"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When does this change take effect?",
+        "options": [
+          "Next month",
+          "This Saturday",
+          "At the end of spring",
+          "Immediately, starting today"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/69.mp3",
+    "speaker": "female",
+    "transcript": "Good evening, passengers. Due to an unexpected mechanical inspection, the departure of flight 219 to Chicago has been delayed by approximately forty-five minutes. Gate agents will provide meal vouchers to affected passengers at the service counter. We apologize for the inconvenience and thank you for your understanding.",
+    "questions": [
+      {
+        "question": "What caused the delay?",
+        "options": [
+          "Bad weather",
+          "An unexpected mechanical inspection",
+          "A gate change",
+          "A crew scheduling issue"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is being offered to passengers?",
+        "options": [
+          "Free upgrades",
+          "Meal vouchers",
+          "Discounted future tickets",
+          "Priority boarding"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/70.mp3",
+    "speaker": "male",
+    "transcript": "Attention museum visitors: the east wing will close thirty minutes earlier than usual today to accommodate a private event this evening. All other galleries will remain open until our regular closing time. We appreciate your understanding and hope you enjoy the rest of your visit.",
+    "questions": [
+      {
+        "question": "Why is the east wing closing early?",
+        "options": [
+          "A private event this evening",
+          "Routine cleaning",
+          "Low visitor turnout",
+          "A staffing shortage"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What is happening to the other galleries?",
+        "options": [
+          "They are also closing early",
+          "They remain open until the regular time",
+          "They are closed for the day",
+          "They are open only to members"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/71.mp3",
+    "speaker": "female",
+    "transcript": "Attention residents: trash collection for this neighborhood will be delayed by one day this week due to the upcoming holiday. Please place your bins at the curb on Wednesday morning instead of Tuesday. Regular collection days will resume the following week without further changes.",
+    "questions": [
+      {
+        "question": "Why is trash collection delayed?",
+        "options": [
+          "A truck breakdown",
+          "An upcoming holiday",
+          "A change in the collection company",
+          "New city regulations"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When should bins be placed at the curb this week?",
+        "options": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/72.mp3",
+    "speaker": "male",
+    "transcript": "Attention conference attendees: the keynote session originally scheduled for the main hall has been moved to Ballroom C due to higher than expected attendance. Please proceed to Ballroom C on the second floor at the same start time. We apologize for any confusion this may cause.",
+    "questions": [
+      {
+        "question": "Why was the session moved?",
+        "options": [
+          "A scheduling conflict",
+          "Higher than expected attendance",
+          "A technical issue in the main hall",
+          "A speaker cancellation"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where should attendees go now?",
+        "options": [
+          "The main hall",
+          "Ballroom C on the second floor",
+          "The conference lobby",
+          "A different building entirely"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/73.mp3",
+    "speaker": "female",
+    "transcript": "Attention passengers waiting for the downtown express bus: due to road construction on Main Street, this route has been temporarily rerouted through Oak Avenue. Stops along Main Street will not be served until construction is complete. Please check posted signs at your stop for updated pickup locations.",
+    "questions": [
+      {
+        "question": "Why has the bus route changed?",
+        "options": [
+          "A traffic accident",
+          "Road construction on Main Street",
+          "A driver shortage",
+          "Low ridership"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should passengers do?",
+        "options": [
+          "Wait at the same stop as usual",
+          "Check posted signs for updated pickup locations",
+          "Call the bus company directly",
+          "Take a taxi instead"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/74.mp3",
+    "speaker": "male",
+    "transcript": "Good morning, staff. Please note that today's scheduled software update will take the internal server offline from noon until approximately one o'clock. Please save all your work before this time to avoid losing any unsaved changes. IT will send a follow-up email once the system is back online.",
+    "questions": [
+      {
+        "question": "What is happening at noon?",
+        "options": [
+          "A staff meeting",
+          "The internal server going offline for an update",
+          "A building fire drill",
+          "A new software rollout to customers"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are staff advised to do?",
+        "options": [
+          "Log off completely for the day",
+          "Save their work before noon",
+          "Continue working as normal",
+          "Contact IT immediately"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/75.mp3",
+    "speaker": "female",
+    "transcript": "Attention concertgoers: due to a slight delay backstage, tonight's show will begin approximately fifteen minutes later than printed on your ticket. Doors to the venue remain open, and concessions are available while you wait. We appreciate your patience and look forward to a great show tonight.",
+    "questions": [
+      {
+        "question": "Why is the concert starting late?",
+        "options": [
+          "A delay backstage",
+          "Ticketing issues",
+          "A weather delay",
+          "A change in venue"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What can attendees do while waiting?",
+        "options": [
+          "Leave and come back later",
+          "Purchase concessions",
+          "Wait outside the venue only",
+          "Nothing is available yet"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/76.mp3",
+    "speaker": "male",
+    "transcript": "Attention shoppers: our electronics department will be relocating to the second floor starting next Monday to make room for an expanded home goods section. Current electronics inventory will be available at a temporary discount this week to reduce moving costs. Thank you for shopping with us.",
+    "questions": [
+      {
+        "question": "What change is being announced?",
+        "options": [
+          "A store closing",
+          "The electronics department relocating",
+          "A new store opening",
+          "A change in store hours"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is offered this week?",
+        "options": [
+          "Free shipping",
+          "A temporary discount on electronics",
+          "Extended store hours",
+          "A loyalty program signup bonus"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/77.mp3",
+    "speaker": "female",
+    "transcript": "Attention passengers: the 9:40 departure to Millbrook has been moved to platform six instead of platform two due to a scheduling change. Please make your way to platform six promptly, as the train will depart on time despite the platform change. We apologize for any confusion.",
+    "questions": [
+      {
+        "question": "What has changed about this train?",
+        "options": [
+          "Its departure time",
+          "Its departure platform",
+          "Its final destination",
+          "Its ticket price"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Will the train still depart on time?",
+        "options": [
+          "No, it will be delayed",
+          "Yes, it will depart on time",
+          "It has been canceled",
+          "The departure time is unknown"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/78.mp3",
+    "speaker": "male",
+    "transcript": "Attention residents: the community center pool will be closed for the remainder of the week due to a mechanical issue with the filtration system. Repair technicians have been scheduled, and we expect the pool to reopen by Monday. We apologize for the inconvenience and appreciate your patience.",
+    "questions": [
+      {
+        "question": "Why is the pool closed?",
+        "options": [
+          "A staffing shortage",
+          "A mechanical issue with the filtration system",
+          "Scheduled cleaning",
+          "Low attendance"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When is the pool expected to reopen?",
+        "options": [
+          "Tomorrow",
+          "By Monday",
+          "In two weeks",
+          "It is permanently closed"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/79.mp3",
+    "speaker": "female",
+    "transcript": "Good afternoon, shoppers. As part of our anniversary celebration, we're offering a free gift with any purchase over fifty dollars at the customer service counter today only. Supplies are limited, so we encourage you to take advantage of this offer while it lasts. Thank you for being a loyal customer.",
+    "questions": [
+      {
+        "question": "What is being offered today?",
+        "options": [
+          "A free gift with purchases over fifty dollars",
+          "A store-wide discount",
+          "Free shipping on all orders",
+          "A raffle entry with any purchase"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What limitation is mentioned about the offer?",
+        "options": [
+          "It only applies to new customers",
+          "Supplies are limited",
+          "It requires a coupon",
+          "It is only valid online"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/80.mp3",
+    "speaker": "male",
+    "transcript": "Attention passengers boarding flight 305 to Seattle: due to a full flight, we are requesting volunteers to check their carry-on bags at the gate free of charge. Bags checked at the gate can be picked up at baggage claim upon arrival. We appreciate your cooperation and thank you for your patience.",
+    "questions": [
+      {
+        "question": "What is being requested from passengers?",
+        "options": [
+          "To arrive earlier for boarding",
+          "Volunteers to check carry-on bags at the gate",
+          "To pay an extra fee for luggage",
+          "To switch to a later flight"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where can checked bags be picked up?",
+        "options": [
+          "At the gate upon landing",
+          "At baggage claim",
+          "At the ticket counter",
+          "They will be delivered to hotels"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/81.mp3",
+    "speaker": "female",
+    "transcript": "Attention students: today's guest lecture in the auditorium has been moved up by thirty minutes due to the speaker's travel schedule. The lecture will now begin at one thirty instead of two o'clock. Please plan to arrive a few minutes early to find seating, as we expect a large turnout.",
+    "questions": [
+      {
+        "question": "Why was the lecture time changed?",
+        "options": [
+          "A room conflict",
+          "The speaker's travel schedule",
+          "Low registration numbers",
+          "A technical issue"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What time will the lecture now begin?",
+        "options": [
+          "One o'clock",
+          "One thirty",
+          "Two o'clock",
+          "Two thirty"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/82.mp3",
+    "speaker": "male",
+    "transcript": "Attention park visitors: due to recent heavy rainfall, the lower riverside trail is currently closed for safety reasons. Visitors are encouraged to use the upper ridge trail instead, which remains open and offers similarly scenic views. Trail conditions will be reassessed once the ground has had time to dry.",
+    "questions": [
+      {
+        "question": "Why is the riverside trail closed?",
+        "options": [
+          "Wildlife activity",
+          "Recent heavy rainfall",
+          "Trail maintenance",
+          "A large event taking place"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative is suggested?",
+        "options": [
+          "Staying near the parking lot",
+          "The upper ridge trail",
+          "Returning another day",
+          "A shuttle tour instead"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/83.mp3",
+    "speaker": "female",
+    "transcript": "Attention customers: our customer service phone lines will be temporarily unavailable this afternoon due to a system upgrade. For urgent matters, please use the live chat feature on our website, which will remain fully operational. Normal phone service is expected to resume by early evening.",
+    "questions": [
+      {
+        "question": "Why are phone lines unavailable?",
+        "options": [
+          "A staffing shortage",
+          "A system upgrade",
+          "High call volume",
+          "A power outage"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative is available?",
+        "options": [
+          "Email support only",
+          "The website's live chat feature",
+          "In-person visits only",
+          "A voicemail system"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/84.mp3",
+    "speaker": "male",
+    "transcript": "Attention hotel guests: please be advised that the rooftop terrace will be closed this evening for a private reception. All other hotel amenities, including the fitness center and lounge, remain available for guest use. We appreciate your understanding and hope you enjoy the rest of your stay.",
+    "questions": [
+      {
+        "question": "Why is the rooftop terrace closed?",
+        "options": [
+          "Weather conditions",
+          "A private reception",
+          "Routine maintenance",
+          "Low guest interest"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What remains available to guests?",
+        "options": [
+          "Nothing else is available tonight",
+          "The fitness center and lounge",
+          "Only room service",
+          "Only the front desk"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/85.mp3",
+    "speaker": "female",
+    "transcript": "Good morning, passengers. This is a reminder that due to ongoing runway maintenance, some flights departing this morning may experience minor delays of up to twenty minutes. We recommend checking the departure boards regularly for the most current information regarding your specific flight.",
+    "questions": [
+      {
+        "question": "Why might flights be delayed this morning?",
+        "options": [
+          "A security threat",
+          "Ongoing runway maintenance",
+          "A shortage of pilots",
+          "Bad weather conditions"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is recommended to passengers?",
+        "options": [
+          "Arriving even earlier than usual",
+          "Checking the departure boards regularly",
+          "Rebooking their flights immediately",
+          "Calling the airline directly"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/86.mp3",
+    "speaker": "male",
+    "transcript": "Attention shoppers: beginning next week, our store will introduce a new self-checkout area near the front entrance to help reduce wait times during busy hours. Staff will be available nearby to assist customers unfamiliar with the new system. We hope this addition improves your overall shopping experience.",
+    "questions": [
+      {
+        "question": "What new addition is being announced?",
+        "options": [
+          "A new parking lot",
+          "A self-checkout area",
+          "An expanded produce section",
+          "A new customer loyalty program"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the purpose of this addition?",
+        "options": [
+          "To increase product variety",
+          "To reduce wait times during busy hours",
+          "To offer more discounts",
+          "To expand store hours"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/87.mp3",
+    "speaker": "female",
+    "transcript": "Attention residents: the building's laundry room will be closed tomorrow morning for equipment servicing. Technicians expect to complete the work by noon, after which normal laundry room hours will resume. We apologize for any inconvenience this brief closure may cause.",
+    "questions": [
+      {
+        "question": "Why is the laundry room closing?",
+        "options": [
+          "A water shutoff",
+          "Equipment servicing",
+          "A renovation project",
+          "A safety inspection"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When is the work expected to be finished?",
+        "options": [
+          "By noon",
+          "By evening",
+          "The next day",
+          "By the end of the week"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/88.mp3",
+    "speaker": "male",
+    "transcript": "Attention passengers: due to a temporary staffing shortage, check-in for international flights will be limited to two counters this morning instead of the usual four. We recommend allowing extra time to check in for your flight. We apologize for any inconvenience this may cause.",
+    "questions": [
+      {
+        "question": "Why are fewer check-in counters open?",
+        "options": [
+          "A computer system failure",
+          "A temporary staffing shortage",
+          "Low passenger volume",
+          "A change in airline policy"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is recommended to passengers?",
+        "options": [
+          "Checking in online only",
+          "Allowing extra time to check in",
+          "Arriving exactly at departure time",
+          "Skipping check-in entirely"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/89.mp3",
+    "speaker": "female",
+    "transcript": "Attention students: the campus bookstore will be extending its hours this week to accommodate the start of the new semester. The store will now remain open until nine in the evening, two hours later than usual, through this Friday. Regular hours will resume the following Monday.",
+    "questions": [
+      {
+        "question": "Why are bookstore hours being extended?",
+        "options": [
+          "A special sale event",
+          "The start of the new semester",
+          "A change in ownership",
+          "Increased holiday shopping"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Until when will the extended hours last?",
+        "options": [
+          "This Wednesday",
+          "This Friday",
+          "The end of the month",
+          "The entire semester"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/90.mp3",
+    "speaker": "male",
+    "transcript": "Attention shoppers: please be aware that the north parking lot will be closed today for resurfacing work. Vehicles should use the south lot instead, which has additional overflow space available. We expect the north lot to reopen tomorrow morning, weather permitting.",
+    "questions": [
+      {
+        "question": "Why is the north parking lot closed?",
+        "options": [
+          "A private event",
+          "Resurfacing work",
+          "A security concern",
+          "Flooding from recent rain"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are shoppers advised to do?",
+        "options": [
+          "Park on the street instead",
+          "Use the south lot",
+          "Come back another day",
+          "Use public transportation"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/91.mp3",
+    "speaker": "female",
+    "transcript": "Good afternoon, passengers aboard the 4:15 service to Brookfield. Please note that due to an earlier delay, this train will be running approximately ten minutes behind schedule. We apologize for the inconvenience and will do our best to make up time during the journey.",
+    "questions": [
+      {
+        "question": "What is the situation with this train?",
+        "options": [
+          "It has been canceled",
+          "It is running about ten minutes late",
+          "It has changed its final destination",
+          "It has been rerouted"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say the crew will try to do?",
+        "options": [
+          "Skip several stops",
+          "Make up time during the journey",
+          "Add an extra stop",
+          "End the route early"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/92.mp3",
+    "speaker": "male",
+    "transcript": "Attention visitors: the aquarium's shark exhibit will be temporarily closed this afternoon while our staff conducts a routine health check on the animals. All other exhibits remain open as scheduled. We expect the shark exhibit to reopen within approximately two hours.",
+    "questions": [
+      {
+        "question": "Why is the shark exhibit closing?",
+        "options": [
+          "A safety incident",
+          "A routine health check on the animals",
+          "Low visitor interest",
+          "Renovation work"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long is the closure expected to last?",
+        "options": [
+          "Thirty minutes",
+          "About two hours",
+          "The rest of the day",
+          "One week"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/93.mp3",
+    "speaker": "female",
+    "transcript": "Attention employees: the cafeteria will be serving a limited menu today due to a delayed food delivery. We apologize for any inconvenience and expect our normal full menu to return tomorrow. Vending machines on each floor remain fully stocked in the meantime.",
+    "questions": [
+      {
+        "question": "Why is the cafeteria menu limited today?",
+        "options": [
+          "A staffing shortage",
+          "A delayed food delivery",
+          "Kitchen equipment repairs",
+          "A special themed menu"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative is mentioned?",
+        "options": [
+          "A nearby restaurant",
+          "Vending machines on each floor",
+          "Free delivery service",
+          "An extended lunch break"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/94.mp3",
+    "speaker": "male",
+    "transcript": "Attention passengers: we are pleased to announce that complimentary Wi-Fi is now available throughout the terminal, including all gate areas and lounges. Simply select the airport network from your device settings to connect. We hope this makes your time at the airport more comfortable.",
+    "questions": [
+      {
+        "question": "What new service is being announced?",
+        "options": [
+          "Free snacks at the gate",
+          "Complimentary Wi-Fi throughout the terminal",
+          "Extended lounge access",
+          "Discounted parking"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can passengers access this service?",
+        "options": [
+          "By purchasing a pass at a kiosk",
+          "By selecting the airport network from device settings",
+          "By registering with a staff member",
+          "By downloading a special app"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/95.mp3",
+    "speaker": "female",
+    "transcript": "Attention shoppers: our seasonal clearance sale begins today, with discounts of up to sixty percent on select summer merchandise throughout the store. Sale items are marked with a red tag and cannot be returned or exchanged. We hope you find some great deals during your visit.",
+    "questions": [
+      {
+        "question": "What is the store announcing?",
+        "options": [
+          "A grand opening event",
+          "A seasonal clearance sale",
+          "A membership drive",
+          "A new product launch"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is noted about sale items?",
+        "options": [
+          "They come with a warranty",
+          "They cannot be returned or exchanged",
+          "They are only available online",
+          "They require a coupon code"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/96.mp3",
+    "speaker": "male",
+    "transcript": "Attention residents: due to scheduled road paving, on-street parking will be prohibited on Maple Street between eight in the morning and four in the afternoon this Thursday. Vehicles not moved by eight will be towed at the owner's expense. We appreciate your cooperation.",
+    "questions": [
+      {
+        "question": "What is happening on Maple Street this Thursday?",
+        "options": [
+          "A street festival",
+          "Scheduled road paving",
+          "A parade",
+          "Utility line repairs"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens to vehicles not moved in time?",
+        "options": [
+          "They receive a warning ticket",
+          "They are towed at the owner's expense",
+          "Nothing happens to them",
+          "They are relocated by the city for free"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/97.mp3",
+    "speaker": "female",
+    "transcript": "Attention gym members: starting this weekend, we will be introducing a new evening spin class every Tuesday and Thursday at six o'clock. Space is limited to twenty participants, so early sign-up is recommended through the front desk or our mobile app.",
+    "questions": [
+      {
+        "question": "What new offering is being announced?",
+        "options": [
+          "A new personal training program",
+          "An evening spin class",
+          "Extended gym hours",
+          "A nutrition workshop"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can members reserve a spot?",
+        "options": [
+          "By calling customer service",
+          "Through the front desk or mobile app",
+          "By emailing the gym manager",
+          "Spots cannot be reserved in advance"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/98.mp3",
+    "speaker": "male",
+    "transcript": "Attention conference guests: lunch will be served in the east dining hall starting at twelve thirty today instead of the west hall as originally printed in your program. Please check with staff near the registration desk if you need directions. We apologize for any confusion.",
+    "questions": [
+      {
+        "question": "What has changed about lunch today?",
+        "options": [
+          "The time it will be served",
+          "The location where it will be served",
+          "The menu being offered",
+          "It has been canceled"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where can attendees get directions?",
+        "options": [
+          "The east dining hall entrance",
+          "Near the registration desk",
+          "The hotel lobby",
+          "The parking area"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/99.mp3",
+    "speaker": "female",
+    "transcript": "Attention passengers: due to a temporary closure of security checkpoint two, all passengers should proceed to checkpoint one for screening this morning. We expect checkpoint two to reopen by mid-afternoon. We apologize for any additional wait times this may cause.",
+    "questions": [
+      {
+        "question": "Why is checkpoint two closed?",
+        "options": [
+          "A staffing shortage",
+          "A temporary closure, reason not detailed but requiring rerouting",
+          "A security threat",
+          "Equipment malfunction requiring reroute"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should passengers do?",
+        "options": [
+          "Wait for checkpoint two to reopen",
+          "Proceed to checkpoint one",
+          "Use a different terminal entirely",
+          "Return to the ticket counter"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p3/100.mp3",
+    "speaker": "male",
+    "transcript": "Attention shoppers: please note that our return policy has been temporarily extended for all holiday purchases, allowing returns within sixty days instead of the usual thirty. This extension applies to items purchased both in store and online. Please bring your receipt for the fastest service.",
+    "questions": [
+      {
+        "question": "What change to policy is being announced?",
+        "options": [
+          "A price increase",
+          "An extended return window for holiday purchases",
+          "A change in store hours",
+          "A new loyalty program"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is needed for the fastest service?",
+        "options": [
+          "A photo ID",
+          "A receipt",
+          "A membership card",
+          "The original packaging only"
+        ],
+        "answer": 1
+      }
+    ]
+  }
+]

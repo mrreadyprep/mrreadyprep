@@ -1,0 +1,3512 @@
+[
+  {
+    "id": 1,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Gym Membership Freeze",
+    "subtitle": "Dear Mr. Alvarez,",
+    "text": "We have received your request to place a temporary freeze on your membership at Crestview Fitness Center due to your upcoming relocation. Your freeze will take effect on June 1 and will run for a maximum of eight weeks, ending no later than July 26. If you return earlier than planned, you may reactivate your membership at any time through your online account, and your monthly rate will remain exactly as it was before the freeze began. Please note that access to the facility, including the pool and group classes, will be suspended for the entire freeze period, though you may still book personal training sessions in advance for after your return. Members who wish to extend the freeze beyond eight weeks must submit a written request at least one week prior to the scheduled end date; requests submitted later than this cannot be guaranteed processing in time, and standard billing will resume automatically regardless. We recommend reviewing your account settings now so that you are not caught off guard by any unexpected charges once the freeze period concludes.\n\nBest regards,\nCrestview Fitness Center",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To confirm a temporary suspension of a gym membership",
+          "To advertise a new fitness program",
+          "To notify a member of a fee increase",
+          "To cancel a membership permanently"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What will happen if Mr. Alvarez does not submit an extension request in time?",
+        "options": [
+          "He will be charged a penalty fee",
+          "His membership will be cancelled automatically",
+          "Standard billing will resume automatically",
+          "He will lose access to personal training bookings permanently"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "The word 'reactivate' in the email is closest in meaning to",
+        "options": [
+          "cancel",
+          "restart",
+          "upgrade",
+          "transfer"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Dentist Appointment Reminder",
+    "subtitle": "Dear Ms. Park,",
+    "text": "This is a reminder that you have a dental check-up and cleaning scheduled for Thursday, March 14, at 10:30 a.m. with Dr. Emily Novak. Please arrive fifteen minutes early to complete an updated medical history form, as our records indicate that yours was last updated more than eighteen months ago. If this is your first visit in over a year, we recommend bringing a list of any medications you are currently taking, along with your insurance card, since coverage details occasionally change between visits. Patients who have had any recent oral surgery or who are currently taking blood thinners should inform the front desk before the appointment begins, as this may affect the cleaning procedure. Should you need to reschedule, please call our office at least 24 hours in advance; cancellations made with less notice than this are subject to a late cancellation fee equal to half the cost of the missed appointment. We look forward to seeing you and hope the updated form will help us provide more personalized care going forward.\n\nWarm regards,\nBrightsmile Dental Clinic",
+    "questions": [
+      {
+        "question": "What is the email mainly about?",
+        "options": [
+          "A reminder of an upcoming dental appointment",
+          "An invitation to a new dental clinic",
+          "A notice about a billing error",
+          "A request to change dentists"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Why does the clinic want Ms. Park to update her medical history form?",
+        "options": [
+          "She has never visited the clinic before",
+          "Her current form was completed more than eighteen months ago",
+          "She recently changed her insurance provider",
+          "The clinic lost her previous records"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is suggested about patients taking blood thinners?",
+        "options": [
+          "They cannot be treated at this clinic",
+          "They must reschedule their appointment",
+          "They should notify the front desk before the appointment",
+          "They will automatically be charged an extra fee"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Package Delivery Delay",
+    "subtitle": "Dear Mr. Osei,",
+    "text": "We are writing to inform you that your recent order, tracking number SW-48213, has been delayed due to unexpected weather conditions affecting our regional distribution center. Your package was originally scheduled to arrive on Tuesday, but based on updated logistics reports, it is now expected to be delivered by Friday of this week, provided that road conditions continue to improve as forecast. We understand that this delay may be frustrating, particularly since two of the items in your order were intended as a gift, and we sincerely apologize for any inconvenience this may cause. As a courtesy, a discount code for 15 percent off your next purchase has been added to your account, valid for the next ninety days. You can track your package's updated status at any time using the link below, and you will receive an automatic notification the moment it leaves our regional facility. If the package has not arrived by the following Monday, please contact our support team directly rather than waiting for a further automatic update, since delays beyond that point are handled on a case-by-case basis.\n\nSincerely,\nSwiftParcel Customer Service",
+    "questions": [
+      {
+        "question": "Why was the package delayed?",
+        "options": [
+          "The item was out of stock",
+          "Weather conditions affected the distribution center",
+          "The customer changed the delivery address",
+          "There was an error in the order"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the email suggest Mr. Osei should do if the package still has not arrived by the following Monday?",
+        "options": [
+          "Wait for another automatic notification",
+          "Request a full refund immediately",
+          "Contact the support team directly",
+          "Reorder the items from a different supplier"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What is indicated about the discount code offered to Mr. Osei?",
+        "options": [
+          "It never expires",
+          "It is valid for ninety days",
+          "It can only be used once the package arrives",
+          "It applies only to gift items"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Community Yoga Class Schedule Change",
+    "subtitle": "Dear Participants,",
+    "text": "Please note that starting next Monday, the community yoga class will move from its current 6:00 p.m. time slot to 7:30 p.m. This change is being made to accommodate the growing number of participants who have requested a later session after work, following a survey we circulated last month in which nearly two-thirds of respondents indicated that the current time conflicted with their commute. The location remains the same, in Studio B at the Riverside Community Center, and class size will still be capped at twenty-five participants to maintain a comfortable environment. Mats and blocks will continue to be provided, though you are welcome to bring your own if you prefer a particular thickness or material. If the new time does not work for your schedule, a make-up session covering the same material will be offered on Saturday mornings at 9:00 a.m., though space in that session is limited and registration will be handled on a first-come, first-served basis starting this Friday. We appreciate your patience as we work to accommodate everyone's needs as fairly as possible.\n\nThank you,\nRiverside Community Center",
+    "questions": [
+      {
+        "question": "What is the purpose of this email?",
+        "options": [
+          "To announce a change in a class schedule",
+          "To cancel the yoga class permanently",
+          "To introduce a new instructor",
+          "To increase the price of the class"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "According to the email, why is the class time being changed?",
+        "options": [
+          "The studio is no longer available in the evening",
+          "A survey showed the current time conflicted with many participants' commutes",
+          "The instructor's schedule changed",
+          "The center is renovating Studio B"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is indicated about the Saturday make-up session?",
+        "options": [
+          "It covers different material from the regular class",
+          "It has no limit on the number of participants",
+          "Registration is limited and given on a first-come, first-served basis",
+          "It will replace the regular class permanently"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Live Chat",
+    "subtitle": "",
+    "text": "Priya Nair (7:15 p.m.)\nHey team, don't forget the apartment cleaning schedule starts this week. I've got kitchen duty tonight, but I noticed the dish rack is still broken from last week.\n\nJordan Lee (7:18 p.m.)\nGot it. I'm on bathroom duty, but I won't be home until late tonight because of a work event. Is it okay if I do it tomorrow morning instead?\n\nSam Okafor (7:20 p.m.)\nThat should be fine, Jordan, as long as it's done before Priya leaves for work at nine. I'll handle the living room and common areas today since I'm around all evening.\n\nPriya Nair (7:22 p.m.)\nSounds good. Sam, you're always so reliable with this stuff — could you also take a look at the dish rack while you're at it? I think a screw came loose.\n\nSam Okafor (7:24 p.m.)\nSure, I'll check it after dinner. If it's more than a quick fix, I'll just order a replacement online.\n\nJordan Lee (7:27 p.m.)\nThanks, Sam. Let's also remember to take the trash out before Wednesday morning pickup — I'll set a reminder for Tuesday night since I'll already be up late anyway.\n\nPriya Nair (7:29 p.m.)\nPerfect, that covers everything. See everyone tomorrow.",
+    "questions": [
+      {
+        "question": "What is the main topic of this conversation?",
+        "options": [
+          "Planning a trip together",
+          "Coordinating apartment cleaning duties",
+          "Discussing a rent increase",
+          "Organizing a dinner party"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why does Jordan want to change the schedule?",
+        "options": [
+          "Jordan is out of town this week",
+          "Jordan does not want to do bathroom duty",
+          "Jordan will not be home until late tonight because of a work event",
+          "Jordan already cleaned the bathroom yesterday"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What can be inferred about Sam Okafor?",
+        "options": [
+          "Sam is often dependable with household tasks",
+          "Sam forgot about the cleaning schedule",
+          "Sam will be away on Wednesday",
+          "Sam refuses to take out the trash"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Live Chat",
+    "subtitle": "",
+    "text": "Diego Ramos (4:02 p.m.)\nHi everyone, are we still meeting at the library tomorrow to prepare for the economics exam? I want to make sure we cover the chapters on monetary policy as well as market structures.\n\nHana Kim (4:05 p.m.)\nYes, I booked the study room on the third floor from 2 to 5 p.m. I'll bring my notes on market structures, but I haven't gotten very far into monetary policy yet.\n\nLeah Whitfield (4:09 p.m.)\nGreat, I can go over the chapters on fiscal policy since I already made a summary sheet for those, and I can probably combine it with a quick overview of monetary policy if I have time tonight.\n\nDiego Ramos (4:11 p.m.)\nPerfect. I'll focus on the practice problems then and print extra copies for everyone, including a few from last year's exam that the professor said were similar in style.\n\nHana Kim (4:13 p.m.)\nSounds like a solid plan. Should we also ask Marcus to join? He mentioned he was struggling with the graphs last week.\n\nLeah Whitfield (4:15 p.m.)\nGood idea, I'll message him now. If the room fills up though, we may need to split into two smaller groups.\n\nDiego Ramos (4:18 p.m.)\nThat works. See you all at 2 tomorrow, and let's aim to start with the practice problems before we run out of energy.",
+    "questions": [
+      {
+        "question": "What is the purpose of this message exchange?",
+        "options": [
+          "To cancel a study session",
+          "To plan a group study session for an exam",
+          "To discuss exam results",
+          "To reschedule a library reservation"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about Hana Kim's preparation so far?",
+        "options": [
+          "She has finished reviewing monetary policy",
+          "She has made more progress on market structures than on monetary policy",
+          "She has not started studying at all",
+          "She is only responsible for printing practice problems"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the group decide to do if the study room becomes too crowded?",
+        "options": [
+          "Cancel the session entirely",
+          "Move to a different library",
+          "Split into two smaller groups",
+          "Ask Marcus not to attend"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Lease Renewal Notice",
+    "subtitle": "Dear Ms. Chen,",
+    "text": "Your current lease agreement for Apartment 4B at Willow Creek Apartments is set to expire on September 30. We would like to offer you the opportunity to renew your lease for an additional twelve months.\n\nDue to rising maintenance and utility costs across the property, the monthly rent for a renewed lease will increase from $1,150 to $1,225, effective October 1. All other terms of your current agreement, including the two-parking-space allowance and pet policy, will remain unchanged.\n\nIf you would like to renew, please sign and return the attached renewal form to the leasing office by September 10. If we do not hear from you by that date, we will assume you do not intend to renew, and you will need to vacate the unit and return your keys no later than September 30.\n\nShould you decide not to renew, a move-out inspection must be scheduled at least two weeks in advance. Please contact our office to arrange a convenient time.\n\nWe have enjoyed having you as a tenant and hope you will choose to stay another year.\n\nBest regards,\nDiane Osei\nProperty Manager, Willow Creek Apartments",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To offer the tenant a lease renewal with updated terms",
+          "To announce that the apartment complex is being sold",
+          "To complain about damage to the apartment",
+          "To advertise a new apartment complex nearby"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "According to the email, what must Ms. Chen do by September 10?",
+        "options": [
+          "Pay a security deposit increase",
+          "Sign and return the renewal form",
+          "Move out of the apartment",
+          "Schedule a maintenance inspection"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'vacate' in the email is closest in meaning to",
+        "options": [
+          "renovate",
+          "leave",
+          "purchase",
+          "inspect"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Shipment Delay Notification",
+    "subtitle": "Dear Mr. Thompson,",
+    "text": "We are writing to let you know that your recent order (Confirmation #48213), a standing desk converter, has been delayed due to severe winter storms affecting our regional distribution center. The item was originally scheduled to arrive on January 14, but we now expect it to reach you by January 22.\n\nWe understand this delay may be inconvenient, especially since you selected expedited shipping. As an apology for the inconvenience, we have refunded the $12.99 expedited shipping fee to your original payment method, and no action is required on your part to receive this refund.\n\nIf the new delivery date does not work for your schedule, you have two options. First, you may cancel the order for a full refund by replying to this email before January 20. Second, you may choose to receive a $15 store credit in addition to keeping your order once it arrives.\n\nYou can track the shipment at any time using the tracking number provided in your account dashboard. We will send another update if there are any further changes to the delivery schedule.\n\nWe appreciate your patience and apologize again for the delay.\n\nBest regards,\nCustomer Service Team\nHomeWorks Office Supply",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To cancel the customer's order without notice",
+          "To inform the customer about a shipping delay and offer compensation",
+          "To request payment for an overdue invoice",
+          "To advertise a sale on office furniture"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why was the shipment delayed?",
+        "options": [
+          "The item was out of stock",
+          "The customer changed the delivery address",
+          "Severe winter storms affected the distribution center",
+          "The payment method was declined"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "The word 'expedited' in the email is closest in meaning to",
+        "options": [
+          "delayed",
+          "expensive",
+          "fast",
+          "free"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Course Registration Confirmation",
+    "subtitle": "Dear Ms. Alvarado,",
+    "text": "This email confirms that you have been successfully registered for the following course for the Spring semester: BIO 210, Introduction to Cellular Biology, meeting Tuesdays and Thursdays from 10:00 a.m. to 11:15 a.m. in Baker Hall, Room 204.\n\nPlease note that this course has a mandatory laboratory component, which will be held every other Friday from 1:00 p.m. to 3:00 p.m. in the Science Annex. Your first lab session is scheduled for January 30. Attendance at all lab sessions is required, and missing more than one lab without an approved excuse may result in a reduction of your final grade.\n\nThe add/drop period for this course ends on February 6. If you wish to withdraw or switch sections after this date, you will need to submit a petition to the Registrar's Office, and approval is not guaranteed.\n\nA list of required textbooks and lab materials has been posted to the course page on the online learning portal. We recommend purchasing these materials before the first lab session so that you are fully prepared.\n\nIf you have any questions about your schedule, please contact the Registrar's Office directly.\n\nBest regards,\nOffice of the Registrar\nFairview State University",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To confirm the student's course registration and provide key details",
+          "To notify the student that a course has been cancelled",
+          "To ask the student to pay outstanding tuition fees",
+          "To invite the student to a campus orientation event"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What happens if a student misses more than one lab session without an approved excuse?",
+        "options": [
+          "The student is automatically withdrawn from the course",
+          "The student's final grade may be reduced",
+          "The student must retake the entire course",
+          "The student loses access to the online portal"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about switching sections after February 6?",
+        "options": [
+          "It is automatically approved for all students",
+          "It is no longer possible under any circumstances",
+          "It requires a petition and is not guaranteed to be approved",
+          "It only requires an email to the professor"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Account Overdraft Notice",
+    "subtitle": "Dear Mr. Rossi,",
+    "text": "We are contacting you regarding your checking account ending in 4471. On July 18, your account balance fell below zero after a scheduled payment of $340.00 to Eastview Insurance was processed, resulting in an overdraft of $52.16.\n\nAs outlined in your account agreement, an overdraft fee of $35.00 has been applied to your account. To avoid additional fees, we recommend depositing enough funds to bring your balance to zero or above as soon as possible. If the account remains negative for more than 14 consecutive days, an extended overdraft fee of $8.00 per day will begin to apply.\n\nYou may enroll in our free Overdraft Alert service, which sends a text message whenever your balance drops below a threshold you choose. This can help you avoid similar situations in the future. To enroll, log in to your online banking account and visit the Alerts section under Account Settings.\n\nIf you believe this overdraft occurred due to an error, such as a duplicate charge, please contact our customer support line within 60 days so that we can investigate the matter.\n\nWe value your business and are happy to assist with any questions.\n\nSincerely,\nCustomer Accounts Department\nMeridian National Bank",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To notify the customer of an overdraft and the resulting fee",
+          "To offer the customer a new credit card",
+          "To announce a change in bank branch hours",
+          "To confirm a successful loan application"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What caused the account to become negative?",
+        "options": [
+          "An unauthorized withdrawal",
+          "A scheduled insurance payment",
+          "A wire transfer fee",
+          "An ATM malfunction"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about the Overdraft Alert service?",
+        "options": [
+          "It automatically covers overdraft fees",
+          "It could help the customer avoid future overdrafts",
+          "It costs an additional monthly fee",
+          "It closes the account after repeated overdrafts"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Appointment Reschedule Notice",
+    "subtitle": "Dear Mrs. Kaplan,",
+    "text": "We are writing to inform you that Dr. Patel will be attending a professional conference on the day of your upcoming appointment, originally scheduled for August 4 at 2:30 p.m. for your six-month cleaning and checkup. As a result, we need to reschedule your visit.\n\nWe have tentatively reserved August 6 at 3:15 p.m. for your new appointment. If this time does not work for your schedule, our office also has openings on August 5 at 9:00 a.m. and August 7 at 1:00 p.m. Please call our front desk at (555) 019-2231 by July 30 to confirm one of these times or to request a different date entirely.\n\nAs a reminder, please arrive 15 minutes early to complete an updated medical history form, as it has been over a year since your last update. If you are currently taking any new medications, please bring a list with you to your appointment.\n\nWe apologize for any inconvenience this change may cause and appreciate your flexibility. Our staff looks forward to seeing you soon.\n\nWarm regards,\nFront Desk Team\nBright Smile Dental Associates",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To cancel Mrs. Kaplan's dental coverage",
+          "To notify Mrs. Kaplan that her appointment must be rescheduled",
+          "To remind Mrs. Kaplan to pay an outstanding bill",
+          "To introduce a new dentist joining the practice"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why is the appointment being rescheduled?",
+        "options": [
+          "The office is closing for renovations",
+          "The dentist is attending a professional conference",
+          "The patient requested a different date",
+          "The clinic is short-staffed that week"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'tentatively' in the email is closest in meaning to",
+        "options": [
+          "permanently",
+          "urgently",
+          "provisionally",
+          "immediately"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Car Rental Reservation Update",
+    "subtitle": "Dear Mr. Dubois,",
+    "text": "Thank you for your recent reservation with Coastal Car Rentals for a midsize sedan at our downtown airport location. We are writing to inform you of an important change to your reservation, confirmation number CR-88245.\n\nDue to an unusually high volume of reservations during the upcoming holiday weekend, the vehicle class you originally selected is no longer available for your pickup date of August 15. To honor your reservation, we have automatically upgraded you to a full-size SUV at no additional cost. Your pickup time of 10:00 a.m. and drop-off date of August 19 remain unchanged.\n\nIf you would prefer a smaller vehicle instead of the SUV, please contact our reservations line at least 48 hours before your pickup time, and we will do our best to accommodate a compact or economy vehicle, subject to availability at that time.\n\nPlease remember to bring a valid driver's license, proof of insurance, and the credit card used to make this reservation when you arrive at the counter. Renters who arrive without these documents may not be able to pick up their vehicle.\n\nWe apologize for any inconvenience and look forward to serving you.\n\nSincerely,\nReservations Department\nCoastal Car Rentals",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To cancel Mr. Dubois's reservation entirely",
+          "To inform Mr. Dubois of a free upgrade due to unavailability",
+          "To request an additional payment for the reservation",
+          "To advertise a new rental location"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why was the customer's vehicle changed to a full-size SUV?",
+        "options": [
+          "The customer requested a larger vehicle",
+          "The original vehicle class was unavailable due to high demand",
+          "The sedan failed a safety inspection",
+          "The rental company discontinued that vehicle class"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about renters who arrive without the required documents?",
+        "options": [
+          "They will receive a discount instead",
+          "They may not be able to pick up their vehicle",
+          "They will be automatically upgraded",
+          "They must wait one extra day"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Insurance Claim Status Update",
+    "subtitle": "Dear Ms. Whitfield,",
+    "text": "This letter is to update you on the status of the claim you submitted on June 2 for your visit to Dr. Ferris on May 28, claim number HC-773401. After reviewing the itemized bill submitted by your provider, we have approved partial coverage for this visit.\n\nOf the total billed amount of $410.00, our review determined that $275.00 is eligible for coverage under your current plan, as the consultation and standard bloodwork are covered services. However, the additional imaging test performed during your visit is not covered under your plan's current benefits, as it was coded as an elective diagnostic procedure rather than a medically necessary one.\n\nAs a result, you are responsible for the remaining balance of $135.00, which your provider's office may bill you for directly. If you believe the imaging test should be classified as medically necessary, you may submit an appeal along with a letter from Dr. Ferris explaining the medical reasoning within 30 days of this notice.\n\nA detailed explanation of benefits has been mailed to your address on file and is also available in your online member portal.\n\nPlease contact our claims department if you have any questions about this decision.\n\nSincerely,\nClaims Review Department\nHarborview Health Insurance",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To inform Ms. Whitfield that her claim was fully denied",
+          "To inform Ms. Whitfield about partial approval of her insurance claim",
+          "To request that Ms. Whitfield renew her insurance policy",
+          "To notify Ms. Whitfield of a change in her provider network"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why wasn't the imaging test covered by the insurance plan?",
+        "options": [
+          "It was performed by an out-of-network provider",
+          "It was coded as an elective procedure rather than medically necessary",
+          "It exceeded the plan's annual coverage limit",
+          "It was not included in the itemized bill"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred if Ms. Whitfield wants the imaging test fully covered?",
+        "options": [
+          "She must switch to a different insurance provider",
+          "She needs to submit an appeal with a letter from her doctor",
+          "She must pay the full amount with no recourse",
+          "She should cancel the original claim and resubmit it"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Overdue Library Materials",
+    "subtitle": "Dear Mr. Nakamura,",
+    "text": "Our records indicate that you currently have three items checked out from the Fairview Public Library that are now overdue. These include \"The Silent Garden\" by Elena Ruiz, due June 10, and two DVDs from our media collection, both due June 12.\n\nBecause these items are more than two weeks overdue, a total late fee of $6.50 has accrued on your account. Please note that your library card will remain blocked from borrowing additional materials or placing new holds until the items are returned or the associated fees are paid, whichever comes first.\n\nIf any of these items have been lost or damaged, you will be charged a replacement fee in addition to the late fee already applied. Replacement fees vary by item; a full list of replacement costs is available on our website under the Policies section.\n\nYou may return items to any branch of the Fairview Public Library system, including through the outdoor book drop, which is available 24 hours a day. Fees can be paid online, over the phone, or in person at any branch's circulation desk.\n\nIf you have already returned these items, please disregard this notice, as our records may take a day or two to update.\n\nSincerely,\nCirculation Department\nFairview Public Library",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To notify Mr. Nakamura of overdue items and accumulated fees",
+          "To inform Mr. Nakamura that his library card has been cancelled",
+          "To invite Mr. Nakamura to a library event",
+          "To announce new library operating hours"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What happens to Mr. Nakamura's library card until the items are returned or the fees are paid?",
+        "options": [
+          "It is upgraded to a premium membership",
+          "It is blocked from borrowing or placing holds",
+          "It is transferred to another branch",
+          "It is automatically renewed"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'accrued' in the email is closest in meaning to",
+        "options": [
+          "waived",
+          "disputed",
+          "accumulated",
+          "refunded"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Scheduled Network Maintenance",
+    "subtitle": "Dear Ms. Reyes,",
+    "text": "We are writing to inform you of scheduled network maintenance in your area that may temporarily affect your internet service. Our technicians will be upgrading fiber equipment at the local distribution hub serving your neighborhood on Thursday, September 11, between 1:00 a.m. and 5:00 a.m.\n\nDuring this window, you may experience intermittent service interruptions lasting anywhere from a few minutes to several hours. In most cases, service will be restored automatically once the upgrade is complete, and no action will be needed on your part. However, if your service has not resumed by 7:00 a.m., we recommend restarting your modem and router by unplugging them for 30 seconds before plugging them back in.\n\nThis maintenance is part of a broader effort to improve network reliability and increase available speeds in your area. Once complete, eligible customers may notice faster download and upload speeds without any change to their monthly bill.\n\nWe have scheduled this work during early morning hours specifically to minimize disruption to our customers. We understand that any interruption can be inconvenient and appreciate your patience while we complete these improvements.\n\nIf service issues persist after 9:00 a.m. on September 11, please contact our technical support line for assistance.\n\nSincerely,\nNetwork Operations Team\nClearline Broadband",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To inform the customer of scheduled maintenance and possible service interruptions",
+          "To inform the customer that their service has been permanently cancelled",
+          "To advertise a discount on a new internet plan",
+          "To request payment for an overdue internet bill"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Why was the maintenance scheduled for early morning hours?",
+        "options": [
+          "Technicians are only available at night",
+          "To minimize disruption to customers",
+          "Equipment costs are lower at that time",
+          "It is required by local regulations"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about eligible customers after the upgrade is complete?",
+        "options": [
+          "They will be charged an additional monthly fee",
+          "They may experience faster speeds at no extra cost",
+          "They will need to purchase a new router",
+          "Their service will be temporarily suspended"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Registration Confirmed: Renewable Energy Symposium",
+    "subtitle": "Dear Dr. Bennett,",
+    "text": "Thank you for registering for the 2026 International Symposium on Renewable Energy, taking place October 12-14 at the Grandview Convention Center. This email confirms your registration under the Full Conference package, which includes access to all keynote sessions, workshops, and the welcome reception on the evening of October 12.\n\nYour registration fee of $495.00 has been charged successfully to the card ending in 7042. A detailed receipt is attached to this email for your records and for any reimbursement you may need to request from your institution.\n\nPlease note that your submitted presentation abstract, \"Advances in Solar Panel Efficiency,\" has been accepted for the poster session on October 13 from 3:00 to 5:00 p.m. Poster boards will be provided on-site, and presenters should arrive 30 minutes early to set up their materials.\n\nHotel accommodations are not included in this registration. However, a discounted room block has been reserved at the Grandview Hotel next door; you may book using the code SYMP26 before September 20 to receive the conference rate.\n\nIf you need to cancel or modify your registration, please do so before September 25, as cancellations after this date are non-refundable.\n\nWe look forward to seeing you in October.\n\nBest regards,\nConference Registration Team",
+    "questions": [
+      {
+        "question": "What is the main purpose of the email?",
+        "options": [
+          "To confirm Dr. Bennett's conference registration and provide key details",
+          "To reject Dr. Bennett's submitted abstract",
+          "To inform Dr. Bennett that the conference has been cancelled",
+          "To request additional payment for hotel accommodations"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "When is Dr. Bennett's poster session scheduled?",
+        "options": [
+          "October 12 in the evening",
+          "October 13 from 3:00 to 5:00 p.m.",
+          "October 14 in the morning",
+          "September 20 at noon"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about cancellations made after September 25?",
+        "options": [
+          "They will receive a full refund",
+          "They will not be refunded",
+          "They require approval from the hotel",
+          "They automatically transfer to next year's conference"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Chem Final Study Session",
+    "subtitle": "",
+    "text": "Priya Nair (7:15 p.m.)\nHey team, are we still on for the study group before the chem final? I was thinking Saturday afternoon at the library.\n\nJordan Lee (7:18 p.m.)\nSaturday works for me. What time exactly? I have a shift until 1.\n\nPriya Nair (7:19 p.m.)\nHow about 2:30? That gives you time to grab lunch first.\n\nAmara Osei (7:22 p.m.)\nI can do 2:30, but the library closes early on Saturdays now, only until 6. Should we book a study room instead so we're not rushed?\n\nJordan Lee (7:24 p.m.)\nGood idea. I can reserve one online tonight if someone sends me the group booking code.\n\nPriya Nair (7:26 p.m.)\nI have it saved from last semester, sending it now. Let's aim for room 214, it has the whiteboard we used last time.\n\nAmara Osei (7:29 p.m.)\nPerfect. Should we split up the chapters beforehand so we're not just re-reading the same material together?\n\nJordan Lee (7:31 p.m.)\nGood call. I'll cover chapters 7 and 8 and bring a summary. Priya, can you take 9 and 10, and Amara, maybe pull together some practice problems from old exams?",
+    "questions": [
+      {
+        "question": "What is the main topic of this conversation?",
+        "options": [
+          "Planning a study group session for a chemistry final",
+          "Rescheduling a chemistry exam",
+          "Complaining about library hours",
+          "Choosing a new professor for the course"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Why does Amara suggest booking a study room?",
+        "options": [
+          "The whiteboard in the main area is broken",
+          "The library closes early on Saturdays, so they don't want to be rushed",
+          "Study rooms are free for all students",
+          "The library will be closed for a holiday"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about Priya?",
+        "options": [
+          "She has used study room 214 with the group before",
+          "She is not able to attend the study session",
+          "She works at the library on weekends",
+          "She is unfamiliar with the course material"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Office Move Chat",
+    "subtitle": "",
+    "text": "Carlos Mendez (9:02 a.m.)\nMorning everyone. Just a heads up, facilities confirmed we're moving to the 5th floor next Monday instead of the 3rd.\n\nRina Patel (9:05 a.m.)\nOh, that's a change. Does that affect the desk assignments we already picked out?\n\nCarlos Mendez (9:07 a.m.)\nGood question, I'm checking with facilities now. The floor plan is a bit different up there, so some window seats might not be available.\n\nDevon Marsh (9:10 a.m.)\nAs long as I'm not stuck next to the printer room again, I'm flexible on the rest.\n\nRina Patel (9:12 a.m.)\nHaha, noted. Carlos, when do we need to have our things packed by?\n\nCarlos Mendez (9:15 a.m.)\nFacilities wants everything boxed by Friday at 5 p.m. so the movers can start over the weekend. They're providing boxes and labels at the supply closet.\n\nDevon Marsh (9:17 a.m.)\nShould we back up anything on our desktop computers ourselves, or is IT handling that?\n\nCarlos Mendez (9:19 a.m.)\nIT will handle the computers and monitors directly, but please back up any personal files first, just in case. I'll send the updated floor plan and desk assignments by Wednesday.",
+    "questions": [
+      {
+        "question": "What is the main topic of this conversation?",
+        "options": [
+          "An upcoming office relocation and its logistics",
+          "A request to redesign the office layout permanently",
+          "A complaint about IT support response times",
+          "A discussion about hiring new employees"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Why might some window seats not be available on the new floor?",
+        "options": [
+          "The windows are being replaced",
+          "The floor plan on the new floor is different",
+          "Those seats are reserved for management",
+          "The new floor has no windows"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about Devon?",
+        "options": [
+          "He had an unpleasant experience being seated near the printer room before",
+          "He is in charge of coordinating the move",
+          "He does not plan to move to the new floor",
+          "He is new to the company"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Weekend Trip Planning",
+    "subtitle": "",
+    "text": "Maya Chen (6:40 p.m.)\nOkay, so for the cabin trip, should we leave Friday night or early Saturday morning?\n\nEthan Cole (6:42 p.m.)\nI'd rather leave Friday night so we're not stuck in weekend traffic. I can get off work by 6.\n\nSofia Ruiz (6:44 p.m.)\nFriday night works for me too. Should we split up who's bringing what for food, or just split the cost?\n\nMaya Chen (6:46 p.m.)\nLet's split up tasks, it'll be easier than splitting receipts later. I can handle breakfast stuff for both mornings.\n\nEthan Cole (6:48 p.m.)\nI'll grab firewood and snacks for the drive. Sofia, are you still good to bring the grill?\n\nSofia Ruiz (6:50 p.m.)\nYes, I have it in my trunk already. I'll also bring stuff for dinner Saturday night if someone else covers Friday dinner.\n\nMaya Chen (6:52 p.m.)\nI can pick up sandwiches on the way up for Friday, that's easy since we're driving through town anyway.\n\nEthan Cole (6:54 p.m.)\nSounds like a plan. Let's meet at my place at 6:15 Friday so we can load the car together.",
+    "questions": [
+      {
+        "question": "What is the main topic of this conversation?",
+        "options": [
+          "Planning logistics for a weekend cabin trip",
+          "Deciding whether to cancel a trip",
+          "Arguing about who should drive",
+          "Choosing a new cabin rental location"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Why does Ethan want to leave on Friday night?",
+        "options": [
+          "The cabin is only available on Friday",
+          "To avoid weekend traffic",
+          "He has to work early Saturday morning",
+          "The weather forecast is bad for Saturday"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred about Sofia?",
+        "options": [
+          "She already has a grill ready to bring on the trip",
+          "She is not able to join the trip",
+          "She dislikes cooking outdoors",
+          "She plans to drive separately from the group"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Live Chat",
+    "subtitle": "",
+    "text": "Devon Brooks (11:02 a.m.)\nHi, I ordered a pair of hiking boots last week but they arrived a half size too small. Can I exchange them?\n\nSupport Agent - Casey (11:03 a.m.)\nHi Devon, I'm sorry for the inconvenience! I can definitely help. Could you provide your order number?\n\nDevon Brooks (11:04 a.m.)\nSure, it's ORD-56213.\n\nSupport Agent - Casey (11:06 a.m.)\nThanks, I see the order. Since it's within our 30-day exchange window, we can send a prepaid return label. Would you like the next size up in the same color?\n\nDevon Brooks (11:07 a.m.)\nYes, that would be great. Will the new pair ship before you receive the return, or do I have to wait?\n\nSupport Agent - Casey (11:09 a.m.)\nGood news, we offer advance exchanges for footwear, so we'll ship the new pair today. You'll have 14 days to send the original pair back using the label once you receive it.\n\nDevon Brooks (11:10 a.m.)\nThat's perfect, thank you. Is there a charge if I don't send them back in time?\n\nSupport Agent - Casey (11:12 a.m.)\nYes, if we don't receive the original boots within 14 days, a charge equal to their purchase price will be applied to the card on file. I'll email you the label and tracking details shortly.",
+    "questions": [
+      {
+        "question": "What is the main topic of this conversation?",
+        "options": [
+          "Exchanging a pair of hiking boots for a larger size",
+          "Requesting a refund for a damaged product",
+          "Complaining about a late delivery",
+          "Reporting a billing error on an account"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Why will the new pair of boots ship before the original pair is received?",
+        "options": [
+          "The company ran out of the smaller size",
+          "The company offers advance exchanges for footwear",
+          "Devon paid extra for expedited shipping",
+          "The original boots were never actually shipped"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can be inferred if Devon does not return the original boots within 14 days?",
+        "options": [
+          "He will receive a discount on his next purchase",
+          "His account will be suspended",
+          "He will be charged for the boots",
+          "The exchange will be automatically cancelled"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Rooftop Terrace Closed",
+    "subtitle": "",
+    "text": "The rooftop terrace will be closed this weekend, June 14-15, for scheduled waterproofing repairs.\n\nResidents may use the ground-floor courtyard as an alternative outdoor space during this time.\n\nWe expect the terrace to reopen Monday morning.",
+    "questions": [
+      {
+        "question": "Why is the rooftop terrace closed?",
+        "options": [
+          "It is being converted into a parking area",
+          "It is undergoing waterproofing repairs",
+          "It has been permanently removed",
+          "It is reserved for a private event"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are residents advised to do this weekend?",
+        "options": [
+          "Avoid the building entirely",
+          "Contact building management for a refund",
+          "Use the ground-floor courtyard instead",
+          "Wait until next month to go outside"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Book Return Slot Out of Service",
+    "subtitle": "",
+    "text": "The exterior book return slot is temporarily out of service due to a mechanical fault.\n\nPlease return all items directly to the front desk during regular operating hours until further notice.\n\nLate fees will not apply to items affected by this closure.",
+    "questions": [
+      {
+        "question": "What is the purpose of this sign?",
+        "options": [
+          "To announce new library hours",
+          "To explain that the book return slot is not working",
+          "To advertise a book sale",
+          "To announce a change in library fees"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the sign say about late fees?",
+        "options": [
+          "They have been doubled",
+          "They will not apply to affected items",
+          "They must be paid at the front desk",
+          "They no longer exist"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Fitness Studio Floor Being Resurfaced",
+    "subtitle": "",
+    "text": "The main fitness studio floor is being resurfaced this Thursday and Friday and will be unavailable for classes.\n\nAll scheduled classes will be relocated to Studio B on the second floor.\n\nMembers should check the front desk for updated room assignments.",
+    "questions": [
+      {
+        "question": "What is happening to the main fitness studio?",
+        "options": [
+          "It is being permanently closed",
+          "Its floor is being resurfaced",
+          "It is being expanded",
+          "It is being repainted"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where will classes be held on Thursday and Friday?",
+        "options": [
+          "Outdoors in the parking lot",
+          "At a different branch location",
+          "In Studio B on the second floor",
+          "Classes will be cancelled entirely"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Loading Dock Access Change",
+    "subtitle": "",
+    "text": "Beginning next Monday, all deliveries must use the loading dock on Elm Street instead of the Main Street entrance.\n\nThis change is due to ongoing sidewalk repairs near the Main Street doors.\n\nDelivery drivers should check in with the security desk upon arrival.",
+    "questions": [
+      {
+        "question": "Why is the delivery entrance being changed?",
+        "options": [
+          "The Main Street entrance is being permanently closed",
+          "Sidewalk repairs are underway near the Main Street doors",
+          "The Elm Street dock is closer to the loading area",
+          "New security cameras are being installed"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should delivery drivers do when they arrive?",
+        "options": [
+          "Park on Main Street and wait",
+          "Check in with the security desk",
+          "Call ahead before arriving",
+          "Use a separate entrance for pedestrians"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Reduced Hours During Inventory",
+    "subtitle": "",
+    "text": "This store will close at 4:00 p.m. on Tuesday, October 8, for our annual inventory count.\n\nNormal hours will resume on Wednesday morning at 9:00 a.m.\n\nWe apologize for any inconvenience and thank you for your understanding.",
+    "questions": [
+      {
+        "question": "What is the purpose of this sign?",
+        "options": [
+          "To announce a store closing permanently",
+          "To inform customers of reduced hours for inventory",
+          "To advertise a discount sale",
+          "To announce a change in store ownership"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When will the store return to its normal hours?",
+        "options": [
+          "Later the same day",
+          "Wednesday morning",
+          "The following Tuesday",
+          "It will remain closed indefinitely"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "New Volunteer Orientation - Saturday",
+    "subtitle": "",
+    "text": "9:00 a.m. — Check-in and Welcome Coffee\n9:30 a.m. — Introduction to the Organization\n10:15 a.m. — Safety and Conduct Training\n11:15 a.m. — Department Tours\n12:15 p.m. — Lunch Provided\n1:00 p.m. — Sign-Up for Shifts",
+    "questions": [
+      {
+        "question": "What happens immediately after the safety and conduct training?",
+        "options": [
+          "Lunch is provided",
+          "Department tours begin",
+          "Volunteers sign up for shifts",
+          "The welcome coffee is served"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "At what time does lunch begin?",
+        "options": [
+          "9:30 a.m.",
+          "11:15 a.m.",
+          "12:15 p.m.",
+          "1:00 p.m."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Neighborhood Cleanup Day - Saturday",
+    "subtitle": "",
+    "text": "8:00 a.m. — Volunteers Meet at Community Center\n8:15 a.m. — Supplies Distributed (gloves, bags, tools)\n8:30 a.m. — Cleanup Teams Depart to Assigned Areas\n11:00 a.m. — Teams Return, Bags Collected\n11:30 a.m. — Free Lunch for Volunteers\n12:30 p.m. — Raffle for Donated Prizes",
+    "questions": [
+      {
+        "question": "What happens right before the cleanup teams depart?",
+        "options": [
+          "Lunch is served",
+          "Supplies are distributed",
+          "The raffle is held",
+          "Bags are collected"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When does the raffle for donated prizes take place?",
+        "options": [
+          "8:00 a.m.",
+          "8:30 a.m.",
+          "11:30 a.m.",
+          "12:30 p.m."
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Freshman Orientation Day",
+    "subtitle": "",
+    "text": "8:30 a.m. — Campus Check-in\n9:00 a.m. — Welcome Address from the Dean\n9:45 a.m. — Academic Advising Sessions\n11:00 a.m. — Campus Tour\n12:30 p.m. — Lunch with Student Mentors\n1:30 p.m. — Club and Activity Fair",
+    "questions": [
+      {
+        "question": "What takes place immediately before the campus tour?",
+        "options": [
+          "Campus check-in",
+          "The welcome address",
+          "Academic advising sessions",
+          "Lunch with student mentors"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "When is the club and activity fair scheduled?",
+        "options": [
+          "8:30 a.m.",
+          "11:00 a.m.",
+          "12:30 p.m.",
+          "1:30 p.m."
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Local Farmers Cooperative Meeting",
+    "subtitle": "",
+    "text": "6:00 p.m. — Doors Open, Light Refreshments\n6:30 p.m. — Treasurer's Report\n7:00 p.m. — Discussion of New Irrigation Proposal\n7:45 p.m. — Guest Speaker: Regional Soil Specialist\n8:30 p.m. — Open Floor for Member Questions\n9:00 p.m. — Meeting Adjourns",
+    "questions": [
+      {
+        "question": "What happens right after the treasurer's report?",
+        "options": [
+          "The guest speaker presents",
+          "Refreshments are served",
+          "The irrigation proposal is discussed",
+          "The meeting adjourns"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "At what time does the guest speaker present?",
+        "options": [
+          "6:30 p.m.",
+          "7:00 p.m.",
+          "7:45 p.m.",
+          "8:30 p.m."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Community Garden Workshop Series",
+    "subtitle": "",
+    "text": "10:00 a.m. — Soil Testing Basics\n10:45 a.m. — Choosing Plants for Your Climate Zone\n11:30 a.m. — Composting Demonstration\n12:15 p.m. — Break for Snacks\n12:45 p.m. — Hands-On Planting Session\n2:00 p.m. — Q&A with Master Gardeners",
+    "questions": [
+      {
+        "question": "What happens right before the break for snacks?",
+        "options": [
+          "Soil testing basics",
+          "Choosing plants for your climate zone",
+          "A composting demonstration",
+          "The hands-on planting session"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "When does the Q&A with master gardeners take place?",
+        "options": [
+          "10:45 a.m.",
+          "11:30 a.m.",
+          "12:45 p.m.",
+          "2:00 p.m."
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Maple Street Bakery",
+    "subtitle": "Date: April 18, 2025 | Time: 8:20 a.m. | Order #4412",
+    "text": "Sourdough Loaf (x1) ......... $6.50 ........ $6.50\nCinnamon Rolls (x2) ......... $3.25 ........ $6.50\nDrip Coffee (x1) ............ $2.75 ........ $2.75\n\nSubtotal: $15.75\nTax (7%): $1.10\nTotal: $16.85\n\nPayment: Debit Card\n\nRewards members earn 1 point per dollar spent. Ask about our loyalty card!",
+    "questions": [
+      {
+        "question": "How was the order paid for?",
+        "options": [
+          "Cash",
+          "Debit card",
+          "Store credit",
+          "Mobile payment app"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are customers told about the rewards program?",
+        "options": [
+          "It requires a monthly fee",
+          "Points are earned per dollar spent",
+          "It is only available online",
+          "Points expire after one week"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Riverside Auto Repair",
+    "subtitle": "Date: September 2, 2025 | Time: 2:10 p.m. | Invoice #8891",
+    "text": "Oil Change (Synthetic) ...... $54.00\nTire Rotation ............... $25.00\nCabin Air Filter ............. $18.00\n\nLabor: $30.00\nParts Subtotal: $97.00\nTax (6%): $7.62\nTotal: $134.62\n\nPayment: Credit Card\n\nNext service recommended at 45,000 miles or in 6 months, whichever comes first.",
+    "questions": [
+      {
+        "question": "What is indicated about the next service?",
+        "options": [
+          "It is due immediately",
+          "It is recommended at 45,000 miles or in 6 months",
+          "It will be free of charge",
+          "It requires a new appointment within a week"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What services were performed on this visit?",
+        "options": [
+          "Only an oil change",
+          "An oil change, tire rotation, and cabin air filter replacement",
+          "A full engine rebuild",
+          "Tire replacement only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Willowbrook Dry Cleaners",
+    "subtitle": "Date: November 11, 2025 | Time: 4:05 p.m. | Ticket #2207",
+    "text": "Suit Jacket (x1) ............ $9.00\nDress Pants (x1) ............ $6.50\nSilk Blouse (x1) ............. $8.00\n\nSubtotal: $23.50\nExpress Service Fee: $5.00\nTax (5%): $1.43\nTotal: $29.93\n\nPayment: Cash\n\nReady for pickup after 5:00 p.m. tomorrow. Please bring this ticket.",
+    "questions": [
+      {
+        "question": "What is indicated about picking up the order?",
+        "options": [
+          "It can be picked up immediately",
+          "Customers must bring the ticket to collect it",
+          "It will be delivered by mail",
+          "No proof of purchase is needed"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What additional fee was charged on this order?",
+        "options": [
+          "A late fee",
+          "A delivery fee",
+          "An express service fee",
+          "A membership fee"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Sunrise Hardware Supply",
+    "subtitle": "Date: January 27, 2025 | Time: 10:40 a.m. | Register #3",
+    "text": "Interior Paint, 1 Gallon (x2) .. $32.00 .... $64.00\nPaint Roller Kit (x1) .......... $11.50 .... $11.50\nPainter's Tape (x3) ............ $4.25 ..... $12.75\n\nSubtotal: $88.25\nTax (8%): $7.06\nTotal: $95.31\n\nPayment: Store Credit Card\n\nReturns accepted within 30 days with receipt; opened paint cans are final sale.",
+    "questions": [
+      {
+        "question": "What is indicated about returning opened paint cans?",
+        "options": [
+          "They can be returned within 30 days",
+          "They are final sale and cannot be returned",
+          "They can only be exchanged, not refunded",
+          "They require manager approval to return"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How was this purchase paid for?",
+        "options": [
+          "Cash",
+          "Personal credit card",
+          "Store credit card",
+          "Check"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Green Leaf Florist",
+    "subtitle": "Date: May 5, 2025 | Time: 1:15 p.m. | Order #6650",
+    "text": "Mixed Spring Bouquet (x1) ....... $45.00\nVase (x1) ........................ $8.00\nDelivery Fee ..................... $10.00\n\nSubtotal: $63.00\nTax (6%): $3.78\nTotal: $66.78\n\nPayment: Mobile App\n\nDelivery scheduled between 2:00 p.m. and 5:00 p.m. today. A signature will be required.",
+    "questions": [
+      {
+        "question": "What is indicated about the delivery?",
+        "options": [
+          "It requires a signature upon arrival",
+          "It will arrive before noon",
+          "It is free of charge",
+          "It can be rescheduled at any time"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "How was this order paid for?",
+        "options": [
+          "Cash on delivery",
+          "A mobile payment app",
+          "A gift card",
+          "Store credit"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Elevator Out of Service",
+    "subtitle": "",
+    "text": "The elevator in this building will be out of service today from 10 a.m. to 3 p.m. for scheduled repairs.\n\nPlease use the stairwell located at the east end of the hallway.\n\nWe apologize for any inconvenience.",
+    "questions": [
+      {
+        "question": "Why is the elevator out of service?",
+        "options": [
+          "It is being replaced permanently",
+          "It is undergoing scheduled repairs",
+          "It was damaged in an accident",
+          "It is reserved for moving furniture"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are residents advised to do?",
+        "options": [
+          "Wait until the elevator is fixed",
+          "Use the stairwell at the east end",
+          "Contact the building manager",
+          "Use a different building entrance"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Pool Closed for Cleaning",
+    "subtitle": "",
+    "text": "The community pool will be closed this Thursday for its monthly deep cleaning.\n\nThe pool will reopen Friday morning at 7 a.m. as usual.\n\nThe hot tub will remain open during this time.",
+    "questions": [
+      {
+        "question": "When will the pool reopen?",
+        "options": [
+          "Thursday afternoon",
+          "Friday morning",
+          "Saturday morning",
+          "It will remain closed indefinitely"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is mentioned about the hot tub?",
+        "options": [
+          "It will also be closed",
+          "It will remain open",
+          "It is being removed",
+          "It requires a reservation"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Package Room Access Changed",
+    "subtitle": "",
+    "text": "Starting Monday, the package room will only be accessible using your resident key fob between 8 a.m. and 9 p.m.\n\nAfter-hours access will no longer be available.\n\nContact the front office if your fob is not working.",
+    "questions": [
+      {
+        "question": "What is changing about the package room?",
+        "options": [
+          "It is being permanently closed",
+          "Access will require a key fob during limited hours",
+          "Packages will be delivered to individual units",
+          "It will be open 24 hours a day"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should a resident do if their fob doesn't work?",
+        "options": [
+          "Wait until the next business day",
+          "Contact the front office",
+          "Use the emergency exit instead",
+          "Ask another resident for help"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Fire Alarm Testing",
+    "subtitle": "",
+    "text": "The fire alarm system will be tested throughout the building tomorrow between 9 a.m. and 11 a.m.\n\nYou do not need to evacuate during this test.\n\nIf the alarm continues after 11 a.m., please exit the building immediately.",
+    "questions": [
+      {
+        "question": "What is the purpose of this notice?",
+        "options": [
+          "To warn about a real fire",
+          "To announce scheduled alarm testing",
+          "To cancel a fire drill",
+          "To report a broken alarm system"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should residents do if the alarm continues after 11 a.m.?",
+        "options": [
+          "Ignore it, since it's just a test",
+          "Call the fire department only",
+          "Exit the building immediately",
+          "Wait for further instructions by email"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Community Center Weekly Class Schedule",
+    "subtitle": "",
+    "text": "Monday — 9:00 a.m. Yoga\nTuesday — 6:00 p.m. Pottery\nWednesday — 9:00 a.m. Yoga\nThursday — 5:30 p.m. Beginner Spanish\nFriday — 6:00 p.m. Pottery",
+    "questions": [
+      {
+        "question": "What class is offered on Thursday?",
+        "options": [
+          "Yoga",
+          "Pottery",
+          "Beginner Spanish",
+          "No class is offered"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "How many days a week is Yoga offered?",
+        "options": [
+          "One",
+          "Two",
+          "Three",
+          "Four"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Campus Shuttle Departure Times",
+    "subtitle": "",
+    "text": "North Lot to Main Campus\n7:00 a.m.\n7:30 a.m.\n8:00 a.m.\n8:30 a.m. (express, no stops)\n9:00 a.m.",
+    "questions": [
+      {
+        "question": "What is special about the 8:30 a.m. shuttle?",
+        "options": [
+          "It only runs on weekends",
+          "It is an express with no stops",
+          "It requires a reservation",
+          "It does not run during exam week"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How often does the shuttle run according to this schedule?",
+        "options": [
+          "Every 15 minutes",
+          "Every 30 minutes",
+          "Every hour",
+          "Every two hours"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Library Study Room Reservations - Today",
+    "subtitle": "",
+    "text": "Room 201: 10:00-11:30 a.m. (Reserved)\nRoom 201: 1:00-3:00 p.m. (Available)\nRoom 202: 9:00 a.m.-12:00 p.m. (Reserved)\nRoom 202: 12:00-5:00 p.m. (Available)",
+    "questions": [
+      {
+        "question": "When is Room 201 available today?",
+        "options": [
+          "10:00-11:30 a.m.",
+          "1:00-3:00 p.m.",
+          "9:00 a.m.-12:00 p.m.",
+          "It is unavailable all day"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Until what time is Room 202 reserved?",
+        "options": [
+          "10:00 a.m.",
+          "11:30 a.m.",
+          "12:00 p.m.",
+          "5:00 p.m."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "New Employee Orientation Agenda",
+    "subtitle": "",
+    "text": "9:00 a.m. — Welcome and Introductions\n9:30 a.m. — Benefits Overview\n10:30 a.m. — IT Systems Setup\n12:00 p.m. — Lunch\n1:00 p.m. — Department Tours",
+    "questions": [
+      {
+        "question": "What happens right before lunch?",
+        "options": [
+          "Welcome and Introductions",
+          "Benefits Overview",
+          "IT Systems Setup",
+          "Department Tours"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What time do department tours begin?",
+        "options": [
+          "9:00 a.m.",
+          "10:30 a.m.",
+          "12:00 p.m.",
+          "1:00 p.m."
+        ],
+        "answer": 3
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Greenfield Hardware Store",
+    "subtitle": "",
+    "text": "1x Paint Roller — $6.50\n2x Paint Tray — $4.00 each\n1x Gallon Paint (White) — $28.00\nSubtotal: $42.50\nTax: $3.40\nTotal: $45.90\nPayment: Debit Card",
+    "questions": [
+      {
+        "question": "How much did the gallon of paint cost?",
+        "options": [
+          "$4.00",
+          "$6.50",
+          "$28.00",
+          "$42.50"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "How was the payment made?",
+        "options": [
+          "Cash",
+          "Credit card",
+          "Debit card",
+          "Store credit"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Riverside Cafe",
+    "subtitle": "",
+    "text": "1x Turkey Sandwich — $8.50\n1x Iced Tea — $3.00\n1x Side Salad — $4.50\nSubtotal: $16.00\nTip: $3.00\nTotal: $19.00\nPayment: Credit Card",
+    "questions": [
+      {
+        "question": "How much was the tip?",
+        "options": [
+          "$3.00",
+          "$4.50",
+          "$8.50",
+          "$16.00"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What was the total amount charged?",
+        "options": [
+          "$16.00",
+          "$19.00",
+          "$21.00",
+          "$24.50"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Campus Print Center",
+    "subtitle": "",
+    "text": "25 Color Copies — $0.50 each\n10 Black & White Copies — $0.10 each\nBinding — $2.00\nSubtotal: $15.50\nStudent Discount: -$1.55\nTotal: $13.95",
+    "questions": [
+      {
+        "question": "How much did the color copies cost in total?",
+        "options": [
+          "$1.00",
+          "$2.50",
+          "$12.50",
+          "$15.50"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What discount was applied?",
+        "options": [
+          "A bulk order discount",
+          "A student discount",
+          "A first-time customer discount",
+          "No discount was applied"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Sunrise Pharmacy",
+    "subtitle": "",
+    "text": "1x Allergy Medication — $12.99\n1x Vitamin C Tablets — $8.49\n1x Reusable Water Bottle — $6.00\nSubtotal: $27.48\nTax: $2.20\nTotal: $29.68\nPayment: Insurance + Card",
+    "questions": [
+      {
+        "question": "What was the total after tax?",
+        "options": [
+          "$27.48",
+          "$29.68",
+          "$2.20",
+          "$12.99"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How was the purchase paid for?",
+        "options": [
+          "Cash only",
+          "Insurance and card",
+          "Store gift card",
+          "Check"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Weekend Hiking Plans",
+    "subtitle": "",
+    "text": "Maya (5:02 p.m.)\nAre we still doing the trail this Saturday?\n\nJon (5:05 p.m.)\nI think so, but the forecast says rain in the morning.\n\nMaya (5:07 p.m.)\nMaybe we should push it to the afternoon instead.\n\nJon (5:09 p.m.)\nGood idea. Let's meet at the trailhead at 1 instead of 9.\n\nMaya (5:10 p.m.)\nWorks for me. I'll bring extra water this time.",
+    "questions": [
+      {
+        "question": "What is the main topic of this conversation?",
+        "options": [
+          "Canceling a hiking trip",
+          "Adjusting the time of a hiking trip due to weather",
+          "Choosing a new hiking trail",
+          "Buying hiking equipment"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What time will they now meet?",
+        "options": [
+          "9 a.m.",
+          "1 p.m.",
+          "5 p.m.",
+          "They decided not to meet"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Maya say she will do?",
+        "options": [
+          "Check the weather again",
+          "Bring extra water",
+          "Invite another friend",
+          "Reserve a campsite"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Splitting a Group Gift",
+    "subtitle": "",
+    "text": "Priya (2:14 p.m.)\nHey, are you in for chipping in on a gift for Mateo's graduation?\n\nSam (2:16 p.m.)\nDefinitely. What's the plan?\n\nPriya (2:18 p.m.)\nI was thinking we split a nice watch, maybe $30 each from five of us.\n\nSam (2:20 p.m.)\nSounds good. Should I send you the money now?\n\nPriya (2:21 p.m.)\nWhenever works, just before Friday so I can order it in time.",
+    "questions": [
+      {
+        "question": "What are Priya and Sam discussing?",
+        "options": [
+          "Planning a surprise party",
+          "Chipping in together on a graduation gift",
+          "Organizing a group trip",
+          "Splitting a restaurant bill"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How much does each person need to contribute?",
+        "options": [
+          "$5",
+          "$15",
+          "$30",
+          "$50"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What deadline does Priya mention?",
+        "options": [
+          "Before Friday",
+          "Before Monday",
+          "By the end of the month",
+          "There is no deadline"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Car Trouble",
+    "subtitle": "",
+    "text": "Dana (8:01 a.m.)\nMy car won't start this morning. Any chance you can give me a ride to work?\n\nLee (8:03 a.m.)\nSure, I can swing by in about twenty minutes.\n\nDana (8:04 a.m.)\nThank you so much! I'll call a tow truck once I get to the office.\n\nLee (8:05 a.m.)\nNo problem. Text me your address so I know exactly where to go.\n\nDana (8:06 a.m.)\nSending it now.",
+    "questions": [
+      {
+        "question": "Why does Dana need a ride?",
+        "options": [
+          "She missed the bus",
+          "Her car won't start",
+          "She lost her car keys",
+          "Her car was towed already"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Dana plan to do once she reaches the office?",
+        "options": [
+          "Fix the car herself",
+          "Call a tow truck",
+          "Ask for the day off",
+          "Buy a new car"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Lee ask Dana to send?",
+        "options": [
+          "Her phone number",
+          "Her work schedule",
+          "Her address",
+          "A photo of the car"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Splitting Grocery Duties",
+    "subtitle": "",
+    "text": "Alex (6:10 p.m.)\nI think we're almost out of basically everything in the kitchen.\n\nJordan (6:12 p.m.)\nSame here. Want to split a big grocery run this weekend?\n\nAlex (6:14 p.m.)\nYeah, let's make a shared list so we don't forget anything.\n\nJordan (6:15 p.m.)\nI'll start one in our notes app right now.\n\nAlex (6:16 p.m.)\nPerfect, I'll add to it tonight after I check the fridge.",
+    "questions": [
+      {
+        "question": "What are Alex and Jordan planning to do?",
+        "options": [
+          "Eat out this weekend",
+          "Do a shared grocery run",
+          "Cancel their grocery delivery",
+          "Move to a new apartment"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Jordan offer to do?",
+        "options": [
+          "Pay for all the groceries",
+          "Start a shared shopping list",
+          "Cook dinner tonight",
+          "Drive them to the store"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will Alex do tonight?",
+        "options": [
+          "Go to the store alone",
+          "Check the fridge and add to the list",
+          "Order food delivery",
+          "Call the landlord"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Change to Weekly Team Meeting",
+    "subtitle": "Dear Team,",
+    "text": "Starting next week, our regular Monday team meeting will move to Wednesday at 2 p.m. This change is being made to accommodate scheduling conflicts several of you raised regarding the Monday morning slot. The meeting location and format will remain the same, and the agenda will continue to be shared the day before each meeting. If Wednesday afternoon presents a new conflict for you, please let me know by the end of this week so we can look into alternative arrangements. Thank you for your flexibility as we work out the best schedule for everyone.\n\nBest,\nTeam Lead",
+    "questions": [
+      {
+        "question": "What is the main purpose of this email?",
+        "options": [
+          "To cancel the weekly team meeting",
+          "To announce a change in the meeting day and time",
+          "To introduce a new team member",
+          "To request feedback on a new project"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why was this change made?",
+        "options": [
+          "The meeting room was no longer available",
+          "Several team members raised scheduling conflicts",
+          "The meeting was being shortened",
+          "The team lead is going on leave"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should someone do if the new time doesn't work for them?",
+        "options": [
+          "Simply skip the meeting",
+          "Let the team lead know by the end of the week",
+          "Wait for the next schedule change",
+          "Attend a different team's meeting instead"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Apartment Maintenance Visit Confirmation",
+    "subtitle": "Dear Ms. Torres,",
+    "text": "This email confirms that a maintenance technician is scheduled to visit your unit this Thursday between 10 a.m. and 12 p.m. to repair the reported issue with your kitchen faucet. Please ensure someone is available to provide access during this window, as our technicians are unable to enter units without a resident present. If this time no longer works for you, please contact the office at least 24 hours in advance to reschedule. Otherwise, no further action is needed on your part, and the repair should take approximately thirty minutes to complete.\n\nSincerely,\nProperty Management Office",
+    "questions": [
+      {
+        "question": "What is this email mainly about?",
+        "options": [
+          "Confirming a scheduled maintenance visit",
+          "Notifying a resident of a rent increase",
+          "Announcing a building inspection",
+          "Requesting permission to enter a unit permanently"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the resident need to do?",
+        "options": [
+          "Fix the faucet themselves",
+          "Be available during the scheduled window",
+          "Pay for the repair in advance",
+          "Move out during the repair"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should Ms. Torres do if Thursday doesn't work?",
+        "options": [
+          "Ignore the appointment",
+          "Contact the office at least 24 hours in advance",
+          "Wait for a new email automatically",
+          "Cancel her lease"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Registration Reminder for Fall Courses",
+    "subtitle": "Dear Student,",
+    "text": "This is a reminder that course registration for the fall semester opens this Friday at 8 a.m. and will remain open on a rolling basis according to your class standing. Seniors and graduate students may register beginning Friday, while all other students will be assigned specific registration windows over the following week. We strongly recommend reviewing your degree audit and meeting with your academic advisor before your registration window opens, since popular courses tend to fill quickly. If you have a registration hold on your account, it must be resolved before you will be able to register.\n\nRegards,\nOffice of the Registrar",
+    "questions": [
+      {
+        "question": "What is the main purpose of this email?",
+        "options": [
+          "To announce final exam dates",
+          "To remind students about upcoming course registration",
+          "To cancel a course due to low enrollment",
+          "To inform students of a tuition increase"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "According to the email, who can register first?",
+        "options": [
+          "First-year students",
+          "Seniors and graduate students",
+          "Only students with holds resolved",
+          "Students who registered late last semester"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the email recommend doing before registration opens?",
+        "options": [
+          "Paying tuition in full",
+          "Meeting with an academic advisor",
+          "Dropping all current courses",
+          "Applying for financial aid"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Delayed Furniture Delivery",
+    "subtitle": "Dear Mr. Whitfield,",
+    "text": "We are writing to inform you that your recent furniture order has been delayed due to an unexpected shortage of materials from our supplier. Your original delivery date of this Friday will now be pushed back to the following Wednesday. We understand this delay may be inconvenient, and as an apology, we are including a ten percent discount on your next purchase with us. You will receive an automatic email notification once your order has shipped, along with an updated tracking number. Please contact our customer service line if the new delivery date poses a significant problem for you.\n\nThank you for your patience,\nCustomer Service Team",
+    "questions": [
+      {
+        "question": "Why was the delivery delayed?",
+        "options": [
+          "The customer changed the order",
+          "A shortage of materials from the supplier",
+          "The delivery truck broke down",
+          "The item was out of stock permanently"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the company offering as an apology?",
+        "options": [
+          "A full refund",
+          "A ten percent discount on the next purchase",
+          "Free shipping for life",
+          "A replacement item"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will the customer receive once the order ships?",
+        "options": [
+          "A phone call",
+          "An automatic email with a tracking number",
+          "A paper letter",
+          "Nothing further"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Library Book Overdue Notice",
+    "subtitle": "Dear Ms. Carrington,",
+    "text": "Our records show that \"The History of Modern Architecture\" is now twelve days overdue. A late fee of twenty-five cents per day has been applied to your account, currently totaling three dollars. Please return the item to any branch location by this Friday to avoid additional charges. If the book has been lost, you may instead pay a replacement fee of forty-five dollars at the front desk. Note that your borrowing privileges will be suspended if the balance is not resolved within two weeks.\n\nSincerely,\nCentral Library System",
+    "questions": [
+      {
+        "question": "Why is Ms. Carrington receiving this email?",
+        "options": [
+          "She requested a new library card",
+          "A book she borrowed is overdue",
+          "She won a library reading contest",
+          "Her account information changed"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will happen if she does not resolve the balance within two weeks?",
+        "options": [
+          "She will be banned from the library forever",
+          "Her borrowing privileges will be suspended",
+          "She will receive a lawsuit notice",
+          "The book will be automatically renewed"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'resolved' in the email is closest in meaning to",
+        "options": [
+          "ignored",
+          "settled",
+          "increased",
+          "questioned"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 56
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Change in Office Parking Policy",
+    "subtitle": "Dear Staff,",
+    "text": "Starting next Monday, all employees must display a new parking permit on their dashboard while parked in the building garage. Permits can be picked up at the front security desk between eight and five on weekdays. Vehicles without a visible permit after the grace period ending in two weeks will be subject to towing at the owner's expense. Employees who carpool with a colleague may request a shared permit covering both vehicles. Please contact facilities management with any questions about eligibility.",
+    "questions": [
+      {
+        "question": "What must employees do starting next Monday?",
+        "options": [
+          "Pay a monthly parking fee",
+          "Display a new parking permit",
+          "Park only on weekends",
+          "Register their license plate online"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens to vehicles without a permit after the grace period?",
+        "options": [
+          "They receive a warning letter",
+          "They are towed at the owner's expense",
+          "They lose garage access permanently",
+          "Nothing happens"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What option is available to employees who carpool?",
+        "options": [
+          "A discounted parking rate",
+          "A shared permit covering both vehicles",
+          "Free reserved parking spots",
+          "Priority towing exemption"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 57
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Community Garden Plot Assignment",
+    "subtitle": "Hello Mr. Delgado,",
+    "text": "Thank you for signing up for a plot at the Riverside Community Garden this season. You have been assigned Plot 14B, located near the tool shed. Please note that plots must be planted by May 1 or they will be reassigned to someone on the waiting list. Water access is available daily from six to nine in the morning and evening. A mandatory orientation meeting will be held this Saturday at ten, and attendance is required for all new gardeners before they may begin planting.",
+    "questions": [
+      {
+        "question": "What will happen if the plot is not planted by May 1?",
+        "options": [
+          "The fee will be refunded",
+          "The plot will be reassigned",
+          "A warning email will be sent",
+          "Nothing will change"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When is water access available?",
+        "options": [
+          "All day and night",
+          "Only on weekends",
+          "Six to nine in the morning and evening",
+          "Only during the orientation"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What must new gardeners do before planting?",
+        "options": [
+          "Pay an extra deposit",
+          "Attend the mandatory orientation",
+          "Submit a garden plan",
+          "Purchase their own tools"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 58
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Flight Schedule Change Notification",
+    "subtitle": "Dear Mr. Osei,",
+    "text": "We are writing to inform you that your flight departing this Thursday has been rescheduled to depart two hours earlier than originally booked, now leaving at 6:45 a.m. instead of 8:45 a.m. Your seat assignment and baggage allowance remain unchanged. If this new time does not work for your schedule, you may rebook onto a different flight within the next thirty days at no additional charge. Please arrive at the airport at least two hours before the new departure time.",
+    "questions": [
+      {
+        "question": "What is the purpose of this email?",
+        "options": [
+          "To cancel a flight",
+          "To notify a customer of a schedule change",
+          "To offer a discount on a ticket",
+          "To confirm a baggage claim"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What has NOT changed about the flight?",
+        "options": [
+          "The departure time",
+          "The seat assignment and baggage allowance",
+          "The gate number",
+          "The airline"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can Mr. Osei do if the new time is inconvenient?",
+        "options": [
+          "Request a full refund only",
+          "Rebook onto a different flight at no charge",
+          "Cancel without any penalty",
+          "Contact a different airline"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 59
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Software Subscription Renewal Reminder",
+    "subtitle": "Hi Taylor,",
+    "text": "This is a friendly reminder that your annual subscription to CloudDraft Pro will renew automatically in five days at the current rate of ninety-nine dollars. If you would like to switch to the monthly plan instead, you must do so before the renewal date through your account settings page. Canceling after the renewal charge has processed will not result in a refund for the current billing period, though you will retain access until the period ends. Contact support if you have any billing questions.",
+    "questions": [
+      {
+        "question": "What will happen in five days if no action is taken?",
+        "options": [
+          "The account will be deleted",
+          "The subscription will renew automatically",
+          "The price will double",
+          "Access will be suspended"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens if Taylor cancels after the renewal charge processes?",
+        "options": [
+          "A full refund is issued",
+          "No refund is issued but access continues until the period ends",
+          "Access is cut off immediately",
+          "The account is downgraded for free"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "The word 'retain' in the email is closest in meaning to",
+        "options": [
+          "lose",
+          "keep",
+          "request",
+          "upgrade"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 60
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Apartment Maintenance Visit Confirmation",
+    "subtitle": "Dear Resident,",
+    "text": "This confirms that a maintenance technician will visit your unit this Wednesday between one and four in the afternoon to repair the reported leak under the kitchen sink. Please ensure the area beneath the sink is clear of any personal items before the scheduled visit. If you are unable to be present, you may leave a spare key with the front office so the technician can still complete the repair. There is no charge for this service since it falls under routine maintenance.",
+    "questions": [
+      {
+        "question": "What is the technician scheduled to repair?",
+        "options": [
+          "A broken window",
+          "A leak under the kitchen sink",
+          "A faulty light switch",
+          "A damaged door lock"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should the resident do before the visit?",
+        "options": [
+          "Pay a maintenance fee",
+          "Clear the area beneath the sink",
+          "Take a day off work",
+          "Call to confirm the appointment"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can the resident do if they cannot be present?",
+        "options": [
+          "Reschedule for the following week",
+          "Leave a spare key with the front office",
+          "Cancel the repair entirely",
+          "Ask a neighbor to supervise"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 61
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Conference Registration Confirmation",
+    "subtitle": "Dear Dr. Nakamura,",
+    "text": "Thank you for registering for the International Symposium on Renewable Energy. Your registration includes access to all three days of sessions, a printed program, and lunch each day. Your badge and materials will be available for pickup at the registration desk starting at seven on the first morning. Please note that the early bird workshop on solar technology requires a separate sign-up, as space is limited to fifty attendees. We look forward to seeing you at the symposium.",
+    "questions": [
+      {
+        "question": "What does the registration include?",
+        "options": [
+          "Hotel accommodation",
+          "Access to all sessions, a program, and lunch",
+          "Round-trip airfare",
+          "A certificate of attendance only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What requires a separate sign-up?",
+        "options": [
+          "The printed program",
+          "The early bird workshop on solar technology",
+          "Badge pickup",
+          "Lunch on the first day"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why is separate sign-up required for the workshop?",
+        "options": [
+          "It costs extra money",
+          "Space is limited to fifty attendees",
+          "It takes place off-site",
+          "It is only for keynote speakers"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 62
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Product Recall Notice",
+    "subtitle": "Dear Customer,",
+    "text": "We are contacting you because our records indicate you purchased a StoveTop electric kettle model EK-200 within the past year. A small number of these units have been found to have a defective heating element that poses a fire risk. Please stop using the kettle immediately and visit our website to request a free replacement unit. You will need your order number, which can be found on your original receipt or in your account order history. We sincerely apologize for any inconvenience this may cause.",
+    "questions": [
+      {
+        "question": "Why is the company contacting the customer?",
+        "options": [
+          "To offer a discount on a new product",
+          "To recall a defective kettle model",
+          "To confirm a delivery address",
+          "To announce a store closing"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should the customer do immediately?",
+        "options": [
+          "Continue using the kettle carefully",
+          "Stop using the kettle",
+          "Return it for a cash refund only",
+          "Repair it themselves"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is needed to request a replacement?",
+        "options": [
+          "A photo of the kettle",
+          "The order number",
+          "A signed complaint form",
+          "Proof of residence"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 63
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "University Course Waitlist Update",
+    "subtitle": "Dear Student,",
+    "text": "You have been moved from the waitlist into Introduction to Marine Biology, section 002, which meets Tuesdays and Thursdays at eleven. You must confirm your enrollment through the student portal within forty-eight hours or your spot will be offered to the next student on the list. Required textbooks are available at the campus bookstore, though the first two chapters are also posted on the course website. Lab sections will be assigned separately next week.",
+    "questions": [
+      {
+        "question": "What must the student do within forty-eight hours?",
+        "options": [
+          "Purchase the required textbook",
+          "Confirm enrollment through the student portal",
+          "Attend the first lecture",
+          "Choose a lab section"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens if the student does not confirm in time?",
+        "options": [
+          "They are automatically enrolled anyway",
+          "Their spot is offered to another student",
+          "They receive a warning email only",
+          "Nothing happens"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where can the first two chapters be found?",
+        "options": [
+          "Only at the campus bookstore",
+          "On the course website",
+          "In the library reserve section",
+          "Emailed directly to students"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 64
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Insurance Claim Status Update",
+    "subtitle": "Dear Ms. Whitmore,",
+    "text": "We have completed our initial review of your claim regarding water damage to your basement. Additional documentation is required before we can proceed, specifically photographs of the affected area and a repair cost estimate from a licensed contractor. Please submit these materials through our online portal within fifteen business days to avoid delays in processing. Once received, a claims adjuster will contact you within five business days to schedule an in-person inspection, if necessary.",
+    "questions": [
+      {
+        "question": "What does the company need from Ms. Whitmore?",
+        "options": [
+          "A police report",
+          "Photographs and a repair cost estimate",
+          "A copy of her lease agreement",
+          "Proof of ownership"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens if the documents are not submitted within fifteen days?",
+        "options": [
+          "The claim is automatically approved",
+          "Processing will be delayed",
+          "The policy will be canceled",
+          "A late fee is charged"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What might happen after the materials are received?",
+        "options": [
+          "An immediate refund is issued",
+          "A claims adjuster may schedule an inspection",
+          "The case is closed automatically",
+          "Nothing further occurs"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 65
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Volunteer Shift Cancellation",
+    "subtitle": "Hi Marcus,",
+    "text": "I'm writing to let you know that the food bank volunteer shift you signed up for this Saturday has been canceled due to a scheduling conflict with a building inspection. We apologize for any inconvenience and would love to have you join us instead next Saturday at the same time, nine to noon. If that doesn't work for your schedule, please reply to this email and we'll find another shift that fits better. Thank you for your continued support of our organization.",
+    "questions": [
+      {
+        "question": "Why was the original shift canceled?",
+        "options": [
+          "Not enough volunteers signed up",
+          "A scheduling conflict with a building inspection",
+          "The food bank ran out of supplies",
+          "Bad weather was forecasted"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is Marcus invited to do instead?",
+        "options": [
+          "Volunteer at a different location",
+          "Join the same shift next Saturday",
+          "Donate money instead of time",
+          "Wait until next month"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should Marcus do if the new time does not work?",
+        "options": [
+          "Ignore the email",
+          "Reply so another shift can be found",
+          "Cancel his volunteer registration",
+          "Call the food bank manager"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 66
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Utility Bill Payment Plan Approval",
+    "subtitle": "Dear Mr. Jennings,",
+    "text": "Your request for a payment plan on your outstanding electric bill has been approved. Your remaining balance of two hundred forty dollars will be divided into four equal monthly installments of sixty dollars, added to your regular monthly bill starting next month. Please note that your service will not be interrupted as long as each installment is paid on time. If a payment is missed, the full remaining balance will become due immediately and service may be suspended.",
+    "questions": [
+      {
+        "question": "What was approved in this email?",
+        "options": [
+          "A refund request",
+          "A payment plan for an outstanding bill",
+          "A service upgrade",
+          "A rate reduction"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens if a payment is missed?",
+        "options": [
+          "A small late fee is added",
+          "The full remaining balance becomes due immediately",
+          "The plan is extended automatically",
+          "Nothing changes"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How much is each monthly installment?",
+        "options": [
+          "Forty dollars",
+          "Sixty dollars",
+          "Two hundred forty dollars",
+          "Twenty dollars"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 67
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Museum Membership Benefits Update",
+    "subtitle": "Dear Member,",
+    "text": "We're excited to announce new benefits for all Gold Level members, effective next month. Members will now receive two free guest passes per visit instead of one, along with a fifteen percent discount at the museum café. Additionally, Gold members will have early access to special exhibitions one full week before they open to the general public. These changes are our way of thanking you for your continued support. No action is needed on your part to receive these new benefits.",
+    "questions": [
+      {
+        "question": "What is the purpose of this email?",
+        "options": [
+          "To request a membership renewal",
+          "To announce new membership benefits",
+          "To close the museum temporarily",
+          "To advertise a new exhibition"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is one of the new benefits mentioned?",
+        "options": [
+          "Free parking",
+          "Two free guest passes per visit",
+          "Unlimited café visits",
+          "A private tour guide"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What must members do to receive these benefits?",
+        "options": [
+          "Upgrade their membership level",
+          "Nothing, no action is needed",
+          "Renew their membership early",
+          "Contact the membership office"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 68
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Job Interview Rescheduling Request",
+    "subtitle": "Dear Ms. Alvarado,",
+    "text": "Thank you again for your interest in the marketing coordinator position. Unfortunately, we need to reschedule your interview originally set for tomorrow at ten due to an unexpected conflict with the hiring manager's calendar. Would either Thursday at two or Friday at eleven work for you instead? Please reply with your preference at your earliest convenience, and we will send an updated calendar invitation. We apologize for any inconvenience this change may cause.",
+    "questions": [
+      {
+        "question": "Why is the interview being rescheduled?",
+        "options": [
+          "The candidate requested a new time",
+          "A conflict with the hiring manager's calendar",
+          "The position was filled by someone else",
+          "The company office is closed"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is Ms. Alvarado asked to do?",
+        "options": [
+          "Submit a new resume",
+          "Reply with her preferred time",
+          "Call the office immediately",
+          "Reapply for the position"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will happen after she replies?",
+        "options": [
+          "An updated calendar invitation will be sent",
+          "The interview will be canceled",
+          "She will be automatically hired",
+          "No further communication will occur"
+        ],
+        "answer": 0
+      }
+    ],
+    "id": 69
+  },
+  {
+    "type": "email",
+    "instruction": "Read an email.",
+    "title": "Streaming Service Password Reset",
+    "subtitle": "Hello,",
+    "text": "We received a request to reset the password for your streaming account. If you made this request, click the secure link below within the next twenty-four hours to create a new password. If you did not request this change, no action is necessary and your current password will remain unchanged. For your security, this link can only be used once and will expire automatically after the time limit passes. Contact customer support if you notice any suspicious activity on your account.",
+    "questions": [
+      {
+        "question": "What should the customer do if they did request the reset?",
+        "options": [
+          "Ignore the email",
+          "Click the link within twenty-four hours",
+          "Call customer support immediately",
+          "Create a new account"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens if the customer did not request the reset?",
+        "options": [
+          "The account is automatically locked",
+          "No action is necessary",
+          "The password changes anyway",
+          "A fee is charged"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How many times can the reset link be used?",
+        "options": [
+          "Unlimited times",
+          "Only once",
+          "Twice",
+          "Until it expires after a week"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 70
+  },
+  {
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Group Chat",
+    "subtitle": "",
+    "text": "Elena (4:02 p.m.)\nDoes anyone still have the notes from Tuesday's lecture? I was out sick.\n\nMarcus (4:05 p.m.)\nI've got them, but they're pretty messy. I can scan them tonight and send them over.\n\nElena (4:06 p.m.)\nThat would be amazing, thank you! Also, did the professor mention anything about the exam format?\n\nPriya (4:09 p.m.)\nYeah, she said it's going to be mostly short answer with one essay question at the end. No multiple choice this time.\n\nMarcus (4:10 p.m.)\nOh that's good to know, I was worried it'd be all multiple choice like the last one.\n\nElena (4:12 p.m.)\nDefinitely easier to study for short answer honestly. Thanks for the update, Priya.\n\nPriya (4:13 p.m.)\nNo problem! Let me know if you two want to study together this weekend.",
+    "questions": [
+      {
+        "question": "Why does Elena ask for the notes?",
+        "options": [
+          "She lost her notebook",
+          "She was absent from the lecture",
+          "She wants to compare answers",
+          "She is helping a friend study"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What did the professor say about the exam format?",
+        "options": [
+          "It will be all multiple choice",
+          "It will be mostly short answer with one essay question",
+          "It will be an oral exam",
+          "It was canceled"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Priya offer to do at the end?",
+        "options": [
+          "Send her own notes",
+          "Study together this weekend",
+          "Talk to the professor",
+          "Cancel the study plan"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 71
+  },
+  {
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Text Messages",
+    "subtitle": "",
+    "text": "Dana (6:40 p.m.)\nHey, are you still coming to help me move the couch tomorrow?\n\nRafael (6:42 p.m.)\nYes! What time were you thinking?\n\nDana (6:43 p.m.)\nMaybe around ten? My roommate said he could help too, so it should only take an hour or so.\n\nRafael (6:45 p.m.)\nTen works for me. Should I bring anything, like straps or a dolly?\n\nDana (6:46 p.m.)\nIf you have a dolly that would be huge, honestly. We don't have one and the couch is heavier than it looks.\n\nRafael (6:48 p.m.)\nNo problem, I'll grab my neighbor's dolly tonight. See you at ten!",
+    "questions": [
+      {
+        "question": "What are Dana and Rafael planning to do?",
+        "options": [
+          "Move a couch together",
+          "Go shopping for furniture",
+          "Paint a room",
+          "Clean an apartment"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does Dana ask Rafael to bring?",
+        "options": [
+          "Extra chairs",
+          "A dolly",
+          "Cleaning supplies",
+          "Snacks"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who else will help with the task?",
+        "options": [
+          "Dana's neighbor",
+          "Rafael's neighbor",
+          "Dana's roommate",
+          "No one else"
+        ],
+        "answer": 2
+      }
+    ],
+    "id": 72
+  },
+  {
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Team Chat",
+    "subtitle": "",
+    "text": "Coach Reyes (5:00 p.m.)\nPractice is moved indoors tomorrow because of the rain forecast. Same time, gym B instead of the field.\n\nJamie (5:03 p.m.)\nGot it, thanks for the heads up. Should we still bring cleats?\n\nCoach Reyes (5:05 p.m.)\nNo need, indoor shoes only for the gym floor. Cleats will scratch the surface.\n\nTaylor (5:08 p.m.)\nWill we still do the fitness test tomorrow or is that pushed back?\n\nCoach Reyes (5:10 p.m.)\nWe'll still run the fitness test, just adjusted slightly for the indoor space. Bring water and be ready to move.\n\nJamie (5:11 p.m.)\nSounds good, see everyone there.",
+    "questions": [
+      {
+        "question": "Why is practice being moved indoors?",
+        "options": [
+          "The field is being repaired",
+          "Rain is forecasted",
+          "The gym was double-booked",
+          "The coach requested a change of scenery"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the coach say about cleats?",
+        "options": [
+          "Everyone must wear them",
+          "They are not needed and could damage the floor",
+          "They are optional",
+          "They will be provided by the team"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will still happen during practice?",
+        "options": [
+          "A scrimmage game",
+          "The fitness test",
+          "A team dinner",
+          "Uniform distribution"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 73
+  },
+  {
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Family Group Chat",
+    "subtitle": "",
+    "text": "Mom (12:15 p.m.)\nJust a reminder that Grandma's birthday dinner is this Sunday at six. Please let me know by Friday if you're coming so I can plan food.\n\nCarlos (12:20 p.m.)\nI'll be there! Should I bring anything?\n\nMom (12:22 p.m.)\nMaybe a dessert if you don't mind, since I'm handling the main course and sides.\n\nSofia (12:30 p.m.)\nI can come too, and I'll bring a dessert as well so we have options.\n\nMom (12:32 p.m.)\nPerfect, that works great. Carlos, maybe bring drinks instead then so we're not doubling up.\n\nCarlos (12:35 p.m.)\nSure thing, I'll grab some sparkling juice for Grandma since she loves that.",
+    "questions": [
+      {
+        "question": "What is being planned in this conversation?",
+        "options": [
+          "A birthday dinner",
+          "A family vacation",
+          "A surprise party",
+          "A holiday gathering"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does Mom ask family members to do by Friday?",
+        "options": [
+          "Buy a gift",
+          "Confirm whether they are coming",
+          "Call Grandma",
+          "Book a restaurant"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Carlos end up agreeing to bring?",
+        "options": [
+          "A dessert",
+          "Drinks",
+          "Nothing",
+          "Decorations"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 74
+  },
+  {
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Roommate Chat",
+    "subtitle": "",
+    "text": "Wei (9:10 a.m.)\nThe landlord emailed about the water shutoff for pipe repairs tomorrow, ten to two. Just a heads up so we can fill some bottles tonight.\n\nAmara (9:15 a.m.)\nThanks for letting me know. Should we shower tonight instead of tomorrow morning then?\n\nWei (9:17 a.m.)\nProbably a good idea. I'm also going to fill a couple pots with water just in case we need to flush the toilet.\n\nAmara (9:20 a.m.)\nSmart thinking. I'll pick up some bottled water on my way home too, just to be safe.\n\nWei (9:22 a.m.)\nSounds good. I'll leave a note on the fridge as a reminder for tomorrow morning.",
+    "questions": [
+      {
+        "question": "Why is the water being shut off?",
+        "options": [
+          "A billing issue",
+          "Pipe repairs",
+          "A citywide drought",
+          "Building renovations"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Amara plan to do?",
+        "options": [
+          "Move out temporarily",
+          "Shower tonight instead of tomorrow",
+          "Complain to the landlord",
+          "Stay at a friend's house"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will Wei do as a final reminder?",
+        "options": [
+          "Send another text tomorrow",
+          "Leave a note on the fridge",
+          "Call Amara in the morning",
+          "Post a sign on the door"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 75
+  },
+  {
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Work Chat",
+    "subtitle": "",
+    "text": "Nadia (2:00 p.m.)\nThe client pushed the meeting from three to four thirty. Can everyone still make it?\n\nBen (2:03 p.m.)\nWorks for me, I'll just adjust my afternoon schedule.\n\nOmar (2:08 p.m.)\nI have a hard stop at five for a doctor's appointment, but four thirty should still give us enough time.\n\nNadia (2:10 p.m.)\nGood, I'll keep the agenda tight so we can wrap up by then. I'll send the updated invite now.\n\nBen (2:11 p.m.)\nSounds good. Should we prep anything beforehand?\n\nNadia (2:13 p.m.)\nJust review the proposal draft I sent yesterday, that should be enough.",
+    "questions": [
+      {
+        "question": "What time was the meeting moved to?",
+        "options": [
+          "Three o'clock",
+          "Four thirty",
+          "Five o'clock",
+          "Two o'clock"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why does Omar mention a doctor's appointment?",
+        "options": [
+          "He wants to reschedule the meeting",
+          "He needs the meeting to end before five",
+          "He is canceling the meeting",
+          "He will miss the meeting entirely"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does Nadia ask the team to do beforehand?",
+        "options": [
+          "Prepare a presentation",
+          "Review the proposal draft",
+          "Call the client directly",
+          "Book a conference room"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 76
+  },
+  {
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Neighbor Chat",
+    "subtitle": "",
+    "text": "Grace (11:00 a.m.)\nHi! I noticed a package on your porch while you were away. I brought it inside my place to keep it safe from the rain.\n\nHector (11:20 a.m.)\nOh thank you so much, I completely forgot I ordered something. I'm actually still out of town until tomorrow.\n\nGrace (11:22 a.m.)\nNo worries, it'll be safe here. Just let me know when you're back and I'll bring it right over.\n\nHector (11:25 a.m.)\nI really appreciate it. I'll message you tomorrow afternoon once I'm home.\n\nGrace (11:26 a.m.)\nSounds perfect, have a safe trip back!",
+    "questions": [
+      {
+        "question": "Why did Grace bring the package inside?",
+        "options": [
+          "It was addressed to her by mistake",
+          "To keep it safe from the rain",
+          "Hector asked her to",
+          "It was too heavy to leave outside"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where is Hector currently?",
+        "options": [
+          "At home",
+          "Out of town",
+          "At work",
+          "At the post office"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will Hector do tomorrow?",
+        "options": [
+          "Pick up the package himself",
+          "Message Grace once he's home",
+          "Cancel the order",
+          "Ask another neighbor for help"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 77
+  },
+  {
+    "type": "message",
+    "instruction": "Read a message exchange.",
+    "title": "Study Group Chat",
+    "subtitle": "",
+    "text": "Liam (8:00 p.m.)\nDoes anyone want to meet at the library tomorrow to go over chapter seven before the quiz?\n\nAisha (8:04 p.m.)\nI'm in. What time works?\n\nLiam (8:06 p.m.)\nMaybe two? That gives us a couple hours before the quiz at five.\n\nNoah (8:10 p.m.)\nI can't make two, I have a class until three. Could we push it to three thirty instead?\n\nAisha (8:12 p.m.)\nThree thirty works for me too, that's still enough time before the quiz.\n\nLiam (8:14 p.m.)\nOkay, three thirty it is. I'll reserve a study room so we have some privacy.",
+    "questions": [
+      {
+        "question": "What are the students planning to do?",
+        "options": [
+          "Attend a lecture together",
+          "Study for a quiz",
+          "Submit a group project",
+          "Celebrate finishing exams"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why does Noah suggest changing the time?",
+        "options": [
+          "He has a class until three",
+          "He is not feeling well",
+          "He forgot about the plan",
+          "He prefers studying alone"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does Liam offer to do at the end?",
+        "options": [
+          "Bring snacks",
+          "Reserve a study room",
+          "Print extra notes",
+          "Cancel the meeting"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 78
+  },
+  {
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Elevator Out of Service",
+    "subtitle": "",
+    "text": "The east elevator is temporarily out of service for scheduled maintenance.\n\nPlease use the west elevator or the stairwell located near the main lobby.\n\nWe expect service to resume by Thursday afternoon. We apologize for any inconvenience.",
+    "questions": [
+      {
+        "question": "Why is the east elevator out of service?",
+        "options": [
+          "It broke down unexpectedly",
+          "Scheduled maintenance",
+          "A power outage",
+          "A safety inspection failure"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative is suggested?",
+        "options": [
+          "Wait until it reopens",
+          "Use the west elevator or stairwell",
+          "Use a service elevator only",
+          "Take a different building entrance"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 79
+  },
+  {
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "Farmers Market: Saturday Hours Update",
+    "subtitle": "",
+    "text": "Starting this weekend, the farmers market will open one hour earlier, from seven in the morning until one in the afternoon.\n\nThis change is due to increasing summer heat and vendor requests for cooler working hours.\n\nRegular Sunday hours remain unchanged at nine to two.",
+    "questions": [
+      {
+        "question": "Why did the Saturday hours change?",
+        "options": [
+          "Fewer vendors were available",
+          "Increasing summer heat and vendor requests",
+          "A new parking restriction",
+          "Lower customer turnout"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What time does the market now open on Saturdays?",
+        "options": [
+          "Six in the morning",
+          "Seven in the morning",
+          "Nine in the morning",
+          "Eight in the morning"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 80
+  },
+  {
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Pool Closed for Cleaning",
+    "subtitle": "",
+    "text": "The community pool will be closed today from noon until four for routine chemical cleaning.\n\nThe pool deck and lounge chairs will remain accessible during this time, but swimming is not permitted.\n\nNormal pool hours will resume at four thirty.",
+    "questions": [
+      {
+        "question": "Why is the pool closed today?",
+        "options": [
+          "A power outage",
+          "Routine chemical cleaning",
+          "A private event",
+          "Storm damage"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is still accessible during the closure?",
+        "options": [
+          "The swimming area",
+          "The pool deck and lounge chairs",
+          "The changing rooms only",
+          "Nothing is accessible"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 81
+  },
+  {
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "Construction Notice: Sidewalk Closure",
+    "subtitle": "",
+    "text": "The sidewalk on the north side of Elm Street will be closed for repaving from Monday through Wednesday of this week.\n\nPedestrians should use the south side sidewalk instead.\n\nWork is scheduled to be completed by Thursday morning, weather permitting.",
+    "questions": [
+      {
+        "question": "Why is the sidewalk closed?",
+        "options": [
+          "A parade is taking place",
+          "It is being repaved",
+          "A tree fell on it",
+          "A water main broke"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are pedestrians advised to do?",
+        "options": [
+          "Avoid Elm Street entirely",
+          "Use the south side sidewalk",
+          "Wait until Thursday to walk there",
+          "Take a detour through a nearby park"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 82
+  },
+  {
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Fire Alarm Testing Today",
+    "subtitle": "",
+    "text": "Routine fire alarm testing will take place throughout the building today between ten and eleven in the morning.\n\nThe alarm will sound briefly several times during this window, but evacuation is not required.\n\nWe apologize for any disruption this may cause to your workday.",
+    "questions": [
+      {
+        "question": "What is happening in the building today?",
+        "options": [
+          "A real fire emergency",
+          "Routine fire alarm testing",
+          "A power shutdown",
+          "A scheduled fire drill requiring evacuation"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should occupants do when the alarm sounds?",
+        "options": [
+          "Evacuate immediately",
+          "No evacuation is required",
+          "Call building security",
+          "Leave through the nearest stairwell"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 83
+  },
+  {
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "Gallery Notice: New Exhibit Opening",
+    "subtitle": "",
+    "text": "A new photography exhibit, \"Coastal Light,\" opens in the west wing this Friday.\n\nAdmission is free for members and five dollars for non-members during the opening week.\n\nThe exhibit will run through the end of next month.",
+    "questions": [
+      {
+        "question": "What is the admission cost for non-members during opening week?",
+        "options": [
+          "Free",
+          "Five dollars",
+          "Ten dollars",
+          "Members only, no non-member access"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long will the exhibit run?",
+        "options": [
+          "One week only",
+          "Through the end of next month",
+          "Permanently",
+          "Until this Friday"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 84
+  },
+  {
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Recycling Collection Change",
+    "subtitle": "",
+    "text": "Due to the upcoming holiday, recycling collection will shift from Monday to Tuesday this week only.\n\nPlease place bins at the curb by seven in the morning on Tuesday.\n\nRegular Monday collection will resume the following week.",
+    "questions": [
+      {
+        "question": "Why is the recycling collection date changing?",
+        "options": [
+          "A truck malfunction",
+          "The upcoming holiday",
+          "New city regulations",
+          "A staffing shortage"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When should bins be placed at the curb this week?",
+        "options": [
+          "Monday morning",
+          "Tuesday morning",
+          "Wednesday afternoon",
+          "Sunday night"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 85
+  },
+  {
+    "type": "sign",
+    "instruction": "Read a sign.",
+    "title": "NOTICE: Gym Equipment Upgrade",
+    "subtitle": "",
+    "text": "The cardio equipment area will be closed for installation of new machines from Monday to Wednesday next week.\n\nAll other areas of the gym, including free weights and group classes, will remain open as usual.\n\nWe appreciate your patience as we upgrade our facility.",
+    "questions": [
+      {
+        "question": "What area of the gym will be closed?",
+        "options": [
+          "The entire gym",
+          "The cardio equipment area",
+          "The group class studio",
+          "The locker rooms"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will remain open during the closure?",
+        "options": [
+          "Nothing else is open",
+          "Free weights and group classes",
+          "Only the front desk",
+          "The pool area"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 86
+  },
+  {
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Community Center Workshop Series",
+    "subtitle": "",
+    "text": "Monday — Beginner Pottery, 6:00 p.m.\nTuesday — Watercolor Painting, 6:30 p.m.\nWednesday — Woodworking Basics, 7:00 p.m.\nThursday — Jewelry Making, 6:00 p.m.\nFriday — Open Studio (all mediums), 5:00 p.m.",
+    "questions": [
+      {
+        "question": "What class is offered on Wednesday?",
+        "options": [
+          "Beginner Pottery",
+          "Watercolor Painting",
+          "Woodworking Basics",
+          "Jewelry Making"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Which day has the earliest start time?",
+        "options": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Friday"
+        ],
+        "answer": 3
+      }
+    ],
+    "id": 87
+  },
+  {
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "City Bus Route 12 - Weekday Schedule",
+    "subtitle": "",
+    "text": "Downtown Station — 7:00, 7:30, 8:00, 8:30 a.m.\nMaple Avenue — 7:12, 7:42, 8:12, 8:42 a.m.\nRiverside Park — 7:25, 7:55, 8:25, 8:55 a.m.\nEastgate Mall — 7:40, 8:10, 8:40, 9:10 a.m.",
+    "questions": [
+      {
+        "question": "What time does the 7:00 bus from Downtown Station arrive at Riverside Park?",
+        "options": [
+          "7:12 a.m.",
+          "7:25 a.m.",
+          "7:40 a.m.",
+          "7:55 a.m."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How many buses depart Downtown Station during this schedule?",
+        "options": [
+          "Two",
+          "Three",
+          "Four",
+          "Five"
+        ],
+        "answer": 2
+      }
+    ],
+    "id": 88
+  },
+  {
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Employee Training Day Agenda",
+    "subtitle": "",
+    "text": "8:30 a.m. — Registration and Breakfast\n9:00 a.m. — Company Overview\n10:00 a.m. — Safety Procedures Training\n11:30 a.m. — Break\n11:45 a.m. — Department-Specific Training\n1:00 p.m. — Lunch\n2:00 p.m. — Q&A with Management",
+    "questions": [
+      {
+        "question": "What takes place right before the break?",
+        "options": [
+          "Company Overview",
+          "Safety Procedures Training",
+          "Department-Specific Training",
+          "Lunch"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is scheduled for 2:00 p.m.?",
+        "options": [
+          "Lunch",
+          "Department-Specific Training",
+          "Q&A with Management",
+          "Registration"
+        ],
+        "answer": 2
+      }
+    ],
+    "id": 89
+  },
+  {
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Local Theater Showtimes - Friday",
+    "subtitle": "",
+    "text": "Screen 1: \"Ocean's Horizon\" — 4:00, 7:00, 9:45 p.m.\nScreen 2: \"The Last Orchard\" — 5:15, 8:00 p.m.\nScreen 3: \"Midnight Runner\" — 6:30, 9:15 p.m.",
+    "questions": [
+      {
+        "question": "How many showtimes does \"Ocean's Horizon\" have?",
+        "options": [
+          "One",
+          "Two",
+          "Three",
+          "Four"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "Which movie has a showtime at 5:15?",
+        "options": [
+          "Ocean's Horizon",
+          "The Last Orchard",
+          "Midnight Runner",
+          "None of them"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 90
+  },
+  {
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Weekly Yoga Class Schedule",
+    "subtitle": "",
+    "text": "Monday — Gentle Flow, 8:00 a.m.\nTuesday — Power Yoga, 6:00 p.m.\nWednesday — Restorative Yoga, 8:00 a.m.\nThursday — Power Yoga, 6:00 p.m.\nSaturday — Beginner Yoga, 10:00 a.m.",
+    "questions": [
+      {
+        "question": "How many times per week is Power Yoga offered?",
+        "options": [
+          "Once",
+          "Twice",
+          "Three times",
+          "Four times"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What class is offered on Saturday?",
+        "options": [
+          "Gentle Flow",
+          "Power Yoga",
+          "Restorative Yoga",
+          "Beginner Yoga"
+        ],
+        "answer": 3
+      }
+    ],
+    "id": 91
+  },
+  {
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Farmers Market Vendor Schedule",
+    "subtitle": "",
+    "text": "7:00 a.m. — Market Opens, Vendor Setup Complete\n8:00 a.m. — Fresh Produce Stalls Open\n9:00 a.m. — Bakery and Coffee Stalls Open\n11:00 a.m. — Live Music Begins\n1:00 p.m. — Market Closes",
+    "questions": [
+      {
+        "question": "What happens at 9:00 a.m.?",
+        "options": [
+          "The market opens",
+          "Fresh produce stalls open",
+          "Bakery and coffee stalls open",
+          "Live music begins"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "How long after the market opens does live music begin?",
+        "options": [
+          "Two hours",
+          "Three hours",
+          "Four hours",
+          "One hour"
+        ],
+        "answer": 2
+      }
+    ],
+    "id": 92
+  },
+  {
+    "type": "schedule",
+    "instruction": "Read a schedule.",
+    "title": "Airport Shuttle Departure Times",
+    "subtitle": "",
+    "text": "Hotel Lobby — 5:00, 6:00, 7:00 a.m.\nAirport Terminal A — 5:35, 6:35, 7:35 a.m.\nAirport Terminal B — 5:45, 6:45, 7:45 a.m.",
+    "questions": [
+      {
+        "question": "How long does the shuttle take to reach Terminal A from the hotel?",
+        "options": [
+          "25 minutes",
+          "35 minutes",
+          "45 minutes",
+          "55 minutes"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How many shuttle departures are listed from the hotel lobby?",
+        "options": [
+          "Two",
+          "Three",
+          "Four",
+          "Five"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 93
+  },
+  {
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Harbor View Diner",
+    "subtitle": "Date: March 3, 2025 | Time: 12:40 p.m. | Order #2210",
+    "text": "Grilled Chicken Sandwich (x1) ... $9.50 ... $9.50\nIced Tea (x2) ... $2.50 ... $5.00\nSide Salad (x1) ... $3.00 ... $3.00\n\nSubtotal: $17.50\nTax (6%): $1.05\nTotal: $18.55\n\nPayment: Credit Card\n\nGratuity not included. Thank you for dining with us!",
+    "questions": [
+      {
+        "question": "How was the order paid for?",
+        "options": [
+          "Cash",
+          "Credit card",
+          "Gift card",
+          "Mobile payment"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is noted about gratuity?",
+        "options": [
+          "It is included in the total",
+          "It is not included",
+          "It was waived entirely",
+          "It is optional and prepaid"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 94
+  },
+  {
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Green Valley Hardware",
+    "subtitle": "Date: June 9, 2025 | Time: 3:15 p.m. | Order #7761",
+    "text": "Paint Roller Set (x1) ... $8.00 ... $8.00\nInterior Paint, 1 Gallon (x2) ... $28.00 ... $56.00\nPainter's Tape (x3) ... $4.50 ... $13.50\n\nSubtotal: $77.50\nTax (8%): $6.20\nTotal: $83.70\n\nPayment: Debit Card\n\nReturns accepted within 30 days with receipt.",
+    "questions": [
+      {
+        "question": "How many gallons of interior paint were purchased?",
+        "options": [
+          "One",
+          "Two",
+          "Three",
+          "Four"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the store's return policy?",
+        "options": [
+          "No returns accepted",
+          "Returns accepted within 30 days with receipt",
+          "Returns accepted within a week",
+          "Store credit only, no time limit"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 95
+  },
+  {
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Sunrise Pharmacy",
+    "subtitle": "Date: February 20, 2025 | Time: 9:05 a.m. | Order #3390",
+    "text": "Multivitamins (x1) ... $12.99 ... $12.99\nHand Sanitizer (x2) ... $3.50 ... $7.00\nCough Drops (x1) ... $4.25 ... $4.25\n\nSubtotal: $24.24\nTax (5%): $1.21\nTotal: $25.45\n\nPayment: Insurance + Cash\n\nSave your receipt for your health savings account records.",
+    "questions": [
+      {
+        "question": "How was this order paid for?",
+        "options": [
+          "Cash only",
+          "Insurance and cash",
+          "Credit card only",
+          "Insurance only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why does the receipt suggest keeping it?",
+        "options": [
+          "For a future discount",
+          "For health savings account records",
+          "To exchange an item",
+          "To enter a rewards contest"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 96
+  },
+  {
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Bright Leaf Bookstore",
+    "subtitle": "Date: October 4, 2025 | Time: 4:50 p.m. | Order #5528",
+    "text": "Novel: \"The Quiet Harbor\" (x1) ... $16.00 ... $16.00\nBookmark (x2) ... $1.50 ... $3.00\nNotebook (x1) ... $6.00 ... $6.00\n\nSubtotal: $25.00\nDiscount (Member 10%): -$2.50\nTax (7%): $1.58\nTotal: $24.08\n\nPayment: Store Credit\n\nThank you for shopping local!",
+    "questions": [
+      {
+        "question": "What discount was applied to this purchase?",
+        "options": [
+          "A student discount",
+          "A member discount of 10%",
+          "A holiday sale discount",
+          "No discount was applied"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How was this order paid for?",
+        "options": [
+          "Credit card",
+          "Store credit",
+          "Cash",
+          "Check"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 97
+  },
+  {
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Fresh Cut Salon",
+    "subtitle": "Date: May 11, 2025 | Time: 2:30 p.m. | Order #1145",
+    "text": "Haircut (x1) ... $35.00 ... $35.00\nHair Wash & Style (x1) ... $15.00 ... $15.00\n\nSubtotal: $50.00\nTip: $10.00\nTotal: $60.00\n\nPayment: Credit Card\n\nBook your next appointment online for 10% off.",
+    "questions": [
+      {
+        "question": "What is the total amount including tip?",
+        "options": [
+          "$35.00",
+          "$50.00",
+          "$60.00",
+          "$65.00"
+        ],
+        "answer": 2
+      },
+      {
+        "question": "What incentive is offered for booking online?",
+        "options": [
+          "A free service",
+          "10% off the next appointment",
+          "A loyalty stamp",
+          "Free hair products"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 98
+  },
+  {
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Metro Auto Repair",
+    "subtitle": "Date: August 22, 2025 | Time: 11:00 a.m. | Order #9012",
+    "text": "Oil Change (x1) ... $45.00 ... $45.00\nTire Rotation (x1) ... $20.00 ... $20.00\nAir Filter Replacement (x1) ... $18.00 ... $18.00\n\nSubtotal: $83.00\nTax (6%): $4.98\nTotal: $87.98\n\nPayment: Credit Card\n\nNext service recommended in 5,000 miles or 6 months.",
+    "questions": [
+      {
+        "question": "What service was performed in addition to the oil change?",
+        "options": [
+          "Brake replacement",
+          "Tire rotation and air filter replacement",
+          "Engine tune-up",
+          "Battery replacement"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When is the next service recommended?",
+        "options": [
+          "In 3,000 miles or 3 months",
+          "In 5,000 miles or 6 months",
+          "In 10,000 miles or 1 year",
+          "Only when a problem occurs"
+        ],
+        "answer": 1
+      }
+    ],
+    "id": 99
+  },
+  {
+    "type": "receipt",
+    "instruction": "Read a receipt.",
+    "title": "Cedar Street Electronics",
+    "subtitle": "Date: January 15, 2025 | Time: 5:40 p.m. | Order #6634",
+    "text": "Wireless Earbuds (x1) ... $59.99 ... $59.99\nProtective Case (x1) ... $9.99 ... $9.99\nExtended Warranty (x1) ... $12.00 ... $12.00\n\nSubtotal: $81.98\nTax (7%): $5.74\nTotal: $87.72\n\nPayment: Credit Card\n\nExtended warranty covers accidental damage for 2 years.",
+    "questions": [
+      {
+        "question": "What does the extended warranty cover?",
+        "options": [
+          "Theft protection",
+          "Accidental damage for 2 years",
+          "Battery replacement only",
+          "Lost item replacement"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How many items were purchased in total?",
+        "options": [
+          "One",
+          "Two",
+          "Three",
+          "Four"
+        ],
+        "answer": 2
+      }
+    ],
+    "id": 100
+  }
+]

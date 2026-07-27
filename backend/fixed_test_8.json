@@ -1,0 +1,1747 @@
+{
+  "id": 8,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 22,
+          "topic": "Bilingualism and Cognitive Flexibility",
+          "category": "Psychology",
+          "paragraph": "Researchers have long been interested in how speaking more than one language affects the brain beyond simply enabling communication in different tongues. Studies suggest that bilingual individuals often develop stronger executive function skills, particularly the ability to switch attention between competing tasks efficiently. This advantage likely stems from constant practice suppressing one language while using another, a mental exercise that appears to strengthen broader cognitive control mechanisms. Some longitudinal research has even suggested that lifelong bilingualism may delay the onset of certain age-related cognitive declines by several years. However, researchers caution that not every study finds consistent evidence for these benefits, and the size of the effect remains debated.",
+          "blanks": [
+            {
+              "word": "bilingual",
+              "visible": "bili",
+              "hidden": "ngual"
+            },
+            {
+              "word": "executive",
+              "visible": "exec",
+              "hidden": "utive"
+            },
+            {
+              "word": "competing",
+              "visible": "comp",
+              "hidden": "eting"
+            },
+            {
+              "word": "efficiently",
+              "visible": "effic",
+              "hidden": "iently"
+            },
+            {
+              "word": "suppressing",
+              "visible": "suppr",
+              "hidden": "essing"
+            },
+            {
+              "word": "mechanisms",
+              "visible": "mecha",
+              "hidden": "nisms"
+            },
+            {
+              "word": "longitudinal",
+              "visible": "longi",
+              "hidden": "tudinal"
+            },
+            {
+              "word": "declines",
+              "visible": "decl",
+              "hidden": "ines"
+            },
+            {
+              "word": "consistent",
+              "visible": "consi",
+              "hidden": "stent"
+            },
+            {
+              "word": "debated",
+              "visible": "deb",
+              "hidden": "ated"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 36,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Elevator Out of Service",
+          "subtitle": "",
+          "text": "The elevator in this building will be out of service today from 10 a.m. to 3 p.m. for scheduled repairs.\n\nPlease use the stairwell located at the east end of the hallway.\n\nWe apologize for any inconvenience.",
+          "questions": [
+            {
+              "question": "Why is the elevator out of service?",
+              "options": [
+                "It is being replaced permanently",
+                "It is undergoing scheduled repairs",
+                "It was damaged in an accident",
+                "It is reserved for moving furniture"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are residents advised to do?",
+              "options": [
+                "Wait until the elevator is fixed",
+                "Use the stairwell at the east end",
+                "Contact the building manager",
+                "Use a different building entrance"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 37,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Pool Closed for Cleaning",
+          "subtitle": "",
+          "text": "The community pool will be closed this Thursday for its monthly deep cleaning.\n\nThe pool will reopen Friday morning at 7 a.m. as usual.\n\nThe hot tub will remain open during this time.",
+          "questions": [
+            {
+              "question": "When will the pool reopen?",
+              "options": [
+                "Thursday afternoon",
+                "Friday morning",
+                "Saturday morning",
+                "It will remain closed indefinitely"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is mentioned about the hot tub?",
+              "options": [
+                "It will also be closed",
+                "It will remain open",
+                "It is being removed",
+                "It requires a reservation"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 38,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Package Room Access Changed",
+          "subtitle": "",
+          "text": "Starting Monday, the package room will only be accessible using your resident key fob between 8 a.m. and 9 p.m.\n\nAfter-hours access will no longer be available.\n\nContact the front office if your fob is not working.",
+          "questions": [
+            {
+              "question": "What is changing about the package room?",
+              "options": [
+                "It is being permanently closed",
+                "Access will require a key fob during limited hours",
+                "Packages will be delivered to individual units",
+                "It will be open 24 hours a day"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should a resident do if their fob doesn't work?",
+              "options": [
+                "Wait until the next business day",
+                "Contact the front office",
+                "Use the emergency exit instead",
+                "Ask another resident for help"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 15,
+          "title": "Neutron Stars and Pulsars",
+          "passage": "When a massive star exhausts its nuclear fuel and explodes as a supernova, its collapsing core can compress into an object so dense that protons and electrons merge into neutrons, forming what astronomers call a neutron star. This extreme collapse packs a mass greater than the Sun's into a sphere only about twenty kilometers across.\n\nDespite their small size, neutron stars possess gravitational fields so intense that a single teaspoon of their material would weigh billions of tons on Earth. They also generate extraordinarily powerful magnetic fields, trillions of times stronger than Earth's, and typically rotate at astonishing speeds, some completing hundreds of rotations every second.\n\nCertain neutron stars, called pulsars, emit narrow beams of radiation from their magnetic poles that sweep across space like a lighthouse beacon as the star rotates. In 1967, astronomer Jocelyn Bell Burnell detected the first pulsar while analyzing radio telescope data, noticing a remarkably regular pulsing signal that was initially, half-jokingly, nicknamed 'Little Green Men' before its true nature was understood.\n\nBecause pulsars rotate with such extraordinary regularity, astronomers use them as precise cosmic clocks to test fundamental physics, including Albert Einstein's general theory of relativity. Timing variations in pulsar signals have also helped researchers detect gravitational waves, ripples in spacetime predicted by Einstein but only directly observed by other means nearly a century after his original prediction.",
+          "passage_marked": "When a massive star exhausts its nuclear fuel and explodes as a supernova, its collapsing core can compress into an object so dense that protons and electrons merge into neutrons, forming what astronomers call a neutron star. This extreme collapse packs a mass greater than the Sun's into a sphere only about twenty kilometers across. [A]\n\nDespite their small size, neutron stars possess gravitational fields so intense that a single teaspoon of their material would weigh billions of tons on Earth. [B] They also generate extraordinarily powerful magnetic fields, trillions of times stronger than Earth's, and typically rotate at astonishing speeds, some completing hundreds of rotations every second.\n\nCertain neutron stars, called pulsars, emit narrow beams of radiation from their magnetic poles that sweep across space like a lighthouse beacon as the star rotates. In 1967, astronomer Jocelyn Bell Burnell detected the first pulsar while analyzing radio telescope data, noticing a remarkably regular pulsing signal that was initially, half-jokingly, nicknamed 'Little Green Men' before its true nature was understood. [C]\n\nBecause pulsars rotate with such extraordinary regularity, astronomers use them as precise cosmic clocks to test fundamental physics, including Albert Einstein's general theory of relativity. Timing variations in pulsar signals have also helped researchers detect gravitational waves, ripples in spacetime predicted by Einstein but only directly observed by other means nearly a century after his original prediction. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'compress' in the passage is closest in meaning to",
+              "options": [
+                "expand outward",
+                "squeeze into a smaller volume",
+                "heat rapidly",
+                "dissolve completely"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what is a neutron star?",
+              "options": [
+                "A star that has not yet begun nuclear fusion",
+                "An extremely dense object formed when a collapsing stellar core compresses protons and electrons into neutrons",
+                "A planet made entirely of gas",
+                "A type of black hole"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What did Jocelyn Bell Burnell discover in 1967?",
+              "options": [
+                "The first black hole",
+                "The first pulsar, detected as a remarkably regular radio signal",
+                "The theory of general relativity",
+                "The first exoplanet"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention that the first pulsar signal was nicknamed 'Little Green Men'?",
+              "options": [
+                "To argue that aliens were actually discovered",
+                "To illustrate the initial mystery surrounding the discovery before its true nature was understood",
+                "To criticize Jocelyn Bell Burnell's methods",
+                "To describe a science fiction novel"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Gravity, however, is far from the only extreme property these objects exhibit.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 23,
+          "topic": "The Physics of Superconductivity",
+          "category": "Physics",
+          "paragraph": "When certain materials are cooled below a specific critical temperature, they undergo a remarkable transformation and begin conducting electricity with absolutely zero resistance. This phenomenon, known as superconductivity, was first observed in 1911 and has since become one of the most actively researched areas of condensed matter physics. In a normal conductor, electrons collide with atoms in the material, losing energy as heat and creating resistance, but in a superconductor, electrons instead form pairs that move through the material without any scattering. This property allows superconducting materials to carry electrical current indefinitely without any loss of energy, an ability with enormous potential applications. Engineers already use superconductors in powerful magnets for medical imaging machines and experimental high-speed trains.",
+          "blanks": [
+            {
+              "word": "phenomenon",
+              "visible": "pheno",
+              "hidden": "menon"
+            },
+            {
+              "word": "observed",
+              "visible": "obse",
+              "hidden": "rved"
+            },
+            {
+              "word": "actively",
+              "visible": "acti",
+              "hidden": "vely"
+            },
+            {
+              "word": "researched",
+              "visible": "resea",
+              "hidden": "rched"
+            },
+            {
+              "word": "conductor",
+              "visible": "cond",
+              "hidden": "uctor"
+            },
+            {
+              "word": "collide",
+              "visible": "col",
+              "hidden": "lide"
+            },
+            {
+              "word": "scattering",
+              "visible": "scatt",
+              "hidden": "ering"
+            },
+            {
+              "word": "indefinitely",
+              "visible": "indef",
+              "hidden": "initely"
+            },
+            {
+              "word": "potential",
+              "visible": "pote",
+              "hidden": "ntial"
+            },
+            {
+              "word": "applications",
+              "visible": "appli",
+              "hidden": "cations"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 16,
+          "title": "The Invention of the Compass",
+          "passage": "The magnetic compass, one of the most important navigational tools in human history, was first developed in China more than two thousand years ago. Early versions were not used for navigation at all, but rather for geomancy, a practice used to align buildings favorably with the natural environment. These early devices consisted of a lodestone, a naturally magnetized piece of iron ore, carved into a spoon-like shape that would rotate to align itself with magnetic north when placed on a smooth surface.\n\nIt was not until several centuries later, during the Song dynasty, that Chinese sailors began adapting magnetized needles for use at sea. By floating a magnetized needle on water or suspending it from a thread, navigators could maintain a reliable heading even when clouds obscured the sun and stars, conditions that had previously left sailors without any dependable way to determine direction.\n\nKnowledge of the compass gradually spread westward along trade routes, reaching the Islamic world and eventually Europe by the twelfth century. European sailors refined the design considerably, mounting the magnetized needle on a pivot within a protective case and adding a compass card marked with directional points, a design that remained largely unchanged for centuries afterward.\n\nThe compass's impact on exploration was profound. Sailors no longer needed to remain within sight of familiar coastlines, since they could now maintain an accurate heading across open ocean for extended periods. Many historians consider the compass an essential enabling technology behind the long transoceanic voyages of the fifteenth and sixteenth centuries.",
+          "passage_marked": "The magnetic compass, one of the most important navigational tools in human history, was first developed in China more than two thousand years ago. Early versions were not used for navigation at all, but rather for geomancy, a practice used to align buildings favorably with the natural environment [A]. These early devices consisted of a lodestone, a naturally magnetized piece of iron ore, carved into a spoon-like shape that would rotate to align itself with magnetic north when placed on a smooth surface.\n\nIt was not until several centuries later, during the Song dynasty, that Chinese sailors began adapting magnetized needles for use at sea. By floating a magnetized needle on water or suspending it from a thread, navigators could maintain a reliable heading even when clouds obscured the sun and stars, conditions that had previously left sailors without any dependable way to determine direction. [B]\n\nKnowledge of the compass gradually spread westward along trade routes, reaching the Islamic world and eventually Europe by the twelfth century. European sailors refined the design considerably, mounting the magnetized needle on a pivot within a protective case and adding a compass card marked with directional points, a design that remained largely unchanged for centuries afterward. [C]\n\nThe compass's impact on exploration was profound. Sailors no longer needed to remain within sight of familiar coastlines, since they could now maintain an accurate heading across open ocean for extended periods [D]. Many historians consider the compass an essential enabling technology behind the long transoceanic voyages of the fifteenth and sixteenth centuries.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'profound' in the passage is closest in meaning to",
+              "options": [
+                "minor",
+                "significant",
+                "temporary",
+                "confusing"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what were early Chinese compasses originally used for?",
+              "options": [
+                "Naval warfare",
+                "Geomancy, for aligning buildings",
+                "Mapping coastlines",
+                "Measuring time"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What allowed sailors to maintain a heading using early magnetized needles?",
+              "options": [
+                "They could float or hang the needle to align with magnetic north",
+                "They compared it with star charts",
+                "They used it only in daylight",
+                "They combined it with a sundial"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention transoceanic voyages of the fifteenth and sixteenth centuries?",
+              "options": [
+                "To criticize European explorers",
+                "To illustrate the compass's impact on long-distance travel",
+                "To describe a specific shipwreck",
+                "To compare Chinese and European ship designs"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "European navigators found this format especially useful for plotting precise courses across the Atlantic.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 24,
+          "topic": "Medieval Guild Systems",
+          "category": "History",
+          "paragraph": "In medieval European towns, skilled craftsmen typically organized themselves into associations called guilds, which regulated nearly every aspect of a trade. Guilds controlled the training of new workers through a structured apprenticeship system, in which a young apprentice would work for years under a master craftsman before being allowed to practice independently. Beyond training, guilds also set strict quality standards for goods, fixed prices to prevent unfair competition among members, and represented their trade's interests before local governments. Membership offered considerable protection and status, but it also excluded many people, including most women and anyone unable to afford the required fees. As industrial production methods spread in later centuries, the influence of traditional guilds gradually declined across much of Europe.",
+          "blanks": [
+            {
+              "word": "controlled",
+              "visible": "contr",
+              "hidden": "olled"
+            },
+            {
+              "word": "structured",
+              "visible": "struc",
+              "hidden": "tured"
+            },
+            {
+              "word": "apprenticeship",
+              "visible": "appre",
+              "hidden": "nticeship"
+            },
+            {
+              "word": "independently",
+              "visible": "indep",
+              "hidden": "endently"
+            },
+            {
+              "word": "standards",
+              "visible": "stan",
+              "hidden": "dards"
+            },
+            {
+              "word": "competition",
+              "visible": "compe",
+              "hidden": "tition"
+            },
+            {
+              "word": "represented",
+              "visible": "repre",
+              "hidden": "sented"
+            },
+            {
+              "word": "excluded",
+              "visible": "excl",
+              "hidden": "uded"
+            },
+            {
+              "word": "influence",
+              "visible": "infl",
+              "hidden": "uence"
+            },
+            {
+              "word": "declined",
+              "visible": "decl",
+              "hidden": "ined"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 39,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Fire Alarm Testing",
+          "subtitle": "",
+          "text": "The fire alarm system will be tested throughout the building tomorrow between 9 a.m. and 11 a.m.\n\nYou do not need to evacuate during this test.\n\nIf the alarm continues after 11 a.m., please exit the building immediately.",
+          "questions": [
+            {
+              "question": "What is the purpose of this notice?",
+              "options": [
+                "To warn about a real fire",
+                "To announce scheduled alarm testing",
+                "To cancel a fire drill",
+                "To report a broken alarm system"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should residents do if the alarm continues after 11 a.m.?",
+              "options": [
+                "Ignore it, since it's just a test",
+                "Call the fire department only",
+                "Exit the building immediately",
+                "Wait for further instructions by email"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Community Center Weekly Class Schedule",
+          "subtitle": "",
+          "text": "Monday — 9:00 a.m. Yoga\nTuesday — 6:00 p.m. Pottery\nWednesday — 9:00 a.m. Yoga\nThursday — 5:30 p.m. Beginner Spanish\nFriday — 6:00 p.m. Pottery",
+          "questions": [
+            {
+              "question": "What class is offered on Thursday?",
+              "options": [
+                "Yoga",
+                "Pottery",
+                "Beginner Spanish",
+                "No class is offered"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "How many days a week is Yoga offered?",
+              "options": [
+                "One",
+                "Two",
+                "Three",
+                "Four"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 155,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/155.mp3",
+          "transcript": "My internet has been down since this morning.",
+          "context": "A customer calls an internet service provider.",
+          "options": [
+            "Let's run a quick diagnostic on your line.",
+            "Our fastest plan is fiber internet.",
+            "Technicians are available on weekdays.",
+            "You can pay your bill online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "20-155"
+        },
+        {
+          "id": 156,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/156.mp3",
+          "transcript": "Do you have any rooms with a mountain view?",
+          "context": "A guest asks about room options at a hotel.",
+          "options": [
+            "Yes, a few are still available tonight.",
+            "The hotel has a rooftop restaurant.",
+            "Check-out time is at eleven.",
+            "Our gym opens at six."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "20-156"
+        },
+        {
+          "id": 157,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/157.mp3",
+          "transcript": "I'd like to donate some old clothes. Where should I bring them?",
+          "context": "A resident asks a neighbor about a donation drive.",
+          "options": [
+            "There's a drop-off bin near the community center.",
+            "Donations are tax deductible.",
+            "The clothes need to be clean.",
+            "Most people donate in spring."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "20-157"
+        },
+        {
+          "id": 158,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/158.mp3",
+          "transcript": "Can I get a copy of my transcript sent to another university?",
+          "context": "A student asks a registrar's office employee.",
+          "options": [
+            "Sure, just fill out this request form.",
+            "Transcripts are updated every semester.",
+            "The registrar's office is on campus.",
+            "Transfer applications are due in March."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "20-158"
+        },
+        {
+          "id": 159,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/159.mp3",
+          "transcript": "Do you accept walk-ins for haircuts?",
+          "context": "A customer asks a receptionist at a salon.",
+          "options": [
+            "Yes, but there's usually a short wait.",
+            "The salon has been open for years.",
+            "Haircuts start at twenty dollars.",
+            "We're closed on Mondays."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "20-159"
+        },
+        {
+          "id": 160,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/160.mp3",
+          "transcript": "I think this coupon expired last week.",
+          "context": "A customer talks to a cashier at checkout.",
+          "options": [
+            "Let me check the date on that for you.",
+            "We offer new coupons every month.",
+            "Sale items cannot be returned.",
+            "The store accepts all major coupons."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "20-160"
+        },
+        {
+          "id": 161,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/161.mp3",
+          "transcript": "Could you turn up the volume on the TV?",
+          "context": "One roommate asks another while watching a show.",
+          "options": [
+            "Sure, one second.",
+            "This show has ten episodes.",
+            "We should order dinner soon.",
+            "The remote needs new batteries."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "21-161"
+        },
+        {
+          "id": 162,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/162.mp3",
+          "transcript": "Is it possible to get an extension on this assignment?",
+          "context": "A student asks a professor after class.",
+          "options": [
+            "I can give you until Friday.",
+            "The assignment is worth twenty points.",
+            "Class meets twice a week.",
+            "The syllabus is posted online."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "21-162"
+        },
+        {
+          "id": 163,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/163.mp3",
+          "transcript": "Do you know if this trail loops back to the parking lot?",
+          "context": "A hiker asks another hiker on the trail.",
+          "options": [
+            "Yes, it's about a three-mile loop.",
+            "The weather looks clear today.",
+            "There's a lookout point ahead.",
+            "Some trails allow dogs."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "21-163"
+        },
+        {
+          "id": 164,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/164.mp3",
+          "transcript": "I need to change my flight to an earlier one.",
+          "context": "A traveler speaks with a gate agent.",
+          "options": [
+            "Let me check what's available today.",
+            "Boarding starts in thirty minutes.",
+            "Your seat is 14C.",
+            "The flight is fully booked."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "21-164"
+        }
+      ],
+      "conv": [
+        {
+          "id": 36,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/36.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I completely forgot about my dentist appointment this morning."
+            },
+            {
+              "speaker": "female",
+              "text": "Did you call to explain?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not yet, I'm worried they'll charge a fee."
+            },
+            {
+              "speaker": "female",
+              "text": "You should call now, most offices waive it if you explain quickly."
+            },
+            {
+              "speaker": "male",
+              "text": "Okay, I'll call them on my lunch break."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He canceled his appointment on purpose",
+                "He forgot his dentist appointment",
+                "He lost his insurance card",
+                "His appointment was rescheduled without notice"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Ignore the missed appointment",
+                "Call the office to explain quickly",
+                "Find a new dentist",
+                "Wait until next week to call"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 37,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/37.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "The construction noise outside the lecture hall made it impossible to hear the professor."
+            },
+            {
+              "speaker": "male",
+              "text": "Did anyone say anything to the department about it?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not that I know of, but it's happened twice now."
+            },
+            {
+              "speaker": "male",
+              "text": "Maybe email the department to see if the class can move rooms temporarily."
+            },
+            {
+              "speaker": "female",
+              "text": "That makes sense, I'll send a message tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She missed a lecture",
+                "Construction noise disrupted her class",
+                "Her class was canceled",
+                "She lost her lecture notes"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Ignore the noise",
+                "Email the department about moving rooms",
+                "Drop the class",
+                "Record the lecture instead"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 38,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/38.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I got into three graduate programs and I'm not sure which to choose."
+            },
+            {
+              "speaker": "female",
+              "text": "What's making it a hard decision?"
+            },
+            {
+              "speaker": "male",
+              "text": "They're all strong programs, but the funding packages are pretty different."
+            },
+            {
+              "speaker": "female",
+              "text": "You might want to talk to current students in each program about their experience."
+            },
+            {
+              "speaker": "male",
+              "text": "That's a great idea, I'll reach out this week."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man trying to decide?",
+              "options": [
+                "Whether to attend graduate school at all",
+                "Which graduate program to attend",
+                "Whether to change his major",
+                "Whether to defer admission"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Choose based on funding alone",
+                "Talk to current students in each program",
+                "Wait another year to decide",
+                "Ask his parents to decide for him"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 36,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/36.mp3",
+          "speaker": "male",
+          "transcript": "A reminder to all undergraduate students: course registration for next semester opens this Wednesday at 8 a.m., organized by class standing, with seniors registering first. Students are encouraged to review their degree audit and meet with their academic advisor before their registration window opens to ensure they have an approved course plan. Registration holds due to unpaid balances or missing paperwork must be resolved before students will be able to register.",
+          "questions": [
+            {
+              "question": "What is this announcement mainly about?",
+              "options": [
+                "A change in tuition rates",
+                "The opening of course registration",
+                "New academic advising staff",
+                "A delay in the semester start date"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is recommended before a student's registration window opens?",
+              "options": [
+                "Paying next semester's tuition in full",
+                "Meeting with an academic advisor",
+                "Submitting a housing application",
+                "Attending an orientation session"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 37,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/37.mp3",
+          "speaker": "female",
+          "transcript": "The Student Health Center will be offering free flu vaccinations to all currently enrolled students beginning next Tuesday. No appointment is necessary, and students only need to bring their student ID. The clinic will be open extended hours, from 9 a.m. to 7 p.m., for the first week of the program to accommodate as many students as possible. Vaccinations will continue on a limited basis after that, by appointment only.",
+          "questions": [
+            {
+              "question": "What is being offered to students?",
+              "options": [
+                "Free eye exams",
+                "Free flu vaccinations",
+                "Free dental checkups",
+                "Free health insurance"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What do students need to bring to receive the service?",
+              "options": [
+                "A doctor's note",
+                "Their student ID",
+                "Proof of insurance",
+                "A parental consent form"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 38,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/38.mp3",
+          "speaker": "male",
+          "transcript": "Attention all residents of campus housing: the university's information technology department will be upgrading the wireless network in all residence halls this weekend. Internet access may be intermittent or unavailable between midnight Saturday and 6 a.m. Sunday while the new equipment is installed. Once complete, students should notice significantly faster connection speeds, especially during peak evening hours when the network has previously experienced slowdowns.",
+          "questions": [
+            {
+              "question": "What is the purpose of this announcement?",
+              "options": [
+                "To announce a new dining service",
+                "To inform students of a wireless network upgrade",
+                "To warn about a security breach",
+                "To announce new housing assignments"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When might students experience interrupted internet access?",
+              "options": [
+                "Every evening this week",
+                "Between midnight Saturday and 6 a.m. Sunday",
+                "During final exams",
+                "For the entire semester"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 29,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/29.mp3",
+          "speaker": "female",
+          "subject": "Physics",
+          "transcript": "Let's turn now to the phenomenon of superconductivity, first discovered in the early twentieth century when a physicist observed that mercury's electrical resistance dropped to exactly zero when cooled to extremely low temperatures near absolute zero. In a normal conductor, electrons moving through the material collide with atoms, creating resistance and generating heat, which is why wires warm up during use. In a superconductor below its critical temperature, electrons instead pair up, forming what are called Cooper pairs, which move through the material without scattering off atoms at all, allowing current to flow indefinitely without any energy loss. For decades, achieving superconductivity required cooling materials with expensive liquid helium, limiting practical applications. Then in the 1980s, researchers discovered a new class of materials, ceramic compounds that become superconducting at much higher, though still quite cold, temperatures that could be reached using cheaper liquid nitrogen instead. This discovery dramatically expanded potential applications, including maglev trains, which use superconducting magnets to levitate above the track, and highly sensitive medical imaging equipment. Scientists continue searching for materials that superconduct at room temperature, which would revolutionize electrical transmission by eliminating energy losses that currently occur across power grids.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "The discovery and applications of superconductivity",
+                "How electrical resistance is measured",
+                "The invention of maglev trains",
+                "The chemistry of liquid helium"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, why does a normal conductor generate heat?",
+              "options": [
+                "Electrons pair up and scatter",
+                "Electrons collide with atoms as they move",
+                "The material begins to melt",
+                "Cooper pairs break apart"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why was the discovery of high-temperature superconductors in the 1980s significant?",
+              "options": [
+                "It eliminated the need for cooling entirely",
+                "It allowed cheaper liquid nitrogen to be used instead of liquid helium",
+                "It proved that superconductivity does not require low temperatures",
+                "It was the first time superconductivity had ever been observed"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What would room-temperature superconductivity allow, according to the professor?",
+              "options": [
+                "The complete elimination of electricity",
+                "Eliminating energy losses across power grids",
+                "The invention of the first electrical wire",
+                "Replacing all current medical imaging equipment"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/30.mp3",
+          "speaker": "male",
+          "subject": "Civil Engineering",
+          "transcript": "Today's topic is base isolation, an engineering technique used to protect buildings from earthquake damage. Traditional buildings are rigidly connected to their foundations, meaning that when the ground shakes violently during an earthquake, that motion transfers directly into the structure, potentially causing catastrophic damage. Base isolation instead places flexible bearings, often made of layered rubber and steel, between the building and its foundation. These bearings allow the foundation to move with the ground while the building above stays relatively still, essentially decoupling the structure from the shaking earth. Think of it like standing on a skateboard that someone yanks out from under you; if your feet are fixed to the skateboard, you fall over immediately, but if there's some give between you and the board, you have a much better chance of staying upright. This technology has been used in seismically active regions since the 1980s, notably in hospitals and other critical facilities that must remain operational immediately after a major earthquake. The tradeoff is cost. Base isolation systems are expensive to install and require regular inspection, so they tend to be reserved for buildings where the consequences of severe damage would be especially high.",
+          "questions": [
+            {
+              "question": "What is the main purpose of base isolation, according to the lecture?",
+              "options": [
+                "To make buildings taller",
+                "To protect structures from earthquake damage",
+                "To reduce construction costs",
+                "To improve a building's insulation"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How do base isolation bearings function?",
+              "options": [
+                "They rigidly bolt the building to bedrock",
+                "They allow the foundation to move while the building stays relatively still",
+                "They prevent any ground movement during an earthquake",
+                "They automatically repair cracks after a quake"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor use the skateboard comparison?",
+              "options": [
+                "To describe a type of foundation material",
+                "To illustrate how flexibility can prevent a fall or damage",
+                "To explain how earthquakes are measured",
+                "To criticize traditional building design"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, why isn't base isolation used in every building?",
+              "options": [
+                "It only works in low-rise buildings",
+                "It is expensive and requires regular inspection",
+                "It has never been tested in real earthquakes",
+                "It is banned in most countries"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 165,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/165.mp3",
+          "transcript": "Could you show me how to use the self-checkout machine?",
+          "context": "A shopper asks a store employee for help.",
+          "options": [
+            "Of course, I'll walk you through it.",
+            "Self-checkout was added last year.",
+            "The store has ten registers.",
+            "Cash is accepted at every register."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "21-165"
+        },
+        {
+          "id": 166,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/166.mp3",
+          "transcript": "Do you offer group rates for the guided tour?",
+          "context": "A visitor asks a tour company representative.",
+          "options": [
+            "Yes, for groups of six or more.",
+            "The tour lasts about two hours.",
+            "Tours run every hour on weekends.",
+            "Tickets can be bought online."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "21-166"
+        },
+        {
+          "id": 167,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/167.mp3",
+          "transcript": "I think my order is missing an item.",
+          "context": "A customer calls a restaurant about a delivery order.",
+          "options": [
+            "I'm sorry, let me check what happened.",
+            "Delivery usually takes thirty minutes.",
+            "Our menu has new items this month.",
+            "You can track your order online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "21-167"
+        },
+        {
+          "id": 168,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/168.mp3",
+          "transcript": "Can you recommend a good place for breakfast nearby?",
+          "context": "A tourist asks a hotel concierge for suggestions.",
+          "options": [
+            "There's a great cafe two blocks from here.",
+            "Breakfast is included with your stay.",
+            "The hotel restaurant opens at seven.",
+            "Most places downtown open at eight."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "21-168"
+        },
+        {
+          "id": 169,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/169.mp3",
+          "transcript": "Could I get a refund on this defective charger?",
+          "context": "A customer speaks to an electronics store clerk.",
+          "options": [
+            "Of course, do you have the receipt?",
+            "Chargers usually last two years.",
+            "This model was just released.",
+            "We offer a one-year warranty."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "22-169"
+        },
+        {
+          "id": 170,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/170.mp3",
+          "transcript": "Is there somewhere I can charge my phone in this cafe?",
+          "context": "A customer asks a barista.",
+          "options": [
+            "There are outlets by the window seats.",
+            "We serve coffee until close.",
+            "The wifi password is on the receipt.",
+            "This location opened last year."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "22-170"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 31,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/31.mp3",
+          "speaker": "female",
+          "subject": "Ornithology",
+          "transcript": "Let's discuss the incredible navigational abilities of migratory birds, some of which travel thousands of miles between breeding and wintering grounds with remarkable precision. Researchers have identified several mechanisms that birds likely use together to navigate. One is a kind of internal compass based on the Earth's magnetic field; specialized cells, possibly in the eye or beak, are thought to allow birds to sense magnetic orientation, though the exact biological mechanism is still debated. Birds also appear to use the position of the sun during the day and star patterns at night as reference points, essentially reading the sky like a map. Additionally, many species rely on learned landmarks, such as coastlines, mountain ranges, or rivers, especially on routes they've flown before. What's particularly interesting is that young birds on their very first migration, without any prior experience or adult birds to follow, can still navigate correctly to a wintering ground they've never seen, suggesting an inherited, genetically programmed sense of direction and distance. Older, experienced birds, on the other hand, seem to refine this innate program with actual environmental experience, becoming more efficient navigators over successive migrations.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "The physical characteristics of migratory birds",
+                "How migratory birds navigate long distances",
+                "The effects of climate change on bird populations",
+                "The history of bird species classification"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what might allow birds to sense the Earth's magnetic field?",
+              "options": [
+                "Specialized cells possibly located in the eye or beak",
+                "A special bone structure in their wings",
+                "Their sense of smell",
+                "Vibrations felt through their feet"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the professor mention young birds on their first migration?",
+              "options": [
+                "To show that migration is purely a learned behavior",
+                "To provide evidence for an inherited sense of direction",
+                "To argue that young birds often get lost",
+                "To explain why some species don't migrate at all"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about experienced birds compared to young birds?",
+              "options": [
+                "They rely less on the sun and stars",
+                "They refine their innate navigation with real experience",
+                "They lose their magnetic sensing ability with age",
+                "They no longer need to migrate at all"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/32.mp3",
+          "speaker": "male",
+          "subject": "Entomology",
+          "transcript": "Today we'll look at eusociality, a highly organized social structure found in insects like bees, ants, and termites. Eusocial colonies are characterized by three main features: cooperative care of the young by colony members other than the parents, overlapping generations living together, and perhaps most strikingly, a division into reproductive and largely non-reproductive castes. In a honeybee colony, for example, a single queen does almost all of the reproducing, while thousands of sterile female workers handle foraging, defense, and caring for larvae. From an evolutionary standpoint, this arrangement initially puzzled biologists, since natural selection is generally thought to favor individuals who successfully reproduce, yet worker bees give up reproduction entirely. The leading explanation involves a concept called kin selection, which recognizes that because workers are extremely closely related to their sisters, in some cases more closely related to sisters than they would be to their own offspring due to their unusual genetic system, helping the queen produce more sisters can actually pass on more of a worker's genes than reproducing individually would. This genetic peculiarity, combined with the ecological benefits of a highly coordinated colony, helps explain why eusociality evolved independently in several different insect lineages.",
+          "questions": [
+            {
+              "question": "What is the main topic of the lecture?",
+              "options": [
+                "The life cycle of the honeybee",
+                "Eusociality and its evolution in insects",
+                "How insects communicate through pheromones",
+                "The classification of insect species"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are the three defining features of eusociality mentioned by the professor?",
+              "options": [
+                "Flight, foraging, and hibernation",
+                "Cooperative care of young, overlapping generations, and reproductive castes",
+                "Nest building, migration, and camouflage",
+                "Pollination, defense, and communication"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why did eusociality initially puzzle biologists, according to the professor?",
+              "options": [
+                "It seemed to contradict the idea that individuals favor their own reproduction",
+                "It was thought to be biologically impossible",
+                "No eusocial species had ever been observed",
+                "It only occurs in species that don't reproduce at all"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "How does kin selection help explain worker sterility?",
+              "options": [
+                "Workers are unrelated to the queen and gain nothing",
+                "Workers can pass on more of their genes by helping raise closely related sisters",
+                "Workers reproduce secretly without the queen's knowledge",
+                "Kin selection has nothing to do with genetic relatedness"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 171,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/171.mp3",
+          "transcript": "Do I need an appointment to see a doctor today?",
+          "context": "A patient calls a medical clinic.",
+          "options": [
+            "We do have some walk-in slots available.",
+            "The clinic is open until six.",
+            "Most appointments last thirty minutes.",
+            "We accept several insurance plans."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "22-171"
+        },
+        {
+          "id": 172,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/172.mp3",
+          "transcript": "Could you tell me which platform the train to the airport leaves from?",
+          "context": "A traveler asks a station employee.",
+          "options": [
+            "It leaves from platform six.",
+            "Trains run every fifteen minutes.",
+            "The airport is twenty minutes away.",
+            "Tickets can be bought at the kiosk."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "22-172"
+        },
+        {
+          "id": 173,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/173.mp3",
+          "transcript": "I'd like to add extra cheese to this order, please.",
+          "context": "A customer places an order at a sandwich shop.",
+          "options": [
+            "Sure, that'll be an extra fifty cents.",
+            "The shop has six sandwich options.",
+            "We're out of wheat bread today.",
+            "Orders take about ten minutes."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "22-173"
+        },
+        {
+          "id": 174,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/174.mp3",
+          "transcript": "Can you tell me if this medication has any side effects?",
+          "context": "A patient asks a pharmacist about a prescription.",
+          "options": [
+            "It might cause mild drowsiness.",
+            "This pharmacy is open until nine.",
+            "Refills can be requested online.",
+            "The prescription is valid for a year."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "22-174"
+        },
+        {
+          "id": 175,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/175.mp3",
+          "transcript": "Do you have a charger I could borrow for a bit?",
+          "context": "A coworker asks another coworker in the office.",
+          "options": [
+            "Sure, here you go.",
+            "My phone battery lasts all day.",
+            "The office has a charging station now.",
+            "I usually charge mine overnight."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "22-175"
+        },
+        {
+          "id": 176,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/176.mp3",
+          "transcript": "Could you tell me where the nearest ATM is?",
+          "context": "A customer asks a bank employee.",
+          "options": [
+            "There's one right by the entrance.",
+            "The bank opens at nine.",
+            "ATM withdrawals are usually free.",
+            "This branch has three tellers."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "22-176"
+        }
+      ],
+      "conv": [
+        {
+          "id": 39,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/39.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm not sure I filled out the scholarship application correctly."
+            },
+            {
+              "speaker": "male",
+              "text": "What part are you unsure about?"
+            },
+            {
+              "speaker": "female",
+              "text": "The section asking for a recommendation letter timeline."
+            },
+            {
+              "speaker": "male",
+              "text": "You could email the scholarship office directly to double-check."
+            },
+            {
+              "speaker": "female",
+              "text": "Good idea, I'll send them a message today."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She missed the application deadline",
+                "She's unsure about part of the application",
+                "She was denied the scholarship",
+                "She lost her recommendation letter"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Guess and submit anyway",
+                "Email the scholarship office to confirm",
+                "Ask a classmate for help",
+                "Withdraw the application"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/40.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "My brother and I share a car, and it's getting complicated to schedule."
+            },
+            {
+              "speaker": "female",
+              "text": "How are you currently working it out?"
+            },
+            {
+              "speaker": "male",
+              "text": "We just text each other, but it keeps causing mix-ups."
+            },
+            {
+              "speaker": "female",
+              "text": "Maybe set up a shared calendar so you can both see it clearly."
+            },
+            {
+              "speaker": "male",
+              "text": "That would definitely help, I'll set one up tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "His car broke down",
+                "Scheduling shared car use is complicated",
+                "He lost his driver's license",
+                "His brother refuses to share the car"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Buy a second car",
+                "Use a shared calendar",
+                "Stop sharing the car",
+                "Ask their parents to decide"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 39,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/39.mp3",
+          "speaker": "female",
+          "transcript": "This is a notice regarding parking lot C, located behind the engineering building. The lot will be closed for resurfacing starting next Monday and is expected to reopen in approximately five business days. Students and staff who normally park in lot C should use lot D instead, which is a short walk away, or the parking garage on Elm Street. Permit holders will not be charged for the temporary inconvenience.",
+          "questions": [
+            {
+              "question": "Why is parking lot C being closed?",
+              "options": [
+                "A special event is being held there",
+                "It is being resurfaced",
+                "It failed a safety inspection",
+                "It is being converted into a new building"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative parking options are mentioned?",
+              "options": [
+                "Lot D and the Elm Street garage",
+                "Street parking only",
+                "A shuttle to an off-campus lot",
+                "No alternative is provided"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 40,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/40.mp3",
+          "speaker": "male",
+          "transcript": "The Department of History is pleased to announce a guest lecture next Thursday evening by a visiting professor who will discuss recent archaeological discoveries in the Mediterranean region. The lecture is free and open to all students and faculty, and will be held in the main auditorium starting at 6:30 p.m. A brief question and answer session will follow the talk, and light refreshments will be served afterward in the lobby.",
+          "questions": [
+            {
+              "question": "What is the topic of the guest lecture?",
+              "options": [
+                "Modern European politics",
+                "Recent archaeological discoveries in the Mediterranean",
+                "Ancient Egyptian architecture",
+                "Climate change research"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will happen after the lecture?",
+              "options": [
+                "A film screening",
+                "A question and answer session with refreshments",
+                "A campus tour",
+                "A student debate"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 71,
+        "promptGender": "female",
+        "prompt": "Did the professor post the grades already?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "whether",
+          "the professor",
+          "had posted the grades already"
+        ],
+        "distractorChunks": [
+          "has posted the grades already"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 72,
+        "promptGender": "male",
+        "prompt": "Where did the moving truck park this morning?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "where",
+          "the moving truck",
+          "had parked this morning"
+        ],
+        "distractorChunks": [
+          "has parked this morning"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 73,
+        "promptGender": "female",
+        "prompt": "Is the Wi-Fi down in the whole building?",
+        "responseGender": "male",
+        "responsePrefix": "Do you know",
+        "correctChunks": [
+          "whether",
+          "the Wi-Fi",
+          "was down in the whole building"
+        ],
+        "distractorChunks": [
+          "is down in the whole building"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 74,
+        "promptGender": "male",
+        "prompt": "How much does the parking permit cost this year?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "how",
+          "much",
+          "the parking permit",
+          "cost this year"
+        ],
+        "distractorChunks": [
+          "costs this year"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 75,
+        "promptGender": "female",
+        "prompt": "Will the concert be canceled if it rains?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "wondered",
+          "whether",
+          "the concert",
+          "would be canceled if it rained"
+        ],
+        "distractorChunks": [
+          "will be canceled if it rains"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 76,
+        "promptGender": "male",
+        "prompt": "What did the manager say about the schedule change?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "what",
+          "the manager",
+          "had said about the schedule change"
+        ],
+        "distractorChunks": [
+          "has said about the schedule change"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 77,
+        "promptGender": "female",
+        "prompt": "Are the tickets still available for tonight's show?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "whether",
+          "the tickets",
+          "were still available for tonight's show"
+        ],
+        "distractorChunks": [
+          "are still available for tonight's show"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 78,
+        "promptGender": "male",
+        "prompt": "Why hasn't the package arrived yet?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "why",
+          "the package",
+          "had not arrived yet"
+        ],
+        "distractorChunks": [
+          "has not arrived yet"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 79,
+        "promptGender": "female",
+        "prompt": "Does the cafeteria serve breakfast on weekends?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the cafeteria",
+          "served breakfast on weekends"
+        ],
+        "distractorChunks": [
+          "serves breakfast on weekends"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 80,
+        "promptGender": "male",
+        "prompt": "When will the results be announced?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "when",
+          "the results",
+          "would be announced"
+        ],
+        "distractorChunks": [
+          "will be announced"
+        ],
+        "responseSuffix": "."
+      }
+    ],
+    "email": {
+      "id": 8,
+      "scenario": "You applied for a summer internship at a marketing firm three weeks ago and have not heard back. You want to politely follow up on your application status.",
+      "recipient": "Ms. Patterson, Hiring Manager",
+      "subject": "Following up on my internship application",
+      "tasks": [
+        {
+          "description": "Remind her that you applied for the internship.",
+          "keywords": [
+            "applied",
+            "submitted",
+            "application",
+            "three weeks ago"
+          ]
+        },
+        {
+          "description": "Express your continued interest in the position.",
+          "keywords": [
+            "still interested",
+            "enthusiastic",
+            "excited",
+            "eager"
+          ]
+        },
+        {
+          "description": "Ask about the timeline for a decision.",
+          "keywords": [
+            "timeline",
+            "decision",
+            "update",
+            "status",
+            "when"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Ms. Patterson,\n\nI hope this email finds you well. I am writing to follow up on my application for the summer marketing internship, which I submitted three weeks ago through your company's careers portal. I understand that reviewing applications takes time, so I wanted to check in politely.\n\nI remain very interested in this position and would welcome the opportunity to contribute to your team this summer. Learning more about your company's recent campaigns has only made me more enthusiastic about the role.\n\nCould you let me know the expected timeline for a hiring decision, or whether any additional materials are needed from me at this stage? I completely understand if the process is still ongoing, and I appreciate you taking the time to consider my application. Thank you for your attention, and I look forward to hearing from you soon.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 8,
+      "subject": "food science",
+      "professor": "Dr. Bertrand",
+      "professorGender": "male",
+      "prompt": "Your food science professor is exploring the future of protein production. Write a post responding to the professor's question.\n\nDr. Bertrand: This week we have been discussing cultivated meat, which is grown from animal cells in a laboratory rather than raised and slaughtered on farms. Proponents claim this technology could dramatically reduce greenhouse gas emissions, land use, and animal suffering associated with traditional livestock farming. Skeptics question whether consumers will ever fully accept lab-grown meat, and they raise concerns about the long-term health effects and the economic disruption it could cause to traditional farming communities. Before our next class, I would like you to respond to this question: Should cultivated meat replace traditional livestock farming as the primary source of meat production?",
+      "classmates": [
+        {
+          "name": "Chidi",
+          "gender": "male",
+          "opinion": "I think cultivated meat represents one of the most promising solutions to the environmental damage caused by industrial livestock farming. Traditional meat production requires enormous amounts of land, water, and feed, while also generating significant methane emissions that contribute to climate change. Cultivated meat could produce the same protein with a fraction of the resources and without the need to raise and slaughter billions of animals every year. Early studies suggest the health and safety profile of cultivated meat is comparable to conventional meat once production scales up. As the technology matures and costs decrease, I believe it will become an essential part of a sustainable food system."
+        },
+        {
+          "name": "Freya",
+          "gender": "female",
+          "opinion": "I remain skeptical that cultivated meat should replace traditional farming any time soon. The technology is still extremely expensive to produce at scale, and many consumers are understandably hesitant to eat meat grown in a lab rather than raised on a farm. There are also legitimate questions about long-term safety, since cultivated meat has not been studied over many decades the way traditional meat has. Beyond that, millions of people worldwide depend on livestock farming for their livelihoods, and a sudden shift away from traditional methods could devastate rural economies. I think traditional farming should be improved through better practices rather than replaced entirely by an unproven technology."
+        }
+      ],
+      "exampleResponse": "The future of meat production raises important questions about sustainability, safety, and economic impact. Whether cultivated meat should replace traditional farming entirely is worth considering carefully. While I see where Freya is coming from when she argues that the technology remains unproven and could devastate farming communities that depend on livestock, I would argue that the environmental cost of industrial farming is too severe to ignore in the long run. In this respect, I am inclined to agree with Chidi, who emphasizes that cultivated meat could drastically reduce land use, water consumption, and emissions compared to conventional livestock. For example, producing a single cultivated burger patty requires a small fraction of the water needed to raise a cow through traditional ranching. Rather than a sudden full replacement, a gradual transition that supports farmers while scaling cultivated meat production seems like the most realistic path forward."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 8,
+      "location": "Community Recycling Center",
+      "icon": "♻️",
+      "speaker": "female",
+      "introText": "You are learning how to explain the recycling process to visitors. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the recycling center.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "Please sort your materials before dropping them off.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Glass and plastic go into separate bins.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Electronics are collected on the far side.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "Cardboard boxes should be flattened before recycling.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Our staff can help you if you are unsure where an item belongs.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "The center also hosts workshops on reducing household waste each month.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 8,
+      "topic": "Neighborhood Life",
+      "icon": "🏘️",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about neighborhood life and community relationships. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. Could you start by describing the neighborhood where you currently live?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer living in a quiet neighborhood or a lively one with a lot of activity? Which suits you better?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people think it is important to know your neighbors well, while others prefer to keep their distance. What is your view?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think community events help strengthen relationships between neighbors? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

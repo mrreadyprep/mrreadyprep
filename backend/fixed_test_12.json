@@ -1,0 +1,1802 @@
+{
+  "id": 12,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 34,
+          "topic": "The Domestication of the Horse",
+          "category": "History",
+          "paragraph": "Horses were among the last major animals to be domesticated by early human societies. Archaeological evidence suggests that domestication first occurred on the grasslands of Central Asia, where wild herds were gradually tamed for both transportation and companionship. Once domesticated, horses fundamentally transformed human civilization by making long-distance travel and trade dramatically faster than walking ever allowed. Armies that incorporated cavalry units gained a substantial military advantage over opponents who still relied entirely on foot soldiers. The relationship between humans and horses continued evolving for thousands of years, eventually producing hundreds of specialized breeds suited to farming, racing, and warfare.",
+          "blanks": [
+            {
+              "word": "Archaeological",
+              "visible": "Archa",
+              "hidden": "eological"
+            },
+            {
+              "word": "domestication",
+              "visible": "domes",
+              "hidden": "tication"
+            },
+            {
+              "word": "Central",
+              "visible": "Cen",
+              "hidden": "tral"
+            },
+            {
+              "word": "fundamentally",
+              "visible": "funda",
+              "hidden": "mentally"
+            },
+            {
+              "word": "distance",
+              "visible": "dist",
+              "hidden": "ance"
+            },
+            {
+              "word": "cavalry",
+              "visible": "cav",
+              "hidden": "alry"
+            },
+            {
+              "word": "advantage",
+              "visible": "adva",
+              "hidden": "ntage"
+            },
+            {
+              "word": "evolving",
+              "visible": "evol",
+              "hidden": "ving"
+            },
+            {
+              "word": "hundreds",
+              "visible": "hund",
+              "hidden": "reds"
+            },
+            {
+              "word": "warfare",
+              "visible": "war",
+              "hidden": "fare"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Library Book Overdue Notice",
+          "subtitle": "Dear Ms. Carrington,",
+          "text": "Our records show that \"The History of Modern Architecture\" is now twelve days overdue. A late fee of twenty-five cents per day has been applied to your account, currently totaling three dollars. Please return the item to any branch location by this Friday to avoid additional charges. If the book has been lost, you may instead pay a replacement fee of forty-five dollars at the front desk. Note that your borrowing privileges will be suspended if the balance is not resolved within two weeks.\n\nSincerely,\nCentral Library System",
+          "questions": [
+            {
+              "question": "Why is Ms. Carrington receiving this email?",
+              "options": [
+                "She requested a new library card",
+                "A book she borrowed is overdue",
+                "She won a library reading contest",
+                "Her account information changed"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will happen if she does not resolve the balance within two weeks?",
+              "options": [
+                "She will be banned from the library forever",
+                "Her borrowing privileges will be suspended",
+                "She will receive a lawsuit notice",
+                "The book will be automatically renewed"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "The word 'resolved' in the email is closest in meaning to",
+              "options": [
+                "ignored",
+                "settled",
+                "increased",
+                "questioned"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 56
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Change in Office Parking Policy",
+          "subtitle": "Dear Staff,",
+          "text": "Starting next Monday, all employees must display a new parking permit on their dashboard while parked in the building garage. Permits can be picked up at the front security desk between eight and five on weekdays. Vehicles without a visible permit after the grace period ending in two weeks will be subject to towing at the owner's expense. Employees who carpool with a colleague may request a shared permit covering both vehicles. Please contact facilities management with any questions about eligibility.",
+          "questions": [
+            {
+              "question": "What must employees do starting next Monday?",
+              "options": [
+                "Pay a monthly parking fee",
+                "Display a new parking permit",
+                "Park only on weekends",
+                "Register their license plate online"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens to vehicles without a permit after the grace period?",
+              "options": [
+                "They receive a warning letter",
+                "They are towed at the owner's expense",
+                "They lose garage access permanently",
+                "Nothing happens"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What option is available to employees who carpool?",
+              "options": [
+                "A discounted parking rate",
+                "A shared permit covering both vehicles",
+                "Free reserved parking spots",
+                "Priority towing exemption"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 57
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Community Garden Plot Assignment",
+          "subtitle": "Hello Mr. Delgado,",
+          "text": "Thank you for signing up for a plot at the Riverside Community Garden this season. You have been assigned Plot 14B, located near the tool shed. Please note that plots must be planted by May 1 or they will be reassigned to someone on the waiting list. Water access is available daily from six to nine in the morning and evening. A mandatory orientation meeting will be held this Saturday at ten, and attendance is required for all new gardeners before they may begin planting.",
+          "questions": [
+            {
+              "question": "What will happen if the plot is not planted by May 1?",
+              "options": [
+                "The fee will be refunded",
+                "The plot will be reassigned",
+                "A warning email will be sent",
+                "Nothing will change"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When is water access available?",
+              "options": [
+                "All day and night",
+                "Only on weekends",
+                "Six to nine in the morning and evening",
+                "Only during the orientation"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "What must new gardeners do before planting?",
+              "options": [
+                "Pay an extra deposit",
+                "Attend the mandatory orientation",
+                "Submit a garden plan",
+                "Purchase their own tools"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 58
+        }
+      ],
+      "ap": [
+        {
+          "id": 23,
+          "title": "Tidal Energy and Renewable Power Generation",
+          "passage": "As countries search for reliable sources of renewable energy, tidal power has attracted growing interest due to its remarkable predictability compared to other renewable sources such as wind and solar power.\n\nUnlike wind, which can vary unpredictably from hour to hour, ocean tides follow a highly consistent pattern governed by the gravitational pull of the moon and sun, meaning engineers can predict tidal patterns years in advance with extraordinary accuracy, making it far easier to plan reliable electricity generation.\n\nTidal energy is typically harnessed using underwater turbines placed in areas with strong tidal currents, functioning much like underwater wind turbines as flowing water spins their blades to generate electricity. Some coastal regions also use tidal barrages, essentially dam-like structures that capture and release water to drive turbines as the tide rises and falls.\n\nDespite its predictability, tidal energy still faces significant challenges. Suitable locations with sufficiently strong tidal currents are relatively limited, construction and maintenance costs remain considerably higher than many other renewable technologies, and underwater turbines can potentially disrupt marine ecosystems if not carefully designed and monitored.",
+          "passage_marked": "As countries search for reliable sources of renewable energy, tidal power has attracted growing interest due to its remarkable predictability compared to other renewable sources such as wind and solar power. [A]\n\nUnlike wind, which can vary unpredictably from hour to hour, ocean tides follow a highly consistent pattern governed by the gravitational pull of the moon and sun, meaning engineers can predict tidal patterns years in advance with extraordinary accuracy, making it far easier to plan reliable electricity generation. [B]\n\nTidal energy is typically harnessed using underwater turbines placed in areas with strong tidal currents, functioning much like underwater wind turbines as flowing water spins their blades to generate electricity. Some coastal regions also use tidal barrages, essentially dam-like structures that capture and release water to drive turbines as the tide rises and falls. [C]\n\nDespite its predictability, tidal energy still faces significant challenges. Suitable locations with sufficiently strong tidal currents are relatively limited, construction and maintenance costs remain considerably higher than many other renewable technologies, and underwater turbines can potentially disrupt marine ecosystems if not carefully designed and monitored. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'harnessed' in the passage is closest in meaning to",
+              "options": [
+                "wasted",
+                "captured and used",
+                "destroyed",
+                "ignored"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, why is tidal energy considered predictable?",
+              "options": [
+                "It depends on unpredictable weather patterns",
+                "It follows a consistent pattern governed by the moon and sun",
+                "It is controlled entirely by engineers",
+                "It only occurs during storms"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "How do tidal barrages generate electricity?",
+              "options": [
+                "By burning fossil fuels near the coast",
+                "By capturing and releasing water to drive turbines",
+                "By collecting sunlight on floating panels",
+                "By using wind to spin blades"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What is mentioned as a challenge facing tidal energy?",
+              "options": [
+                "It cannot be predicted in advance",
+                "Suitable locations are relatively limited",
+                "It produces no usable electricity",
+                "It works only in freshwater"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This reliability makes it an appealing complement to more variable renewable sources within a broader energy grid.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 35,
+          "topic": "Coral Bleaching",
+          "category": "Marine Biology",
+          "paragraph": "Coral reefs are among the most biologically diverse ecosystems on the planet. When ocean temperatures rise even slightly above normal, corals experience significant stress that disrupts their relationship with the tiny algae living inside their tissues. This disruption causes the coral to expel the algae entirely, resulting in a stark white appearance commonly known as bleaching. Without the nutrients these algae normally provide, bleached coral becomes considerably more vulnerable to disease and can eventually die if conditions do not improve quickly. Scientists worldwide are researching techniques to develop heat-resistant coral strains that might survive future ocean warming.",
+          "blanks": [
+            {
+              "word": "temperatures",
+              "visible": "tempe",
+              "hidden": "ratures"
+            },
+            {
+              "word": "significant",
+              "visible": "signi",
+              "hidden": "ficant"
+            },
+            {
+              "word": "disruption",
+              "visible": "disru",
+              "hidden": "ption"
+            },
+            {
+              "word": "commonly",
+              "visible": "comm",
+              "hidden": "only"
+            },
+            {
+              "word": "provide",
+              "visible": "pro",
+              "hidden": "vide"
+            },
+            {
+              "word": "considerably",
+              "visible": "consi",
+              "hidden": "derably"
+            },
+            {
+              "word": "improve",
+              "visible": "imp",
+              "hidden": "rove"
+            },
+            {
+              "word": "worldwide",
+              "visible": "worl",
+              "hidden": "dwide"
+            },
+            {
+              "word": "resistant",
+              "visible": "resi",
+              "hidden": "stant"
+            },
+            {
+              "word": "warming",
+              "visible": "war",
+              "hidden": "ming"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "The Formation of Sedimentary Rock",
+          "passage": "Sedimentary rock forms through a gradual process involving the accumulation and compression of mineral and organic particles over immense periods of time. Unlike igneous rock, which crystallizes directly from molten material, sedimentary rock typically begins as loose sediment deposited by wind, water, or ice.\n\nAs layers of sediment accumulate, the weight of overlying material gradually compresses the lower layers, squeezing out water and reducing the space between individual particles. This compaction is often accompanied by cementation, a process in which dissolved minerals precipitate between grains and bind them together into a solid mass.\n\nThe resulting rock frequently preserves distinct horizontal layers, known as strata, which record the sequence in which sediments were deposited. Geologists rely heavily on these strata to reconstruct past environmental conditions, since different types of sediment tend to accumulate under different circumstances, such as shallow seas, river deltas, or desert dunes.\n\nFossils are also commonly preserved within sedimentary rock, since the gradual burial process can protect the remains of organisms from decay before they are able to fully decompose. This preservation makes sedimentary rock an invaluable resource for paleontologists studying the history of life on Earth.",
+          "passage_marked": "Sedimentary rock forms through a gradual process involving the accumulation and compression of mineral and organic particles over immense periods of time. Unlike igneous rock, which crystallizes directly from molten material, sedimentary rock typically begins as loose sediment deposited by wind, water, or ice. [A]\n\nAs layers of sediment accumulate, the weight of overlying material gradually compresses the lower layers, squeezing out water and reducing the space between individual particles. [B] This compaction is often accompanied by cementation, a process in which dissolved minerals precipitate between grains and bind them together into a solid mass.\n\nThe resulting rock frequently preserves distinct horizontal layers, known as strata, which record the sequence in which sediments were deposited. Geologists rely heavily on these strata to reconstruct past environmental conditions, since different types of sediment tend to accumulate under different circumstances, such as shallow seas, river deltas, or desert dunes. [C]\n\nFossils are also commonly preserved within sedimentary rock, since the gradual burial process can protect the remains of organisms from decay before they are able to fully decompose. [D] This preservation makes sedimentary rock an invaluable resource for paleontologists studying the history of life on Earth.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'compaction' in the passage is closest in meaning to",
+              "options": [
+                "expansion",
+                "erosion",
+                "compression",
+                "melting"
+              ],
+              "answer": 2
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, how does sedimentary rock differ from igneous rock?",
+              "options": [
+                "It forms from molten material",
+                "It begins as loose sediment rather than crystallizing from magma",
+                "It never contains fossils",
+                "It only forms underwater"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What can geologists learn from strata?",
+              "options": [
+                "The exact age of the Earth",
+                "Past environmental conditions",
+                "The chemical composition of magma",
+                "The speed of tectonic plate movement"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does sedimentary rock often preserve fossils well?",
+              "options": [
+                "It forms at extremely high temperatures",
+                "The gradual burial process protects remains from decay",
+                "Fossils are added artificially by scientists",
+                "It never contains any organic material"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This makes sedimentary rock particularly useful for scientists studying Earth's climate history.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 24
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 36,
+          "topic": "The Invention of Movable Type",
+          "category": "History",
+          "paragraph": "Before the invention of movable type printing, books had to be copied entirely by hand, a laborious process that made written material extremely expensive and rare. The introduction of movable metal type revolutionized the production of books by allowing individual letters to be rearranged and reused for different pages. This innovation dramatically reduced the cost of printing and made written knowledge accessible to a much broader segment of the population than ever before. Literacy rates gradually increased across many regions as books became more affordable, and this technological advancement is often credited with accelerating the spread of scientific and philosophical ideas.",
+          "blanks": [
+            {
+              "word": "introduction",
+              "visible": "intro",
+              "hidden": "duction"
+            },
+            {
+              "word": "production",
+              "visible": "produ",
+              "hidden": "ction"
+            },
+            {
+              "word": "rearranged",
+              "visible": "rearr",
+              "hidden": "anged"
+            },
+            {
+              "word": "reduced",
+              "visible": "red",
+              "hidden": "uced"
+            },
+            {
+              "word": "knowledge",
+              "visible": "know",
+              "hidden": "ledge"
+            },
+            {
+              "word": "segment",
+              "visible": "seg",
+              "hidden": "ment"
+            },
+            {
+              "word": "increased",
+              "visible": "incr",
+              "hidden": "eased"
+            },
+            {
+              "word": "affordable",
+              "visible": "affor",
+              "hidden": "dable"
+            },
+            {
+              "word": "credited",
+              "visible": "cred",
+              "hidden": "ited"
+            },
+            {
+              "word": "philosophical",
+              "visible": "philo",
+              "hidden": "sophical"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Flight Schedule Change Notification",
+          "subtitle": "Dear Mr. Osei,",
+          "text": "We are writing to inform you that your flight departing this Thursday has been rescheduled to depart two hours earlier than originally booked, now leaving at 6:45 a.m. instead of 8:45 a.m. Your seat assignment and baggage allowance remain unchanged. If this new time does not work for your schedule, you may rebook onto a different flight within the next thirty days at no additional charge. Please arrive at the airport at least two hours before the new departure time.",
+          "questions": [
+            {
+              "question": "What is the purpose of this email?",
+              "options": [
+                "To cancel a flight",
+                "To notify a customer of a schedule change",
+                "To offer a discount on a ticket",
+                "To confirm a baggage claim"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What has NOT changed about the flight?",
+              "options": [
+                "The departure time",
+                "The seat assignment and baggage allowance",
+                "The gate number",
+                "The airline"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can Mr. Osei do if the new time is inconvenient?",
+              "options": [
+                "Request a full refund only",
+                "Rebook onto a different flight at no charge",
+                "Cancel without any penalty",
+                "Contact a different airline"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 59
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Software Subscription Renewal Reminder",
+          "subtitle": "Hi Taylor,",
+          "text": "This is a friendly reminder that your annual subscription to CloudDraft Pro will renew automatically in five days at the current rate of ninety-nine dollars. If you would like to switch to the monthly plan instead, you must do so before the renewal date through your account settings page. Canceling after the renewal charge has processed will not result in a refund for the current billing period, though you will retain access until the period ends. Contact support if you have any billing questions.",
+          "questions": [
+            {
+              "question": "What will happen in five days if no action is taken?",
+              "options": [
+                "The account will be deleted",
+                "The subscription will renew automatically",
+                "The price will double",
+                "Access will be suspended"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens if Taylor cancels after the renewal charge processes?",
+              "options": [
+                "A full refund is issued",
+                "No refund is issued but access continues until the period ends",
+                "Access is cut off immediately",
+                "The account is downgraded for free"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "The word 'retain' in the email is closest in meaning to",
+              "options": [
+                "lose",
+                "keep",
+                "request",
+                "upgrade"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 60
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 243,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/243.mp3",
+          "transcript": "Is it too late to submit my application for financial aid?",
+          "context": "A student asks a financial aid office employee.",
+          "options": [
+            "You still have until the end of the month.",
+            "Financial aid packages vary by student.",
+            "The application is available online.",
+            "Most students apply in early spring."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "31-243"
+        },
+        {
+          "id": 244,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/244.mp3",
+          "transcript": "Could you help me figure out which bus route goes to the stadium?",
+          "context": "A visitor asks a transit employee for directions.",
+          "options": [
+            "Route 12 will take you right there.",
+            "Bus fare is two dollars each way.",
+            "Buses run every fifteen minutes.",
+            "The stadium is a major stop downtown."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "31-244"
+        },
+        {
+          "id": 245,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/245.mp3",
+          "transcript": "Do you know if this store price-matches other retailers?",
+          "context": "A customer asks a store employee about pricing policy.",
+          "options": [
+            "Yes, just bring in proof of the lower price.",
+            "This item is already on sale.",
+            "The store has a rewards program.",
+            "Price matching applies to online prices too."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "31-245"
+        },
+        {
+          "id": 246,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/246.mp3",
+          "transcript": "Could you confirm if my rent payment went through this month?",
+          "context": "A tenant calls the property management office.",
+          "options": [
+            "Let me check your account right now.",
+            "Rent is due on the first of the month.",
+            "Late fees apply after the fifth.",
+            "You can pay online through the portal."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "31-246"
+        },
+        {
+          "id": 247,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/247.mp3",
+          "transcript": "Is it possible to get a receipt emailed instead of printed?",
+          "context": "A customer asks a cashier at checkout.",
+          "options": [
+            "Sure, I just need your email address.",
+            "Printed receipts use recycled paper.",
+            "Returns require the original receipt.",
+            "We're switching to digital receipts soon."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "31-247"
+        },
+        {
+          "id": 248,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/248.mp3",
+          "transcript": "Could you tell me if this software update fixed the crashing issue?",
+          "context": "An employee asks an IT technician about a recent update.",
+          "options": [
+            "It should be resolved now, let's test it together.",
+            "The update was released this morning.",
+            "Most software updates happen automatically.",
+            "You may need to restart your computer."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "31-248"
+        },
+        {
+          "id": 249,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/249.mp3",
+          "transcript": "Do you have this jacket in a medium?",
+          "context": "A customer asks a clothing store employee.",
+          "options": [
+            "Let me check the stockroom for you.",
+            "This jacket is waterproof.",
+            "The store closes at nine.",
+            "Jackets are on the second floor."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "32-249"
+        },
+        {
+          "id": 250,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/250.mp3",
+          "transcript": "Could you validate my parking ticket?",
+          "context": "A customer asks a store cashier.",
+          "options": [
+            "Sure, just show me your receipt.",
+            "The parking lot is behind the building.",
+            "Parking costs five dollars an hour.",
+            "We don't have a parking lot."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "32-250"
+        },
+        {
+          "id": 251,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/251.mp3",
+          "transcript": "I think my order is missing an item.",
+          "context": "A customer speaks to a delivery driver.",
+          "options": [
+            "I'm sorry, let me call the restaurant to check.",
+            "The delivery fee is three dollars.",
+            "Your order should arrive in ten minutes.",
+            "We deliver every day of the week."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "32-251"
+        },
+        {
+          "id": 252,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/252.mp3",
+          "transcript": "Would it be possible to move my appointment to next week?",
+          "context": "A patient calls a dental office.",
+          "options": [
+            "Of course, let me check what's available.",
+            "The dentist recommends flossing daily.",
+            "Our office is open on weekdays.",
+            "Your last appointment was in March."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "32-252"
+        }
+      ],
+      "conv": [
+        {
+          "id": 56,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/56.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Hey, do you have a minute to look over my lab report before I submit it?"
+            },
+            {
+              "speaker": "female",
+              "text": "Sure, what part are you unsure about?"
+            },
+            {
+              "speaker": "male",
+              "text": "Mostly the discussion section. I'm not sure my conclusions actually match the data."
+            },
+            {
+              "speaker": "female",
+              "text": "Let me take a look... okay, I think you need to explain the outlier in trial three a bit more."
+            },
+            {
+              "speaker": "male",
+              "text": "Right, I noticed that too but wasn't sure how to address it."
+            },
+            {
+              "speaker": "female",
+              "text": "Just add a sentence saying it was likely due to equipment error, that should be enough."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What does the man want help with?",
+              "options": [
+                "Finding a lab partner",
+                "Reviewing his lab report",
+                "Scheduling a lab session",
+                "Ordering lab supplies"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest about the outlier?",
+              "options": [
+                "Ignore it completely",
+                "Redo the entire experiment",
+                "Explain it as likely equipment error",
+                "Remove trial three from the report"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 57,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/57.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I heard the campus gym is getting new equipment next month."
+            },
+            {
+              "speaker": "male",
+              "text": "Really? I hope they finally replace those old treadmills."
+            },
+            {
+              "speaker": "female",
+              "text": "I think that's part of the plan, along with some new weight machines."
+            },
+            {
+              "speaker": "male",
+              "text": "That's great news. Do you know if membership prices will change?"
+            },
+            {
+              "speaker": "female",
+              "text": "I don't think so, but I'll check the announcement board to be sure."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the main topic of the conversation?",
+              "options": [
+                "A new campus restaurant",
+                "Upgrades to the campus gym",
+                "A change in gym membership fees",
+                "A new fitness class schedule"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man hope will happen?",
+              "options": [
+                "Prices will decrease",
+                "The old treadmills will be replaced",
+                "The gym will extend its hours",
+                "A new location will open"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 58,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/58.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Do you know if the professor posted our exam grades yet?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not that I've seen. She said it might take until Friday."
+            },
+            {
+              "speaker": "male",
+              "text": "I'm a little nervous, that essay question was tough."
+            },
+            {
+              "speaker": "female",
+              "text": "I felt the same way, but I think I covered the main points at least."
+            },
+            {
+              "speaker": "male",
+              "text": "Same here. Let's just wait and see."
+            }
+          ],
+          "questions": [
+            {
+              "question": "Why is the man nervous?",
+              "options": [
+                "He missed the exam",
+                "He found the essay question difficult",
+                "He forgot to submit his exam",
+                "He arrived late to the exam"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When does the professor expect to post the grades?",
+              "options": [
+                "By Monday",
+                "By Wednesday",
+                "By Friday",
+                "Next month"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 56,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/56.mp3",
+          "speaker": "male",
+          "transcript": "Attention shoppers: our store will be closing one hour early today at eight o'clock for inventory count. We apologize for any inconvenience this may cause. All checkout lines will close at seven forty-five to allow enough time to process final purchases. Regular store hours will resume tomorrow morning at nine.",
+          "questions": [
+            {
+              "question": "What is the main purpose of this announcement?",
+              "options": [
+                "To announce a store closing for inventory",
+                "To advertise a store sale",
+                "To warn about a power outage",
+                "To announce new store hours permanently"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "When will checkout lines close?",
+              "options": [
+                "At seven o'clock",
+                "At seven forty-five",
+                "At eight o'clock",
+                "At nine o'clock"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 57,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/57.mp3",
+          "speaker": "female",
+          "transcript": "Good afternoon, passengers. This is your captain speaking. We are currently experiencing some turbulence ahead and will be keeping the seatbelt sign on for the remainder of the flight. We expect to land approximately fifteen minutes ahead of schedule. Flight attendants will be delayed in serving beverages until conditions improve. Thank you for your patience.",
+          "questions": [
+            {
+              "question": "Why is the seatbelt sign being kept on?",
+              "options": [
+                "Due to turbulence ahead",
+                "Because the flight is about to land",
+                "Due to a mechanical issue",
+                "Because of a delay in the schedule"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the captain say about the landing time?",
+              "options": [
+                "The flight will land late",
+                "The flight will land on time",
+                "The flight will land ahead of schedule",
+                "The landing time is unknown"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 58,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/58.mp3",
+          "speaker": "male",
+          "transcript": "Attention library patrons: the third floor study rooms will be unavailable this weekend due to carpet replacement. Patrons needing a quiet space are encouraged to use the reading room on the first floor instead. We expect the third floor to reopen by Monday morning. Thank you for your understanding as we work to improve our facilities.",
+          "questions": [
+            {
+              "question": "Why are the third floor study rooms unavailable?",
+              "options": [
+                "They are being used for an event",
+                "Carpet replacement is taking place",
+                "They are being cleaned for an inspection",
+                "New furniture is being delivered"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative is suggested?",
+              "options": [
+                "The computer lab",
+                "The reading room on the first floor",
+                "A different library branch",
+                "The building lobby"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 45,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/45.mp3",
+          "speaker": "female",
+          "subject": "Psychology",
+          "transcript": "Today I want to talk about a concept called cognitive dissonance, which was first described by the psychologist Leon Festinger in the nineteen fifties. Cognitive dissonance refers to the mental discomfort people experience when they hold two contradictory beliefs, or when their actions conflict with their stated values. Festinger's classic example involved smokers who knew smoking was harmful but continued smoking anyway. That contradiction between knowledge and behavior creates psychological tension, and people are strongly motivated to reduce that tension somehow. There are generally three ways people resolve this discomfort. First, they might change their behavior to align with their beliefs, such as actually quitting smoking. Second, they might change their belief itself, perhaps by downplaying the health risks or telling themselves the research is exaggerated. Third, and this is quite common, people add new justifying beliefs, such as telling themselves that smoking helps them manage stress, which they consider more important than the long-term health risk. What's particularly interesting is that dissonance theory helps explain why people sometimes become more committed to a belief after being presented with contradictory evidence, rather than less committed. If changing the belief would be too costly or too central to someone's identity, they may instead work harder to justify or defend it. This has obvious implications well beyond just health behavior. It applies to political beliefs, financial decisions, and even everyday choices like justifying an expensive purchase after the fact. Researchers have also found that dissonance tends to be strongest when a decision was made freely, without external pressure, and when it's difficult to reverse. If someone was forced into a decision, they generally don't feel as much need to justify it internally, since they can simply blame the external pressure rather than their own judgment.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "The health effects of smoking",
+                "The theory of cognitive dissonance",
+                "How memory formation works",
+                "The history of behavioral psychology"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what are the three ways people resolve dissonance?",
+              "options": [
+                "Ignoring it, ignoring it further, and forgetting it",
+                "Changing behavior, changing belief, or adding justifying beliefs",
+                "Talking to a therapist, journaling, and meditating",
+                "Denial, anger, and acceptance"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention people becoming more committed to a belief after contradictory evidence?",
+              "options": [
+                "To show that dissonance theory has limitations",
+                "To illustrate an unexpected pattern the theory helps explain",
+                "To argue that people are generally irrational",
+                "To criticize Festinger's original research"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When does dissonance tend to be strongest, according to the talk?",
+              "options": [
+                "When a decision was made under pressure",
+                "When a decision was made freely and is hard to reverse",
+                "When a decision involves very little money",
+                "When a decision is made in a group setting"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 46,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/46.mp3",
+          "speaker": "male",
+          "subject": "Geology",
+          "transcript": "Let's continue our discussion of plate tectonics by focusing specifically on subduction zones. A subduction zone forms where two tectonic plates converge and one plate, usually the denser oceanic plate, is forced beneath the other. This process has enormous consequences for the geology we observe at Earth's surface. As the subducting plate descends into the mantle, it heats up and releases water trapped within its minerals. This released water lowers the melting point of the surrounding mantle rock, causing it to partially melt and form magma. That magma is less dense than the surrounding rock, so it rises upward, eventually producing chains of volcanoes on the overriding plate. This is exactly how the volcanic mountains of the Pacific Ring of Fire formed, a roughly circular belt of volcanic activity that surrounds much of the Pacific Ocean. Subduction zones are also responsible for some of the most powerful earthquakes ever recorded, since enormous stress builds up along the boundary where the two plates are locked together by friction. When that stress is finally released, it can produce a megathrust earthquake, capable of generating devastating tsunamis if it occurs beneath the ocean floor. The 2011 earthquake off the coast of Japan is a well-known example of this kind of event. Interestingly, not all subduction zones behave the same way. Some are relatively quiet, releasing stress gradually through smaller, more frequent earthquakes, while others remain locked for centuries, building up enormous amounts of stored energy before eventually rupturing in a massive event. Geologists study historical earthquake patterns and use GPS monitoring to track how much strain is accumulating along different subduction zones around the world, which helps them assess long-term seismic risk for coastal communities.",
+          "questions": [
+            {
+              "question": "What is the main focus of this talk?",
+              "options": [
+                "The formation and effects of subduction zones",
+                "How mountains form through erosion",
+                "The composition of Earth's core",
+                "The history of earthquake prediction"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the subducting plate contribute to volcano formation?",
+              "options": [
+                "It directly turns into lava",
+                "Released water lowers the melting point of surrounding mantle rock",
+                "It cools the surrounding rock rapidly",
+                "It blocks magma from rising"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What causes megathrust earthquakes according to the talk?",
+              "options": [
+                "Volcanic eruptions releasing pressure",
+                "Sudden release of stress built up between locked plates",
+                "Rapid cooling of oceanic crust",
+                "Movement of magma through cracks"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about subduction zones from the talk?",
+              "options": [
+                "They all behave in exactly the same way",
+                "Some build up stress for centuries before rupturing",
+                "They never produce earthquakes",
+                "They only exist in the Pacific Ocean"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 253,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/253.mp3",
+          "transcript": "The printer on the third floor is out of paper again.",
+          "context": "An employee tells a coworker.",
+          "options": [
+            "I'll grab a new ream from the supply closet.",
+            "The printer was installed last year.",
+            "We have two printers on this floor.",
+            "Paper is expensive these days."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "32-253"
+        },
+        {
+          "id": 254,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/254.mp3",
+          "transcript": "Excuse me, is this seat taken?",
+          "context": "A passenger asks another passenger on a train.",
+          "options": [
+            "No, go ahead and sit down.",
+            "The train departs in five minutes.",
+            "This train goes downtown.",
+            "I usually sit near the window."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "32-254"
+        },
+        {
+          "id": 255,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/255.mp3",
+          "transcript": "Can I get a refund on this sweater? It doesn't fit.",
+          "context": "A customer speaks to a store clerk.",
+          "options": [
+            "Sure, do you have your receipt with you?",
+            "The sweater is made of wool.",
+            "We just got new sweaters in.",
+            "Sweaters are fifty percent off today."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "32-255"
+        },
+        {
+          "id": 256,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/256.mp3",
+          "transcript": "I noticed my rent went up this month.",
+          "context": "A tenant speaks to a building manager.",
+          "options": [
+            "Yes, all units had a small increase this year.",
+            "The building has twelve floors.",
+            "Rent is due on the first.",
+            "We just repainted the lobby."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "32-256"
+        },
+        {
+          "id": 257,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/257.mp3",
+          "transcript": "Do you offer any discounts for students?",
+          "context": "A customer asks a museum ticket seller.",
+          "options": [
+            "Yes, just show your student ID.",
+            "The museum has three floors of exhibits.",
+            "It opens at ten every day.",
+            "Admission includes an audio guide."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "33-257"
+        },
+        {
+          "id": 258,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/258.mp3",
+          "transcript": "Could you turn down the music a little?",
+          "context": "A customer speaks to a café employee.",
+          "options": [
+            "Sure, no problem at all.",
+            "We play music every afternoon.",
+            "The café was renovated last year.",
+            "Our playlist changes daily."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "33-258"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 47,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/47.mp3",
+          "speaker": "female",
+          "subject": "Economics",
+          "transcript": "Today we're going to examine the concept of market externalities, situations where the production or consumption of a good affects a third party who wasn't directly involved in the transaction. Economists typically divide externalities into two categories: negative and positive. A negative externality occurs when an activity imposes a cost on someone outside the transaction. The classic example is industrial pollution, where a factory's production process might pollute a nearby river, harming the health and livelihoods of people who live downstream but had no say in the factory's operations. Because the factory doesn't have to pay for this harm directly, it has little financial incentive to reduce pollution on its own, leading economists to describe this as a market failure. Positive externalities work in the opposite direction, providing unpriced benefits to third parties. A commonly cited example is education, since an educated population tends to produce broader societal benefits, such as lower crime rates and higher rates of civic participation, beyond just the direct benefits the individual student receives. Because these broader benefits aren't captured in the price of education, some economists argue that education tends to be underprovided by a purely free market, which is one justification often given for public funding of schools. Governments have developed several tools to address externalities. For negative externalities, common approaches include taxes on the harmful activity, often called Pigovian taxes after the economist who proposed them, as well as direct regulation limiting how much pollution a company is legally allowed to produce. For positive externalities, governments often use subsidies to encourage more of the beneficial activity than the market would otherwise provide. Understanding externalities is fundamental to environmental economics and helps explain why purely unregulated markets don't always produce socially optimal outcomes.",
+          "questions": [
+            {
+              "question": "What is the main topic of the lecture?",
+              "options": [
+                "The history of environmental regulation",
+                "Market externalities and their effects",
+                "How taxes are calculated",
+                "The benefits of public education funding"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What example does the professor give of a negative externality?",
+              "options": [
+                "A factory polluting a river",
+                "A company offering employee training",
+                "A school raising tuition",
+                "A city building a new park"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the professor mention education as a positive externality?",
+              "options": [
+                "To argue that education should be privatized",
+                "To show that its societal benefits go beyond the individual student",
+                "To criticize the quality of public schools",
+                "To explain how tuition prices are set"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is a Pigovian tax used for, according to the talk?",
+              "options": [
+                "Funding public schools directly",
+                "Addressing negative externalities like pollution",
+                "Encouraging more people to attend college",
+                "Reducing income inequality"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 48,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/48.mp3",
+          "speaker": "male",
+          "subject": "Astronomy",
+          "transcript": "This week we're discussing the life cycle of stars, specifically what happens when a star like our sun eventually runs out of fuel. For most of its life, a star maintains a delicate balance between two opposing forces: gravity, which constantly pulls inward, and the outward pressure generated by nuclear fusion occurring in its core. As long as the star has enough hydrogen to fuse into helium, this balance holds steady, sometimes for billions of years. But eventually, the hydrogen in the core runs out. Once fusion in the core stops, gravity briefly gains the upper hand, causing the core to contract and heat up further. This increased heat is enough to ignite fusion in a shell surrounding the core, and this new energy output causes the star's outer layers to expand dramatically, transforming the star into what's called a red giant. Our own sun is expected to undergo this transformation in roughly five billion years, expanding so much that it may engulf the orbits of Mercury and Venus, and possibly Earth as well. What happens after the red giant phase depends heavily on the star's original mass. For a star roughly the size of our sun, the outer layers will eventually drift away into space, forming a glowing shell of gas known as a planetary nebula, while the exposed core collapses into an extremely dense object called a white dwarf, which will slowly cool over an immense span of time. Much more massive stars follow a dramatically different path. Instead of gently shedding their outer layers, they undergo a catastrophic collapse followed by a violent explosion known as a supernova, which can briefly outshine an entire galaxy. Depending on how massive the original star was, what remains after a supernova can be an incredibly dense neutron star, or in the most extreme cases, a black hole, an object so dense that not even light can escape its gravitational pull.",
+          "questions": [
+            {
+              "question": "What is the main subject of this talk?",
+              "options": [
+                "How planets form around stars",
+                "The life cycle of stars and what happens when they run out of fuel",
+                "The discovery of black holes",
+                "The formation of the solar system"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What causes a star to become a red giant?",
+              "options": [
+                "The core stops rotating",
+                "Fusion ignites in a shell around the core after core hydrogen runs out",
+                "The star collides with another star",
+                "Gravity permanently overcomes fusion pressure"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What determines whether a star becomes a white dwarf or ends in a supernova?",
+              "options": [
+                "The star's distance from Earth",
+                "The star's original mass",
+                "The star's color",
+                "The star's age when it formed"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about black holes from the talk?",
+              "options": [
+                "They only form from small stars like the sun",
+                "They can form from the collapse of very massive stars after a supernova",
+                "They are less dense than neutron stars",
+                "They emit more light than any other object"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 259,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/259.mp3",
+          "transcript": "I think I left my umbrella in the meeting room.",
+          "context": "An employee speaks to a receptionist.",
+          "options": [
+            "Let me go check for you right now.",
+            "It's supposed to rain today.",
+            "The meeting room is booked until noon.",
+            "We have extra umbrellas at the front desk."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "33-259"
+        },
+        {
+          "id": 260,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/260.mp3",
+          "transcript": "Is there a fee for returning the rental car late?",
+          "context": "A customer asks a car rental agent.",
+          "options": [
+            "Yes, there's a small hourly charge after the deadline.",
+            "The car has a full tank of gas.",
+            "Rentals include unlimited mileage.",
+            "We have several car models available."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "33-260"
+        },
+        {
+          "id": 261,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/261.mp3",
+          "transcript": "My internet has been really slow all week.",
+          "context": "A customer calls tech support.",
+          "options": [
+            "Let's run a quick speed test to check.",
+            "Our internet plans start at thirty dollars.",
+            "The company was founded ten years ago.",
+            "You can upgrade your plan online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "33-261"
+        },
+        {
+          "id": 262,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/262.mp3",
+          "transcript": "Would you mind covering my shift on Saturday?",
+          "context": "One coworker asks another.",
+          "options": [
+            "Sure, I don't have any plans that day.",
+            "The store opens at nine on Saturdays.",
+            "I usually work weekdays only.",
+            "Saturday shifts pay a bit more."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "33-262"
+        },
+        {
+          "id": 263,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/263.mp3",
+          "transcript": "I'd like to exchange these headphones for a different color.",
+          "context": "A customer speaks to an electronics store clerk.",
+          "options": [
+            "Sure, let me see what colors we have left.",
+            "These headphones are noise-canceling.",
+            "The warranty lasts one year.",
+            "We just restocked headphones yesterday."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "33-263"
+        },
+        {
+          "id": 264,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/264.mp3",
+          "transcript": "Do you know when the next campus shuttle arrives?",
+          "context": "A student asks another student at a bus stop.",
+          "options": [
+            "I think it should be here in about five minutes.",
+            "The shuttle only runs on weekdays.",
+            "It costs a dollar to ride.",
+            "The shuttle route was changed last semester."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "33-264"
+        }
+      ],
+      "conv": [
+        {
+          "id": 59,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/59.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Excuse me, I'm trying to find the financial aid office."
+            },
+            {
+              "speaker": "male",
+              "text": "It's actually on the second floor, right past the elevators."
+            },
+            {
+              "speaker": "female",
+              "text": "Thank you. Do you know if I need an appointment?"
+            },
+            {
+              "speaker": "male",
+              "text": "I don't think so for general questions, but for specific issues you might want to call ahead."
+            },
+            {
+              "speaker": "female",
+              "text": "Okay, I'll head up there now and see."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman looking for?",
+              "options": [
+                "The registrar's office",
+                "The financial aid office",
+                "The library",
+                "The bookstore"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man recommend for specific issues?",
+              "options": [
+                "Emailing the office",
+                "Calling ahead for an appointment",
+                "Visiting during lunch",
+                "Filling out an online form"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 60,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/60.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Are you going to the guest lecture on marine ecosystems tomorrow?"
+            },
+            {
+              "speaker": "female",
+              "text": "I was planning to, but I have a study group at the same time."
+            },
+            {
+              "speaker": "male",
+              "text": "That's too bad, I heard the speaker is really well known in the field."
+            },
+            {
+              "speaker": "female",
+              "text": "Maybe I can reschedule the study group to the next day instead."
+            },
+            {
+              "speaker": "male",
+              "text": "That sounds like a good plan, I think you'd really enjoy the talk."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's conflict?",
+              "options": [
+                "She has another class",
+                "She has a study group at the same time",
+                "She is out of town",
+                "She already attended a similar lecture"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman decide to do?",
+              "options": [
+                "Skip the lecture entirely",
+                "Try to reschedule her study group",
+                "Ask a friend to record the lecture",
+                "Attend both events partially"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 59,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/59.mp3",
+          "speaker": "female",
+          "transcript": "May I have your attention please. The 3:15 train to Lakeside has been delayed by approximately twenty minutes due to a signal issue further down the line. We apologize for the inconvenience and appreciate your patience. Updated arrival information will be posted on the departure boards as soon as it becomes available.",
+          "questions": [
+            {
+              "question": "Why has the train been delayed?",
+              "options": [
+                "A mechanical failure",
+                "A signal issue down the line",
+                "Heavy passenger traffic",
+                "Bad weather conditions"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How long is the delay expected to be?",
+              "options": [
+                "Ten minutes",
+                "Twenty minutes",
+                "Thirty minutes",
+                "One hour"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 60,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/60.mp3",
+          "speaker": "male",
+          "transcript": "Attention all employees: the annual company picnic has been moved from this Saturday to the following Saturday due to the forecast of heavy rain. The location remains the same, Riverside Park, and the time will still be noon to four. Please update your calendars accordingly, and let the events team know if you have any questions.",
+          "questions": [
+            {
+              "question": "Why was the picnic rescheduled?",
+              "options": [
+                "The park was unavailable",
+                "Heavy rain is forecasted",
+                "Not enough employees signed up",
+                "A scheduling conflict with another event"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What stayed the same about the picnic?",
+              "options": [
+                "The date",
+                "The location and time",
+                "The guest list",
+                "The catering menu"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "Is the shuttle bus running today?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the shuttle bus",
+          "was running today"
+        ],
+        "distractorChunks": [
+          "is running today"
+        ],
+        "responseSuffix": ".",
+        "id": 111
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Did the landlord approve the lease renewal?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "whether",
+          "the landlord",
+          "had approved the lease renewal"
+        ],
+        "distractorChunks": [
+          "has approved the lease renewal"
+        ],
+        "responseSuffix": ".",
+        "id": 112
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Will the store restock these shoes next week?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "was",
+          "not",
+          "sure",
+          "whether",
+          "the store",
+          "would restock these shoes next week"
+        ],
+        "distractorChunks": [
+          "will restock these shoes next week"
+        ],
+        "responseSuffix": ".",
+        "id": 113
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Can the technician fix the router remotely?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the technician",
+          "could fix the router remotely"
+        ],
+        "distractorChunks": [
+          "can fix the router remotely"
+        ],
+        "responseSuffix": ".",
+        "id": 114
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Has the package arrived at the front desk?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wondered",
+          "whether",
+          "the package",
+          "had arrived at the front desk"
+        ],
+        "distractorChunks": [
+          "has arrived at the front desk"
+        ],
+        "responseSuffix": ".",
+        "id": 115
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Does the museum offer discounts for students?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "was",
+          "curious",
+          "whether",
+          "the museum",
+          "offered discounts for students"
+        ],
+        "distractorChunks": [
+          "offers discounts for students"
+        ],
+        "responseSuffix": ".",
+        "id": 116
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Is the conference room booked for the afternoon?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "checked",
+          "whether",
+          "the conference room",
+          "was booked for the afternoon"
+        ],
+        "distractorChunks": [
+          "is booked for the afternoon"
+        ],
+        "responseSuffix": ".",
+        "id": 117
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Will the flight depart on time?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "the agent",
+          "whether",
+          "the flight",
+          "would depart on time"
+        ],
+        "distractorChunks": [
+          "will depart on time"
+        ],
+        "responseSuffix": ".",
+        "id": 118
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Did the plumber replace the pipe already?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "had",
+          "no",
+          "idea",
+          "whether",
+          "the plumber",
+          "had already replaced the pipe"
+        ],
+        "distractorChunks": [
+          "has already replaced the pipe"
+        ],
+        "responseSuffix": ".",
+        "id": 119
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Can I reschedule my appointment for Friday?",
+        "responseGender": "female",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "he",
+          "could reschedule his appointment for Friday"
+        ],
+        "distractorChunks": [
+          "can reschedule his appointment for Friday"
+        ],
+        "responseSuffix": ".",
+        "id": 120
+      }
+    ],
+    "email": {
+      "id": 12,
+      "scenario": "You booked a hotel room for a family event, but upon arrival you were given a smaller, lower-quality room than the one you reserved. You want to complain and request compensation.",
+      "recipient": "Guest Relations, Harbor View Hotel",
+      "subject": "Complaint about room downgrade",
+      "tasks": [
+        {
+          "description": "Explain that you received a different room than booked.",
+          "keywords": [
+            "different room",
+            "downgraded",
+            "smaller",
+            "not what I booked"
+          ]
+        },
+        {
+          "description": "Mention the inconvenience this caused during your stay.",
+          "keywords": [
+            "inconvenience",
+            "uncomfortable",
+            "disappointed",
+            "affected"
+          ]
+        },
+        {
+          "description": "Request compensation or a partial refund.",
+          "keywords": [
+            "compensation",
+            "refund",
+            "discount",
+            "reimbursement"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Guest Relations Team,\n\nI am writing to express my disappointment about my recent stay at Harbor View Hotel for my family's reunion. I had reserved a deluxe room with a view, but upon arrival, I was given a much smaller, standard room facing the parking lot instead, with no explanation offered at check-in.\n\nThis downgrade caused real inconvenience during an important family event, as we had specifically chosen that room type to comfortably host relatives visiting from out of town. The mismatch between what I booked and what we received was disappointing and affected our overall experience.\n\nGiven this situation, I would like to request compensation, such as a partial refund or a discount on a future stay, to reflect the difference in the room we actually received. I have attached my booking confirmation for reference. Thank you for looking into this matter.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 12,
+      "subject": "oceanography",
+      "professor": "Dr. Delgado",
+      "professorGender": "male",
+      "prompt": "Your oceanography professor is examining the debate over deep-sea mining. Write a post responding to the professor's question.\n\nDr. Delgado: This week we've been discussing deep-sea mining, which involves extracting valuable minerals like cobalt and manganese from the ocean floor. These minerals are essential for manufacturing batteries used in electric vehicles and renewable energy technology, and mining companies argue that deep-sea extraction is less environmentally destructive than traditional land-based mining. However, marine scientists warn that deep-sea ecosystems are poorly understood and extremely fragile, and mining could cause irreversible damage to species that have not even been discovered yet. Before our next class, please respond to this question: Should deep-sea mining be permitted to meet growing demand for critical minerals, or should the deep ocean be protected from industrial extraction?",
+      "classmates": [
+        {
+          "name": "Olumide",
+          "gender": "male",
+          "opinion": "I think deep-sea mining should be permitted, at least under strict environmental regulations, because the world urgently needs these minerals for the clean energy transition. Electric vehicle batteries and renewable energy storage systems depend heavily on cobalt and manganese, and land-based mining for these minerals often causes severe deforestation, water pollution, and human rights abuses in developing countries. Deep-sea mining could actually reduce this harm by shifting extraction to less populated, though still sensitive, environments. With proper oversight and continued research into minimizing ecological disruption, I believe deep-sea mining can responsibly supply the materials needed to fight climate change without repeating the mistakes of traditional mining industries."
+        },
+        {
+          "name": "Ingrid",
+          "gender": "female",
+          "opinion": "I strongly believe the deep ocean should be protected from industrial mining. Scientists have discovered that deep-sea ecosystems, despite existing in complete darkness under immense pressure, host incredibly diverse and unique species found nowhere else on Earth, many of which have not even been formally studied yet. Mining operations would stir up sediment plumes that could smother marine life across vast areas, and because these ecosystems recover so slowly, any damage could be essentially permanent. We simply do not understand these environments well enough to mine them responsibly. I think we should prioritize recycling existing minerals and developing alternative battery technologies rather than risking irreversible destruction of a largely unexplored part of our planet."
+        }
+      ],
+      "exampleResponse": "Deep-sea mining sits at the intersection of climate action and ocean conservation, making it a genuinely difficult issue. Whether the benefits of mining critical minerals outweigh the risks to fragile ecosystems is worth considering carefully. While I see where Olumide is coming from when he argues that deep-sea mining could reduce the human and environmental costs associated with land-based mining, I would argue that our limited scientific understanding of these ecosystems makes the risk of irreversible damage too great to accept right now. In this respect, I am inclined to agree with Ingrid, who emphasizes that deep-sea habitats are unique, slow to recover, and still largely unexplored. For example, sediment plumes from a single mining operation could spread for miles, potentially smothering species that scientists have not even had the chance to identify yet. Expanding recycling programs and investing in alternative battery materials seems like a safer path forward than mining an ecosystem we barely understand."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 12,
+      "location": "University Planetarium",
+      "icon": "🔭",
+      "speaker": "female",
+      "introText": "You are learning how to introduce a planetarium show. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the university planetarium.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "Tonight's show is about the solar system.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Please silence your phones before we begin.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "The dome above you simulates the night sky.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "Our telescope session follows immediately after the show.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Feel free to ask the astronomer questions during the discussion period.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Souvenir star maps are available at the counter near the exit.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 12,
+      "topic": "Community Service",
+      "icon": "🤝",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about volunteering and community service. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. Let's begin with an easy question. Have you ever volunteered for a cause or organization? What was that experience like?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer volunteering for local community projects or for larger international organizations?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people think that volunteering should be a required part of school education. What is your opinion on this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you believe volunteering has a meaningful impact on society? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

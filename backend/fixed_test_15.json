@@ -1,0 +1,1794 @@
+{
+  "id": 15,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 43,
+          "topic": "Octopus Camouflage",
+          "category": "Zoology",
+          "paragraph": "Octopuses possess one of the most sophisticated camouflage systems found anywhere in the animal kingdom. Specialized cells embedded throughout their skin allow them to rapidly change both color and texture to match their surrounding environment. This remarkable ability helps octopuses avoid detection by predators while also allowing them to ambush unsuspecting prey without being noticed beforehand. Unlike many other camouflaging animals, octopuses can accomplish this transformation within a fraction of a second, an astonishingly fast response given the complexity of the process involved. Researchers studying this phenomenon hope that understanding the underlying mechanisms might eventually inspire new technologies in fields like adaptive materials and robotics.",
+          "blanks": [
+            {
+              "word": "Specialized",
+              "visible": "Speci",
+              "hidden": "alized"
+            },
+            {
+              "word": "texture",
+              "visible": "tex",
+              "hidden": "ture"
+            },
+            {
+              "word": "ability",
+              "visible": "abi",
+              "hidden": "lity"
+            },
+            {
+              "word": "unsuspecting",
+              "visible": "unsus",
+              "hidden": "pecting"
+            },
+            {
+              "word": "animals",
+              "visible": "ani",
+              "hidden": "mals"
+            },
+            {
+              "word": "fraction",
+              "visible": "frac",
+              "hidden": "tion"
+            },
+            {
+              "word": "process",
+              "visible": "pro",
+              "hidden": "cess"
+            },
+            {
+              "word": "phenomenon",
+              "visible": "pheno",
+              "hidden": "menon"
+            },
+            {
+              "word": "inspire",
+              "visible": "ins",
+              "hidden": "pire"
+            },
+            {
+              "word": "robotics",
+              "visible": "robo",
+              "hidden": "tics"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Group Chat",
+          "subtitle": "",
+          "text": "Elena (4:02 p.m.)\nDoes anyone still have the notes from Tuesday's lecture? I was out sick.\n\nMarcus (4:05 p.m.)\nI've got them, but they're pretty messy. I can scan them tonight and send them over.\n\nElena (4:06 p.m.)\nThat would be amazing, thank you! Also, did the professor mention anything about the exam format?\n\nPriya (4:09 p.m.)\nYeah, she said it's going to be mostly short answer with one essay question at the end. No multiple choice this time.\n\nMarcus (4:10 p.m.)\nOh that's good to know, I was worried it'd be all multiple choice like the last one.\n\nElena (4:12 p.m.)\nDefinitely easier to study for short answer honestly. Thanks for the update, Priya.\n\nPriya (4:13 p.m.)\nNo problem! Let me know if you two want to study together this weekend.",
+          "questions": [
+            {
+              "question": "Why does Elena ask for the notes?",
+              "options": [
+                "She lost her notebook",
+                "She was absent from the lecture",
+                "She wants to compare answers",
+                "She is helping a friend study"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did the professor say about the exam format?",
+              "options": [
+                "It will be all multiple choice",
+                "It will be mostly short answer with one essay question",
+                "It will be an oral exam",
+                "It was canceled"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Priya offer to do at the end?",
+              "options": [
+                "Send her own notes",
+                "Study together this weekend",
+                "Talk to the professor",
+                "Cancel the study plan"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 71
+        },
+        {
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Text Messages",
+          "subtitle": "",
+          "text": "Dana (6:40 p.m.)\nHey, are you still coming to help me move the couch tomorrow?\n\nRafael (6:42 p.m.)\nYes! What time were you thinking?\n\nDana (6:43 p.m.)\nMaybe around ten? My roommate said he could help too, so it should only take an hour or so.\n\nRafael (6:45 p.m.)\nTen works for me. Should I bring anything, like straps or a dolly?\n\nDana (6:46 p.m.)\nIf you have a dolly that would be huge, honestly. We don't have one and the couch is heavier than it looks.\n\nRafael (6:48 p.m.)\nNo problem, I'll grab my neighbor's dolly tonight. See you at ten!",
+          "questions": [
+            {
+              "question": "What are Dana and Rafael planning to do?",
+              "options": [
+                "Move a couch together",
+                "Go shopping for furniture",
+                "Paint a room",
+                "Clean an apartment"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does Dana ask Rafael to bring?",
+              "options": [
+                "Extra chairs",
+                "A dolly",
+                "Cleaning supplies",
+                "Snacks"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Who else will help with the task?",
+              "options": [
+                "Dana's neighbor",
+                "Rafael's neighbor",
+                "Dana's roommate",
+                "No one else"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 72
+        },
+        {
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Team Chat",
+          "subtitle": "",
+          "text": "Coach Reyes (5:00 p.m.)\nPractice is moved indoors tomorrow because of the rain forecast. Same time, gym B instead of the field.\n\nJamie (5:03 p.m.)\nGot it, thanks for the heads up. Should we still bring cleats?\n\nCoach Reyes (5:05 p.m.)\nNo need, indoor shoes only for the gym floor. Cleats will scratch the surface.\n\nTaylor (5:08 p.m.)\nWill we still do the fitness test tomorrow or is that pushed back?\n\nCoach Reyes (5:10 p.m.)\nWe'll still run the fitness test, just adjusted slightly for the indoor space. Bring water and be ready to move.\n\nJamie (5:11 p.m.)\nSounds good, see everyone there.",
+          "questions": [
+            {
+              "question": "Why is practice being moved indoors?",
+              "options": [
+                "The field is being repaired",
+                "Rain is forecasted",
+                "The gym was double-booked",
+                "The coach requested a change of scenery"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the coach say about cleats?",
+              "options": [
+                "Everyone must wear them",
+                "They are not needed and could damage the floor",
+                "They are optional",
+                "They will be provided by the team"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will still happen during practice?",
+              "options": [
+                "A scrimmage game",
+                "The fitness test",
+                "A team dinner",
+                "Uniform distribution"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 73
+        }
+      ],
+      "ap": [
+        {
+          "title": "The Development of Written Language in Mesopotamia",
+          "passage": "One of the earliest known writing systems, cuneiform, developed in ancient Mesopotamia over five thousand years ago, initially as a practical tool for record-keeping rather than as a means of literary expression. Early Sumerian scribes pressed wedge-shaped marks into soft clay tablets using a reed stylus, creating symbols that represented specific goods, quantities, and transactions.\n\nOver time, this system evolved considerably in both form and function. What began as simple pictographs representing physical objects gradually transformed into a more abstract system capable of representing sounds and grammatical elements, allowing scribes to record increasingly complex ideas, including laws, religious texts, and historical narratives.\n\nThe spread of cuneiform writing throughout the ancient Near East was closely tied to the growth of increasingly complex societies that required reliable methods of record-keeping. Large temple and palace administrations needed accurate records of grain storage, tax collection, and trade transactions, creating strong practical incentives for the continued development and standardization of writing.\n\nCuneiform tablets have proven remarkably durable, since baked or sun-dried clay can survive for thousands of years under the right conditions. As a result, archaeologists have recovered hundreds of thousands of cuneiform tablets, providing modern historians with an extraordinarily detailed window into the daily life, economy, and beliefs of ancient Mesopotamian civilizations.",
+          "passage_marked": "One of the earliest known writing systems, cuneiform, developed in ancient Mesopotamia over five thousand years ago, initially as a practical tool for record-keeping rather than as a means of literary expression. Early Sumerian scribes pressed wedge-shaped marks into soft clay tablets using a reed stylus, creating symbols that represented specific goods, quantities, and transactions. [A]\n\nOver time, this system evolved considerably in both form and function. [B] What began as simple pictographs representing physical objects gradually transformed into a more abstract system capable of representing sounds and grammatical elements, allowing scribes to record increasingly complex ideas, including laws, religious texts, and historical narratives.\n\nThe spread of cuneiform writing throughout the ancient Near East was closely tied to the growth of increasingly complex societies that required reliable methods of record-keeping. Large temple and palace administrations needed accurate records of grain storage, tax collection, and trade transactions, creating strong practical incentives for the continued development and standardization of writing. [C]\n\nCuneiform tablets have proven remarkably durable, since baked or sun-dried clay can survive for thousands of years under the right conditions. [D] As a result, archaeologists have recovered hundreds of thousands of cuneiform tablets, providing modern historians with an extraordinarily detailed window into the daily life, economy, and beliefs of ancient Mesopotamian civilizations.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'durable' in the passage is closest in meaning to",
+              "options": [
+                "fragile",
+                "colorful",
+                "long-lasting",
+                "expensive"
+              ],
+              "answer": 2
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What was the original primary purpose of cuneiform writing?",
+              "options": [
+                "Literary and artistic expression",
+                "Practical record-keeping",
+                "Religious ceremony",
+                "Diplomatic communication between kingdoms"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "How did cuneiform change over time?",
+              "options": [
+                "It became simpler and more pictographic",
+                "It evolved to represent sounds and grammatical elements",
+                "It was replaced entirely by a new alphabet",
+                "It stopped being used for administrative purposes"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why did large temple and palace administrations support the development of writing?",
+              "options": [
+                "They needed accurate records for grain storage and taxes",
+                "They wanted to create religious art",
+                "They were required to by foreign rulers",
+                "They used writing only for entertainment"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This durability explains why so much cuneiform material has survived into the present day.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 3
+            }
+          ],
+          "id": 29
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 44,
+          "topic": "The Silk Road Trade Network",
+          "category": "History",
+          "paragraph": "The Silk Road was not a single road but rather an extensive network of interconnected trade routes spanning much of Asia and reaching into Europe and Africa. Merchants traveling these routes exchanged goods such as silk, spices, and precious metals across vast distances that would have taken months or even years to complete. Beyond material goods, this network also facilitated the exchange of ideas, religious beliefs, and technological innovations between distant civilizations that otherwise had little direct contact. Diseases unfortunately spread along these same routes as well, occasionally causing devastating epidemics in regions far from where an outbreak originally began. Historians consider the Silk Road one of the most significant factors connecting the ancient world together.",
+          "blanks": [
+            {
+              "word": "Merchants",
+              "visible": "Merc",
+              "hidden": "hants"
+            },
+            {
+              "word": "precious",
+              "visible": "prec",
+              "hidden": "ious"
+            },
+            {
+              "word": "facilitated",
+              "visible": "facil",
+              "hidden": "itated"
+            },
+            {
+              "word": "beliefs",
+              "visible": "bel",
+              "hidden": "iefs"
+            },
+            {
+              "word": "distant",
+              "visible": "dis",
+              "hidden": "tant"
+            },
+            {
+              "word": "unfortunately",
+              "visible": "unfor",
+              "hidden": "tunately"
+            },
+            {
+              "word": "devastating",
+              "visible": "devas",
+              "hidden": "tating"
+            },
+            {
+              "word": "outbreak",
+              "visible": "outb",
+              "hidden": "reak"
+            },
+            {
+              "word": "significant",
+              "visible": "signi",
+              "hidden": "ficant"
+            },
+            {
+              "word": "ancient",
+              "visible": "anc",
+              "hidden": "ient"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "The Psychological Effects of Sleep Deprivation",
+          "passage": "Sleep plays an essential role in maintaining cognitive function, emotional regulation, and overall physical health, yet a significant portion of the population regularly experiences insufficient sleep due to work demands, stress, or lifestyle choices. Even short-term sleep deprivation can produce measurable impairments in attention, memory, and decision-making.\n\nResearch conducted in controlled laboratory settings has demonstrated that individuals deprived of sleep for even a single night show slower reaction times and reduced accuracy on cognitive tasks compared to well-rested individuals. These impairments often go unnoticed by the sleep-deprived individuals themselves, who may underestimate the extent to which their performance has declined.\n\nBeyond cognitive effects, chronic sleep deprivation has also been linked to significant changes in emotional processing. Sleep-deprived individuals frequently exhibit heightened emotional reactivity, including increased irritability and a diminished capacity to regulate negative emotions in stressful situations.\n\nLong-term consequences of chronic sleep deprivation extend well beyond temporary impairment, with research increasingly linking insufficient sleep to elevated risks for cardiovascular disease, obesity, and weakened immune function. These findings have prompted public health officials in many countries to emphasize adequate sleep as a critical component of overall wellness, comparable in importance to diet and exercise.",
+          "passage_marked": "Sleep plays an essential role in maintaining cognitive function, emotional regulation, and overall physical health, yet a significant portion of the population regularly experiences insufficient sleep due to work demands, stress, or lifestyle choices. Even short-term sleep deprivation can produce measurable impairments in attention, memory, and decision-making. [A]\n\nResearch conducted in controlled laboratory settings has demonstrated that individuals deprived of sleep for even a single night show slower reaction times and reduced accuracy on cognitive tasks compared to well-rested individuals. [B] These impairments often go unnoticed by the sleep-deprived individuals themselves, who may underestimate the extent to which their performance has declined.\n\nBeyond cognitive effects, chronic sleep deprivation has also been linked to significant changes in emotional processing. Sleep-deprived individuals frequently exhibit heightened emotional reactivity, including increased irritability and a diminished capacity to regulate negative emotions in stressful situations. [C]\n\nLong-term consequences of chronic sleep deprivation extend well beyond temporary impairment, with research increasingly linking insufficient sleep to elevated risks for cardiovascular disease, obesity, and weakened immune function. [D] These findings have prompted public health officials in many countries to emphasize adequate sleep as a critical component of overall wellness, comparable in importance to diet and exercise.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'impairments' in the passage is closest in meaning to",
+              "options": [
+                "improvements",
+                "opportunities",
+                "habits",
+                "reductions in ability"
+              ],
+              "answer": 3
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What is one effect of even short-term sleep deprivation?",
+              "options": [
+                "Improved memory",
+                "Impairments in attention, memory, and decision-making",
+                "Increased physical strength",
+                "Enhanced emotional stability"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What did laboratory research find about sleep-deprived individuals' self-awareness?",
+              "options": [
+                "They accurately judge their own performance decline",
+                "They often underestimate how much their performance has declined",
+                "They sleep more than well-rested individuals",
+                "They perform better than well-rested individuals"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "According to the passage, what long-term risks are linked to chronic sleep deprivation?",
+              "options": [
+                "Improved cardiovascular health",
+                "Cardiovascular disease, obesity, and weakened immune function",
+                "Increased height",
+                "Better emotional regulation"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Notably, this lack of self-awareness can make the problem particularly difficult for people to recognize and address on their own.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 30
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 45,
+          "topic": "The Chemistry of Fireworks",
+          "category": "Chemistry",
+          "paragraph": "Fireworks produce their spectacular displays through carefully controlled chemical reactions involving specific combinations of metal compounds. Each color visible in a firework display results from a different metallic element being heated to extremely high temperatures during the explosive reaction. For example, compounds containing strontium typically produce vivid red colors, while copper compounds tend to generate striking shades of blue. Manufacturers must carefully calculate the precise proportions of these ingredients to achieve the desired visual effect without compromising the stability of the overall mixture. Understanding this underlying chemistry has allowed pyrotechnic designers to create increasingly elaborate and colorful displays for celebrations around the world.",
+          "blanks": [
+            {
+              "word": "visible",
+              "visible": "vis",
+              "hidden": "ible"
+            },
+            {
+              "word": "metallic",
+              "visible": "meta",
+              "hidden": "llic"
+            },
+            {
+              "word": "explosive",
+              "visible": "expl",
+              "hidden": "osive"
+            },
+            {
+              "word": "containing",
+              "visible": "conta",
+              "hidden": "ining"
+            },
+            {
+              "word": "generate",
+              "visible": "gene",
+              "hidden": "rate"
+            },
+            {
+              "word": "precise",
+              "visible": "pre",
+              "hidden": "cise"
+            },
+            {
+              "word": "desired",
+              "visible": "des",
+              "hidden": "ired"
+            },
+            {
+              "word": "Understanding",
+              "visible": "Under",
+              "hidden": "standing"
+            },
+            {
+              "word": "designers",
+              "visible": "desi",
+              "hidden": "gners"
+            },
+            {
+              "word": "celebrations",
+              "visible": "celeb",
+              "hidden": "rations"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Family Group Chat",
+          "subtitle": "",
+          "text": "Mom (12:15 p.m.)\nJust a reminder that Grandma's birthday dinner is this Sunday at six. Please let me know by Friday if you're coming so I can plan food.\n\nCarlos (12:20 p.m.)\nI'll be there! Should I bring anything?\n\nMom (12:22 p.m.)\nMaybe a dessert if you don't mind, since I'm handling the main course and sides.\n\nSofia (12:30 p.m.)\nI can come too, and I'll bring a dessert as well so we have options.\n\nMom (12:32 p.m.)\nPerfect, that works great. Carlos, maybe bring drinks instead then so we're not doubling up.\n\nCarlos (12:35 p.m.)\nSure thing, I'll grab some sparkling juice for Grandma since she loves that.",
+          "questions": [
+            {
+              "question": "What is being planned in this conversation?",
+              "options": [
+                "A birthday dinner",
+                "A family vacation",
+                "A surprise party",
+                "A holiday gathering"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does Mom ask family members to do by Friday?",
+              "options": [
+                "Buy a gift",
+                "Confirm whether they are coming",
+                "Call Grandma",
+                "Book a restaurant"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Carlos end up agreeing to bring?",
+              "options": [
+                "A dessert",
+                "Drinks",
+                "Nothing",
+                "Decorations"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 74
+        },
+        {
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Roommate Chat",
+          "subtitle": "",
+          "text": "Wei (9:10 a.m.)\nThe landlord emailed about the water shutoff for pipe repairs tomorrow, ten to two. Just a heads up so we can fill some bottles tonight.\n\nAmara (9:15 a.m.)\nThanks for letting me know. Should we shower tonight instead of tomorrow morning then?\n\nWei (9:17 a.m.)\nProbably a good idea. I'm also going to fill a couple pots with water just in case we need to flush the toilet.\n\nAmara (9:20 a.m.)\nSmart thinking. I'll pick up some bottled water on my way home too, just to be safe.\n\nWei (9:22 a.m.)\nSounds good. I'll leave a note on the fridge as a reminder for tomorrow morning.",
+          "questions": [
+            {
+              "question": "Why is the water being shut off?",
+              "options": [
+                "A billing issue",
+                "Pipe repairs",
+                "A citywide drought",
+                "Building renovations"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Amara plan to do?",
+              "options": [
+                "Move out temporarily",
+                "Shower tonight instead of tomorrow",
+                "Complain to the landlord",
+                "Stay at a friend's house"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will Wei do as a final reminder?",
+              "options": [
+                "Send another text tomorrow",
+                "Leave a note on the fridge",
+                "Call Amara in the morning",
+                "Post a sign on the door"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 75
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 309,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/309.mp3",
+          "transcript": "Do you offer any payment plans for this course?",
+          "context": "A student asks a school administrator.",
+          "options": [
+            "Yes, we offer a few different options.",
+            "The course runs for twelve weeks.",
+            "Classes meet twice a week.",
+            "Enrollment closes at the end of the month."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "39-309"
+        },
+        {
+          "id": 310,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/310.mp3",
+          "transcript": "Could you keep an eye on my bag for a moment?",
+          "context": "A traveler asks a stranger at an airport.",
+          "options": [
+            "Sure, no problem, take your time.",
+            "The airport has free luggage carts.",
+            "Security lines can be long here.",
+            "There's a café just around the corner."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "39-310"
+        },
+        {
+          "id": 311,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/311.mp3",
+          "transcript": "I noticed my package shows delivered, but I never received it.",
+          "context": "A customer calls a shipping company.",
+          "options": [
+            "I'm sorry about that, let's file a claim right away.",
+            "Packages are usually delivered by five.",
+            "Delivery times vary by location.",
+            "You can track your package online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "39-311"
+        },
+        {
+          "id": 312,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/312.mp3",
+          "transcript": "Would you like me to reserve a table for tonight?",
+          "context": "A restaurant employee asks a regular customer.",
+          "options": [
+            "Yes, please, for two people around seven.",
+            "The restaurant just added new menu items.",
+            "Reservations can be made online.",
+            "Tonight's special is grilled salmon."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "39-312"
+        },
+        {
+          "id": 313,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/313.mp3",
+          "transcript": "Could you show me how to reset my password?",
+          "context": "An employee asks the IT help desk.",
+          "options": [
+            "Sure, I'll walk you through it right now.",
+            "Passwords must be changed every ninety days.",
+            "The IT office is on the fourth floor.",
+            "You can also submit a help ticket online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "40-313"
+        },
+        {
+          "id": 314,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/314.mp3",
+          "transcript": "I think I misplaced my ID badge somewhere in the building.",
+          "context": "An employee speaks to a security guard.",
+          "options": [
+            "Let's check the lost and found first.",
+            "Badges are required to enter the building.",
+            "New badges take a few days to print.",
+            "The security desk is open around the clock."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "40-314"
+        },
+        {
+          "id": 315,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/315.mp3",
+          "transcript": "Do you have this book available as an e-book?",
+          "context": "A patron asks a librarian.",
+          "options": [
+            "Yes, you can borrow it through our app.",
+            "The book was published last year.",
+            "We have several copies in print.",
+            "This author has written many novels."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "40-315"
+        },
+        {
+          "id": 316,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/316.mp3",
+          "transcript": "Could I get an extension on this assignment?",
+          "context": "A student asks a professor.",
+          "options": [
+            "I can give you until Friday.",
+            "The assignment is worth twenty percent of your grade.",
+            "Most students submit on time.",
+            "The syllabus outlines all due dates."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "40-316"
+        },
+        {
+          "id": 317,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/317.mp3",
+          "transcript": "I noticed the coffee machine in the break room is broken.",
+          "context": "An employee tells a coworker.",
+          "options": [
+            "I'll put in a maintenance request today.",
+            "The break room was recently remodeled.",
+            "We usually buy coffee from the café downstairs.",
+            "That machine is only a year old."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "40-317"
+        },
+        {
+          "id": 318,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/318.mp3",
+          "transcript": "Would you be able to lower the thermostat a bit?",
+          "context": "A guest asks a hotel staff member.",
+          "options": [
+            "Of course, I'll adjust it for you now.",
+            "The hotel has central air conditioning.",
+            "Rooms are cleaned once a day.",
+            "Checkout is at eleven tomorrow."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "40-318"
+        }
+      ],
+      "conv": [
+        {
+          "id": 71,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/71.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I noticed the dining hall changed its menu this week."
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, they added more vegetarian options I think."
+            },
+            {
+              "speaker": "female",
+              "text": "That's good, I've been wanting more variety there."
+            },
+            {
+              "speaker": "male",
+              "text": "Same, though I heard some of the old favorites are gone now."
+            },
+            {
+              "speaker": "female",
+              "text": "I'll have to check it out for myself at lunch."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What change is being discussed?",
+              "options": [
+                "The dining hall's operating hours",
+                "A change to the dining hall menu",
+                "A new dining hall location",
+                "A price increase at the dining hall"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man mention was removed?",
+              "options": [
+                "The salad bar",
+                "Some old favorite dishes",
+                "The coffee station",
+                "The dessert options"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 72,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/72.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Do you know a good place to get my bike repaired near campus?"
+            },
+            {
+              "speaker": "female",
+              "text": "There's a shop a few blocks from the dorms that a lot of students use."
+            },
+            {
+              "speaker": "male",
+              "text": "Is it expensive?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not too bad, and they usually finish repairs within a day."
+            },
+            {
+              "speaker": "male",
+              "text": "That's perfect, my tire has been flat for a week."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What does the man need?",
+              "options": [
+                "A new bike",
+                "His bike repaired",
+                "A bike lock",
+                "Directions to a bike shop"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman say about the shop?",
+              "options": [
+                "It is very expensive",
+                "It usually finishes repairs within a day",
+                "It only repairs certain bike brands",
+                "It is closed on weekends"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 73,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/73.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "How did your job interview go this morning?"
+            },
+            {
+              "speaker": "male",
+              "text": "I think it went well, though they asked some tough technical questions."
+            },
+            {
+              "speaker": "female",
+              "text": "Did you feel prepared for those?"
+            },
+            {
+              "speaker": "male",
+              "text": "Mostly, though there was one about a topic I hadn't reviewed in a while."
+            },
+            {
+              "speaker": "female",
+              "text": "Well, hopefully your overall performance made up for that."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man discussing?",
+              "options": [
+                "A class presentation",
+                "A job interview",
+                "A group project meeting",
+                "A scholarship application"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What difficulty did he mention?",
+              "options": [
+                "He arrived late",
+                "A question on a topic he hadn't reviewed",
+                "He forgot his resume",
+                "The interview was rescheduled"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 71,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/71.mp3",
+          "speaker": "female",
+          "transcript": "Attention residents: trash collection for this neighborhood will be delayed by one day this week due to the upcoming holiday. Please place your bins at the curb on Wednesday morning instead of Tuesday. Regular collection days will resume the following week without further changes.",
+          "questions": [
+            {
+              "question": "Why is trash collection delayed?",
+              "options": [
+                "A truck breakdown",
+                "An upcoming holiday",
+                "A change in the collection company",
+                "New city regulations"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When should bins be placed at the curb this week?",
+              "options": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 72,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/72.mp3",
+          "speaker": "male",
+          "transcript": "Attention conference attendees: the keynote session originally scheduled for the main hall has been moved to Ballroom C due to higher than expected attendance. Please proceed to Ballroom C on the second floor at the same start time. We apologize for any confusion this may cause.",
+          "questions": [
+            {
+              "question": "Why was the session moved?",
+              "options": [
+                "A scheduling conflict",
+                "Higher than expected attendance",
+                "A technical issue in the main hall",
+                "A speaker cancellation"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where should attendees go now?",
+              "options": [
+                "The main hall",
+                "Ballroom C on the second floor",
+                "The conference lobby",
+                "A different building entirely"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 73,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/73.mp3",
+          "speaker": "female",
+          "transcript": "Attention passengers waiting for the downtown express bus: due to road construction on Main Street, this route has been temporarily rerouted through Oak Avenue. Stops along Main Street will not be served until construction is complete. Please check posted signs at your stop for updated pickup locations.",
+          "questions": [
+            {
+              "question": "Why has the bus route changed?",
+              "options": [
+                "A traffic accident",
+                "Road construction on Main Street",
+                "A driver shortage",
+                "Low ridership"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should passengers do?",
+              "options": [
+                "Wait at the same stop as usual",
+                "Check posted signs for updated pickup locations",
+                "Call the bus company directly",
+                "Take a taxi instead"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 57,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/57.mp3",
+          "speaker": "female",
+          "subject": "Marine Biology",
+          "transcript": "Today we'll discuss deep ocean hydrothermal vents, one of the most unusual ecosystems discovered on our planet. These vents were first discovered in the late nineteen seventies, and their existence dramatically changed scientists' understanding of what conditions life could actually tolerate. Hydrothermal vents form along volcanically active areas of the ocean floor, typically near tectonic plate boundaries, where seawater seeps down through cracks in the crust, becomes superheated by nearby magma, and then rises back up, emerging from vent openings at temperatures that can exceed several hundred degrees Celsius, dissolving minerals from the surrounding rock along the way. What makes these ecosystems so remarkable is that they thrive in complete darkness, far below any depth sunlight can reach, meaning photosynthesis is completely impossible there. Instead, the base of the food web at hydrothermal vents relies on a process called chemosynthesis, in which specialized bacteria and archaea convert chemical compounds, particularly hydrogen sulfide dissolved in the vent fluid, into usable energy, essentially performing a chemical version of what plants accomplish using sunlight. These chemosynthetic microorganisms form the foundation that supports an entire surprisingly complex ecosystem, including giant tube worms, specialized clams, and unique species of shrimp and crabs found nowhere else on Earth, many of which have evolved remarkable adaptations allowing them to tolerate the vents' extreme heat, high pressure, and toxic chemical concentrations. Some species, like the giant tube worms, don't even have a digestive system at all; instead, they house chemosynthetic bacteria directly within specialized internal tissue, receiving nutrients produced by their bacterial partners in exchange for providing a safe, stable environment. The discovery of these ecosystems has even influenced scientific thinking about the possible origins of life on Earth, as well as speculation about where else in our solar system life might potentially exist, particularly beneath the icy surfaces of certain moons that may harbor similar hydrothermal activity beneath their oceans.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "Coral reef ecosystems",
+                "Deep ocean hydrothermal vent ecosystems",
+                "The formation of underwater volcanoes",
+                "Ocean current patterns"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is chemosynthesis essential at hydrothermal vents?",
+              "options": [
+                "Sunlight cannot reach that depth, so photosynthesis is impossible",
+                "It produces more oxygen than photosynthesis",
+                "It only occurs near the ocean surface",
+                "It replaces the need for bacteria entirely"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "How do giant tube worms obtain nutrients, according to the talk?",
+              "options": [
+                "Through a highly specialized digestive system",
+                "From chemosynthetic bacteria living within their tissue",
+                "By filtering plankton from the water",
+                "By absorbing sunlight through their skin"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention the possibility of life on icy moons?",
+              "options": [
+                "To argue that hydrothermal vents are common throughout the solar system",
+                "To suggest that similar chemosynthetic ecosystems might exist elsewhere",
+                "To explain how moons form",
+                "To criticize theories about the origins of life"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 58,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/58.mp3",
+          "speaker": "male",
+          "subject": "Philosophy",
+          "transcript": "Today we turn to the trolley problem, a thought experiment widely used in moral philosophy to explore how people reason about ethical dilemmas involving harm. In its most basic form, the scenario asks you to imagine an out-of-control trolley heading toward five people tied to the tracks who will certainly be killed unless something is done. You happen to be standing next to a lever that, if pulled, would divert the trolley onto a side track, where it would instead kill only one person. The core philosophical question is whether it's morally acceptable, or perhaps even morally required, to actively pull the lever, thereby causing one death in order to prevent five. Most people, when asked this version, say they would pull the lever, reasoning that saving five lives at the cost of one represents the better overall outcome. However, philosophers have developed a variation that produces strikingly different intuitive responses despite similar underlying mathematics. In this second version, instead of a lever, you're standing on a footbridge above the tracks next to a large stranger. The only way to stop the trolley and save the five people is to push this person off the bridge, using their body to stop the train. Although the numerical outcome is identical, one death prevents five, most people report feeling that physically pushing someone to their death is significantly less acceptable than pulling a lever, even though the consequences appear mathematically equivalent. Philosophers use this contrast to explore the tension between two major ethical frameworks: consequentialism, which judges actions primarily by their outcomes, and deontological ethics, which holds that certain actions, such as directly using another person's body as a mere means to an end, are inherently wrong regardless of the resulting consequences. This apparent inconsistency in moral intuitions has generated substantial research not just in philosophy, but also in psychology and neuroscience, as researchers attempt to understand why our moral judgments seem to shift so dramatically based on factors that don't change the mathematical outcome at all.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the trolley problem?",
+              "options": [
+                "To test people's physical reflexes",
+                "To explore how people reason about ethical dilemmas involving harm",
+                "To demonstrate a flaw in modern transportation systems",
+                "To prove that consequentialism is always correct"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the key difference between the lever version and the footbridge version?",
+              "options": [
+                "The footbridge version involves more people",
+                "The footbridge version requires physically pushing someone, despite an identical numerical outcome",
+                "The lever version has no possible solution",
+                "The footbridge version guarantees no deaths"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor say most people report feeling about the footbridge version?",
+              "options": [
+                "It feels more acceptable than the lever version",
+                "It feels significantly less acceptable, despite the same outcome",
+                "People feel no difference between the two versions",
+                "Most people refuse to answer either version"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What contrast does the professor use this thought experiment to illustrate?",
+              "options": [
+                "The difference between science and philosophy",
+                "The tension between consequentialist and deontological ethical frameworks",
+                "The history of moral philosophy",
+                "The reliability of eyewitness testimony"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 319,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/319.mp3",
+          "transcript": "Do you know if this trail loops back to the parking lot?",
+          "context": "A hiker asks a fellow hiker.",
+          "options": [
+            "Yes, it should bring you right back here.",
+            "The trail is about four miles long.",
+            "There's a scenic overlook halfway through.",
+            "This park has several other trails too."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "40-319"
+        },
+        {
+          "id": 320,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/320.mp3",
+          "transcript": "Could you check if my order has shipped yet?",
+          "context": "A customer calls an online retailer.",
+          "options": [
+            "Sure, let me pull up your order details.",
+            "Orders typically ship within two days.",
+            "We offer free shipping over fifty dollars.",
+            "You'll receive a confirmation email."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "40-320"
+        },
+        {
+          "id": 321,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/321.mp3",
+          "transcript": "I think there's an error on my utility bill this month.",
+          "context": "A customer calls a utility company.",
+          "options": [
+            "Let me review your account and check that.",
+            "Bills are sent out on the first of the month.",
+            "You can pay your bill online or by phone.",
+            "Utility rates increased slightly this year."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "41-321"
+        },
+        {
+          "id": 322,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/322.mp3",
+          "transcript": "Could you tell me which aisle the batteries are in?",
+          "context": "A customer asks a store employee.",
+          "options": [
+            "They're in aisle seven, next to the light bulbs.",
+            "We sell several battery brands.",
+            "Batteries are on sale this week.",
+            "The store just got a new shipment."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "41-322"
+        },
+        {
+          "id": 323,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/323.mp3",
+          "transcript": "Do you think we should postpone the meeting until Thursday?",
+          "context": "A manager asks a colleague.",
+          "options": [
+            "That sounds reasonable given everyone's schedules.",
+            "The meeting room holds about twenty people.",
+            "We usually meet on Tuesdays.",
+            "The agenda has five items."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "41-323"
+        },
+        {
+          "id": 324,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/324.mp3",
+          "transcript": "I'd like to add extra luggage to my flight.",
+          "context": "A traveler speaks to an airline agent.",
+          "options": [
+            "Sure, there will be an additional fee.",
+            "The flight departs from gate twelve.",
+            "Carry-on bags must fit in the overhead bin.",
+            "Check-in closes an hour before departure."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "41-324"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 59,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/59.mp3",
+          "speaker": "female",
+          "subject": "Environmental Science",
+          "transcript": "Today we'll examine the phenomenon of ocean acidification, sometimes described as the lesser-known twin of climate change, since both stem from the same underlying cause: rising atmospheric carbon dioxide concentrations resulting largely from human fossil fuel use. While much public attention focuses on carbon dioxide's role in trapping heat within the atmosphere, a substantial portion of the carbon dioxide humans emit, roughly a quarter according to most estimates, is actually absorbed directly by the world's oceans. When carbon dioxide dissolves in seawater, it undergoes a chemical reaction, forming carbonic acid, which then breaks down further, releasing hydrogen ions that lower the water's pH, making it more acidic. Since the beginning of the industrial revolution, average ocean pH has already decreased measurably, and this shift, though it may sound small in numerical terms, represents a substantial change in ocean chemistry, since pH is measured on a logarithmic scale, meaning even modest numerical changes reflect a much larger change in actual chemical acidity. This increased acidity poses a serious threat to marine organisms that build shells or skeletons using calcium carbonate, including corals, oysters, and numerous species of plankton that form a crucial foundation of the ocean food web. As ocean water becomes more acidic, calcium carbonate becomes progressively more difficult for these organisms to produce, and in sufficiently acidic conditions, existing shells and skeletal structures can even begin to dissolve. This creates ripple effects throughout marine ecosystems, since a decline in shell-forming plankton populations, for instance, could destabilize food sources that countless other marine species, including commercially important fish populations, depend upon either directly or indirectly. Coral reefs face a particularly severe compounded threat, since they're simultaneously being affected by both rising ocean temperatures, which cause coral bleaching, and increasing acidity, which directly impairs their ability to build and maintain their calcium carbonate skeletal structures in the first place.",
+          "questions": [
+            {
+              "question": "What is the main topic of the talk?",
+              "options": [
+                "Rising sea levels due to melting ice",
+                "Ocean acidification caused by absorbed carbon dioxide",
+                "Overfishing in coastal waters",
+                "Plastic pollution in the ocean"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does carbon dioxide cause ocean acidification?",
+              "options": [
+                "It directly lowers ocean temperature",
+                "It forms carbonic acid when dissolved in seawater, lowering pH",
+                "It blocks sunlight from reaching the ocean",
+                "It increases the salt content of seawater"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention that pH is measured on a logarithmic scale?",
+              "options": [
+                "To explain that ocean acidification isn't actually a serious issue",
+                "To emphasize that small numerical pH changes reflect much larger chemical changes",
+                "To describe how pH meters work",
+                "To compare ocean pH to freshwater pH"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why are coral reefs described as facing a compounded threat?",
+              "options": [
+                "They are affected by both rising temperatures and increasing acidity simultaneously",
+                "They are the only organisms affected by acidification",
+                "They are unaffected by temperature changes",
+                "They only face threats from overfishing"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 60,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/60.mp3",
+          "speaker": "male",
+          "subject": "Business",
+          "transcript": "Today's discussion focuses on the concept of network effects, an important idea in modern business strategy, particularly relevant to understanding how many of today's largest technology companies achieved their dominant market positions. A network effect occurs when a product or service becomes more valuable to each individual user as more people overall begin using it. Telephone systems provide a classic, easy to understand early example: a single telephone by itself is essentially useless, but as more people acquire telephones, each additional phone increases the potential value of every other phone already in the network, since there are now more people any given phone owner can potentially call. This same underlying principle explains the rapid growth of many modern social media platforms and online marketplaces. A social media platform becomes considerably more useful once your friends, family, and colleagues are already using it, and a shopping marketplace becomes more attractive to buyers as more sellers join, while simultaneously becoming more attractive to sellers as more buyers join, creating a reinforcing cycle that can be extremely difficult for competitors to break into once a network reaches significant scale. This dynamic often produces what economists call a winner-take-most market structure, where one or two dominant platforms end up capturing the overwhelming majority of total market value, since users generally have relatively little incentive to switch to a smaller, less established competing network, even if that competitor's product happens to offer some individually superior features. However, network effects aren't without meaningful limits and potential weaknesses. Some networks can become excessively crowded or congested as they grow, gradually degrading the overall user experience, a phenomenon sometimes referred to as negative network effects. Additionally, new competitors can sometimes successfully overcome established network effects by specifically targeting a smaller, underserved niche market segment first, gradually building their own loyal user base there before eventually expanding outward to directly challenge the incumbent's broader market position.",
+          "questions": [
+            {
+              "question": "What is a network effect, as defined in the talk?",
+              "options": [
+                "A marketing technique used to lower prices",
+                "A situation where a product becomes more valuable as more people use it",
+                "A method for building computer networks",
+                "A type of financial investment strategy"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What example does the professor use to introduce the concept?",
+              "options": [
+                "Social media platforms",
+                "Telephone systems",
+                "Online marketplaces",
+                "Video streaming services"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is meant by a winner-take-most market structure?",
+              "options": [
+                "Multiple small companies share the market equally",
+                "One or two dominant platforms capture most of the market value",
+                "Only new companies can succeed in the market",
+                "Prices remain fixed regardless of competition"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How can new competitors overcome established network effects, according to the talk?",
+              "options": [
+                "By copying the larger company's product exactly",
+                "By targeting a smaller niche market before expanding",
+                "By lowering their prices to zero permanently",
+                "It is impossible to overcome network effects"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 325,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/325.mp3",
+          "transcript": "Could you recommend a good Italian restaurant nearby?",
+          "context": "A tourist asks a hotel concierge.",
+          "options": [
+            "Certainly, there's a wonderful one two blocks away.",
+            "The hotel has a restaurant on the ground floor.",
+            "Room service is available until midnight.",
+            "Breakfast is served from seven to ten."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "41-325"
+        },
+        {
+          "id": 326,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/326.mp3",
+          "transcript": "I noticed the sign outside says the shop closes early today.",
+          "context": "A customer speaks to a shop owner.",
+          "options": [
+            "Yes, we're closing at four for a staff meeting.",
+            "The shop usually closes at eight.",
+            "We're open seven days a week.",
+            "This shop has been here for ten years."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "41-326"
+        },
+        {
+          "id": 327,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/327.mp3",
+          "transcript": "Would you mind lowering your voice? I'm on a call.",
+          "context": "A coworker speaks to another coworker in a shared office.",
+          "options": [
+            "Oh, sorry, I didn't realize. I'll step outside.",
+            "The office gets pretty loud in the afternoon.",
+            "I have a call scheduled later too.",
+            "We should really get some soundproof panels."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "41-327"
+        },
+        {
+          "id": 328,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/328.mp3",
+          "transcript": "Is there a discount if I buy these in bulk?",
+          "context": "A customer asks a hardware store employee.",
+          "options": [
+            "Yes, we offer a discount for orders over ten.",
+            "These items are made of durable steel.",
+            "We restock this product every week.",
+            "This brand is one of our most popular."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "41-328"
+        },
+        {
+          "id": 329,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/329.mp3",
+          "transcript": "Could you tell me if the pool is open right now?",
+          "context": "A hotel guest asks a staff member.",
+          "options": [
+            "Yes, it's open until ten tonight.",
+            "The pool was renovated last spring.",
+            "There's a hot tub next to the pool.",
+            "Towels are available at the front desk."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "42-329"
+        },
+        {
+          "id": 330,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/330.mp3",
+          "transcript": "I think I need a stronger prescription for these glasses.",
+          "context": "A patient speaks to an optometrist.",
+          "options": [
+            "Let's do another eye exam to check.",
+            "Glasses frames come in many styles.",
+            "Your last exam was over a year ago.",
+            "We also sell contact lenses here."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "42-330"
+        }
+      ],
+      "conv": [
+        {
+          "id": 74,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/74.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I'm thinking of joining the debate club this semester."
+            },
+            {
+              "speaker": "female",
+              "text": "That sounds like a great fit for you, you're always good at arguing your point."
+            },
+            {
+              "speaker": "male",
+              "text": "Ha, thanks. Do you know when tryouts are?"
+            },
+            {
+              "speaker": "female",
+              "text": "I think they're posted on the club's page, sometime next week."
+            },
+            {
+              "speaker": "male",
+              "text": "I'll check it out tonight then."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man considering joining?",
+              "options": [
+                "The chess club",
+                "The debate club",
+                "The drama club",
+                "The student newspaper"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where does the woman suggest he find tryout information?",
+              "options": [
+                "The main bulletin board",
+                "The club's page",
+                "The student center",
+                "His academic advisor"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 75,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/75.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Did you manage to fix the issue with your dorm's Wi-Fi?"
+            },
+            {
+              "speaker": "male",
+              "text": "Sort of, it works now but it's still pretty slow."
+            },
+            {
+              "speaker": "female",
+              "text": "Have you contacted IT services about it?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not yet, I was hoping it would improve on its own."
+            },
+            {
+              "speaker": "female",
+              "text": "You should probably submit a ticket, they usually respond quickly."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What problem does the man have?",
+              "options": [
+                "His laptop broke",
+                "His dorm Wi-Fi is slow",
+                "He lost his student login",
+                "His printer isn't working"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman recommend?",
+              "options": [
+                "Buying a new router",
+                "Submitting a ticket to IT services",
+                "Moving to a different dorm",
+                "Waiting for the problem to resolve itself"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 74,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/74.mp3",
+          "speaker": "male",
+          "transcript": "Good morning, staff. Please note that today's scheduled software update will take the internal server offline from noon until approximately one o'clock. Please save all your work before this time to avoid losing any unsaved changes. IT will send a follow-up email once the system is back online.",
+          "questions": [
+            {
+              "question": "What is happening at noon?",
+              "options": [
+                "A staff meeting",
+                "The internal server going offline for an update",
+                "A building fire drill",
+                "A new software rollout to customers"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are staff advised to do?",
+              "options": [
+                "Log off completely for the day",
+                "Save their work before noon",
+                "Continue working as normal",
+                "Contact IT immediately"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 75,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/75.mp3",
+          "speaker": "female",
+          "transcript": "Attention concertgoers: due to a slight delay backstage, tonight's show will begin approximately fifteen minutes later than printed on your ticket. Doors to the venue remain open, and concessions are available while you wait. We appreciate your patience and look forward to a great show tonight.",
+          "questions": [
+            {
+              "question": "Why is the concert starting late?",
+              "options": [
+                "A delay backstage",
+                "Ticketing issues",
+                "A weather delay",
+                "A change in venue"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can attendees do while waiting?",
+              "options": [
+                "Leave and come back later",
+                "Purchase concessions",
+                "Wait outside the venue only",
+                "Nothing is available yet"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "Are the tickets still available for tonight's show?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "tickets",
+          "were still available for tonight's show"
+        ],
+        "distractorChunks": [
+          "are still available for tonight's show"
+        ],
+        "responseSuffix": ".",
+        "id": 141
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Did the courier deliver the wrong package?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "thought",
+          "the courier",
+          "had delivered the wrong package"
+        ],
+        "distractorChunks": [
+          "has delivered the wrong package"
+        ],
+        "responseSuffix": ".",
+        "id": 142
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Will the workshop be recorded for later viewing?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the workshop",
+          "would be recorded for later viewing"
+        ],
+        "distractorChunks": [
+          "will be recorded for later viewing"
+        ],
+        "responseSuffix": ".",
+        "id": 143
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Can the team finish the prototype by Friday?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "was",
+          "not",
+          "sure",
+          "whether",
+          "the team",
+          "could finish the prototype by Friday"
+        ],
+        "distractorChunks": [
+          "can finish the prototype by Friday"
+        ],
+        "responseSuffix": ".",
+        "id": 144
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Has the invoice been approved by accounting?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "whether",
+          "the invoice",
+          "had been approved by accounting"
+        ],
+        "distractorChunks": [
+          "has been approved by accounting"
+        ],
+        "responseSuffix": ".",
+        "id": 145
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Does the apartment come with parking included?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the apartment",
+          "came with parking included"
+        ],
+        "distractorChunks": [
+          "comes with parking included"
+        ],
+        "responseSuffix": ".",
+        "id": 146
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Is the trail open after the recent storm?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "checked",
+          "whether",
+          "the trail",
+          "was open after the recent storm"
+        ],
+        "distractorChunks": [
+          "is open after the recent storm"
+        ],
+        "responseSuffix": ".",
+        "id": 147
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Will the committee vote on the proposal today?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the committee",
+          "would vote on the proposal today"
+        ],
+        "distractorChunks": [
+          "will vote on the proposal today"
+        ],
+        "responseSuffix": ".",
+        "id": 148
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Did the shipment clear customs yet?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wondered",
+          "whether",
+          "the shipment",
+          "had cleared customs yet"
+        ],
+        "distractorChunks": [
+          "has cleared customs yet"
+        ],
+        "responseSuffix": ".",
+        "id": 149
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Can visitors bring cameras into the exhibit?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "visitors",
+          "could bring cameras into the exhibit"
+        ],
+        "distractorChunks": [
+          "can bring cameras into the exhibit"
+        ],
+        "responseSuffix": ".",
+        "id": 150
+      }
+    ],
+    "email": {
+      "id": 15,
+      "scenario": "You have decided you want to switch your major from Biology to Psychology, and you want to inform your academic advisor and ask for guidance on the process.",
+      "recipient": "Professor Hartley, Academic Advisor",
+      "subject": "Considering a change of major",
+      "tasks": [
+        {
+          "description": "Explain that you are considering switching your major to Psychology.",
+          "keywords": [
+            "switch",
+            "change my major",
+            "considering",
+            "Psychology"
+          ]
+        },
+        {
+          "description": "Briefly explain your reason for wanting the change.",
+          "keywords": [
+            "reason",
+            "more interested",
+            "realized",
+            "passion"
+          ]
+        },
+        {
+          "description": "Ask for guidance on the steps required to make the change.",
+          "keywords": [
+            "steps",
+            "process",
+            "guidance",
+            "how do I",
+            "requirements"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Professor Hartley,\n\nI hope you are doing well. I am writing to let you know that I am seriously considering switching my major from Biology to Psychology, and I wanted to discuss this decision with you as my academic advisor before moving forward.\n\nOver the past year, I have realized that I am far more interested in human behavior and mental processes than in the laboratory-focused coursework required for Biology. My recent introductory psychology class confirmed this passion, and I feel this new path would suit my strengths and interests much better.\n\nSince I am not entirely familiar with the requirements involved, could you guide me through the steps needed to officially change my major? I would also appreciate knowing how this change might affect my graduation timeline. Thank you very much for your continued support.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 15,
+      "subject": "epidemiology",
+      "professor": "Dr. Sørensen",
+      "professorGender": "female",
+      "prompt": "Your epidemiology professor is discussing public health policy and individual rights. Write a post responding to the professor's question.\n\nDr. Sørensen: This week we have been examining the debate surrounding mandatory vaccination policies. Public health officials argue that requiring vaccinations for school enrollment or certain jobs is necessary to maintain herd immunity and protect vulnerable populations who cannot be vaccinated for medical reasons. Opponents argue that mandatory vaccination policies infringe on personal autonomy and that individuals should have the right to make their own medical decisions, including the choice to decline vaccination based on personal or religious beliefs. Before our next class, please respond to this question: Should governments be allowed to mandate vaccinations for the general population, or should vaccination remain entirely a matter of personal choice?",
+      "classmates": [
+        {
+          "name": "Kwame",
+          "gender": "male",
+          "opinion": "I believe mandatory vaccination policies are justified because public health decisions inevitably affect more than just the individual making them. Herd immunity only works when a sufficiently high percentage of the population is vaccinated, and unvaccinated individuals directly increase the risk of outbreaks that can harm immunocompromised people, infants, and others who cannot receive vaccines for legitimate medical reasons. History shows that diseases like measles, once nearly eradicated, have resurged in communities with low vaccination rates. Personal choice should not extend to decisions that put entire communities at risk of preventable disease outbreaks. Reasonable mandates, such as requiring vaccination for school enrollment, strike a fair balance between individual rights and collective public health responsibility."
+        },
+        {
+          "name": "Niamh",
+          "gender": "female",
+          "opinion": "I think vaccination should ultimately remain a matter of personal choice rather than government mandate. Bodily autonomy is a fundamental right, and forcing medical procedures on individuals, even well-intentioned ones, sets a concerning precedent for government overreach into personal healthcare decisions. Some people have legitimate concerns about vaccine ingredients or personal medical history that mandates fail to account for on an individual basis. Rather than mandates, I believe governments should focus on public education campaigns that clearly communicate the benefits and safety of vaccines, along with making them as accessible and affordable as possible. Trust and transparency are likely to achieve higher voluntary vaccination rates than coercive policies that may provoke resistance and distrust."
+        }
+      ],
+      "exampleResponse": "Vaccination policy is a classic example of individual rights coming into tension with collective public health. Whether governments should mandate vaccination or leave it to personal choice is worth considering carefully. While I see where Niamh is coming from when she argues that bodily autonomy is a fundamental right that mandates risk violating, I would argue that infectious disease uniquely differs from purely personal health decisions because it directly endangers others who cannot protect themselves. In this respect, I am inclined to agree with Kwame, who emphasizes that herd immunity depends on high vaccination rates and that unvaccinated individuals can put vulnerable community members at serious risk. For example, the resurgence of measles outbreaks in communities with declining vaccination rates demonstrates how quickly preventable diseases can return once collective immunity weakens. Reasonable, narrowly tailored mandates, such as school entry requirements with medical exemptions, seem to balance both concerns better than treating vaccination as purely optional."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 15,
+      "location": "Public Library Reference Desk",
+      "icon": "📖",
+      "speaker": "male",
+      "introText": "You are learning how to help visitors at the reference desk. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the reference desk.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "I can help you find any book.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Our database includes academic journals and articles.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Please keep your voice low in this area.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "Study rooms can be reserved for group projects.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Let me know if you need help citing a source correctly.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "The library stays open late during final exam week each semester.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 15,
+      "topic": "Outdoor Activities",
+      "icon": "🥾",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about outdoor activities and recreation. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. To begin, what kind of outdoor activities do you enjoy doing in your free time?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer engaging in outdoor activities alone or with a group of friends or family?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people believe that spending time outdoors is essential for maintaining good mental health. What is your opinion on this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think people today spend enough time outdoors compared to previous generations? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

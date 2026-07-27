@@ -1,62 +1,157 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo, Component } from 'react'
 
-// ─── Complete the Words Module ────────────────────────────────────────────────
-const QUESTION_TIME = 180 // 3 minutes per question
+// ─── Full-screen exam shell (matches the official TOEFL iBT test-day UI) ─────
+const EXAM_NAVY = '#2ac56c'
+const EXAM_DARK = '#11162d'
 
-function CompleteTheWords({ onBack }) {
-  const [exercises, setExercises] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [answers, setAnswers] = useState({})
+function TestPillButton({ children, onClick, variant = 'light', disabled = false }) {
+  const styles = {
+    light: { background: '#fff', color: '#333333' },
+    dark: { background: EXAM_DARK, color: '#fff' },
+  }
+  return (
+    <button onClick={onClick} disabled={disabled} style={{ ...styles[variant], border: 'none', borderRadius: '8px', padding: '11px 24px', fontSize: '13px', fontWeight: '700', cursor: disabled ? 'default' : 'pointer', fontFamily: 'sans-serif', opacity: disabled ? 0.5 : 1, whiteSpace: 'nowrap' }}>
+      {children}
+    </button>
+  )
+}
+
+function TestTopBar({ left, right }) {
+  return (
+    <div style={{ background: EXAM_NAVY, padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+      <div>{left}</div>
+      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>{right}</div>
+    </div>
+  )
+}
+
+function TestSubHeader({ section, questionLabel, timeText, lowTime }) {
+  return (
+    <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, fontFamily: 'sans-serif' }}>
+      <div style={{ fontSize: '13px', color: '#1a1a1a' }}>
+        <span style={{ fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{section}</span>
+        {questionLabel && <><span style={{ color: '#9ca3af', margin: '0 8px' }}>|</span><span>{questionLabel}</span></>}
+      </div>
+      {timeText && <span style={{ fontSize: '14px', fontWeight: '700', color: lowTime ? '#d94040' : '#1a1a1a' }}>{timeText}</span>}
+    </div>
+  )
+}
+
+// Full-page wrapper every exercise screen sits in — full-bleed white background,
+// navy top bar + white sub-header, content fills the rest of the viewport.
+function ExamScreen({ topLeft, topRight, section, questionLabel, timeText, lowTime, children, contentStyle }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <TestTopBar left={topLeft} right={topRight} />
+      {section && <TestSubHeader section={section} questionLabel={questionLabel} timeText={timeText} lowTime={lowTime} />}
+      <div style={{ flex: 1, padding: '48px 64px 100px', boxSizing: 'border-box', ...contentStyle }}>{children}</div>
+    </div>
+  )
+}
+
+// ─── Complete the Words — Liste Ekranı ───────────────────────────────────────
+function CTWList({ exercises, scores, onSelect, onBack }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Complete the Words</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {exercises.map((ex, idx) => {
+            const result = scores[idx]
+            const pct = result ? Math.round((result.correct / result.total) * 100) : null
+            return (
+              <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Exercise {idx + 1}</div>
+                    {result && (
+                      <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>
+                        ✓ {result.correct}/{result.total} · {pct}%
+                      </span>
+                    )}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{ex.blanks.length} blank{ex.blanks.length !== 1 ? 's' : ''}</div>
+                </div>
+                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {result ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Complete the Words — Tek Egzersiz ───────────────────────────────────────
+const QUESTION_TIME = 180
+
+function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false, poolTime, moduleOffset, moduleTotal, onPrevSlot, isLastSlot = true, initialAnswers, onAnswersChange }) {
+  const [answers, setAnswers] = useState(() => initialAnswers || {})
   const [checked, setChecked] = useState(false)
   const [finished, setFinished] = useState(false)
-  const [totalCorrect, setTotalCorrect] = useState(0)
   const [timeLeft, setTimeLeft] = useState(QUESTION_TIME)
   const inputRefs = useRef({})
   const timerRef = useRef(null)
   const answersRef = useRef({})
-  const exercisesRef = useRef([])
-  const currentIndexRef = useRef(0)
   const checkedRef = useRef(false)
 
-  // keep refs in sync
   useEffect(() => { answersRef.current = answers }, [answers])
-  useEffect(() => { exercisesRef.current = exercises }, [exercises])
-  useEffect(() => { currentIndexRef.current = currentIndex }, [currentIndex])
   useEffect(() => { checkedRef.current = checked }, [checked])
+  // Mirror every keystroke up to the parent (FullMockTest's sessionRef) so that if the student
+  // navigates away via Back/module-timeout before finishing this exercise, their partial input
+  // is preserved and restored the next time this slot is shown.
+  useEffect(() => { if (onAnswersChange) onAnswersChange(answers) }, [answers])
 
-  useEffect(() => {
-    fetch('https://mrreadyprep.onrender.com/api/reading/complete-the-words')
-      .then(r => r.json())
-      .then(data => { setExercises(data); setLoading(false) })
-      .catch(() => setLoading(false))
-  }, [])
+  const ex = exercise
 
-  // countdown per question
+  const calcCorrect = (ans) => {
+    let correct = 0; let gIdx = 0
+    ex.blanks.forEach((blank) => {
+      const ok = blank.hidden.split('').every((ch, i) => (ans[gIdx + i] || '').toLowerCase() === ch.toLowerCase())
+      if (ok) correct++
+      gIdx += blank.hidden.length
+    })
+    return correct
+  }
+
+  const buildDetail = (ans) => {
+    let gIdx = 0
+    return ex.blanks.map((blank) => {
+      const given = blank.hidden.split('').map((_, i) => ans[gIdx + i] || '').join('')
+      const word = blank.visible + blank.hidden
+      const isCorrect = blank.hidden.split('').every((ch, i) => (ans[gIdx + i] || '').toLowerCase() === ch.toLowerCase())
+      gIdx += blank.hidden.length
+      return { prompt: word, given: blank.visible + given, correctAnswer: word, isCorrect }
+    })
+  }
+
+  // When `poolTime` is provided (Full Mock Test Reading modules), a single clock owned by
+  // FullMockTest ticks down across the WHOLE module — matching the real TOEFL iBT, which gives
+  // one combined time budget per module rather than resetting per question. In that mode this
+  // component just displays the shared countdown and never runs its own timer/auto-expiry.
   useEffect(() => {
-    if (loading || finished || checked) return
+    if (poolTime !== undefined) return
+    if (finished || checked) return
     setTimeLeft(QUESTION_TIME)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          // auto-submit using refs (no stale closure)
           if (!checkedRef.current) {
-            const ex = exercisesRef.current[currentIndexRef.current]
-            let correct = 0
-            let globalIdx = 0
-            ex.blanks.forEach((blank) => {
-              const hiddenChars = blank.hidden.split('')
-              const isCorrect = hiddenChars.every((ch, i) =>
-                (answersRef.current[globalIdx + i] || '').toLowerCase() === ch.toLowerCase()
-              )
-              if (isCorrect) correct++
-              globalIdx += hiddenChars.length
-            })
-            setTotalCorrect(t => t + correct)
-            setChecked(true)
             checkedRef.current = true
+            if (mockMode) {
+              const ans = answersRef.current
+              onComplete(calcCorrect(ans), ex.blanks.length, buildDetail(ans))
+            } else {
+              setChecked(true)
+            }
           }
           return 0
         }
@@ -64,504 +159,1227 @@ function CompleteTheWords({ onBack }) {
       })
     }, 1000)
     return () => clearInterval(timerRef.current)
-  }, [currentIndex, loading, finished, checked])
+  }, [finished, checked, poolTime])
 
-  const formatTime = (s) => {
-    const mm = String(Math.floor(s / 60)).padStart(2, '0')
-    const ss = String(s % 60).padStart(2, '0')
-    return `${mm}:${ss}`
-  }
-
-  if (loading) return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>
-      Loading exercises...
-    </div>
-  )
-  if (!exercises.length) return (
-    <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>
-      No exercises found. Make sure the backend is running.
-    </div>
-  )
-
-  const ex = exercises[currentIndex]
-  const totalQ = exercises.length
-  const isLowTime = timeLeft <= 30
+  const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
+  const displayTime = poolTime !== undefined ? poolTime : timeLeft
+  const isLowTime = poolTime !== undefined ? poolTime <= 60 : timeLeft <= 30
+  // In the Full Mock Test, show this exercise's position within the WHOLE Reading module
+  // (e.g. "Questions 4-9 of 20") instead of a standalone exercise number — matches the
+  // official TOEFL iBT UI, which numbers questions across the entire module, not per task.
+  const questionLabel = moduleTotal !== undefined
+    ? (ex.blanks.length > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + ex.blanks.length} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`)
+    : `Exercise ${exerciseNum}`
 
   const renderParagraph = () => {
-    const parts = []
-    let remaining = ex.paragraph
-    let globalIdx = 0
-
+    const parts = []; let remaining = ex.paragraph; let globalIdx = 0
     ex.blanks.forEach((blank, blankIdx) => {
       const wordPos = remaining.indexOf(blank.word)
       if (wordPos === -1) return
-
-      if (wordPos > 0) parts.push(
-        <span key={`text-${blankIdx}`}>{remaining.slice(0, wordPos)}</span>
-      )
-
+      if (wordPos > 0) parts.push(<span key={`text-${blankIdx}`}>{remaining.slice(0, wordPos)}</span>)
       const startIdx = globalIdx
-      const isBlankCorrect = checked
-        ? blank.hidden.split('').every((ch, i) => (answers[startIdx + i] || '').toLowerCase() === ch.toLowerCase())
-        : null
-
+      const isBlankCorrect = checked ? blank.hidden.split('').every((ch, i) => (answers[startIdx + i] || '').toLowerCase() === ch.toLowerCase()) : null
       const charInputs = blank.hidden.split('').map((ch, i) => {
-        const gIdx = startIdx + i
-        const val = answers[gIdx] || ''
+        const gIdx = startIdx + i; const val = answers[gIdx] || ''
         const charCorrect = checked ? val.toLowerCase() === ch.toLowerCase() : null
-
         return (
           <span key={gIdx} style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', width: '11px' }}>
-            <input
-              ref={el => inputRefs.current[gIdx] = el}
-              value={val}
-              maxLength={1}
-              onChange={e => {
-                if (checked) return
-                const newVal = e.target.value.slice(-1)
-                setAnswers(prev => ({ ...prev, [gIdx]: newVal }))
-                if (newVal && inputRefs.current[gIdx + 1]) inputRefs.current[gIdx + 1].focus()
-              }}
-              onKeyDown={e => {
-                if (e.key === 'Backspace' && !val) {
-                  if (inputRefs.current[gIdx - 1]) inputRefs.current[gIdx - 1].focus()
-                }
-                if (e.key === 'Tab') { e.preventDefault(); if (inputRefs.current[gIdx + 1]) inputRefs.current[gIdx + 1].focus() }
-              }}
+            <input ref={el => inputRefs.current[gIdx] = el} value={val} maxLength={1}
+              onChange={e => { if (checked) return; const newVal = e.target.value.slice(-1); setAnswers(prev => ({ ...prev, [gIdx]: newVal })); if (newVal && inputRefs.current[gIdx + 1]) inputRefs.current[gIdx + 1].focus() }}
+              onKeyDown={e => { if (e.key === 'Backspace' && !val && inputRefs.current[gIdx - 1]) inputRefs.current[gIdx - 1].focus(); if (e.key === 'Tab') { e.preventDefault(); if (inputRefs.current[gIdx + 1]) inputRefs.current[gIdx + 1].focus() } }}
               disabled={checked}
-              style={{
-                width: '11px',
-                height: '14px',
-                border: 'none',
-                borderBottom: checked
-                  ? charCorrect ? '1.5px solid #2a9d5c' : '1.5px solid #d94040'
-                  : '1.5px solid #555',
-                outline: 'none',
-                background: 'transparent',
-                textAlign: 'center',
-                fontSize: '13px',
-                fontFamily: 'Georgia, serif',
-                color: checked ? (charCorrect ? '#1a7a44' : '#b03030') : '#1a1a1a',
-                padding: 0,
-                margin: 0,
-                caretColor: '#701fa1',
-                cursor: 'text',
-                boxSizing: 'border-box',
-                lineHeight: '14px',
-              }}
-            />
+              style={{ width: '11px', height: '14px', border: 'none', borderBottom: checked ? (charCorrect ? '1.5px solid #2a9d5c' : '1.5px solid #d94040') : '1.5px solid #555', outline: 'none', background: 'transparent', textAlign: 'center', fontSize: '13px', fontFamily: 'Georgia, serif', color: checked ? (charCorrect ? '#1a7a44' : '#b03030') : '#1a1a1a', padding: 0, margin: 0, caretColor: '#701fa1', cursor: 'text', boxSizing: 'border-box', lineHeight: '14px' }} />
           </span>
         )
       })
-
       globalIdx += blank.hidden.length
-
       parts.push(
         <span key={`blank-${blankIdx}`} style={{ display: 'inline-flex', alignItems: 'center', verticalAlign: 'middle', whiteSpace: 'nowrap' }}>
           <span style={{ fontSize: '15px', fontFamily: 'Georgia, serif', color: '#1a1a1a' }}>{blank.visible}</span>
-          <span
-            style={{
-              display: 'inline-flex',
-              alignItems: 'flex-end',
-              gap: '2px',
-              background: checked
-                ? isBlankCorrect ? '#edfbf3' : '#fff2f2'
-                : '#d6d8db',
-              padding: '1px 3px',
-              borderRadius: '2px',
-              marginLeft: '1px',
-              cursor: 'text',
-            }}
-            onClick={() => {
-              const firstEmpty = blank.hidden.split('').findIndex((_, i) => !answers[startIdx + i])
-              const focusIdx = firstEmpty === -1 ? startIdx + blank.hidden.length - 1 : startIdx + firstEmpty
-              if (inputRefs.current[focusIdx]) inputRefs.current[focusIdx].focus()
-            }}
-          >
+          <span style={{ display: 'inline-flex', alignItems: 'flex-end', gap: '2px', background: checked ? (isBlankCorrect ? '#edfbf3' : '#fff2f2') : '#d6d8db', padding: '1px 3px', borderRadius: '2px', marginLeft: '1px', cursor: 'text' }}
+            onClick={() => { const firstEmpty = blank.hidden.split('').findIndex((_, i) => !answers[startIdx + i]); const focusIdx = firstEmpty === -1 ? startIdx + blank.hidden.length - 1 : startIdx + firstEmpty; if (inputRefs.current[focusIdx]) inputRefs.current[focusIdx].focus() }}>
             {charInputs}
           </span>
-          {checked && !isBlankCorrect && (
-            <span style={{ fontSize: '11px', color: '#2a9d5c', fontWeight: '700', marginLeft: '4px', fontFamily: 'sans-serif', whiteSpace: 'nowrap' }}>
-              → {blank.hidden}
-            </span>
-          )}
+          {checked && !isBlankCorrect && <span style={{ fontSize: '11px', color: '#2a9d5c', fontWeight: '700', marginLeft: '4px', fontFamily: 'sans-serif', whiteSpace: 'nowrap' }}>→ {blank.hidden}</span>}
         </span>
       )
-
       remaining = remaining.slice(wordPos + blank.word.length)
     })
-
     if (remaining) parts.push(<span key="tail">{remaining}</span>)
     return parts
   }
 
   const handleSubmit = () => {
     if (timerRef.current) clearInterval(timerRef.current)
-    let correct = 0
-    let gIdx = 0
-    ex.blanks.forEach((blank) => {
-      const ok = blank.hidden.split('').every((ch, i) => (answers[gIdx + i] || '').toLowerCase() === ch.toLowerCase())
-      if (ok) correct++
-      gIdx += blank.hidden.length
-    })
-    setTotalCorrect(prev => prev + correct)
+    if (mockMode) {
+      checkedRef.current = true
+      onComplete(calcCorrect(answers), ex.blanks.length, buildDetail(answers))
+      return
+    }
     setChecked(true)
   }
+  const questionScore = checked ? calcCorrect(answers) : null
 
-  const handleNext = () => {
-    if (currentIndex + 1 >= totalQ) {
-      setFinished(true)
-    } else {
-      setCurrentIndex(i => i + 1)
-      setAnswers({})
-      setChecked(false)
-      inputRefs.current = {}
-      setTimeout(() => { if (inputRefs.current[0]) inputRefs.current[0].focus() }, 100)
-    }
-  }
-
-  const handleRestart = () => {
-    setCurrentIndex(0)
-    setAnswers({})
-    setChecked(false)
-    setFinished(false)
-    setTotalCorrect(0)
-    inputRefs.current = {}
-  }
-
-  // ── Score Screen ──
   if (finished) {
-    const maxScore = totalQ * 10
-    const pct = Math.round((totalCorrect / maxScore) * 100)
-    const grade = pct >= 90 ? { label: 'Excellent!',    color: '#2a9d5c', emoji: '🏆' }
-                : pct >= 70 ? { label: 'Good job!',     color: '#701fa1', emoji: '🎉' }
-                : pct >= 50 ? { label: 'Keep going',    color: '#e07b00', emoji: '💪' }
-                :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+    const correct = calcCorrect(answers); const total = ex.blanks.length; const pct = Math.round((correct / total) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2a9d5c', emoji: '🏆' } : pct >= 70 ? { label: 'Good job!', color: '#701fa1', emoji: '🎉' } : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' } : { label: 'Practice more', color: '#c0392b', emoji: '📚' }
     return (
-      <div style={{
-        position: 'fixed', inset: 0, background: '#f2f3f5',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-        zIndex: 10, fontFamily: 'Georgia, serif',
-      }}>
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 10, fontFamily: 'Georgia, serif' }}>
         <div style={{ background: '#fff', borderRadius: '16px', padding: '48px 56px', textAlign: 'center', maxWidth: '420px', width: '90%', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
           <div style={{ fontSize: '52px', marginBottom: '12px' }}>{grade.emoji}</div>
           <div style={{ fontSize: '26px', fontWeight: '700', color: grade.color, marginBottom: '8px' }}>{grade.label}</div>
-          <div style={{ fontSize: '13px', color: '#888', marginBottom: '24px', fontFamily: 'sans-serif' }}>You completed all {totalQ} questions</div>
-          <div style={{ fontSize: '52px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1', fontFamily: 'sans-serif' }}>
-            {totalCorrect}
-            <span style={{ fontSize: '20px', color: '#aaa', fontWeight: '400' }}>/{maxScore}</span>
-          </div>
-          <div style={{ margin: '20px 0 8px', height: '8px', background: '#efefef', borderRadius: '4px' }}>
-            <div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px', transition: 'width 0.8s ease' }} />
-          </div>
+          <div style={{ fontSize: '13px', color: '#888', marginBottom: '24px', fontFamily: 'sans-serif' }}>Exercise {exerciseNum}</div>
+          <div style={{ fontSize: '52px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1', fontFamily: 'sans-serif' }}>{correct}<span style={{ fontSize: '20px', color: '#aaa', fontWeight: '400' }}>/{total}</span></div>
+          <div style={{ margin: '20px 0 8px', height: '8px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px', transition: 'width 0.8s ease' }} /></div>
           <div style={{ fontSize: '13px', color: '#777', marginBottom: '32px', fontFamily: 'sans-serif' }}>{pct}% correct</div>
           <div style={{ display: 'flex', gap: '10px' }}>
-            <button onClick={handleRestart} style={{ flex: 1, padding: '13px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', letterSpacing: '0.5px', fontFamily: 'sans-serif' }}>
-              TRY AGAIN
-            </button>
-            <button onClick={onBack} style={{ flex: 1, padding: '13px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '14px', cursor: 'pointer', fontFamily: 'sans-serif' }}>
-              Back
-            </button>
+            <button onClick={() => { setAnswers({}); setChecked(false); setFinished(false); inputRefs.current = {} }} style={{ flex: 1, padding: '13px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', fontFamily: 'sans-serif' }}>TRY AGAIN</button>
+            <button onClick={() => onComplete(correct, total)} style={{ flex: 1, padding: '13px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '14px', cursor: 'pointer', fontFamily: 'sans-serif' }}>Back</button>
           </div>
         </div>
       </div>
     )
   }
 
-  const questionScore = (() => {
-    if (!checked) return null
-    let correct = 0
-    let gIdx = 0
-    ex.blanks.forEach((blank) => {
-      const ok = blank.hidden.split('').every((ch, i) => (answers[gIdx + i] || '').toLowerCase() === ch.toLowerCase())
-      if (ok) correct++
-      gIdx += blank.hidden.length
-    })
-    return correct
-  })()
-
   return (
-    <div style={{
-      position: 'fixed', inset: 0,
-      background: '#f2f3f5',
-      display: 'flex', flexDirection: 'column',
-      fontFamily: 'Georgia, "Times New Roman", serif',
-      zIndex: 10,
-      overflowY: 'auto',
-    }}>
-      {/* Top bar */}
-      <div style={{
-        background: '#fff',
-        borderBottom: '1px solid #e0e0e0',
-        padding: '12px 24px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexShrink: 0,
-        position: 'sticky',
-        top: 0,
-        zIndex: 20,
-      }}>
-        <button onClick={onBack} style={{
-          position: 'absolute', left: '20px',
-          background: 'none', border: 'none', cursor: 'pointer',
-          fontSize: '13px', color: '#888', fontFamily: 'sans-serif',
-        }}>
-          ← Exit
-        </button>
-
-        {/* Timer */}
-        <span style={{
-          fontSize: '20px',
-          fontWeight: '700',
-          color: isLowTime ? '#d94040' : '#1a1a1a',
-          letterSpacing: '2px',
-          fontFamily: 'sans-serif',
-          transition: 'color 0.3s',
-        }}>
-          ⏱ {formatTime(timeLeft)}
-        </span>
-
-        <span style={{
-          position: 'absolute', right: '24px',
-          fontSize: '12px', color: '#888', fontFamily: 'sans-serif',
-        }}>
-          {currentIndex + 1} / {totalQ}
-        </span>
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={!checked
+        ? <>
+            {mockMode && <TestPillButton onClick={onPrevSlot} disabled={!onPrevSlot}>Back</TestPillButton>}
+            <TestPillButton onClick={handleSubmit}>{mockMode ? (isLastSlot ? 'Finish' : 'Next') : 'Submit'}</TestPillButton>
+          </>
+        : <TestPillButton onClick={() => setFinished(true)}>See Results</TestPillButton>}
+      section="READING"
+      questionLabel={questionLabel}
+      timeText={formatTime(displayTime)}
+      lowTime={isLowTime}
+      contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
+      <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 36px', fontFamily: 'sans-serif', maxWidth: '760px' }}>Fill in the missing letters in the paragraph.</h1>
+      <div style={{ maxWidth: '860px', width: '100%', boxSizing: 'border-box', marginBottom: checked ? '20px' : '32px', border: '2.5px solid #1a1a1a', borderRadius: '14px', padding: '28px 34px' }}>
+        <p style={{ fontSize: '16px', lineHeight: '2.6', color: '#1a1a1a', margin: 0, fontFamily: 'Georgia, serif' }}>{renderParagraph()}</p>
       </div>
-
-      {/* Body */}
-      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '40px 20px 120px' }}>
-
-        <h1 style={{
-          fontSize: '22px', fontWeight: '700', color: '#1a1a1a',
-          textAlign: 'center', margin: '0 0 28px',
-          fontFamily: 'Georgia, serif',
-          maxWidth: '700px',
-        }}>
-          Fill in the missing letters in the paragraph
-        </h1>
-
-        {/* Passage card */}
-        <div style={{
-          background: '#fff',
-          borderRadius: '12px',
-          padding: '36px 44px',
-          maxWidth: '700px',
-          width: '100%',
-          boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
-          boxSizing: 'border-box',
-          marginBottom: checked ? '20px' : '32px',
-        }}>
-          <p style={{
-            fontSize: '16px',
-            lineHeight: '2.6',
-            color: '#1a1a1a',
-            margin: 0,
-          }}>
-            {renderParagraph()}
-          </p>
+      {checked && (
+        <div style={{ maxWidth: '760px', width: '100%', background: questionScore === ex.blanks.length ? '#edfbf3' : '#fff8ec', border: '1px solid ' + (questionScore === ex.blanks.length ? '#a7e9c3' : '#f5d08a'), borderRadius: '10px', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', fontFamily: 'sans-serif', boxSizing: 'border-box' }}>
+          <span style={{ fontSize: '14px', fontWeight: '700', color: questionScore === ex.blanks.length ? '#1a7a44' : '#c07000' }}>{timeLeft === 0 ? "⏱ Time's up! " : ''}{questionScore === ex.blanks.length ? '🎯 Perfect score!' : `${questionScore} / ${ex.blanks.length} correct`}</span>
+          <span style={{ fontSize: '12px', color: '#888' }}>Correct answers in <span style={{ color: '#2a9d5c', fontWeight: '700' }}>green</span></span>
         </div>
+      )}
+    </ExamScreen>
+  )
+}
 
-        {/* Result feedback */}
-        {checked && (
-          <div style={{
-            maxWidth: '700px', width: '100%',
-            background: questionScore === ex.blanks.length ? '#edfbf3' : '#fff8ec',
-            border: '1px solid ' + (questionScore === ex.blanks.length ? '#a7e9c3' : '#f5d08a'),
-            borderRadius: '10px',
-            padding: '14px 20px',
-            display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-            marginBottom: '24px',
-            fontFamily: 'sans-serif',
-            boxSizing: 'border-box',
-          }}>
-            <span style={{ fontSize: '14px', fontWeight: '700', color: questionScore === ex.blanks.length ? '#1a7a44' : '#c07000' }}>
-              {timeLeft === 0 ? '⏱ Time\'s up! ' : ''}{questionScore === ex.blanks.length ? '🎯 Perfect score!' : `${questionScore} / ${ex.blanks.length} correct`}
-            </span>
-            <span style={{ fontSize: '12px', color: '#888' }}>
-              Correct answers in <span style={{ color: '#2a9d5c', fontWeight: '700' }}>green</span>
-            </span>
+function CompleteTheWords({ onBack }) {
+  const [exercises, setExercises] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selectedIdx, setSelectedIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/reading/complete-the-words`).then(r => r.json()),
+      fetchLatestResults('ctw'),
+    ]).then(([data, results]) => {
+      setExercises(data)
+      const mapped = {}
+      data.forEach((ex, i) => { const row = results[String(ex.id)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!exercises.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found.</div>
+
+  if (selectedIdx !== null) return (
+    <CTWSingle exercise={exercises[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
+      onComplete={(correct, total) => {
+        saveResult('ctw', exercises[selectedIdx].id, correct, total, `Complete the Words #${selectedIdx + 1}`)
+        setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
+      }} />
+  )
+  return <CTWList exercises={exercises} scores={scores} onSelect={setSelectedIdx} onBack={onBack} />
+}
+
+// ─── Read in Daily Life ───────────────────────────────────────────────────────
+const RIDL_TIME = 90
+const RIDL_TYPE_LABELS = { email: 'Email', message: 'Message Exchange', sign: 'Sign / Notice', poster: 'Poster', receipt: 'Receipt', advertisement: 'Advertisement', schedule: 'Schedule / Agenda', article: 'Article' }
+// Short 2-question types (sign/schedule/receipt) listed first, then the longer 3-question types
+// (email/message/article/poster/advertisement) -- lets students warm up on the quicker practices
+// before the longer ones.
+const RIDL_TYPE_ORDER = ['sign', 'schedule', 'receipt', 'email', 'message', 'article', 'poster', 'advertisement']
+
+// "Practice N" should count up 1, 2, 3... in the order things are actually shown on screen (per
+// RIDL_TYPE_ORDER above), not the item's position in the underlying data array -- which would
+// otherwise jump around (17, 18, 19... then 29, 30...) once grouped/reordered by type. Shared by
+// both the list screen and the exercise screen (via ReadInDailyLife) so the numbers always match.
+function computeRIDLDisplayNums(passages) {
+  const byType = {}
+  passages.forEach((p, i) => { if (!byType[p.type]) byType[p.type] = []; byType[p.type].push(i) })
+  const map = new Map()
+  let counter = 0
+  RIDL_TYPE_ORDER.filter(t => byType[t]).forEach(t => {
+    byType[t].forEach(i => { counter += 1; map.set(i, counter) })
+  })
+  return map
+}
+
+function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
+  const typeOrder = RIDL_TYPE_ORDER
+  const grouped = {}
+  passages.forEach((p, i) => { if (!grouped[p.type]) grouped[p.type] = []; grouped[p.type].push({ ...p, globalIdx: i }) })
+  const displayNumByGlobalIdx = displayNums || computeRIDLDisplayNums(passages)
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Read in Daily Life</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        {typeOrder.filter(t => grouped[t]).map(type => (
+          <div key={type} style={{ marginBottom: '28px' }}>
+            <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '10px' }}>{RIDL_TYPE_LABELS[type]}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {grouped[type].map((p) => {
+                const result = scores[p.globalIdx]; const pct = result ? Math.round((result.score / result.total) * 100) : null
+                return (
+                  <div key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {displayNumByGlobalIdx.get(p.globalIdx)}</div>
+                        {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.score}/{result.total} · {pct}%</span>}
+                      </div>
+                      <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{p.title} · {p.questions.length} questions</div>
+                    </div>
+                    <button onClick={() => onSelect(p.globalIdx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
+                  </div>
+                )
+              })}
+            </div>
           </div>
-        )}
-
-        {/* Button */}
-        {!checked ? (
-          <button onClick={handleSubmit} style={{
-            background: '#2a9d5c',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '16px 56px',
-            fontSize: '15px',
-            fontWeight: '700',
-            letterSpacing: '1.5px',
-            cursor: 'pointer',
-            fontFamily: 'sans-serif',
-            boxShadow: '0 2px 8px rgba(42,157,92,0.25)',
-          }}>
-            SUBMIT ANSWERS
-          </button>
-        ) : (
-          <button onClick={handleNext} style={{
-            background: currentIndex + 1 >= totalQ ? '#701fa1' : '#2a9d5c',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '8px',
-            padding: '16px 56px',
-            fontSize: '15px',
-            fontWeight: '700',
-            letterSpacing: '1.5px',
-            cursor: 'pointer',
-            fontFamily: 'sans-serif',
-          }}>
-            {currentIndex + 1 >= totalQ ? 'FINISH →' : 'NEXT QUESTION →'}
-          </button>
-        )}
-
+        ))}
       </div>
     </div>
   )
 }
-// ─── Read in Daily Life Module ───────────────────────────────────────────────
-const RIDL_TIME = 90 // 90 seconds per question
 
-function ReadInDailyLife({ onBack }) {
+function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, onComplete, mockMode = false, poolTime, moduleOffset, moduleTotal, onPrevSlot, enterAtEnd, isLastSlot = true, initialAnswers, onAnswersChange }) {
+  const [questionIdx, setQuestionIdx] = useState(() => enterAtEnd ? passage.questions.length - 1 : 0)
+  // Left as null on mount — the questionIdx effect just below runs immediately after mount too
+  // and restores the right value from `answers` (itself seeded from initialAnswers), so this
+  // never flashes an incorrect selection.
+  const [selected, setSelected] = useState(null)
+  const [done, setDone] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(RIDL_TIME)
+  const [answers, setAnswers] = useState(() => initialAnswers || []) // answers[i] = { selected, correct, isCorrect } for each question, keyed by index
+  const timerRef = useRef(null)
+
+  // Mirror every recorded answer up to the parent so Back-navigating out of this passage and
+  // later returning restores exactly what was chosen, instead of remounting blank.
+  useEffect(() => { if (onAnswersChange) onAnswersChange(answers) }, [answers])
+
+  const formatTime = (s) => String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0')
+  const displayTime = poolTime !== undefined ? poolTime : timeLeft
+  const isLowTime = poolTime !== undefined ? poolTime <= 60 : timeLeft <= 20
+  const question = passage.questions[questionIdx]
+  const totalQ = passage.questions.length
+  const score = answers.reduce((s, a) => s + (a && a.isCorrect ? 1 : 0), 0)
+  const questionLabel = moduleTotal !== undefined
+    ? `Question ${moduleOffset + questionIdx + 1} of ${moduleTotal}`
+    : `Practice ${practiceNum} · Question ${questionIdx + 1} of ${totalQ}`
+
+  // Whenever the visible question changes (forward OR backward), load whatever answer was
+  // already recorded for it, so navigating back and forth preserves the student's choices
+  // instead of always showing a blank/stale selection.
+  useEffect(() => {
+    setSelected(answers[questionIdx] ? answers[questionIdx].selected : null)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionIdx])
+
+  // See CTWSingle: when `poolTime` is provided, FullMockTest owns one shared clock for the
+  // whole Reading module, so this per-question timer/auto-expiry is skipped entirely — the
+  // student uses Next/Back freely and only the module-level clock can force it to end.
+  useEffect(() => {
+    if (poolTime !== undefined) return
+    if (done) return
+    setTimeLeft(RIDL_TIME)
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => { setTimeLeft(prev => { if (prev <= 1) { clearInterval(timerRef.current); goNext(); return 0 } return prev - 1 }) }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [questionIdx, done, poolTime])
+
+  // Returns a fresh copy of `answers` with the given question's answer set — used instead of
+  // a functional setState update so callers can immediately use the up-to-date array (e.g. to
+  // compute the final score) without waiting for the next render.
+  const withAnswer = (idx, sel) => {
+    const q = passage.questions[idx]
+    const isCorrect = sel !== null && sel === q.answer
+    const next = [...answers]
+    next[idx] = { selected: sel, correct: q.answer, isCorrect }
+    return next
+  }
+
+  const finish = (finalAnswers) => {
+    if (mockMode) {
+      const finalScore = finalAnswers.reduce((s, a) => s + (a && a.isCorrect ? 1 : 0), 0)
+      const detail = passage.questions.map((q, qi) => {
+        const a = finalAnswers[qi]
+        return {
+          prompt: q.question,
+          given: a && a.selected !== null && a.selected !== undefined ? q.options[a.selected] : 'No answer',
+          correctAnswer: q.options[q.answer],
+          isCorrect: !!(a && a.isCorrect),
+        }
+      })
+      onComplete(finalScore, totalQ, detail)
+      return
+    }
+    setDone(true)
+  }
+
+  // Records the current selection and moves forward — to the next question, or finishes
+  // the set if this was the last one. Used by both the NEXT/FINISH button and the timer.
+  const goNext = () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    const finalAnswers = withAnswer(questionIdx, selected)
+    setAnswers(finalAnswers)
+    if (questionIdx + 1 < totalQ) {
+      setQuestionIdx(i => i + 1)
+    } else {
+      finish(finalAnswers)
+    }
+  }
+
+  // Records the current selection and moves back one question, restoring whatever was
+  // previously chosen there (or a blank selection if it hadn't been answered yet).
+  const goBack = () => {
+    if (questionIdx === 0) {
+      if (onPrevSlot) onPrevSlot()
+      return
+    }
+    if (timerRef.current) clearInterval(timerRef.current)
+    setAnswers(withAnswer(questionIdx, selected))
+    setQuestionIdx(i => i - 1)
+  }
+
+  const [reviewQ, setReviewQ] = useState(null)
+
+  if (done) {
+    const pct = Math.round((score / totalQ) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2a9d5c', emoji: '🏆' } : pct >= 70 ? { label: 'Good job!', color: '#701fa1', emoji: '🎉' } : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' } : { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+
+    if (reviewQ !== null) {
+      const q = passage.questions[reviewQ]; const a = answers[reviewQ]
+      return (
+        <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 20 }}>
+          <div style={{ padding: '0 32px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#701fa1', fontWeight: '600', cursor: 'pointer' }}>← Back to Review</button>
+            <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+            </div>
+          </div>
+          <div style={{ height: '2.5px', background: '#2a9d5c', flexShrink: 0 }} />
+          <div style={{ flex: 1, display: 'flex', padding: '24px 32px', gap: '40px', overflow: 'hidden', minHeight: 0 }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', minWidth: 0, maxWidth: '520px' }}>
+              <div style={{ fontSize: '12px', color: '#616473' }}>{passage.instruction}</div>
+              <div style={{ border: '2px solid #2a9d5c', borderRadius: '8px', padding: '16px 18px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: 'calc(100vh - 180px)' }}>
+                {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px' }}>{passage.title}</div>}
+                {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
+                <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
+              </div>
+            </div>
+            <div style={{ width: '400px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a', lineHeight: '1.55' }}>{q.question}</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {q.options.map((opt, oi) => {
+                  const isCorrectOpt = oi === q.answer; const isWrongSelected = oi === a.selected && !isCorrectOpt
+                  return (
+                    <div key={oi} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '4px 0' }}>
+                      <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isCorrectOpt ? '2px solid #2a9d5c' : isWrongSelected ? '2px solid #d94040' : '1.5px solid #c0c0c0', display: 'flex', alignItems: 'center', justifyContent: 'center', background: isCorrectOpt ? '#edfbf3' : isWrongSelected ? '#fff2f2' : '#fff' }}>
+                        {isCorrectOpt && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#2a9d5c', display: 'block' }} />}
+                        {isWrongSelected && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#d94040', display: 'block' }} />}
+                      </span>
+                      <span style={{ fontSize: '14px', lineHeight: '1.5', color: isCorrectOpt ? '#1a7a44' : isWrongSelected ? '#b03030' : '#888', fontWeight: isCorrectOpt ? '600' : '400' }}>
+                        {opt}
+                        {isCorrectOpt && !a.isCorrect && <span style={{ fontSize: '11px', color: '#2a9d5c', marginLeft: '6px', fontWeight: '700' }}>✓ correct</span>}
+                        {isWrongSelected && <span style={{ fontSize: '11px', color: '#d94040', marginLeft: '6px' }}>✗ your answer</span>}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+        <div style={{ maxWidth: '700px', width: '100%', margin: '0 auto', padding: '40px 24px' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '32px', textAlign: 'center', marginBottom: '24px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ fontSize: '44px', marginBottom: '10px' }}>{grade.emoji}</div>
+            <div style={{ fontSize: '22px', fontWeight: '700', color: grade.color, marginBottom: '4px' }}>{grade.label}</div>
+            <div style={{ fontSize: '13px', color: '#888', marginBottom: '16px' }}>Practice {practiceNum} · {totalQ} questions</div>
+            <div style={{ fontSize: '44px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>{score}<span style={{ fontSize: '18px', color: '#aaa', fontWeight: '400' }}>/{totalQ}</span></div>
+            <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
+            <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={onBack} style={{ flex: 1, padding: '11px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>All Practices</button>
+              <button onClick={onFinish} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Exit</button>
+            </div>
+          </div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see the passage</span></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {passage.questions.map((q, qi) => {
+              const a = answers[qi]; if (!a) return null
+              return (
+                <div key={qi} onClick={() => setReviewQ(qi)} style={{ background: '#fff', borderRadius: '10px', padding: '14px 18px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (a.isCorrect ? '#2a9d5c' : '#d94040'), cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}
+                  onMouseEnter={e => e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)'} onMouseLeave={e => e.currentTarget.style.boxShadow = 'none'}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                      <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2a9d5c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
+                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.question}</span>
+                    </div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2a9d5c' : '#b03030' }}>{a.isCorrect ? '✓ ' + q.options[q.answer] : '✗ You chose: ' + (a.selected !== null ? q.options[a.selected] : 'No answer')}</div>
+                  </div>
+                  <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const RIDL_BOX_COLORS = ['#127c84', '#e0952b', '#4b7bec', '#c0392b', '#0f9960']
+  const boxColor = RIDL_BOX_COLORS[(passage.id || practiceNum || 0) % RIDL_BOX_COLORS.length]
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={mockMode
+        ? <>
+            <TestPillButton onClick={goBack} disabled={questionIdx === 0 && !onPrevSlot}>Back</TestPillButton>
+            <TestPillButton onClick={goNext}>{(questionIdx + 1 === totalQ && isLastSlot) ? 'Finish' : 'Next'}</TestPillButton>
+          </>
+        : <TestPillButton onClick={goNext}>{questionIdx + 1 === totalQ ? 'Finish' : 'Next'}</TestPillButton>}
+      section="READING"
+      questionLabel={questionLabel}
+      timeText={formatTime(displayTime)}
+      lowTime={isLowTime}
+    >
+      <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 32px' }}>{passage.instruction}</h1>
+      <div style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto' }}>
+        <div style={{ flex: 1, minWidth: 0, maxWidth: '520px' }}>
+          <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '18px 20px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: 'calc(100vh - 260px)' }}>
+            {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px', color: '#1a1a1a' }}>{passage.title}</div>}
+            {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
+            <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
+          </div>
+        </div>
+        <div style={{ width: '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
+          <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>{question.question}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            {question.options.map((opt, i) => {
+              const isChosen = i === selected
+              return (
+                <div key={i} onClick={() => setSelected(i)} style={{ display: 'flex', alignItems: 'center', gap: '14px', cursor: 'pointer', padding: '4px 0' }}>
+                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff', transition: 'all 0.1s' }} />
+                  <span style={{ fontSize: '16px', lineHeight: '1.5', color: '#1a1a1a' }}>{opt}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </ExamScreen>
+  )
+}
+
+// ─── Academic Passage ─────────────────────────────────────────────────────────
+// VITE_BACKEND_URL can be set at build time (e.g. in Render's environment variables) to point
+// the deployed frontend at its deployed backend. Falls back to localhost for local dev.
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
+
+// ─── Auth: token storage + an authenticated fetch wrapper ────────────────────────────────────
+const AUTH_TOKEN_KEY = 'mrreadyprep_token'
+
+function getAuthToken() {
+  return localStorage.getItem(AUTH_TOKEN_KEY) || ''
+}
+function setAuthToken(token) {
+  localStorage.setItem(AUTH_TOKEN_KEY, token)
+}
+function clearAuthToken() {
+  localStorage.removeItem(AUTH_TOKEN_KEY)
+}
+function logout() {
+  clearAuthToken()
+  window.location.reload()
+}
+
+// Every call in this file that hits our own backend goes through this instead of the raw
+// `fetch` so the logged-in student's session token rides along automatically. On a 401 (missing/
+// expired/invalid token) it clears the stale token and reloads, which drops the student back
+// onto the login screen instead of leaving them stuck on a broken, half-authenticated page.
+function apiFetch(url, options = {}) {
+  const token = getAuthToken()
+  const headers = { ...(options.headers || {}) }
+  if (token) headers['Authorization'] = `Bearer ${token}`
+  return fetch(url, { ...options, headers }).then(res => {
+    if (res.status === 401) {
+      clearAuthToken()
+      window.location.reload()
+    }
+    return res
+  })
+}
+
+// Fire-and-forget: records one finished exercise/attempt into the unified progress table so
+// the student can see their history/improvement later on the Progress screen. Never blocks or
+// throws on failure -- a save hiccup shouldn't interrupt the student's flow.
+function saveResult(category, itemId, score, total, label = '') {
+  apiFetch(`${BACKEND_URL}/api/results/save`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ category, item_id: String(itemId), label, score, total }),
+  }).catch(() => {})
+}
+
+// Loads every past attempt for a category and reduces it down to the most recent attempt per
+// item_id (history comes back most-recent-first, so the first row seen per item_id wins) --
+// this is what list screens use to restore each exercise's "✓ done" badge after a reload,
+// mirroring the score that was showing right before the student navigated away.
+function fetchLatestResults(category) {
+  return apiFetch(`${BACKEND_URL}/api/results/history?category=${category}`)
+    .then(r => r.json())
+    .then(rows => {
+      const map = {}
+      ;(Array.isArray(rows) ? rows : []).forEach(row => {
+        if (!(row.item_id in map)) map[row.item_id] = row
+      })
+      return map
+    })
+    .catch(() => ({}))
+}
+
+function APList({ passages, scores, onSelect, onBack }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Read an Academic Passage</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {passages.map((p, idx) => {
+            const result = scores[p.id]; const pct = result ? Math.round((result.score / result.total) * 100) : null
+            return (
+              <div key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Passage {idx + 1}</div>
+                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.score}/{result.total} · {pct}%</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{p.title} · {p.questions.length} questions</div>
+                </div>
+                <button onClick={() => onSelect(p)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, moduleOffset, moduleTotal, onPrevSlot, enterAtEnd, isLastSlot = true, initialAnswers, onAnswersChange }) {
+  const TOTAL_TIME = 600
+  const [currentQ, setCurrentQ] = useState(() => enterAtEnd ? passage.questions.length - 1 : 0)
+  const [answers, setAnswers] = useState(() => initialAnswers || {})
+  const [submitted, setSubmitted] = useState(false)
+  const [showReview, setShowReview] = useState(false)
+  const [reviewIdx, setReviewIdx] = useState(null)
+  const [timeLeft, setTimeLeft] = useState(TOTAL_TIME)
+  const answersRef = useRef({})
+  useEffect(() => { answersRef.current = answers }, [answers])
+  // Mirror selections up to the parent so Back-navigating away from this passage and returning
+  // later restores exactly what was chosen, instead of remounting blank.
+  useEffect(() => { if (onAnswersChange) onAnswersChange(answers) }, [answers])
+
+  const questions = passage.questions; const q = questions[currentQ]
+  const isInsert = q && q.type === 'insert_sentence'
+  const activePassage = isInsert ? passage.passage_marked : passage.passage
+  const questionLabel = moduleTotal !== undefined
+    ? `Question ${moduleOffset + currentQ + 1} of ${moduleTotal}`
+    : `Question ${currentQ + 1} of ${questions.length}`
+  const displayTime = poolTime !== undefined ? poolTime : timeLeft
+  const isLowTime = poolTime !== undefined ? poolTime <= 60 : timeLeft <= 60
+
+  const buildDetail = (ans) => questions.map((qq, i) => ({
+    prompt: qq.question,
+    given: ans[i] !== undefined ? qq.options[ans[i]] : 'No answer',
+    correctAnswer: qq.options[qq.answer],
+    isCorrect: ans[i] === qq.answer,
+  }))
+
+  // See CTWSingle/RIDLQuestion: when `poolTime` is provided, FullMockTest owns one shared clock
+  // for the whole Reading module, so this passage-level timer/auto-expiry is skipped entirely.
+  useEffect(() => {
+    if (poolTime !== undefined) return
+    if (submitted) return
+    const t = setInterval(() => setTimeLeft(s => {
+      if (s <= 1) {
+        clearInterval(t)
+        if (mockMode) {
+          const ans = answersRef.current
+          const finalScore = questions.filter((qq, i) => ans[i] === qq.answer).length
+          onComplete(finalScore, questions.length, buildDetail(ans))
+        } else {
+          setSubmitted(true)
+        }
+        return 0
+      }
+      return s - 1
+    }), 1000)
+    return () => clearInterval(t)
+  }, [submitted, poolTime])
+
+  const formatTime = s => `${String(Math.floor(s / 60)).padStart(2,'0')}:${String(s % 60).padStart(2,'0')}`
+
+  function renderMarkedPassage(text) {
+    return text.split(/(\[A\]|\[B\]|\[C\]|\[D\])/g).map((part, i) =>
+      /^\[.\]$/.test(part)
+        ? <span key={i} style={{ display: 'inline-block', background: '#1a5c3a', color: '#fff', borderRadius: 4, padding: '0 6px', fontSize: 11, fontWeight: 700, margin: '0 2px', lineHeight: '20px' }}>{part}</span>
+        : part
+    )
+  }
+
+  const score = submitted ? questions.filter((qq, i) => answers[i] === qq.answer).length : 0
+
+  if (submitted && showReview && reviewIdx !== null) {
+    const rq = questions[reviewIdx]; const isIns = rq.type === 'insert_sentence'
+    const rPassage = isIns ? passage.passage_marked : passage.passage
+    const userAns = answers[reviewIdx]; const correct = rq.answer
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10 }}>
+        <div style={{ padding: '0 32px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+          <div style={{ fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>Read an Academic Passage</div>
+          <button onClick={() => setShowReview(false)} style={{ background: '#fff', border: '1.5px solid #2a9d5c', borderRadius: '6px', padding: '6px 14px', fontSize: '13px', color: '#2a9d5c', cursor: 'pointer', fontWeight: '700' }}>← BACK</button>
+        </div>
+        <div style={{ height: '2.5px', background: '#2a9d5c', flexShrink: 0 }} />
+        <div style={{ flex: 1, display: 'flex', padding: '24px 32px', gap: '40px', overflow: 'hidden', minHeight: 0 }}>
+          <div style={{ flex: 1, border: '2px solid #2a9d5c', borderRadius: '8px', padding: '16px 18px', overflowY: 'auto', boxSizing: 'border-box' }}>
+            <div style={{ fontWeight: '700', fontSize: '14px', marginBottom: '12px', color: '#1a1a1a' }}>{passage.title}</div>
+            {isIns ? <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a' }}>{renderMarkedPassage(rPassage)}</div> : <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a', whiteSpace: 'pre-line' }}>{rPassage}</div>}
+          </div>
+          <div style={{ width: '420px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ fontSize: '12px', color: '#999' }}>Question {reviewIdx + 1} of {questions.length}</div>
+            {isIns && <div style={{ background: '#f0faf4', border: '1px solid #2a9d5c', borderRadius: '8px', padding: '12px 14px', fontStyle: 'italic', fontSize: '13px', color: '#1a1a1a', lineHeight: '1.6' }}>"{rq.insert_text}"</div>}
+            <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a', lineHeight: '1.55' }}>{rq.question}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {rq.options.map((opt, i) => {
+                let bg = '#fafafa', border = '1px solid #e0e0e0', color = '#1a1a1a'
+                if (i === correct) { bg = '#e8f5e9'; border = '1.5px solid #2a9d5c'; color = '#1a5c3a' }
+                if (i === userAns && userAns !== correct) { bg = '#fdecea'; border = '1.5px solid #e53935'; color = '#c62828' }
+                return <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 14px', borderRadius: '8px', border, background: bg }}><span style={{ fontSize: '15px', flexShrink: 0 }}>{i === correct ? '✓' : i === userAns && userAns !== correct ? '✗' : '○'}</span><span style={{ fontSize: '14px', color, lineHeight: '1.4' }}>{opt}</span></div>
+              })}
+            </div>
+            <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+              <button onClick={() => setReviewIdx(i => Math.max(0, i - 1))} disabled={reviewIdx === 0} style={{ flex: 1, padding: '10px 0', borderRadius: '6px', border: '1.5px solid #2a9d5c', background: reviewIdx === 0 ? '#f5f5f5' : '#fff', color: reviewIdx === 0 ? '#bbb' : '#2a9d5c', cursor: reviewIdx === 0 ? 'not-allowed' : 'pointer', fontWeight: '700', fontSize: '13px' }}>← PREV</button>
+              <button onClick={() => setReviewIdx(i => Math.min(questions.length - 1, i + 1))} disabled={reviewIdx === questions.length - 1} style={{ flex: 1, padding: '10px 0', borderRadius: '6px', border: 'none', background: reviewIdx === questions.length - 1 ? '#e5e7eb' : '#2a9d5c', color: reviewIdx === questions.length - 1 ? '#aaa' : '#fff', cursor: reviewIdx === questions.length - 1 ? 'not-allowed' : 'pointer', fontWeight: '700', fontSize: '13px' }}>NEXT →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (submitted) {
+    const pct = Math.round((score / questions.length) * 100)
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10 }}>
+        <div style={{ padding: '0 32px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+          <div style={{ fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>Read an Academic Passage</div>
+          <button onClick={onBack} style={{ background: '#fff', border: '1.5px solid #2a9d5c', borderRadius: '6px', padding: '6px 14px', fontSize: '13px', color: '#2a9d5c', cursor: 'pointer', fontWeight: '700' }}>← BACK</button>
+        </div>
+        <div style={{ height: '2.5px', background: '#2a9d5c', flexShrink: 0 }} />
+        <div style={{ flex: 1, overflowY: 'auto', padding: '32px', display: 'flex', justifyContent: 'center' }}>
+          <div style={{ maxWidth: 560, width: '100%' }}>
+            <div style={{ textAlign: 'center', marginBottom: '28px' }}>
+              <div style={{ fontSize: 48, marginBottom: 8 }}>{pct >= 80 ? '🌟' : pct >= 60 ? '👍' : '📚'}</div>
+              <div style={{ fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: 4 }}>{passage.title}</div>
+              <div style={{ fontSize: '36px', fontWeight: '700', color: '#2a9d5c' }}>{score}/{questions.length}</div>
+              <div style={{ fontSize: '18px', color: '#666' }}>{pct}%</div>
+            </div>
+            <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · tap a question to see details</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              {questions.map((qq, i) => {
+                const isCorrect = answers[i] === qq.answer
+                return (
+                  <div key={i} onClick={() => { setReviewIdx(i); setShowReview(true) }} style={{ background: '#fff', borderRadius: '10px', padding: '14px 18px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (isCorrect ? '#2a9d5c' : '#d94040'), cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                        <span style={{ fontSize: '11px', background: isCorrect ? '#edfbf3' : '#fff2f2', color: isCorrect ? '#2a9d5c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{isCorrect ? '✓' : '✗'} Q{i + 1}</span>
+                        <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.question}</span>
+                      </div>
+                      <div style={{ fontSize: '12px', color: isCorrect ? '#2a9d5c' : '#b03030' }}>{isCorrect ? '✓ ' + qq.options[qq.answer] : '✗ ' + (answers[i] !== undefined ? qq.options[answers[i]] : 'No answer')}</div>
+                    </div>
+                    <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
+                  </div>
+                )
+              })}
+            </div>
+            <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
+              <button onClick={() => { setAnswers({}); setCurrentQ(0); setSubmitted(false); setTimeLeft(TOTAL_TIME) }} style={{ flex: 1, padding: '13px 0', borderRadius: '8px', border: '1.5px solid #2a9d5c', background: '#fff', color: '#2a9d5c', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { onComplete && onComplete(score, questions.length); onBack() }} style={{ flex: 1, padding: '13px 0', borderRadius: '8px', border: 'none', background: '#2a9d5c', color: '#fff', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Back to List</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={<>
+        {mockMode && <TestPillButton onClick={() => {
+          if (currentQ === 0) {
+            if (onPrevSlot) onPrevSlot()
+          } else setCurrentQ(i => i - 1)
+        }} disabled={currentQ === 0 && !onPrevSlot}>Back</TestPillButton>}
+        <TestPillButton onClick={() => {
+          if (currentQ + 1 === questions.length) {
+            if (mockMode) {
+              const finalScore = questions.filter((qq, i) => answers[i] === qq.answer).length
+              onComplete(finalScore, questions.length, buildDetail(answers))
+            } else {
+              setSubmitted(true)
+            }
+          } else setCurrentQ(i => i + 1)
+        }}>{(currentQ + 1 === questions.length && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>
+      </>}
+      section="READING"
+      questionLabel={questionLabel}
+      timeText={formatTime(displayTime)}
+      lowTime={isLowTime}
+    >
+      <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 32px' }}>{passage.title}</h1>
+      <div style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto' }}>
+        <div style={{ flex: 1, minWidth: 0, maxWidth: '540px' }}>
+          <div style={{ padding: '4px 0', overflowY: 'auto', boxSizing: 'border-box', maxHeight: 'calc(100vh - 260px)' }}>
+            {isInsert ? <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a' }}>{renderMarkedPassage(activePassage)}</div> : <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a', whiteSpace: 'pre-line' }}>{activePassage}</div>}
+          </div>
+        </div>
+        <div style={{ width: '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
+          {isInsert && <div style={{ background: '#f0faf4', border: '1px solid #2a9d5c', borderRadius: '8px', padding: '12px 14px', fontStyle: 'italic', fontSize: '13px', color: '#1a1a1a', lineHeight: '1.6' }}>"{q.insert_text}"</div>}
+          <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>{q.question}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            {q.options.map((opt, i) => {
+              const isChosen = answers[currentQ] === i
+              return (
+                <div key={i} onClick={() => setAnswers(prev => ({ ...prev, [currentQ]: i }))} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '4px 0', cursor: 'pointer' }}>
+                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
+                  <span style={{ fontSize: '16px', lineHeight: '1.5', color: '#1a1a1a' }}>{opt}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </ExamScreen>
+  )
+}
+
+function AcademicPassage({ onBack }) {
   const [passages, setPassages] = useState([])
   const [loading, setLoading] = useState(true)
-  const [passageIdx, setPassageIdx] = useState(0)
-  const [questionIdx, setQuestionIdx] = useState(0)
   const [selected, setSelected] = useState(null)
-  const [submitted, setSubmitted] = useState(false)
-  const [score, setScore] = useState(0)
-  const [finished, setFinished] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(RIDL_TIME)
-  const timerRef = useRef(null)
-  const totalAnsweredRef = useRef(0)
-  const scoreRef = useRef(0)
+  const [scores, setScores] = useState({})
 
   useEffect(() => {
-    fetch('https://mrreadyprep.onrender.com/api/reading/read-in-daily-life')
-      .then(r => r.json())
-      .then(data => { setPassages(data); setLoading(false) })
-      .catch(() => setLoading(false))
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/reading/academic-passage`).then(r => r.json()),
+      fetchLatestResults('ap'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setPassages(list)
+      const mapped = {}
+      list.forEach(p => { const row = results[String(p.id)]; if (row) mapped[p.id] = { score: row.score, total: row.total } })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
   }, [])
 
-  // Timer per question
+  if (loading) return <div style={{ textAlign: 'center', padding: 60, color: '#701fa1' }}>Loading passages…</div>
+  if (selected) return <APQuestion passage={selected} onBack={() => setSelected(null)} onComplete={(score, total) => {
+    saveResult('ap', selected.id, score, total, selected.title || `Academic Passage #${selected.id}`)
+    setScores(prev => ({ ...prev, [selected.id]: { score, total } })); setSelected(null)
+  }} />
+  return <APList passages={passages} scores={scores} onSelect={p => setSelected(p)} onBack={onBack} />
+}
+// ─── Listening ────────────────────────────────────────────────────────────────
+
+const AUDIO_START_DELAY_MS = 1500
+
+// Reused across every question instead of being remounted per URL — iOS/desktop Safari treats
+// "has this exact element ever played" as part of what it takes to keep autoplay unlocked, so
+// tearing the element down and recreating it every question (the old `key={url}` approach)
+// fought against that. Changing .src on one persistent element plays far more reliably.
+function AudioPlayer({ url, autoPlayKey, onEnded }) {
+  const audioRef = useRef(null)
+
   useEffect(() => {
-    if (loading || finished || submitted) return
-    setTimeLeft(RIDL_TIME)
+    const audio = audioRef.current
+    if (!url || !audio) return
+    audio.pause()
+    audio.src = url
+    audio.currentTime = 0
+    audio.load()
+    const tryPlay = () => {
+      const p = audio.play()
+      if (p && p.catch) {
+        p.catch(() => {
+          // Autoplay was blocked (can happen on the very first question before the app-wide
+          // unlock listener in App() has caught a click). Rather than showing a manual "Play"
+          // button, silently retry the instant the student's next click/tap/keypress happens
+          // anywhere — which is always within a second or two, since they're actively taking
+          // the test — so playback simply resumes on its own with no extra UI.
+          const retry = () => { audio.play().catch(() => {}) }
+          document.addEventListener('pointerdown', retry, { once: true, capture: true })
+          document.addEventListener('keydown', retry, { once: true, capture: true })
+        })
+      }
+    }
+    const timer = setTimeout(tryPlay, AUDIO_START_DELAY_MS)
+    return () => clearTimeout(timer)
+  }, [url, autoPlayKey])
+
+  if (!url) {
+    return (
+      <div style={{ background: '#f4f6fa', border: '2px dashed #d1d5db', borderRadius: '12px', padding: '28px 24px', textAlign: 'center' }}>
+        <div style={{ fontSize: '28px', marginBottom: '8px' }}>🎵</div>
+        <div style={{ fontSize: '13px', fontWeight: '600', color: '#9ca3af' }}>Audio coming soon</div>
+        <div style={{ fontSize: '11px', color: '#c0c0c0', marginTop: '4px' }}>Transcript is shown below for practice</div>
+      </div>
+    )
+  }
+  return <audio ref={audioRef} style={{ display: 'none' }} onEnded={onEnded} onError={onEnded} />
+}
+
+// Plays a short pre-recorded narration line ("Listen to a conversation.", etc.) before the
+// actual conversation/announcement/talk audio is allowed to start, matching the real TOEFL's
+// spoken intro (same neural narrator voice used for the rest of the app's audio, generated via
+// backend/generate_audio_intro.py) instead of each browser's own inconsistent built-in TTS voice.
+// Returns true once the narration has finished (or a fallback elapses if the file is missing/
+// blocked), which callers use to gate mounting the main <AudioPlayer>.
+function useIntroNarration(url) {
+  const [announced, setAnnounced] = useState(false)
+  useEffect(() => {
+    setAnnounced(false)
+    if (!url) {
+      const t = setTimeout(() => setAnnounced(true), 300)
+      return () => clearTimeout(t)
+    }
+    let settled = false
+    let audio = null
+    const finish = () => { if (!settled) { settled = true; setAnnounced(true) } }
+    // The actual Audio object + .play() call is deferred behind a cancelable timer (instead of
+    // firing the instant the effect runs) so that React's development-mode double-invoke of
+    // effects (mount → cleanup → mount) can never end up starting two overlapping playbacks of
+    // the same line — which was the cause of the echoed/doubled-voice sound. The cleanup below
+    // cancels the pending timer outright before it ever creates an Audio element.
+    const startTimer = setTimeout(() => {
+      audio = new Audio(url)
+      audio.onended = finish
+      audio.onerror = finish
+      const p = audio.play()
+      if (p && p.catch) {
+        p.catch(() => {
+          // Autoplay blocked — resume on the student's next interaction, same fallback pattern
+          // used by AudioPlayer, and don't hold up the test indefinitely if they don't interact.
+          const retry = () => { audio.play().catch(finish) }
+          document.addEventListener('pointerdown', retry, { once: true, capture: true })
+          document.addEventListener('keydown', retry, { once: true, capture: true })
+          setTimeout(finish, 3000)
+        })
+      }
+    }, 60)
+    return () => {
+      settled = true
+      clearTimeout(startTimer)
+      if (audio) audio.pause()
+    }
+  }, [url])
+  return announced
+}
+
+// Placeholder speaker photos (free-to-use placeholder avatar set, gender-matched).
+// Each speaker gets a stable photo based on question id so the same question always shows the same person.
+const FEMALE_AVATAR_IDS = [0, 5, 12, 18, 24, 31, 38, 45, 52, 59, 66, 71, 76]
+const MALE_AVATAR_IDS = [0, 5, 12, 18, 24, 31, 38, 45, 52, 59, 66, 71, 76]
+
+// Local photos (dropped into public/avatars/female/1.jpg, public/avatars/male/1.jpg, etc.)
+// are tried first; if a numbered file doesn't exist yet, we fall back to the placeholder set.
+// Update these counts whenever more photos are added to those folders.
+const LOCAL_AVATAR_COUNT = { female: 3, male: 3 }
+
+function SpeakerAvatar({ gender, seed = 0, width = 340, height = 640 }) {
+  const isFemale = gender !== 'male'
+  const pool = isFemale ? FEMALE_AVATAR_IDS : MALE_AVATAR_IDS
+  const fallbackIdx = pool[seed % pool.length]
+  const fallbackSrc = `https://xsgames.co/randomusers/assets/avatars/${isFemale ? 'female' : 'male'}/${fallbackIdx}.jpg`
+  const localCount = isFemale ? LOCAL_AVATAR_COUNT.female : LOCAL_AVATAR_COUNT.male
+  const localIdx = (seed % localCount) + 1
+  const localSrc = `/avatars/${isFemale ? 'female' : 'male'}/${localIdx}.jpg`
+  return (
+    <div style={{ width: `${width}px`, height: `${height}px`, overflow: 'hidden', background: '#f2f3f5', flexShrink: 0, position: 'relative' }}>
+      <img
+        src={localSrc}
+        alt={isFemale ? 'Female speaker' : 'Male speaker'}
+        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
+        onError={(e) => { e.target.onerror = null; e.target.src = fallbackSrc }}
+      />
+      {/* Soft vignette so any photo backdrop (not just pure white) fades into the page background at the edges */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', background: 'radial-gradient(ellipse 70% 65% at center, rgba(242,243,245,0) 55%, rgba(242,243,245,1) 100%)' }} />
+    </div>
+  )
+}
+
+// A SpeakerAvatar wrapper that simulates the interviewer being alive on screen: the mouth
+// pulses while a question is playing, and the head nods gently while the student is recording
+// (as if listening). Pure CSS keyframe animation over a static photo — no real lip-sync/video.
+// Fallback: a fully illustrated (non-photo) cartoon character, drawn in SVG so we can genuinely
+// animate its mouth open/closed while a question plays, and nod its head while the student is
+// recording (as if listening). Used only if the real talking-head video below fails to load.
+function DrawnCharacterAvatar({ gender, seed = 0, width = 220, height = 220, mode = 'idle' }) {
+  const isFemale = gender !== 'male'
+  const skin = isFemale ? '#f0c39e' : '#e8b48c'
+  const hair = isFemale ? '#4a3728' : '#241c14'
+  const clothing = isFemale ? '#d16b86' : '#3b6ea5'
+
+  return (
+    <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', borderRadius: '16px', background: 'linear-gradient(135deg, #edfbf3, #eaf1ff)', border: '0.5px solid #e1e4ed', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', flexShrink: 0, overflow: 'hidden' }}>
+      <style>{`
+        @keyframes toeflCharNod {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(4px) rotate(1.5deg); }
+        }
+        @keyframes toeflCharMouth {
+          0%, 100% { transform: scaleY(0.25); }
+          50% { transform: scaleY(1); }
+        }
+      `}</style>
+      <svg viewBox="0 0 200 220" width="88%" height="88%" style={{ display: 'block', overflow: 'visible' }}>
+        <g style={{ animation: mode === 'recording' ? 'toeflCharNod 1.6s ease-in-out infinite' : 'none', transformOrigin: '100px 120px' }}>
+          {/* shoulders / clothing */}
+          <path d="M18 220 Q100 128 182 220 Z" fill={clothing} />
+          {/* neck */}
+          <rect x="86" y="126" width="28" height="28" fill={skin} />
+          {/* hair back layer (behind head, for volume) */}
+          {isFemale ? (
+            <ellipse cx="100" cy="80" rx="58" ry="54" fill={hair} />
+          ) : (
+            <ellipse cx="100" cy="75" rx="52" ry="46" fill={hair} />
+          )}
+          {/* head */}
+          <ellipse cx="100" cy="94" rx="46" ry="50" fill={skin} />
+          {/* hair front / fringe */}
+          {isFemale ? (
+            <>
+              <path d="M52 95 Q46 140 58 168 Q64 130 62 96 Z" fill={hair} />
+              <path d="M148 95 Q154 140 142 168 Q136 130 138 96 Z" fill={hair} />
+              <path d="M54 72 Q58 46 100 44 Q142 46 146 72 Q140 54 100 54 Q60 54 54 72 Z" fill={hair} />
+            </>
+          ) : (
+            <path d="M54 70 Q58 42 100 40 Q142 42 146 70 Q140 50 100 48 Q60 50 54 70 Z" fill={hair} />
+          )}
+          {/* eyes */}
+          <ellipse cx="82" cy="90" rx="5" ry="6" fill="#2b2b2b" />
+          <ellipse cx="118" cy="90" rx="5" ry="6" fill="#2b2b2b" />
+          {/* eyebrows */}
+          <rect x="72" y="76" width="18" height="3" rx="1.5" fill={hair} />
+          <rect x="110" y="76" width="18" height="3" rx="1.5" fill={hair} />
+          {/* nose */}
+          <path d="M100 96 Q104 108 100 112 Q96 110 98 104" fill="none" stroke="#c98f66" strokeWidth="2" strokeLinecap="round" />
+          {/* mouth: animates open/closed while playing, thin closed line otherwise */}
+          <ellipse
+            cx="100" cy="122" rx="13" ry={mode === 'playing' ? 6 : 2}
+            fill="#7a3b3b"
+            style={{
+              transformBox: 'fill-box', transformOrigin: 'center',
+              animation: mode === 'playing' ? 'toeflCharMouth 0.42s ease-in-out infinite' : 'none',
+            }}
+          />
+        </g>
+      </svg>
+    </div>
+  )
+}
+
+// A real talking-head video (free-licensed stock footage, one per gender) so the mouth movement
+// is genuine, not simulated. Loops while a question plays; pauses (and gently nods, via CSS
+// transform on the video element) while the student is recording their answer. Falls back to the
+// drawn SVG character above if the video file hasn't been placed in public/talking-videos/ yet.
+function TalkingAvatar({ gender, seed = 0, width = 220, height = 220, mode = 'idle' }) {
+  const isFemale = gender !== 'male'
+  const videoRef = useRef(null)
+  const [videoFailed, setVideoFailed] = useState(false)
+  const src = isFemale ? '/talking-videos/female.mp4' : '/talking-videos/male.mp4'
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    if (mode === 'playing') { try { v.currentTime = 0 } catch (e) {} v.play().catch(() => {}) }
+    else v.pause()
+  }, [mode])
+
+  if (videoFailed) return <DrawnCharacterAvatar gender={gender} seed={seed} width={width} height={height} mode={mode} />
+
+  return (
+    <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', margin: '0 auto' }}>
+      <style>{`
+        @keyframes toeflVideoNod {
+          0%, 100% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(4px) rotate(1.2deg); }
+        }
+      `}</style>
+      <div style={{ width: '100%', height: '100%', borderRadius: '16px', overflow: 'hidden', background: '#f2f3f5', animation: mode === 'recording' ? 'toeflVideoNod 1.6s ease-in-out infinite' : 'none' }}>
+        <video
+          ref={videoRef}
+          src={src}
+          muted
+          loop
+          playsInline
+          onError={() => setVideoFailed(true)}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block', transform: 'scale(2.1) translateY(-6%)', transformOrigin: 'center 20%' }}
+        />
+      </div>
+    </div>
+  )
+}
+
+// Photos of a man and woman having a conversation together (used for Listen to a Conversation).
+// Drop numbered photos into public/avatars/conversations/1.jpg, 2.jpg, etc. and bump this count.
+const CONVERSATION_PHOTO_COUNT = 7
+
+function ConversationPhoto({ seed = 0, width = 640, height = 380 }) {
+  const idx = (seed % CONVERSATION_PHOTO_COUNT) + 1
+  const src = `/avatars/conversations/${idx}.jpg`
+  return (
+    <div style={{ width: `${width}px`, maxWidth: '90vw', height: `${height}px`, borderRadius: '16px', overflow: 'hidden', flexShrink: 0, position: 'relative' }}>
+      <img
+        src={src}
+        alt="Two people having a conversation"
+        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
+      />
+      {/* Fade the photo's edges into the page background so it doesn't look like a pasted-in rectangle */}
+      <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', boxShadow: 'inset 0 0 60px 25px #f2f3f5' }} />
+    </div>
+  )
+}
+
+function ListeningP1List({ exercises, scores, onSelect, onBack }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen and Choose a Response</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {exercises.map((ex, idx) => {
+            const result = scores[idx]
+            const pct = result ? Math.round((result.correct / result.total) * 100) : null
+            return (
+              <div key={ex.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Exercise {idx + 1}</div>
+                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{ex.questions.length} question{ex.questions.length === 1 ? '' : 's'}</div>
+                </div>
+                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {result ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const LISTENING_P1_TIME = 20
+
+function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+  const [currentQ, setCurrentQ] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [done, setDone] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(LISTENING_P1_TIME)
+  const [answers, setAnswers] = useState([])
+  const [reviewQ, setReviewQ] = useState(null)
+  const timerRef = useRef(null)
+  const selectedRef = useRef(null)
+
+  const questions = exercise.questions
+  const q = questions[currentQ]
+  const totalQ = questions.length
+
+  useEffect(() => { selectedRef.current = selected }, [selected])
+  // Defensive reset: guarantees no option looks pre-selected when a new question appears,
+  // regardless of which code path advanced currentQ.
+  useEffect(() => { setSelected(null) }, [currentQ])
+
+  const advance = (sel) => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    const isCorrect = sel !== null && sel === q.answer
+    const newAnswers = [...answers, { selected: sel, correct: q.answer, isCorrect }]
+    if (currentQ + 1 >= totalQ) {
+      if (mockMode) {
+        const finalScore = newAnswers.filter(a => a.isCorrect).length
+        const detail = questions.map((qq, i) => ({
+          prompt: qq.context || `Question ${i + 1}`,
+          given: newAnswers[i].selected !== null ? qq.options[newAnswers[i].selected] : 'No answer',
+          correctAnswer: qq.options[qq.answer],
+          isCorrect: newAnswers[i].isCorrect,
+        }))
+        onComplete(finalScore, totalQ, detail)
+      } else {
+        setAnswers(newAnswers)
+        setDone(true)
+      }
+    } else {
+      setAnswers(newAnswers)
+      setCurrentQ(i => i + 1)
+      setSelected(null)
+    }
+  }
+
+  useEffect(() => {
+    if (done) return
+    setTimeLeft(LISTENING_P1_TIME)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          handleSubmit(null, true)
+          advance(selectedRef.current)
           return 0
         }
         return prev - 1
       })
     }, 1000)
     return () => clearInterval(timerRef.current)
-  }, [passageIdx, questionIdx, loading, finished, submitted])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQ, done])
 
-  const formatTime = (s) => {
-    const mm = String(Math.floor(s / 60)).padStart(2, '0')
-    const ss = String(s % 60).padStart(2, '0')
-    return mm + ':' + ss
-  }
+  const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
+  const isLowTime = timeLeft <= 5
+  const handleNext = () => advance(selected)
+  const score = answers.filter(a => a.isCorrect).length
 
-  if (loading) return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>
-      Loading passages...
-    </div>
-  )
-  if (!passages.length) return (
-    <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No passages found.</div>
-  )
-
-  const passage = passages[passageIdx]
-  const question = passage.questions[questionIdx]
-  const totalQuestions = passages.reduce((s, p) => s + p.questions.length, 0)
-  const isLowTime = timeLeft <= 20
-
-  // Calculate global question number
-  let globalQ = 0
-  for (let i = 0; i < passageIdx; i++) globalQ += passages[i].questions.length
-  globalQ += questionIdx + 1
-
-  const handleSubmit = (sel, autoSubmit = false) => {
-    if (timerRef.current) clearInterval(timerRef.current)
-    const answer = sel !== null ? sel : selected
-    const correct = answer === question.answer
-    if (correct) {
-      scoreRef.current += 1
-      setScore(s => s + 1)
-    }
-    totalAnsweredRef.current += 1
-    setSubmitted(true)
-  }
-
-  const handleNext = () => {
-    const nextQIdx = questionIdx + 1
-    if (nextQIdx < passage.questions.length) {
-      setQuestionIdx(nextQIdx)
-      setSelected(null)
-      setSubmitted(false)
-    } else {
-      const nextPIdx = passageIdx + 1
-      if (nextPIdx < passages.length) {
-        setPassageIdx(nextPIdx)
-        setQuestionIdx(0)
-        setSelected(null)
-        setSubmitted(false)
-      } else {
-        setFinished(true)
-      }
-    }
-  }
-
-  const handleRestart = () => {
-    setPassageIdx(0)
-    setQuestionIdx(0)
-    setSelected(null)
-    setSubmitted(false)
-    setFinished(false)
-    setScore(0)
-    scoreRef.current = 0
-    totalAnsweredRef.current = 0
-  }
-
-  // Type label
-  const typeLabels = {
-    email: 'Email', message: 'Message Exchange', sign: 'Sign / Notice',
-    poster: 'Poster', receipt: 'Receipt', advertisement: 'Advertisement',
-    schedule: 'Schedule / Agenda', article: 'Article'
-  }
-
-  // Score Screen
-  if (finished) {
-    const pct = Math.round((scoreRef.current / totalQuestions) * 100)
-    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2a9d5c', emoji: '🏆' }
-                : pct >= 70 ? { label: 'Good job!',  color: '#701fa1', emoji: '🎉' }
+  // Score screen
+  if (done) {
+    const pct = Math.round((score / totalQ) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2ac56c', emoji: '🏆' }
+                : pct >= 70 ? { label: 'Good job!', color: '#701fa1', emoji: '🎉' }
                 : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' }
                 :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+
+    if (reviewQ !== null) {
+      const rq = questions[reviewQ]
+      const a = answers[reviewQ]
+      return (
+        <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 20 }}>
+          <div style={{ padding: '0 32px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
+            <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+            </div>
+          </div>
+          <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
+          <div style={{ flex: 1, overflowY: 'auto', padding: '32px', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '820px', width: '100%', display: 'flex', gap: '36px', alignItems: 'flex-start' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
+                <SpeakerAvatar gender={rq.speaker} seed={rq.id} />
+                <div style={{ width: '220px' }}><AudioPlayer url={rq.audio_url} /></div>
+                <div style={{ width: '220px', fontSize: '12px', color: '#9ca3af', textAlign: 'center' }}>{rq.context}</div>
+              </div>
+              <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a' }}>Choose the best response.</div>
+                {rq.options.map((opt, i) => {
+                  const isCorrectOpt = i === rq.answer
+                  const isWrongSelected = i === a.selected && !isCorrectOpt
+                  return (
+                    <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '4px 0' }}>
+                      <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isCorrectOpt ? '2px solid #2ac56c' : isWrongSelected ? '2px solid #d94040' : '2px solid #c0c0c0', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+                        {isCorrectOpt && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#2ac56c', display: 'block' }} />}
+                        {isWrongSelected && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#d94040', display: 'block' }} />}
+                      </span>
+                      <span style={{ fontSize: '15px', lineHeight: '1.5', color: isCorrectOpt ? '#1a7a44' : isWrongSelected ? '#b03030' : '#888', fontWeight: isCorrectOpt ? '600' : '400', flex: 1 }}>
+                        {opt}
+                        {isCorrectOpt && !a.isCorrect && <span style={{ fontSize: '11px', color: '#2ac56c', marginLeft: '6px', fontWeight: '700' }}>✓ correct</span>}
+                        {isWrongSelected && <span style={{ fontSize: '11px', color: '#d94040', marginLeft: '6px' }}>✗ your answer</span>}
+                      </span>
+                    </div>
+                  )
+                })}
+                {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You ran out of time — no answer selected.</div>}
+              </div>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     return (
-      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 10, fontFamily: 'sans-serif' }}>
-        <div style={{ background: '#fff', borderRadius: '16px', padding: '48px 56px', textAlign: 'center', maxWidth: '420px', width: '90%', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
-          <div style={{ fontSize: '52px', marginBottom: '12px' }}>{grade.emoji}</div>
-          <div style={{ fontSize: '26px', fontWeight: '700', color: grade.color, marginBottom: '8px' }}>{grade.label}</div>
-          <div style={{ fontSize: '13px', color: '#888', marginBottom: '24px' }}>You completed all {totalQuestions} questions</div>
-          <div style={{ fontSize: '52px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>
-            {scoreRef.current}<span style={{ fontSize: '20px', color: '#aaa', fontWeight: '400' }}>/{totalQuestions}</span>
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+        <div style={{ maxWidth: '700px', width: '100%', margin: '0 auto', padding: '40px 24px' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '32px', textAlign: 'center', marginBottom: '24px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ fontSize: '44px', marginBottom: '10px' }}>{grade.emoji}</div>
+            <div style={{ fontSize: '22px', fontWeight: '700', color: grade.color, marginBottom: '4px' }}>{grade.label}</div>
+            <div style={{ fontSize: '13px', color: '#888', marginBottom: '16px' }}>Exercise {exerciseNum} · {totalQ} questions</div>
+            <div style={{ fontSize: '44px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>{score}<span style={{ fontSize: '18px', color: '#aaa', fontWeight: '400' }}>/{totalQ}</span></div>
+            <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
+            <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={() => { setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
+            </div>
           </div>
-          <div style={{ margin: '20px 0 8px', height: '8px', background: '#efefef', borderRadius: '4px' }}>
-            <div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px', transition: 'width 0.8s ease' }} />
-          </div>
-          <div style={{ fontSize: '13px', color: '#777', marginBottom: '32px' }}>{pct}% correct</div>
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <button onClick={handleRestart} style={{ flex: 1, padding: '13px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>TRY AGAIN</button>
-            <button onClick={onBack} style={{ flex: 1, padding: '13px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Back</button>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {questions.map((qq, qi) => {
+              const a = answers[qi]
+              if (!a) return null
+              return (
+                <div key={qi} onClick={() => setReviewQ(qi)} style={{ background: '#fff', borderRadius: '10px', padding: '14px 18px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (a.isCorrect ? '#2ac56c' : '#d94040'), cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
+                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.context}</span>
+                    </div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer (time ran out)')}</div>
+                  </div>
+                  <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
+                </div>
+              )
+            })}
           </div>
         </div>
       </div>
@@ -569,101 +1387,4518 @@ function ReadInDailyLife({ onBack }) {
   }
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10 }}>
-
-      {/* Header */}
-      <div style={{ background: '#fff', borderBottom: '1px solid #e0e0e0', padding: '0 24px', height: '52px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
-        <button onClick={onBack} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '13px', color: '#888', padding: '8px 0' }}>← BACK</button>
-        <span style={{ fontSize: '18px', fontWeight: '700', color: isLowTime ? '#d94040' : '#1a1a1a', letterSpacing: '2px', transition: 'color 0.3s' }}>
-          ⏱ {formatTime(timeLeft)}
-        </span>
-        <button onClick={handleNext} disabled={!submitted} style={{ background: submitted ? '#2a9d5c' : '#e5e7eb', color: submitted ? '#fff' : '#aaa', border: 'none', borderRadius: '6px', padding: '8px 16px', fontSize: '13px', fontWeight: '700', cursor: submitted ? 'pointer' : 'not-allowed', transition: 'background 0.2s' }}>
-          NEXT →
-        </button>
-      </div>
-
-      {/* Progress bar */}
-      <div style={{ height: '3px', background: '#e5e7eb', flexShrink: 0 }}>
-        <div style={{ width: (globalQ / totalQuestions * 100) + '%', height: '100%', background: '#701fa1', transition: 'width 0.3s' }} />
-      </div>
-
-      {/* Body */}
-      <div style={{ flex: 1, display: 'flex', gap: '20px', padding: '20px 24px', overflow: 'hidden', minHeight: 0 }}>
-
-        {/* Left: Passage */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px', minWidth: 0 }}>
-          <div style={{ fontSize: '11px', color: '#701fa1', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-            {passage.instruction}
-          </div>
-          <div style={{ flex: 1, background: '#fff', borderRadius: '10px', border: '2px solid #2a9d5c', padding: '20px', overflowY: 'auto', boxSizing: 'border-box' }}>
-            {passage.title && (
-              <div style={{ fontWeight: '700', fontSize: '14px', textAlign: 'center', marginBottom: '4px', color: '#1a1a1a' }}>{passage.title}</div>
-            )}
-            {passage.subtitle && (
-              <div style={{ fontSize: '12px', textAlign: 'center', color: '#616473', marginBottom: '12px', fontStyle: 'italic' }}>{passage.subtitle}</div>
-            )}
-            <div style={{ fontSize: '13px', lineHeight: '1.8', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
-          </div>
-          <div style={{ fontSize: '11px', color: '#9ca3af', textAlign: 'center' }}>
-            {globalQ} / {totalQuestions} · {typeLabels[passage.type] || passage.type}
-          </div>
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={<TestPillButton onClick={handleNext}>{(currentQ + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
+      section="LISTENING"
+      questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + currentQ + 1} of ${moduleTotal}` : `Question ${currentQ + 1} of ${totalQ}`}
+      timeText={formatTime(timeLeft)}
+      lowTime={isLowTime}
+      contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
+      <h1 style={{ margin: '0 0 40px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>Choose the best response.</h1>
+      <div style={{ maxWidth: '980px', width: '100%', display: 'flex', gap: '96px', alignItems: 'flex-start', justifyContent: 'center' }}>
+        {/* Left: speaker avatar + audio */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
+          <SpeakerAvatar gender={q.speaker} seed={q.id} />
+          <div style={{ width: '300px' }}><AudioPlayer url={q.audio_url} autoPlayKey={currentQ} /></div>
+          {!q.audio_url && (
+            <div style={{ width: '300px', fontSize: '14px', color: '#1a1a1a', fontStyle: 'italic', textAlign: 'center', lineHeight: '1.5' }}>"{q.transcript}"</div>
+          )}
         </div>
 
-        {/* Right: Question */}
-        <div style={{ width: '420px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '14px' }}>
-          <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>
-            {question.question}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-            {question.options.map((opt, i) => {
-              let bg = '#fff', border = '1px solid #d1d5db', color = '#1a1a1a'
-              if (submitted) {
-                if (i === question.answer) { bg = '#edfbf3'; border = '2px solid #2a9d5c'; color = '#1a7a44' }
-                else if (i === selected && i !== question.answer) { bg = '#fff2f2'; border = '2px solid #d94040'; color = '#b03030' }
-              } else if (i === selected) {
-                bg = '#f4ecff'; border = '2px solid #701fa1'; color = '#701fa1'
-              }
+        {/* Right: options */}
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '28px', paddingTop: '48px', maxWidth: '520px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            {q.options.map((opt, i) => {
+              const isChosen = selected === i
               return (
-                <div
-                  key={i}
-                  onClick={() => { if (!submitted) setSelected(i) }}
-                  style={{ background: bg, border, borderRadius: '8px', padding: '12px 16px', cursor: submitted ? 'default' : 'pointer', display: 'flex', alignItems: 'center', gap: '10px', transition: 'all 0.15s', boxSizing: 'border-box' }}
-                >
-                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', border: submitted && i === question.answer ? '2px solid #2a9d5c' : submitted && i === selected ? '2px solid #d94040' : i === selected ? '2px solid #701fa1' : '1.5px solid #d1d5db', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    {submitted && i === question.answer && <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#2a9d5c', display: 'block' }} />}
-                    {!submitted && i === selected && <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#701fa1', display: 'block' }} />}
-                  </span>
-                  <span style={{ fontSize: '13px', color, lineHeight: '1.4' }}>{opt}</span>
+                <div key={i} onClick={() => setSelected(i)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: 'pointer' }}>
+                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
+                  <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
                 </div>
               )
             })}
           </div>
-
-          {/* Submit button */}
-          {!submitted ? (
-            <button
-              onClick={() => { if (selected !== null) handleSubmit(selected) }}
-              disabled={selected === null}
-              style={{ marginTop: 'auto', padding: '13px', background: selected !== null ? '#701fa1' : '#e5e7eb', color: selected !== null ? '#fff' : '#aaa', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: selected !== null ? 'pointer' : 'not-allowed', transition: 'background 0.2s' }}
-            >
-              SUBMIT
-            </button>
-          ) : (
-            <div style={{ marginTop: 'auto', padding: '12px 16px', background: selected === question.answer ? '#edfbf3' : '#fff8ec', border: '1px solid ' + (selected === question.answer ? '#a7e9c3' : '#f5d08a'), borderRadius: '8px', fontSize: '13px', fontWeight: '600', color: selected === question.answer ? '#1a7a44' : '#c07000' }}>
-              {selected === null ? "⏱ Time's up!" : selected === question.answer ? '🎯 Correct!' : '❌ Incorrect'}
-            </div>
-          )}
         </div>
+      </div>
+    </ExamScreen>
+  )
+}
 
+function ListeningP1({ onBack }) {
+  const [exercises, setExercises] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selectedIdx, setSelectedIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/listening/choose-response`).then(r => r.json()),
+      fetchLatestResults('listening_p1'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setExercises(list)
+      const mapped = {}
+      list.forEach((ex, i) => { const row = results[String(ex.id ?? i)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!exercises.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  if (selectedIdx !== null) return (
+    <ListeningP1Exercise exercise={exercises[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
+      onComplete={(correct, total) => {
+        saveResult('listening_p1', exercises[selectedIdx].id ?? selectedIdx, correct, total, `Choose a Response #${selectedIdx + 1}`)
+        setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
+      }} />
+  )
+  return <ListeningP1List exercises={exercises} scores={scores} onSelect={setSelectedIdx} onBack={onBack} />
+}
+
+// ─── Listening Part 2 — Listen to a Conversation ──────────────────────────────
+function ListeningP2List({ conversations, scores, onSelect, onBack }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to a Conversation</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {conversations.map((c, idx) => {
+            const result = scores[idx]
+            const pct = result ? Math.round((result.correct / result.total) * 100) : null
+            return (
+              <div key={c.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Conversation {idx + 1}</div>
+                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{c.questions.length} questions</div>
+                </div>
+                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {result ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
       </div>
     </div>
   )
 }
-// ─────────────────────────────────────────────────────────────────────────────
 
-// ─────────────────────────────────────────────────────────────────────────────
+const LISTENING_P2_TIME = 30
 
+function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+  const [phase, setPhase] = useState('listening') // 'listening' | 'question'
+  const [qIdx, setQIdx] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [done, setDone] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(LISTENING_P2_TIME)
+  const [answers, setAnswers] = useState([])
+  const [reviewQ, setReviewQ] = useState(null)
+  const timerRef = useRef(null)
+  const selectedRef = useRef(null)
+  const announced = useIntroNarration(`${BACKEND_URL}/audio/intro/listen_to_a_conversation.mp3`)
+
+  const questions = conversation.questions
+  const q = questions[qIdx]
+  const totalQ = questions.length
+
+  useEffect(() => { selectedRef.current = selected }, [selected])
+  // Defensive reset: guarantees no option looks pre-selected when a new question appears,
+  // regardless of which code path advanced qIdx.
+  useEffect(() => { setSelected(null) }, [qIdx])
+
+  const advance = (sel) => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    const isCorrect = sel !== null && sel === q.answer
+    const newAnswers = [...answers, { selected: sel, correct: q.answer, isCorrect }]
+    if (qIdx + 1 >= totalQ) {
+      if (mockMode) {
+        const finalScore = newAnswers.filter(a => a.isCorrect).length
+        const detail = questions.map((qq, i) => ({
+          prompt: qq.question || `Question ${i + 1}`,
+          given: newAnswers[i].selected !== null ? qq.options[newAnswers[i].selected] : 'No answer',
+          correctAnswer: qq.options[qq.answer],
+          isCorrect: newAnswers[i].isCorrect,
+        }))
+        onComplete(finalScore, totalQ, detail)
+      } else {
+        setAnswers(newAnswers)
+        setDone(true)
+      }
+    } else {
+      setAnswers(newAnswers)
+      setQIdx(i => i + 1)
+      setSelected(null)
+    }
+  }
+
+  useEffect(() => {
+    if (phase !== 'question' || done) return
+    setTimeLeft(LISTENING_P2_TIME)
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          advance(selectedRef.current)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, qIdx, done])
+
+  const formatTime = (s) => `00:${String(s).padStart(2, '0')}`
+  const isLowTime = timeLeft <= 5
+  const handleNext = () => advance(selected)
+  const score = answers.filter(a => a.isCorrect).length
+
+  // Score screen
+  if (done) {
+    const pct = Math.round((score / totalQ) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2ac56c', emoji: '🏆' }
+                : pct >= 70 ? { label: 'Good job!', color: '#701fa1', emoji: '🎉' }
+                : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' }
+                :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+
+    if (reviewQ !== null) {
+      const rq = questions[reviewQ]
+      const a = answers[reviewQ]
+      return (
+        <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 20 }}>
+          <div style={{ padding: '0 32px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
+            <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+            </div>
+          </div>
+          <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
+          <div style={{ flex: 1, overflowY: 'auto', padding: '32px', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '700px', width: '100%', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+              <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a' }}>{rq.question}</div>
+              {rq.options.map((opt, i) => {
+                const isCorrectOpt = i === rq.answer
+                const isWrongSelected = i === a.selected && !isCorrectOpt
+                return (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '4px 0' }}>
+                    <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isCorrectOpt ? '2px solid #2ac56c' : isWrongSelected ? '2px solid #d94040' : '2px solid #c0c0c0', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+                      {isCorrectOpt && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#2ac56c', display: 'block' }} />}
+                      {isWrongSelected && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#d94040', display: 'block' }} />}
+                    </span>
+                    <span style={{ fontSize: '15px', lineHeight: '1.5', color: isCorrectOpt ? '#1a7a44' : isWrongSelected ? '#b03030' : '#888', fontWeight: isCorrectOpt ? '600' : '400', flex: 1 }}>
+                      {opt}
+                      {isCorrectOpt && !a.isCorrect && <span style={{ fontSize: '11px', color: '#2ac56c', marginLeft: '6px', fontWeight: '700' }}>✓ correct</span>}
+                      {isWrongSelected && <span style={{ fontSize: '11px', color: '#d94040', marginLeft: '6px' }}>✗ your answer</span>}
+                    </span>
+                  </div>
+                )
+              })}
+              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You ran out of time — no answer selected.</div>}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+        <div style={{ maxWidth: '700px', width: '100%', margin: '0 auto', padding: '40px 24px' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '32px', textAlign: 'center', marginBottom: '24px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ fontSize: '44px', marginBottom: '10px' }}>{grade.emoji}</div>
+            <div style={{ fontSize: '22px', fontWeight: '700', color: grade.color, marginBottom: '4px' }}>{grade.label}</div>
+            <div style={{ fontSize: '13px', color: '#888', marginBottom: '16px' }}>Conversation {exerciseNum} · {totalQ} questions</div>
+            <div style={{ fontSize: '44px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>{score}<span style={{ fontSize: '18px', color: '#aaa', fontWeight: '400' }}>/{totalQ}</span></div>
+            <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
+            <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={() => { setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
+            </div>
+          </div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {questions.map((qq, qi) => {
+              const a = answers[qi]
+              if (!a) return null
+              return (
+                <div key={qi} onClick={() => setReviewQ(qi)} style={{ background: '#fff', borderRadius: '10px', padding: '14px 18px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (a.isCorrect ? '#2ac56c' : '#d94040'), cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
+                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.question}</span>
+                    </div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer (time ran out)')}</div>
+                  </div>
+                  <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Listening phase — only the two speakers are shown, audio autoplays, no questions yet
+  if (phase === 'listening') {
+    return (
+      <ExamScreen
+        topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+        section="LISTENING"
+        questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Conversation ${exerciseNum}`}
+        contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <h1 style={{ margin: '0 0 8px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>Listen to a conversation.</h1>
+        <div style={{ fontSize: '14px', color: '#888', textAlign: 'center', marginBottom: '32px' }}>Two questions will follow once the conversation ends.</div>
+        <ConversationPhoto seed={conversation.id} />
+        {announced && (
+          <div style={{ width: '1px', height: '1px', overflow: 'hidden' }}>
+            <AudioPlayer url={conversation.audio_url} autoPlayKey={conversation.id} onEnded={() => setPhase('question')} />
+          </div>
+        )}
+      </ExamScreen>
+    )
+  }
+
+  // Question phase
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
+      section="LISTENING"
+      questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
+      timeText={formatTime(timeLeft)}
+      lowTime={isLowTime}
+    >
+      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: '64px', alignItems: 'flex-start' }}>
+        <div style={{ flexShrink: 0 }}>
+          <ConversationPhoto seed={conversation.id} width={340} height={340} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '8px' }}>
+          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: '32px' }}>{q.question}</h1>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            {q.options.map((opt, i) => {
+              const isChosen = selected === i
+              return (
+                <div key={i} onClick={() => setSelected(i)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: 'pointer' }}>
+                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
+                  <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </ExamScreen>
+  )
+}
+
+function ListeningP2({ onBack }) {
+  const [conversations, setConversations] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selectedIdx, setSelectedIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/listening/conversation`).then(r => r.json()),
+      fetchLatestResults('listening_p2'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setConversations(list)
+      const mapped = {}
+      list.forEach((ex, i) => { const row = results[String(ex.id ?? i)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!conversations.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  if (selectedIdx !== null) return (
+    <ListeningP2Exercise conversation={conversations[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
+      onComplete={(correct, total) => {
+        saveResult('listening_p2', conversations[selectedIdx].id ?? selectedIdx, correct, total, `Conversation #${selectedIdx + 1}`)
+        setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
+      }} />
+  )
+  return <ListeningP2List conversations={conversations} scores={scores} onSelect={setSelectedIdx} onBack={onBack} />
+}
+
+// ─── Listening Part 3 — Listen to an Announcement ─────────────────────────────
+function ListeningP3List({ announcements, scores, onSelect, onBack }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to an Announcement</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {announcements.map((a, idx) => {
+            const result = scores[idx]
+            const pct = result ? Math.round((result.correct / result.total) * 100) : null
+            return (
+              <div key={a.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Announcement {idx + 1}</div>
+                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{a.questions.length} questions</div>
+                </div>
+                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {result ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const LISTENING_P3_TIME = 30
+
+function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+  const [phase, setPhase] = useState('listening') // 'listening' | 'question'
+  const [qIdx, setQIdx] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [done, setDone] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(LISTENING_P3_TIME)
+  const [answers, setAnswers] = useState([])
+  const [reviewQ, setReviewQ] = useState(null)
+  const timerRef = useRef(null)
+  const selectedRef = useRef(null)
+  const announced = useIntroNarration(`${BACKEND_URL}/audio/intro/listen_to_an_announcement.mp3`)
+
+  const questions = announcement.questions
+  const q = questions[qIdx]
+  const totalQ = questions.length
+
+  useEffect(() => { selectedRef.current = selected }, [selected])
+  // Defensive reset: guarantees no option looks pre-selected when a new question appears,
+  // regardless of which code path advanced qIdx.
+  useEffect(() => { setSelected(null) }, [qIdx])
+
+  const advance = (sel) => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    const isCorrect = sel !== null && sel === q.answer
+    const newAnswers = [...answers, { selected: sel, correct: q.answer, isCorrect }]
+    if (qIdx + 1 >= totalQ) {
+      if (mockMode) {
+        const finalScore = newAnswers.filter(a => a.isCorrect).length
+        const detail = questions.map((qq, i) => ({
+          prompt: qq.question || `Question ${i + 1}`,
+          given: newAnswers[i].selected !== null ? qq.options[newAnswers[i].selected] : 'No answer',
+          correctAnswer: qq.options[qq.answer],
+          isCorrect: newAnswers[i].isCorrect,
+        }))
+        onComplete(finalScore, totalQ, detail)
+      } else {
+        setAnswers(newAnswers)
+        setDone(true)
+      }
+    } else {
+      setAnswers(newAnswers)
+      setQIdx(i => i + 1)
+      setSelected(null)
+    }
+  }
+
+  useEffect(() => {
+    if (phase !== 'question' || done) return
+    setTimeLeft(LISTENING_P3_TIME)
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          advance(selectedRef.current)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, qIdx, done])
+
+  const formatTime = (s) => `00:${String(s).padStart(2, '0')}`
+  const isLowTime = timeLeft <= 5
+  const handleNext = () => advance(selected)
+  const score = answers.filter(a => a.isCorrect).length
+
+  // Score screen
+  if (done) {
+    const pct = Math.round((score / totalQ) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2ac56c', emoji: '🏆' }
+                : pct >= 70 ? { label: 'Good job!', color: '#701fa1', emoji: '🎉' }
+                : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' }
+                :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+
+    if (reviewQ !== null) {
+      const rq = questions[reviewQ]
+      const a = answers[reviewQ]
+      return (
+        <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 20 }}>
+          <div style={{ padding: '0 32px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
+            <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+            </div>
+          </div>
+          <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
+          <div style={{ flex: 1, overflowY: 'auto', padding: '32px', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '700px', width: '100%', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+              <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a' }}>{rq.question}</div>
+              {rq.options.map((opt, i) => {
+                const isCorrectOpt = i === rq.answer
+                const isWrongSelected = i === a.selected && !isCorrectOpt
+                return (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '4px 0' }}>
+                    <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isCorrectOpt ? '2px solid #2ac56c' : isWrongSelected ? '2px solid #d94040' : '2px solid #c0c0c0', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+                      {isCorrectOpt && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#2ac56c', display: 'block' }} />}
+                      {isWrongSelected && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#d94040', display: 'block' }} />}
+                    </span>
+                    <span style={{ fontSize: '15px', lineHeight: '1.5', color: isCorrectOpt ? '#1a7a44' : isWrongSelected ? '#b03030' : '#888', fontWeight: isCorrectOpt ? '600' : '400', flex: 1 }}>
+                      {opt}
+                      {isCorrectOpt && !a.isCorrect && <span style={{ fontSize: '11px', color: '#2ac56c', marginLeft: '6px', fontWeight: '700' }}>✓ correct</span>}
+                      {isWrongSelected && <span style={{ fontSize: '11px', color: '#d94040', marginLeft: '6px' }}>✗ your answer</span>}
+                    </span>
+                  </div>
+                )
+              })}
+              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You ran out of time — no answer selected.</div>}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+        <div style={{ maxWidth: '700px', width: '100%', margin: '0 auto', padding: '40px 24px' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '32px', textAlign: 'center', marginBottom: '24px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ fontSize: '44px', marginBottom: '10px' }}>{grade.emoji}</div>
+            <div style={{ fontSize: '22px', fontWeight: '700', color: grade.color, marginBottom: '4px' }}>{grade.label}</div>
+            <div style={{ fontSize: '13px', color: '#888', marginBottom: '16px' }}>Announcement {exerciseNum} · {totalQ} questions</div>
+            <div style={{ fontSize: '44px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>{score}<span style={{ fontSize: '18px', color: '#aaa', fontWeight: '400' }}>/{totalQ}</span></div>
+            <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
+            <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={() => { setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
+            </div>
+          </div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {questions.map((qq, qi) => {
+              const a = answers[qi]
+              if (!a) return null
+              return (
+                <div key={qi} onClick={() => setReviewQ(qi)} style={{ background: '#fff', borderRadius: '10px', padding: '14px 18px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (a.isCorrect ? '#2ac56c' : '#d94040'), cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
+                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.question}</span>
+                    </div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer (time ran out)')}</div>
+                  </div>
+                  <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Listening phase — a single announcer avatar is shown, audio autoplays, no questions yet
+  if (phase === 'listening') {
+    return (
+      <ExamScreen
+        topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+        section="LISTENING"
+        questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Announcement ${exerciseNum}`}
+        contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <h1 style={{ margin: '0 0 8px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>Listen to an announcement.</h1>
+        <div style={{ fontSize: '14px', color: '#888', textAlign: 'center', marginBottom: '32px' }}>Two questions will follow once the announcement ends.</div>
+        <SpeakerAvatar gender={announcement.speaker} seed={announcement.id} width={260} height={340} />
+        {announced && (
+          <div style={{ width: '1px', height: '1px', overflow: 'hidden' }}>
+            <AudioPlayer url={announcement.audio_url} autoPlayKey={announcement.id} onEnded={() => setPhase('question')} />
+          </div>
+        )}
+      </ExamScreen>
+    )
+  }
+
+  // Question phase
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
+      section="LISTENING"
+      questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
+      timeText={formatTime(timeLeft)}
+      lowTime={isLowTime}
+    >
+      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: '64px', alignItems: 'flex-start' }}>
+        <div style={{ flexShrink: 0 }}>
+          <SpeakerAvatar gender={announcement.speaker} seed={announcement.id} width={260} height={260} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '8px' }}>
+          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: '32px' }}>{q.question}</h1>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            {q.options.map((opt, i) => {
+              const isChosen = selected === i
+              return (
+                <div key={i} onClick={() => setSelected(i)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: 'pointer' }}>
+                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
+                  <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </ExamScreen>
+  )
+}
+
+function ListeningP3({ onBack }) {
+  const [announcements, setAnnouncements] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selectedIdx, setSelectedIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/listening/announcement`).then(r => r.json()),
+      fetchLatestResults('listening_p3'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setAnnouncements(list)
+      const mapped = {}
+      list.forEach((ex, i) => { const row = results[String(ex.id ?? i)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!announcements.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  if (selectedIdx !== null) return (
+    <ListeningP3Exercise announcement={announcements[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
+      onComplete={(correct, total) => {
+        saveResult('listening_p3', announcements[selectedIdx].id ?? selectedIdx, correct, total, `Announcement #${selectedIdx + 1}`)
+        setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
+      }} />
+  )
+  return <ListeningP3List announcements={announcements} scores={scores} onSelect={setSelectedIdx} onBack={onBack} />
+}
+
+// ─── Listening Part 4 — Listen to an Academic Talk ────────────────────────────
+function ListeningP4List({ talks, scores, onSelect, onBack }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to an Academic Talk</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {talks.map((t, idx) => {
+            const result = scores[idx]
+            const pct = result ? Math.round((result.correct / result.total) * 100) : null
+            return (
+              <div key={t.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Talk {idx + 1}</div>
+                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{t.questions.length} questions</div>
+                </div>
+                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {result ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const LISTENING_P4_TIME = 30
+
+function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+  const [phase, setPhase] = useState('listening') // 'listening' | 'question'
+  const [qIdx, setQIdx] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [done, setDone] = useState(false)
+  const [timeLeft, setTimeLeft] = useState(LISTENING_P4_TIME)
+  const [answers, setAnswers] = useState([])
+  const [reviewQ, setReviewQ] = useState(null)
+  const timerRef = useRef(null)
+  const selectedRef = useRef(null)
+
+  const questions = talk.questions
+  const q = questions[qIdx]
+  const totalQ = questions.length
+  const talkIntroText = talk.subject ? `Listen to a talk in ${/^[aeiou]/i.test(talk.subject) ? 'an' : 'a'} ${talk.subject.toLowerCase()} class.` : 'Listen to a talk in an academic class.'
+  const announced = useIntroNarration(`${BACKEND_URL}/audio/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
+
+  useEffect(() => { selectedRef.current = selected }, [selected])
+  // Defensive reset: guarantees no option looks pre-selected when a new question appears,
+  // regardless of which code path advanced qIdx.
+  useEffect(() => { setSelected(null) }, [qIdx])
+
+  const advance = (sel) => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    const isCorrect = sel !== null && sel === q.answer
+    const newAnswers = [...answers, { selected: sel, correct: q.answer, isCorrect }]
+    if (qIdx + 1 >= totalQ) {
+      if (mockMode) {
+        const finalScore = newAnswers.filter(a => a.isCorrect).length
+        const detail = questions.map((qq, i) => ({
+          prompt: qq.question || `Question ${i + 1}`,
+          given: newAnswers[i].selected !== null ? qq.options[newAnswers[i].selected] : 'No answer',
+          correctAnswer: qq.options[qq.answer],
+          isCorrect: newAnswers[i].isCorrect,
+        }))
+        onComplete(finalScore, totalQ, detail)
+      } else {
+        setAnswers(newAnswers)
+        setDone(true)
+      }
+    } else {
+      setAnswers(newAnswers)
+      setQIdx(i => i + 1)
+      setSelected(null)
+    }
+  }
+
+  useEffect(() => {
+    if (phase !== 'question' || done) return
+    setTimeLeft(LISTENING_P4_TIME)
+    if (timerRef.current) clearInterval(timerRef.current)
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          advance(selectedRef.current)
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase, qIdx, done])
+
+  const formatTime = (s) => `00:${String(s).padStart(2, '0')}`
+  const isLowTime = timeLeft <= 5
+  const handleNext = () => advance(selected)
+  const score = answers.filter(a => a.isCorrect).length
+
+  // Score screen
+  if (done) {
+    const pct = Math.round((score / totalQ) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2ac56c', emoji: '🏆' }
+                : pct >= 70 ? { label: 'Good job!', color: '#701fa1', emoji: '🎉' }
+                : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' }
+                :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+
+    if (reviewQ !== null) {
+      const rq = questions[reviewQ]
+      const a = answers[reviewQ]
+      return (
+        <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 20 }}>
+          <div style={{ padding: '0 32px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
+            <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+            </div>
+          </div>
+          <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
+          <div style={{ flex: 1, overflowY: 'auto', padding: '32px', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '700px', width: '100%', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+              <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a' }}>{rq.question}</div>
+              {rq.options.map((opt, i) => {
+                const isCorrectOpt = i === rq.answer
+                const isWrongSelected = i === a.selected && !isCorrectOpt
+                return (
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '4px 0' }}>
+                    <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isCorrectOpt ? '2px solid #2ac56c' : isWrongSelected ? '2px solid #d94040' : '2px solid #c0c0c0', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff' }}>
+                      {isCorrectOpt && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#2ac56c', display: 'block' }} />}
+                      {isWrongSelected && <span style={{ width: '9px', height: '9px', borderRadius: '50%', background: '#d94040', display: 'block' }} />}
+                    </span>
+                    <span style={{ fontSize: '15px', lineHeight: '1.5', color: isCorrectOpt ? '#1a7a44' : isWrongSelected ? '#b03030' : '#888', fontWeight: isCorrectOpt ? '600' : '400', flex: 1 }}>
+                      {opt}
+                      {isCorrectOpt && !a.isCorrect && <span style={{ fontSize: '11px', color: '#2ac56c', marginLeft: '6px', fontWeight: '700' }}>✓ correct</span>}
+                      {isWrongSelected && <span style={{ fontSize: '11px', color: '#d94040', marginLeft: '6px' }}>✗ your answer</span>}
+                    </span>
+                  </div>
+                )
+              })}
+              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You ran out of time — no answer selected.</div>}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+        <div style={{ maxWidth: '700px', width: '100%', margin: '0 auto', padding: '40px 24px' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '32px', textAlign: 'center', marginBottom: '24px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ fontSize: '44px', marginBottom: '10px' }}>{grade.emoji}</div>
+            <div style={{ fontSize: '22px', fontWeight: '700', color: grade.color, marginBottom: '4px' }}>{grade.label}</div>
+            <div style={{ fontSize: '13px', color: '#888', marginBottom: '16px' }}>Talk {exerciseNum} · {totalQ} questions</div>
+            <div style={{ fontSize: '44px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>{score}<span style={{ fontSize: '18px', color: '#aaa', fontWeight: '400' }}>/{totalQ}</span></div>
+            <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
+            <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={() => { setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
+            </div>
+          </div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {questions.map((qq, qi) => {
+              const a = answers[qi]
+              if (!a) return null
+              return (
+                <div key={qi} onClick={() => setReviewQ(qi)} style={{ background: '#fff', borderRadius: '10px', padding: '14px 18px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (a.isCorrect ? '#2ac56c' : '#d94040'), cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
+                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.question}</span>
+                    </div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer (time ran out)')}</div>
+                  </div>
+                  <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Listening phase — a single lecturer avatar is shown, audio autoplays, no questions yet
+  if (phase === 'listening') {
+    return (
+      <ExamScreen
+        topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+        section="LISTENING"
+        questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Talk ${exerciseNum}`}
+        contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <h1 style={{ margin: '0 0 8px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>
+          {talkIntroText}
+        </h1>
+        <div style={{ fontSize: '14px', color: '#888', textAlign: 'center', marginBottom: '32px' }}>Questions will follow once the talk ends.</div>
+        <SpeakerAvatar gender={talk.speaker} seed={talk.id} width={260} height={340} />
+        {announced && (
+          <div style={{ width: '1px', height: '1px', overflow: 'hidden' }}>
+            <AudioPlayer url={talk.audio_url} autoPlayKey={talk.id} onEnded={() => setPhase('question')} />
+          </div>
+        )}
+      </ExamScreen>
+    )
+  }
+
+  // Question phase
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
+      section="LISTENING"
+      questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
+      timeText={formatTime(timeLeft)}
+      lowTime={isLowTime}
+    >
+      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: '64px', alignItems: 'flex-start' }}>
+        <div style={{ flexShrink: 0 }}>
+          <SpeakerAvatar gender={talk.speaker} seed={talk.id} width={260} height={260} />
+        </div>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '8px' }}>
+          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: '32px' }}>{q.question}</h1>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+            {q.options.map((opt, i) => {
+              const isChosen = selected === i
+              return (
+                <div key={i} onClick={() => setSelected(i)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: 'pointer' }}>
+                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
+                  <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </ExamScreen>
+  )
+}
+
+function ListeningP4({ onBack }) {
+  const [talks, setTalks] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selectedIdx, setSelectedIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/listening/academic-talk`).then(r => r.json()),
+      fetchLatestResults('listening_p4'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setTalks(list)
+      const mapped = {}
+      list.forEach((ex, i) => { const row = results[String(ex.id ?? i)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!talks.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  if (selectedIdx !== null) return (
+    <ListeningP4Exercise talk={talks[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
+      onComplete={(correct, total) => {
+        saveResult('listening_p4', talks[selectedIdx].id ?? selectedIdx, correct, total, `Academic Talk #${selectedIdx + 1}`)
+        setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
+      }} />
+  )
+  return <ListeningP4List talks={talks} scores={scores} onSelect={setSelectedIdx} onBack={onBack} />
+}
+
+// ─── Writing Part 1 — Build a Sentence ────────────────────────────────────────
+// Total shared clock for the whole 10-item set (matches ETS's official Writing section
+// budget: 23 min total - 7 min Email - 10 min Discussion = 6 min for Build a Sentence),
+// not a per-item timer like the other modules.
+const BUILD_SENTENCE_TOTAL_TIME = 360 // 6:00 per practice set
+const BUILD_SENTENCE_SET_SIZE = 10
+
+function shuffleArray(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+
+function BuildSentenceItem({ item, onChange, initialPlaced }) {
+  // Word bank = correct chunks + distractor chunks, shuffled once per item.
+  const bank = useMemo(() => shuffleArray([...item.correctChunks, ...(item.distractorChunks || [])]), [item.id])
+  const slotCount = item.correctChunks.length
+  // Restores a previous placement (e.g. after pressing Back and then coming forward again) by
+  // matching each placed word's text to a bank chip, since the bank is reshuffled on every mount.
+  const [slots, setSlots] = useState(() => {
+    if (!initialPlaced || !initialPlaced.some(Boolean)) return Array(slotCount).fill(null)
+    const usedIdx = new Set()
+    return initialPlaced.map(text => {
+      if (!text) return null
+      const idx = bank.findIndex((t, i) => t === text && !usedIdx.has(i))
+      if (idx === -1) return null
+      usedIdx.add(idx)
+      return { bankIdx: idx, text }
+    })
+  })
+  const [dragOverSlot, setDragOverSlot] = useState(null)
+  const [dragOverBank, setDragOverBank] = useState(false)
+
+  useEffect(() => {
+    onChange(slots.map(s => (s ? s.text : null)))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slots])
+
+  const usedBankIdx = new Set(slots.filter(Boolean).map(s => s.bankIdx))
+
+  const setDragData = (e, data) => e.dataTransfer.setData('text/plain', JSON.stringify(data))
+  const getDragData = (e) => { try { return JSON.parse(e.dataTransfer.getData('text/plain')) } catch { return null } }
+
+  const placeAt = (slotIdx, data) => {
+    if (!data) return
+    setSlots(prev => {
+      const next = [...prev]
+      if (data.from === 'bank') {
+        // Free up any slot that currently holds this same bank chip.
+        for (let i = 0; i < next.length; i++) {
+          if (next[i] && next[i].bankIdx === data.bankIdx) next[i] = null
+        }
+        next[slotIdx] = { bankIdx: data.bankIdx, text: data.text }
+      } else if (data.from === 'slot') {
+        if (data.slotIdx === slotIdx) return prev
+        const tmp = next[slotIdx]
+        next[slotIdx] = next[data.slotIdx]
+        next[data.slotIdx] = tmp
+      }
+      return next
+    })
+  }
+
+  const removeSlot = (slotIdx) => setSlots(prev => { const next = [...prev]; next[slotIdx] = null; return next })
+
+  const placeFirstEmpty = (bankIdx, text) => {
+    setSlots(prev => {
+      const firstEmpty = prev.findIndex(s => s === null)
+      if (firstEmpty === -1) return prev
+      const next = [...prev]
+      next[firstEmpty] = { bankIdx, text }
+      return next
+    })
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+        <SpeakerAvatar gender={item.promptGender} seed={item.id} width={64} height={64} />
+        <div style={{ fontSize: '19px', fontWeight: '700', color: '#11162d', lineHeight: '1.5', paddingTop: '10px' }}>{item.prompt}</div>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px' }}>
+        <SpeakerAvatar gender={item.responseGender} seed={item.id + 1} width={64} height={64} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '10px', paddingTop: '10px', minHeight: '40px' }}>
+          {item.responsePrefix && <span style={{ fontSize: '19px', color: '#11162d' }}>{item.responsePrefix}</span>}
+          {slots.map((slot, i) => (
+            slot ? (
+              <span key={i}
+                draggable
+                onDragStart={(e) => setDragData(e, { from: 'slot', slotIdx: i })}
+                onDragOver={(e) => { e.preventDefault(); setDragOverSlot(i) }}
+                onDragLeave={() => setDragOverSlot(prev => (prev === i ? null : prev))}
+                onDrop={(e) => { e.preventDefault(); placeAt(i, getDragData(e)); setDragOverSlot(null) }}
+                onClick={() => removeSlot(i)}
+                title="Drag to reorder, or click to remove"
+                style={{ fontSize: '17px', color: '#1a5c3a', background: '#edfbf3', border: '1px solid #2ac56c', borderRadius: '6px', padding: '4px 10px', cursor: 'grab' }}>
+                {slot.text}
+              </span>
+            ) : (
+              <span key={i}
+                onDragOver={(e) => { e.preventDefault(); setDragOverSlot(i) }}
+                onDragLeave={() => setDragOverSlot(prev => (prev === i ? null : prev))}
+                onDrop={(e) => { e.preventDefault(); placeAt(i, getDragData(e)); setDragOverSlot(null) }}
+                style={{
+                  display: 'inline-block', width: '52px', minHeight: '26px',
+                  borderBottom: '2px solid ' + (dragOverSlot === i ? '#2ac56c' : '#c0c0c0'),
+                  background: dragOverSlot === i ? '#edfbf3' : 'transparent',
+                  borderRadius: '4px', transition: 'all 0.15s',
+                }} />
+            )
+          ))}
+          {item.responseSuffix && <span style={{ fontSize: '19px', color: '#11162d' }}>{item.responseSuffix}</span>}
+        </div>
+      </div>
+      <div
+        onDragOver={(e) => { e.preventDefault(); setDragOverBank(true) }}
+        onDragLeave={() => setDragOverBank(false)}
+        onDrop={(e) => {
+          e.preventDefault()
+          const data = getDragData(e)
+          if (data && data.from === 'slot') removeSlot(data.slotIdx)
+          setDragOverBank(false)
+        }}
+        style={{
+          display: 'flex', flexWrap: 'wrap', gap: '10px', paddingTop: '8px', borderTop: '1px solid #e5e7eb',
+          minHeight: '48px', background: dragOverBank ? '#f7faf8' : 'transparent', borderRadius: '8px', transition: 'background 0.15s',
+        }}>
+        {bank.map((text, i) => {
+          const isUsed = usedBankIdx.has(i)
+          return (
+            <span key={i}
+              draggable={!isUsed}
+              onDragStart={(e) => setDragData(e, { from: 'bank', bankIdx: i, text })}
+              onClick={() => !isUsed && placeFirstEmpty(i, text)}
+              style={{
+                fontSize: '17px', padding: '8px 14px', borderRadius: '6px',
+                background: isUsed ? '#f4f6fa' : '#e9ecf3',
+                color: isUsed ? '#c3c7d1' : '#11162d',
+                cursor: isUsed ? 'default' : 'grab',
+                userSelect: 'none',
+              }}>
+              {text}
+            </span>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) {
+  const [qIdx, setQIdx] = useState(0)
+  // Every item's placement is kept (not just the current one), so navigating Back and
+  // forward again restores exactly what the student had placed, instead of discarding it.
+  const [placedByIndex, setPlacedByIndex] = useState(() => items.map(() => []))
+  const [answers, setAnswers] = useState([])
+  const [done, setDone] = useState(false)
+  const [reviewQ, setReviewQ] = useState(null)
+  const [timeLeft, setTimeLeft] = useState(BUILD_SENTENCE_TOTAL_TIME)
+  const timerRef = useRef(null)
+  const stateRef = useRef(null)
+
+  const totalQ = items.length
+  const item = items[qIdx]
+  const placed = placedByIndex[qIdx] || []
+
+  const computeAnswers = (pbi) => items.map((it, i) => {
+    const p = pbi[i] || []
+    return { placed: p, isCorrect: JSON.stringify(p) === JSON.stringify(it.correctChunks) }
+  })
+
+  const finishAll = (finalAnswers) => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    if (mockMode) {
+      const finalScore = finalAnswers.filter(a => a.isCorrect).length
+      const detail = items.map((it, i) => ({
+        prompt: it.prompt,
+        given: finalAnswers[i] && finalAnswers[i].placed.filter(Boolean).length ? finalAnswers[i].placed.filter(Boolean).join(' ') : 'No answer',
+        correctAnswer: it.correctChunks.join(' '),
+        isCorrect: finalAnswers[i] ? finalAnswers[i].isCorrect : false,
+      }))
+      onComplete(finalScore, totalQ, detail)
+      return
+    }
+    setAnswers(finalAnswers)
+    setDone(true)
+  }
+  stateRef.current = { placedByIndex }
+
+  // Single running clock for the whole 10-item set.
+  useEffect(() => {
+    if (done) return
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          // Time's up — score whatever was placed in every item (unvisited items are simply
+          // empty, which computeAnswers already treats as unanswered/incorrect).
+          finishAll(computeAnswers(stateRef.current.placedByIndex))
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [done])
+
+  const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
+  const isLowTime = timeLeft <= 60
+
+  const handleNext = () => {
+    if (qIdx + 1 >= totalQ) {
+      finishAll(computeAnswers(placedByIndex))
+    } else {
+      setQIdx(i => i + 1)
+    }
+  }
+
+  const handleBack = () => {
+    if (qIdx === 0) return
+    setQIdx(i => i - 1)
+  }
+
+  const score = answers.filter(a => a.isCorrect).length
+
+  if (done) {
+    const pct = Math.round((score / totalQ) * 100)
+    const grade = pct >= 90 ? { label: 'Excellent!', color: '#2ac56c', emoji: '🏆' }
+                : pct >= 70 ? { label: 'Good job!', color: '#701fa1', emoji: '🎉' }
+                : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' }
+                :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+
+    if (reviewQ !== null) {
+      const rq = items[reviewQ]
+      const a = answers[reviewQ]
+      return (
+        <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 20 }}>
+          <div style={{ padding: '0 32px', height: '56px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #f0f0f0', flexShrink: 0 }}>
+            <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
+            <span style={{ fontSize: '13px', color: '#888' }}>Item {reviewQ + 1} of {totalQ}</span>
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+            </div>
+          </div>
+          <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
+          <div style={{ flex: 1, overflowY: 'auto', padding: '32px', display: 'flex', justifyContent: 'center' }}>
+            <div style={{ maxWidth: '700px', width: '100%', display: 'flex', flexDirection: 'column', gap: '22px' }}>
+              <div style={{ fontSize: '15px', color: '#616473' }}>{rq.prompt}</div>
+              <div>
+                <div style={{ fontSize: '11px', fontWeight: '700', color: a.isCorrect ? '#2ac56c' : '#d94040', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Your answer</div>
+                <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.6' }}>
+                  {rq.responsePrefix ? rq.responsePrefix + ' ' : ''}{a.placed.filter(Boolean).length ? a.placed.filter(Boolean).join(' ') : '(no answer)'}{rq.responseSuffix}
+                </div>
+              </div>
+              {!a.isCorrect && (
+                <div>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: '#2ac56c', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Correct answer</div>
+                  <div style={{ fontSize: '17px', color: '#1a7a44', lineHeight: '1.6', fontWeight: '600' }}>
+                    {rq.responsePrefix ? rq.responsePrefix + ' ' : ''}{rq.correctChunks.join(' ')}{rq.responseSuffix}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+        <div style={{ maxWidth: '700px', width: '100%', margin: '0 auto', padding: '40px 24px' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '32px', textAlign: 'center', marginBottom: '24px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ fontSize: '44px', marginBottom: '10px' }}>{grade.emoji}</div>
+            <div style={{ fontSize: '22px', fontWeight: '700', color: grade.color, marginBottom: '4px' }}>{grade.label}</div>
+            <div style={{ fontSize: '13px', color: '#888', marginBottom: '16px' }}>Build a Sentence · {totalQ} items</div>
+            <div style={{ fontSize: '44px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>{score}<span style={{ fontSize: '18px', color: '#aaa', fontWeight: '400' }}>/{totalQ}</span></div>
+            <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
+            <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct · all-or-nothing scoring</div>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button onClick={() => { setQIdx(0); setPlacedByIndex(items.map(() => [])); setAnswers([]); setDone(false); setTimeLeft(BUILD_SENTENCE_TOTAL_TIME) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
+            </div>
+          </div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap an item to see details</span></div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {items.map((it, qi) => {
+              const a = answers[qi]
+              if (!a) return null
+              return (
+                <div key={qi} onClick={() => setReviewQ(qi)} style={{ background: '#fff', borderRadius: '10px', padding: '14px 18px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (a.isCorrect ? '#2ac56c' : '#d94040'), cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+                      <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Item {qi + 1}</span>
+                      <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{it.prompt}</span>
+                    </div>
+                  </div>
+                  <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={<>
+        <TestPillButton onClick={handleBack} disabled={qIdx === 0}>Back</TestPillButton>
+        <TestPillButton variant="dark" onClick={handleNext}>{qIdx + 1 >= totalQ ? 'Finish' : 'Next'}</TestPillButton>
+      </>}
+      section="WRITING"
+      questionLabel={`Item ${qIdx + 1} of ${totalQ}`}
+      timeText={formatTime(timeLeft)}
+      lowTime={isLowTime}
+      contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
+      <h1 style={{ fontSize: '24px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 36px', maxWidth: '760px' }}>Make an appropriate sentence.</h1>
+      <div style={{ maxWidth: '760px', width: '100%' }}>
+        <BuildSentenceItem key={item.id} item={item} initialPlaced={placed}
+          onChange={(vals) => setPlacedByIndex(prev => { const next = [...prev]; next[qIdx] = vals; return next })} />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: '760px', width: '100%', marginTop: '28px' }}>
+        <button onClick={handleBack} disabled={qIdx === 0} style={{ background: '#fff', color: qIdx === 0 ? '#c0c0c0' : '#333', border: '1px solid #d0d5dd', borderRadius: '6px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: qIdx === 0 ? 'default' : 'pointer' }}>
+          ← Back
+        </button>
+        <button onClick={handleNext} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>
+          {qIdx + 1 >= totalQ ? 'Finish →' : 'Next →'}
+        </button>
+      </div>
+    </ExamScreen>
+  )
+}
+
+function BuildASentence({ onBack }) {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [activeSet, setActiveSet] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/writing/build-a-sentence`).then(r => r.json()),
+      fetchLatestResults('bas'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setItems(list)
+      const setCount = Math.ceil(list.length / BUILD_SENTENCE_SET_SIZE)
+      const mapped = {}
+      for (let i = 0; i < setCount; i++) { const row = results[String(i)]; if (row) mapped[i] = { correct: row.score, total: row.total } }
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  // Split the full item pool into fixed-size practice sets (10 items · 7:00 each).
+  const sets = []
+  for (let i = 0; i < items.length; i += BUILD_SENTENCE_SET_SIZE) {
+    sets.push(items.slice(i, i + BUILD_SENTENCE_SET_SIZE))
+  }
+
+  if (activeSet !== null) return (
+    <BuildSentenceExercise items={sets[activeSet]} onBack={() => setActiveSet(null)}
+      onComplete={(correct, total) => {
+        saveResult('bas', activeSet, correct, total, `Build a Sentence · Set ${activeSet + 1}`)
+        setScores(prev => ({ ...prev, [activeSet]: { correct, total } })); setActiveSet(null)
+      }} />
+  )
+
+  const totalLabel = `${Math.floor(BUILD_SENTENCE_TOTAL_TIME / 60)}:${String(BUILD_SENTENCE_TOTAL_TIME % 60).padStart(2, '0')}`
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Build a Sentence</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {sets.map((setItems, i) => {
+            const score = scores[i]
+            const pct = score ? Math.round((score.correct / score.total) * 100) : null
+            return (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice Set {i + 1}</div>
+                    {score && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score.correct}/{score.total} · {pct}%</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{setItems.length} items · {totalLabel} total</div>
+                </div>
+                <button onClick={() => setActiveSet(i)} style={{ background: score ? '#e5e7eb' : '#2ac56c', color: score ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {score ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const EMAIL_TIME_LIMIT = 420 // 7:00 per email
+const EMAIL_ANALYZE_DELAY_MS = 1800 // simulated "AI is grading" delay (well under the 30s budget)
+
+// Scoring aligned to ETS's official public "Write an Email" scoring guide (ETS Writing Scoring
+// Guide, ets.org/pdfs/toefl/writing-rubrics.pdf), which uses a holistic 0-5 band scale (not
+// additive points), keyed to three named dimensions: elaboration that supports the
+// communicative purpose, syntactic variety and precise/idiomatic word choice, and consistent
+// use of appropriate social conventions (register, politeness, organization of requests/
+// refusals/criticisms). A fourth dimension, grammatical/lexical error frequency, is also named
+// by the rubric but can't be measured without a live grammar checker, so it's proxied here by
+// lexical diversity and sentence-structure variety — the same text-derivable signal the rubric
+// itself points to. Cross-checked against Magoosh's and BestMyTest's public descriptions of the
+// same task, which independently name the same three core dimensions (elaboration/relevance,
+// syntax/vocabulary, social/discourse conventions) and note the task's own "at least 100 words"
+// guidance as the practical threshold for full elaboration credit. Wording below is
+// paraphrased, not copied from the ETS document.
+function evaluateEmailResponse(text, tasks) {
+  const trimmed = text.trim()
+  const words = trimmed ? trimmed.split(/\s+/) : []
+  const wordCount = words.length
+  const lower = text.toLowerCase()
+  const criteria = []
+
+  if (wordCount === 0) {
+    return {
+      score: 0, wordCount,
+      summary: 'The response is blank or entirely unconnected to the task.',
+      criteria: [{ ok: false, label: 'Response', detail: 'Write a complete email addressing every bullet point.' }],
+    }
+  }
+
+  const taskCount = (tasks && tasks.length) || 1
+  let tasksMatched = 0
+  ;(tasks || []).forEach((t, i) => {
+    const matched = (t.keywords || []).some(kw => lower.includes(kw.toLowerCase()))
+    if (matched) tasksMatched++
+    criteria.push({
+      ok: matched,
+      label: `Task ${i + 1}`,
+      detail: matched ? `Addressed: ${t.description}` : `Missing or unclear: ${t.description}`,
+    })
+  })
+  const taskRatio = tasksMatched / taskCount
+
+  const hasGreeting = /^\s*(dear|hello|hi|to whom)/i.test(trimmed)
+  const hasClosing = /(sincerely|regards|best,|best regards|thanks,|thank you,)/i.test(lower)
+  const hasPoliteness = /(could you|would you|please|i would appreciate|i was wondering)/i.test(lower)
+  criteria.push({
+    ok: hasGreeting && hasClosing,
+    label: 'Email structure & tone',
+    detail: hasGreeting && hasClosing
+      ? 'Clear greeting and closing with an appropriately polite tone.'
+      : `Add ${!hasGreeting ? 'a greeting (e.g., "Dear ...")' : ''}${!hasGreeting && !hasClosing ? ' and ' : ''}${!hasClosing ? 'a closing (e.g., "Sincerely,")' : ''} to follow standard email conventions.`,
+  })
+
+  const uniqueWords = new Set(words.map(w => w.toLowerCase().replace(/[^a-z']/g, ''))).size
+  const diversity = wordCount ? uniqueWords / wordCount : 0
+  const sentences = trimmed.split(/[.!?]+/).map(s => s.trim()).filter(Boolean)
+  const avgSentenceLen = sentences.length ? wordCount / sentences.length : 0
+  const rangeOk = diversity >= 0.55 && sentences.length >= 4
+  criteria.push({
+    ok: rangeOk,
+    label: 'Syntactic & vocabulary range',
+    detail: rangeOk
+      ? `Good range of vocabulary and sentence structure (${wordCount} words, ${sentences.length} sentences).`
+      : `Try varying your sentence length and word choice more — currently ${wordCount} words across ${sentences.length} sentence(s), average ${avgSentenceLen.toFixed(1)} words/sentence.`,
+  })
+
+  // Holistic band selection modeled on ETS's official "Write an Email" rubric structure. The
+  // word-count gate for the top band (100 words) matches the task's own published "an effective
+  // response will contain at least 100 words" guidance, echoed by Magoosh/BestMyTest.
+  let score
+  if (wordCount < 15 || taskRatio === 0) {
+    score = 1 // unsuccessful: telegraphic, minimal/no elaboration
+  } else if (taskRatio < 0.5 || (diversity < 0.4 && sentences.length < 3)) {
+    score = 2 // mostly unsuccessful: limited/irrelevant elaboration, limited range
+  } else if (taskRatio < 1 || !(hasGreeting && hasClosing) || diversity < 0.5) {
+    score = 3 // partially successful: task generally accomplished but with noticeable limitations
+  } else if (wordCount < 100 || !rangeOk || !hasPoliteness) {
+    score = 4 // generally successful: adequate elaboration, mostly appropriate conventions
+  } else {
+    score = 5 // fully successful: effective, clear, consistent facility with language
+  }
+
+  const summary =
+    score === 5 ? 'Fully successful: your message is effective and clearly expressed, with consistent facility in the use of language.'
+    : score === 4 ? 'Generally successful: your message is mostly effective and easily understood.'
+    : score === 3 ? 'Partially successful: the task is generally accomplished, but limitations in language may prevent parts of the message from being fully clear.'
+    : score === 2 ? 'Mostly unsuccessful: your attempt addresses the task, but it is mostly ineffective and may be hard to interpret.'
+    : 'Unsuccessful: your attempt to address the task is ineffective — the message may be hard to understand.'
+
+  return { score, wordCount, summary, criteria }
+}
+
+function toolbarBtnStyle(disabled) {
+  return {
+    background: disabled ? '#f4f6fa' : '#fff', color: disabled ? '#c3c7d1' : '#333',
+    border: '1px solid #d0d5dd', borderRadius: '5px', padding: '5px 12px', fontSize: '12px',
+    fontWeight: '600', cursor: disabled ? 'default' : 'pointer',
+  }
+}
+
+function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
+  const [timeLeft, setTimeLeft] = useState(EMAIL_TIME_LIMIT)
+  const [historyState, setHistoryState] = useState({ list: [''], idx: 0 })
+  const [phase, setPhase] = useState('writing') // 'writing' | 'analyzing' | 'done'
+  const [result, setResult] = useState(null)
+  const textareaRef = useRef(null)
+  const timerRef = useRef(null)
+  const liveRef = useRef(null)
+
+  const body = historyState.list[historyState.idx]
+  const wordCount = body.trim() ? body.trim().split(/\s+/).length : 0
+  liveRef.current = { historyState, phase }
+
+  const finishNow = () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    const { historyState: hs, phase: curPhase } = liveRef.current
+    if (curPhase !== 'writing') return
+    setPhase('analyzing')
+    const text = hs.list[hs.idx]
+    setTimeout(() => {
+      const res = evaluateEmailResponse(text, item.tasks)
+      if (mockMode) {
+        onComplete(res.score, { prompt: item.scenario, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria })
+        return
+      }
+      setResult(res)
+      setPhase('done')
+    }, EMAIL_ANALYZE_DELAY_MS)
+  }
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          finishNow()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
+  const isLowTime = timeLeft <= 60
+  const locked = phase !== 'writing'
+
+  const commitText = (text) => {
+    setHistoryState(prev => {
+      const list = prev.list.slice(0, prev.idx + 1)
+      list.push(text)
+      return { list, idx: list.length - 1 }
+    })
+  }
+
+  const handleTextChange = (e) => commitText(e.target.value)
+  const handleUndo = () => setHistoryState(prev => ({ ...prev, idx: Math.max(0, prev.idx - 1) }))
+  const handleRedo = () => setHistoryState(prev => ({ ...prev, idx: Math.min(prev.list.length - 1, prev.idx + 1) }))
+
+  const handleCut = () => {
+    const ta = textareaRef.current
+    const start = ta ? ta.selectionStart : 0
+    const end = ta ? ta.selectionEnd : 0
+    const selected = body.substring(start, end)
+    if (selected && navigator.clipboard) navigator.clipboard.writeText(selected).catch(() => {})
+    commitText(body.substring(0, start) + body.substring(end))
+  }
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText()
+      const ta = textareaRef.current
+      const start = ta ? ta.selectionStart : body.length
+      const end = ta ? ta.selectionEnd : body.length
+      commitText(body.substring(0, start) + text + body.substring(end))
+    } catch (err) { /* clipboard permission denied - ignore */ }
+  }
+
+  const handleDownload = () => {
+    const blob = new Blob([body], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `email_response_${item.id}.txt`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
+      section="WRITING"
+      questionLabel={`Practice ${index + 1}`}
+      timeText={phase === 'writing' ? formatTime(timeLeft) : (phase === 'analyzing' ? 'Analyzing…' : `${result.score} / 5`)}
+      lowTime={phase === 'writing' && isLowTime}
+      contentStyle={{ display: 'flex', flexDirection: 'column' }}
+    >
+        <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
+          <div style={{ flex: '0.8 1 320px', minWidth: '280px', paddingRight: '36px' }}>
+            <div style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '18px' }}>{item.scenario}</div>
+            <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Write an email to {item.recipient}. In your email, do the following:</div>
+            <ul style={{ margin: '0 0 18px 0', paddingLeft: '22px' }}>
+              {item.tasks.map((t, i) => (
+                <li key={i} style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '6px' }}>{t.description}</li>
+              ))}
+            </ul>
+            <div style={{ fontSize: '15px', color: '#1a1a1a' }}>Write as much as you can and in complete sentences.</div>
+          </div>
+
+          <div style={{ width: '1px', alignSelf: 'stretch', background: '#e5e7eb', margin: '0 4px' }} />
+
+          <div style={{ flex: '1.4 1 480px', minWidth: '360px', paddingLeft: '36px' }}>
+            <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '14px' }}>Your Response:</div>
+            <div style={{ fontSize: '14px', color: '#1a1a1a', marginBottom: '4px' }}><u>To:</u> {item.recipient}</div>
+            <div style={{ fontSize: '14px', color: '#1a1a1a', marginBottom: '14px' }}><u>Subject:</u> {item.subject}</div>
+
+            <div style={{ border: '1px solid #d0d5dd', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 10px', borderBottom: '1px solid #e5e7eb', background: '#fafbfc' }}>
+                <button onClick={handleCut} disabled={locked} style={toolbarBtnStyle(locked)}>Cut</button>
+                <button onClick={handlePaste} disabled={locked} style={toolbarBtnStyle(locked)}>Paste</button>
+                <button onClick={handleUndo} disabled={locked || historyState.idx === 0} style={toolbarBtnStyle(locked || historyState.idx === 0)}>Undo</button>
+                <button onClick={handleRedo} disabled={locked || historyState.idx >= historyState.list.length - 1} style={toolbarBtnStyle(locked || historyState.idx >= historyState.list.length - 1)}>Redo</button>
+                <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#9ca3af', fontWeight: '700' }}>{wordCount} words</span>
+              </div>
+              <textarea ref={textareaRef} value={body} onChange={handleTextChange} disabled={locked}
+                placeholder={`Dear ${item.recipient},\n\n...`}
+                style={{ width: '100%', minHeight: '260px', border: 'none', outline: 'none', resize: 'vertical', padding: '14px', fontSize: '14px', lineHeight: '1.6', fontFamily: 'sans-serif', color: locked ? '#9ca3af' : '#1a1a1a', boxSizing: 'border-box', background: locked ? '#fbfbfc' : '#fff' }} />
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
+              <button onClick={handleDownload} style={{ background: '#fff', border: '1px solid #d0d5dd', borderRadius: '6px', padding: '8px 16px', fontSize: '12px', color: '#333', cursor: 'pointer', fontWeight: '600' }}>Download response ⬇</button>
+            </div>
+
+            {phase === 'writing' && (
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
+                <button onClick={finishNow} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>SUBMIT →</button>
+              </div>
+            )}
+
+            {phase === 'analyzing' && (
+              <div style={{ marginTop: '18px', fontSize: '13px', color: '#e07b00', fontWeight: '600' }}>🤖 The AI grader is reading your email and preparing feedback…</div>
+            )}
+
+            {phase === 'done' && (
+              <div style={{ marginTop: '18px' }}>
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '10px' }}>{result.summary}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px' }}>
+                  {result.criteria.map((c, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', fontSize: '13px', color: '#333', lineHeight: '1.5' }}>
+                      <span style={{ color: c.ok ? '#2ac56c' : '#d94040', fontWeight: '700', flexShrink: 0 }}>{c.ok ? '✓' : '✗'}</span>
+                      <span><b>{c.label}:</b> {c.detail}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Example Response</div>
+                <div style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '8px', padding: '16px', fontSize: '13px', color: '#333', lineHeight: '1.7', whiteSpace: 'pre-wrap', marginBottom: '16px' }}>
+                  {item.exampleResponse}
+                </div>
+
+                <button onClick={() => onComplete(result.score)} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 20px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>
+                  Back to Practice List
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+    </ExamScreen>
+  )
+}
+
+function WriteEmail({ onBack }) {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [activeIdx, setActiveIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/writing/email`).then(r => r.json()),
+      fetchLatestResults('email'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setItems(list)
+      const mapped = {}
+      list.forEach((it, i) => { const row = results[String(it.id ?? i)]; if (row) mapped[i] = row.score })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  if (activeIdx !== null) return (
+    <EmailExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
+      onComplete={(finalScore) => {
+        saveResult('email', items[activeIdx].id ?? activeIdx, finalScore, 5, `Write an Email #${activeIdx + 1}`)
+        setScores(prev => ({ ...prev, [activeIdx]: finalScore })); setActiveIdx(null)
+      }} />
+  )
+
+  const timeLabel = `${Math.floor(EMAIL_TIME_LIMIT / 60)}:${String(EMAIL_TIME_LIMIT % 60).padStart(2, '0')}`
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Write an Email</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {items.map((it, i) => {
+            const score = scores[i]
+            return (
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {i + 1}</div>
+                    {score != null && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>To: {it.recipient} · {timeLabel} time limit</div>
+                </div>
+                <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {score != null ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const DISCUSSION_TIME_LIMIT = 600 // 10:00 per discussion post
+
+// Scoring aligned to ETS's official public "Write for an Academic Discussion" scoring guide
+// (ETS Writing Scoring Guide, ets.org/pdfs/toefl/writing-rubrics.pdf), which uses a holistic
+// 0-5 band scale (not additive points), keyed to two named content dimensions — a relevant,
+// well-elaborated contribution (explanations/exemplifications/details) and effective use of a
+// variety of syntactic structures with precise/idiomatic word choice — plus a third,
+// grammatical/lexical error frequency, which can't be measured without a live grammar checker
+// and is proxied here by lexical diversity and sentence-structure variety. Cross-checked
+// against Magoosh's and BestMyTest's public descriptions of the same task, which independently
+// summarize the rubric as: relevant and clearly developed ideas, variety in the use of
+// language, and correct use of language — and both note the task's own "at least 100 words"
+// instruction (with ~130 recommended) as the practical bar for full elaboration credit.
+// Engaging with a named classmate is not itself a scored rubric line, but is the standard
+// technique test-prep guides recommend for demonstrating a "relevant contribution to the
+// discussion," so it's used here as one signal toward that dimension. Wording below is
+// paraphrased, not copied from the ETS document.
+function evaluateDiscussionResponse(text, classmates) {
+  const trimmed = text.trim()
+  const words = trimmed ? trimmed.split(/\s+/) : []
+  const wordCount = words.length
+  const lower = text.toLowerCase()
+  const criteria = []
+
+  if (wordCount === 0) {
+    return {
+      score: 0, wordCount,
+      summary: 'The response is blank or entirely unconnected to the discussion.',
+      criteria: [{ ok: false, label: 'Response', detail: 'Write a complete post that states and supports your opinion.' }],
+    }
+  }
+
+  const hasOpinion = /(i believe|i think|in my opinion|my view|i would argue|i'd argue|i'd say)/i.test(lower)
+  const hasReason = /(because|since|as a result|due to|therefore|this is why)/i.test(lower)
+  criteria.push({
+    ok: hasOpinion && hasReason,
+    label: 'Opinion & support',
+    detail: hasOpinion && hasReason
+      ? 'You clearly state your opinion and back it up with a reason.'
+      : `Make sure to ${!hasOpinion ? 'clearly state your own opinion (e.g., "I believe...")' : ''}${!hasOpinion && !hasReason ? ' and ' : ''}${!hasReason ? 'explain why with a reason (e.g., "...because...")' : ''}.`,
+  })
+
+  const namesMentioned = (classmates || []).filter(c => lower.includes(c.name.toLowerCase())).length
+  const hasEngagementPhrase = /(i agree|i disagree|unlike|similar to|on the other hand|while i see where)/i.test(lower)
+  const engaged = namesMentioned > 0 || hasEngagementPhrase
+  criteria.push({
+    ok: engaged,
+    label: 'Engagement with classmates',
+    detail: engaged
+      ? 'You engage directly with the discussion by referencing a classmate’s point.'
+      : 'Try referring to one of your classmates by name (e.g., "I agree with ... because...") to show you are contributing to their discussion, not just restating the prompt.',
+  })
+
+  const hasExample = /(for example|for instance|such as|specifically)/i.test(lower)
+  criteria.push({
+    ok: hasExample,
+    label: 'Elaboration & examples',
+    detail: hasExample
+      ? 'Good use of a specific example or detail to support your point.'
+      : 'Add a concrete example (e.g., "for example, ...") to make your contribution more convincing.',
+  })
+
+  const uniqueWords = new Set(words.map(w => w.toLowerCase().replace(/[^a-z']/g, ''))).size
+  const diversity = wordCount ? uniqueWords / wordCount : 0
+  const sentences = trimmed.split(/[.!?]+/).map(s => s.trim()).filter(Boolean)
+  const rangeOk = diversity >= 0.55 && sentences.length >= 4
+  criteria.push({
+    ok: rangeOk,
+    label: 'Syntactic & vocabulary range',
+    detail: rangeOk
+      ? `Good range of vocabulary and sentence structure (${wordCount} words, ${sentences.length} sentences).`
+      : `Try varying your sentence length and word choice more — currently ${wordCount} words across ${sentences.length} sentence(s).`,
+  })
+
+  // Holistic band selection modeled on ETS's official "Write for an Academic Discussion"
+  // rubric structure. The word-count gate for the top band (100 words) matches the task's own
+  // published "an effective response will contain at least 100 words" guidance.
+  let score
+  if (wordCount < 15 || (!hasOpinion && !engaged)) {
+    score = 1 // unsuccessful: few or no coherent ideas connecting to the discussion
+  } else if (!hasOpinion || !hasReason || (!engaged && !hasExample)) {
+    score = 2 // mostly unsuccessful: ideas poorly elaborated or only partially relevant
+  } else if (!engaged || !hasExample || diversity < 0.5) {
+    score = 3 // partially successful: mostly relevant/understandable, some limitations
+  } else if (wordCount < 100 || !rangeOk) {
+    score = 4 // generally successful: relevant, adequately elaborated, easily understood
+  } else {
+    score = 5 // fully successful: relevant, well-elaborated, consistent facility with language
+  }
+
+  const summary =
+    score === 5 ? 'Fully successful: your post is a relevant, clearly expressed contribution with consistent facility in the use of language.'
+    : score === 4 ? 'Generally successful: your post is a relevant contribution and your ideas are easily understood.'
+    : score === 3 ? 'Partially successful: your post is mostly relevant and understandable, with some limitations in language.'
+    : score === 2 ? 'Mostly unsuccessful: your attempt to contribute is reflected, but limitations in language may make ideas hard to follow.'
+    : 'Unsuccessful: limitations in language may prevent your ideas from being expressed clearly.'
+
+  return { score, wordCount, summary, criteria }
+}
+
+function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode = false }) {
+  const [timeLeft, setTimeLeft] = useState(DISCUSSION_TIME_LIMIT)
+  const [historyState, setHistoryState] = useState({ list: [''], idx: 0 })
+  const [phase, setPhase] = useState('writing') // 'writing' | 'analyzing' | 'done'
+  const [result, setResult] = useState(null)
+  const textareaRef = useRef(null)
+  const timerRef = useRef(null)
+  const liveRef = useRef(null)
+
+  const body = historyState.list[historyState.idx]
+  const wordCount = body.trim() ? body.trim().split(/\s+/).length : 0
+  liveRef.current = { historyState, phase }
+
+  const finishNow = () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    const { historyState: hs, phase: curPhase } = liveRef.current
+    if (curPhase !== 'writing') return
+    setPhase('analyzing')
+    const text = hs.list[hs.idx]
+    setTimeout(() => {
+      const res = evaluateDiscussionResponse(text, item.classmates)
+      if (mockMode) {
+        onComplete(res.score, { prompt: item.prompt, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria })
+        return
+      }
+      setResult(res)
+      setPhase('done')
+    }, EMAIL_ANALYZE_DELAY_MS)
+  }
+
+  useEffect(() => {
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          finishNow()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(timerRef.current)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
+  const isLowTime = timeLeft <= 60
+  const locked = phase !== 'writing'
+
+  const commitText = (text) => {
+    setHistoryState(prev => {
+      const list = prev.list.slice(0, prev.idx + 1)
+      list.push(text)
+      return { list, idx: list.length - 1 }
+    })
+  }
+
+  const handleTextChange = (e) => commitText(e.target.value)
+  const handleUndo = () => setHistoryState(prev => ({ ...prev, idx: Math.max(0, prev.idx - 1) }))
+  const handleRedo = () => setHistoryState(prev => ({ ...prev, idx: Math.min(prev.list.length - 1, prev.idx + 1) }))
+
+  const handleCut = () => {
+    const ta = textareaRef.current
+    const start = ta ? ta.selectionStart : 0
+    const end = ta ? ta.selectionEnd : 0
+    const selected = body.substring(start, end)
+    if (selected && navigator.clipboard) navigator.clipboard.writeText(selected).catch(() => {})
+    commitText(body.substring(0, start) + body.substring(end))
+  }
+
+  const handlePaste = async () => {
+    try {
+      const text = await navigator.clipboard.readText()
+      const ta = textareaRef.current
+      const start = ta ? ta.selectionStart : body.length
+      const end = ta ? ta.selectionEnd : body.length
+      commitText(body.substring(0, start) + text + body.substring(end))
+    } catch (err) { /* clipboard permission denied - ignore */ }
+  }
+
+  const handleDownload = () => {
+    const blob = new Blob([body], { type: 'text/plain' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `discussion_response_${item.id}.txt`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
+      section="WRITING"
+      questionLabel={`Practice ${index + 1}`}
+      timeText={phase === 'writing' ? formatTime(timeLeft) : (phase === 'analyzing' ? 'Analyzing…' : `${result.score} / 5`)}
+      lowTime={phase === 'writing' && isLowTime}
+      contentStyle={{ display: 'flex', flexDirection: 'column' }}
+    >
+        <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
+          <div style={{ flex: '0.8 1 320px', minWidth: '280px', paddingRight: '36px' }}>
+            <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Your professor is teaching a class on {item.subject}. Write a post responding to the professor's question.</div>
+            <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>In your response, you should do the following:</div>
+            <ul style={{ margin: '0 0 14px 0', paddingLeft: '22px' }}>
+              <li style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '6px' }}>Express and support your opinion.</li>
+              <li style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '6px' }}>Make a contribution to the discussion in your own words.</li>
+            </ul>
+            <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '20px' }}>An effective response will contain at least 100 words.</div>
+
+            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
+              <SpeakerAvatar gender={item.professorGender} seed={item.id} width={56} height={56} />
+              <span style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>{item.professor}</span>
+            </div>
+            <div style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7' }}>{item.prompt}</div>
+          </div>
+
+          <div style={{ width: '1px', alignSelf: 'stretch', background: '#e5e7eb', margin: '0 4px' }} />
+
+          <div style={{ flex: '1.4 1 480px', minWidth: '360px', paddingLeft: '36px' }}>
+            {item.classmates.map((c, i) => (
+              <div key={i} style={{ display: 'flex', gap: '14px', paddingBottom: '16px', marginBottom: '16px', borderBottom: '1px solid #e5e7eb' }}>
+                <div style={{ flexShrink: 0, textAlign: 'center' }}>
+                  <SpeakerAvatar gender={c.gender} seed={item.id * 10 + i} width={48} height={48} />
+                  <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginTop: '4px' }}>{c.name}</div>
+                </div>
+                <div style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7', paddingTop: '2px' }}>{c.opinion}</div>
+              </div>
+            ))}
+
+            <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Your Response:</div>
+            <div style={{ border: '1px solid #d0d5dd', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 10px', borderBottom: '1px solid #e5e7eb', background: '#fafbfc' }}>
+                <button onClick={handleCut} disabled={locked} style={toolbarBtnStyle(locked)}>Cut</button>
+                <button onClick={handlePaste} disabled={locked} style={toolbarBtnStyle(locked)}>Paste</button>
+                <button onClick={handleUndo} disabled={locked || historyState.idx === 0} style={toolbarBtnStyle(locked || historyState.idx === 0)}>Undo</button>
+                <button onClick={handleRedo} disabled={locked || historyState.idx >= historyState.list.length - 1} style={toolbarBtnStyle(locked || historyState.idx >= historyState.list.length - 1)}>Redo</button>
+                <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#9ca3af', fontWeight: '700' }}>{wordCount} words</span>
+              </div>
+              <textarea ref={textareaRef} value={body} onChange={handleTextChange} disabled={locked}
+                placeholder="Share your opinion and respond to your classmates..."
+                style={{ width: '100%', minHeight: '220px', border: 'none', outline: 'none', resize: 'vertical', padding: '14px', fontSize: '14px', lineHeight: '1.6', fontFamily: 'sans-serif', color: locked ? '#9ca3af' : '#1a1a1a', boxSizing: 'border-box', background: locked ? '#fbfbfc' : '#fff' }} />
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
+              <button onClick={handleDownload} style={{ background: '#fff', border: '1px solid #d0d5dd', borderRadius: '6px', padding: '8px 16px', fontSize: '12px', color: '#333', cursor: 'pointer', fontWeight: '600' }}>Download response ⬇</button>
+            </div>
+
+            {phase === 'writing' && (
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
+                <button onClick={finishNow} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>SUBMIT →</button>
+              </div>
+            )}
+
+            {phase === 'analyzing' && (
+              <div style={{ marginTop: '18px', fontSize: '13px', color: '#e07b00', fontWeight: '600' }}>🤖 The AI grader is reading your post and preparing feedback…</div>
+            )}
+
+            {phase === 'done' && (
+              <div style={{ marginTop: '18px' }}>
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '10px' }}>{result.summary}</div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px' }}>
+                  {result.criteria.map((c, i) => (
+                    <div key={i} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', fontSize: '13px', color: '#333', lineHeight: '1.5' }}>
+                      <span style={{ color: c.ok ? '#2ac56c' : '#d94040', fontWeight: '700', flexShrink: 0 }}>{c.ok ? '✓' : '✗'}</span>
+                      <span><b>{c.label}:</b> {c.detail}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Example Response</div>
+                <div style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '8px', padding: '16px', fontSize: '13px', color: '#333', lineHeight: '1.7', whiteSpace: 'pre-wrap', marginBottom: '16px' }}>
+                  {item.exampleResponse}
+                </div>
+
+                <button onClick={() => onComplete(result.score)} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 20px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>
+                  Back to Practice List
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+    </ExamScreen>
+  )
+}
+
+function AcademicDiscussion({ onBack }) {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [activeIdx, setActiveIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/writing/academic-discussion`).then(r => r.json()),
+      fetchLatestResults('disc'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setItems(list)
+      const mapped = {}
+      list.forEach((it, i) => { const row = results[String(it.id ?? i)]; if (row) mapped[i] = row.score })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  if (activeIdx !== null) return (
+    <AcademicDiscussionExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
+      onComplete={(finalScore) => {
+        saveResult('disc', items[activeIdx].id ?? activeIdx, finalScore, 5, `Academic Discussion #${activeIdx + 1}`)
+        setScores(prev => ({ ...prev, [activeIdx]: finalScore })); setActiveIdx(null)
+      }} />
+  )
+
+  const timeLabel = `${Math.floor(DISCUSSION_TIME_LIMIT / 60)}:${String(DISCUSSION_TIME_LIMIT % 60).padStart(2, '0')}`
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Write for an Academic Discussion</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {items.map((it, i) => {
+            const score = scores[i]
+            return (
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {i + 1}</div>
+                    {score != null && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Topic: {it.subject} · {timeLabel} time limit</div>
+                </div>
+                <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {score != null ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Speaking — shared helpers ─────────────────────────────────────────────
+
+function getSpeechRecognitionCtor() {
+  return window.SpeechRecognition || window.webkitSpeechRecognition || null
+}
+
+function normalizeWords(s) {
+  return (s || '').toLowerCase().replace(/[^a-z0-9' ]/g, '').split(/\s+/).filter(Boolean)
+}
+
+// Word-level Dice coefficient via LCS — used to compare a spoken transcript to a target sentence.
+function wordSimilarity(a, b) {
+  const m = a.length, n = b.length
+  if (m === 0 && n === 0) return 1
+  if (m === 0 || n === 0) return 0
+  const dp = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0))
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i - 1] === b[j - 1] ? dp[i - 1][j - 1] + 1 : Math.max(dp[i - 1][j], dp[i][j - 1])
+    }
+  }
+  return (2 * dp[m][n]) / (m + n)
+}
+
+// Scoring aligned to ETS's official public "Listen and Repeat" scoring guide (ETS Speaking
+// Scoring Guide, ets.org/pdfs/toefl/speaking-rubrics.pdf), which uses a holistic 0-5 band
+// scale (not additive points): 5 = exact, fully intelligible repetition; 4 = meaning captured
+// with only minor word/grammar differences that don't change the original meaning; 3 =
+// essentially a full response but meaning not fully accurate (several content/function words
+// changed or missing); 2 = a significant part of the prompt missing and/or highly inaccurate,
+// not a self-standing sentence; 1 = very little of the prompt captured, largely unintelligible;
+// 0 = no response, entirely unintelligible, or unconnected to the prompt. Cross-checked against
+// TestGlider/MySpeakingScore's public description of the same task, which summarizes the
+// rubric's three dimensions as fluency, intelligibility, and repeat accuracy, and notes that
+// minor function-word shifts are acceptable at the 4 band while missing content, unintelligible
+// speech, or a fragment (instead of a full sentence) are what push a response down. Word-overlap
+// ratio is used as the measurable proxy for repeat accuracy, and a direct check for missing
+// content words is used for completeness, since pronunciation/intonation/fluency can't be
+// judged from a text transcript alone. Wording below is paraphrased, not copied from the ETS
+// document.
+function evaluateRepeatResponse(transcript, target) {
+  const targetWords = normalizeWords(target)
+  const saidWords = normalizeWords(transcript)
+  if (saidWords.length === 0) {
+    return {
+      score: 0, similarity: 0,
+      summary: 'No response — nothing intelligible was captured.',
+      criteria: [{ ok: false, label: 'Response', detail: 'No usable speech was detected for this sentence.' }],
+    }
+  }
+  const exact = saidWords.join(' ') === targetWords.join(' ')
+  const ratio = wordSimilarity(targetWords, saidWords)
+  const score =
+    exact ? 5
+    : ratio >= 0.85 ? 4
+    : ratio >= 0.65 ? 3
+    : ratio >= 0.4 ? 2
+    : ratio >= 0.15 ? 1
+    : 0
+  const summary =
+    score === 5 ? 'Exact repetition — fully intelligible.'
+    : score === 4 ? 'The meaning is captured, with only minor word or grammar differences from the prompt.'
+    : score === 3 ? 'Essentially a full response, but it does not fully capture the original meaning — several words were changed or missing.'
+    : score === 2 ? 'A significant part of the sentence is missing and/or the response is largely inaccurate.'
+    : score === 1 ? 'Very little of the sentence was captured — the response is mostly unintelligible.'
+    : 'No usable response was captured — try speaking clearly into the microphone.'
+  const missing = targetWords.filter(w => !saidWords.includes(w))
+  const criteria = [
+    {
+      ok: ratio >= 0.65,
+      label: 'Word accuracy',
+      detail: `${Math.round(ratio * 100)}% word overlap with the target sentence.`,
+    },
+    {
+      ok: missing.length === 0,
+      label: 'Completeness',
+      detail: missing.length === 0 ? 'Every key word from the prompt was repeated.' : `Missing or changed: ${missing.slice(0, 6).join(', ')}${missing.length > 6 ? ', …' : ''}`,
+    },
+  ]
+  return { score, similarity: Math.round(ratio * 100), summary, criteria }
+}
+
+// Scoring aligned to ETS's official public "Take an Interview" scoring guide (ETS Speaking
+// Scoring Guide, ets.org/pdfs/toefl/speaking-rubrics.pdf), which is a holistic 0-5 band scale
+// keyed to four named dimensions: (1) how fully/relevantly the question is addressed and
+// elaborated, (2) speaking pace/pausing, (3) pronunciation/intonation, and (4) the range and
+// accuracy of grammar and vocabulary. Cross-checked against Magoosh's and TestGlider/
+// MySpeakingScore's public descriptions of the same rubric, which name the same four
+// dimensions (fluency, intelligibility/pronunciation, coherence/relevance, grammar-vocabulary
+// range). Since fluency, pausing, and pronunciation can't be measured from a text transcript,
+// this uses the text-derivable proxies the rubric itself points to for the other two
+// dimensions: topic relevance, presence of supporting reasons, elaboration length, and lexical
+// diversity as a stand-in for vocabulary/grammar range. Wording below is paraphrased, not
+// copied from the ETS document.
+function evaluateInterviewResponse(transcript, questionText) {
+  const words = normalizeWords(transcript)
+  const wordCount = words.length
+  const criteria = []
+
+  if (wordCount === 0) {
+    return {
+      score: 0, wordCount,
+      summary: 'No response, or the response is unconnected to the question.',
+      criteria: [{ ok: false, label: 'Response', detail: 'No usable speech was detected for this question.' }],
+    }
+  }
+
+  const stop = new Set(['the', 'a', 'an', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'for', 'and', 'or', 'you', 'your', 'do', 'did', 'does', 'think', 'why', 'what', 'which', 'some', 'people', 'that', 'this', 'with', 'about', 'from', 'would', 'could', 'should', 'will', 'can', 'i', 'we', 'they', 'he', 'she', 'it', 'one', 'last', 'question'])
+  const keywords = normalizeWords(questionText).filter(w => w.length > 3 && !stop.has(w))
+  const hits = keywords.filter(k => words.includes(k)).length
+  const relevance = keywords.length ? hits / keywords.length : 0
+
+  const hasReason = /(because|since|so that|the reason|due to)/i.test(transcript)
+  const uniqueWords = new Set(words).size
+  const diversity = wordCount ? uniqueWords / wordCount : 0
+
+  criteria.push({
+    ok: relevance >= 0.15,
+    label: 'Relevance',
+    detail: relevance >= 0.15 ? 'Your answer stays on topic and responds to the question asked.' : 'Try to directly reference the topic of the question in your answer.',
+  })
+  criteria.push({
+    ok: hasReason,
+    label: 'Explanation',
+    detail: hasReason ? 'You explain your answer with a reason.' : 'Add a reason (e.g., "...because...") to support your answer.',
+  })
+  criteria.push({
+    ok: wordCount >= 45,
+    label: 'Elaboration',
+    detail: wordCount >= 45 ? `Well elaborated response (${wordCount} words).` : `Try to speak a bit longer and add more detail (currently ${wordCount} words).`,
+  })
+  criteria.push({
+    ok: diversity >= 0.55,
+    label: 'Grammar & vocabulary range',
+    detail: diversity >= 0.55 ? 'You use a reasonable range of vocabulary rather than repeating the same words.' : 'Try using a wider range of vocabulary and sentence structures instead of repeating the same words.',
+  })
+
+  // Note: per ETS's own scored sample responses, natural filler words ("um", "uh") do NOT
+  // lower the score as long as meaning isn't impeded — so fillers are deliberately not
+  // penalized here.
+  let score
+  if (wordCount < 8 || (relevance < 0.08 && wordCount < 15)) {
+    score = 1
+  } else if (relevance < 0.15 || (!hasReason && wordCount < 20)) {
+    score = 2
+  } else if (wordCount < 45 || !hasReason) {
+    score = 3
+  } else if (wordCount < 65 || diversity < 0.5) {
+    score = 4
+  } else {
+    score = 5
+  }
+
+  const summary =
+    score === 5 ? 'Fully successful: the response fully addresses the question and is clear and well elaborated.'
+    : score === 4 ? 'Generally successful: the response addresses the question and is reasonably clear.'
+    : score === 3 ? 'Partially successful: the response addresses the question but with limited elaboration or clarity.'
+    : score === 2 ? 'Mostly unsuccessful: an attempt is made, but it is not well supported.'
+    : 'Unsuccessful: the response only minimally addresses the question.'
+
+  return { score, wordCount, summary, criteria }
+}
+
+function micGateStyle() {
+  return { position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '14px', fontFamily: 'sans-serif', zIndex: 10, padding: '40px', textAlign: 'center' }
+}
+
+function MicPermissionGate({ micState, onRetry, onBack }) {
+  return (
+    <div style={micGateStyle()}>
+      <div style={{ fontSize: '40px' }}>🎙️</div>
+      {micState === 'checking' && <div style={{ fontSize: '15px', color: '#616473' }}>Checking microphone access…</div>}
+      {micState === 'unsupported' && (
+        <>
+          <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', maxWidth: '420px' }}>Your browser doesn't support live speech recognition.</div>
+          <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px' }}>Please try this exercise in Chrome or Edge on desktop.</div>
+        </>
+      )}
+      {micState === 'denied' && (
+        <>
+          <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', maxWidth: '420px' }}>Microphone access was denied.</div>
+          <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px' }}>Please allow microphone access for this site in your browser settings, then try again.</div>
+          <button onClick={onRetry} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 20px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', marginTop: '8px' }}>Try Again</button>
+        </>
+      )}
+      <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer', marginTop: '6px' }}>← Back</button>
+    </div>
+  )
+}
+
+// ─── Speaking Part 1: Listen and Repeat ────────────────────────────────────
+
+function TopicPhoto({ icon, label, photoSlug, photoUrl, width = 140, height = 140 }) {
+  // Try the local photo first (frontend/public/topic-photos/{slug}.jpg), then the remote
+  // Wikimedia URL as a fallback, and finally the emoji if both fail to load.
+  const localSrc = photoSlug ? `/topic-photos/${photoSlug}.jpg` : null
+  const [stage, setStage] = useState(localSrc ? 'local' : (photoUrl ? 'remote' : 'emoji'))
+  const currentSrc = stage === 'local' ? localSrc : (stage === 'remote' ? photoUrl : null)
+
+  return (
+    <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', borderRadius: '16px', background: 'linear-gradient(135deg, #edfbf3, #eaf1ff)', border: '0.5px solid #e1e4ed', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', flexShrink: 0, overflow: 'hidden' }}>
+      {currentSrc ? (
+        <img
+          src={currentSrc}
+          alt={label || 'topic'}
+          onError={() => setStage(prev => (prev === 'local' && photoUrl ? 'remote' : 'emoji'))}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+      ) : (
+        <span style={{ fontSize: `${Math.round(width * 0.42)}px`, lineHeight: 1 }} role="img" aria-label={label || 'topic'}>{icon || '📍'}</span>
+      )}
+    </div>
+  )
+}
+
+function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = false }) {
+  const [micState, setMicState] = useState('checking')
+  const [sentenceIdx, setSentenceIdx] = useState(0)
+  const [phase, setPhase] = useState('intro') // 'intro' | 'playing' | 'recording' | 'summary'
+  const [answers, setAnswers] = useState([])
+  const [countdown, setCountdown] = useState(0)
+  const recognitionRef = useRef(null)
+  const timerRef = useRef(null)
+  const transcriptRef = useRef('')
+
+  const sentence = item.sentences[sentenceIdx]
+  const totalQ = item.sentences.length
+  const SR = getSpeechRecognitionCtor()
+
+  useEffect(() => {
+    if (!SR) { setMicState('unsupported'); return }
+    checkMic()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const beginPractice = () => setPhase('playing')
+
+  const checkMic = () => {
+    setMicState('checking')
+    navigator.mediaDevices?.getUserMedia({ audio: true })
+      .then(stream => { stream.getTracks().forEach(t => t.stop()); setMicState('ready') })
+      .catch(() => setMicState('denied'))
+  }
+
+  const startRecording = () => {
+    if (!SR || micState !== 'ready') return
+    transcriptRef.current = ''
+    const rec = new SR()
+    rec.lang = 'en-US'
+    rec.continuous = true
+    rec.interimResults = true
+    rec.onresult = (e) => {
+      let finalText = ''
+      for (let i = 0; i < e.results.length; i++) {
+        if (e.results[i].isFinal) finalText += e.results[i][0].transcript + ' '
+      }
+      transcriptRef.current = finalText
+    }
+    rec.onerror = () => {}
+    try { rec.start() } catch (e) {}
+    recognitionRef.current = rec
+    setPhase('recording')
+    setCountdown(sentence.recordSeconds)
+    timerRef.current = setInterval(() => {
+      setCountdown(prev => prev - 1)
+    }, 1000)
+  }
+
+  const stoppingRef = useRef(false)
+
+  const stopRecording = () => {
+    if (stoppingRef.current) return
+    stoppingRef.current = true
+    if (timerRef.current) clearInterval(timerRef.current)
+    if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
+    setTimeout(() => {
+      const transcript = transcriptRef.current.trim()
+      const evalResult = evaluateRepeatResponse(transcript, sentence.text)
+      const newAnswer = { transcript, target: sentence.text, ...evalResult }
+      if (sentenceIdx + 1 >= totalQ) {
+        const finalAnswers = [...answers, newAnswer]
+        if (mockMode) {
+          onComplete(finalAnswers, finalAnswers.map((a, i) => ({
+            prompt: item.sentences[i].text,
+            given: a.transcript || '(nothing detected)',
+            score: a.score, maxScore: 5, feedback: a.summary, criteria: a.criteria,
+          })))
+        } else {
+          setAnswers(finalAnswers)
+          setPhase('summary')
+        }
+      } else {
+        setAnswers(prev => [...prev, newAnswer])
+        setSentenceIdx(i => i + 1)
+        setPhase('playing')
+      }
+      stoppingRef.current = false
+    }, 350)
+  }
+
+  useEffect(() => {
+    if (phase === 'recording' && countdown <= 0) stopRecording()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [countdown, phase])
+
+  useEffect(() => () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
+  }, [])
+
+  if (micState !== 'ready') return <MicPermissionGate micState={micState} onRetry={checkMic} onBack={onBack} />
+
+  const score = answers.reduce((s, a) => s + a.score, 0)
+  const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
+  const progressPct = phase === 'summary' ? 100 : (sentenceIdx / totalQ) * 100
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 5</span>}
+      section="SPEAKING"
+      questionLabel={`${item.location} · Sentence ${sentenceIdx + 1} of ${totalQ}`}
+      contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
+    >
+        <div style={{ maxWidth: phase === 'summary' ? '760px' : '720px', width: '100%' }}>
+          {phase === 'intro' && (
+            <>
+              <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.location}</div>
+              <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
+              <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
+              <audio src={item.audio_url_intro} autoPlay onEnded={beginPractice} onError={beginPractice} />
+            </>
+          )}
+
+          {(phase === 'playing' || phase === 'recording') && (
+            <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
+          )}
+
+          {phase === 'playing' && (
+            <>
+              <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '22px 0 8px' }}>{sentence.length} sentence</div>
+              <div style={{ fontSize: '16px', color: '#616473', marginBottom: '20px' }}>🔊 Listen carefully, then repeat exactly what you hear.</div>
+              <audio src={sentence.audio_url} autoPlay onEnded={startRecording} onError={startRecording} />
+            </>
+          )}
+
+          {phase === 'recording' && (
+            <>
+              <div style={{ fontSize: '14px', color: '#616473', fontWeight: '600', margin: '22px 0 16px' }}>Repeat the sentence now.</div>
+              <div style={{ maxWidth: '300px', margin: '0 auto', borderRadius: '10px', overflow: 'hidden', border: '1px solid #d0d5dd' }}>
+                <div style={{ background: '#5b5f6b', color: '#fff', fontSize: '13px', fontWeight: '700', letterSpacing: '0.5px', padding: '10px', textTransform: 'uppercase' }}>Response Time</div>
+                <div style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '18px' }}>
+                  <button onClick={stopRecording} title="Stop recording" style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#d94040', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ width: '12px', height: '12px', background: '#fff', borderRadius: '2px', display: 'block' }} />
+                  </button>
+                  <span style={{ fontSize: '28px', fontWeight: '700', color: '#1a1a1a', fontVariantNumeric: 'tabular-nums' }}>00:00:{String(countdown).padStart(2, '0')}</span>
+                </div>
+              </div>
+            </>
+          )}
+
+          {phase === 'summary' && (
+            <>
+              <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>All sentences complete</div>
+              <div style={{ margin: '4px 0 18px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c', background: '#edfbf3', padding: '6px 16px', borderRadius: '999px' }}>Avg {avgLabel} / 5</span>
+              </div>
+              <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px', maxHeight: '380px', overflowY: 'auto' }}>
+                {answers.map((a, i) => (
+                  <div key={i} style={{ background: '#f4f6fa', borderRadius: '8px', padding: '14px 16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase' }}>Sentence {i + 1}</span>
+                      <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 5</span>
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>Target:</b> {a.target}</div>
+                    <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || '(nothing detected)'}</div>
+                    <div style={{ fontSize: '12px', color: '#616473' }}>{a.summary}</div>
+                  </div>
+                ))}
+              </div>
+              <button onClick={() => onComplete(answers)} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '10px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>
+                Finish →
+              </button>
+            </>
+          )}
+        </div>
+    </ExamScreen>
+  )
+}
+
+function ListenRepeat({ onBack }) {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [activeIdx, setActiveIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/speaking/listen-and-repeat`).then(r => r.json()),
+      fetchLatestResults('speaking_lr'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setItems(list)
+      const mapped = {}
+      list.forEach((it, i) => { const row = results[String(it.id ?? i)]; if (row) mapped[i] = row.score })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  if (activeIdx !== null) return (
+    <ListenRepeatExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
+      onComplete={(answers) => {
+        const avg = answers.reduce((s, a) => s + a.score, 0) / answers.length
+        const rounded = Math.round(avg * 10) / 10
+        saveResult('speaking_lr', items[activeIdx].id ?? activeIdx, rounded, 5, `Listen and Repeat #${activeIdx + 1}`)
+        setScores(prev => ({ ...prev, [activeIdx]: rounded }))
+        setActiveIdx(null)
+      }} />
+  )
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen and Repeat</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {items.map((it, i) => {
+            const score = scores[i]
+            return (
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>{it.location}</div>
+                    {score != null && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5 avg</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{it.sentences.length} sentences</div>
+                </div>
+                <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {score != null ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── Speaking Part 2: Take an Interview ────────────────────────────────────
+
+function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }) {
+  const [micState, setMicState] = useState('checking')
+  const [qIdx, setQIdx] = useState(0)
+  const [phase, setPhase] = useState('intro') // 'intro' | 'playing' | 'recording' | 'summary'
+  const [answers, setAnswers] = useState([])
+  const [countdown, setCountdown] = useState(0)
+  const recognitionRef = useRef(null)
+  const timerRef = useRef(null)
+  const transcriptRef = useRef('')
+
+  const question = item.questions[qIdx]
+  const totalQ = item.questions.length
+  const SR = getSpeechRecognitionCtor()
+
+  useEffect(() => {
+    if (!SR) { setMicState('unsupported'); return }
+    checkMic()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const beginPractice = () => setPhase('playing')
+
+  const checkMic = () => {
+    setMicState('checking')
+    navigator.mediaDevices?.getUserMedia({ audio: true })
+      .then(stream => { stream.getTracks().forEach(t => t.stop()); setMicState('ready') })
+      .catch(() => setMicState('denied'))
+  }
+
+  const startRecording = () => {
+    if (!SR || micState !== 'ready') return
+    transcriptRef.current = ''
+    const rec = new SR()
+    rec.lang = 'en-US'
+    rec.continuous = true
+    rec.interimResults = true
+    rec.onresult = (e) => {
+      let finalText = ''
+      for (let i = 0; i < e.results.length; i++) {
+        if (e.results[i].isFinal) finalText += e.results[i][0].transcript + ' '
+      }
+      transcriptRef.current = finalText
+    }
+    rec.onerror = () => {}
+    try { rec.start() } catch (e) {}
+    recognitionRef.current = rec
+    setPhase('recording')
+    setCountdown(question.recordSeconds)
+    timerRef.current = setInterval(() => {
+      setCountdown(prev => prev - 1)
+    }, 1000)
+  }
+
+  const stoppingRef = useRef(false)
+
+  const stopRecording = () => {
+    if (stoppingRef.current) return
+    stoppingRef.current = true
+    if (timerRef.current) clearInterval(timerRef.current)
+    if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
+    setTimeout(() => {
+      const transcript = transcriptRef.current.trim()
+      const evalResult = evaluateInterviewResponse(transcript, question.text)
+      const newAnswer = { transcript, ...evalResult }
+      stoppingRef.current = false
+      if (qIdx + 1 >= totalQ) {
+        const finalAnswers = [...answers, newAnswer]
+        if (mockMode) {
+          onComplete(finalAnswers, finalAnswers.map((a, i) => ({
+            prompt: item.questions[i].text,
+            given: a.transcript || '(nothing detected)',
+            score: a.score, maxScore: 5, feedback: a.summary, criteria: a.criteria,
+          })))
+        } else {
+          setAnswers(finalAnswers)
+          setPhase('summary')
+        }
+      } else {
+        setAnswers(prev => [...prev, newAnswer])
+        setQIdx(i => i + 1)
+        setPhase('playing')
+      }
+    }, 350)
+  }
+
+  useEffect(() => {
+    if (phase === 'recording' && countdown <= 0) stopRecording()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [countdown, phase])
+
+  useEffect(() => () => {
+    if (timerRef.current) clearInterval(timerRef.current)
+    if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
+  }, [])
+
+  if (micState !== 'ready') return <MicPermissionGate micState={micState} onRetry={checkMic} onBack={onBack} />
+
+  const score = answers.reduce((s, a) => s + a.score, 0)
+  const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
+  const progressPct = phase === 'summary' ? 100 : (qIdx / totalQ) * 100
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 5</span>}
+      section="SPEAKING"
+      questionLabel={`${item.topic} · Question ${qIdx + 1} of ${totalQ}`}
+      contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
+    >
+        <div style={{ maxWidth: phase === 'summary' ? '760px' : '720px', width: '100%' }}>
+          {phase === 'intro' && (
+            <>
+              <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.topic}</div>
+              <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
+              <DrawnCharacterAvatar gender={item.speaker} seed={item.id * 10} width={400} height={400} mode="playing" />
+              <audio src={item.audio_url_intro} autoPlay onEnded={beginPractice} onError={beginPractice} />
+            </>
+          )}
+
+          {(phase === 'playing' || phase === 'recording') && (
+            <DrawnCharacterAvatar gender={item.speaker} seed={item.id * 10 + qIdx} width={400} height={400} mode={phase} />
+          )}
+
+          {phase === 'playing' && (
+            <audio src={question.audio_url} autoPlay onEnded={startRecording} onError={startRecording} />
+          )}
+
+          {phase === 'recording' && (
+            <>
+              <div style={{ fontSize: '14px', color: '#616473', fontWeight: '600', margin: '22px 0 16px' }}>Answer the question now.</div>
+              <div style={{ maxWidth: '300px', margin: '0 auto', borderRadius: '10px', overflow: 'hidden', border: '1px solid #d0d5dd' }}>
+                <div style={{ background: '#5b5f6b', color: '#fff', fontSize: '13px', fontWeight: '700', letterSpacing: '0.5px', padding: '10px', textTransform: 'uppercase' }}>Response Time</div>
+                <div style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '18px' }}>
+                  <button onClick={stopRecording} title="Stop recording" style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#d94040', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    <span style={{ width: '12px', height: '12px', background: '#fff', borderRadius: '2px', display: 'block' }} />
+                  </button>
+                  <span style={{ fontSize: '28px', fontWeight: '700', color: '#1a1a1a', fontVariantNumeric: 'tabular-nums' }}>00:00:{String(countdown).padStart(2, '0')}</span>
+                </div>
+              </div>
+            </>
+          )}
+
+          {phase === 'summary' && (
+            <>
+              <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>All questions complete</div>
+              <div style={{ margin: '4px 0 18px' }}>
+                <span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c', background: '#edfbf3', padding: '6px 16px', borderRadius: '999px' }}>Avg {avgLabel} / 5</span>
+              </div>
+              <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px', maxHeight: '380px', overflowY: 'auto' }}>
+                {answers.map((a, i) => (
+                  <div key={i} style={{ background: '#f4f6fa', borderRadius: '8px', padding: '14px 16px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase' }}>Question {i + 1}</span>
+                      <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 5</span>
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || '(nothing detected)'}</div>
+                    <div style={{ fontSize: '12px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>{a.summary}</div>
+                    {a.criteria && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                        {a.criteria.map((c, ci) => (
+                          <div key={ci} style={{ display: 'flex', gap: '8px', alignItems: 'flex-start', fontSize: '12px', color: '#333', lineHeight: '1.5' }}>
+                            <span style={{ color: c.ok ? '#2ac56c' : '#d94040', fontWeight: '700', flexShrink: 0 }}>{c.ok ? '✓' : '✗'}</span>
+                            <span><b>{c.label}:</b> {c.detail}</span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <button onClick={() => onComplete(answers)} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '10px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>
+                Finish →
+              </button>
+            </>
+          )}
+        </div>
+    </ExamScreen>
+  )
+}
+
+function TakeInterview({ onBack }) {
+  const [items, setItems] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [activeIdx, setActiveIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/speaking/interview`).then(r => r.json()),
+      fetchLatestResults('speaking_interview'),
+    ]).then(([data, results]) => {
+      const list = Array.isArray(data) ? data : []
+      setItems(list)
+      const mapped = {}
+      list.forEach((it, i) => { const row = results[String(it.id ?? i)]; if (row) mapped[i] = row.score })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+
+  if (activeIdx !== null) return (
+    <InterviewExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
+      onComplete={(answers) => {
+        const avg = answers.reduce((s, a) => s + a.score, 0) / answers.length
+        const rounded = Math.round(avg * 10) / 10
+        saveResult('speaking_interview', items[activeIdx].id ?? activeIdx, rounded, 5, `Take an Interview #${activeIdx + 1}`)
+        setScores(prev => ({ ...prev, [activeIdx]: rounded }))
+        setActiveIdx(null)
+      }} />
+  )
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Take an Interview</h1>
+          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
+        </div>
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          {items.map((it, i) => {
+            const score = scores[i]
+            return (
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>{it.topic}</div>
+                    {score != null && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5 avg</span>}
+                  </div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{it.questions.length} questions · 45s each</div>
+                </div>
+                <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  {score != null ? 'Retry' : 'Start'}
+                </button>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ListeningHome({ onSelect, onBack }) {
+  const parts = [
+    { key: 'p1', title: 'Part 1: Choose a Response', desc: 'Listen to a short statement or question and choose the most appropriate response.', count: '150 exercises · 1,200 questions', ready: true },
+    { key: 'p2', title: 'Part 2: Listen to a Conversation', desc: 'Listen to a dialogue between two people and answer comprehension questions.', count: '150 conversations · 300 questions', ready: true },
+    { key: 'p3', title: 'Part 3: Listen to an Announcement', desc: 'Listen to a formal announcement and answer comprehension questions.', count: '150 announcements · 300 questions', ready: true },
+    { key: 'p4', title: 'Part 4: Listen to an Academic Talk', desc: 'Listen to a lecture or academic discussion and answer comprehension questions.', count: '150 talks · 600 questions', ready: true },
+  ]
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+      {parts.map((p, i) => (
+        <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ maxWidth: '70%' }}>
+            <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
+            <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+            <span style={{ fontSize: '11px', color: p.ready ? '#2ac56c' : '#9ca3af', fontWeight: '600' }}>{p.count}</span>
+          </div>
+          <button onClick={() => p.ready && onSelect(p.key)} style={{ backgroundColor: p.ready ? '#2ac56c' : '#e5e7eb', color: p.ready ? '#fff' : '#9ca3af', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: p.ready ? 'pointer' : 'not-allowed', fontSize: '13px', flexShrink: 0 }}>
+            {p.ready ? 'Open Module' : 'Coming Soon'}
+          </button>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// ─── Read in Daily Life — Wrapper ─────────────────────────────────────────────
+function ReadInDailyLife({ onBack }) {
+  const [passages, setPassages] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [selectedIdx, setSelectedIdx] = useState(null)
+  const [scores, setScores] = useState({})
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/reading/read-in-daily-life`).then(r => r.json()),
+      apiFetch(`${BACKEND_URL}/api/reading/results`).then(r => r.json()),
+    ]).then(([passageData, resultData]) => {
+      setPassages(passageData)
+      const mapped = {}
+      passageData.forEach((p, i) => { const key = String(p.id); if (resultData[key]) mapped[i] = resultData[key] })
+      setScores(mapped)
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  const handleComplete = (score, total) => {
+    if (selectedIdx === null) return
+    const passage = passages[selectedIdx]
+    apiFetch(`${BACKEND_URL}/api/reading/save-result`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ passage_id: passage.id, score, total }),
+    }).catch(err => console.error(err))
+    saveResult('ridl', passage.id, score, total, `Read in Daily Life #${passage.id}`)
+    setScores(prev => ({ ...prev, [selectedIdx]: { score, total } }))
+  }
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading...</div>
+
+  const displayNums = computeRIDLDisplayNums(passages)
+  if (selectedIdx !== null) return (
+    <RIDLQuestion passage={passages[selectedIdx]} practiceNum={displayNums.get(selectedIdx)} totalPractices={passages.length}
+      onBack={() => setSelectedIdx(null)} onFinish={onBack} onComplete={handleComplete} />
+  )
+  return <RIDLList passages={passages} onSelect={setSelectedIdx} onBack={onBack} scores={scores} displayNums={displayNums} />
+}
+
+// ─── Full Mock Test ─────────────────────────────────────────────────────────
+// Runs Reading → Listening → Writing → Speaking back-to-back in the official 2026 order.
+// Reading and Listening are "multistage adaptive": everyone gets a fixed Module 1, then the
+// content of Module 2 depends on how well Module 1 went (mirrors ETS's real adaptive design,
+// though the exact routing thresholds ETS uses internally aren't public — this is our own
+// reasonable approximation). Writing and Speaking are not adaptive: one set per task type.
+
+function shuffleArr(arr) {
+  const a = [...arr]
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[a[i], a[j]] = [a[j], a[i]]
+  }
+  return a
+}
+function pickN(arr, n) { return shuffleArr(arr).slice(0, Math.min(n, arr.length)) }
+// Prefer items not already used elsewhere in this test; if the pool is too small, allow reuse
+// rather than come up short (our content pools are smaller than a real 2026 administration).
+function pickNPreferUnused(arr, n, usedSet) {
+  const fresh = arr.filter(x => !usedSet.has(x.id))
+  const picked = pickN(fresh, n)
+  if (picked.length < n) {
+    const reused = pickN(arr.filter(x => !picked.includes(x)), n - picked.length)
+    return [...picked, ...reused]
+  }
+  return picked
+}
+function isGoodPerf(correct, total) { return total > 0 && (correct / total) >= 0.6 }
+
+// Section-specific mapping from "percent of points earned" to the TOEFL 2026 format's band
+// scale — Reading and Listening are reported on a 1.0-6.0 scale, Writing and Speaking on a
+// 1.0-5.0 scale. Each table is [minRawOutOf30, band]. Reading/Listening are taken directly from
+// ETS's published 0-30 → 1-6 concordance table (ets.org/toefl/institutions/ibt/score-scale-
+// update.html). Writing/Speaking use the same raw-score thresholds but proportionally rescaled
+// onto the narrower 1.0-5.0 band range this format uses for those two sections.
+const BAND_TABLES = {
+  reading:   [[29, 6], [27, 5.5], [24, 5], [22, 4.5], [18, 4], [12, 3.5], [6, 3], [4, 2.5], [3, 2], [2, 1.5], [0, 1]],
+  listening: [[28, 6], [26, 5.5], [22, 5], [20, 4.5], [17, 4], [13, 3.5], [9, 3], [6, 2.5], [4, 2], [2, 1.5], [0, 1]],
+  writing:   [[29, 5], [27, 4.5], [24, 4], [17, 3.5], [15, 3], [13, 2.5], [11, 2], [3, 1.5], [0, 1]],
+  speaking:  [[28, 5], [27, 4.5], [25, 4], [20, 3.5], [18, 3], [16, 2.5], [13, 2], [5, 1.5], [0, 1]],
+}
+// Top of each section's band scale — used anywhere a band needs to be normalized or displayed
+// against its own max (dashboard progress bars, results screens, mock test detail badges).
+const SECTION_BAND_MAX = { reading: 6, listening: 6, writing: 5, speaking: 5 }
+
+// Reading/Listening top out at 6.0 while Writing/Speaking top out at 5.0, so a straight average
+// of the four raw band values would be unfairly pulled down by Writing/Speaking's narrower
+// scale. Instead, each section's band is normalized to "fraction of its own max" first, then
+// the four fractions are averaged and re-expressed on a 1.0-6.0 scale — an even composite that
+// doesn't penalize a section just because its own scale happens to be shorter.
+function computeOverallBand(readingBand, listeningBand, writingBand, speakingBand) {
+  const frac = (band, section) => (band - 1) / (SECTION_BAND_MAX[section] - 1)
+  const avgFrac = (frac(readingBand, 'reading') + frac(listeningBand, 'listening') + frac(writingBand, 'writing') + frac(speakingBand, 'speaking')) / 4
+  return Math.round((1 + avgFrac * 5) * 2) / 2
+}
+function pctToBand(pct, section) {
+  const table = BAND_TABLES[section] || BAND_TABLES.reading
+  const raw = pct * 30
+  for (const [minRaw, band] of table) {
+    if (raw >= minRaw) return band
+  }
+  return 1
+}
+
+function flattenCarPool(carPool) {
+  const flat = []
+  ;(carPool || []).forEach(ex => (ex.questions || []).forEach(q => flat.push({ ...q, _uid: `${ex.id}-${q.id}` })))
+  return flat
+}
+function buildCarSlot(flatCarPool, n, usedUidSet) {
+  const fresh = flatCarPool.filter(q => !usedUidSet.has(q._uid))
+  let picked = pickN(fresh, n)
+  if (picked.length < n) picked = [...picked, ...pickN(flatCarPool.filter(q => !picked.includes(q)), n - picked.length)]
+  return { kind: 'car', data: { questions: picked }, uids: picked.map(q => q._uid) }
+}
+
+// Real TOEFL iBT gives one combined time budget per Reading module rather than resetting a
+// clock per question. Per-question allowance: 25s per Complete-the-Words blank (a paragraph
+// with 10 blanks = 250s), 40s per Read-in-Daily-Life question, 60s per Academic-Passage
+// question — summed across every slot in the module's queue.
+function computeReadingPoolSeconds(slots) {
+  return slots.reduce((total, slot) => {
+    if (slot.kind === 'ctw') return total + 25 * slot.data.blanks.length
+    if (slot.kind === 'ridl') return total + 40 * slot.data.questions.length
+    if (slot.kind === 'ap') return total + 60 * slot.data.questions.length
+    return total
+  }, 0)
+}
+
+// Question count for a Reading slot — used to score unattempted items as 0/N when the pooled
+// module clock (see computeReadingPoolSeconds) runs out before the student reaches them.
+function slotQuestionCount(slot) {
+  if (slot.kind === 'ctw') return slot.data.blanks.length
+  if (slot.kind === 'ridl') return slot.data.questions.length
+  if (slot.kind === 'ap') return slot.data.questions.length
+  if (slot.kind === 'car') return slot.data.questions.length
+  if (slot.kind === 'conv') return slot.data.questions.length
+  if (slot.kind === 'announce') return slot.data.questions.length
+  if (slot.kind === 'at') return slot.data.questions.length
+  return 0
+}
+
+// RIDL pools mix genuinely short 2-question formats (sign/schedule/receipt — brief real-world
+// notices) with longer 3-question formats (email/message/article/poster/advertisement). Rather
+// than faking a "2-question" item by slicing the 3rd question off a full-length email (which left
+// the passage text just as long as the 3-question version), each module picks one item from each
+// bucket so the text length actually matches the question count.
+const RIDL_SHORT_TYPES = ['sign', 'schedule', 'receipt']
+const RIDL_LONG_TYPES = ['email', 'message', 'article', 'poster', 'advertisement']
+
+function buildReadingModule1(pools) {
+  const ctwN = Math.random() < 0.15 ? 2 : 1
+  const ctw = pickN(pools.ctw, ctwN)
+  const shortPool = pools.ridl.filter(p => RIDL_SHORT_TYPES.includes(p.type))
+  const messagePool = pools.ridl.filter(p => p.type === 'message')
+  const longPool = pools.ridl.filter(p => RIDL_LONG_TYPES.includes(p.type) && p.type !== 'message')
+  // 1 short notice (2 questions), 1 longer single text (3 questions), 1 message exchange (3 questions).
+  const shortItems = pickN(shortPool, 1)
+  const longItems = pickN(longPool, 1)
+  const messages = pickN(messagePool, 1)
+  const ap = pickN(pools.ap, 1)
+  return {
+    slots: [
+      ...ctw.map(d => ({ kind: 'ctw', data: d })),
+      ...shortItems.map(d => ({ kind: 'ridl', data: d })),
+      ...longItems.map(d => ({ kind: 'ridl', data: d })),
+      ...messages.map(d => ({ kind: 'ridl', data: d })),
+      ...ap.map(d => ({ kind: 'ap', data: d })),
+    ],
+    used: { ctw: new Set(ctw.map(x => x.id)), ridl: new Set([...shortItems.map(x => x.id), ...longItems.map(x => x.id), ...messages.map(x => x.id)]), ap: new Set(ap.map(x => x.id)) },
+  }
+}
+function buildReadingModule2(pools, used, good) {
+  const ctw = pickNPreferUnused(pools.ctw, 1, used.ctw)
+  if (good) {
+    const ap = pickNPreferUnused(pools.ap, 1, used.ap)
+    return [...ctw.map(d => ({ kind: 'ctw', data: d })), ...ap.map(d => ({ kind: 'ap', data: d }))]
+  }
+  const shortPool = pools.ridl.filter(p => RIDL_SHORT_TYPES.includes(p.type))
+  const longPool = pools.ridl.filter(p => p.type !== 'message' && !RIDL_SHORT_TYPES.includes(p.type))
+  const shortItems = pickNPreferUnused(shortPool, 1, used.ridl)
+  const longItems = pickNPreferUnused(longPool, 1, used.ridl)
+  return [...ctw.map(d => ({ kind: 'ctw', data: d })), ...shortItems.map(d => ({ kind: 'ridl', data: d })), ...longItems.map(d => ({ kind: 'ridl', data: d }))]
+}
+
+function buildListeningModule1(pools) {
+  const flatCar = flattenCarPool(pools.car)
+  const carN = 8 + Math.floor(Math.random() * 5) // 8-12
+  const carSlot = buildCarSlot(flatCar, carN, new Set())
+  const convs = pickN(pools.conv, 3)
+  const anns = pickN(pools.announce, 3)
+  const atN = Math.random() < 0.5 ? 1 : 2
+  const ats = pickN(pools.at, atN)
+  return {
+    slots: [carSlot, ...convs.map(d => ({ kind: 'conv', data: d })), ...anns.map(d => ({ kind: 'announce', data: d })), ...ats.map(d => ({ kind: 'at', data: d }))],
+    used: { car: new Set(carSlot.uids), conv: new Set(convs.map(x => x.id)), announce: new Set(anns.map(x => x.id)), at: new Set(ats.map(x => x.id)) },
+  }
+}
+function buildListeningModule2(pools, used, good) {
+  const flatCar = flattenCarPool(pools.car)
+  const carSlot = buildCarSlot(flatCar, 6, used.car)
+  if (good) {
+    const ats = pickNPreferUnused(pools.at, 2, used.at)
+    return [carSlot, ...ats.map(d => ({ kind: 'at', data: d }))]
+  }
+  const convs = pickNPreferUnused(pools.conv, 2, used.conv)
+  const anns = pickNPreferUnused(pools.announce, 2, used.announce)
+  return [carSlot, ...convs.map(d => ({ kind: 'conv', data: d })), ...anns.map(d => ({ kind: 'announce', data: d }))]
+}
+
+function buildWritingQueue(pools) {
+  const basChunks = []
+  for (let i = 0; i < pools.bas.length; i += BUILD_SENTENCE_SET_SIZE) basChunks.push(pools.bas.slice(i, i + BUILD_SENTENCE_SET_SIZE))
+  const basSet = shuffleArr(basChunks)[0] || pools.bas.slice(0, BUILD_SENTENCE_SET_SIZE)
+  const email = pickN(pools.email, 1)[0]
+  const disc = pickN(pools.disc, 1)[0]
+  return [
+    { kind: 'bas', data: basSet },
+    { kind: 'email', data: email },
+    { kind: 'disc', data: disc },
+  ]
+}
+function buildSpeakingQueue(pools) {
+  const lr = pickN(pools.lr, 1)[0]
+  const interview = pickN(pools.interview, 1)[0]
+  return [
+    { kind: 'lr', data: lr },
+    { kind: 'interview', data: interview },
+  ]
+}
+
+// ─── Fixed (pre-built) mock tests ──────────────────────────────────────────────
+// Every function below reads from one already-curated test bundle (see fixed_test_1.json)
+// instead of sampling randomly from a shared pool — the same student sees the exact same
+// content every time they take this specific fixed test. The adaptive branch (which module2
+// the student gets) is still decided live from their module1 performance via isGoodPerf; only
+// WHICH items make up each branch is pre-authored rather than drawn at random.
+function buildFixedReadingModule1(bundle) {
+  const b = bundle.reading.module1
+  return [
+    ...b.ctw.map(d => ({ kind: 'ctw', data: d })),
+    ...b.ridl.map(d => ({ kind: 'ridl', data: d })),
+    ...b.ap.map(d => ({ kind: 'ap', data: d })),
+  ]
+}
+function buildFixedReadingModule2(bundle, good) {
+  const b = good ? bundle.reading.module2Easy : bundle.reading.module2Hard
+  return [
+    ...(b.ctw || []).map(d => ({ kind: 'ctw', data: d })),
+    ...(b.ridl || []).map(d => ({ kind: 'ridl', data: d })),
+    ...(b.ap || []).map(d => ({ kind: 'ap', data: d })),
+  ]
+}
+function buildFixedListeningModule1(bundle) {
+  const b = bundle.listening.module1
+  return [
+    { kind: 'car', data: { questions: b.car } },
+    ...b.conv.map(d => ({ kind: 'conv', data: d })),
+    ...b.announce.map(d => ({ kind: 'announce', data: d })),
+    ...b.at.map(d => ({ kind: 'at', data: d })),
+  ]
+}
+function buildFixedListeningModule2(bundle, good) {
+  const b = good ? bundle.listening.module2Easy : bundle.listening.module2Hard
+  return [
+    { kind: 'car', data: { questions: b.car } },
+    ...(b.conv || []).map(d => ({ kind: 'conv', data: d })),
+    ...(b.announce || []).map(d => ({ kind: 'announce', data: d })),
+    ...(b.at || []).map(d => ({ kind: 'at', data: d })),
+  ]
+}
+function buildFixedWritingQueue(bundle) {
+  return [
+    { kind: 'bas', data: bundle.writing.bas },
+    { kind: 'email', data: bundle.writing.email },
+    { kind: 'disc', data: bundle.writing.disc },
+  ]
+}
+function buildFixedSpeakingQueue(bundle) {
+  return [
+    { kind: 'lr', data: bundle.speaking.lr },
+    { kind: 'interview', data: bundle.speaking.interview },
+  ]
+}
+
+// ─── Section intro / module transition notice screens (match testglider.com's ─────
+// official-style TOEFL iBT UI: navy top bar with only a Continue button, plain title +
+// underline + paragraph(s), and an optional "Type of Task" table for section overviews.
+function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
+      <TestTopBar left={null} right={<TestPillButton variant="light" onClick={onContinue}>Continue</TestPillButton>} />
+      <div style={{ padding: '48px 64px 100px', boxSizing: 'border-box' }}>
+        <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 14px' }}>{title}</h1>
+        <div style={{ height: '1px', background: '#1a1a1a', marginBottom: '28px' }} />
+        {icons && (
+          <div style={{ display: 'flex', gap: '40px', margin: '4px 0 28px' }}>
+            {icons.map((ic, i) => (
+              <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
+                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#edfbf3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px' }}>{ic.emoji}</div>
+                <span style={{ fontSize: '12px', fontWeight: '700', color: '#616473' }}>{ic.label}</span>
+              </div>
+            ))}
+          </div>
+        )}
+        {paragraphs.map((p, i) => (
+          <p key={i} style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.7', margin: '0 0 20px', maxWidth: '1100px' }}>{p}</p>
+        ))}
+        {visual && <div style={{ margin: '8px 0 24px' }}>{visual}</div>}
+        {rows && (
+          <div style={{ marginTop: '8px', border: '1px solid #e5e7eb', borderRadius: '4px', overflow: 'hidden', maxWidth: '1400px' }}>
+            <div style={{ display: 'flex', background: '#eef0f4', borderBottom: '1px solid #e5e7eb', padding: '12px 20px' }}>
+              <div style={{ flex: '0 0 320px', fontSize: '13px', fontWeight: '700', color: '#616473' }}>Type of Task</div>
+              <div style={{ flex: 1, fontSize: '13px', fontWeight: '700', color: '#616473' }}>Description</div>
+            </div>
+            {rows.map((r, i) => (
+              <div key={i} style={{ display: 'flex', padding: '16px 20px', borderBottom: i < rows.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
+                <div style={{ flex: '0 0 320px', fontSize: '15px', color: '#1a1a1a' }}>{r[0]}</div>
+                <div style={{ flex: 1, fontSize: '15px', color: '#1a1a1a' }}>{r[1]}</div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ─── Pre-test hardware check ───────────────────────────────────────────────────
+// Runs once, right when a test/section is started, before its content begins — mirrors the
+// mic/headset/volume check real TOEFL test centers do, styled in our own colors rather than any
+// third-party site's. Only the sections that actually need a mic and/or speaker show any of
+// this at all (see getHwCheckPlan below). Step 0, when present, is the live microphone level
+// check (modal); the rest are short static screens using the same TestNoticeScreen shell as the
+// rest of the mock test's transition notices.
+function MicVolumeCheckModal({ onStart }) {
+  const [micLabel, setMicLabel] = useState('Detecting…')
+  const [level, setLevel] = useState(0) // 0-1, smoothed live input level
+  const [status, setStatus] = useState('checking') // checking | ready | denied
+  const [devices, setDevices] = useState([]) // [{deviceId, label}] -- all known audio inputs
+  const [selectedDeviceId, setSelectedDeviceId] = useState('') // '' = browser default
+  const [pickerOpen, setPickerOpen] = useState(false)
+  const streamRef = useRef(null)
+  const audioCtxRef = useRef(null)
+  const rafRef = useRef(null)
+
+  const teardown = () => {
+    if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    if (audioCtxRef.current) { audioCtxRef.current.close().catch(() => {}); audioCtxRef.current = null }
+    if (streamRef.current) { streamRef.current.getTracks().forEach(t => t.stop()); streamRef.current = null }
+  }
+
+  // (Re)connects to a specific microphone (or the browser default when deviceId is falsy),
+  // tearing down whatever stream/analyser was running before. Used both on first mount and
+  // whenever the student picks a different device from the list below.
+  const connect = (deviceId) => {
+    teardown()
+    setStatus('checking')
+    const constraints = deviceId ? { audio: { deviceId: { exact: deviceId } } } : { audio: true }
+    navigator.mediaDevices?.getUserMedia(constraints).then(stream => {
+      streamRef.current = stream
+      setStatus('ready')
+      const track = stream.getAudioTracks()[0]
+      setMicLabel((track && track.label) || 'Default microphone')
+      // Labels are only populated by the browser once permission has been granted at least
+      // once -- refresh the device list now so "Change Microphone" shows real names, not
+      // generic placeholders.
+      navigator.mediaDevices.enumerateDevices().then(list => {
+        setDevices(list.filter(d => d.kind === 'audioinput').map(d => ({ deviceId: d.deviceId, label: d.label || 'Microphone' })))
+      }).catch(() => {})
+      const AudioContextCtor = window.AudioContext || window.webkitAudioContext
+      if (!AudioContextCtor) return
+      const ctx = new AudioContextCtor()
+      audioCtxRef.current = ctx
+      const source = ctx.createMediaStreamSource(stream)
+      const analyser = ctx.createAnalyser()
+      analyser.fftSize = 512
+      source.connect(analyser)
+      const data = new Uint8Array(analyser.frequencyBinCount)
+      const tick = () => {
+        analyser.getByteFrequencyData(data)
+        const avg = data.reduce((a, b) => a + b, 0) / data.length
+        setLevel(prev => prev * 0.6 + Math.min(1, avg / 90) * 0.4) // smoothed
+        rafRef.current = requestAnimationFrame(tick)
+      }
+      tick()
+    }).catch(() => setStatus('denied'))
+  }
+
+  useEffect(() => {
+    connect('')
+    return teardown
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const handlePick = (deviceId) => {
+    setSelectedDeviceId(deviceId)
+    setPickerOpen(false)
+    connect(deviceId)
+  }
+
+  const BAR_COUNT = 7
+  const activeBars = Math.round(level * BAR_COUNT)
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 30, fontFamily: 'sans-serif' }}>
+      <div style={{ background: '#fff', borderRadius: '16px', padding: '36px 40px', width: '440px', maxWidth: '90vw', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }}>
+        <h2 style={{ margin: '0 0 22px', fontSize: '19px', fontWeight: '800', color: '#1a1a1a', textAlign: 'center' }}>Check Your Microphone Volume</h2>
+        <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '20px 24px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', height: '64px' }}>
+            <span style={{ fontSize: '28px' }}>🎤</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', gap: '5px', height: '54px' }}>
+              {Array.from({ length: BAR_COUNT }).map((_, i) => (
+                <div key={i} style={{ width: '10px', height: `${16 + i * 6}px`, borderRadius: '3px', background: i < activeBars ? '#701fa1' : '#eef0f4', transition: 'background 0.08s' }} />
+              ))}
+            </div>
+          </div>
+          <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', position: 'relative' }}>
+            <div style={{ minWidth: 0 }}>
+              <div style={{ fontSize: '10px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px' }}>Connected Microphone</div>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{status === 'denied' ? 'Not available' : micLabel}</div>
+            </div>
+            {devices.length > 1 && status !== 'denied' && (
+              <button onClick={() => setPickerOpen(prev => !prev)} style={{ flexShrink: 0, background: 'none', border: 'none', color: '#701fa1', fontSize: '12px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px', padding: '4px 0' }}>
+                Change Microphone <span>{pickerOpen ? '▲' : '›'}</span>
+              </button>
+            )}
+            {pickerOpen && (
+              <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '6px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '10px', boxShadow: '0 6px 20px rgba(0,0,0,0.12)', width: '260px', overflow: 'hidden', zIndex: 5 }}>
+                {devices.map(d => (
+                  <button key={d.deviceId} onClick={() => handlePick(d.deviceId)}
+                    style={{ display: 'block', width: '100%', textAlign: 'left', background: d.deviceId === selectedDeviceId ? '#f4eafb' : '#fff', border: 'none', borderBottom: '1px solid #f0f0f0', padding: '10px 14px', fontSize: '13px', color: '#1a1a1a', cursor: 'pointer', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {d.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        {status === 'denied' && (
+          <div style={{ fontSize: '12px', color: '#c0392b', marginTop: '14px', textAlign: 'center', lineHeight: '1.5' }}>
+            Microphone access was blocked. You can still continue, but Speaking questions won't be able to record your voice.
+          </div>
+        )}
+        <button onClick={() => { teardown(); onStart() }} style={{ width: '100%', marginTop: '22px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '13px', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }}>
+          Start
+        </button>
+      </div>
+    </div>
+  )
+}
+
+// Illustrative "good vs too loud" bar rows for the microphone-adjustment screen — static, not
+// live-driven (the live meter is on the screen before this one).
+function MicLevelExampleRow({ label, good }) {
+  const litCount = good ? 6 : 13
+  const color = good ? '#2a9d5c' : '#d94040'
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div style={{ display: 'flex', gap: '4px' }}>
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div key={i} style={{ width: '14px', height: '28px', borderRadius: '2px', background: i < litCount ? color : '#eef0f4' }} />
+        ))}
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#9ca3af', maxWidth: '210px' }}>
+        <span>Too Quiet</span><span>Good</span><span>Too Loud</span>
+      </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: '700', color }}>
+        <span>{good ? '✓' : '✗'}</span><span>{label}</span>
+      </div>
+    </div>
+  )
+}
+
+// Plays a short, pleasant two-tone chime through the browser's speaker/headset output so the
+// student can actually confirm they can hear audio before continuing — not just read about it.
+// Plays a pre-generated narration clip (same Microsoft neural voice — en-US-GuyNeural — used for
+// the rest of the mock test's TOEFL-style narration, produced by backend/generate_audio_hwcheck.py)
+// as soon as this screen mounts. This replaces the browser's built-in speech synthesis, which
+// sounds robotic and inconsistent across browsers/OSes.
+function HwCheckAudioPlayer({ src }) {
+  const [playing, setPlaying] = useState(false)
+  const audioRef = useRef(null)
+
+  useEffect(() => {
+    const audio = new Audio(src)
+    audioRef.current = audio
+    audio.onplay = () => setPlaying(true)
+    audio.onended = () => setPlaying(false)
+    audio.onerror = () => setPlaying(false)
+    audio.play().catch(() => setPlaying(false))
+    return () => { audio.pause(); audioRef.current = null }
+  }, [src])
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+      <span style={{ fontSize: '30px' }}>{playing ? '🔊' : '🔈'}</span>
+      <span style={{ fontSize: '13px', color: '#6b7280' }}>
+        {playing ? 'Reading the instructions aloud…' : 'Did you hear the instructions just now?'}
+      </span>
+    </div>
+  )
+}
+
+// Thin wrapper kept for the "Adjusting the Volume" screen so its visual prop reads clearly.
+function VolumeTestPlayer({ src }) {
+  return <HwCheckAudioPlayer src={src} />
+}
+
+// Wraps the Good/Too Loud example rows and automatically plays a short demonstration chime the
+// moment this screen appears (no click needed) — the student hears it as soon as they land here.
+function MicAdjustVisual({ src }) {
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+      <HwCheckAudioPlayer src={src} />
+      <div style={{ display: 'flex', gap: '56px' }}>
+        <MicLevelExampleRow label="Good" good />
+        <MicLevelExampleRow label="Too Loud" good={false} />
+      </div>
+    </div>
+  )
+}
+
+const HW_SCREEN_INTRO = {
+  title: 'Hardware Check',
+  icons: [{ emoji: '🎤', label: 'Microphone' }, { emoji: '🎧', label: 'Headset' }, { emoji: '🔊', label: 'Speaker' }],
+  paragraphs: [
+    "Before the test begins, let's quickly check your microphone and speaker or headset volume.",
+    'Make sure your headset or speakers are on and your microphone is positioned so it can pick up your voice clearly — you\'ll need it for the Speaking section later.',
+  ],
+}
+function hwScreenVolume(dependsOnText) {
+  return {
+    title: 'Adjusting the Volume',
+    paragraphs: [
+      "You can adjust your device's system volume at any time during the test using your computer's own volume controls.",
+      `Make sure you can comfortably hear audio before continuing — ${dependsOnText}.`,
+    ],
+    visual: <VolumeTestPlayer src={`${BACKEND_URL}/audio/hwcheck/adjusting_volume.mp3`} />,
+  }
+}
+const HW_SCREEN_MICROPHONE = {
+  title: 'Adjusting the Microphone',
+  paragraphs: [
+    'When you record your Speaking answers, speak at your normal volume and keep a steady distance from the microphone.',
+    'Try to stay in the "Good" range shown below — not too quiet, and not too loud.',
+  ],
+  visual: <MicAdjustVisual src={`${BACKEND_URL}/audio/hwcheck/adjusting_microphone.mp3`} />,
+}
+
+// Only the sections that actually use a mic/speaker need their hardware checked before starting.
+// Reading and Writing use neither, so a student going straight into just one of those parts skips
+// the hardware-check flow entirely. Listening only needs the speaker/headset check (no mic use in
+// that section), Speaking only needs the mic check. A full test still runs the complete original
+// 3-screen flow (general intro + both checks) since it eventually needs both.
+function getHwCheckPlan(mode) {
+  if (mode === 'listening') {
+    return { needsMicModal: false, screens: [hwScreenVolume('the Listening section depends on it')] }
+  }
+  if (mode === 'speaking') {
+    return { needsMicModal: true, screens: [HW_SCREEN_MICROPHONE] }
+  }
+  if (mode === 'reading' || mode === 'writing') {
+    return { needsMicModal: false, screens: [] }
+  }
+  // 'full'
+  return { needsMicModal: true, screens: [HW_SCREEN_INTRO, hwScreenVolume('the Listening and Speaking sections both depend on it'), HW_SCREEN_MICROPHONE] }
+}
+
+const SECTION_LABEL = { reading: 'Reading', listening: 'Listening', writing: 'Writing', speaking: 'Speaking' }
+
+const SECTION_TASK_TABLE = {
+  reading: {
+    desc: 'In the Reading section, you will answer questions to demonstrate how well you understand academic and non-academic texts in English. There are three types of tasks.',
+    rows: [
+      ['Complete the Words', 'Fill in the missing letters in a paragraph.'],
+      ['Read in Daily Life', 'Answer questions about everyday reading material.'],
+      ['Read an Academic Passage', 'Answer questions about an academic passage.'],
+    ],
+  },
+  listening: {
+    desc: 'In the Listening section, you will answer questions to demonstrate how well you understand spoken English. There are four types of tasks.',
+    rows: [
+      ['Listen and Choose a Response', 'Select the best response to the question or statement.'],
+      ['Conversations', 'Answer questions about short conversations.'],
+      ['Announcements', 'Answer questions about announcements.'],
+      ['Academic Talks', 'Answer questions about academic talks.'],
+    ],
+  },
+  writing: {
+    desc: 'In the Writing section, you will answer questions to demonstrate how well you can write English. There are three types of tasks.',
+    rows: [
+      ['Build a Sentence', 'Create a grammatical sentence.'],
+      ['Write an Email', 'Write an email using information provided.'],
+      ['Write for an Academic Discussion', 'Participate in an online discussion.'],
+    ],
+  },
+  speaking: {
+    desc: 'In the Speaking section, you will answer questions to demonstrate how well you can speak English. There are two types of tasks.',
+    rows: [
+      ['Listen and Repeat', 'Listen to a sentence, then repeat exactly what you heard.'],
+      ['Take an Interview', 'Answer interview questions on a familiar topic.'],
+    ],
+  },
+}
+
+const sectionIntroNotice = (key) => ({
+  title: `${SECTION_LABEL[key]} section`,
+  paragraphs: [SECTION_TASK_TABLE[key].desc],
+  rows: SECTION_TASK_TABLE[key].rows,
+})
+
+const MODULE1_TEXT = {
+  reading: [
+    'The clock will show you how much time you have to complete Module 1.',
+    'You can use Next and Back to move to the next question or return to previous questions within the same module.',
+    'You WILL NOT be able to return to Module 1 once you have begun Module 2.',
+  ],
+  listening: [
+    'The clock will show you how much time you have to complete each question.',
+    'You can use NEXT to move to the next question.',
+    'The first task is Listen and Choose a Response. In this task, you will listen to a sentence or question. You will then read four sentences and choose the option that is the best response.',
+  ],
+}
+const module1Notice = (key) => ({ title: 'Module 1', paragraphs: MODULE1_TEXT[key] })
+
+const moduleTransitionNotices = (key) => ([
+  { title: 'End of Module 1', paragraphs: [`Your time for Module 1 of the ${SECTION_LABEL[key].toLowerCase()} section has ended.`, 'Select Continue to go to Module 2.'] },
+  { title: 'Module 2', paragraphs: ['The clock will show you how much time you have to complete Module 2.'] },
+])
+
+const endOfSectionNotice = (key) => ({ title: 'End of Section', paragraphs: [`Thank you for completing the ${SECTION_LABEL[key].toLowerCase()} section.`] })
+
+const TASK_INTRO = {
+  bas: { title: 'Build a Sentence', paragraphs: ['Move the words in the boxes to create grammatical sentences.', 'A clock will show you how much time you have to complete this task.'] },
+  email: { title: 'Write an Email', paragraphs: ['You will read a scenario and write an email addressing it.', 'A clock will show you how much time you have to complete this task.'] },
+  disc: { title: 'Write for an Academic Discussion', paragraphs: ["You will read a professor's question and your classmates' responses, then write your own post.", 'A clock will show you how much time you have to complete this task.'] },
+  lr: { title: 'Listen and Repeat', paragraphs: ['You will listen as someone speaks to you. Listen carefully and then repeat what you have heard. The clock will indicate how much time you have to speak.', 'No time for preparation will be provided.'] },
+  interview: { title: 'Take an Interview', paragraphs: ['You will answer interview questions on a familiar topic. The clock will indicate how much time you have to speak.', 'No time for preparation will be provided.'] },
+}
+
+const MOCK_STAGE_LABELS = {
+  'reading-m1': 'Reading · Module 1', 'reading-m2': 'Reading · Module 2',
+  'listening-m1': 'Listening · Module 1', 'listening-m2': 'Listening · Module 2',
+  'writing': 'Writing', 'speaking': 'Speaking',
+}
+
+const MOCK_SECTION_INFO = [
+  { key: 'reading', label: 'Reading', emoji: '📖', desc: 'Complete the Words, Read in Daily Life, Academic Passage' },
+  { key: 'listening', label: 'Listening', emoji: '🎧', desc: 'Choose a Response, Conversations, Announcements, Academic Talks' },
+  { key: 'writing', label: 'Writing', emoji: '✍️', desc: 'Build a Sentence, Write an Email, Academic Discussion' },
+  { key: 'speaking', label: 'Speaking', emoji: '🗣️', desc: 'Listen and Repeat, Take an Interview' },
+]
+
+// How many fixed mock tests the app is designed to eventually hold, and which of those are
+// actually built and playable right now. Extend AVAILABLE_FIXED_TEST_IDS as more tests get
+// their own fixed_test_N.json + FIXED_TEST_FILES entry on the backend (see generate scripts /
+// task "Test 2-20'yi üret") — everything else in this list renders as a locked "Coming soon" card.
+const TOTAL_FIXED_TESTS = 20
+const AVAILABLE_FIXED_TEST_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+
+// Flat list of just the test names — clicking a name navigates to that test's own full-page
+// detail screen (MockTestDetailScreen) rather than expanding inline.
+function MockTestList({ onSelect }) {
+  return (
+    <div style={{ width: '100%', maxWidth: '560px', marginBottom: '36px' }}>
+      <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px', textAlign: 'left' }}>
+        Fixed Mock Tests — same content every time
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        {Array.from({ length: TOTAL_FIXED_TESTS }, (_, i) => i + 1).map(id => {
+          const available = AVAILABLE_FIXED_TEST_IDS.includes(id)
+          return (
+            <button key={id} onClick={() => onSelect(id)}
+              style={{
+                background: available ? '#fff' : '#f7f7fa',
+                border: '1px solid #e5e7eb', borderRadius: '12px', padding: '13px 18px', cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px', textAlign: 'left', width: '100%', boxSizing: 'border-box',
+              }}>
+              <span style={{ fontSize: '14px', fontWeight: '700', color: available ? '#1a1a1a' : '#b0b3bd' }}>Mock Test {id}</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+                <span style={{ fontSize: '10px', fontWeight: '700', color: available ? '#2a9d5c' : '#c1c4cd', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+                  {available ? 'Ready' : 'Coming soon'}
+                </span>
+                <span style={{ fontSize: '12px', color: '#9ca3af' }}>›</span>
+              </span>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+// Which unified-progress category holds this specific fixed test's saved score for each section
+// (see saveResult('mock_reading'/'mock_listening'/'mock_writing'/'mock_speaking', testId, ...)
+// in FullMockTest) — used below to show a "✓ done" badge on a section once the student has
+// actually completed it for this particular test.
+const MOCK_SECTION_CATEGORY = { reading: 'mock_reading', listening: 'mock_listening', writing: 'mock_writing', speaking: 'mock_speaking' }
+
+// Dedicated full-page screen for one specific fixed mock test, opened by clicking its name in
+// MockTestList — mirrors the layout/style of MockIntroScreen itself (title, section parts,
+// start button) instead of expanding the row in place.
+function MockTestDetailScreen({ id, onBack, onStartSection }) {
+  const available = AVAILABLE_FIXED_TEST_IDS.includes(id)
+  // Per-section score for THIS specific test id, once the student has completed it — keyed by
+  // section key ('reading'/'listening'/'writing'/'speaking'), sourced from the same
+  // attempt_results history every other progress badge in the app reads from.
+  const [sectionScores, setSectionScores] = useState({})
+
+  useEffect(() => {
+    if (!available) return
+    let cancelled = false
+    Promise.all(
+      MOCK_SECTION_INFO.map(sec =>
+        fetchLatestResults(MOCK_SECTION_CATEGORY[sec.key]).then(map => [sec.key, map[String(id)]])
+      )
+    ).then(pairs => {
+      if (cancelled) return
+      const next = {}
+      pairs.forEach(([key, row]) => { if (row) next[key] = row })
+      setSectionScores(next)
+    })
+    return () => { cancelled = true }
+  }, [id, available])
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', fontFamily: 'sans-serif', zIndex: 10, padding: '110px 40px 40px', textAlign: 'center', overflowY: 'auto' }}>
+      <button onClick={onBack} style={{ position: 'fixed', top: '24px', left: '24px', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer', zIndex: 11 }}>← Back</button>
+      <div style={{ fontSize: '13px', fontWeight: '700', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>Fixed Mock Test</div>
+      <h1 style={{ margin: '0 0 14px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Mock Test {id}</h1>
+      <p style={{ maxWidth: '520px', color: '#616473', fontSize: '14px', lineHeight: '1.7', marginBottom: '10px' }}>
+        {available
+          ? 'Same content every time you take it — Reading, Listening, Writing, and Speaking, back-to-back in the official order.'
+          : "This test hasn't been built yet. Check back soon — new fixed mock tests are added regularly."}
+      </p>
+      {available && (
+        <>
+          <button onClick={() => onStartSection('full')} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '13px 32px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', marginBottom: '14px' }}>
+            Start Full Mock Test
+          </button>
+          <p style={{ maxWidth: '520px', color: '#9ca3af', fontSize: '12px', lineHeight: '1.6', marginBottom: '18px' }}>
+            Want to practice just one part? Click a section below to jump straight into that part of this test.
+          </p>
+        </>
+      )}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '28px', marginTop: available ? 0 : '18px' }}>
+        {MOCK_SECTION_INFO.map(sec => {
+          const result = sectionScores[sec.key]
+          return (
+            <button key={sec.key} onClick={() => available && onStartSection(sec.key)} disabled={!available}
+              style={{
+                background: available ? '#fff' : '#f7f7fa', border: '1px solid #e1e4ed', borderRadius: '12px',
+                padding: '16px 18px', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '4px',
+                cursor: available ? 'pointer' : 'default', font: 'inherit',
+              }}>
+              <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                <span style={{ fontSize: '14px', fontWeight: '700', color: available ? '#1a1a1a' : '#b0b3bd' }}>{sec.emoji} {sec.label}</span>
+                {result && (
+                  <span style={{ fontSize: '11px', fontWeight: '700', color: result.pct >= 70 ? '#2ac56c' : '#e07b00', background: result.pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px', flexShrink: 0 }}>
+                    ✓ {pctToBand(result.pct / 100, sec.key).toFixed(1)}/{SECTION_BAND_MAX[sec.key]}
+                  </span>
+                )}
+              </span>
+              <span style={{ fontSize: '11px', color: '#9ca3af', lineHeight: '1.5' }}>{sec.desc}</span>
+            </button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed }) {
+  // Which fixed test's own detail page is currently showing (null = the main intro screen with
+  // the test list is showing instead).
+  const [selectedTestId, setSelectedTestId] = useState(null)
+
+  if (selectedTestId) {
+    return <MockTestDetailScreen id={selectedTestId} onBack={() => setSelectedTestId(null)}
+      onStartSection={(sectionKey) => onStartFixed(selectedTestId, sectionKey)} />
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: '40px', textAlign: 'center', overflowY: 'auto' }}>
+      <button onClick={onBack} style={{ position: 'fixed', top: '24px', left: '24px', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer', zIndex: 11 }}>← Back</button>
+      <div style={{ fontSize: '13px', fontWeight: '700', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>Full Mock Test</div>
+      <h1 style={{ margin: '0 0 14px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Reading → Listening → Writing → Speaking</h1>
+      <p style={{ maxWidth: '520px', color: '#616473', fontSize: '14px', lineHeight: '1.7', marginBottom: '10px' }}>
+        This runs all four sections back-to-back in the official order, with no going back once you start.
+        Reading and Listening are adaptive: your Module 2 content depends on how well you do in Module 1,
+        just like the real TOEFL iBT 2026 test.
+      </p>
+      <p style={{ maxWidth: '520px', color: '#9ca3af', fontSize: '12px', lineHeight: '1.6', marginBottom: '28px' }}>
+        At the end you'll get an estimated 1–6 band score for each section plus an overall average —
+        estimated because ETS doesn't publish its exact scoring formula.
+      </p>
+      {onStartFixed && <MockTestList onSelect={setSelectedTestId} />}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '18px' }}>
+        <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
+        <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or practice one section only</span>
+        <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', width: '100%', maxWidth: '560px' }}>
+        {MOCK_SECTION_INFO.map(sec => (
+          <button key={sec.key} onClick={() => onStartSection(sec.key)}
+            style={{ background: '#fff', border: '1px solid #e1e4ed', borderRadius: '12px', padding: '16px 18px', cursor: 'pointer', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            <span style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>{sec.emoji} {sec.label}</span>
+            <span style={{ fontSize: '11px', color: '#9ca3af', lineHeight: '1.5' }}>{sec.desc}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Flattens a section's review log (array of { kind, detail: [...] }) into one list of
+// question-level cards and renders them. Used only on the final mock-test results screen —
+// no per-question feedback is ever shown while the test itself is in progress.
+function MockReviewList({ reviewEntries }) {
+  const items = reviewEntries.flatMap(entry => entry.detail || [])
+  if (!items.length) return <div style={{ fontSize: '12px', color: '#9ca3af', padding: '12px 0' }}>No answers recorded for this section.</div>
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
+      {items.map((it, i) => {
+        const isRightWrong = it.isCorrect !== undefined
+        const good = isRightWrong ? it.isCorrect : (it.score / (it.maxScore || 5)) >= 0.6
+        return (
+          <div key={i} style={{ background: '#fff', borderRadius: '8px', padding: '12px 16px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (good ? '#2ac56c' : '#d94040') }}>
+            <div style={{ fontSize: '12px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>{i + 1}. {it.prompt}</div>
+            <div style={{ fontSize: '12px', color: good ? '#1a7a44' : '#b03030', marginBottom: it.correctAnswer || it.feedback ? '2px' : 0 }}>Your answer: {it.given}</div>
+            {it.correctAnswer !== undefined && !it.isCorrect && (
+              <div style={{ fontSize: '12px', color: '#2a9d5c' }}>Correct answer: {it.correctAnswer}</div>
+            )}
+            {it.score !== undefined && (
+              <div style={{ fontSize: '11px', color: '#616473', marginTop: '4px' }}>Score: {it.score}/{it.maxScore}{it.feedback ? ' — ' + it.feedback : ''}</div>
+            )}
+            {it.criteria && it.criteria.length > 0 && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #f0f0f0' }}>
+                {it.criteria.map((c, ci) => (
+                  <div key={ci} style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: '11px', color: c.ok ? '#2ac56c' : '#d94040', flexShrink: 0, marginTop: '1px' }}>{c.ok ? '✓' : '✗'}</span>
+                    <span style={{ fontSize: '11px', color: '#616473', lineHeight: '1.5' }}><strong style={{ color: '#1a1a1a' }}>{c.label}:</strong> {c.detail}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+// Writing is scored from 3 separate ETS tasks (Build a Sentence, Write an Email, Write for an
+// Academic Discussion), each with its own rubric/point scale — showing one pooled "13/20 pts"
+// number hid that breakdown. This shows each task's own score as its own row, each independently
+// expandable to that task's own answer + feedback (instead of one long combined list for all
+// three tasks at once).
+function WritingScoreBreakdown({ basResult, emailResult, discResult, reviewEntries }) {
+  const [open, setOpen] = useState({ bas: false, email: false, disc: false })
+  const items = [
+    { key: 'bas', label: 'Build a Sentence', scoreText: `${basResult.correct}/${basResult.total}` },
+    { key: 'email', label: 'Write an Email', scoreText: `${(emailResult.score || 0).toFixed(1)}/5` },
+    { key: 'disc', label: 'Academic Discussion', scoreText: `${(discResult.score || 0).toFixed(1)}/5` },
+  ]
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+      {items.map(it => {
+        const entries = reviewEntries.filter(e => e.kind === it.key)
+        const isOpen = open[it.key]
+        return (
+          <div key={it.key}>
+            <button onClick={() => setOpen(prev => ({ ...prev, [it.key]: !prev[it.key] }))}
+              style={{ width: '100%', background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '9px 12px', fontSize: '12px', fontWeight: '700', color: '#1a1a1a', cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span>{it.label} — {it.scoreText}</span><span style={{ color: '#9ca3af', fontWeight: '400' }}>{isOpen ? '▲' : '▼'}</span>
+            </button>
+            {isOpen && <MockReviewList reviewEntries={entries} />}
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+function FullMockTest({ onBack }) {
+  const [phase, setPhase] = useState('loading') // loading | intro | notice | running | results
+  const [pools, setPools] = useState(null)
+  // Set (non-null) once the student picks a fixed test from the intro screen — from then on,
+  // every builder function branches on `fixedTestId` to read from `fixedBundle` (the one
+  // pre-built test bundle — see fixed_test_1.json / /api/mock/fixed-test/:id) instead of
+  // sampling from the 12 randomly-drawn dynamic pools.
+  const [fixedTestId, setFixedTestId] = useState(null)
+  const [fixedBundle, setFixedBundle] = useState(null)
+  // Pre-test hardware check (mic level + static info screens) — runs once, right after the
+  // student presses Start on the intro screen, before any section begins. Which screens actually
+  // show depends on which section is being started (see getHwCheckPlan) — hwCheckPlanRef holds
+  // that plan, hwCheckStep indexes into it (0 = the live mic-level modal, if the plan needs one).
+  // pendingBeginRef holds whichever "actually start the test" function should run once the check
+  // is dismissed (or immediately, if the plan needs no hardware check at all).
+  const [hwCheckStep, setHwCheckStep] = useState(0)
+  const hwCheckPlanRef = useRef({ needsMicModal: true, screens: [] })
+  const pendingBeginRef = useRef(() => {})
+  const [mode, setMode] = useState('full') // 'full' | 'reading' | 'listening' | 'writing' | 'speaking'
+  const [stage, setStage] = useState('reading-m1')
+  const [queue, setQueue] = useState([])
+  const [idx, setIdx] = useState(0)
+  const [openReview, setOpenReview] = useState({ reading: false, listening: false, writing: false, speaking: false })
+  // Section-intro / module-transition notice screens (testglider.com-style "Continue" pages)
+  // shown between stages — see runWithNotices/continueNotice below.
+  const [noticeQueue, setNoticeQueue] = useState([])
+  const noticeNextRef = useRef(() => {})
+  const runWithNotices = (notices, afterFn) => {
+    const list = (notices || []).filter(Boolean)
+    noticeNextRef.current = afterFn
+    if (list.length === 0) { afterFn(); return }
+    setNoticeQueue(list)
+    setPhase('notice')
+  }
+  const continueNotice = () => {
+    if (noticeQueue.length <= 1) {
+      setNoticeQueue([])
+      noticeNextRef.current()
+    } else {
+      setNoticeQueue(prev => prev.slice(1))
+    }
+  }
+  // Reading modules use ONE combined clock for the whole module (see computeReadingPoolSeconds)
+  // instead of a per-question timer — matches the real TOEFL iBT. `readingPoolLeft` is set when
+  // a reading-m1/reading-m2 queue is built, then ticks down every second while that stage runs.
+  const [readingPoolLeft, setReadingPoolLeft] = useState(null)
+  const sessionRef = useRef({
+    stageRaw: {}, // { 'reading-m1': {correct,total}, ... }
+    // Reading modules support cross-slot Back navigation, so a slot can be answered more than
+    // once (student goes Back and redoes it). Recording results per slot index — instead of
+    // accumulating totals — lets a re-answer overwrite its own entry rather than double-count.
+    // See recordSlot/recomputeReadingAggregates below.
+    slotRecords: { 'reading-m1': {}, 'reading-m2': {} },
+    // In-progress (not-yet-finished) answer state per slot, keyed by stage then slot index —
+    // lets CTWSingle/RIDLQuestion/APQuestion restore exactly what the student had selected when
+    // they Back out of a slot and later return to it, instead of remounting blank. Written live
+    // via onAnswersChange as the student answers, read via getSlotAnswers when a slot renders.
+    slotAnswers: { 'reading-m1': {}, 'reading-m2': {} },
+    used: { ctw: new Set(), ridl: new Set(), ap: new Set(), car: new Set(), conv: new Set(), announce: new Set(), at: new Set() },
+    writing: [], // { kind, correct?, total?, score? }
+    speaking: [], // { kind, items }
+    // Full question-by-question breakdown, revealed only on the final results screen —
+    // no per-question feedback is shown while the mock test is in progress.
+    review: { reading: [], listening: [], writing: [], speaking: [] },
+  })
+
+  useEffect(() => {
+    // Fixed-test content is fetched on demand from startFixedTest (triggered by the intro
+    // screen's pilot button), not here — this effect only loads the dynamic pools every mock
+    // test has used up to now, so the existing "Start Full Mock Test" flow is unaffected.
+    if (fixedTestId) return
+    Promise.all([
+      // All Reading/Listening/Writing/Speaking content for the mock test comes from its own
+      // /api/mock/* endpoints — pools written specifically for the mock test that never overlap
+      // with the practice pools, so a student never sees the same question in both practice mode
+      // and the mock test.
+      apiFetch(`${BACKEND_URL}/api/mock/complete-the-words`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/read-in-daily-life`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/academic-passage`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/choose-response`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/conversation`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/announcement`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/academic-talk`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/build-a-sentence`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/email`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/academic-discussion`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/listen-and-repeat`).then(r => r.json()).catch(() => []),
+      apiFetch(`${BACKEND_URL}/api/mock/interview`).then(r => r.json()).catch(() => []),
+    ]).then(([ctw, ridl, ap, car, conv, announce, at, bas, email, disc, lr, interview]) => {
+      setPools({ ctw, ridl, ap, car, conv, announce, at, bas, email, disc, lr, interview })
+      setPhase('intro')
+    })
+  }, [fixedTestId])
+
+  // Persists this attempt's band score(s) into the unified progress table as soon as the
+  // results screen is reached, so the student can see it later on the Progress screen. Only
+  // saves the section(s) that were actually attempted (mode === 'full' saves all four + overall;
+  // a single-section run like mode === 'listening' saves just that one section).
+  const mockResultSavedRef = useRef(false)
+  useEffect(() => {
+    if (phase !== 'results') { mockResultSavedRef.current = false; return }
+    if (mockResultSavedRef.current) return
+    mockResultSavedRef.current = true
+
+    const s = sessionRef.current
+    const readingRaw = ['reading-m1', 'reading-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
+    const listeningRaw = ['listening-m1', 'listening-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
+    const basResult = s.writing.find(w => w.kind === 'bas') || { correct: 0, total: 10 }
+    const emailResult = s.writing.find(w => w.kind === 'email') || { score: 0 }
+    const discResult = s.writing.find(w => w.kind === 'disc') || { score: 0 }
+    const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
+    const writingMax = basResult.total + 5 + 5
+    const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
+    const interviewResult = s.speaking.find(w => w.kind === 'interview') || { items: [] }
+    const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 5) : null
+    const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 5) : null
+    const speakingTaskPct = lrPct != null && ivPct != null ? (lrPct + ivPct) / 2 : (lrPct ?? ivPct ?? 0)
+    // Raw points earned / points possible across every graded item -- same "sum of what was
+    // actually solved" unit used for practice exercises, so mock attempts blend into the
+    // dashboard's average correctly instead of counting as one flat band value per attempt.
+    const speakingPts = lrResult.items.reduce((a, x) => a + (x.score || 0), 0) + interviewResult.items.reduce((a, x) => a + (x.score || 0), 0)
+    const speakingMax = lrResult.items.length * 5 + interviewResult.items.length * 5
+
+    const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
+    const listeningBand = pctToBand(listeningRaw.total ? listeningRaw.correct / listeningRaw.total : 0, 'listening')
+    const writingBand = pctToBand(writingMax ? writingPts / writingMax : 0, 'writing')
+    const speakingBand = pctToBand(speakingTaskPct, 'speaking')
+    const overallBand = computeOverallBand(readingBand, listeningBand, writingBand, speakingBand)
+
+    const testLabel = fixedTestId ? `Mock Test ${fixedTestId}` : 'Full Mock Test'
+    const testItemId = fixedTestId ? String(fixedTestId) : 'practice'
+
+    // Reading/Listening/Writing/Speaking are saved as raw points-earned/points-possible (exact
+    // same unit practice exercises use: correct answers out of questions, or graded points out
+    // of max) rather than the pre-collapsed 0-6 band -- so a 20-question mock module contributes
+    // proportionally more to the dashboard average than a 5-question practice exercise, and mock
+    // attempts blend into the same true "average of everything solved" as practice attempts.
+    // mock_overall has no raw equivalent (it's an average of four already-derived bands), so it
+    // stays as a band out of 6.
+    if ((mode === 'full' || mode === 'reading') && readingRaw.total) saveResult('mock_reading', testItemId, readingRaw.correct, readingRaw.total, `${testLabel} · Reading`)
+    if ((mode === 'full' || mode === 'listening') && listeningRaw.total) saveResult('mock_listening', testItemId, listeningRaw.correct, listeningRaw.total, `${testLabel} · Listening`)
+    if ((mode === 'full' || mode === 'writing') && writingMax) saveResult('mock_writing', testItemId, writingPts, writingMax, `${testLabel} · Writing`)
+    if ((mode === 'full' || mode === 'speaking') && speakingMax) saveResult('mock_speaking', testItemId, speakingPts, speakingMax, `${testLabel} · Speaking`)
+    if (mode === 'full') saveResult('mock_overall', testItemId, overallBand, 6, `${testLabel} · Overall`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [phase])
+
+  // Entry point for the intro screen's fixed-test list — fetches that one self-contained bundle
+  // on demand (the dynamic-pool fetch in the effect above is skipped once fixedTestId is set).
+  // `section` lets a student jump straight into just one part of that specific fixed test
+  // (Reading / Listening / Writing / Speaking) instead of always starting from Reading Module 1 —
+  // mirrors how the dynamic "practice one section only" cards on the same screen work, just
+  // sourced from the fixed bundle's content instead of the random pools.
+  const beginFixedTestAfterHwCheck = (testId, section = 'full') => {
+    setPhase('loading')
+    apiFetch(`${BACKEND_URL}/api/mock/fixed-test/${testId}`).then(r => r.json()).then(data => {
+      setFixedTestId(testId)
+      setFixedBundle(data)
+      if (section === 'listening') {
+        const slots = buildFixedListeningModule1(data)
+        setQueue(slots); setIdx(0); setStage('listening-m1')
+        runWithNotices([sectionIntroNotice('listening'), module1Notice('listening')], () => setPhase('running'))
+      } else if (section === 'writing') {
+        const slots = buildFixedWritingQueue(data)
+        setQueue(slots); setIdx(0); setStage('writing')
+        runWithNotices([sectionIntroNotice('writing'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
+      } else if (section === 'speaking') {
+        const slots = buildFixedSpeakingQueue(data)
+        setQueue(slots); setIdx(0); setStage('speaking')
+        runWithNotices([sectionIntroNotice('speaking'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
+      } else {
+        // 'full' or 'reading' both start with Reading Module 1
+        const slots = buildFixedReadingModule1(data)
+        setQueue(slots); setIdx(0); setStage('reading-m1')
+        setReadingPoolLeft(computeReadingPoolSeconds(slots))
+        runWithNotices([sectionIntroNotice('reading'), module1Notice('reading')], () => setPhase('running'))
+      }
+    }).catch(() => setPhase('intro'))
+  }
+
+  const beginTestAfterHwCheck = (m = 'full') => {
+    if (fixedTestId) {
+      // Fixed tests are always taken as one complete "full" sitting — no per-section shortcuts,
+      // matching how the real official test is administered.
+      const slots = buildFixedReadingModule1(fixedBundle)
+      setQueue(slots); setIdx(0); setStage('reading-m1')
+      setReadingPoolLeft(computeReadingPoolSeconds(slots))
+      runWithNotices([sectionIntroNotice('reading'), module1Notice('reading')], () => setPhase('running'))
+      return
+    }
+    if (m === 'listening') {
+      const m1 = buildListeningModule1(pools)
+      sessionRef.current.used.car = m1.used.car
+      sessionRef.current.used.conv = m1.used.conv
+      sessionRef.current.used.announce = m1.used.announce
+      sessionRef.current.used.at = m1.used.at
+      setQueue(m1.slots); setIdx(0); setStage('listening-m1')
+      runWithNotices([sectionIntroNotice('listening'), module1Notice('listening')], () => setPhase('running'))
+    } else if (m === 'writing') {
+      const slots = buildWritingQueue(pools)
+      setQueue(slots); setIdx(0); setStage('writing')
+      runWithNotices([sectionIntroNotice('writing'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
+    } else if (m === 'speaking') {
+      const slots = buildSpeakingQueue(pools)
+      setQueue(slots); setIdx(0); setStage('speaking')
+      runWithNotices([sectionIntroNotice('speaking'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
+    } else {
+      // 'full' or 'reading' both start with Reading Module 1
+      const m1 = buildReadingModule1(pools)
+      sessionRef.current.used.ctw = m1.used.ctw
+      sessionRef.current.used.ridl = m1.used.ridl
+      sessionRef.current.used.ap = m1.used.ap
+      setQueue(m1.slots); setIdx(0); setStage('reading-m1')
+      setReadingPoolLeft(computeReadingPoolSeconds(m1.slots))
+      runWithNotices([sectionIntroNotice('reading'), module1Notice('reading')], () => setPhase('running'))
+    }
+  }
+
+  // Public entry points wired to the intro screen's buttons — set mode/mode-adjacent state
+  // immediately, then route through whichever hardware-check screens that section actually needs
+  // (see getHwCheckPlan) before actually building the first module's content.
+  // beginTestAfterHwCheck/beginFixedTestAfterHwCheck (above) run once that flow finishes — or
+  // immediately, for a section (Reading/Writing) that needs no hardware check at all.
+  const startTest = (m = 'full') => {
+    setMode(m)
+    const plan = getHwCheckPlan(m)
+    hwCheckPlanRef.current = plan
+    const begin = () => beginTestAfterHwCheck(m)
+    pendingBeginRef.current = begin
+    if (!plan.needsMicModal && plan.screens.length === 0) { begin(); return }
+    setHwCheckStep(0)
+    setPhase('hwcheck')
+  }
+  const startFixedTest = (testId, section = 'full') => {
+    setMode(section)
+    const plan = getHwCheckPlan(section)
+    hwCheckPlanRef.current = plan
+    const begin = () => beginFixedTestAfterHwCheck(testId, section)
+    pendingBeginRef.current = begin
+    if (!plan.needsMicModal && plan.screens.length === 0) { begin(); return }
+    setHwCheckStep(0)
+    setPhase('hwcheck')
+  }
+
+  const addRaw = (key, correct, total) => {
+    const s = sessionRef.current
+    if (!s.stageRaw[key]) s.stageRaw[key] = { correct: 0, total: 0 }
+    s.stageRaw[key].correct += correct
+    s.stageRaw[key].total += total
+  }
+
+  // Rebuilds stageRaw['reading-m1'/'reading-m2'] and review.reading from slotRecords, so both
+  // stay correct even after a slot has been re-answered via Back (overwrite, not accumulate).
+  const recomputeReadingAggregates = () => {
+    const s = sessionRef.current
+    for (const stageKey of ['reading-m1', 'reading-m2']) {
+      const recs = s.slotRecords[stageKey] || {}
+      s.stageRaw[stageKey] = Object.values(recs).reduce((acc, r) => ({ correct: acc.correct + r.correct, total: acc.total + r.total }), { correct: 0, total: 0 })
+    }
+    const reviewEntries = []
+    for (const stageKey of ['reading-m1', 'reading-m2']) {
+      const recs = s.slotRecords[stageKey] || {}
+      Object.keys(recs).map(Number).sort((a, b) => a - b).forEach(i => {
+        const r = recs[i]
+        if (r.detail) reviewEntries.push({ kind: r.kind, detail: r.detail })
+      })
+    }
+    s.review.reading = reviewEntries
+  }
+
+  const recordSlot = (stageKey, slotIdx, correct, total, kind, detail) => {
+    const s = sessionRef.current
+    if (!s.slotRecords[stageKey]) s.slotRecords[stageKey] = {}
+    s.slotRecords[stageKey][slotIdx] = { correct, total, kind, detail }
+    recomputeReadingAggregates()
+  }
+
+  // Live in-progress answers for the slot currently on screen, restored on remount when the
+  // student navigates back to a previously-visited slot within the same Reading module.
+  const getSlotAnswers = (stageKey, slotIdx) => {
+    const s = sessionRef.current
+    return s.slotAnswers[stageKey] ? s.slotAnswers[stageKey][slotIdx] : undefined
+  }
+  const setSlotAnswers = (stageKey, slotIdx, val) => {
+    const s = sessionRef.current
+    if (!s.slotAnswers[stageKey]) s.slotAnswers[stageKey] = {}
+    s.slotAnswers[stageKey][slotIdx] = val
+  }
+
+  const advanceStage = () => {
+    const s = sessionRef.current
+    if (stage === 'reading-m1') {
+      const r = s.stageRaw['reading-m1'] || { correct: 0, total: 0 }
+      const good = isGoodPerf(r.correct, r.total)
+      const slots = fixedTestId ? buildFixedReadingModule2(fixedBundle, good) : buildReadingModule2(pools, s.used, good)
+      setQueue(slots); setIdx(0); setStage('reading-m2')
+      setReadingPoolLeft(computeReadingPoolSeconds(slots))
+      runWithNotices(moduleTransitionNotices('reading'), () => setPhase('running'))
+    } else if (stage === 'reading-m2') {
+      if (mode === 'reading') { runWithNotices([endOfSectionNotice('reading')], () => setPhase('results')); return }
+      if (fixedTestId) {
+        const slots = buildFixedListeningModule1(fixedBundle)
+        setQueue(slots); setIdx(0); setStage('listening-m1')
+        runWithNotices([endOfSectionNotice('reading'), sectionIntroNotice('listening'), module1Notice('listening')], () => setPhase('running'))
+        return
+      }
+      const m1 = buildListeningModule1(pools)
+      s.used.car = m1.used.car; s.used.conv = m1.used.conv; s.used.announce = m1.used.announce; s.used.at = m1.used.at
+      setQueue(m1.slots); setIdx(0); setStage('listening-m1')
+      runWithNotices([endOfSectionNotice('reading'), sectionIntroNotice('listening'), module1Notice('listening')], () => setPhase('running'))
+    } else if (stage === 'listening-m1') {
+      const r = s.stageRaw['listening-m1'] || { correct: 0, total: 0 }
+      const good = isGoodPerf(r.correct, r.total)
+      const slots = fixedTestId ? buildFixedListeningModule2(fixedBundle, good) : buildListeningModule2(pools, s.used, good)
+      setQueue(slots); setIdx(0); setStage('listening-m2')
+      runWithNotices(moduleTransitionNotices('listening'), () => setPhase('running'))
+    } else if (stage === 'listening-m2') {
+      if (mode === 'listening') { runWithNotices([endOfSectionNotice('listening')], () => setPhase('results')); return }
+      const slots = fixedTestId ? buildFixedWritingQueue(fixedBundle) : buildWritingQueue(pools)
+      setQueue(slots); setIdx(0); setStage('writing')
+      runWithNotices([endOfSectionNotice('listening'), sectionIntroNotice('writing'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
+    } else if (stage === 'writing') {
+      if (mode === 'writing') { runWithNotices([endOfSectionNotice('writing')], () => setPhase('results')); return }
+      const slots = fixedTestId ? buildFixedSpeakingQueue(fixedBundle) : buildSpeakingQueue(pools)
+      setQueue(slots); setIdx(0); setStage('speaking')
+      runWithNotices([endOfSectionNotice('writing'), sectionIntroNotice('speaking'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
+    } else if (stage === 'speaking') {
+      runWithNotices([endOfSectionNotice('speaking')], () => setPhase('results'))
+    }
+  }
+
+  const goNext = () => {
+    if (idx + 1 < queue.length) {
+      const nextIdx = idx + 1
+      const nextSlot = queue[nextIdx]
+      const prevSlot = queue[idx]
+      setIdx(nextIdx)
+      // Within the single-pass writing/speaking queues, show that task type's own
+      // instruction notice whenever the slot kind changes (e.g. bas -> email -> disc).
+      if ((stage === 'writing' || stage === 'speaking') && nextSlot && prevSlot && nextSlot.kind !== prevSlot.kind) {
+        runWithNotices([TASK_INTRO[nextSlot.kind]], () => setPhase('running'))
+      }
+    } else {
+      advanceStage()
+    }
+  }
+
+  // Cross-slot Back navigation within a Reading module — lets the Back button always do
+  // something (per user request) instead of dead-ending at the first question of each new
+  // exercise/passage. Lands on the LAST question of the previous slot (enterAtEndRef, read by
+  // RIDLQuestion/APQuestion on mount) since that's the most natural place to resume from.
+  const enterAtEndRef = useRef(null)
+  const goPrev = () => {
+    if (idx === 0) return
+    enterAtEndRef.current = idx - 1
+    setIdx(idx - 1)
+  }
+
+  // The "Save & Exit" button is now shown in every part of the mock test (Reading, Listening,
+  // Writing, Speaking), not just in standalone practice mode. Since abandoning a timed mock test
+  // partway through discards all progress made so far, confirm before actually leaving.
+  const exitMockTest = () => {
+    if (window.confirm('Exit the mock test? Your progress in this session will be lost.')) onBack()
+  }
+
+  // Keeps a ref to the latest idx/queue/stage so the pooled Reading clock's interval (below),
+  // which is only recreated when stage/phase change, can still read up-to-date progress when
+  // the module time runs out mid-question.
+  const readingLiveRef = useRef({ idx: 0, queue: [], stage: '' })
+  readingLiveRef.current = { idx, queue, stage }
+
+  const handleReadingPoolExpired = () => {
+    const { idx: curIdx, queue: curQueue, stage: curStage } = readingLiveRef.current
+    // Score every remaining (not-yet-recorded) slot as 0/N — but don't touch slots the student
+    // already completed and recorded (including ones they'd gone Back to revisit), since
+    // recordSlot below would otherwise wipe out a real score with an unattempted one.
+    for (let i = curIdx; i < curQueue.length; i++) {
+      const already = sessionRef.current.slotRecords[curStage] && sessionRef.current.slotRecords[curStage][i]
+      if (!already) {
+        const slot = curQueue[i]
+        recordSlot(curStage, i, 0, slotQuestionCount(slot), slot.kind, null)
+      }
+    }
+    advanceStage()
+  }
+
+  // One combined clock per Reading module (see computeReadingPoolSeconds) — ticks only while
+  // a reading-m1/reading-m2 stage is actively running, and pauses during notice/intro screens.
+  useEffect(() => {
+    const isReadingModule = stage === 'reading-m1' || stage === 'reading-m2'
+    if (!isReadingModule || phase !== 'running') return
+    const t = setInterval(() => {
+      setReadingPoolLeft(prev => {
+        if (prev === null) return prev
+        if (prev <= 1) {
+          clearInterval(t)
+          handleReadingPoolExpired()
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
+    return () => clearInterval(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stage, phase])
+
+  const addReview = (section, kind, detail) => {
+    if (!detail) return
+    sessionRef.current.review[section].push({ kind, detail })
+  }
+
+  const handleReadingListening = (slot, correct, total, detail) => {
+    if (stage === 'reading-m1' || stage === 'reading-m2') {
+      // Keyed by slot index so re-answering after Back overwrites this slot's own record
+      // instead of adding a second entry — see recordSlot/recomputeReadingAggregates.
+      recordSlot(stage, idx, correct, total, slot.kind, detail)
+    } else {
+      addRaw(stage, correct, total)
+      addReview('listening', slot.kind, detail)
+    }
+    goNext()
+  }
+  const handleWriting = (slot, payload, detail) => {
+    sessionRef.current.writing.push({ kind: slot.kind, ...payload })
+    addReview('writing', slot.kind, detail)
+    goNext()
+  }
+  const handleSpeaking = (slot, items, detail) => {
+    sessionRef.current.speaking.push({ kind: slot.kind, items })
+    addReview('speaking', slot.kind, detail)
+    goNext()
+  }
+
+  if (phase === 'loading') return <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10, color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>Loading mock test content…</div>
+  if (phase === 'intro') return <MockIntroScreen onStart={startTest} onStartSection={(sec) => startTest(sec)} onBack={onBack} onStartFixed={startFixedTest} />
+  if (phase === 'hwcheck') {
+    const plan = hwCheckPlanRef.current
+    if (plan.needsMicModal && hwCheckStep === 0) return <MicVolumeCheckModal onStart={() => setHwCheckStep(1)} />
+    const screenIdx = hwCheckStep - (plan.needsMicModal ? 1 : 0)
+    const screen = plan.screens[screenIdx]
+    return <TestNoticeScreen title={screen.title} paragraphs={screen.paragraphs} icons={screen.icons} visual={screen.visual}
+      onContinue={() => { if (screenIdx < plan.screens.length - 1) setHwCheckStep(hwCheckStep + 1); else pendingBeginRef.current() }} />
+  }
+  if (phase === 'notice') {
+    const n = noticeQueue[0]
+    if (!n) return null
+    return <TestNoticeScreen title={n.title} paragraphs={n.paragraphs} rows={n.rows} onContinue={continueNotice} />
+  }
+
+  if (phase === 'results') {
+    const s = sessionRef.current
+    const readingRaw = ['reading-m1', 'reading-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
+    const listeningRaw = ['listening-m1', 'listening-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
+    const basResult = s.writing.find(w => w.kind === 'bas') || { correct: 0, total: 10 }
+    const emailResult = s.writing.find(w => w.kind === 'email') || { score: 0 }
+    const discResult = s.writing.find(w => w.kind === 'disc') || { score: 0 }
+    const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
+    const writingMax = basResult.total + 5 + 5
+    const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
+    const interviewResult = s.speaking.find(w => w.kind === 'interview') || { items: [] }
+    const speakingPts = lrResult.items.reduce((a, x) => a + (x.score || 0), 0) + interviewResult.items.reduce((a, x) => a + (x.score || 0), 0)
+    const speakingMax = lrResult.items.length * 5 + interviewResult.items.length * 5
+    // Per ETS's scoring method, the Listen-and-Repeat task score and the Interview task score
+    // are each averaged on their own first, then combined with EQUAL (50/50) weight — not
+    // pooled into one raw-points ratio, which would over-weight L&R's 7 items vs Interview's 4.
+    const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 5) : null
+    const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 5) : null
+    const speakingTaskPct = lrPct != null && ivPct != null ? (lrPct + ivPct) / 2 : (lrPct ?? ivPct ?? 0)
+
+    const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
+    const listeningBand = pctToBand(listeningRaw.total ? listeningRaw.correct / listeningRaw.total : 0, 'listening')
+    const writingBand = pctToBand(writingMax ? writingPts / writingMax : 0, 'writing')
+    const speakingBand = pctToBand(speakingTaskPct, 'speaking')
+    const overall = computeOverallBand(readingBand, listeningBand, writingBand, speakingBand)
+
+    const rows = [
+      { key: 'reading', label: 'Reading', band: readingBand, detail: `${readingRaw.correct}/${readingRaw.total} correct` },
+      { key: 'listening', label: 'Listening', band: listeningBand, detail: `${listeningRaw.correct}/${listeningRaw.total} correct` },
+      { key: 'writing', label: 'Writing', band: writingBand, detail: `${writingPts.toFixed(1)}/${writingMax} pts` },
+      { key: 'speaking', label: 'Speaking', band: speakingBand, detail: `${speakingPts.toFixed(1)}/${speakingMax} pts` },
+    ]
+
+    const isSingleSection = mode !== 'full'
+    const sectionRow = rows.find(r => r.key === mode)
+
+    if (isSingleSection && sectionRow) {
+      const isOpen = openReview[sectionRow.key]
+      return (
+        <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: '48px 24px', overflowY: 'auto' }}>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>{sectionRow.label} Practice Complete</div>
+          <div style={{ fontSize: '42px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>{sectionRow.band.toFixed(1)} / {SECTION_BAND_MAX[sectionRow.key]}</div>
+          <div style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '20px' }}>Estimated {sectionRow.label} band · {sectionRow.detail}</div>
+          <div style={{ width: '100%', maxWidth: '640px', marginBottom: '20px' }}>
+            {sectionRow.key === 'writing' ? (
+              <WritingScoreBreakdown basResult={basResult} emailResult={emailResult} discResult={discResult} reviewEntries={s.review.writing} />
+            ) : (
+              <>
+                <button onClick={() => setOpenReview(prev => ({ ...prev, [sectionRow.key]: !prev[sectionRow.key] }))}
+                  style={{ width: '100%', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', padding: '12px 18px', fontSize: '13px', fontWeight: '700', color: '#1a1a1a', cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span>Review your answers</span><span>{isOpen ? '▲' : '▼'}</span>
+                </button>
+                {isOpen && <MockReviewList reviewEntries={s.review[sectionRow.key]} />}
+              </>
+            )}
+          </div>
+          <div style={{ fontSize: '11px', color: '#9ca3af', maxWidth: '480px', textAlign: 'center', marginBottom: '20px', lineHeight: '1.6' }}>
+            Band scores are estimates based on your raw performance — ETS does not publish its exact scoring formula, so treat this as a practice signal, not a guaranteed test-day result.
+          </div>
+          <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
+        </div>
+      )
+    }
+
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: '48px 24px', overflowY: 'auto' }}>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Full Mock Test Complete</div>
+        <div style={{ fontSize: '42px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>{overall.toFixed(1)} / 6</div>
+        <div style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '28px' }}>Estimated overall band (average of 4 sections)</div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '14px', width: '100%', maxWidth: '560px', marginBottom: '20px' }}>
+          {rows.map(r => (
+            <div key={r.label} style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
+              <div style={{ fontSize: '12px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', marginBottom: '6px' }}>{r.label}</div>
+              <div style={{ fontSize: '26px', fontWeight: '800', color: '#1a1a1a' }}>{r.band.toFixed(1)} <span style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '600' }}>/ {SECTION_BAND_MAX[r.key]}</span></div>
+              <div style={{ fontSize: '12px', color: '#616473', marginTop: '4px', marginBottom: '10px' }}>{r.detail}</div>
+              {r.key === 'writing' ? (
+                <WritingScoreBreakdown basResult={basResult} emailResult={emailResult} discResult={discResult} reviewEntries={s.review.writing} />
+              ) : (
+                <>
+                  <button onClick={() => setOpenReview(prev => ({ ...prev, [r.key]: !prev[r.key] }))}
+                    style={{ width: '100%', background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '7px 10px', fontSize: '11px', fontWeight: '700', color: '#616473', cursor: 'pointer' }}>
+                    Review answers {openReview[r.key] ? '▲' : '▼'}
+                  </button>
+                  {openReview[r.key] && <MockReviewList reviewEntries={s.review[r.key]} />}
+                </>
+              )}
+            </div>
+          ))}
+        </div>
+        <div style={{ fontSize: '11px', color: '#9ca3af', maxWidth: '480px', textAlign: 'center', marginBottom: '20px', lineHeight: '1.6' }}>
+          Band scores are estimates based on your raw performance — ETS does not publish its exact scoring formula, so treat this as a practice signal, not a guaranteed test-day result.
+        </div>
+        <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
+      </div>
+    )
+  }
+
+  // phase === 'running'
+  const slot = queue[idx]
+  if (!slot) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: '#616473' }}>Loading next section…</div>
+
+  // A small floating badge (bottom-left, out of the way of every module's own header/controls)
+  // shows overall mock-test progress without interfering with each exercise's own fixed-position layout.
+  const progressBadge = (
+    <div style={{ position: 'fixed', bottom: '14px', left: '14px', zIndex: 50, background: '#11162d', color: '#fff', padding: '6px 14px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', letterSpacing: '0.3px', boxShadow: '0 2px 10px rgba(0,0,0,0.25)' }}>
+      {MOCK_STAGE_LABELS[stage]} · {idx + 1}/{queue.length}
+    </div>
+  )
+  const wrap = (child) => <>{child}{progressBadge}</>
+
+  // For Reading modules, number questions across the WHOLE module (not per exercise/passage) —
+  // matches the official TOEFL iBT UI (e.g. "Questions 4-9 of 20").
+  const isReadingStage = stage === 'reading-m1' || stage === 'reading-m2'
+  const isListeningStage = stage === 'listening-m1' || stage === 'listening-m2'
+  const moduleTotal = (isReadingStage || isListeningStage) ? queue.reduce((a, s) => a + slotQuestionCount(s), 0) : undefined
+  const moduleOffset = (isReadingStage || isListeningStage) ? queue.slice(0, idx).reduce((a, s) => a + slotQuestionCount(s), 0) : undefined
+  // Consume the one-shot "enter at last question" flag set by goPrev — only applies to the
+  // render immediately after navigating back, and only for the slot it was set for.
+  const shouldEnterAtEnd = isReadingStage && enterAtEndRef.current === idx
+  if (shouldEnterAtEnd) enterAtEndRef.current = null
+  const prevSlotHandler = isReadingStage && idx > 0 ? goPrev : undefined
+  // "Finish" should only ever appear on the button that actually ends the module (moves on to
+  // the next module/section) — every other Next/Submit press within the module, even the last
+  // question of a given passage/exercise, should read "Next" since more slots follow. Applies to
+  // both Reading and Listening modules.
+  const isLastSlotInModule = (isReadingStage || isListeningStage) && idx === queue.length - 1
+
+  if (slot.kind === 'ctw') return wrap(<CTWSingle key={idx} exercise={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(c, t, detail) => handleReadingListening(slot, c, t, detail)} poolTime={readingPoolLeft === null ? undefined : readingPoolLeft} moduleOffset={moduleOffset} moduleTotal={moduleTotal} onPrevSlot={prevSlotHandler} isLastSlot={isLastSlotInModule} initialAnswers={getSlotAnswers(stage, idx)} onAnswersChange={(val) => setSlotAnswers(stage, idx, val)} />)
+  if (slot.kind === 'ridl') return wrap(<RIDLQuestion key={idx} passage={slot.data} practiceNum={idx + 1} totalPractices={queue.length} onBack={exitMockTest} onFinish={goNext} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} poolTime={readingPoolLeft === null ? undefined : readingPoolLeft} moduleOffset={moduleOffset} moduleTotal={moduleTotal} onPrevSlot={prevSlotHandler} enterAtEnd={shouldEnterAtEnd} isLastSlot={isLastSlotInModule} initialAnswers={getSlotAnswers(stage, idx)} onAnswersChange={(val) => setSlotAnswers(stage, idx, val)} />)
+  if (slot.kind === 'ap') return wrap(<APQuestion key={idx} passage={slot.data} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} poolTime={readingPoolLeft === null ? undefined : readingPoolLeft} moduleOffset={moduleOffset} moduleTotal={moduleTotal} onPrevSlot={prevSlotHandler} enterAtEnd={shouldEnterAtEnd} isLastSlot={isLastSlotInModule} initialAnswers={getSlotAnswers(stage, idx)} onAnswersChange={(val) => setSlotAnswers(stage, idx, val)} />)
+  if (slot.kind === 'car') return wrap(<ListeningP1Exercise key={idx} exercise={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} />)
+  if (slot.kind === 'conv') return wrap(<ListeningP2Exercise key={idx} conversation={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} />)
+  if (slot.kind === 'announce') return wrap(<ListeningP3Exercise key={idx} announcement={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} />)
+  if (slot.kind === 'at') return wrap(<ListeningP4Exercise key={idx} talk={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} />)
+  if (slot.kind === 'bas') return wrap(<BuildSentenceExercise key={idx} items={slot.data} onBack={exitMockTest} mockMode onComplete={(c, t, detail) => handleWriting(slot, { correct: c, total: t }, detail)} />)
+  if (slot.kind === 'email') return wrap(<EmailExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(score, detail) => handleWriting(slot, { score }, detail)} />)
+  if (slot.kind === 'disc') return wrap(<AcademicDiscussionExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(score, detail) => handleWriting(slot, { score }, detail)} />)
+  if (slot.kind === 'lr') return wrap(<ListenRepeatExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(answers, detail) => handleSpeaking(slot, answers, detail)} />)
+  if (slot.kind === 'interview') return wrap(<InterviewExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(answers, detail) => handleSpeaking(slot, answers, detail)} />)
+  return null
+}
+
+// ─── My Progress ────────────────────────────────────────────────────────────
+// Reads back everything saveResult() has ever written (every practice exercise + every mock
+// test section), so the student can see how they're improving over time in one place.
+const PROGRESS_CATEGORY_META = {
+  ctw: { section: 'Reading', label: 'Complete the Words' },
+  ridl: { section: 'Reading', label: 'Read in Daily Life' },
+  ap: { section: 'Reading', label: 'Academic Passage' },
+  listening_p1: { section: 'Listening', label: 'Choose a Response' },
+  listening_p2: { section: 'Listening', label: 'Listen to a Conversation' },
+  listening_p3: { section: 'Listening', label: 'Listen to an Announcement' },
+  listening_p4: { section: 'Listening', label: 'Listen to an Academic Talk' },
+  bas: { section: 'Writing', label: 'Build a Sentence' },
+  email: { section: 'Writing', label: 'Write an Email' },
+  disc: { section: 'Writing', label: 'Academic Discussion' },
+  speaking_lr: { section: 'Speaking', label: 'Listen and Repeat' },
+  speaking_interview: { section: 'Speaking', label: 'Take an Interview' },
+  mock_reading: { section: 'Mock Tests', label: 'Reading' },
+  mock_listening: { section: 'Mock Tests', label: 'Listening' },
+  mock_writing: { section: 'Mock Tests', label: 'Writing' },
+  mock_speaking: { section: 'Mock Tests', label: 'Speaking' },
+  mock_overall: { section: 'Mock Tests', label: 'Overall Band' },
+}
+const PROGRESS_SECTION_ORDER = ['Reading', 'Listening', 'Writing', 'Speaking', 'Mock Tests']
+const PROGRESS_SECTION_COLORS = { Reading: '#701fa1', Listening: '#2ac56c', Writing: '#e07b00', Speaking: '#2f6fed', 'Mock Tests': '#d94040' }
+
+function ProgressScreen({ onBack }) {
+  const [summary, setSummary] = useState(null)
+  const [history, setHistory] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/results/summary`).then(r => r.json()),
+      apiFetch(`${BACKEND_URL}/api/results/history?limit=30`).then(r => r.json()),
+    ]).then(([summaryData, historyData]) => {
+      setSummary(summaryData)
+      setHistory(Array.isArray(historyData) ? historyData : [])
+      setLoading(false)
+    }).catch(() => setLoading(false))
+  }, [])
+
+  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading your progress...</div>
+
+  const byCategory = summary?.by_category || {}
+  const overall = summary?.overall || { attempts: 0, avg_pct: 0, last_attempt: null }
+
+  const fmtDate = (iso) => {
+    if (!iso) return '—'
+    const d = new Date(iso.replace(' ', 'T') + 'Z')
+    if (isNaN(d.getTime())) return '—'
+    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+  }
+
+  if (!overall.attempts) {
+    return (
+      <div style={{ padding: '48px 24px', textAlign: 'center' }}>
+        <div style={{ fontSize: '40px', marginBottom: '12px' }}>📈</div>
+        <h2 style={{ margin: '0 0 8px', color: '#1a1a1a', fontSize: '20px' }}>No activity yet</h2>
+        <p style={{ color: '#616473', fontSize: '14px', maxWidth: '420px', margin: '0 auto 20px' }}>Complete a practice exercise or a mock test and your results will start showing up here.</p>
+        <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
+      </div>
+    )
+  }
+
+  // Group each category's stats under its section (Reading/Listening/Writing/Speaking/Mock
+  // Tests), computing an attempts-weighted average percentage for the section as a whole.
+  const sections = {}
+  Object.entries(byCategory).forEach(([cat, data]) => {
+    const meta = PROGRESS_CATEGORY_META[cat] || { section: 'Other', label: data.label || cat }
+    if (!sections[meta.section]) sections[meta.section] = { attempts: 0, weightedPct: 0, items: [] }
+    sections[meta.section].attempts += data.attempts
+    sections[meta.section].weightedPct += data.avg_pct * data.attempts
+    sections[meta.section].items.push({ cat, label: meta.label, ...data })
+  })
+
+  return (
+    <div style={{ padding: '0 8px 40px' }}>
+      <div style={{ marginBottom: '22px' }}>
+        <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>My Progress</h1>
+        <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Every exercise and mock test you've completed, all in one place.</div>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '28px' }}>
+        <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
+          <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Total Attempts</div>
+          <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginTop: '4px' }}>{overall.attempts}</div>
+        </div>
+        <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
+          <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Average Score</div>
+          <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginTop: '4px' }}>{overall.avg_pct}%</div>
+        </div>
+        <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
+          <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Last Activity</div>
+          <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginTop: '4px' }}>{fmtDate(overall.last_attempt)}</div>
+        </div>
+      </div>
+
+      {PROGRESS_SECTION_ORDER.filter(s => sections[s]).map(secName => {
+        const sec = sections[secName]
+        const avgPct = sec.attempts ? Math.round(sec.weightedPct / sec.attempts) : 0
+        const color = PROGRESS_SECTION_COLORS[secName] || '#701fa1'
+        return (
+          <div key={secName} style={{ marginBottom: '22px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
+              <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>{secName}</div>
+              <div style={{ fontSize: '13px', color, fontWeight: '700' }}>{avgPct}% avg · {sec.attempts} attempt{sec.attempts === 1 ? '' : 's'}</div>
+            </div>
+            <div style={{ background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', overflow: 'hidden' }}>
+              {sec.items.sort((a, b) => a.label.localeCompare(b.label)).map((it, i) => (
+                <div key={it.cat} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '13px 18px', borderTop: i === 0 ? 'none' : '0.5px solid #f0f0f0' }}>
+                  <div>
+                    <div style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a' }}>{it.label}</div>
+                    <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>{it.attempts} attempt{it.attempts === 1 ? '' : 's'} · best {it.best_pct}% · last {fmtDate(it.last_attempt)}</div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{ width: '90px', height: '6px', background: '#efefef', borderRadius: '4px' }}>
+                      <div style={{ width: `${it.avg_pct}%`, height: '100%', background: color, borderRadius: '4px' }} />
+                    </div>
+                    <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', width: '38px', textAlign: 'right' }}>{it.avg_pct}%</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )
+      })}
+
+      <div style={{ marginTop: '10px' }}>
+        <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '10px' }}>Recent Activity</div>
+        <div style={{ background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', overflow: 'hidden' }}>
+          {history.slice(0, 20).map((h, i) => (
+            <div key={h.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 18px', borderTop: i === 0 ? 'none' : '0.5px solid #f0f0f0' }}>
+              <div>
+                <div style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a' }}>{h.label || (PROGRESS_CATEGORY_META[h.category]?.label ?? h.category)}</div>
+                <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>{fmtDate(h.saved_at)}</div>
+              </div>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: h.pct >= 70 ? '#2ac56c' : h.pct >= 50 ? '#e07b00' : '#d94040' }}>{h.score}/{h.total} · {h.pct}%</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <button onClick={onBack} style={{ marginTop: '24px', background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back to Dashboard</button>
+    </div>
+  )
+}
+
+// ─── Auth: login / sign up screen ────────────────────────────────────────────
+// Set at build time once Google Cloud OAuth credentials exist (VITE_GOOGLE_CLIENT_ID). Until
+// then the "Sign in with Google" button simply doesn't render, rather than showing a broken one.
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
+
+function AuthScreen({ onAuthSuccess }) {
+  const [mode, setMode] = useState('login') // 'login' | 'signup'
+  const [email, setEmail] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const inputStyle = { padding: '11px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }
+  const labelStyle = { fontWeight: '600', color: '#616473', fontSize: '12px' }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setError('')
+    if (mode === 'signup') {
+      if (!username.trim()) { setError('Please enter a username.'); return }
+      if (password.length < 8) { setError('Password must be at least 8 characters.'); return }
+      if (password !== confirmPassword) { setError('Passwords do not match.'); return }
+    }
+    setLoading(true)
+    const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register'
+    const body = mode === 'login' ? { email, password } : { email, username, password }
+    fetch(`${BACKEND_URL}${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }).then(async res => {
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.detail || 'Something went wrong. Please try again.')
+      return data
+    }).then(data => {
+      setAuthToken(data.access_token)
+      onAuthSuccess(data.user)
+    }).catch(err => setError(err.message)).finally(() => setLoading(false))
+  }
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#11162d', boxSizing: 'border-box', padding: '20px' }}>
+      <div style={{ width: '100%', maxWidth: '380px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '22px' }}>
+          <div style={{ color: '#b67bfb', fontSize: '24px', fontWeight: '700' }}>mrreadyprep</div>
+          <div style={{ fontSize: '10px', color: '#7b809a', letterSpacing: '1.5px', marginTop: '2px' }}>TOEFL IBT PREP</div>
+        </div>
+
+        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '26px', boxSizing: 'border-box' }}>
+          <div style={{ display: 'flex', borderRadius: '9px', backgroundColor: '#f4f6fa', padding: '3px', marginBottom: '20px' }}>
+            {['login', 'signup'].map(m => (
+              <button key={m} type="button" onClick={() => { setMode(m); setError('') }}
+                style={{ flex: 1, padding: '9px', borderRadius: '7px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '700', backgroundColor: mode === m ? '#701fa1' : 'transparent', color: mode === m ? '#fff' : '#616473' }}>
+                {m === 'login' ? 'Log In' : 'Sign Up'}
+              </button>
+            ))}
+          </div>
+
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
+            {mode === 'signup' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <label style={labelStyle}>Username</label>
+                <input type="text" value={username} onChange={e => setUsername(e.target.value)} style={inputStyle} required />
+              </div>
+            )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={labelStyle}>Email</label>
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} required />
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+              <label style={labelStyle}>Password</label>
+              <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} required minLength={mode === 'signup' ? 8 : undefined} />
+            </div>
+            {mode === 'signup' && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <label style={labelStyle}>Confirm Password</label>
+                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} style={inputStyle} required />
+              </div>
+            )}
+
+            {error && <div style={{ background: '#fef2f2', color: '#dc2626', fontSize: '12px', fontWeight: '600', padding: '9px 11px', borderRadius: '7px' }}>{error}</div>}
+
+            <button type="submit" disabled={loading} style={{ backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '12px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1, marginTop: '4px' }}>
+              {loading ? 'Please wait…' : mode === 'login' ? 'Log In' : 'Create Account'}
+            </button>
+          </form>
+
+          {GOOGLE_CLIENT_ID && (
+            <>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '18px 0' }}>
+                <div style={{ flex: 1, height: '1px', background: '#e1e4ed' }} />
+                <span style={{ fontSize: '11px', color: '#9ca3af', fontWeight: '600' }}>OR</span>
+                <div style={{ flex: 1, height: '1px', background: '#e1e4ed' }} />
+              </div>
+              <div id="google-signin-button" style={{ display: 'flex', justifyContent: 'center' }} />
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ─── App ──────────────────────────────────────────────────────────────────────
 function App() {
+  // Browsers (Safari in particular) block audio.play() unless it happens inside a genuine
+  // user gesture. Listening/Speaking audio auto-plays a moment after the screen renders
+  // (AUDIO_START_DELAY_MS), which is not itself a gesture, so the very first attempt can be
+  // silently blocked. The fix used by most audio-heavy web apps: play (and immediately pause)
+  // a tiny silent clip on the very first click/keypress anywhere in the app. That one
+  // gesture-backed play() unlocks audio playback for the rest of the page session, so every
+  // later autoplay call — even ones fired from a timer with no direct click behind them —
+  // is allowed to go through with no manual "Play" button ever needed.
+  useEffect(() => {
+    const unlock = () => {
+      try {
+        const a = new Audio('data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=')
+        const p = a.play()
+        if (p && p.catch) p.catch(() => {})
+      } catch (e) {}
+    }
+    document.addEventListener('pointerdown', unlock, true)
+    document.addEventListener('keydown', unlock, true)
+    return () => {
+      document.removeEventListener('pointerdown', unlock, true)
+      document.removeEventListener('keydown', unlock, true)
+    }
+  }, [])
+
   const [userData, setUserData] = useState(null)
   const [currentTab, setCurrentTab] = useState('dashboard')
   const [profileName, setProfileName] = useState('')
@@ -673,7 +5908,10 @@ function App() {
   const [vocabFilter, setVocabFilter] = useState('all')
   const [flippedCards, setFlippedCards] = useState({})
   const [expandedFormat, setExpandedFormat] = useState(false)
-  const [readingSubTab, setReadingSubTab] = useState(null)  // null | 'ctw' | 'ridl'
+  const [readingSubTab, setReadingSubTab] = useState(null)
+  const [listeningSubTab, setListeningSubTab] = useState(null)
+  const [writingSubTab, setWritingSubTab] = useState(null)
+  const [speakingSubTab, setSpeakingSubTab] = useState(null)
 
   const getExamDaysLeft = () => {
     if (!examDate) return null
@@ -685,82 +5923,66 @@ function App() {
 
   const generateGoals = (daysLeft, data) => {
     const sections = [
-      { name: 'Reading practice',   gap: 5.5 - data.reading_score },
+      { name: 'Reading practice', gap: 5.5 - data.reading_score },
       { name: 'Listening practice', gap: 5.0 - data.listening_score },
-      { name: 'Writing practice',   gap: 5.0 - data.writing_score },
-      { name: 'Speaking practice',  gap: 5.0 - data.speaking_score },
+      { name: 'Writing practice', gap: 4.5 - data.writing_score },
+      { name: 'Speaking practice', gap: 4.5 - data.speaking_score },
     ].filter(s => s.gap > 0).sort((a, b) => b.gap - a.gap)
-    const goals = []
-    const today = new Date().getDate()
+    const goals = []; const today = new Date().getDate()
     sections.forEach((s, i) => {
-      if (daysLeft > 60) {
-        goals.push(`Practice ${s.name} (gap: ${s.gap.toFixed(1)})`)
-      } else if (daysLeft > 30) {
-        goals.push(s.gap >= 1.0 ? `Do 2 ${s.name} sessions — urgent` : `Do 1 ${s.name} session`)
-      } else if (daysLeft > 14) {
-        if (s.gap >= 0.5) goals.push(`Full ${s.name} mock test`)
-      } else {
-        if (s.gap >= 1.0) {
-          goals.push(`${s.name}: full focus session — biggest gap (${s.gap.toFixed(1)})`)
-        } else if (s.gap >= 0.5 && i === today % sections.length) {
-          goals.push(`${s.name}: quick review — exam soon`)
-        }
-      }
+      if (daysLeft > 60) goals.push(`Practice ${s.name} (gap: ${s.gap.toFixed(1)})`)
+      else if (daysLeft > 30) goals.push(s.gap >= 1.0 ? `Do 2 ${s.name} sessions — urgent` : `Do 1 ${s.name} session`)
+      else if (daysLeft > 14) { if (s.gap >= 0.5) goals.push(`Full ${s.name} mock test`) }
+      else { if (s.gap >= 1.0) goals.push(`${s.name}: full focus session — biggest gap (${s.gap.toFixed(1)})`); else if (s.gap >= 0.5 && i === today % sections.length) goals.push(`${s.name}: quick review — exam soon`) }
     })
     if (daysLeft <= 60) goals.push('Review 10 vocabulary words')
     if (daysLeft <= 30) goals.push('Take a full timed practice test')
-    if (daysLeft <= 1)  goals.push('Rest, review notes, sleep early')
+    if (daysLeft <= 1) goals.push('Rest, review notes, sleep early')
     return goals.slice(0, 5)
   }
 
   const fetchVocabData = () => {
-    fetch('https://mrreadyprep.onrender.com/api/vocab')
-      .then(res => res.json())
-      .then(data => setVocabWords(data))
-      .catch(err => console.error(err))
+    apiFetch(`${BACKEND_URL}/api/vocab`).then(res => res.json()).then(data => setVocabWords(data)).catch(err => console.error(err))
   }
 
   const toggleLearned = (id) => {
-    fetch('https://mrreadyprep.onrender.com/api/vocab/toggle/' + id, { method: 'POST' })
-      .then(res => res.json())
-      .then(() => {
-        setVocabWords(prev => prev.map(item =>
-          item.id === id ? { ...item, learned: !item.learned } : item
-        ))
-        fetchDashboardData()
-      })
-      .catch(err => console.error(err))
+    apiFetch(`${BACKEND_URL}/api/vocab/toggle/${id}`, { method: 'POST' })
+      .then(res => res.json()).then(() => { setVocabWords(prev => prev.map(item => item.id === id ? { ...item, learned: !item.learned } : item)); fetchDashboardData() }).catch(err => console.error(err))
   }
 
   const fetchDashboardData = () => {
-    fetch('https://mrreadyprep.onrender.com/api/dashboard')
-      .then(res => res.json())
-      .then(data => { setUserData(data); setProfileName(data.username); setTargetScore(data.target_score) })
-      .catch(err => console.error(err))
+    apiFetch(`${BACKEND_URL}/api/dashboard`).then(res => res.json())
+      .then(data => { setUserData(data); setProfileName(data.username); setTargetScore(data.target_score); setExamDate(data.exam_date || '') }).catch(err => console.error(err))
   }
 
   useEffect(() => { fetchDashboardData(); fetchVocabData() }, [])
 
   const handleProfileSave = (e) => {
     e.preventDefault()
-    fetch('https://mrreadyprep.onrender.com/api/profile/update', {
+    apiFetch(`${BACKEND_URL}/api/profile/update`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username: profileName, target_score: Number(targetScore) }),
-    }).then(res => res.json()).then(data => { if (data.status === "success") { alert("Saved!"); fetchDashboardData() } })
+    }).then(res => res.json()).then(data => { if (data.status === 'success') { alert('Saved!'); fetchDashboardData() } })
   }
 
-  if (!userData) return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}>
-      <h2>Loading mrreadyprep...</h2>
-    </div>
-  )
+  // Saved immediately on change (no separate "save" button) so the exam date sticks across
+  // reloads and the student can update it again anytime just by picking a new date.
+  const handleExamDateChange = (newDate) => {
+    setExamDate(newDate)
+    apiFetch(`${BACKEND_URL}/api/profile/exam-date`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ exam_date: newDate }),
+    }).catch(err => console.error(err))
+  }
+
+  if (!userData) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}><h2>Loading mrreadyprep...</h2></div>
 
   const examDaysLeft = getExamDaysLeft()
-  const streakDays = [true, true, true, true, true, false, false]
+  const streakDays = userData.week_activity || [false, false, false, false, false, false, false]
   const dayLabels = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
   const sb = (tab, icon, label) => (
-    <button onClick={() => { setCurrentTab(tab); setReadingSubTab(null) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <button onClick={() => { setCurrentTab(tab); setReadingSubTab(null); setListeningSubTab(null) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
       {icon} {label}
     </button>
   )
@@ -777,19 +5999,24 @@ function App() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
             {sb('dashboard', '📊', 'Dashboard')}
-            {sb('reading',   '📖', 'Reading')}
+            {sb('reading', '📖', 'Reading')}
             {sb('listening', '🎧', 'Listening')}
-            {sb('writing',   '✍️', 'Writing')}
-            {sb('speaking',  '🎙️', 'Speaking')}
-            {sb('vocab',     '📚', 'Vocabulary')}
+            {sb('writing', '✍️', 'Writing')}
+            {sb('speaking', '🎙️', 'Speaking')}
+            {sb('mocktest', '🧪', 'Full Mock Test')}
+            {sb('progress', '📈', 'My Progress')}
+            {sb('vocab', '📚', 'Vocabulary')}
           </div>
         </div>
-        <div onClick={() => setCurrentTab('settings')} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px', borderTop: '1px solid #252a44' }}>
-          <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px' }}>M</div>
-          <div>
-            <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff' }}>mehmetdisbudak</div>
-            <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', borderTop: '1px solid #252a44', paddingTop: '4px' }}>
+          <div onClick={() => setCurrentTab('settings')} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
+            <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px', flexShrink: 0 }}>{(userData.username || '?').charAt(0).toUpperCase()}</div>
+            <div style={{ minWidth: 0, overflow: 'hidden' }}>
+              <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userData.username}</div>
+              <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
+            </div>
           </div>
+          <button onClick={logout} title="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
         </div>
       </div>
 
@@ -798,21 +6025,32 @@ function App() {
 
         {currentTab !== 'dashboard' && (
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
-            <span
-              onClick={() => {
-                if (readingSubTab) { setReadingSubTab(null) }
-                else { setCurrentTab('dashboard') }
-              }}
-              style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>
-              ← Back
-            </span>
+            <span onClick={() => {
+              if (readingSubTab) setReadingSubTab(null)
+              else if (listeningSubTab) setListeningSubTab(null)
+              else if (writingSubTab) setWritingSubTab(null)
+              else if (speakingSubTab) setSpeakingSubTab(null)
+              else setCurrentTab('dashboard')
+            }} style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
             <h2 style={{ margin: '0 0 0 14px', fontSize: '18px', fontWeight: '700' }}>
               {currentTab === 'reading' && !readingSubTab && '📖 Reading Practice'}
               {currentTab === 'reading' && readingSubTab === 'ctw' && '📖 Complete the Words'}
               {currentTab === 'reading' && readingSubTab === 'ridl' && '📖 Read in Daily Life'}
-              {currentTab === 'listening' && '🎧 Listening Practice'}
-              {currentTab === 'writing' && '✍️ Writing Practice'}
-              {currentTab === 'speaking' && '🎙️ Speaking Practice'}
+              {currentTab === 'reading' && readingSubTab === 'academic' && '📖 Academic Passage'}
+              {currentTab === 'listening' && !listeningSubTab && '🎧 Listening Practice'}
+              {currentTab === 'listening' && listeningSubTab === 'p1' && '🎧 Choose a Response'}
+              {currentTab === 'listening' && listeningSubTab === 'p2' && '🎧 Listen to a Conversation'}
+              {currentTab === 'listening' && listeningSubTab === 'p3' && '🎧 Listen to an Announcement'}
+              {currentTab === 'listening' && listeningSubTab === 'p4' && '🎧 Listen to an Academic Talk'}
+              {currentTab === 'writing' && !writingSubTab && '✍️ Writing Practice'}
+              {currentTab === 'writing' && writingSubTab === 'p1' && '✍️ Build a Sentence'}
+              {currentTab === 'writing' && writingSubTab === 'p2' && '✍️ Write an Email'}
+              {currentTab === 'writing' && writingSubTab === 'p3' && '✍️ Academic Discussion'}
+              {currentTab === 'speaking' && !speakingSubTab && '🎙️ Speaking Practice'}
+              {currentTab === 'speaking' && speakingSubTab === 'p1' && '🎙️ Listen and Repeat'}
+              {currentTab === 'speaking' && speakingSubTab === 'p2' && '🎙️ Take an Interview'}
+              {currentTab === 'mocktest' && '🧪 Full Mock Test'}
+              {currentTab === 'progress' && '📈 My Progress'}
               {currentTab === 'vocab' && '📚 Vocabulary'}
               {currentTab === 'settings' && '⚙️ Settings'}
             </h2>
@@ -822,10 +6060,7 @@ function App() {
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
           <>
-            {/* ÜST BANT: Streak + Mock Test */}
             <div style={{ display: 'flex', gap: '12px', flexShrink: 0 }}>
-
-              {/* Streak */}
               <div style={{ background: '#11162d', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '16px', flex: 1 }}>
                 <div style={{ fontSize: '26px' }}>🔥</div>
                 <div>
@@ -843,34 +6078,28 @@ function App() {
                   ))}
                 </div>
               </div>
-
-              {/* Mock Test */}
               <div style={{ background: '#701fa1', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', minWidth: '240px', flexShrink: 0 }}>
                 <div>
                   <div style={{ fontSize: '10px', color: '#d4a0f5', marginBottom: '2px' }}>Full mock test</div>
                   <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff' }}>All 4 sections · ~90 min</div>
                   <div style={{ fontSize: '10px', color: '#c084fc', marginTop: '3px' }}>Last taken: 3 days ago</div>
                 </div>
-                <button onClick={() => alert('Mock test başlatılıyor!')} style={{ marginLeft: 'auto', background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Start test</button>
+                <button onClick={() => setCurrentTab('mocktest')} style={{ marginLeft: 'auto', background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Start test</button>
               </div>
             </div>
 
-            {/* ALT: Scores + Sağ Kolon */}
             <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: 'hidden' }}>
-
-              {/* Sol: Scores */}
               <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
                 <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '14px' }}>Section scores vs targets</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
                   {[
-                    { name: 'Reading practice',   current: userData.reading_score,   target: 5.5 },
-                    { name: 'Listening practice', current: userData.listening_score, target: 5.0 },
-                    { name: 'Writing practice',   current: userData.writing_score,   target: 5.0 },
-                    { name: 'Speaking practice',  current: userData.speaking_score,  target: 5.0 },
+                    { name: 'Reading practice', key: 'reading', current: userData.reading_score, target: 5.5 },
+                    { name: 'Listening practice', key: 'listening', current: userData.listening_score, target: 5.0 },
+                    { name: 'Writing practice', key: 'writing', current: userData.writing_score, target: 4.5 },
+                    { name: 'Speaking practice', key: 'speaking', current: userData.speaking_score, target: 4.5 },
                   ].map(s => {
-                    const curPct = Math.round((s.current / 6) * 100)
-                    const tgtPct = Math.round((s.target / 6) * 100)
-                    const gap = s.target - s.current
+                    const max = SECTION_BAND_MAX[s.key]
+                    const curPct = Math.round((s.current / max) * 100); const tgtPct = Math.round((s.target / max) * 100); const gap = s.target - s.current
                     return (
                       <div key={s.name}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '5px' }}>
@@ -890,20 +6119,14 @@ function App() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
                 </div>
 
-                {/* TOEFL 2026 Format Card */}
-                <div onClick={() => setExpandedFormat(!expandedFormat)} style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '16px', cursor: 'pointer', transition: 'all 0.3s ease' }}>
+                <div onClick={() => setExpandedFormat(!expandedFormat)} style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '16px', cursor: 'pointer' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                     <div style={{ fontSize: '13px', fontWeight: '700' }}>📋 TOEFL 2026 Format</div>
                     <span style={{ fontSize: '11px', color: '#701fa1', fontWeight: '600' }}>{expandedFormat ? '▲ Less' : '▼ Details'}</span>
                   </div>
                   {!expandedFormat ? (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {[
-                        { label: 'Reading', color: '#2563eb' },
-                        { label: 'Listening', color: '#16a34a' },
-                        { label: 'Writing', color: '#ea580c' },
-                        { label: 'Speaking', color: '#9333ea' },
-                      ].map(item => (
+                      {[{ label: 'Reading', color: '#2563eb' }, { label: 'Listening', color: '#16a34a' }, { label: 'Writing', color: '#ea580c' }, { label: 'Speaking', color: '#9333ea' }].map(item => (
                         <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '8px', paddingBottom: '8px', borderBottom: '0.5px solid #f0f2f5' }}>
                           <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
                           <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
@@ -924,45 +6147,31 @@ function App() {
                             <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
                           </div>
                           <div style={{ marginLeft: '8px', fontSize: '11px', color: '#616473', display: 'flex', flexDirection: 'column', gap: '3px' }}>
-                            {item.tasks.map(task => (
-                              <div key={task}>· {task}</div>
-                            ))}
+                            {item.tasks.map(task => <div key={task}>· {task}</div>)}
                           </div>
                         </div>
                       ))}
                     </div>
                   )}
-                  <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '0.5px solid #e1e4ed', fontSize: '11px', fontWeight: '600', color: '#616473', textAlign: 'center' }}>
-                    Score: 1–6 (bands of 0.5)
-                  </div>
+                  <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '0.5px solid #e1e4ed', fontSize: '11px', fontWeight: '600', color: '#616473', textAlign: 'center' }}>Reading/Listening: 1–6 · Writing/Speaking: 1–5 (bands of 0.5)</div>
                 </div>
 
-                {/* Motivasyon */}
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '12px' }}>
                   <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}>🎯 Keep Going</div>
                   <div style={{ fontSize: '12px', lineHeight: '1.6', color: '#616473' }}>
-                    {examDaysLeft === null
-                      ? "Set your exam date and start your journey. Every day of practice counts!"
-                      : examDaysLeft > 30
-                      ? `You have ${examDaysLeft} days ahead — build strong habits now. Consistency beats cramming every time.`
-                      : examDaysLeft > 14
-                      ? `${examDaysLeft} days to go — you're in the final stretch. Focus on your weakest section daily.`
-                      : examDaysLeft > 7
-                      ? `Only ${examDaysLeft} days left — go full intensity. Mock tests every day from here.`
-                      : examDaysLeft > 1
-                      ? `${examDaysLeft} days to exam day — review your notes, rest well, and trust your preparation.`
-                      : "Tomorrow is the day — you've put in the work. Stay calm, sleep early, and believe in yourself. 💪"}
+                    {examDaysLeft === null ? "Set your exam date and start your journey. Every day of practice counts!"
+                      : examDaysLeft > 30 ? `You have ${examDaysLeft} days ahead — build strong habits now.`
+                      : examDaysLeft > 14 ? `${examDaysLeft} days to go — focus on your weakest section daily.`
+                      : examDaysLeft > 7 ? `Only ${examDaysLeft} days left — go full intensity.`
+                      : examDaysLeft > 1 ? `${examDaysLeft} days to exam day — rest well and trust your preparation.`
+                      : "Tomorrow is the day — stay calm, sleep early, and believe in yourself. 💪"}
                   </div>
                 </div>
 
-                {/* Günlük TOEFL Stratejisi */}
                 <div style={{ background: 'linear-gradient(135deg, #701fa1 0%, #2563eb 100%)', borderRadius: '12px', padding: '16px', marginTop: '16px' }}>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                    💡 Today's Strategy
-                  </div>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>💡 Today's Strategy</div>
                   <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff', lineHeight: '1.5' }}>
-                    {[
-                      "In Reading, look for transition words (however, therefore, moreover) — they signal the author's main point.",
+                    {["In Reading, look for transition words (however, therefore, moreover) — they signal the author's main point.",
                       "For Listening, focus on the first and last sentences of each speaker's turn — key info is usually there.",
                       "In Speaking Task 1, spend 15 seconds planning, then speak clearly for 45 seconds without stopping.",
                       "For Writing, always start with a clear thesis in your first sentence — graders look for it immediately.",
@@ -974,10 +6183,7 @@ function App() {
                 </div>
               </div>
 
-              {/* Sağ Kolon */}
               <div style={{ width: '260px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '10px', boxSizing: 'border-box' }}>
-
-                {/* Exam date */}
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flexShrink: 0 }}>
                   <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Exam date</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -986,22 +6192,24 @@ function App() {
                       <div style={{ fontSize: '8px', color: '#7b809a' }}>days left</div>
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
-                      <div style={{ fontSize: '11px', fontWeight: '500', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}
-                      </div>
-                      <input type="date" value={examDate} onChange={e => setExamDate(e.target.value)} style={{ marginTop: '4px', fontSize: '10px', padding: '2px 5px', borderRadius: '5px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d', width: '100%', boxSizing: 'border-box' }} />
+                      <div style={{ fontSize: '11px', fontWeight: '500', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}</div>
+                      <input type="date" value={examDate} onChange={e => handleExamDateChange(e.target.value)} style={{ marginTop: '4px', fontSize: '10px', padding: '2px 5px', borderRadius: '5px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                   </div>
                 </div>
 
-                {/* Score cards 2x2 */}
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   {[
-                    { name: 'Reading',   score: userData.reading_score,   note: '+0.5 this week', color: '#2ac56c' },
-                    { name: 'Listening', score: userData.listening_score, note: '+0.5 this week', color: '#2ac56c' },
-                    { name: 'Writing',   score: userData.writing_score,   note: 'No change',      color: '#999' },
-                    { name: 'Speaking',  score: userData.speaking_score,  note: 'Needs focus',    color: '#e85555' },
-                  ].map(item => (
+                    { name: 'Reading', score: userData.reading_score, target: 5.5 },
+                    { name: 'Listening', score: userData.listening_score, target: 5.0 },
+                    { name: 'Writing', score: userData.writing_score, target: 4.5 },
+                    { name: 'Speaking', score: userData.speaking_score, target: 4.5 },
+                  ].map(raw => {
+                    const gap = raw.target - raw.score
+                    const note = gap <= 0 ? 'On target' : `${gap.toFixed(1)} to target`
+                    const color = gap <= 0 ? '#2ac56c' : gap >= 1 ? '#e85555' : '#e07b00'
+                    return { ...raw, note, color }
+                  }).map(item => (
                     <div key={item.name} style={{ background: '#fff', borderRadius: '10px', padding: '10px 12px', border: '0.5px solid #e1e4ed' }}>
                       <div style={{ fontSize: '10px', color: '#616473', marginBottom: '3px' }}>{item.name}</div>
                       <div style={{ fontSize: '18px', fontWeight: '600' }}>{item.score}</div>
@@ -1010,20 +6218,16 @@ function App() {
                   ))}
                 </div>
 
-                {/* Goals */}
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flex: 1 }}>
                   <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Today's goals</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                    {examDaysLeft === null ? (
-                      <div style={{ fontSize: '11px', color: '#999' }}>Select an exam date to generate your daily goals.</div>
-                    ) : generateGoals(examDaysLeft, userData).map((g, i) => (
-                      <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '11px', color: '#444' }}>
-                        <span style={{ color: '#701fa1', flexShrink: 0 }}>○</span> {g}
-                      </div>
-                    ))}
+                    {examDaysLeft === null
+                      ? <div style={{ fontSize: '11px', color: '#999' }}>Select an exam date to generate your daily goals.</div>
+                      : generateGoals(examDaysLeft, userData).map((g, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '11px', color: '#444' }}><span style={{ color: '#701fa1', flexShrink: 0 }}>○</span> {g}</div>
+                      ))}
                   </div>
                 </div>
-
               </div>
             </div>
           </>
@@ -1033,235 +6237,138 @@ function App() {
         {currentTab === 'reading' && !readingSubTab && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
-              {
-                key: 'ctw',
-                title: 'Part 1: Complete the Words',
-                desc: 'Read academic passages and type the missing letters to complete key vocabulary words.',
-                count: '50 questions · 5 categories',
-                color: '#701fa1',
-              },
-              {
-                key: 'ridl',
-                title: 'Part 2: Read in Daily Life',
-                desc: 'Read emails, messages, signs, schedules, and articles. Answer comprehension questions.',
-                count: '48 passages · 124 questions',
-                color: '#701fa1',
-              },
-              {
-                key: null,
-                title: 'Part 3: Academic Passage',
-                desc: 'Read scientific or historical essays and answer comprehension queries.',
-                count: 'Coming soon',
-                color: '#9ca3af',
-              },
+              { key: 'ctw', title: 'Part 1: Complete the Words', desc: 'Read academic passages and type the missing letters to complete key vocabulary words.', count: '150 questions · 5 categories' },
+              { key: 'ridl', title: 'Part 2: Read in Daily Life', desc: 'Read emails, messages, signs, schedules, and articles. Answer comprehension questions.', count: '150 passages · 387 questions' },
+              { key: 'academic', title: 'Part 3: Academic Passage', desc: 'Read scientific or historical essays and answer comprehension questions.', count: '150 passages · 750 questions' },
             ].map((p, i) => (
               <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ maxWidth: '70%' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                    <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  </div>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
                   <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
-                  <span style={{ fontSize: '11px', color: p.key ? '#701fa1' : '#9ca3af', fontWeight: '600' }}>{p.count}</span>
+                  <span style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600' }}>{p.count}</span>
                 </div>
-                <button
-                  onClick={() => p.key && setReadingSubTab(p.key)}
-                  style={{
-                    backgroundColor: p.key ? '#701fa1' : '#e5e7eb',
-                    color: p.key ? '#fff' : '#9ca3af',
-                    border: 'none',
-                    padding: '10px 18px',
-                    borderRadius: '8px',
-                    fontWeight: '700',
-                    cursor: p.key ? 'pointer' : 'not-allowed',
-                    fontSize: '13px',
-                    flexShrink: 0,
-                  }}>
-                  {p.key ? 'Open Module' : 'Coming Soon'}
+                <button onClick={() => setReadingSubTab(p.key)} style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
+              </div>
+            ))}
+          </div>
+        )}
+        {currentTab === 'reading' && readingSubTab === 'ctw' && <CompleteTheWords onBack={() => setReadingSubTab(null)} />}
+        {currentTab === 'reading' && readingSubTab === 'ridl' && <ReadInDailyLife onBack={() => setReadingSubTab(null)} />}
+        {currentTab === 'reading' && readingSubTab === 'academic' && <AcademicPassage onBack={() => setReadingSubTab(null)} />}
+
+        {/* LISTENING */}
+        {currentTab === 'listening' && !listeningSubTab && <ListeningHome onSelect={setListeningSubTab} onBack={() => setCurrentTab('dashboard')} />}
+        {currentTab === 'listening' && listeningSubTab === 'p1' && <ListeningP1 onBack={() => setListeningSubTab(null)} />}
+        {currentTab === 'listening' && listeningSubTab === 'p2' && <ListeningP2 onBack={() => setListeningSubTab(null)} />}
+        {currentTab === 'listening' && listeningSubTab === 'p3' && <ListeningP3 onBack={() => setListeningSubTab(null)} />}
+        {currentTab === 'listening' && listeningSubTab === 'p4' && <ListeningP4 onBack={() => setListeningSubTab(null)} />}
+
+        {/* WRITING */}
+        {currentTab === 'writing' && !writingSubTab && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+            {[
+              { key: 'p1', title: 'Part 1: Build a Sentence', desc: 'Drag word chunks into the correct order to form a grammatical sentence or question.', count: '100 practice items · 10 per set', ready: true },
+              { key: 'p2', title: 'Part 2: Write an Email', desc: 'Draft formal requests or academic inquiries with contextual formatting.', count: '100 practice emails · 7:00 each', ready: true },
+              { key: 'p3', title: 'Part 3: Academic Discussion', desc: 'Contribute opinions and critical analysis to an interactive lecture forum.', count: '100 practice posts · 10:00 each', ready: true },
+            ].map((p, i) => (
+              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ maxWidth: '70%' }}>
+                  <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
+                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                  <span style={{ fontSize: '11px', color: p.ready ? '#2ac56c' : '#9ca3af', fontWeight: '600' }}>{p.count}</span>
+                </div>
+                <button onClick={() => p.ready && setWritingSubTab(p.key)} style={{ backgroundColor: p.ready ? '#2ac56c' : '#e5e7eb', color: p.ready ? '#fff' : '#9ca3af', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: p.ready ? 'pointer' : 'not-allowed', fontSize: '13px', flexShrink: 0 }}>
+                  {p.ready ? 'Open Module' : 'Coming Soon'}
                 </button>
               </div>
             ))}
           </div>
         )}
-
-        {/* READING → Complete the Words */}
-        {currentTab === 'reading' && readingSubTab === 'ctw' && (
-          <CompleteTheWords onBack={() => setReadingSubTab(null)} />
-        )}
-
-        {/* READING → Read in Daily Life */}
-        {currentTab === 'reading' && readingSubTab === 'ridl' && (
-          <ReadInDailyLife onBack={() => setReadingSubTab(null)} />
-        )}
-
-        {/* LISTENING */}
-        {currentTab === 'listening' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {["Part 1: Choose a Response", "Part 2: Conversation", "Part 3: Announcement", "Part 4: Academic Talk"].map((title, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <h4 style={{ margin: 0, fontSize: '14px', fontWeight: '700' }}>{title}</h4>
-                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {/* WRITING */}
-        {currentTab === 'writing' && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {[
-              { title: 'Part 1: Build a Sentence', desc: 'Assemble and restructure diverse academic clause structures.' },
-              { title: 'Part 2: Write an Email', desc: 'Draft formal requests or academic inquiries with contextual formatting.' },
-              { title: 'Part 3: Academic Discussion', desc: 'Contribute opinions and critical analysis to an interactive lecture forum.' }
-            ].map((p, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ maxWidth: '70%' }}>
-                  <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
-                </div>
-                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
-              </div>
-            ))}
-          </div>
-        )}
+        {currentTab === 'writing' && writingSubTab === 'p1' && <BuildASentence onBack={() => setWritingSubTab(null)} />}
+        {currentTab === 'writing' && writingSubTab === 'p2' && <WriteEmail onBack={() => setWritingSubTab(null)} />}
+        {currentTab === 'writing' && writingSubTab === 'p3' && <AcademicDiscussion onBack={() => setWritingSubTab(null)} />}
 
         {/* SPEAKING */}
-        {currentTab === 'speaking' && (
+        {currentTab === 'speaking' && !speakingSubTab && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
-              { title: 'Part 1: Listen and Repeat', desc: 'Sharpen intonation and vocal stress through audio response capture.' },
-              { title: 'Part 2: Take an Interview', desc: 'Deliver clear multi-turn answers facing real-time audio inquiry scenarios.' }
+              { key: 'p1', title: 'Part 1: Listen and Repeat', desc: 'Sharpen intonation and vocal stress through audio response capture.', count: '100 practice sets · 7 sentences each', ready: true },
+              { key: 'p2', title: 'Part 2: Take an Interview', desc: 'Deliver clear multi-turn answers facing real-time audio inquiry scenarios.', count: '100 practice sets · 4 questions each', ready: true },
             ].map((p, i) => (
               <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div style={{ maxWidth: '70%' }}>
                   <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                  <span style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600' }}>{p.count}</span>
                 </div>
-                <button style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
+                <button onClick={() => setSpeakingSubTab(p.key)} style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
               </div>
             ))}
           </div>
         )}
+        {currentTab === 'speaking' && speakingSubTab === 'p1' && <ListenRepeat onBack={() => setSpeakingSubTab(null)} />}
+        {currentTab === 'speaking' && speakingSubTab === 'p2' && <TakeInterview onBack={() => setSpeakingSubTab(null)} />}
+
+        {/* FULL MOCK TEST */}
+        {currentTab === 'mocktest' && <FullMockTest onBack={() => setCurrentTab('dashboard')} />}
+
+        {currentTab === 'progress' && <ProgressScreen onBack={() => setCurrentTab('dashboard')} />}
 
         {/* VOCABULARY */}
-        {currentTab === 'vocab' && vocabWords.length === 0 && (
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }}>
-            <p style={{ color: '#616473', fontSize: '13px' }}>Loading vocabulary...</p>
-          </div>
-        )}
+        {currentTab === 'vocab' && vocabWords.length === 0 && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }}><p style={{ color: '#616473', fontSize: '13px' }}>Loading vocabulary...</p></div>}
         {currentTab === 'vocab' && vocabWords.length > 0 && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-
-            {/* Progress bar */}
             <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px' }}>
                 <span style={{ fontWeight: '600' }}>Progress</span>
-                <span style={{ color: '#616473' }}>
-                  {vocabWords.filter(w => w.learned).length} / {vocabWords.length} learned
-                </span>
+                <span style={{ color: '#616473' }}>{vocabWords.filter(w => w.learned).length} / {vocabWords.length} learned</span>
               </div>
               <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px' }}>
-                <div style={{
-                  width: (vocabWords.filter(w => w.learned).length / vocabWords.length * 100) + '%',
-                  height: '100%', background: '#2ac56c', borderRadius: '4px', transition: 'width 0.3s ease'
-                }} />
+                <div style={{ width: (vocabWords.filter(w => w.learned).length / vocabWords.length * 100) + '%', height: '100%', background: '#2ac56c', borderRadius: '4px', transition: 'width 0.3s ease' }} />
               </div>
             </div>
-
-            {/* Filter buttons */}
             <div style={{ display: 'flex', gap: '8px' }}>
               {['all', 'learned', 'unlearned'].map(f => (
-                <button key={f} onClick={() => setVocabFilter(f)} style={{
-                  padding: '7px 14px', borderRadius: '8px', border: '1px solid #d1d5db',
-                  backgroundColor: vocabFilter === f ? '#701fa1' : '#fff',
-                  color: vocabFilter === f ? '#fff' : '#616473',
-                  fontSize: '12px', fontWeight: '600', cursor: 'pointer'
-                }}>
+                <button key={f} onClick={() => setVocabFilter(f)} style={{ padding: '7px 14px', borderRadius: '8px', border: '1px solid #d1d5db', backgroundColor: vocabFilter === f ? '#701fa1' : '#fff', color: vocabFilter === f ? '#fff' : '#616473', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}>
                   {f === 'all' ? 'All' : f === 'learned' ? 'Learned' : 'Not Learned'}
                 </button>
               ))}
             </div>
-
-            {vocabWords
-              .filter(item => vocabFilter === 'all' ? true : vocabFilter === 'learned' ? item.learned : !item.learned)
-              .map(item => {
-                const vibrantColors = ['#701fa1', '#2563eb', '#dc2626', '#16a34a', '#ea580c', '#0891b2', '#c026d3', '#ca8a04'];
-                const wordColor = vibrantColors[item.id % vibrantColors.length];
-                const difficultyStyles = {
-                  easy: { bg: '#dcfce7', text: '#15803d' },
-                  medium: { bg: '#dbeafe', text: '#1e40af' },
-                  hard: { bg: '#fce7f3', text: '#9d174d' }
-                };
-                const difficultyBorderColors = {
-                  easy: '#16a34a',
-                  medium: '#2563eb',
-                  hard: '#dc2626'
-                };
-                const borderColor = difficultyBorderColors[item.difficulty] || difficultyBorderColors.medium;
-                const diffStyle = difficultyStyles[item.difficulty] || difficultyStyles.medium;
-                const isFlipped = !!flippedCards[item.id];
-
-                return (
-                  <div key={item.id} onClick={() => setFlippedCards(prev => ({ ...prev, [item.id]: !prev[item.id] }))} style={{
-                    backgroundColor: isFlipped ? diffStyle.bg : '#fff',
-                    border: '0.5px solid #e1e4ed',
-                    borderLeft: '4px solid ' + borderColor,
-                    borderRadius: '12px',
-                    padding: '18px',
-                    minHeight: '140px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-between',
-                    cursor: 'pointer',
-                    opacity: item.learned ? 0.6 : 1,
-                    position: 'relative',
-                    transition: 'background-color 0.2s ease'
-                  }}>
-                  <div style={{
-                    position: 'absolute',
-                    top: '14px',
-                    right: '14px',
-                    backgroundColor: '#fff',
-                    color: borderColor,
-                    padding: '4px 10px',
-                    borderRadius: '999px',
-                    fontSize: '10px',
-                    fontWeight: '700',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.4px'
-                  }}>
-                    {item.difficulty?.toUpperCase()}
-                  </div>
-
-                    {!isFlipped ? (
-                      <div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                          <span style={{ width: '10px', height: '10px', background: wordColor, borderRadius: '4px', display: 'inline-block' }} />
-                          <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
-                        </div>
-                        <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
-                        <div style={{ fontSize: '13px', color: '#616473' }}>Tap to reveal meaning</div>
+            {vocabWords.filter(item => vocabFilter === 'all' ? true : vocabFilter === 'learned' ? item.learned : !item.learned).map(item => {
+              const vibrantColors = ['#701fa1', '#2563eb', '#dc2626', '#16a34a', '#ea580c', '#0891b2', '#c026d3', '#ca8a04']
+              const wordColor = vibrantColors[item.id % vibrantColors.length]
+              const difficultyStyles = { easy: { bg: '#dcfce7', text: '#15803d' }, medium: { bg: '#dbeafe', text: '#1e40af' }, hard: { bg: '#fce7f3', text: '#9d174d' } }
+              const difficultyBorderColors = { easy: '#16a34a', medium: '#2563eb', hard: '#dc2626' }
+              const borderColor = difficultyBorderColors[item.difficulty] || difficultyBorderColors.medium
+              const diffStyle = difficultyStyles[item.difficulty] || difficultyStyles.medium
+              const isFlipped = !!flippedCards[item.id]
+              return (
+                <div key={item.id} onClick={() => setFlippedCards(prev => ({ ...prev, [item.id]: !prev[item.id] }))}
+                  style={{ backgroundColor: isFlipped ? diffStyle.bg : '#fff', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + borderColor, borderRadius: '12px', padding: '18px', minHeight: '140px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', opacity: item.learned ? 0.6 : 1, position: 'relative', transition: 'background-color 0.2s ease' }}>
+                  <div style={{ position: 'absolute', top: '14px', right: '14px', backgroundColor: '#fff', color: borderColor, padding: '4px 10px', borderRadius: '999px', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>{item.difficulty?.toUpperCase()}</div>
+                  {!isFlipped ? (
+                    <div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                        <span style={{ width: '10px', height: '10px', background: wordColor, borderRadius: '4px', display: 'inline-block' }} />
+                        <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
                       </div>
-                    ) : (
-                      <div>
-                        <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
-                        <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
-                        {item.example && <p style={{ marginTop: '8px', fontSize: '12px', color: '#7b809a' }}>&quot;{item.example}&quot;</p>}
-                      </div>
-                    )}
-
-                    <button onClick={(e) => { e.stopPropagation(); toggleLearned(item.id); }} style={{
-                      backgroundColor: item.learned ? '#2ac56c' : '#fff',
-                      color: item.learned ? '#fff' : '#11162d',
-                      border: '1px solid ' + (item.learned ? '#2ac56c' : '#d1d5db'),
-                      padding: '6px 10px', borderRadius: '8px', fontWeight: '700',
-                      cursor: 'pointer', fontSize: '11px', marginTop: '10px', alignSelf: 'flex-start'
-                    }}>
-                      {item.learned ? '✅ Learned' : 'Mark as Learned'}
-                    </button>
-
-                  </div>
-                )
-              })}
+                      <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
+                      <div style={{ fontSize: '13px', color: '#616473' }}>Tap to reveal meaning</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
+                      <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
+                      {item.example && <p style={{ marginTop: '8px', fontSize: '12px', color: '#7b809a' }}>&quot;{item.example}&quot;</p>}
+                    </div>
+                  )}
+                  <button onClick={(e) => { e.stopPropagation(); toggleLearned(item.id) }}
+                    style={{ backgroundColor: item.learned ? '#2ac56c' : '#fff', color: item.learned ? '#fff' : '#11162d', border: '1px solid ' + (item.learned ? '#2ac56c' : '#d1d5db'), padding: '6px 10px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '11px', marginTop: '10px', alignSelf: 'flex-start' }}>
+                    {item.learned ? '✅ Learned' : 'Mark as Learned'}
+                  </button>
+                </div>
+              )
+            })}
           </div>
         )}
 
@@ -1286,6 +6393,10 @@ function App() {
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🔒 Account Security</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Email</label>
+                  <input type="text" value={userData.email || ''} readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Current Password</label>
                   <input type="password" value="••••••••" readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
                 </div>
@@ -1298,6 +6409,7 @@ function App() {
                   <input type="password" placeholder="Confirm new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <button style={{ backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
+                <button onClick={logout} style={{ backgroundColor: '#fff', color: '#dc2626', border: '1px solid #fecaca', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Log Out</button>
               </div>
             </div>
           </div>
@@ -1308,4 +6420,68 @@ function App() {
   )
 }
 
-export default App
+// Catches any uncaught render-time error anywhere in the tree (e.g. a stray undefined access
+// deep in one of the exam components) and shows a recoverable screen instead of a blank white
+// page — which is what React does by default when an error escapes with no boundary in place.
+class ExamErrorBoundary extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { hasError: false }
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true }
+  }
+  componentDidCatch(error, info) {
+    // eslint-disable-next-line no-console
+    console.error('Uncaught error in exam UI:', error, info)
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', zIndex: 999, padding: '24px', textAlign: 'center' }}>
+          <div style={{ fontSize: '44px', marginBottom: '12px' }}>⚠️</div>
+          <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Something went wrong</div>
+          <div style={{ fontSize: '13px', color: '#616473', marginBottom: '20px', maxWidth: '420px' }}>
+            This screen hit an unexpected error. Your progress up to this point wasn't lost — reload to pick back up from the dashboard.
+          </div>
+          <button onClick={() => window.location.reload()} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Reload</button>
+        </div>
+      )
+    }
+    return this.props.children
+  }
+}
+
+// Gates the whole app behind login. On mount, if a token is already saved, it's verified against
+// /api/auth/me (so a stale/expired token drops the student back to the login screen instead of
+// showing a broken app); otherwise the login/signup screen renders immediately.
+function AuthGate() {
+  const [authState, setAuthState] = useState('checking') // 'checking' | 'out' | 'in'
+
+  useEffect(() => {
+    const token = getAuthToken()
+    if (!token) { setAuthState('out'); return }
+    apiFetch(`${BACKEND_URL}/api/auth/me`)
+      .then(res => { if (!res.ok) throw new Error(); return res.json() })
+      .then(() => setAuthState('in'))
+      .catch(() => { clearAuthToken(); setAuthState('out') })
+  }, [])
+
+  if (authState === 'checking') {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />
+  }
+  if (authState === 'out') {
+    return <AuthScreen onAuthSuccess={() => setAuthState('in')} />
+  }
+  return <App />
+}
+
+function AppWithErrorBoundary() {
+  return (
+    <ExamErrorBoundary>
+      <AuthGate />
+    </ExamErrorBoundary>
+  )
+}
+
+export default AppWithErrorBoundary

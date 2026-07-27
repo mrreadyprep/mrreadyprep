@@ -1,0 +1,3563 @@
+[
+  {
+    "id": 1,
+    "promptGender": "female",
+    "prompt": "Do you know why the coffee machine in the break room is out of order?",
+    "responseGender": "male",
+    "responsePrefix": "Someone",
+    "correctChunks": [
+      "said",
+      "it",
+      "needs",
+      "a new water filter"
+    ],
+    "distractorChunks": [
+      "needed"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 2,
+    "promptGender": "male",
+    "prompt": "Did anyone turn in a black umbrella to the front desk?",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Did",
+      "someone",
+      "already",
+      "check",
+      "the lost and found box"
+    ],
+    "distractorChunks": [
+      "checked"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 3,
+    "promptGender": "female",
+    "prompt": "I still have three books from the library that are overdue.",
+    "responseGender": "male",
+    "responsePrefix": "You",
+    "correctChunks": [
+      "should",
+      "return",
+      "them",
+      "before",
+      "the fine",
+      "gets",
+      "any bigger"
+    ],
+    "distractorChunks": [
+      "get"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 4,
+    "promptGender": "male",
+    "prompt": "Can we move tomorrow's meeting to a different time?",
+    "responseGender": "female",
+    "responsePrefix": "Let me",
+    "correctChunks": [
+      "find out",
+      "whether",
+      "everyone",
+      "is",
+      "available",
+      "on Thursday instead"
+    ],
+    "distractorChunks": [
+      "are"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 5,
+    "promptGender": "female",
+    "prompt": "I heard your flight got delayed yesterday.",
+    "responseGender": "male",
+    "responsePrefix": "Yes,",
+    "correctChunks": [
+      "the airline",
+      "explained",
+      "why",
+      "the delay",
+      "happened",
+      "so late"
+    ],
+    "distractorChunks": [
+      "happens"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 6,
+    "promptGender": "male",
+    "prompt": "This recipe calls for an ingredient I don't have.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "What time",
+      "does",
+      "the nearest grocery store",
+      "actually",
+      "close"
+    ],
+    "distractorChunks": [
+      "closes"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 7,
+    "promptGender": "female",
+    "prompt": "I can't remember the password for our shared streaming account.",
+    "responseGender": "male",
+    "responsePrefix": "I'll",
+    "correctChunks": [
+      "check",
+      "whether",
+      "it's",
+      "saved",
+      "in my email"
+    ],
+    "distractorChunks": [
+      "save"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 8,
+    "promptGender": "male",
+    "prompt": "How is the group project going so far?",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "The new members",
+      "handled",
+      "the research section",
+      "surprisingly well"
+    ],
+    "distractorChunks": [
+      "handles"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 9,
+    "promptGender": "female",
+    "prompt": "I still don't understand the new lease renewal process.",
+    "responseGender": "male",
+    "responsePrefix": "I'll walk you through",
+    "correctChunks": [
+      "how",
+      "the online form",
+      "works",
+      "step by step"
+    ],
+    "distractorChunks": [
+      "work"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 10,
+    "promptGender": "male",
+    "prompt": "The yoga class on Saturday seems to be canceled.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Have",
+      "they",
+      "already",
+      "rescheduled",
+      "it",
+      "for another day"
+    ],
+    "distractorChunks": [
+      "reschedule"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 11,
+    "promptGender": "female",
+    "prompt": "I filed a claim after the car accident last week.",
+    "responseGender": "male",
+    "responsePrefix": "Let me know",
+    "correctChunks": [
+      "whether",
+      "the insurance company",
+      "responds",
+      "by Monday"
+    ],
+    "distractorChunks": [
+      "respond"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 12,
+    "promptGender": "male",
+    "prompt": "Did the study room get reserved for our group tonight?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "said",
+      "someone",
+      "will",
+      "confirm",
+      "the reservation",
+      "by five o'clock"
+    ],
+    "distractorChunks": [
+      "confirms"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 13,
+    "promptGender": "female",
+    "prompt": "I ordered food twenty minutes ago and it still hasn't arrived.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Can",
+      "you",
+      "go",
+      "check",
+      "whether",
+      "it's",
+      "outside"
+    ],
+    "distractorChunks": [
+      "checked"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 14,
+    "promptGender": "male",
+    "prompt": "What did the professor say about office hours this week?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "mentioned",
+      "that",
+      "office hours",
+      "might",
+      "be",
+      "moved online"
+    ],
+    "distractorChunks": [
+      "moves"
+    ],
+    "responseSuffix": " this week."
+  },
+  {
+    "id": 15,
+    "promptGender": "female",
+    "prompt": "The conference wifi wasn't working during the first session.",
+    "responseGender": "male",
+    "responsePrefix": "Yes,",
+    "correctChunks": [
+      "the staff",
+      "explained",
+      "why",
+      "the network",
+      "was",
+      "overloaded"
+    ],
+    "distractorChunks": [
+      "explains"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 16,
+    "promptGender": "male",
+    "prompt": "Do you know if hotel checkout got extended today?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "heard",
+      "it",
+      "must",
+      "be",
+      "requested",
+      "at the front desk"
+    ],
+    "distractorChunks": [
+      "request"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 17,
+    "promptGender": "female",
+    "prompt": "Why did the delivery company ask for your signature?",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "They",
+      "needed",
+      "to confirm",
+      "whether",
+      "I",
+      "was",
+      "the one",
+      "to receive"
+    ],
+    "distractorChunks": [
+      "confirmed"
+    ],
+    "responseSuffix": " the package."
+  },
+  {
+    "id": 18,
+    "promptGender": "male",
+    "prompt": "The volunteer schedule changed again this week.",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wonder",
+      "whether",
+      "the coordinator",
+      "has",
+      "updated",
+      "everyone's shift"
+    ],
+    "distractorChunks": [
+      "updates"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 19,
+    "promptGender": "female",
+    "prompt": "What did the technician say about fixing your phone?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "suggested",
+      "that",
+      "I",
+      "replace",
+      "the cracked screen"
+    ],
+    "distractorChunks": [
+      "replaced"
+    ],
+    "responseSuffix": " first."
+  },
+  {
+    "id": 20,
+    "promptGender": "male",
+    "prompt": "The museum's special exhibit seems confusing to navigate.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Let's",
+      "ask",
+      "the guide",
+      "how",
+      "the new layout",
+      "should",
+      "be explained"
+    ],
+    "distractorChunks": [
+      "explain"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 21,
+    "promptGender": "female",
+    "prompt": "Is the campus gym open before 7 a.m.?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "whether",
+      "the gym",
+      "was open before 7 a.m."
+    ],
+    "distractorChunks": [
+      "is"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 22,
+    "promptGender": "male",
+    "prompt": "Why was the project deadline moved up?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "was",
+      "curious",
+      "about",
+      "why",
+      "the deadline",
+      "had been moved up"
+    ],
+    "distractorChunks": [
+      "have been moved up"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 23,
+    "promptGender": "female",
+    "prompt": "Where did you put the conference room key?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "me",
+      "where",
+      "I",
+      "had put the conference room key"
+    ],
+    "distractorChunks": [
+      "has put the conference room key"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 24,
+    "promptGender": "male",
+    "prompt": "Can I bring a guest to the orientation?",
+    "responseGender": "female",
+    "responsePrefix": "Could you tell me",
+    "correctChunks": [
+      "whether",
+      "he",
+      "was allowed to bring a guest",
+      "to the orientation"
+    ],
+    "distractorChunks": [
+      "is allowed to bring a guest"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 25,
+    "promptGender": "female",
+    "prompt": "Has the new intern finished the report yet?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "would",
+      "love",
+      "to",
+      "know",
+      "whether",
+      "the intern",
+      "had finished the report yet"
+    ],
+    "distractorChunks": [
+      "has finished the report yet"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 26,
+    "promptGender": "male",
+    "prompt": "Why is the printer on the third floor always out of paper?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "do",
+      "not",
+      "understand",
+      "why",
+      "the printer on the third floor",
+      "is always out of paper"
+    ],
+    "distractorChunks": [
+      "are always out of paper"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 27,
+    "promptGender": "female",
+    "prompt": "Where did she park the car this morning?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "have",
+      "no",
+      "idea",
+      "where",
+      "she",
+      "parked the car this morning"
+    ],
+    "distractorChunks": [
+      "park the car this morning"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 28,
+    "promptGender": "male",
+    "prompt": "Would the landlord fix the heater before winter?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "did",
+      "not",
+      "think",
+      "the landlord",
+      "would fix the heater before winter"
+    ],
+    "distractorChunks": [
+      "will fix the heater before winter"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 29,
+    "promptGender": "female",
+    "prompt": "How much does the new software license cost?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "found",
+      "out",
+      "how",
+      "much",
+      "the new software license",
+      "cost"
+    ],
+    "distractorChunks": [
+      "costs"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 30,
+    "promptGender": "male",
+    "prompt": "Did the shuttle bus leave already?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "mentioned",
+      "that",
+      "the shuttle bus",
+      "had already left"
+    ],
+    "distractorChunks": [
+      "has already left"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 31,
+    "promptGender": "female",
+    "prompt": "I can't find my keys anywhere this morning.",
+    "responseGender": "male",
+    "responsePrefix": "Maybe",
+    "correctChunks": [
+      "they",
+      "fell",
+      "behind",
+      "the couch cushions",
+      "again"
+    ],
+    "distractorChunks": [
+      "fall"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 32,
+    "promptGender": "male",
+    "prompt": "The new intern seems really nervous about her first presentation.",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "think",
+      "she",
+      "just",
+      "needs",
+      "a little more practice"
+    ],
+    "distractorChunks": [
+      "need"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 33,
+    "promptGender": "female",
+    "prompt": "Our flight got moved up two hours.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Does",
+      "that",
+      "mean",
+      "we",
+      "have to",
+      "leave",
+      "earlier"
+    ],
+    "distractorChunks": [
+      "means"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 34,
+    "promptGender": "male",
+    "prompt": "I can't remember if I locked the front door.",
+    "responseGender": "female",
+    "responsePrefix": "You",
+    "correctChunks": [
+      "probably",
+      "should",
+      "go back",
+      "and check",
+      "it"
+    ],
+    "distractorChunks": [
+      "going"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 35,
+    "promptGender": "female",
+    "prompt": "The garden hasn't gotten any rain in weeks.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Do",
+      "you",
+      "think",
+      "the plants",
+      "are",
+      "getting",
+      "enough water"
+    ],
+    "distractorChunks": [
+      "is"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 36,
+    "promptGender": "male",
+    "prompt": "My computer keeps freezing whenever I open too many tabs.",
+    "responseGender": "female",
+    "responsePrefix": "Maybe",
+    "correctChunks": [
+      "it",
+      "needs",
+      "more memory",
+      "installed"
+    ],
+    "distractorChunks": [
+      "need"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 37,
+    "promptGender": "female",
+    "prompt": "I haven't heard from the moving company in days.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Have",
+      "you",
+      "tried",
+      "calling",
+      "them",
+      "directly"
+    ],
+    "distractorChunks": [
+      "call"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 38,
+    "promptGender": "male",
+    "prompt": "The neighbors are having construction done again this week.",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "hope",
+      "it",
+      "doesn't",
+      "last",
+      "as long",
+      "as last time"
+    ],
+    "distractorChunks": [
+      "don't"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 39,
+    "promptGender": "female",
+    "prompt": "Our team lost the client because of a scheduling mix-up.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Who",
+      "was",
+      "actually",
+      "responsible",
+      "for",
+      "the schedule"
+    ],
+    "distractorChunks": [
+      "were"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 40,
+    "promptGender": "male",
+    "prompt": "I think I left my charger at the coffee shop.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Did",
+      "you",
+      "already",
+      "check",
+      "the lost and found there"
+    ],
+    "distractorChunks": [
+      "checked"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 41,
+    "promptGender": "female",
+    "prompt": "The printer keeps jamming every time I try to print.",
+    "responseGender": "male",
+    "responsePrefix": "It",
+    "correctChunks": [
+      "probably",
+      "needs",
+      "a new toner cartridge"
+    ],
+    "distractorChunks": [
+      "need"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 42,
+    "promptGender": "male",
+    "prompt": "I'm worried the cake won't be ready in time for the party.",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "can",
+      "help",
+      "you",
+      "finish",
+      "it",
+      "this afternoon"
+    ],
+    "distractorChunks": [
+      "helped"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 43,
+    "promptGender": "female",
+    "prompt": "The train was delayed again this morning.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Does",
+      "that",
+      "happen",
+      "every",
+      "Monday"
+    ],
+    "distractorChunks": [
+      "happens"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 44,
+    "promptGender": "male",
+    "prompt": "My phone battery drains really fast lately.",
+    "responseGender": "female",
+    "responsePrefix": "You",
+    "correctChunks": [
+      "might",
+      "want",
+      "to",
+      "replace",
+      "the battery",
+      "soon"
+    ],
+    "distractorChunks": [
+      "replacing"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 45,
+    "promptGender": "female",
+    "prompt": "I forgot to water the office plants again this week.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Do",
+      "they",
+      "usually",
+      "survive",
+      "a few missed waterings"
+    ],
+    "distractorChunks": [
+      "does"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 46,
+    "promptGender": "male",
+    "prompt": "The landlord still hasn't fixed the leaky faucet.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Have",
+      "you",
+      "sent",
+      "him",
+      "a written request yet"
+    ],
+    "distractorChunks": [
+      "sending"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 47,
+    "promptGender": "female",
+    "prompt": "I think the milk in the fridge has gone bad.",
+    "responseGender": "male",
+    "responsePrefix": "It",
+    "correctChunks": [
+      "probably",
+      "needs",
+      "to be",
+      "thrown out"
+    ],
+    "distractorChunks": [
+      "need"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 48,
+    "promptGender": "male",
+    "prompt": "Our internet has been really slow all week.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Did",
+      "you",
+      "already",
+      "restart",
+      "the router"
+    ],
+    "distractorChunks": [
+      "restarted"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 49,
+    "promptGender": "female",
+    "prompt": "I can't decide which apartment to rent.",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "think",
+      "the one",
+      "near campus",
+      "makes",
+      "more sense"
+    ],
+    "distractorChunks": [
+      "make"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 50,
+    "promptGender": "male",
+    "prompt": "The professor never replied to my email about the extension.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Did",
+      "you",
+      "try",
+      "emailing",
+      "her",
+      "a second time"
+    ],
+    "distractorChunks": [
+      "emails"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 51,
+    "promptGender": "female",
+    "prompt": "My car started making a strange noise this morning.",
+    "responseGender": "male",
+    "responsePrefix": "You",
+    "correctChunks": [
+      "should",
+      "probably",
+      "get",
+      "it",
+      "checked",
+      "soon"
+    ],
+    "distractorChunks": [
+      "getting"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 52,
+    "promptGender": "male",
+    "prompt": "The bakery downstairs closes earlier than it used to.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Does",
+      "it",
+      "still",
+      "open",
+      "on Sundays"
+    ],
+    "distractorChunks": [
+      "opens"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 53,
+    "promptGender": "female",
+    "prompt": "I keep forgetting my umbrella when it rains.",
+    "responseGender": "male",
+    "responsePrefix": "Maybe",
+    "correctChunks": [
+      "you",
+      "should",
+      "just",
+      "leave",
+      "one",
+      "in your bag"
+    ],
+    "distractorChunks": [
+      "leaving"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 54,
+    "promptGender": "male",
+    "prompt": "The conference room was double-booked again this afternoon.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Who",
+      "actually",
+      "manages",
+      "the booking system"
+    ],
+    "distractorChunks": [
+      "manage"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 55,
+    "promptGender": "female",
+    "prompt": "I can't tell if this shirt is machine washable.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Does",
+      "the tag",
+      "say",
+      "anything",
+      "about",
+      "dry cleaning"
+    ],
+    "distractorChunks": [
+      "says"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 56,
+    "promptGender": "male",
+    "prompt": "The bookstore ran out of the textbook I need.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Have",
+      "you",
+      "checked",
+      "whether",
+      "the library",
+      "has a copy"
+    ],
+    "distractorChunks": [
+      "checking"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 57,
+    "promptGender": "female",
+    "prompt": "Our old couch finally fell apart yesterday.",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "guess",
+      "we",
+      "really",
+      "need",
+      "a new one",
+      "now"
+    ],
+    "distractorChunks": [
+      "needs"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 58,
+    "promptGender": "male",
+    "prompt": "I think I left the stove on when I left the house.",
+    "responseGender": "female",
+    "responsePrefix": "You",
+    "correctChunks": [
+      "should",
+      "probably",
+      "go back",
+      "and check",
+      "right away"
+    ],
+    "distractorChunks": [
+      "checking"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 59,
+    "promptGender": "female",
+    "prompt": "The gym added a bunch of new equipment this month.",
+    "responseGender": "male",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Does",
+      "it",
+      "still",
+      "get",
+      "crowded",
+      "in the evenings"
+    ],
+    "distractorChunks": [
+      "gets"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 60,
+    "promptGender": "male",
+    "prompt": "My package was supposed to arrive two days ago.",
+    "responseGender": "female",
+    "responsePrefix": "",
+    "correctChunks": [
+      "Did",
+      "you",
+      "already",
+      "track",
+      "the shipment",
+      "online"
+    ],
+    "distractorChunks": [
+      "tracked"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 61,
+    "promptGender": "female",
+    "prompt": "Did the library extend its hours for finals week?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the library",
+      "had extended its hours for finals week"
+    ],
+    "distractorChunks": [
+      "has extended its hours for finals week"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 62,
+    "promptGender": "male",
+    "prompt": "Where is the nearest ATM on campus?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "where",
+      "the nearest ATM",
+      "was"
+    ],
+    "distractorChunks": [
+      "is"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 63,
+    "promptGender": "female",
+    "prompt": "Why did the meeting get rescheduled?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "why",
+      "the meeting",
+      "had been rescheduled"
+    ],
+    "distractorChunks": [
+      "has been rescheduled"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 64,
+    "promptGender": "male",
+    "prompt": "Is the bookstore accepting returns this week?",
+    "responseGender": "female",
+    "responsePrefix": "Could you tell me",
+    "correctChunks": [
+      "whether",
+      "the bookstore",
+      "was accepting returns this week"
+    ],
+    "distractorChunks": [
+      "is accepting returns this week"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 65,
+    "promptGender": "female",
+    "prompt": "How long will the road construction last?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "was",
+      "curious",
+      "about",
+      "how",
+      "long",
+      "the construction",
+      "would last"
+    ],
+    "distractorChunks": [
+      "will last"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 66,
+    "promptGender": "male",
+    "prompt": "Have you submitted the reimbursement form yet?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "I",
+      "had submitted the reimbursement form yet"
+    ],
+    "distractorChunks": [
+      "have submitted the reimbursement form yet"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 67,
+    "promptGender": "female",
+    "prompt": "What time does the shuttle leave in the morning?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "what",
+      "time",
+      "the shuttle",
+      "left in the morning"
+    ],
+    "distractorChunks": [
+      "leaves in the morning"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 68,
+    "promptGender": "male",
+    "prompt": "Who is teaching the seminar next semester?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "am",
+      "not",
+      "sure",
+      "who",
+      "was teaching the seminar next semester"
+    ],
+    "distractorChunks": [
+      "is teaching the seminar next semester"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 69,
+    "promptGender": "female",
+    "prompt": "Can students park in lot B after 6 p.m.?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wondered",
+      "whether",
+      "students",
+      "were allowed to park in lot B after 6 p.m."
+    ],
+    "distractorChunks": [
+      "are allowed to park in lot B after 6 p.m."
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 70,
+    "promptGender": "male",
+    "prompt": "Why does the elevator keep making that noise?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "why",
+      "the elevator",
+      "kept making that noise"
+    ],
+    "distractorChunks": [
+      "keeps making that noise"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 71,
+    "promptGender": "female",
+    "prompt": "Did the professor post the grades already?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "whether",
+      "the professor",
+      "had posted the grades already"
+    ],
+    "distractorChunks": [
+      "has posted the grades already"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 72,
+    "promptGender": "male",
+    "prompt": "Where did the moving truck park this morning?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "where",
+      "the moving truck",
+      "had parked this morning"
+    ],
+    "distractorChunks": [
+      "has parked this morning"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 73,
+    "promptGender": "female",
+    "prompt": "Is the Wi-Fi down in the whole building?",
+    "responseGender": "male",
+    "responsePrefix": "Do you know",
+    "correctChunks": [
+      "whether",
+      "the Wi-Fi",
+      "was down in the whole building"
+    ],
+    "distractorChunks": [
+      "is down in the whole building"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 74,
+    "promptGender": "male",
+    "prompt": "How much does the parking permit cost this year?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "how",
+      "much",
+      "the parking permit",
+      "cost this year"
+    ],
+    "distractorChunks": [
+      "costs this year"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 75,
+    "promptGender": "female",
+    "prompt": "Will the concert be canceled if it rains?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wondered",
+      "whether",
+      "the concert",
+      "would be canceled if it rained"
+    ],
+    "distractorChunks": [
+      "will be canceled if it rains"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 76,
+    "promptGender": "male",
+    "prompt": "What did the manager say about the schedule change?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "what",
+      "the manager",
+      "had said about the schedule change"
+    ],
+    "distractorChunks": [
+      "has said about the schedule change"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 77,
+    "promptGender": "female",
+    "prompt": "Are the tickets still available for tonight's show?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "whether",
+      "the tickets",
+      "were still available for tonight's show"
+    ],
+    "distractorChunks": [
+      "are still available for tonight's show"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 78,
+    "promptGender": "male",
+    "prompt": "Why hasn't the package arrived yet?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "why",
+      "the package",
+      "had not arrived yet"
+    ],
+    "distractorChunks": [
+      "has not arrived yet"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 79,
+    "promptGender": "female",
+    "prompt": "Does the cafeteria serve breakfast on weekends?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the cafeteria",
+      "served breakfast on weekends"
+    ],
+    "distractorChunks": [
+      "serves breakfast on weekends"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 80,
+    "promptGender": "male",
+    "prompt": "When will the results be announced?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "when",
+      "the results",
+      "would be announced"
+    ],
+    "distractorChunks": [
+      "will be announced"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 81,
+    "promptGender": "female",
+    "prompt": "Is the printer on this floor working now?",
+    "responseGender": "male",
+    "responsePrefix": "Could you tell me",
+    "correctChunks": [
+      "whether",
+      "the printer",
+      "was working now"
+    ],
+    "distractorChunks": [
+      "is working now"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 82,
+    "promptGender": "male",
+    "prompt": "Who approved the budget for the new equipment?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "am",
+      "not",
+      "sure",
+      "who",
+      "had approved the budget for the new equipment"
+    ],
+    "distractorChunks": [
+      "has approved the budget for the new equipment"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 83,
+    "promptGender": "female",
+    "prompt": "Does this bus stop near the train station?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the bus",
+      "stopped near the train station"
+    ],
+    "distractorChunks": [
+      "stops near the train station"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 84,
+    "promptGender": "male",
+    "prompt": "Why was the flight delayed for two hours?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wondered",
+      "why",
+      "the flight",
+      "had been delayed for two hours"
+    ],
+    "distractorChunks": [
+      "has been delayed for two hours"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 85,
+    "promptGender": "female",
+    "prompt": "Has the landlord fixed the heating yet?",
+    "responseGender": "male",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the landlord",
+      "had fixed the heating yet"
+    ],
+    "distractorChunks": [
+      "has fixed the heating yet"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 86,
+    "promptGender": "male",
+    "prompt": "Where can I find last semester's syllabus?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "where",
+      "I",
+      "could find last semester's syllabus"
+    ],
+    "distractorChunks": [
+      "can find last semester's syllabus"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 87,
+    "promptGender": "female",
+    "prompt": "Is the museum free on the first Sunday of the month?",
+    "responseGender": "male",
+    "responsePrefix": "Do you know",
+    "correctChunks": [
+      "whether",
+      "the museum",
+      "was free on the first Sunday of the month"
+    ],
+    "distractorChunks": [
+      "is free on the first Sunday of the month"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 88,
+    "promptGender": "male",
+    "prompt": "How many people signed up for the workshop?",
+    "responseGender": "female",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "how",
+      "many",
+      "people",
+      "had signed up for the workshop"
+    ],
+    "distractorChunks": [
+      "have signed up for the workshop"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 89,
+    "promptGender": "female",
+    "prompt": "Will the store restock the item this week?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "whether",
+      "the store",
+      "would restock the item this week"
+    ],
+    "distractorChunks": [
+      "will restock the item this week"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 90,
+    "promptGender": "male",
+    "prompt": "What caused the fire alarm to go off?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "what",
+      "had caused the fire alarm to go off"
+    ],
+    "distractorChunks": [
+      "has caused the fire alarm to go off"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 91,
+    "promptGender": "female",
+    "prompt": "Are the dorms open during winter break?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the dorms",
+      "were open during winter break"
+    ],
+    "distractorChunks": [
+      "are open during winter break"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 92,
+    "promptGender": "male",
+    "prompt": "Why did the professor cancel office hours?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wondered",
+      "why",
+      "the professor",
+      "had canceled office hours"
+    ],
+    "distractorChunks": [
+      "has canceled office hours"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 93,
+    "promptGender": "female",
+    "prompt": "Does the gym require a reservation for the pool?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the gym",
+      "required a reservation for the pool"
+    ],
+    "distractorChunks": [
+      "requires a reservation for the pool"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 94,
+    "promptGender": "male",
+    "prompt": "When did the committee make its final decision?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "when",
+      "the committee",
+      "had made its final decision"
+    ],
+    "distractorChunks": [
+      "has made its final decision"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 95,
+    "promptGender": "female",
+    "prompt": "Is the internship program accepting applications now?",
+    "responseGender": "male",
+    "responsePrefix": "Could you tell me",
+    "correctChunks": [
+      "whether",
+      "the internship program",
+      "was accepting applications now"
+    ],
+    "distractorChunks": [
+      "is accepting applications now"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 96,
+    "promptGender": "male",
+    "prompt": "Who left this umbrella in the classroom?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "am",
+      "not",
+      "sure",
+      "who",
+      "had left the umbrella in the classroom"
+    ],
+    "distractorChunks": [
+      "has left the umbrella in the classroom"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 97,
+    "promptGender": "female",
+    "prompt": "Does the clinic accept walk-in patients on Fridays?",
+    "responseGender": "male",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the clinic",
+      "accepted walk-in patients on Fridays"
+    ],
+    "distractorChunks": [
+      "accepts walk-in patients on Fridays"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 98,
+    "promptGender": "male",
+    "prompt": "Why is the elevator out of service today?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "why",
+      "the elevator",
+      "was out of service today"
+    ],
+    "distractorChunks": [
+      "is out of service today"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 99,
+    "promptGender": "female",
+    "prompt": "Has the committee reviewed our proposal yet?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the committee",
+      "had reviewed our proposal yet"
+    ],
+    "distractorChunks": [
+      "has reviewed our proposal yet"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 100,
+    "promptGender": "male",
+    "prompt": "Where will the graduation ceremony be held this year?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "where",
+      "the graduation ceremony",
+      "would be held this year"
+    ],
+    "distractorChunks": [
+      "will be held this year"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 101,
+    "promptGender": "female",
+    "prompt": "Is the software update mandatory for all employees?",
+    "responseGender": "male",
+    "responsePrefix": "Do you know",
+    "correctChunks": [
+      "whether",
+      "the software update",
+      "was mandatory for all employees"
+    ],
+    "distractorChunks": [
+      "is mandatory for all employees"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 102,
+    "promptGender": "male",
+    "prompt": "How often does the newsletter get sent out?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "how",
+      "often",
+      "the newsletter",
+      "got sent out"
+    ],
+    "distractorChunks": [
+      "gets sent out"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 103,
+    "promptGender": "female",
+    "prompt": "Will the new policy apply to current students?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "wondered",
+      "whether",
+      "the new policy",
+      "would apply to current students"
+    ],
+    "distractorChunks": [
+      "will apply to current students"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 104,
+    "promptGender": "male",
+    "prompt": "What made the traffic so bad this morning?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "what",
+      "had made the traffic so bad this morning"
+    ],
+    "distractorChunks": [
+      "has made the traffic so bad this morning"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 105,
+    "promptGender": "female",
+    "prompt": "Are the seminar recordings available online?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "whether",
+      "the seminar recordings",
+      "were available online"
+    ],
+    "distractorChunks": [
+      "are available online"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 106,
+    "promptGender": "male",
+    "prompt": "Why did the vending machine reject my card?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "why",
+      "the vending machine",
+      "had rejected her card"
+    ],
+    "distractorChunks": [
+      "has rejected her card"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 107,
+    "promptGender": "female",
+    "prompt": "Does the library charge a fine for late returns?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the library",
+      "charged a fine for late returns"
+    ],
+    "distractorChunks": [
+      "charges a fine for late returns"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 108,
+    "promptGender": "male",
+    "prompt": "When does registration close for the workshop?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "when",
+      "registration",
+      "closed for the workshop"
+    ],
+    "distractorChunks": [
+      "closes for the workshop"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "id": 109,
+    "promptGender": "female",
+    "prompt": "Is the rooftop terrace open to all residents?",
+    "responseGender": "male",
+    "responsePrefix": "Could you tell me",
+    "correctChunks": [
+      "whether",
+      "the rooftop terrace",
+      "was open to all residents"
+    ],
+    "distractorChunks": [
+      "is open to all residents"
+    ],
+    "responseSuffix": "?"
+  },
+  {
+    "id": 110,
+    "promptGender": "male",
+    "prompt": "Who scheduled the maintenance for this weekend?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "am",
+      "not",
+      "sure",
+      "who",
+      "had scheduled the maintenance for this weekend"
+    ],
+    "distractorChunks": [
+      "has scheduled the maintenance for this weekend"
+    ],
+    "responseSuffix": "."
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Is the shuttle bus running today?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the shuttle bus",
+      "was running today"
+    ],
+    "distractorChunks": [
+      "is running today"
+    ],
+    "responseSuffix": ".",
+    "id": 111
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Did the landlord approve the lease renewal?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "whether",
+      "the landlord",
+      "had approved the lease renewal"
+    ],
+    "distractorChunks": [
+      "has approved the lease renewal"
+    ],
+    "responseSuffix": ".",
+    "id": 112
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Will the store restock these shoes next week?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "was",
+      "not",
+      "sure",
+      "whether",
+      "the store",
+      "would restock these shoes next week"
+    ],
+    "distractorChunks": [
+      "will restock these shoes next week"
+    ],
+    "responseSuffix": ".",
+    "id": 113
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Can the technician fix the router remotely?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the technician",
+      "could fix the router remotely"
+    ],
+    "distractorChunks": [
+      "can fix the router remotely"
+    ],
+    "responseSuffix": ".",
+    "id": 114
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Has the package arrived at the front desk?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wondered",
+      "whether",
+      "the package",
+      "had arrived at the front desk"
+    ],
+    "distractorChunks": [
+      "has arrived at the front desk"
+    ],
+    "responseSuffix": ".",
+    "id": 115
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Does the museum offer discounts for students?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "was",
+      "curious",
+      "whether",
+      "the museum",
+      "offered discounts for students"
+    ],
+    "distractorChunks": [
+      "offers discounts for students"
+    ],
+    "responseSuffix": ".",
+    "id": 116
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Is the conference room booked for the afternoon?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "checked",
+      "whether",
+      "the conference room",
+      "was booked for the afternoon"
+    ],
+    "distractorChunks": [
+      "is booked for the afternoon"
+    ],
+    "responseSuffix": ".",
+    "id": 117
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Will the flight depart on time?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "the agent",
+      "whether",
+      "the flight",
+      "would depart on time"
+    ],
+    "distractorChunks": [
+      "will depart on time"
+    ],
+    "responseSuffix": ".",
+    "id": 118
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Did the plumber replace the pipe already?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "had",
+      "no",
+      "idea",
+      "whether",
+      "the plumber",
+      "had already replaced the pipe"
+    ],
+    "distractorChunks": [
+      "has already replaced the pipe"
+    ],
+    "responseSuffix": ".",
+    "id": 119
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Can I reschedule my appointment for Friday?",
+    "responseGender": "female",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "he",
+      "could reschedule his appointment for Friday"
+    ],
+    "distractorChunks": [
+      "can reschedule his appointment for Friday"
+    ],
+    "responseSuffix": ".",
+    "id": 120
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Where did the manager leave the delivery keys?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "could",
+      "not",
+      "remember",
+      "where",
+      "the manager",
+      "had left the delivery keys"
+    ],
+    "distractorChunks": [
+      "has left the delivery keys"
+    ],
+    "responseSuffix": ".",
+    "id": 121
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Why was the flight rerouted to a different airport?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "why",
+      "the flight",
+      "had been rerouted to a different airport"
+    ],
+    "distractorChunks": [
+      "has been rerouted to a different airport"
+    ],
+    "responseSuffix": ".",
+    "id": 122
+  },
+  {
+    "promptGender": "female",
+    "prompt": "How long will the road construction continue?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "how",
+      "long",
+      "the road construction",
+      "would continue"
+    ],
+    "distractorChunks": [
+      "will continue"
+    ],
+    "responseSuffix": ".",
+    "id": 123
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Who approved the changes to the schedule?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "was",
+      "not",
+      "sure",
+      "who",
+      "had approved the changes to the schedule"
+    ],
+    "distractorChunks": [
+      "has approved the changes to the schedule"
+    ],
+    "responseSuffix": ".",
+    "id": 124
+  },
+  {
+    "promptGender": "female",
+    "prompt": "What time does the last shuttle depart?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "what",
+      "time",
+      "the last shuttle",
+      "departed"
+    ],
+    "distractorChunks": [
+      "departs"
+    ],
+    "responseSuffix": ".",
+    "id": 125
+  },
+  {
+    "promptGender": "male",
+    "prompt": "How much did the repair end up costing?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "mentioned",
+      "how",
+      "much",
+      "the repair",
+      "had ended up costing"
+    ],
+    "distractorChunks": [
+      "has ended up costing"
+    ],
+    "responseSuffix": ".",
+    "id": 126
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Where is the nearest recycling center located?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "where",
+      "the nearest recycling center",
+      "was located"
+    ],
+    "distractorChunks": [
+      "is located"
+    ],
+    "responseSuffix": ".",
+    "id": 127
+  },
+  {
+    "promptGender": "male",
+    "prompt": "When will the elevator be back in service?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "wondered",
+      "when",
+      "the elevator",
+      "would be back in service"
+    ],
+    "distractorChunks": [
+      "will be back in service"
+    ],
+    "responseSuffix": ".",
+    "id": 128
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Why did the meeting get postponed?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "explained",
+      "why",
+      "the meeting",
+      "had gotten postponed"
+    ],
+    "distractorChunks": [
+      "has gotten postponed"
+    ],
+    "responseSuffix": ".",
+    "id": 129
+  },
+  {
+    "promptGender": "male",
+    "prompt": "What caused the delay at the border crossing?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "still",
+      "did",
+      "not",
+      "know",
+      "what",
+      "had caused the delay at the border crossing"
+    ],
+    "distractorChunks": [
+      "has caused the delay at the border crossing"
+    ],
+    "responseSuffix": ".",
+    "id": 130
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The bakery is closing early today.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "mentioned",
+      "that",
+      "the bakery",
+      "was closing early today"
+    ],
+    "distractorChunks": [
+      "is closing early today"
+    ],
+    "responseSuffix": ".",
+    "id": 131
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The invoice was sent to the wrong department.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "explained",
+      "that",
+      "the invoice",
+      "had been sent to the wrong department"
+    ],
+    "distractorChunks": [
+      "has been sent to the wrong department"
+    ],
+    "responseSuffix": ".",
+    "id": 132
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The landlord will raise the rent next year.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "said",
+      "that",
+      "the landlord",
+      "would raise the rent next year"
+    ],
+    "distractorChunks": [
+      "will raise the rent next year"
+    ],
+    "responseSuffix": ".",
+    "id": 133
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The warehouse needs additional staff for the holidays.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "told",
+      "me",
+      "that",
+      "the warehouse",
+      "needed additional staff for the holidays"
+    ],
+    "distractorChunks": [
+      "needs additional staff for the holidays"
+    ],
+    "responseSuffix": ".",
+    "id": 134
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The city council approved the new bike lanes.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "said",
+      "that",
+      "the city council",
+      "had approved the new bike lanes"
+    ],
+    "distractorChunks": [
+      "has approved the new bike lanes"
+    ],
+    "responseSuffix": ".",
+    "id": 135
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The airline canceled several flights due to weather.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "said",
+      "that",
+      "the airline",
+      "had canceled several flights due to weather"
+    ],
+    "distractorChunks": [
+      "has canceled several flights due to weather"
+    ],
+    "responseSuffix": ".",
+    "id": 136
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The clinic can accommodate walk-in patients today.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "mentioned",
+      "that",
+      "the clinic",
+      "could accommodate walk-in patients today"
+    ],
+    "distractorChunks": [
+      "can accommodate walk-in patients today"
+    ],
+    "responseSuffix": ".",
+    "id": 137
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The professor extended the deadline for the essay.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "told",
+      "us",
+      "that",
+      "the professor",
+      "had extended the deadline for the essay"
+    ],
+    "distractorChunks": [
+      "has extended the deadline for the essay"
+    ],
+    "responseSuffix": ".",
+    "id": 138
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The company will relocate its headquarters next year.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "announced",
+      "that",
+      "the company",
+      "would relocate its headquarters next year"
+    ],
+    "distractorChunks": [
+      "will relocate its headquarters next year"
+    ],
+    "responseSuffix": ".",
+    "id": 139
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The vendor increased prices on all produce.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "noted",
+      "that",
+      "the vendor",
+      "had increased prices on all produce"
+    ],
+    "distractorChunks": [
+      "has increased prices on all produce"
+    ],
+    "responseSuffix": ".",
+    "id": 140
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Are the tickets still available for tonight's show?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "tickets",
+      "were still available for tonight's show"
+    ],
+    "distractorChunks": [
+      "are still available for tonight's show"
+    ],
+    "responseSuffix": ".",
+    "id": 141
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Did the courier deliver the wrong package?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "thought",
+      "the courier",
+      "had delivered the wrong package"
+    ],
+    "distractorChunks": [
+      "has delivered the wrong package"
+    ],
+    "responseSuffix": ".",
+    "id": 142
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Will the workshop be recorded for later viewing?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the workshop",
+      "would be recorded for later viewing"
+    ],
+    "distractorChunks": [
+      "will be recorded for later viewing"
+    ],
+    "responseSuffix": ".",
+    "id": 143
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Can the team finish the prototype by Friday?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "was",
+      "not",
+      "sure",
+      "whether",
+      "the team",
+      "could finish the prototype by Friday"
+    ],
+    "distractorChunks": [
+      "can finish the prototype by Friday"
+    ],
+    "responseSuffix": ".",
+    "id": 144
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Has the invoice been approved by accounting?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "whether",
+      "the invoice",
+      "had been approved by accounting"
+    ],
+    "distractorChunks": [
+      "has been approved by accounting"
+    ],
+    "responseSuffix": ".",
+    "id": 145
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Does the apartment come with parking included?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the apartment",
+      "came with parking included"
+    ],
+    "distractorChunks": [
+      "comes with parking included"
+    ],
+    "responseSuffix": ".",
+    "id": 146
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Is the trail open after the recent storm?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "checked",
+      "whether",
+      "the trail",
+      "was open after the recent storm"
+    ],
+    "distractorChunks": [
+      "is open after the recent storm"
+    ],
+    "responseSuffix": ".",
+    "id": 147
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Will the committee vote on the proposal today?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the committee",
+      "would vote on the proposal today"
+    ],
+    "distractorChunks": [
+      "will vote on the proposal today"
+    ],
+    "responseSuffix": ".",
+    "id": 148
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Did the shipment clear customs yet?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wondered",
+      "whether",
+      "the shipment",
+      "had cleared customs yet"
+    ],
+    "distractorChunks": [
+      "has cleared customs yet"
+    ],
+    "responseSuffix": ".",
+    "id": 149
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Can visitors bring cameras into the exhibit?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "visitors",
+      "could bring cameras into the exhibit"
+    ],
+    "distractorChunks": [
+      "can bring cameras into the exhibit"
+    ],
+    "responseSuffix": ".",
+    "id": 150
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Where should we store the extra supplies?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "where",
+      "we",
+      "should store the extra supplies"
+    ],
+    "distractorChunks": [
+      "should have stored the extra supplies"
+    ],
+    "responseSuffix": ".",
+    "id": 151
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Why did the vendor cancel the contract?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "explained",
+      "why",
+      "the vendor",
+      "had canceled the contract"
+    ],
+    "distractorChunks": [
+      "has canceled the contract"
+    ],
+    "responseSuffix": ".",
+    "id": 152
+  },
+  {
+    "promptGender": "female",
+    "prompt": "How often does the newsletter get sent out?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "how",
+      "often",
+      "the newsletter",
+      "got sent out"
+    ],
+    "distractorChunks": [
+      "gets sent out"
+    ],
+    "responseSuffix": ".",
+    "id": 153
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Who scheduled the fire drill for this afternoon?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "was",
+      "not",
+      "sure",
+      "who",
+      "had scheduled the fire drill for this afternoon"
+    ],
+    "distractorChunks": [
+      "has scheduled the fire drill for this afternoon"
+    ],
+    "responseSuffix": ".",
+    "id": 154
+  },
+  {
+    "promptGender": "female",
+    "prompt": "What time does the pharmacy close on weekends?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "what",
+      "time",
+      "the pharmacy",
+      "closed on weekends"
+    ],
+    "distractorChunks": [
+      "closes on weekends"
+    ],
+    "responseSuffix": ".",
+    "id": 155
+  },
+  {
+    "promptGender": "male",
+    "prompt": "How far is the campsite from the main trailhead?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "how",
+      "far",
+      "the campsite",
+      "was from the main trailhead"
+    ],
+    "distractorChunks": [
+      "is from the main trailhead"
+    ],
+    "responseSuffix": ".",
+    "id": 156
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Where did the committee post the meeting minutes?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "could",
+      "not",
+      "find",
+      "where",
+      "the committee",
+      "had posted the meeting minutes"
+    ],
+    "distractorChunks": [
+      "has posted the meeting minutes"
+    ],
+    "responseSuffix": ".",
+    "id": 157
+  },
+  {
+    "promptGender": "male",
+    "prompt": "When will the new policy take effect?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "when",
+      "the new policy",
+      "would take effect"
+    ],
+    "distractorChunks": [
+      "will take effect"
+    ],
+    "responseSuffix": ".",
+    "id": 158
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Why is the printer showing an error message?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "was",
+      "not",
+      "sure",
+      "why",
+      "the printer",
+      "was showing an error message"
+    ],
+    "distractorChunks": [
+      "is showing an error message"
+    ],
+    "responseSuffix": ".",
+    "id": 159
+  },
+  {
+    "promptGender": "male",
+    "prompt": "What led to the sudden increase in orders?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "still",
+      "did",
+      "not",
+      "understand",
+      "what",
+      "had led to the sudden increase in orders"
+    ],
+    "distractorChunks": [
+      "has led to the sudden increase in orders"
+    ],
+    "responseSuffix": ".",
+    "id": 160
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The gallery is extending its hours this weekend.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "mentioned",
+      "that",
+      "the gallery",
+      "was extending its hours this weekend"
+    ],
+    "distractorChunks": [
+      "is extending its hours this weekend"
+    ],
+    "responseSuffix": ".",
+    "id": 161
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The contractor finished the renovation ahead of schedule.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "said",
+      "that",
+      "the contractor",
+      "had finished the renovation ahead of schedule"
+    ],
+    "distractorChunks": [
+      "has finished the renovation ahead of schedule"
+    ],
+    "responseSuffix": ".",
+    "id": 162
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The airline will offer refunds for canceled flights.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "announced",
+      "that",
+      "the airline",
+      "would offer refunds for canceled flights"
+    ],
+    "distractorChunks": [
+      "will offer refunds for canceled flights"
+    ],
+    "responseSuffix": ".",
+    "id": 163
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The nonprofit needs more volunteers for the event.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "told",
+      "me",
+      "that",
+      "the nonprofit",
+      "needed more volunteers for the event"
+    ],
+    "distractorChunks": [
+      "needs more volunteers for the event"
+    ],
+    "responseSuffix": ".",
+    "id": 164
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The board approved the merger last week.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "confirmed",
+      "that",
+      "the board",
+      "had approved the merger last week"
+    ],
+    "distractorChunks": [
+      "has approved the merger last week"
+    ],
+    "responseSuffix": ".",
+    "id": 165
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The city plans to repave several streets this summer.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "said",
+      "that",
+      "the city",
+      "planned to repave several streets this summer"
+    ],
+    "distractorChunks": [
+      "plans to repave several streets this summer"
+    ],
+    "responseSuffix": ".",
+    "id": 166
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The clinic can no longer accept new patients.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "mentioned",
+      "that",
+      "the clinic",
+      "could no longer accept new patients"
+    ],
+    "distractorChunks": [
+      "can no longer accept new patients"
+    ],
+    "responseSuffix": ".",
+    "id": 167
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The teacher postponed the quiz until next week.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "told",
+      "the class",
+      "that",
+      "the teacher",
+      "had postponed the quiz until next week"
+    ],
+    "distractorChunks": [
+      "has postponed the quiz until next week"
+    ],
+    "responseSuffix": ".",
+    "id": 168
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The startup will launch its app next month.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "said",
+      "that",
+      "the startup",
+      "would launch its app next month"
+    ],
+    "distractorChunks": [
+      "will launch its app next month"
+    ],
+    "responseSuffix": ".",
+    "id": 169
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The inspector found several safety violations.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "reported",
+      "that",
+      "the inspector",
+      "had found several safety violations"
+    ],
+    "distractorChunks": [
+      "has found several safety violations"
+    ],
+    "responseSuffix": ".",
+    "id": 170
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Is the swimming pool heated during winter?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the swimming pool",
+      "was heated during winter"
+    ],
+    "distractorChunks": [
+      "is heated during winter"
+    ],
+    "responseSuffix": ".",
+    "id": 171
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Did the accountant reconcile last quarter's numbers?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "confirmed",
+      "whether",
+      "the accountant",
+      "had reconciled last quarter's numbers"
+    ],
+    "distractorChunks": [
+      "has reconciled last quarter's numbers"
+    ],
+    "responseSuffix": ".",
+    "id": 172
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Will the university extend the application deadline?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "heard",
+      "that",
+      "the university",
+      "would extend the application deadline"
+    ],
+    "distractorChunks": [
+      "will extend the application deadline"
+    ],
+    "responseSuffix": ".",
+    "id": 173
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Can the new hire start training next Monday?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the new hire",
+      "could start training next Monday"
+    ],
+    "distractorChunks": [
+      "can start training next Monday"
+    ],
+    "responseSuffix": ".",
+    "id": 174
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Has the shipment been inspected by customs officials?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "whether",
+      "the shipment",
+      "had been inspected by customs officials"
+    ],
+    "distractorChunks": [
+      "has been inspected by customs officials"
+    ],
+    "responseSuffix": ".",
+    "id": 175
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Does the hotel provide airport transportation?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the hotel",
+      "provided airport transportation"
+    ],
+    "distractorChunks": [
+      "provides airport transportation"
+    ],
+    "responseSuffix": ".",
+    "id": 176
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Is the bridge closed for repairs this week?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "checked",
+      "whether",
+      "the bridge",
+      "was closed for repairs this week"
+    ],
+    "distractorChunks": [
+      "is closed for repairs this week"
+    ],
+    "responseSuffix": ".",
+    "id": 177
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Will the committee reconsider the budget cuts?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the committee",
+      "would reconsider the budget cuts"
+    ],
+    "distractorChunks": [
+      "will reconsider the budget cuts"
+    ],
+    "responseSuffix": ".",
+    "id": 178
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Where did the technician install the new router?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "forgot",
+      "where",
+      "the technician",
+      "had installed the new router"
+    ],
+    "distractorChunks": [
+      "has installed the new router"
+    ],
+    "responseSuffix": ".",
+    "id": 179
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Why was the shipment delayed at the port?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "explained",
+      "why",
+      "the shipment",
+      "had been delayed at the port"
+    ],
+    "distractorChunks": [
+      "has been delayed at the port"
+    ],
+    "responseSuffix": ".",
+    "id": 180
+  },
+  {
+    "promptGender": "female",
+    "prompt": "How long does the certification process usually take?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "how",
+      "long",
+      "the certification process",
+      "usually took"
+    ],
+    "distractorChunks": [
+      "usually takes"
+    ],
+    "responseSuffix": ".",
+    "id": 181
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Who redesigned the company's website last year?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "was",
+      "not",
+      "sure",
+      "who",
+      "had redesigned the company's website last year"
+    ],
+    "distractorChunks": [
+      "has redesigned the company's website last year"
+    ],
+    "responseSuffix": ".",
+    "id": 182
+  },
+  {
+    "promptGender": "female",
+    "prompt": "What time does the farmers market open on Sundays?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "what",
+      "time",
+      "the farmers market",
+      "opened on Sundays"
+    ],
+    "distractorChunks": [
+      "opens on Sundays"
+    ],
+    "responseSuffix": ".",
+    "id": 183
+  },
+  {
+    "promptGender": "male",
+    "prompt": "How many applicants applied for the scholarship?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "wanted",
+      "to",
+      "know",
+      "how",
+      "many",
+      "applicants",
+      "had applied for the scholarship"
+    ],
+    "distractorChunks": [
+      "have applied for the scholarship"
+    ],
+    "responseSuffix": ".",
+    "id": 184
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Where does the recycling truck usually stop first?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "asked",
+      "where",
+      "the recycling truck",
+      "usually stopped first"
+    ],
+    "distractorChunks": [
+      "usually stops first"
+    ],
+    "responseSuffix": ".",
+    "id": 185
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The airline upgraded several passengers to first class.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "mentioned",
+      "that",
+      "the airline",
+      "had upgraded several passengers to first class"
+    ],
+    "distractorChunks": [
+      "has upgraded several passengers to first class"
+    ],
+    "responseSuffix": ".",
+    "id": 186
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The landlord will inspect the unit next Tuesday.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "said",
+      "that",
+      "the landlord",
+      "would inspect the unit next Tuesday"
+    ],
+    "distractorChunks": [
+      "will inspect the unit next Tuesday"
+    ],
+    "responseSuffix": ".",
+    "id": 187
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The charity raised more money than expected this year.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "announced",
+      "that",
+      "the charity",
+      "had raised more money than expected this year"
+    ],
+    "distractorChunks": [
+      "has raised more money than expected this year"
+    ],
+    "responseSuffix": ".",
+    "id": 188
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The store needs to reorder several popular items.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "told",
+      "me",
+      "that",
+      "the store",
+      "needed to reorder several popular items"
+    ],
+    "distractorChunks": [
+      "needs to reorder several popular items"
+    ],
+    "responseSuffix": ".",
+    "id": 189
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The council will vote on the new zoning law tomorrow.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "said",
+      "that",
+      "the council",
+      "would vote on the new zoning law tomorrow"
+    ],
+    "distractorChunks": [
+      "will vote on the new zoning law tomorrow"
+    ],
+    "responseSuffix": ".",
+    "id": 190
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The lab confirmed the results of the earlier test.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "reported",
+      "that",
+      "the lab",
+      "had confirmed the results of the earlier test"
+    ],
+    "distractorChunks": [
+      "has confirmed the results of the earlier test"
+    ],
+    "responseSuffix": ".",
+    "id": 191
+  },
+  {
+    "promptGender": "male",
+    "prompt": "The airport plans to add a new terminal next year.",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "said",
+      "that",
+      "the airport",
+      "planned to add a new terminal next year"
+    ],
+    "distractorChunks": [
+      "plans to add a new terminal next year"
+    ],
+    "responseSuffix": ".",
+    "id": 192
+  },
+  {
+    "promptGender": "female",
+    "prompt": "The manager can approve the request by tomorrow.",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "mentioned",
+      "that",
+      "the manager",
+      "could approve the request by tomorrow"
+    ],
+    "distractorChunks": [
+      "can approve the request by tomorrow"
+    ],
+    "responseSuffix": ".",
+    "id": 193
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Is the ferry running on its normal schedule today?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the ferry",
+      "was running on its normal schedule today"
+    ],
+    "distractorChunks": [
+      "is running on its normal schedule today"
+    ],
+    "responseSuffix": ".",
+    "id": 194
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Did the auditors finish reviewing the accounts?",
+    "responseGender": "male",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "was",
+      "not",
+      "sure",
+      "whether",
+      "the auditors",
+      "had finished reviewing the accounts"
+    ],
+    "distractorChunks": [
+      "have finished reviewing the accounts"
+    ],
+    "responseSuffix": ".",
+    "id": 195
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Will the new bridge reduce traffic congestion?",
+    "responseGender": "female",
+    "responsePrefix": "She",
+    "correctChunks": [
+      "wondered",
+      "whether",
+      "the new bridge",
+      "would reduce traffic congestion"
+    ],
+    "distractorChunks": [
+      "will reduce traffic congestion"
+    ],
+    "responseSuffix": ".",
+    "id": 196
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Can the pharmacy transfer my prescription to another branch?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "whether",
+      "the pharmacy",
+      "could transfer his prescription to another branch"
+    ],
+    "distractorChunks": [
+      "can transfer his prescription to another branch"
+    ],
+    "responseSuffix": ".",
+    "id": 197
+  },
+  {
+    "promptGender": "male",
+    "prompt": "Where did the crew store the extra equipment?",
+    "responseGender": "female",
+    "responsePrefix": "I",
+    "correctChunks": [
+      "could",
+      "not",
+      "recall",
+      "where",
+      "the crew",
+      "had stored the extra equipment"
+    ],
+    "distractorChunks": [
+      "has stored the extra equipment"
+    ],
+    "responseSuffix": ".",
+    "id": 198
+  },
+  {
+    "promptGender": "female",
+    "prompt": "Why does the elevator make that strange noise?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "why",
+      "the elevator",
+      "made that strange noise"
+    ],
+    "distractorChunks": [
+      "makes that strange noise"
+    ],
+    "responseSuffix": ".",
+    "id": 199
+  },
+  {
+    "promptGender": "female",
+    "prompt": "How much did the venue charge for the extra hour?",
+    "responseGender": "male",
+    "responsePrefix": "He",
+    "correctChunks": [
+      "asked",
+      "how",
+      "much",
+      "the venue",
+      "had charged for the extra hour"
+    ],
+    "distractorChunks": [
+      "has charged for the extra hour"
+    ],
+    "responseSuffix": ".",
+    "id": 200
+  }
+]

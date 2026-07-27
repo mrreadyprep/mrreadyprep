@@ -1,0 +1,1809 @@
+{
+  "id": 4,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 10,
+          "topic": "Language Acquisition in Children",
+          "category": "Linguistics",
+          "paragraph": "Language acquisition is the process through which children learn to understand and produce their native tongue, typically without formal instruction, since infants begin distinguishing speech sounds long before their first words, suggesting an innate sensitivity to linguistic patterns. Their vocabulary expands rapidly during the first year, while grammar develops in predictable stages. Some theorists argue that humans possess a specialized cognitive mechanism dedicated to grammar, while others emphasize imitation and social interaction. Children who are bilingual often reach similar developmental milestones as monolingual peers, which helps educators design effective strategies for supporting language development.",
+          "blanks": [
+            {
+              "word": "vocabulary",
+              "visible": "vocab",
+              "hidden": "ulary"
+            },
+            {
+              "word": "expands",
+              "visible": "exp",
+              "hidden": "ands"
+            },
+            {
+              "word": "during",
+              "visible": "dur",
+              "hidden": "ing"
+            },
+            {
+              "word": "grammar",
+              "visible": "gra",
+              "hidden": "mmar"
+            },
+            {
+              "word": "predictable",
+              "visible": "predi",
+              "hidden": "ctable"
+            },
+            {
+              "word": "theorists",
+              "visible": "theo",
+              "hidden": "rists"
+            },
+            {
+              "word": "specialized",
+              "visible": "speci",
+              "hidden": "alized"
+            },
+            {
+              "word": "imitation",
+              "visible": "imit",
+              "hidden": "ation"
+            },
+            {
+              "word": "bilingual",
+              "visible": "bili",
+              "hidden": "ngual"
+            },
+            {
+              "word": "developmental",
+              "visible": "devel",
+              "hidden": "opmental"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 13,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Insurance Claim Status Update",
+          "subtitle": "Dear Ms. Whitfield,",
+          "text": "This letter is to update you on the status of the claim you submitted on June 2 for your visit to Dr. Ferris on May 28, claim number HC-773401. After reviewing the itemized bill submitted by your provider, we have approved partial coverage for this visit.\n\nOf the total billed amount of $410.00, our review determined that $275.00 is eligible for coverage under your current plan, as the consultation and standard bloodwork are covered services. However, the additional imaging test performed during your visit is not covered under your plan's current benefits, as it was coded as an elective diagnostic procedure rather than a medically necessary one.\n\nAs a result, you are responsible for the remaining balance of $135.00, which your provider's office may bill you for directly. If you believe the imaging test should be classified as medically necessary, you may submit an appeal along with a letter from Dr. Ferris explaining the medical reasoning within 30 days of this notice.\n\nA detailed explanation of benefits has been mailed to your address on file and is also available in your online member portal.\n\nPlease contact our claims department if you have any questions about this decision.\n\nSincerely,\nClaims Review Department\nHarborview Health Insurance",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To inform Ms. Whitfield that her claim was fully denied",
+                "To inform Ms. Whitfield about partial approval of her insurance claim",
+                "To request that Ms. Whitfield renew her insurance policy",
+                "To notify Ms. Whitfield of a change in her provider network"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why wasn't the imaging test covered by the insurance plan?",
+              "options": [
+                "It was performed by an out-of-network provider",
+                "It was coded as an elective procedure rather than medically necessary",
+                "It exceeded the plan's annual coverage limit",
+                "It was not included in the itemized bill"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred if Ms. Whitfield wants the imaging test fully covered?",
+              "options": [
+                "She must switch to a different insurance provider",
+                "She needs to submit an appeal with a letter from her doctor",
+                "She must pay the full amount with no recourse",
+                "She should cancel the original claim and resubmit it"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Overdue Library Materials",
+          "subtitle": "Dear Mr. Nakamura,",
+          "text": "Our records indicate that you currently have three items checked out from the Fairview Public Library that are now overdue. These include \"The Silent Garden\" by Elena Ruiz, due June 10, and two DVDs from our media collection, both due June 12.\n\nBecause these items are more than two weeks overdue, a total late fee of $6.50 has accrued on your account. Please note that your library card will remain blocked from borrowing additional materials or placing new holds until the items are returned or the associated fees are paid, whichever comes first.\n\nIf any of these items have been lost or damaged, you will be charged a replacement fee in addition to the late fee already applied. Replacement fees vary by item; a full list of replacement costs is available on our website under the Policies section.\n\nYou may return items to any branch of the Fairview Public Library system, including through the outdoor book drop, which is available 24 hours a day. Fees can be paid online, over the phone, or in person at any branch's circulation desk.\n\nIf you have already returned these items, please disregard this notice, as our records may take a day or two to update.\n\nSincerely,\nCirculation Department\nFairview Public Library",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To notify Mr. Nakamura of overdue items and accumulated fees",
+                "To inform Mr. Nakamura that his library card has been cancelled",
+                "To invite Mr. Nakamura to a library event",
+                "To announce new library operating hours"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What happens to Mr. Nakamura's library card until the items are returned or the fees are paid?",
+              "options": [
+                "It is upgraded to a premium membership",
+                "It is blocked from borrowing or placing holds",
+                "It is transferred to another branch",
+                "It is automatically renewed"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "The word 'accrued' in the email is closest in meaning to",
+              "options": [
+                "waived",
+                "disputed",
+                "accumulated",
+                "refunded"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Scheduled Network Maintenance",
+          "subtitle": "Dear Ms. Reyes,",
+          "text": "We are writing to inform you of scheduled network maintenance in your area that may temporarily affect your internet service. Our technicians will be upgrading fiber equipment at the local distribution hub serving your neighborhood on Thursday, September 11, between 1:00 a.m. and 5:00 a.m.\n\nDuring this window, you may experience intermittent service interruptions lasting anywhere from a few minutes to several hours. In most cases, service will be restored automatically once the upgrade is complete, and no action will be needed on your part. However, if your service has not resumed by 7:00 a.m., we recommend restarting your modem and router by unplugging them for 30 seconds before plugging them back in.\n\nThis maintenance is part of a broader effort to improve network reliability and increase available speeds in your area. Once complete, eligible customers may notice faster download and upload speeds without any change to their monthly bill.\n\nWe have scheduled this work during early morning hours specifically to minimize disruption to our customers. We understand that any interruption can be inconvenient and appreciate your patience while we complete these improvements.\n\nIf service issues persist after 9:00 a.m. on September 11, please contact our technical support line for assistance.\n\nSincerely,\nNetwork Operations Team\nClearline Broadband",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To inform the customer of scheduled maintenance and possible service interruptions",
+                "To inform the customer that their service has been permanently cancelled",
+                "To advertise a discount on a new internet plan",
+                "To request payment for an overdue internet bill"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why was the maintenance scheduled for early morning hours?",
+              "options": [
+                "Technicians are only available at night",
+                "To minimize disruption to customers",
+                "Equipment costs are lower at that time",
+                "It is required by local regulations"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about eligible customers after the upgrade is complete?",
+              "options": [
+                "They will be charged an additional monthly fee",
+                "They may experience faster speeds at no extra cost",
+                "They will need to purchase a new router",
+                "Their service will be temporarily suspended"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 7,
+          "title": "The Formation of Impact Craters",
+          "passage": "When an asteroid or meteorite strikes a planetary surface at high velocity, the collision releases enormous energy, vaporizing rock and excavating a bowl-shaped depression known as an impact crater. The process occurs almost instantaneously, often within seconds, as shock waves compress and displace material far more massive than the impacting object itself.\n\nSmall impacts typically produce simple craters, bowl-shaped depressions with a raised rim of ejected debris surrounding them. Larger impacts, however, generate complex craters featuring central peaks formed when compressed rock rebounds upward after the collision, along with terraced walls that slump inward under gravity. Surrounding both crater types lies an ejecta blanket, material thrown outward during the impact.\n\nOn Earth, most ancient impact craters have been erased by erosion, volcanic activity, and the constant recycling of crust through plate tectonics. The Moon, by contrast, lacks an atmosphere, flowing water, and active tectonic plates, so its surface preserves impact craters for billions of years, offering a nearly untouched record of the solar system's violent early history.\n\nScientists use crater density to estimate the age of planetary surfaces, since more heavily cratered regions have generally existed longer without resurfacing. Notable terrestrial examples include the Chicxulub crater, linked to the extinction of the dinosaurs, and Arizona's well-preserved Barringer Crater. Studying these formations helps researchers reconstruct the timeline of impacts across the solar system.",
+          "passage_marked": "When an asteroid or meteorite strikes a planetary surface at high velocity, the collision releases enormous energy, vaporizing rock and excavating a bowl-shaped depression known as an impact crater. The process occurs almost instantaneously, often within seconds, as shock waves compress and displace material far more massive than the impacting object itself. [A]\n\nSmall impacts typically produce simple craters, bowl-shaped depressions with a raised rim of ejected debris surrounding them. Larger impacts, however, generate complex craters featuring central peaks formed when compressed rock rebounds upward after the collision, along with terraced walls that slump inward under gravity. [B] Surrounding both crater types lies an ejecta blanket, material thrown outward during the impact.\n\nOn Earth, most ancient impact craters have been erased by erosion, volcanic activity, and the constant recycling of crust through plate tectonics. The Moon, by contrast, lacks an atmosphere, flowing water, and active tectonic plates, so its surface preserves impact craters for billions of years, offering a nearly untouched record of the solar system's violent early history. [C]\n\nScientists use crater density to estimate the age of planetary surfaces, since more heavily cratered regions have generally existed longer without resurfacing. Notable terrestrial examples include the Chicxulub crater, linked to the extinction of the dinosaurs, and Arizona's well-preserved Barringer Crater. Studying these formations helps researchers reconstruct the timeline of impacts across the solar system. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'excavating' in the passage is closest in meaning to",
+              "options": [
+                "filling in with debris",
+                "digging out and removing material",
+                "covering with rock",
+                "cooling rapidly"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what distinguishes complex craters from simple craters?",
+              "options": [
+                "Complex craters have no ejecta blanket",
+                "Complex craters feature central peaks and terraced walls",
+                "Complex craters are always smaller",
+                "Complex craters only form on the Moon"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "Why are impact craters better preserved on the Moon than on Earth?",
+              "options": [
+                "The Moon has stronger gravity",
+                "The Moon lacks atmosphere, water, and active tectonics that erode craters on Earth",
+                "Meteorites never strike Earth",
+                "Earth's craters are too small to see"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention the Chicxulub crater?",
+              "options": [
+                "To argue that dinosaurs caused the impact",
+                "To provide a well-known example of a crater's significance",
+                "To describe the formation of the Moon",
+                "To explain plate tectonics"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Regardless of these internal structural differences, however, both crater types share one common feature.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 11,
+          "topic": "The Renaissance and Artistic Innovation",
+          "category": "Art History",
+          "paragraph": "The Renaissance was a period of extraordinary artistic and intellectual achievement that began in Italy during the fourteenth century. Artists of this era sought to revive the ideals of classical antiquity, emphasizing realism and human emotion. The development of linear perspective allowed painters to create convincing illusions of depth on flat surfaces. Wealthy merchants acted as patrons, commissioning elaborate works and fueling unprecedented creative output. Figures such as Leonardo da Vinci, a prominent representative of this era, combined scientific curiosity with artistic mastery. A philosophical movement known as humanism influenced artistic themes, while innovations in technique expanded the expressive possibilities available to artists.",
+          "blanks": [
+            {
+              "word": "antiquity",
+              "visible": "anti",
+              "hidden": "quity"
+            },
+            {
+              "word": "perspective",
+              "visible": "persp",
+              "hidden": "ective"
+            },
+            {
+              "word": "patrons",
+              "visible": "pat",
+              "hidden": "rons"
+            },
+            {
+              "word": "commissioning",
+              "visible": "commi",
+              "hidden": "ssioning"
+            },
+            {
+              "word": "unprecedented",
+              "visible": "unpre",
+              "hidden": "cedented"
+            },
+            {
+              "word": "prominent",
+              "visible": "prom",
+              "hidden": "inent"
+            },
+            {
+              "word": "curiosity",
+              "visible": "curi",
+              "hidden": "osity"
+            },
+            {
+              "word": "humanism",
+              "visible": "huma",
+              "hidden": "nism"
+            },
+            {
+              "word": "innovations",
+              "visible": "innov",
+              "hidden": "ations"
+            },
+            {
+              "word": "expressive",
+              "visible": "expre",
+              "hidden": "ssive"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 8,
+          "title": "Tulip Mania in the Dutch Golden Age",
+          "passage": "During the Dutch Golden Age of the seventeenth century, tulips imported from the Ottoman Empire became a fashionable luxury among wealthy merchants in the Netherlands. Rare bulb varieties, prized for their vivid, streaked petals, functioned as status symbols, and demand for the most striking specimens grew rapidly among a prosperous trading class eager to display new wealth.\n\nAs demand intensified, traders began buying and selling tulip bulbs through futures contracts, agreements to purchase bulbs at a set price before they were even harvested. This system allowed speculation without owning any actual bulbs, drawing in buyers hoping to profit from rising prices rather than from growing flowers. By the winter of 1636, prices for some rare bulbs had reached extraordinary levels.\n\nIn February 1637, the market abruptly collapsed when buyers at a routine bulb auction failed to appear, triggering panic selling. Prices for many varieties fell to a small fraction of their peak value within days. Historians attribute the crash to the market's speculative foundation, since contract prices had drifted far beyond any reasonable value tied to the bulbs themselves.\n\nTulip mania is often cited as history's first recorded speculative bubble, a cautionary tale invoked whenever asset prices rise sharply detached from underlying value. Some modern historians, however, argue that its economic impact on the broader Dutch economy was actually quite limited, confined mainly to a small circle of wealthy speculators rather than the population at large.",
+          "passage_marked": "During the Dutch Golden Age of the seventeenth century, tulips imported from the Ottoman Empire became a fashionable luxury among wealthy merchants in the Netherlands. Rare bulb varieties, prized for their vivid, streaked petals, functioned as status symbols, and demand for the most striking specimens grew rapidly among a prosperous trading class eager to display new wealth. [A]\n\nAs demand intensified, traders began buying and selling tulip bulbs through futures contracts, agreements to purchase bulbs at a set price before they were even harvested. This system allowed speculation without owning any actual bulbs, drawing in buyers hoping to profit from rising prices rather than from growing flowers. [B] By the winter of 1636, prices for some rare bulbs had reached extraordinary levels.\n\nIn February 1637, the market abruptly collapsed when buyers at a routine bulb auction failed to appear, triggering panic selling. Prices for many varieties fell to a small fraction of their peak value within days. Historians attribute the crash to the market's speculative foundation, since contract prices had drifted far beyond any reasonable value tied to the bulbs themselves. [C]\n\nTulip mania is often cited as history's first recorded speculative bubble, a cautionary tale invoked whenever asset prices rise sharply detached from underlying value. Some modern historians, however, argue that its economic impact on the broader Dutch economy was actually quite limited, confined mainly to a small circle of wealthy speculators rather than the population at large. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'speculation' in the passage is closest in meaning to",
+              "options": [
+                "investment based on careful long-term planning",
+                "buying or selling based on anticipated price changes rather than intrinsic value",
+                "charitable donation of goods",
+                "government regulation of markets"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what allowed traders to buy and sell tulip bulbs without owning them?",
+              "options": [
+                "Bank loans",
+                "Futures contracts allowing purchase agreements before harvest",
+                "Government subsidies",
+                "Direct barter with farmers"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What triggered the collapse of the tulip market in February 1637?",
+              "options": [
+                "A new government tax on tulips",
+                "Buyers failing to appear at a routine auction, sparking panic selling",
+                "A disease that killed most tulip bulbs",
+                "A ban on tulip imports"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention modern historians' differing views on tulip mania's economic impact?",
+              "options": [
+                "To prove that tulip mania never actually happened",
+                "To show that interpretations of the event's severity are still debated",
+                "To argue that tulips are still valuable investments today",
+                "To criticize modern historians"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Some economic historians see clear parallels between this episode and modern financial bubbles.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 12,
+          "topic": "Climate Change and Ecosystems",
+          "category": "Environmental Science",
+          "paragraph": "Climate change refers to long-term shifts in temperature and weather patterns, largely driven by human activities such as burning fossil fuels. Rising global temperatures have already begun altering ecosystems around the world, disrupting the balance between species and their habitats. Many organisms are shifting their geographic ranges, while coastal wetlands and coral reefs are particularly vulnerable to changing conditions. Extreme weather events, including droughts and heatwaves, have become more frequent. Many scientists warn that without significant emission reductions, species could face extinction. International cooperation remains essential for developing sustainable, coordinated policies that protect biodiversity for future generations.",
+          "blanks": [
+            {
+              "word": "temperatures",
+              "visible": "tempe",
+              "hidden": "ratures"
+            },
+            {
+              "word": "ecosystems",
+              "visible": "ecosy",
+              "hidden": "stems"
+            },
+            {
+              "word": "organisms",
+              "visible": "orga",
+              "hidden": "nisms"
+            },
+            {
+              "word": "wetlands",
+              "visible": "wetl",
+              "hidden": "ands"
+            },
+            {
+              "word": "vulnerable",
+              "visible": "vulne",
+              "hidden": "rable"
+            },
+            {
+              "word": "droughts",
+              "visible": "drou",
+              "hidden": "ghts"
+            },
+            {
+              "word": "scientists",
+              "visible": "scien",
+              "hidden": "tists"
+            },
+            {
+              "word": "extinction",
+              "visible": "extin",
+              "hidden": "ction"
+            },
+            {
+              "word": "sustainable",
+              "visible": "susta",
+              "hidden": "inable"
+            },
+            {
+              "word": "coordinated",
+              "visible": "coord",
+              "hidden": "inated"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 16,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Registration Confirmed: Renewable Energy Symposium",
+          "subtitle": "Dear Dr. Bennett,",
+          "text": "Thank you for registering for the 2026 International Symposium on Renewable Energy, taking place October 12-14 at the Grandview Convention Center. This email confirms your registration under the Full Conference package, which includes access to all keynote sessions, workshops, and the welcome reception on the evening of October 12.\n\nYour registration fee of $495.00 has been charged successfully to the card ending in 7042. A detailed receipt is attached to this email for your records and for any reimbursement you may need to request from your institution.\n\nPlease note that your submitted presentation abstract, \"Advances in Solar Panel Efficiency,\" has been accepted for the poster session on October 13 from 3:00 to 5:00 p.m. Poster boards will be provided on-site, and presenters should arrive 30 minutes early to set up their materials.\n\nHotel accommodations are not included in this registration. However, a discounted room block has been reserved at the Grandview Hotel next door; you may book using the code SYMP26 before September 20 to receive the conference rate.\n\nIf you need to cancel or modify your registration, please do so before September 25, as cancellations after this date are non-refundable.\n\nWe look forward to seeing you in October.\n\nBest regards,\nConference Registration Team",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To confirm Dr. Bennett's conference registration and provide key details",
+                "To reject Dr. Bennett's submitted abstract",
+                "To inform Dr. Bennett that the conference has been cancelled",
+                "To request additional payment for hotel accommodations"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "When is Dr. Bennett's poster session scheduled?",
+              "options": [
+                "October 12 in the evening",
+                "October 13 from 3:00 to 5:00 p.m.",
+                "October 14 in the morning",
+                "September 20 at noon"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about cancellations made after September 25?",
+              "options": [
+                "They will receive a full refund",
+                "They will not be refunded",
+                "They require approval from the hotel",
+                "They automatically transfer to next year's conference"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Office Move Chat",
+          "subtitle": "",
+          "text": "Carlos Mendez (9:02 a.m.)\nMorning everyone. Just a heads up, facilities confirmed we're moving to the 5th floor next Monday instead of the 3rd.\n\nRina Patel (9:05 a.m.)\nOh, that's a change. Does that affect the desk assignments we already picked out?\n\nCarlos Mendez (9:07 a.m.)\nGood question, I'm checking with facilities now. The floor plan is a bit different up there, so some window seats might not be available.\n\nDevon Marsh (9:10 a.m.)\nAs long as I'm not stuck next to the printer room again, I'm flexible on the rest.\n\nRina Patel (9:12 a.m.)\nHaha, noted. Carlos, when do we need to have our things packed by?\n\nCarlos Mendez (9:15 a.m.)\nFacilities wants everything boxed by Friday at 5 p.m. so the movers can start over the weekend. They're providing boxes and labels at the supply closet.\n\nDevon Marsh (9:17 a.m.)\nShould we back up anything on our desktop computers ourselves, or is IT handling that?\n\nCarlos Mendez (9:19 a.m.)\nIT will handle the computers and monitors directly, but please back up any personal files first, just in case. I'll send the updated floor plan and desk assignments by Wednesday.",
+          "questions": [
+            {
+              "question": "What is the main topic of this conversation?",
+              "options": [
+                "An upcoming office relocation and its logistics",
+                "A request to redesign the office layout permanently",
+                "A complaint about IT support response times",
+                "A discussion about hiring new employees"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why might some window seats not be available on the new floor?",
+              "options": [
+                "The windows are being replaced",
+                "The floor plan on the new floor is different",
+                "Those seats are reserved for management",
+                "The new floor has no windows"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about Devon?",
+              "options": [
+                "He had an unpleasant experience being seated near the printer room before",
+                "He is in charge of coordinating the move",
+                "He does not plan to move to the new floor",
+                "He is new to the company"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 67,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/67.mp3",
+          "transcript": "My package was supposed to arrive yesterday, but it never came.",
+          "context": "A customer calls about a delayed package.",
+          "options": [
+            "I'm sorry, let me check the tracking for you.",
+            "Our warehouse is closed on weekends.",
+            "The delivery fee was waived.",
+            "You can pick it up in person."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "9-67"
+        },
+        {
+          "id": 68,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/68.mp3",
+          "transcript": "Do you still have the vegetable soup, or is it sold out?",
+          "context": "A student asks a cafeteria worker about a menu item.",
+          "options": [
+            "The salad bar closes at two.",
+            "Lunch prices went up this year.",
+            "We just made a fresh batch.",
+            "The cafeteria is under renovation."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "9-68"
+        },
+        {
+          "id": 69,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/69.mp3",
+          "transcript": "Can you help me plan the surprise party for Jake?",
+          "context": "A woman asks a friend for help organizing a birthday party.",
+          "options": [
+            "Jake's birthday is in October.",
+            "Of course, what do you need me to do?",
+            "The bakery is out of chocolate cake.",
+            "We should invite his coworkers too."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "9-69"
+        },
+        {
+          "id": 70,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/70.mp3",
+          "transcript": "How much is admission for university students?",
+          "context": "A visitor asks about a discounted museum ticket.",
+          "options": [
+            "The museum closes at six today.",
+            "Group tours start every hour.",
+            "The exhibit hall is being renovated.",
+            "It's half price with a valid student ID."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "9-70"
+        },
+        {
+          "id": 71,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/71.mp3",
+          "transcript": "Is it time for an oil change on my car yet?",
+          "context": "A customer asks a mechanic about routine maintenance.",
+          "options": [
+            "Yes, it's been about five thousand miles.",
+            "Your tires need rotating too.",
+            "The car wash is next door.",
+            "We're closed on Sundays."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "9-71"
+        },
+        {
+          "id": 72,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/72.mp3",
+          "transcript": "The dryer stopped working before my clothes were fully dry.",
+          "context": "A customer reports a laundromat machine issue.",
+          "options": [
+            "The washers are all in use right now.",
+            "Detergent is sold at the counter.",
+            "I'll refund your coins, sorry about that.",
+            "We close at nine tonight."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "9-72"
+        },
+        {
+          "id": 73,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/73.mp3",
+          "transcript": "I'm heading to the store, do you need anything?",
+          "context": "A woman tells her roommate she's going grocery shopping.",
+          "options": [
+            "The store closes at ten.",
+            "Could you grab some milk?",
+            "I already ate dinner.",
+            "My car needs gas."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "10-73"
+        },
+        {
+          "id": 74,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/74.mp3",
+          "transcript": "When is the final exam for chemistry class scheduled?",
+          "context": "A student asks a classmate about an exam date.",
+          "options": [
+            "The lab report is due Friday.",
+            "Our professor is out sick.",
+            "I still need to buy the textbook.",
+            "It's next Monday morning."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "10-74"
+        },
+        {
+          "id": 75,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/75.mp3",
+          "transcript": "What did you think of my presentation this morning?",
+          "context": "A coworker asks for feedback on a presentation.",
+          "options": [
+            "It was really clear and well organized.",
+            "The meeting ran a bit long.",
+            "I forgot my notes at home.",
+            "The projector wasn't working earlier."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "10-75"
+        },
+        {
+          "id": 76,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/76.mp3",
+          "transcript": "I have a coupon, but I'm not sure if it's still valid.",
+          "context": "A customer asks a cashier about an expired-looking coupon.",
+          "options": [
+            "We accept all major credit cards.",
+            "The sale ends this weekend.",
+            "Let me check the date for you.",
+            "That item is out of stock."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "10-76"
+        }
+      ],
+      "conv": [
+        {
+          "id": 16,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/16.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I still haven't picked a topic for the history research paper. It's due in three weeks."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you thought about narrowing it down by region or time period first?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not really. There are just too many interesting options and I keep changing my mind."
+            },
+            {
+              "speaker": "male",
+              "text": "Maybe talk to Professor Diaz during office hours. She's great at helping students narrow topics."
+            },
+            {
+              "speaker": "female",
+              "text": "That's a good idea. I'll stop by tomorrow afternoon."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She cannot find enough sources for her paper.",
+                "She has not chosen a topic for her research paper.",
+                "She missed the deadline for the paper.",
+                "She disagrees with her professor's grading."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest the woman do?",
+              "options": [
+                "Choose a shorter topic.",
+                "Ask a classmate for help.",
+                "Speak with the professor during office hours.",
+                "Postpone the assignment."
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/17.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "My roommate has been staying up until 3 a.m. playing music, and I can't sleep."
+            },
+            {
+              "speaker": "female",
+              "text": "Have you tried talking to him about it directly?"
+            },
+            {
+              "speaker": "male",
+              "text": "I mentioned it once, but nothing changed."
+            },
+            {
+              "speaker": "female",
+              "text": "You might want to bring it up with your resident advisor if it keeps happening."
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, I think that's what I'll have to do next."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "His roommate keeps him awake at night with music.",
+                "He cannot find his roommate.",
+                "He was asked to move out of his room.",
+                "His roommate borrowed his belongings."
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the woman suggest he do?",
+              "options": [
+                "Move to a different dorm.",
+                "Talk to the resident advisor.",
+                "Buy noise-canceling headphones.",
+                "Wait until the semester ends."
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/18.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm torn between the study abroad program in Spain and the one in Japan."
+            },
+            {
+              "speaker": "male",
+              "text": "What's making it hard to decide?"
+            },
+            {
+              "speaker": "female",
+              "text": "The Spain program fits my major better, but I've always wanted to visit Japan."
+            },
+            {
+              "speaker": "male",
+              "text": "Maybe check whether either program offers credits toward your major before deciding."
+            },
+            {
+              "speaker": "female",
+              "text": "Good point. I'll email the study abroad office today."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman trying to decide?",
+              "options": [
+                "Whether to study abroad at all.",
+                "Which study abroad program to choose.",
+                "Which courses to take next semester.",
+                "Whether to change her major."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man recommend she check?",
+              "options": [
+                "The cost of each program.",
+                "Whether the programs offer credits toward her major.",
+                "The length of each program.",
+                "The application deadline."
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 16,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/16.mp3",
+          "speaker": "female",
+          "transcript": "Attention students: the main library will be closed this coming Saturday and Sunday for scheduled floor renovations. During this time, the smaller branch library near the student center will remain open with extended hours to accommodate students who need a place to study. All items currently checked out will not be due until the library reopens on Monday, so there is no need to worry about late fees over the weekend.",
+          "questions": [
+            {
+              "question": "Why is the main library closing this weekend?",
+              "options": [
+                "For scheduled floor renovations",
+                "Because of a power outage",
+                "For a private event",
+                "Due to low staffing"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What is mentioned about items currently checked out?",
+              "options": [
+                "They must be returned before the closure",
+                "They will not be due until the library reopens",
+                "They can only be renewed online",
+                "They will be automatically extended by one semester"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/17.mp3",
+          "speaker": "male",
+          "transcript": "This is a notice for all commuter students. Starting next Monday, the campus shuttle route will be adjusted to include a new stop at the north parking structure. The change is being made in response to feedback about overcrowding at the current stops during peak morning hours. Shuttle schedules will otherwise remain the same, and updated route maps will be posted at every existing stop by the end of this week.",
+          "questions": [
+            {
+              "question": "What is the main purpose of this announcement?",
+              "options": [
+                "To announce a new shuttle stop",
+                "To cancel the shuttle service",
+                "To increase shuttle fares",
+                "To reduce the number of shuttle buses"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why was the change made?",
+              "options": [
+                "To save fuel costs",
+                "In response to feedback about overcrowding",
+                "Because of road construction",
+                "To reduce the shuttle's operating hours"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/18.mp3",
+          "speaker": "female",
+          "transcript": "Members of the recreation center, please note that the weight room equipment will be temporarily unavailable this Wednesday from 6 a.m. to 10 a.m. for routine maintenance and safety inspections. The cardio machines and group fitness studios will remain open as usual during this time. We apologize for any inconvenience and appreciate your patience as we work to keep our equipment safe for everyone.",
+          "questions": [
+            {
+              "question": "What is the announcement mainly about?",
+              "options": [
+                "Temporary closure of the weight room for maintenance",
+                "A new fitness class schedule",
+                "Membership fee changes",
+                "The recreation center's summer hours"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What will remain open during the maintenance period?",
+              "options": [
+                "Nothing will be open",
+                "Only the swimming pool",
+                "The cardio machines and group fitness studios",
+                "Only the weight room"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 13,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/13.mp3",
+          "speaker": "male",
+          "subject": "Political Science",
+          "transcript": "Today's lecture concerns a foundational model in political science known as the median voter theorem, which attempts to explain why political parties in two-party systems so often converge toward remarkably similar, centrist policy positions, despite representing supposedly distinct ideological camps.\n\nThe theorem, formalized by economist Anthony Downs in 1957, though building on earlier work by Duncan Black, rests on a simplifying but useful assumption: imagine that voters' policy preferences can be arranged along a single left-to-right spectrum, and that each voter simply supports whichever candidate's position is closest to their own on that spectrum. Given this setup, the theorem predicts that in a straightforward two-candidate election, both candidates have a strong strategic incentive to position themselves as close as possible to the preferences of the median voter, that is, the voter positioned exactly in the middle of the distribution, with equal numbers of voters to their left and their right.\n\nWhy the median specifically, rather than, say, the average voter? Consider a candidate positioned to the left of the median. Because more than half of all voters sit at or to the right of that position, a rival candidate can simply position themselves just slightly to the right of the first candidate and thereby capture every voter from that point rightward, which constitutes a majority. The only position from which a candidate cannot be outflanked in this manner on either side is precisely the median position itself. Any deviation from the median, in either direction, opens up a vulnerability that a rational competitor can exploit.\n\nThis theorem offers a compelling explanation for a pattern political scientists frequently observe: over time, competing parties in stable two-party systems tend to drift toward the ideological center, sometimes producing remarkably similar platforms on major issues, a phenomenon that can frustrate voters seeking genuinely distinct choices.\n\nThat said, the model rests on assumptions that don't always hold in the real world, and it's important to be critical of them. Real political preferences rarely align along a single, clean dimension, economic and social issues often form separate axes entirely. Party primaries can pull candidates toward their more ideologically committed base before a general election. And voters don't always vote purely based on positional distance; factors like party loyalty, candidate character, and turnout decisions complicate the simple picture considerably. Multi-party systems, where more than two candidates compete simultaneously, also break the elegant logic of the theorem entirely, since capturing the median no longer guarantees a majority.\n\nNevertheless, as a baseline model, the median voter theorem remains one of the most useful starting points for understanding strategic positioning in electoral competition, even if real-world politics inevitably introduces complications the simple model doesn't fully capture.",
+          "questions": [
+            {
+              "question": "What is the main idea of this lecture?",
+              "options": [
+                "Political parties always maintain fixed, unchanging ideological positions",
+                "The median voter theorem explains why parties in two-party systems tend to converge toward centrist positions",
+                "Multi-party systems function identically to two-party systems",
+                "Voter turnout is the most important factor in elections"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, why is the median voter position uniquely stable in a two-candidate election?",
+              "options": [
+                "It guarantees support from every single voter",
+                "A candidate cannot be outflanked from either side without losing majority support",
+                "It requires the fewest campaign resources",
+                "It is the position preferred by party primaries"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention party primaries and multi-party systems?",
+              "options": [
+                "To argue that the median voter theorem is completely useless",
+                "To point out real-world complications that limit the theorem's simple predictions",
+                "To explain how the theorem was first developed",
+                "To describe how voters choose candidates based on character"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred from the professor's concluding remarks about the median voter theorem?",
+              "options": [
+                "It has been entirely disproven by modern political science",
+                "It remains a useful simplified model despite not capturing every real-world complexity",
+                "It applies more accurately to multi-party systems than two-party systems",
+                "It proves that voters never consider candidate character"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 14,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/14.mp3",
+          "speaker": "female",
+          "subject": "Nutrition Science",
+          "transcript": "Today we're going to look at a relationship that nutrition science has only really begun to appreciate over the past two decades: the intricate connection between dietary fiber, the trillions of bacteria living in our gut, and a group of compounds called short-chain fatty acids.\n\nFor a long time, dietary fiber was thought of mainly in terms of what it doesn't do, it isn't broken down by human digestive enzymes, so it passes through the small intestine largely intact, adding bulk to stool and supporting regular digestion. That's true as far as it goes, but it substantially undersells fiber's role. Once fiber reaches the large intestine, it becomes food for an enormous, diverse population of bacteria that make up what we now call the gut microbiome. These bacteria ferment fiber, and one of the major byproducts of this fermentation process is a class of molecules known as short-chain fatty acids, the three most important being acetate, propionate, and butyrate.\n\nButyrate, in particular, has drawn enormous scientific interest. It turns out that the cells lining our colon, called colonocytes, actually prefer butyrate as their primary energy source over glucose. Studies suggest that butyrate supports the integrity of the intestinal lining, strengthening what's sometimes called the gut barrier, and helps regulate inflammation within the colon. Some research even suggests that adequate butyrate production is associated with a reduced risk of colorectal cancer, though we should be cautious about the strength of this evidence, since much of it comes from observational studies rather than controlled trials.\n\nBeyond the gut itself, short-chain fatty acids appear to have effects throughout the body. Propionate, for instance, is absorbed into the bloodstream and transported to the liver, where it appears to play a role in regulating glucose production and possibly appetite signaling. Some researchers have proposed that short-chain fatty acids may partly explain why diets rich in fiber are consistently associated with lower rates of obesity and type 2 diabetes, not simply because fiber displaces calorie-dense foods in the diet, but because of these active metabolic signals fiber generates once it reaches the colon.\n\nThis growing understanding has practical implications worth emphasizing. It suggests that dietary recommendations to increase fiber intake aren't just about digestive comfort or feeling full longer. They reflect an attempt to nourish an internal ecosystem whose metabolic byproducts genuinely influence processes throughout the body, from inflammation to energy metabolism. In many ways, when we eat fiber, we're not only feeding ourselves, we're feeding an entire community of microorganisms whose activity turns out to matter enormously for our own health.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "The digestive process of protein and fats",
+                "How dietary fiber is fermented by gut bacteria to produce beneficial short-chain fatty acids",
+                "The history of dietary fiber recommendations",
+                "The structure of the small intestine"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what is unique about butyrate's role in the colon?",
+              "options": [
+                "It is the preferred energy source of colon cells, ahead of glucose",
+                "It passes through the body without being absorbed",
+                "It is produced only in the small intestine",
+                "It has no effect on inflammation"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the professor mention propionate and the liver?",
+              "options": [
+                "To show that short-chain fatty acids can influence processes beyond the gut, such as glucose regulation",
+                "To argue that propionate is harmful to liver function",
+                "To compare propionate with butyrate's structure",
+                "To explain how the liver produces fiber"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred from the professor's concluding remarks about fiber intake?",
+              "options": [
+                "Fiber's health benefits come only from adding bulk to stool",
+                "Fiber benefits health partly by nourishing gut bacteria that produce active metabolic byproducts",
+                "Fiber has no connection to obesity or diabetes risk",
+                "The gut microbiome plays no role in human metabolism"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 77,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/77.mp3",
+          "transcript": "I have a peanut allergy, does this dish contain any nuts?",
+          "context": "A customer asks a waiter about food ingredients.",
+          "options": [
+            "The soup is very popular today.",
+            "No, this dish is completely nut-free.",
+            "We're out of the fish special.",
+            "Dessert is included with the meal."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "10-77"
+        },
+        {
+          "id": 78,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/78.mp3",
+          "transcript": "My vision has been blurry for reading lately.",
+          "context": "A patient describes a symptom to an eye doctor.",
+          "options": [
+            "Your last checkup was a year ago.",
+            "The glasses are ready for pickup.",
+            "Sunlight can be hard on the eyes.",
+            "Let's do a quick eye exam to check."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "10-78"
+        },
+        {
+          "id": 79,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/79.mp3",
+          "transcript": "I'm sorry, but your flight has been delayed two hours.",
+          "context": "An airline employee informs a passenger about a delay.",
+          "options": [
+            "Is there a lounge I can wait in?",
+            "My luggage is already checked in.",
+            "The gate number changed recently.",
+            "Boarding starts in ten minutes."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "10-79"
+        },
+        {
+          "id": 80,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/80.mp3",
+          "transcript": "The wifi keeps disconnecting every few minutes at home.",
+          "context": "A customer describes an internet problem to a technician.",
+          "options": [
+            "Your bill was paid last week.",
+            "The service outage ended yesterday.",
+            "Let's troubleshoot the router together.",
+            "A technician visited last month."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "10-80"
+        },
+        {
+          "id": 81,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/81.mp3",
+          "transcript": "Is there a quiet room available for studying right now?",
+          "context": "A student asks a librarian about a private study space.",
+          "options": [
+            "The library closes at midnight.",
+            "Yes, room three is free at the moment.",
+            "You can print documents upstairs.",
+            "The reference desk is on the second floor."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "11-81"
+        },
+        {
+          "id": 82,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/82.mp3",
+          "transcript": "Can we focus on my legs during today's session?",
+          "context": "A gym member requests a specific workout focus from a trainer.",
+          "options": [
+            "The gym added new machines.",
+            "Your membership renews next week.",
+            "The locker room is being cleaned.",
+            "Sure, let's start with some squats."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "11-82"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 15,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/15.mp3",
+          "speaker": "male",
+          "subject": "Architecture",
+          "transcript": "Today I'd like to discuss biomimicry in architecture, the practice of looking to natural systems, refined over millions of years of evolution, for solutions to design problems, particularly problems related to energy efficiency and climate control.\n\nOne of the most celebrated examples of this approach is the Eastgate Centre, a mixed-use office and shopping complex completed in 1996 in Harare, Zimbabwe. Its architect, Mick Pearce, faced a genuine challenge: how do you keep a large building cool in a hot climate without relying heavily on air conditioning? His inspiration came from an unlikely source, termite mounds found throughout the region.\n\nAfrican termite mounds maintain a remarkably stable internal temperature, generally within about one degree of a fixed target, even as the external temperature swings dramatically between a chilly night and a scorching midday. Termites accomplish this through an elaborate network of internal chimneys and vents. Warm air generated by the termites' own metabolic activity, and by the fungus gardens some species cultivate for food, rises through central chimneys, drawing cooler air in through vents lower in the mound. As external temperatures shift throughout the day, the termites actively open and close various tunnels, constantly adjusting airflow to keep the internal climate within a tolerably narrow range.\n\nPearce and his engineering team adapted this basic principle for the Eastgate Centre. The building doesn't use conventional air conditioning at all. Instead, it draws in outside air at the base of the building, where fans push it upward through hollow spaces built into the floors, which function much like the termite mound's internal chimneys. This air absorbs heat from the building's concrete mass overnight, when temperatures are relatively cool, and this thermal mass, essentially a large reservoir of stored coolness, helps offset the heat that accumulates during the day. Warm, used air is then expelled through chimneys at the top of the structure, drawing fresh air in below in a continuous, largely passive cycle.\n\nThe measurable results have been impressive: the building reportedly uses roughly ten percent of the energy that conventional air conditioning would require for a structure of comparable size, saving considerable money and reducing carbon emissions.\n\nWhy does this example matter beyond its specific engineering details? It illustrates a broader principle behind biomimicry as a design philosophy: rather than treating nature purely as decoration or inspiration for a building's outward appearance, architects can study the underlying functional strategies organisms have evolved to solve genuinely analogous problems, and translate those strategies, often through very different materials and mechanisms, into human-engineered systems. In this sense, the Eastgate Centre didn't simply imitate what a termite mound looks like; it borrowed the functional logic of how the mound solves its climate control problem.",
+          "questions": [
+            {
+              "question": "What is the main purpose of this lecture?",
+              "options": [
+                "To describe the history of office buildings in Zimbabwe",
+                "To explain how biomimicry inspired a passive cooling system in the Eastgate Centre",
+                "To compare termite mounds with human homes",
+                "To argue that air conditioning should never be used"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, how do termite mounds maintain a stable internal temperature?",
+              "options": [
+                "By using an underground water supply",
+                "Through a network of chimneys and vents that regulate airflow",
+                "By remaining completely sealed from the outside air",
+                "Through chemical reactions in the mound's walls"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor describe the building's use of thermal mass and hollow floor spaces?",
+              "options": [
+                "To explain how the Eastgate Centre passively regulates temperature without conventional air conditioning",
+                "To argue that concrete is an ineffective building material",
+                "To describe how termites build their mounds",
+                "To compare the Eastgate Centre with other office buildings in Africa"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred from the professor's concluding remarks about biomimicry?",
+              "options": [
+                "It focuses mainly on replicating the visual appearance of natural structures",
+                "It involves adapting the functional strategies of organisms to solve analogous engineering problems",
+                "It has only been applied successfully once in architectural history",
+                "It requires abandoning modern building materials entirely"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 16,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/16.mp3",
+          "speaker": "male",
+          "subject": "Sociology",
+          "transcript": "Today I want to talk about a theory that explains how new ideas, products, and technologies spread through a society: the diffusion of innovations. This framework, developed by sociologist Everett Rogers in the 1960s, divides adopters of any new idea into five categories based on how quickly they embrace it. First come the innovators, a very small group willing to take risks on unproven ideas. Next are the early adopters, who are more socially connected and often serve as opinion leaders that others watch closely before making their own decisions. After them comes the early majority, a larger group that adopts an innovation only once they see it working successfully for others. Following that is the late majority, who tend to be skeptical and adopt mainly out of necessity or social pressure, once an innovation has become the norm. Finally, there are the laggards, who are the last to adopt, often preferring tradition and viewing new approaches with suspicion. Rogers argued that this pattern produces a bell-shaped curve when you plot the number of new adopters over time, and an S-shaped curve when you plot the cumulative total. Now, why does this matter beyond simply describing behavior? Understanding these categories helps organizations design better strategies for introducing something new. If a company focuses all of its marketing on the broad majority too early, before early adopters have had a chance to demonstrate the innovation's value, the effort often fails, because the majority typically waits for social proof before committing. This is sometimes called crossing the chasm, a term borrowed from later research building on Rogers's original model, referring to the gap between early adopters and the early majority. Consider the adoption of smartphones. The earliest models attracted a small group of technology enthusiasts willing to tolerate limited functionality and high prices. It wasn't until features improved, prices dropped, and enough early adopters demonstrated the phones' usefulness in daily life that the broader population began to adopt them. A similar pattern has played out repeatedly, from the adoption of electric vehicles to online banking. One important factor influencing how quickly an innovation spreads is what Rogers called relative advantage, meaning how much better people perceive the new option to be compared to what it replaces. Another is compatibility, or how well the innovation fits with existing values and past experiences. Innovations that are complex or difficult to try on a small scale tend to spread more slowly, regardless of their actual benefits. Next class, we'll look at some case studies where diffusion of innovations theory failed to predict actual adoption patterns, and discuss some of its limitations.",
+          "questions": [
+            {
+              "question": "What is the talk mainly about?",
+              "options": [
+                "A theory describing how new ideas spread through society",
+                "The history of smartphone technology",
+                "How companies set prices for new products",
+                "The biography of Everett Rogers"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, what characterizes early adopters?",
+              "options": [
+                "They are the last to try anything new",
+                "They are highly connected and often act as opinion leaders",
+                "They only adopt out of necessity",
+                "They avoid all forms of risk"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention smartphones?",
+              "options": [
+                "To criticize the pricing of modern smartphones",
+                "To illustrate how the diffusion of innovations pattern applies to a real technology",
+                "To explain how smartphones are manufactured",
+                "To compare smartphones with electric vehicles in detail"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about innovations that are difficult to try on a small scale?",
+              "options": [
+                "They tend to spread more slowly regardless of their benefits",
+                "They always fail completely",
+                "They are adopted first by the late majority",
+                "They have no relative advantage"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 83,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/83.mp3",
+          "transcript": "The ATM outside just ate my card.",
+          "context": "A customer reports a card being stuck in the machine.",
+          "options": [
+            "Let me help you retrieve it.",
+            "The ATM fee is two dollars.",
+            "Our branch closes at five.",
+            "You can deposit checks online now."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "11-83"
+        },
+        {
+          "id": 84,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/84.mp3",
+          "transcript": "Could I get room service delivered around eight tonight?",
+          "context": "A hotel guest requests a food delivery time.",
+          "options": [
+            "The restaurant closes at nine.",
+            "Breakfast is included with your stay.",
+            "Of course, I'll note that for you.",
+            "Housekeeping comes in the morning."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "11-84"
+        },
+        {
+          "id": 85,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/85.mp3",
+          "transcript": "Dad's flight lands tomorrow morning, can you pick him up?",
+          "context": "A man asks his mother to pick up his father from the airport.",
+          "options": [
+            "The airport is under construction.",
+            "Sure, what time does he land?",
+            "I already booked a taxi.",
+            "His luggage might be delayed."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "11-85"
+        },
+        {
+          "id": 86,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/86.mp3",
+          "transcript": "Do you want to bring your camera to the park this weekend?",
+          "context": "A woman invites a friend to a photography outing.",
+          "options": [
+            "The park closes at sunset.",
+            "My camera battery needs charging.",
+            "The weather forecast looks cloudy.",
+            "Sure, I'd love to get some shots."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "11-86"
+        },
+        {
+          "id": 87,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/87.mp3",
+          "transcript": "You've been parking in front of my driveway again.",
+          "context": "A man complains to his neighbor about a parking issue.",
+          "options": [
+            "Sorry, I'll move my car right away.",
+            "The street gets crowded on weekends.",
+            "My guests are visiting today.",
+            "The parking sign fell down."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "11-87"
+        },
+        {
+          "id": 88,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/88.mp3",
+          "transcript": "I wanted to let you know your rent will increase next year.",
+          "context": "A landlord informs a tenant about an upcoming rent change.",
+          "options": [
+            "The building has new security cameras.",
+            "My lease ends in December.",
+            "Thanks for letting me know in advance.",
+            "The hallway was repainted recently."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "11-88"
+        }
+      ],
+      "conv": [
+        {
+          "id": 19,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/19.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I just got a notice saying I owe a fine for an overdue library book."
+            },
+            {
+              "speaker": "female",
+              "text": "Did you already return the book?"
+            },
+            {
+              "speaker": "male",
+              "text": "Yes, last week, but the fine is still showing on my account."
+            },
+            {
+              "speaker": "female",
+              "text": "That might just be a delay in the system. I'd go talk to the front desk to clear it up."
+            },
+            {
+              "speaker": "male",
+              "text": "I'll stop by after my next class."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He lost a library book.",
+                "He is being charged a fine for a book he already returned.",
+                "He cannot find a book he needs.",
+                "His library card has expired."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Pay the fine immediately.",
+                "Ignore the notice.",
+                "Talk to the front desk about the issue.",
+                "Check the library's website."
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/20.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I signed up for five classes this semester, and I'm already feeling overwhelmed."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you considered dropping one before the deadline?"
+            },
+            {
+              "speaker": "female",
+              "text": "I've thought about it, but I'm worried it will delay my graduation."
+            },
+            {
+              "speaker": "male",
+              "text": "You could talk to your academic advisor about how it would actually affect your timeline."
+            },
+            {
+              "speaker": "female",
+              "text": "That's probably smarter than guessing. I'll schedule an appointment."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She failed one of her classes.",
+                "She feels overwhelmed by her course load.",
+                "She cannot register for a required class.",
+                "She missed an important exam."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest she do?",
+              "options": [
+                "Drop out of school for a semester.",
+                "Talk to her academic advisor.",
+                "Take a lighter course load next year.",
+                "Ask a professor for extra credit."
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 19,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/19.mp3",
+          "speaker": "male",
+          "transcript": "A reminder to all students: if your student ID card is lost, damaged, or stolen, replacement cards can now be issued at the campus services office on the ground floor of the administration building, rather than requiring an appointment at the main office across campus. Office hours for ID replacement are Monday through Friday, nine to four. A small processing fee applies for replacement cards issued due to loss or damage.",
+          "questions": [
+            {
+              "question": "What is this announcement mainly about?",
+              "options": [
+                "A new location for getting a replacement student ID",
+                "A change in tuition payment methods",
+                "New student orientation dates",
+                "A change to library card policies"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What is mentioned about the fee?",
+              "options": [
+                "There is never a fee",
+                "A small fee applies for lost or damaged cards",
+                "The fee was recently eliminated",
+                "The fee depends on the student's year"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/20.mp3",
+          "speaker": "female",
+          "transcript": "This is a scheduled fire drill notice for all residents of the north dormitory building. The drill will take place tomorrow at 2 p.m. and should last no more than fifteen minutes. When the alarm sounds, please exit the building immediately using the nearest stairwell and proceed to the designated meeting point in the courtyard. Elevators must not be used during the drill. Resident advisors will be present to answer any questions.",
+          "questions": [
+            {
+              "question": "What is the purpose of this announcement?",
+              "options": [
+                "To warn about an actual fire",
+                "To announce a scheduled fire drill",
+                "To cancel a planned event",
+                "To report a maintenance issue"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should residents avoid doing during the drill?",
+              "options": [
+                "Talking to resident advisors",
+                "Using the elevators",
+                "Leaving personal belongings behind",
+                "Going to the courtyard"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 31,
+        "promptGender": "female",
+        "prompt": "I can't find my keys anywhere this morning.",
+        "responseGender": "male",
+        "responsePrefix": "Maybe",
+        "correctChunks": [
+          "they",
+          "fell",
+          "behind",
+          "the couch cushions",
+          "again"
+        ],
+        "distractorChunks": [
+          "fall"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 32,
+        "promptGender": "male",
+        "prompt": "The new intern seems really nervous about her first presentation.",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "think",
+          "she",
+          "just",
+          "needs",
+          "a little more practice"
+        ],
+        "distractorChunks": [
+          "need"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 33,
+        "promptGender": "female",
+        "prompt": "Our flight got moved up two hours.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Does",
+          "that",
+          "mean",
+          "we",
+          "have to",
+          "leave",
+          "earlier"
+        ],
+        "distractorChunks": [
+          "means"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 34,
+        "promptGender": "male",
+        "prompt": "I can't remember if I locked the front door.",
+        "responseGender": "female",
+        "responsePrefix": "You",
+        "correctChunks": [
+          "probably",
+          "should",
+          "go back",
+          "and check",
+          "it"
+        ],
+        "distractorChunks": [
+          "going"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 35,
+        "promptGender": "female",
+        "prompt": "The garden hasn't gotten any rain in weeks.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Do",
+          "you",
+          "think",
+          "the plants",
+          "are",
+          "getting",
+          "enough water"
+        ],
+        "distractorChunks": [
+          "is"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 36,
+        "promptGender": "male",
+        "prompt": "My computer keeps freezing whenever I open too many tabs.",
+        "responseGender": "female",
+        "responsePrefix": "Maybe",
+        "correctChunks": [
+          "it",
+          "needs",
+          "more memory",
+          "installed"
+        ],
+        "distractorChunks": [
+          "need"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 37,
+        "promptGender": "female",
+        "prompt": "I haven't heard from the moving company in days.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Have",
+          "you",
+          "tried",
+          "calling",
+          "them",
+          "directly"
+        ],
+        "distractorChunks": [
+          "call"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 38,
+        "promptGender": "male",
+        "prompt": "The neighbors are having construction done again this week.",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "hope",
+          "it",
+          "doesn't",
+          "last",
+          "as long",
+          "as last time"
+        ],
+        "distractorChunks": [
+          "don't"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 39,
+        "promptGender": "female",
+        "prompt": "Our team lost the client because of a scheduling mix-up.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Who",
+          "was",
+          "actually",
+          "responsible",
+          "for",
+          "the schedule"
+        ],
+        "distractorChunks": [
+          "were"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 40,
+        "promptGender": "male",
+        "prompt": "I think I left my charger at the coffee shop.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Did",
+          "you",
+          "already",
+          "check",
+          "the lost and found there"
+        ],
+        "distractorChunks": [
+          "checked"
+        ],
+        "responseSuffix": "?"
+      }
+    ],
+    "email": {
+      "id": 4,
+      "scenario": "You are applying to a graduate program and need a letter of recommendation. You want to ask your former statistics professor, who taught you two years ago, if she would be willing to write one.",
+      "recipient": "Dr. Simmons",
+      "subject": "Request for a letter of recommendation",
+      "tasks": [
+        {
+          "description": "Explain that you are applying to a graduate program and need a recommendation letter.",
+          "keywords": [
+            "graduate program",
+            "recommendation",
+            "letter",
+            "applying",
+            "grad school"
+          ]
+        },
+        {
+          "description": "Remind her which course you took with her and when.",
+          "keywords": [
+            "statistics",
+            "course",
+            "took your class",
+            "two years ago",
+            "your class"
+          ]
+        },
+        {
+          "description": "Ask if she would be willing to write the letter and mention the deadline.",
+          "keywords": [
+            "willing",
+            "deadline",
+            "would you be able",
+            "due",
+            "by"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Dr. Simmons,\n\nI hope you are doing well. I am applying to a graduate program in data analytics, and I need a letter of recommendation from someone familiar with my academic work.\n\nI took your introductory statistics course two years ago and really enjoyed the way you explained complex concepts, which is part of why I became interested in this field.\n\nWould you be willing to write a recommendation letter for me? The application deadline is in five weeks, and I would be glad to send my resume and personal statement to help refresh your memory. Thank you very much for considering my request.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 4,
+      "subject": "urban planning",
+      "professor": "Dr. Osei",
+      "professorGender": "female",
+      "prompt": "We've been discussing how cities should invest limited transportation budgets, a decision that shapes commute times and pollution levels for decades. Some transportation planners argue that cities should prioritize expanding public transportation, such as buses and trains, since it reduces both congestion and pollution. Others argue that expanding highways should come first, since most residents currently rely on cars and would benefit more directly from reduced driving times. Should cities prioritize public transportation or highway expansion? Why?",
+      "classmates": [
+        {
+          "name": "Camille",
+          "gender": "female",
+          "opinion": "I think public transportation should come first. Every dollar spent widening highways tends to attract more cars onto the road within a few years, largely canceling out any reduction in congestion. Good public transit actually gives people a real alternative to driving at all, instead of just making driving marginally faster for a short period. I've seen a widened highway near me refill with traffic within about two years, while a new train line kept gaining riders."
+        },
+        {
+          "name": "Tariq",
+          "gender": "male",
+          "opinion": "I'd prioritize highways instead. Most people in this city don't live near a reliable transit line, and that isn't going to change quickly no matter how much gets invested starting today. Until routes actually reach the neighborhoods where people live and work, expanding roads will help the majority of current residents get to their jobs faster right now, rather than years from now once a hypothetical transit network is built out."
+        }
+      ],
+      "exampleResponse": "Transportation policy shapes how residents move through a city every single day. The question of whether cities should prioritize public transportation or highway expansion is worth considering. While I see where Tariq is coming from when he argues that most residents currently depend on cars, I would argue that this dependence exists partly because transit options are so limited, not because driving is inherently preferable. In this respect, I am inclined to agree with Camille, who emphasizes that expanding highways tends to generate more traffic over time rather than solving congestion. For example, a city that invests in a reliable train line can gradually shift commuter habits, whereas a wider highway often fills back up with new drivers within a few years."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 4,
+      "location": "Botanical Garden",
+      "icon": "🌿",
+      "speaker": "female",
+      "introText": "You are learning how to guide visitors through the botanical garden. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the botanical garden.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "The rose section is just ahead of us.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Please stay on the marked pathways.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Some plants here are extremely rare.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "The greenhouse maintains a tropical climate year-round.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Feel free to take photographs, but please do not touch the flowers.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "The garden tour ends near the fountain at the main entrance.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 4,
+      "topic": "Getting Around the City",
+      "icon": "🚌",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about public transportation in cities. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for taking the time to speak with me. To begin, could you describe the public transportation system in your city or town?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer using public transportation or driving your own vehicle? Which do you think is more convenient?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people think that governments should invest more money in public transportation instead of building new roads. What do you think about this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you believe public transportation will become more popular in the future? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

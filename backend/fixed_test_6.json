@@ -1,0 +1,1757 @@
+{
+  "id": 6,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 16,
+          "topic": "Trade Networks of the Silk Road",
+          "category": "History",
+          "paragraph": "The Silk Road was not a single road but a sprawling network of trade routes connecting East Asia with the Mediterranean world for well over a thousand years. Merchants transported silk, spices, and precious metals across vast deserts and towering mountain ranges, often relying on caravans of camels to survive the harsh terrain. Along these routes, cities flourished as bustling hubs where travelers exchanged goods, languages, and religious beliefs. The constant circulation of ideas fostered remarkable cultural diffusion, spreading innovations like papermaking and gunpowder far beyond their places of origin. Despite the dangers of banditry and extreme weather, the network endured for centuries, fundamentally reshaping the economies and societies it touched.",
+          "blanks": [
+            {
+              "word": "transported",
+              "visible": "trans",
+              "hidden": "ported"
+            },
+            {
+              "word": "precious",
+              "visible": "prec",
+              "hidden": "ious"
+            },
+            {
+              "word": "towering",
+              "visible": "towe",
+              "hidden": "ring"
+            },
+            {
+              "word": "flourished",
+              "visible": "flour",
+              "hidden": "ished"
+            },
+            {
+              "word": "bustling",
+              "visible": "bust",
+              "hidden": "ling"
+            },
+            {
+              "word": "exchanged",
+              "visible": "exch",
+              "hidden": "anged"
+            },
+            {
+              "word": "circulation",
+              "visible": "circu",
+              "hidden": "lation"
+            },
+            {
+              "word": "diffusion",
+              "visible": "diff",
+              "hidden": "usion"
+            },
+            {
+              "word": "innovations",
+              "visible": "innov",
+              "hidden": "ations"
+            },
+            {
+              "word": "banditry",
+              "visible": "band",
+              "hidden": "itry"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 25,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Reduced Hours During Inventory",
+          "subtitle": "",
+          "text": "This store will close at 4:00 p.m. on Tuesday, October 8, for our annual inventory count.\n\nNormal hours will resume on Wednesday morning at 9:00 a.m.\n\nWe apologize for any inconvenience and thank you for your understanding.",
+          "questions": [
+            {
+              "question": "What is the purpose of this sign?",
+              "options": [
+                "To announce a store closing permanently",
+                "To inform customers of reduced hours for inventory",
+                "To advertise a discount sale",
+                "To announce a change in store ownership"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When will the store return to its normal hours?",
+              "options": [
+                "Later the same day",
+                "Wednesday morning",
+                "The following Tuesday",
+                "It will remain closed indefinitely"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 27,
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Neighborhood Cleanup Day - Saturday",
+          "subtitle": "",
+          "text": "8:00 a.m. — Volunteers Meet at Community Center\n8:15 a.m. — Supplies Distributed (gloves, bags, tools)\n8:30 a.m. — Cleanup Teams Depart to Assigned Areas\n11:00 a.m. — Teams Return, Bags Collected\n11:30 a.m. — Free Lunch for Volunteers\n12:30 p.m. — Raffle for Donated Prizes",
+          "questions": [
+            {
+              "question": "What happens right before the cleanup teams depart?",
+              "options": [
+                "Lunch is served",
+                "Supplies are distributed",
+                "The raffle is held",
+                "Bags are collected"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When does the raffle for donated prizes take place?",
+              "options": [
+                "8:00 a.m.",
+                "8:30 a.m.",
+                "11:30 a.m.",
+                "12:30 p.m."
+              ],
+              "answer": 3
+            }
+          ]
+        },
+        {
+          "id": 28,
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Freshman Orientation Day",
+          "subtitle": "",
+          "text": "8:30 a.m. — Campus Check-in\n9:00 a.m. — Welcome Address from the Dean\n9:45 a.m. — Academic Advising Sessions\n11:00 a.m. — Campus Tour\n12:30 p.m. — Lunch with Student Mentors\n1:30 p.m. — Club and Activity Fair",
+          "questions": [
+            {
+              "question": "What takes place immediately before the campus tour?",
+              "options": [
+                "Campus check-in",
+                "The welcome address",
+                "Academic advising sessions",
+                "Lunch with student mentors"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "When is the club and activity fair scheduled?",
+              "options": [
+                "8:30 a.m.",
+                "11:00 a.m.",
+                "12:30 p.m.",
+                "1:30 p.m."
+              ],
+              "answer": 3
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 11,
+          "title": "Linear Perspective in Renaissance Painting",
+          "passage": "Medieval European paintings typically depicted figures and objects with little regard for spatial depth, arranging scenes according to symbolic importance rather than realistic proportion. This began to change in early fifteenth-century Florence, when the architect Filippo Brunelleschi conducted experiments demonstrating how objects could be rendered on a flat surface to convincingly suggest three-dimensional space.\n\nBrunelleschi's insights were soon formalized into a mathematical system known as linear perspective. Artists learned to draw parallel lines, called orthogonals, converging toward a single vanishing point on the horizon, creating a convincing illusion of depth and distance. The architect and theorist Leon Battista Alberti later codified these principles in a treatise, making the technique accessible to painters across Italy.\n\nPainters quickly embraced linear perspective to achieve striking realism. Masaccio's fresco of the Holy Trinity, painted in a Florentine church, famously used the technique to create a convincing illusion of a deep, architectural chapel receding into the wall itself, astonishing viewers accustomed to the flatter compositions of previous centuries and demonstrating the dramatic expressive potential of mathematical precision.\n\nLinear perspective became a cornerstone of Western artistic training for the next several centuries, shaping how painters composed space well into the modern era. Only in the late nineteenth and twentieth centuries did artists deliberately challenge and abandon strict perspective, exploring flattened, fragmented, or multiple viewpoints as movements like Cubism questioned assumptions that had gone largely unquestioned for generations.",
+          "passage_marked": "Medieval European paintings typically depicted figures and objects with little regard for spatial depth, arranging scenes according to symbolic importance rather than realistic proportion. This began to change in early fifteenth-century Florence, when the architect Filippo Brunelleschi conducted experiments demonstrating how objects could be rendered on a flat surface to convincingly suggest three-dimensional space. [A]\n\nBrunelleschi's insights were soon formalized into a mathematical system known as linear perspective. Artists learned to draw parallel lines, called orthogonals, converging toward a single vanishing point on the horizon, creating a convincing illusion of depth and distance. [B] The architect and theorist Leon Battista Alberti later codified these principles in a treatise, making the technique accessible to painters across Italy.\n\nPainters quickly embraced linear perspective to achieve striking realism. Masaccio's fresco of the Holy Trinity, painted in a Florentine church, famously used the technique to create a convincing illusion of a deep, architectural chapel receding into the wall itself, astonishing viewers accustomed to the flatter compositions of previous centuries and demonstrating the dramatic expressive potential of mathematical precision. [C]\n\nLinear perspective became a cornerstone of Western artistic training for the next several centuries, shaping how painters composed space well into the modern era. Only in the late nineteenth and twentieth centuries did artists deliberately challenge and abandon strict perspective, exploring flattened, fragmented, or multiple viewpoints as movements like Cubism questioned assumptions that had gone largely unquestioned for generations. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'codified' in the passage is closest in meaning to",
+              "options": [
+                "destroyed",
+                "organized into a formal system",
+                "criticized",
+                "ignored"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what did Brunelleschi's experiments demonstrate?",
+              "options": [
+                "How to mix oil paints",
+                "How objects could be rendered on a flat surface to suggest three-dimensional depth",
+                "How to construct church domes",
+                "How medieval symbolism functioned in art"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "How does linear perspective create an illusion of depth?",
+              "options": [
+                "By using only bright colors",
+                "By drawing parallel orthogonal lines converging at a vanishing point",
+                "By avoiding any straight lines",
+                "By painting figures larger than life"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention Masaccio's fresco of the Holy Trinity?",
+              "options": [
+                "To criticize medieval religious art",
+                "To provide a striking example of linear perspective's dramatic effect",
+                "To explain the history of Florentine churches",
+                "To describe Alberti's treatise"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This mathematical precision transformed painting from an intuitive craft into something approaching an exact science.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 17,
+          "topic": "The Physiology of Animal Hibernation",
+          "category": "Biology",
+          "paragraph": "Hibernation is a remarkable survival strategy that allows certain mammals to endure long periods of extreme cold and food scarcity. During this dormant state, an animal's heart rate and body temperature drop dramatically, sometimes falling to just a few degrees above freezing, which conserves enormous amounts of energy. Changes in metabolism slow digestive processes almost to a standstill so that stored fat reserves can sustain the animal for months without eating. Researchers have discovered that certain proteins help protect cells from damage during these shifts, preventing the kind of tissue injury that would otherwise be fatal. Understanding these mechanisms could eventually inform medical treatments, including techniques for preserving organs before transplantation.",
+          "blanks": [
+            {
+              "word": "dormant",
+              "visible": "dor",
+              "hidden": "mant"
+            },
+            {
+              "word": "dramatically",
+              "visible": "drama",
+              "hidden": "tically"
+            },
+            {
+              "word": "conserves",
+              "visible": "cons",
+              "hidden": "erves"
+            },
+            {
+              "word": "metabolism",
+              "visible": "metab",
+              "hidden": "olism"
+            },
+            {
+              "word": "digestive",
+              "visible": "dige",
+              "hidden": "stive"
+            },
+            {
+              "word": "standstill",
+              "visible": "stand",
+              "hidden": "still"
+            },
+            {
+              "word": "sustain",
+              "visible": "sus",
+              "hidden": "tain"
+            },
+            {
+              "word": "discovered",
+              "visible": "disco",
+              "hidden": "vered"
+            },
+            {
+              "word": "proteins",
+              "visible": "prot",
+              "hidden": "eins"
+            },
+            {
+              "word": "preventing",
+              "visible": "preve",
+              "hidden": "nting"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 12,
+          "title": "The Evolution of Bird Flight",
+          "passage": "Birds are the only living descendants of dinosaurs, having evolved from small, feathered theropods during the Mesozoic Era. Long before flight developed, feathers likely served other purposes, such as insulation to retain body heat or elaborate display structures used to attract mates, rather than functioning initially as an aid to locomotion through the air.\n\nPaleontologists have long debated exactly how powered flight emerged from these feathered, ground-dwelling ancestors. The cursorial, or ground-up, hypothesis proposes that fast-running dinosaurs gradually extended their forelimbs while pursuing prey or leaping obstacles. The competing arboreal, or trees-down, hypothesis instead suggests that tree-climbing ancestors developed gliding capabilities before evolving the sustained flapping flight seen in modern birds.\n\nFossil discoveries, most famously Archaeopteryx from the late Jurassic period, reveal a striking mosaic of features supporting the dinosaur-bird connection. Archaeopteryx possessed feathered wings alongside unmistakably reptilian traits, including sharp teeth, a long bony tail, and clawed fingers. Such transitional fossils demonstrate that flight-related structures appeared gradually, blending characteristics later associated exclusively with either dinosaurs or birds.\n\nMost paleontologists today agree that flight evolved incrementally rather than in a single leap, with feathers repurposed, a process called exaptation, from their original insulating or ornamental function into structures capable of generating lift. This gradual repurposing illustrates how evolution frequently adapts existing traits for entirely new uses rather than creating novel structures from nothing.",
+          "passage_marked": "Birds are the only living descendants of dinosaurs, having evolved from small, feathered theropods during the Mesozoic Era. Long before flight developed, feathers likely served other purposes, such as insulation to retain body heat or elaborate display structures used to attract mates, rather than functioning initially as an aid to locomotion through the air. [A]\n\nPaleontologists have long debated exactly how powered flight emerged from these feathered, ground-dwelling ancestors. The cursorial, or ground-up, hypothesis proposes that fast-running dinosaurs gradually extended their forelimbs while pursuing prey or leaping obstacles. [B] The competing arboreal, or trees-down, hypothesis instead suggests that tree-climbing ancestors developed gliding capabilities before evolving the sustained flapping flight seen in modern birds.\n\nFossil discoveries, most famously Archaeopteryx from the late Jurassic period, reveal a striking mosaic of features supporting the dinosaur-bird connection. Archaeopteryx possessed feathered wings alongside unmistakably reptilian traits, including sharp teeth, a long bony tail, and clawed fingers. Such transitional fossils demonstrate that flight-related structures appeared gradually, blending characteristics later associated exclusively with either dinosaurs or birds. [C]\n\nMost paleontologists today agree that flight evolved incrementally rather than in a single leap, with feathers repurposed, a process called exaptation, from their original insulating or ornamental function into structures capable of generating lift. This gradual repurposing illustrates how evolution frequently adapts existing traits for entirely new uses rather than creating novel structures from nothing. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'mosaic' in the passage is closest in meaning to",
+              "options": [
+                "a single uniform pattern",
+                "a combination of many different, distinct elements",
+                "a type of fossil rock",
+                "a scientific instrument"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what was the original function of feathers before flight evolved?",
+              "options": [
+                "Camouflage from predators only",
+                "Insulation and display for attracting mates",
+                "Producing sound for communication",
+                "Storing water in dry climates"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What do transitional fossils like Archaeopteryx demonstrate?",
+              "options": [
+                "That birds and dinosaurs are unrelated",
+                "That flight-related structures appeared gradually, blending dinosaur and bird traits",
+                "That flight evolved in a single sudden event",
+                "That feathers appeared only after flight began"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author describe both the cursorial and arboreal hypotheses?",
+              "options": [
+                "To prove that one hypothesis is entirely correct",
+                "To illustrate ongoing scientific debate about how flight evolved",
+                "To argue that Archaeopteryx could not fly",
+                "To describe modern bird migration"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Such fossils are often described as nature's own missing links.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 18,
+          "topic": "Group Conformity and Social Influence",
+          "category": "Psychology",
+          "paragraph": "Social psychologists have long been fascinated by the extent to which individuals adjust their behavior to match the expectations of a group, even when doing so contradicts their own private judgment. In a series of classic experiments during the 1950s, a researcher demonstrated that participants would frequently give obviously incorrect answers simply because everyone else in the room had already done so. This tendency toward conformity appears to stem from two separate psychological pressures: a desire to be accurate and a desire to be accepted by others. When individuals believe the group possesses superior knowledge, they may genuinely change their private opinion, a process known as informational influence.",
+          "blanks": [
+            {
+              "word": "experiments",
+              "visible": "exper",
+              "hidden": "iments"
+            },
+            {
+              "word": "demonstrated",
+              "visible": "demon",
+              "hidden": "strated"
+            },
+            {
+              "word": "frequently",
+              "visible": "frequ",
+              "hidden": "ently"
+            },
+            {
+              "word": "incorrect",
+              "visible": "inco",
+              "hidden": "rrect"
+            },
+            {
+              "word": "tendency",
+              "visible": "tend",
+              "hidden": "ency"
+            },
+            {
+              "word": "conformity",
+              "visible": "confo",
+              "hidden": "rmity"
+            },
+            {
+              "word": "psychological",
+              "visible": "psych",
+              "hidden": "ological"
+            },
+            {
+              "word": "accurate",
+              "visible": "accu",
+              "hidden": "rate"
+            },
+            {
+              "word": "possesses",
+              "visible": "poss",
+              "hidden": "esses"
+            },
+            {
+              "word": "superior",
+              "visible": "supe",
+              "hidden": "rior"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 29,
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Local Farmers Cooperative Meeting",
+          "subtitle": "",
+          "text": "6:00 p.m. — Doors Open, Light Refreshments\n6:30 p.m. — Treasurer's Report\n7:00 p.m. — Discussion of New Irrigation Proposal\n7:45 p.m. — Guest Speaker: Regional Soil Specialist\n8:30 p.m. — Open Floor for Member Questions\n9:00 p.m. — Meeting Adjourns",
+          "questions": [
+            {
+              "question": "What happens right after the treasurer's report?",
+              "options": [
+                "The guest speaker presents",
+                "Refreshments are served",
+                "The irrigation proposal is discussed",
+                "The meeting adjourns"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "At what time does the guest speaker present?",
+              "options": [
+                "6:30 p.m.",
+                "7:00 p.m.",
+                "7:45 p.m.",
+                "8:30 p.m."
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Community Garden Workshop Series",
+          "subtitle": "",
+          "text": "10:00 a.m. — Soil Testing Basics\n10:45 a.m. — Choosing Plants for Your Climate Zone\n11:30 a.m. — Composting Demonstration\n12:15 p.m. — Break for Snacks\n12:45 p.m. — Hands-On Planting Session\n2:00 p.m. — Q&A with Master Gardeners",
+          "questions": [
+            {
+              "question": "What happens right before the break for snacks?",
+              "options": [
+                "Soil testing basics",
+                "Choosing plants for your climate zone",
+                "A composting demonstration",
+                "The hands-on planting session"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "When does the Q&A with master gardeners take place?",
+              "options": [
+                "10:45 a.m.",
+                "11:30 a.m.",
+                "12:45 p.m.",
+                "2:00 p.m."
+              ],
+              "answer": 3
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 111,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/111.mp3",
+          "transcript": "Your music has been really loud the past few nights.",
+          "context": "A woman complains to her neighbor about noise.",
+          "options": [
+            "I'm sorry, I'll turn it down from now on.",
+            "I just moved in last month.",
+            "The walls here are pretty thin.",
+            "I usually listen to music in the evening."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "14-111"
+        },
+        {
+          "id": 112,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/112.mp3",
+          "transcript": "I wanted to ask about renewing my lease for another year.",
+          "context": "A tenant discusses lease renewal with a landlord.",
+          "options": [
+            "The rent was paid on time this month.",
+            "The building passed its last inspection.",
+            "Sure, I'll prepare the new contract.",
+            "Maintenance requests are handled quickly."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "14-112"
+        },
+        {
+          "id": 113,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/113.mp3",
+          "transcript": "Is it too late in the season to get a flu shot?",
+          "context": "A patient asks a nurse about getting vaccinated.",
+          "options": [
+            "The clinic opens at eight.",
+            "No, we still have appointments available.",
+            "Your last visit was in spring.",
+            "Flu season usually ends in March."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "15-113"
+        },
+        {
+          "id": 114,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/114.mp3",
+          "transcript": "Could I book a manicure appointment for Saturday?",
+          "context": "A client calls a salon to schedule a manicure.",
+          "options": [
+            "We just got new nail polish colors.",
+            "Appointments usually take an hour.",
+            "The salon is closed on Sundays.",
+            "Let me check our schedule for that day."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "15-114"
+        },
+        {
+          "id": 115,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/115.mp3",
+          "transcript": "Can you leave the food order at the front desk?",
+          "context": "A customer gives instructions for a food delivery.",
+          "options": [
+            "Sure, I'll drop it off there.",
+            "Your order total is fifteen dollars.",
+            "The restaurant is running a promotion.",
+            "Delivery usually takes thirty minutes."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "15-115"
+        },
+        {
+          "id": 116,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/116.mp3",
+          "transcript": "Do you have any vegetarian options today?",
+          "context": "A student asks about meal choices at a cafeteria.",
+          "options": [
+            "The cafeteria opens at seven.",
+            "Meal plans can be purchased online.",
+            "Yes, we have a veggie stir-fry today.",
+            "The salad bar was removed last year."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "15-116"
+        },
+        {
+          "id": 117,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/117.mp3",
+          "transcript": "Are you attending the conference in Chicago next month?",
+          "context": "A coworker asks about plans to attend a work conference.",
+          "options": [
+            "The conference schedule was just released.",
+            "Yes, I already booked my flight.",
+            "Our office is hosting a webinar too.",
+            "Chicago has great weather in summer."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "15-117"
+        },
+        {
+          "id": 118,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/118.mp3",
+          "transcript": "Is there a discount for university students on weekdays?",
+          "context": "A student asks about ticket pricing at a museum.",
+          "options": [
+            "The museum is closed on Mondays.",
+            "Group tours require advance booking.",
+            "The new exhibit opens next week.",
+            "Yes, just show your student ID at the counter."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "15-118"
+        },
+        {
+          "id": 119,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/119.mp3",
+          "transcript": "I have a flat tire and I'm stuck on the highway.",
+          "context": "A driver calls roadside assistance for help.",
+          "options": [
+            "We'll send someone to help you shortly.",
+            "Your insurance covers towing costs.",
+            "The nearest gas station is two miles away.",
+            "Tire replacements take about an hour."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "15-119"
+        },
+        {
+          "id": 120,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/120.mp3",
+          "transcript": "I can't find my ticket, but I dropped off a coat last week.",
+          "context": "A customer tries to pick up dry cleaning without a claim ticket.",
+          "options": [
+            "Dry cleaning usually takes three days.",
+            "We accept credit cards now.",
+            "That's fine, let me look it up by your name.",
+            "The shop closes at six today."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "15-120"
+        }
+      ],
+      "conv": [
+        {
+          "id": 26,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/26.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "There's an error on my financial aid paperwork, and I'm not sure how to fix it."
+            },
+            {
+              "speaker": "male",
+              "text": "What kind of error is it?"
+            },
+            {
+              "speaker": "female",
+              "text": "My parents' income information got entered incorrectly somehow."
+            },
+            {
+              "speaker": "male",
+              "text": "You should go to the financial aid office in person. They can usually correct that quickly."
+            },
+            {
+              "speaker": "female",
+              "text": "I'll head over there right after this class."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She missed the financial aid deadline.",
+                "There is an error on her financial aid paperwork.",
+                "She was denied financial aid.",
+                "She lost her financial aid documents."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest she do?",
+              "options": [
+                "Call her parents about it.",
+                "Visit the financial aid office in person.",
+                "Wait for the system to fix itself.",
+                "Fill out a new application from scratch."
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 27,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/27.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "My roommate and I can't agree on how to split the cost of a parking permit."
+            },
+            {
+              "speaker": "female",
+              "text": "What's the disagreement about exactly?"
+            },
+            {
+              "speaker": "male",
+              "text": "I barely drive, but he wants to split it fifty-fifty."
+            },
+            {
+              "speaker": "female",
+              "text": "Maybe suggest splitting it based on how often each of you actually uses the car."
+            },
+            {
+              "speaker": "male",
+              "text": "That seems fair. I'll bring it up with him tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He cannot find a parking spot on campus.",
+                "He disagrees with his roommate about splitting a parking cost.",
+                "His car was towed from a permit lot.",
+                "He needs to renew his parking permit."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Split the cost based on usage.",
+                "Refuse to pay anything.",
+                "Buy a separate permit for himself.",
+                "Ask the building manager to decide."
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 28,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/28.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I can never find a quiet spot to study during the day. The library is always packed."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you tried the study rooms on the top floor of the student center?"
+            },
+            {
+              "speaker": "female",
+              "text": "I didn't even know those existed."
+            },
+            {
+              "speaker": "male",
+              "text": "They're pretty quiet, and you can usually reserve one online in advance."
+            },
+            {
+              "speaker": "female",
+              "text": "I'll check that out before my next exam."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She cannot find a quiet place to study.",
+                "She forgot the location of the library.",
+                "She is failing her classes.",
+                "She lost her study materials."
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the man recommend?",
+              "options": [
+                "Study at home instead.",
+                "Use the study rooms in the student center.",
+                "Study late at night in the library.",
+                "Form a study group."
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 26,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/26.mp3",
+          "speaker": "female",
+          "transcript": "This is a reminder to all residence hall students that a new recycling program is launching next week. Each floor will receive color-coded bins for paper, plastic, and glass, replacing the single shared bin currently located in the hallway. Resident advisors will hold a short information session this weekend to explain what materials belong in each bin, and attendance is strongly encouraged.",
+          "questions": [
+            {
+              "question": "What is the announcement mainly about?",
+              "options": [
+                "A new recycling program in the residence halls",
+                "A change in trash collection schedules",
+                "A ban on plastic containers",
+                "New rules about hallway decorations"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What are residents encouraged to do?",
+              "options": [
+                "Buy their own recycling bins",
+                "Attend an information session",
+                "Sort recycling into a single shared bin",
+                "Contact the housing office directly"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 27,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/27.mp3",
+          "speaker": "male",
+          "transcript": "The student health center will be holding a free flu shot clinic in the main lobby this Wednesday and Thursday from nine in the morning until four in the afternoon. No appointment is necessary, and students only need to bring their student ID. Faculty and staff are also welcome to attend, though a small fee will apply for non-students.",
+          "questions": [
+            {
+              "question": "What is the main purpose of this announcement?",
+              "options": [
+                "To announce a free flu shot clinic",
+                "To announce a new health insurance policy",
+                "To report a flu outbreak on campus",
+                "To close the health center temporarily"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What do students need to bring to the clinic?",
+              "options": [
+                "A doctor's note",
+                "Their student ID",
+                "Proof of insurance",
+                "A signed consent form only"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 28,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/28.mp3",
+          "speaker": "female",
+          "transcript": "Please note that the campus mail room is changing its package pickup procedure starting next Monday. Instead of picking up packages at the front counter, students will now receive a text notification with a locker number and code to retrieve their package from the new self-service lockers outside the mail room. This change is designed to reduce wait times during peak pickup hours.",
+          "questions": [
+            {
+              "question": "What change is being announced?",
+              "options": [
+                "Packages will now be delivered to dorm rooms",
+                "Students will use self-service lockers to pick up packages",
+                "The mail room is closing permanently",
+                "Package fees are being introduced"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why was this change made?",
+              "options": [
+                "To reduce wait times during peak hours",
+                "Because the mail room lost its lease",
+                "To save on shipping costs",
+                "Because of a change in postal regulations"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 21,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/21.mp3",
+          "speaker": "female",
+          "subject": "Chemistry",
+          "transcript": "Today we'll discuss catalysts, substances that speed up chemical reactions without being permanently consumed in the process. To understand why catalysts matter, it helps to first recall that for a chemical reaction to occur, reacting molecules must collide with enough energy to break existing bonds and form new ones. This minimum energy requirement is called the activation energy, and it acts as a kind of barrier that determines how quickly a reaction proceeds. Reactions with a high activation energy tend to occur slowly, even if the overall reaction is thermodynamically favorable, because relatively few molecular collisions have enough energy to clear that barrier at any given moment. Catalysts work by providing an alternative reaction pathway with a lower activation energy, allowing more collisions to successfully result in a reaction, which dramatically increases the reaction rate. Crucially, a catalyst is not consumed by the reaction; it participates in intermediate steps but is regenerated by the end, meaning a small amount of catalyst can facilitate a very large number of reaction cycles. This is fundamentally different from a reactant, which is used up as the reaction proceeds. One everyday example of catalysis is the catalytic converter found in most gasoline-powered vehicles. Inside the converter, metals such as platinum and palladium act as catalysts, converting harmful exhaust gases, including carbon monoxide and nitrogen oxides, into less harmful substances like carbon dioxide, nitrogen, and water vapor, before the exhaust exits the vehicle. Without these catalysts, exhaust systems would release far higher levels of pollutants into the atmosphere. Catalysis is equally essential inside living organisms, where specialized proteins called enzymes act as biological catalysts. Enzymes allow the countless chemical reactions necessary for life, from digestion to DNA replication, to occur quickly enough at normal body temperature, reactions that would otherwise proceed far too slowly to sustain life without such assistance. Each enzyme is typically highly specific, catalyzing only one particular reaction or a narrow range of related reactions, due to the precise three-dimensional shape of its active site, the region where reacting molecules bind. Industrial chemistry also relies heavily on catalysts to make large-scale chemical production economically feasible. The industrial production of ammonia, essential for manufacturing fertilizer and supporting global food production, depends on an iron-based catalyst that allows the reaction to proceed at manageable temperatures and pressures rather than conditions that would otherwise be prohibitively expensive to maintain. Next class, we'll examine how temperature and concentration further influence reaction rates alongside catalysis.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "How catalysts speed up chemical reactions",
+                "How to calculate reaction rates mathematically",
+                "The history of the periodic table",
+                "How enzymes are digested in the body"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, what happens to a catalyst during a reaction?",
+              "options": [
+                "It is permanently consumed",
+                "It is regenerated and not consumed overall",
+                "It becomes part of the final product permanently",
+                "It slows the reaction down over time"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention catalytic converters?",
+              "options": [
+                "To give a real-world example of catalysis in vehicles",
+                "To explain how gasoline is refined",
+                "To argue that catalytic converters are ineffective",
+                "To describe how engines generate power"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about enzymes based on the lecture?",
+              "options": [
+                "They are typically highly specific to one type of reaction",
+                "They can catalyze any reaction equally well",
+                "They are not affected by their three-dimensional shape",
+                "They function identically to industrial catalysts"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/22.mp3",
+          "speaker": "male",
+          "subject": "Zoology",
+          "transcript": "Today's lecture focuses on long-distance animal migration, one of the most physically demanding behaviors found in the animal kingdom. Migration refers to the seasonal movement of animals between different regions, typically driven by the search for food, suitable breeding conditions, or more favorable climates. While many species migrate, few examples are as striking as the Arctic tern, a small seabird that completes an annual round-trip journey between the Arctic and Antarctic regions, covering a distance of roughly seventy thousand kilometers each year, the longest migration of any known animal. What makes such extraordinary journeys possible? Researchers have identified several remarkable adaptations that allow migratory animals to navigate accurately over vast distances. Many bird species appear to rely on a combination of cues, including the position of the sun, patterns of polarized light, and even the Earth's magnetic field, which some birds can apparently sense directly through specialized cells, allowing them to maintain a consistent heading even across featureless ocean or under cloudy skies. Some species also appear to use celestial navigation, effectively orienting themselves using the position of stars, a skill that young birds seem to develop partly through experience during their first migratory season. Migration is not limited to birds, of course. Many marine species undertake equally impressive journeys. Gray whales migrate thousands of kilometers between feeding grounds in colder polar waters and warmer breeding grounds nearer the equator, timing their journey to coincide with seasonal changes in food availability and water temperature suitable for calving. Sea turtles are known to return with remarkable precision to the very beaches where they themselves hatched decades earlier, in order to lay their own eggs, a phenomenon researchers believe is guided partly by the turtles' ability to detect subtle variations in the Earth's magnetic field near their home beach. These long migrations come with substantial risks and energy costs. Animals often arrive at their destination in a significantly depleted physical state, having relied on stored fat reserves built up before departure, and migratory routes frequently expose animals to increased predation, exhaustion, and, particularly in recent decades, obstacles created by human development, such as artificial lighting that can disorient nocturnal migrating birds, or fishing nets that pose an incidental threat to migrating marine animals. Conservation biologists increasingly emphasize the importance of protecting not just breeding and feeding grounds, but the migratory corridors that connect them, since disrupting any single link in this chain can have consequences for the entire migratory cycle. Next class, we'll look specifically at how climate change is altering the timing of migration in several well-studied bird species.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "Long-distance migration in animals and how it is accomplished",
+                "The diet of Arctic seabirds",
+                "How whales communicate with each other",
+                "The classification of marine reptiles"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the professor mention the Arctic tern?",
+              "options": [
+                "To describe the bird's diet in detail",
+                "To provide an example of the longest known animal migration",
+                "To explain how the bird builds its nest",
+                "To compare it with land-based migratory animals"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, how do sea turtles find their way back to their home beach?",
+              "options": [
+                "By following other turtles",
+                "Partly by detecting variations in the Earth's magnetic field",
+                "By memorizing landmarks as hatchlings",
+                "By using their sense of smell exclusively"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about human development and animal migration?",
+              "options": [
+                "It has had no measurable effect on migratory animals",
+                "It can create obstacles such as disorienting lighting or fishing nets",
+                "It has made migration easier for most species",
+                "It only affects animals that migrate over land"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 121,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/121.mp3",
+          "transcript": "Could you water my plants while I'm away next week?",
+          "context": "A woman asks her neighbor for a favor before a trip.",
+          "options": [
+            "Sure, just leave me a key.",
+            "Plants need sunlight to grow.",
+            "I'll be away for a week too.",
+            "The garden store closes at six."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "16-121"
+        },
+        {
+          "id": 122,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/122.mp3",
+          "transcript": "Do you know if the library extended its hours during finals week?",
+          "context": "A student asks a classmate about library hours.",
+          "options": [
+            "Yes, it's open until midnight now.",
+            "The library has four floors.",
+            "Finals start next Monday.",
+            "I usually study at home instead."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "16-122"
+        },
+        {
+          "id": 123,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/123.mp3",
+          "transcript": "My order still hasn't arrived and it's been two weeks.",
+          "context": "A customer calls an online store about a delayed shipment.",
+          "options": [
+            "I'm sorry, let me track that for you.",
+            "Orders usually ship within two days.",
+            "Our store has a return policy.",
+            "The warehouse is located out of state."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "16-123"
+        },
+        {
+          "id": 124,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/124.mp3",
+          "transcript": "Would it be possible to switch my lab section to Thursday?",
+          "context": "A student asks a teaching assistant about changing lab times.",
+          "options": [
+            "Thursday's section is already full, unfortunately.",
+            "The lab is on the third floor.",
+            "Lab reports are due weekly.",
+            "You'll need safety goggles for lab."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "16-124"
+        },
+        {
+          "id": 125,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/125.mp3",
+          "transcript": "The printer on this floor is out of toner again.",
+          "context": "An employee complains to a coworker about the office printer.",
+          "options": [
+            "I'll put in a request for a new cartridge.",
+            "The printer was installed last year.",
+            "Most people print in black and white.",
+            "The copier is on the second floor."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "16-125"
+        },
+        {
+          "id": 126,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/126.mp3",
+          "transcript": "Is there a fee for returning this rental car early?",
+          "context": "A customer asks an agent at a car rental counter.",
+          "options": [
+            "No, early returns don't cost anything extra.",
+            "The car has a full tank of gas.",
+            "Rentals typically last one week.",
+            "We accept most major credit cards."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "16-126"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 23,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/23.mp3",
+          "speaker": "female",
+          "subject": "Meteorology",
+          "transcript": "Today we're going to look at how hurricanes form, a process that requires a very specific combination of atmospheric and oceanic conditions to come together. Hurricanes, also called typhoons or cyclones depending on the region of the world, are powerful rotating storm systems that develop over warm ocean waters, typically requiring sea surface temperatures of at least about twenty-six degrees Celsius extending to a sufficient depth below the surface. This warm water serves as the storm's primary energy source, since as ocean water evaporates, it carries heat energy upward into the atmosphere, and that heat is released when water vapor condenses back into clouds, fueling the storm's continued development. The process typically begins with a cluster of thunderstorms over warm tropical waters, often originating from a pre-existing disturbance such as a tropical wave. If conditions remain favorable, this cluster can begin to organize into a more defined, rotating system, aided significantly by the Coriolis effect, a force caused by the Earth's rotation that gives storms their characteristic spin. Because the Coriolis effect is essentially absent at the equator itself, hurricanes generally cannot form there, and typically develop instead in bands somewhat farther north or south of the equator. As the storm continues to draw energy from warm water below, low pressure at the storm's center intensifies, drawing in surrounding air that spirals inward and upward, forming the storm's increasingly organized structure. Once sustained wind speeds reach a certain threshold, the storm is officially classified as a hurricane, and continued strengthening depends heavily on the storm remaining over sufficiently warm water while avoiding disruptive factors, most notably wind shear, meaning significant changes in wind speed or direction at different altitudes, which can tear a storm's structure apart before it has a chance to fully organize. This is why forecasters pay close attention not just to ocean temperature, but to upper-level wind conditions when predicting whether a developing storm system will strengthen or weaken. A hurricane's most dangerous region is often not its outer bands, but the eyewall, a ring of intense thunderstorms immediately surrounding the calm center, or eye, where the strongest winds and heaviest rainfall typically occur. Once a hurricane makes landfall, it is cut off from its primary energy source, warm ocean water, and typically begins to weaken relatively quickly, though it can still produce significant flooding and wind damage well inland before fully dissipating. Next class, we'll examine how satellite technology and computer modeling have improved hurricane forecasting over the past several decades.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "How hurricanes form and strengthen",
+                "The history of hurricane naming conventions",
+                "How to build storm-resistant buildings",
+                "The economic cost of hurricane damage"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, why do hurricanes rarely form directly at the equator?",
+              "options": [
+                "The water is too cold there",
+                "The Coriolis effect is essentially absent at the equator",
+                "There are no thunderstorms near the equator",
+                "Wind shear is always too strong there"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention wind shear?",
+              "options": [
+                "To explain a factor that can prevent a storm from strengthening",
+                "To describe how hurricanes are named",
+                "To argue that wind shear always causes hurricanes to form",
+                "To compare hurricanes with tornadoes"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about a hurricane after it makes landfall?",
+              "options": [
+                "It typically becomes stronger after landfall",
+                "It is cut off from its energy source and usually begins to weaken",
+                "It immediately disappears upon landfall",
+                "It has no further effect once it reaches land"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 24,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/24.mp3",
+          "speaker": "male",
+          "subject": "Paleoanthropology",
+          "transcript": "Today's lecture examines one of the defining features of early human ancestors: bipedalism, or the ability to walk upright on two legs. While many animals can briefly stand or move on two limbs, habitual bipedalism, meaning consistently walking upright as the primary form of movement, is quite rare among mammals, and its emergence in the hominin lineage millions of years ago represents a major turning point in human evolutionary history. Fossil evidence suggests that bipedalism emerged well before significant increases in brain size, which challenges an older assumption that greater intelligence must have preceded upright walking. One of the most compelling pieces of early evidence comes from a set of fossilized footprints discovered in Laetoli, in what is now Tanzania, preserved in volcanic ash roughly three point six million years ago. These footprints show a walking pattern remarkably similar to that of modern humans, with a clear heel strike and weight transfer through the foot, strongly suggesting the individuals who made them walked upright in a manner not dramatically different from our own. Researchers have proposed several hypotheses to explain why bipedalism evolved in the first place, since walking upright involves significant trade-offs. On one hand, bipedalism freed the hands for carrying food, tools, or offspring, and it may have improved energy efficiency for covering long distances compared to the quadrupedal knuckle-walking style seen in modern great apes. On the other hand, an upright posture also introduced new physical challenges, including a narrower birth canal relative to infant head size, which some researchers argue contributed to human infants being born at a comparatively earlier and more helpless developmental stage than other primates. Skeletal evidence provides further insight into this transition. Changes in the structure of the pelvis, the angle of the femur, and the alignment of the big toe all reflect adaptations that support efficient upright walking, and paleoanthropologists can trace the gradual appearance of these features across different hominin fossils over millions of years. Interestingly, evidence suggests that some early bipedal hominins retained certain features suited for climbing, such as curved fingers, indicating that the transition away from tree-dwelling behavior may have been gradual rather than an abrupt shift. Some researchers have proposed that changing environmental conditions, specifically the gradual replacement of dense forests with more open woodland and grassland habitats in parts of Africa, may have favored bipedal movement, since walking upright can be more energy efficient than quadrupedal movement across open terrain, though this hypothesis remains actively debated. Next class, we'll examine how brain size evolved independently, and often much later, than upright walking in the hominin lineage.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "The evolution of bipedalism in early human ancestors",
+                "The diet of early hominins",
+                "How modern humans learn to walk as infants",
+                "The discovery of stone tools in Africa"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the professor mention the Laetoli footprints?",
+              "options": [
+                "To argue that footprints cannot provide reliable evidence",
+                "To provide early physical evidence of upright walking",
+                "To describe a volcanic eruption in detail",
+                "To compare hominins with modern apes' footprints"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what is one possible cost of bipedalism related to childbirth?",
+              "options": [
+                "Infants being born at an earlier, more helpless developmental stage",
+                "A complete inability to give birth",
+                "Significantly longer pregnancies",
+                "No effect on childbirth at all"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about early bipedal hominins with curved fingers?",
+              "options": [
+                "They may have retained some climbing ability during the transition",
+                "They were incapable of walking upright at all",
+                "They had no connection to tree-dwelling ancestors",
+                "They evolved after brain size had already increased significantly"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 127,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/127.mp3",
+          "transcript": "I think I left my umbrella in the lecture hall this morning.",
+          "context": "A student mentions a lost item to a classmate.",
+          "options": [
+            "Let's check the lost and found after class.",
+            "It's supposed to rain again tomorrow.",
+            "The lecture hall seats two hundred students.",
+            "Umbrellas are sold at the bookstore."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "16-127"
+        },
+        {
+          "id": 128,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/128.mp3",
+          "transcript": "Can you recommend a good place to get my bike fixed nearby?",
+          "context": "A new resident asks a coworker for advice.",
+          "options": [
+            "There's a shop two blocks from here.",
+            "I usually walk to work instead.",
+            "Bike lanes were added last year.",
+            "My bike is pretty old now."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "16-128"
+        },
+        {
+          "id": 129,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/129.mp3",
+          "transcript": "We're thinking about repainting the lobby this summer.",
+          "context": "A building manager tells a resident about upcoming renovations.",
+          "options": [
+            "That sounds like a nice update.",
+            "The lobby was built in 1990.",
+            "Paint usually takes a day to dry.",
+            "The elevator is being repaired."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "17-129"
+        },
+        {
+          "id": 130,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/130.mp3",
+          "transcript": "Could you send me the notes from today's meeting?",
+          "context": "A colleague asks another for meeting notes.",
+          "options": [
+            "Sure, I'll email them this afternoon.",
+            "The meeting lasted about an hour.",
+            "We meet every Tuesday morning.",
+            "The conference room is being used."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "17-130"
+        },
+        {
+          "id": 131,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/131.mp3",
+          "transcript": "This sweater shrank after I washed it once.",
+          "context": "A customer complains to a store clerk about a purchase.",
+          "options": [
+            "I'm sorry, let's find you a replacement.",
+            "That fabric is very popular this season.",
+            "The dressing rooms are in the back.",
+            "We're having a sale next week."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "17-131"
+        },
+        {
+          "id": 132,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/132.mp3",
+          "transcript": "Is the shuttle to the airport still running this late?",
+          "context": "A traveler asks a hotel front desk clerk.",
+          "options": [
+            "Yes, the last one leaves at midnight.",
+            "The airport is about ten miles away.",
+            "Most flights depart in the morning.",
+            "The shuttle seats twelve passengers."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "17-132"
+        }
+      ],
+      "conv": [
+        {
+          "id": 29,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/29.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I want to switch from the full meal plan to the smaller one, but I'm not sure how."
+            },
+            {
+              "speaker": "female",
+              "text": "You usually have to submit a request through the housing office."
+            },
+            {
+              "speaker": "male",
+              "text": "Is there a deadline for switching?"
+            },
+            {
+              "speaker": "female",
+              "text": "I think it's the end of the first month of the semester, so you should do it soon."
+            },
+            {
+              "speaker": "male",
+              "text": "Thanks, I'll go by the housing office tomorrow morning."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What does the man want to do?",
+              "options": [
+                "Cancel his meal plan entirely.",
+                "Switch to a smaller meal plan.",
+                "Upgrade to a larger meal plan.",
+                "Get a refund for unused meals."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman tell him about the process?",
+              "options": [
+                "It can only be done online.",
+                "He needs to submit a request through the housing office.",
+                "It cannot be changed once selected.",
+                "He needs approval from his roommate."
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/30.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I still haven't decided whether to live in the dorms again next year or move off campus."
+            },
+            {
+              "speaker": "male",
+              "text": "What's making you lean toward moving off campus?"
+            },
+            {
+              "speaker": "female",
+              "text": "Mostly the cost. Rent nearby seems a lot cheaper than the dorm fees."
+            },
+            {
+              "speaker": "male",
+              "text": "That's true, but don't forget to factor in things like utilities and a longer commute."
+            },
+            {
+              "speaker": "female",
+              "text": "Good point. I'll add those costs up before I make a final decision."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman trying to decide?",
+              "options": [
+                "Whether to transfer to a different school.",
+                "Whether to live in the dorms or move off campus next year.",
+                "Which roommate to choose.",
+                "Whether to take a semester off."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man remind her to consider?",
+              "options": [
+                "The dorm's meal plan options.",
+                "Additional costs like utilities and commuting.",
+                "The distance to the library.",
+                "Whether her friends are moving too."
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 29,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/29.mp3",
+          "speaker": "male",
+          "transcript": "This is a notice for all members of the aquatics center. The main pool will be closed this Sunday for its scheduled quarterly deep cleaning and water quality testing. The smaller therapy pool will remain open during regular hours. We expect the main pool to reopen Monday morning, and we appreciate your understanding as we complete this routine maintenance.",
+          "questions": [
+            {
+              "question": "Why is the main pool closing on Sunday?",
+              "options": [
+                "For a swim competition",
+                "For quarterly deep cleaning and water testing",
+                "Because of a broken filter",
+                "Due to low attendance"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will remain open during the closure?",
+              "options": [
+                "Nothing will be open",
+                "The therapy pool",
+                "The main pool only",
+                "The locker rooms only"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 30,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/30.mp3",
+          "speaker": "female",
+          "transcript": "A final reminder to all seniors and graduate students: registration for next month's career fair closes this Friday at midnight. Students who register in advance will receive priority scheduling for one-on-one sessions with recruiters from over fifty participating companies. Walk-in attendance will still be permitted on the day of the event, but scheduled sessions cannot be guaranteed for students who do not register beforehand.",
+          "questions": [
+            {
+              "question": "What is this announcement mainly about?",
+              "options": [
+                "A new career counseling service",
+                "The registration deadline for the career fair",
+                "A change in the career fair's date",
+                "New requirements for graduation"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What advantage do students get by registering early?",
+              "options": [
+                "A discount on parking",
+                "Priority scheduling for one-on-one sessions",
+                "Free professional headshots",
+                "Guaranteed job offers"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 51,
+        "promptGender": "female",
+        "prompt": "My car started making a strange noise this morning.",
+        "responseGender": "male",
+        "responsePrefix": "You",
+        "correctChunks": [
+          "should",
+          "probably",
+          "get",
+          "it",
+          "checked",
+          "soon"
+        ],
+        "distractorChunks": [
+          "getting"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 52,
+        "promptGender": "male",
+        "prompt": "The bakery downstairs closes earlier than it used to.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Does",
+          "it",
+          "still",
+          "open",
+          "on Sundays"
+        ],
+        "distractorChunks": [
+          "opens"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 53,
+        "promptGender": "female",
+        "prompt": "I keep forgetting my umbrella when it rains.",
+        "responseGender": "male",
+        "responsePrefix": "Maybe",
+        "correctChunks": [
+          "you",
+          "should",
+          "just",
+          "leave",
+          "one",
+          "in your bag"
+        ],
+        "distractorChunks": [
+          "leaving"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 54,
+        "promptGender": "male",
+        "prompt": "The conference room was double-booked again this afternoon.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Who",
+          "actually",
+          "manages",
+          "the booking system"
+        ],
+        "distractorChunks": [
+          "manage"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 55,
+        "promptGender": "female",
+        "prompt": "I can't tell if this shirt is machine washable.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Does",
+          "the tag",
+          "say",
+          "anything",
+          "about",
+          "dry cleaning"
+        ],
+        "distractorChunks": [
+          "says"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 56,
+        "promptGender": "male",
+        "prompt": "The bookstore ran out of the textbook I need.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Have",
+          "you",
+          "checked",
+          "whether",
+          "the library",
+          "has a copy"
+        ],
+        "distractorChunks": [
+          "checking"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 57,
+        "promptGender": "female",
+        "prompt": "Our old couch finally fell apart yesterday.",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "guess",
+          "we",
+          "really",
+          "need",
+          "a new one",
+          "now"
+        ],
+        "distractorChunks": [
+          "needs"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 58,
+        "promptGender": "male",
+        "prompt": "I think I left the stove on when I left the house.",
+        "responseGender": "female",
+        "responsePrefix": "You",
+        "correctChunks": [
+          "should",
+          "probably",
+          "go back",
+          "and check",
+          "right away"
+        ],
+        "distractorChunks": [
+          "checking"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 59,
+        "promptGender": "female",
+        "prompt": "The gym added a bunch of new equipment this month.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Does",
+          "it",
+          "still",
+          "get",
+          "crowded",
+          "in the evenings"
+        ],
+        "distractorChunks": [
+          "gets"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 60,
+        "promptGender": "male",
+        "prompt": "My package was supposed to arrive two days ago.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Did",
+          "you",
+          "already",
+          "track",
+          "the shipment",
+          "online"
+        ],
+        "distractorChunks": [
+          "tracked"
+        ],
+        "responseSuffix": "?"
+      }
+    ],
+    "email": {
+      "id": 6,
+      "scenario": "You have been having ongoing conflicts with your roommate about noise late at night, and you want to request a room change through the housing office.",
+      "recipient": "Mr. Coleman, Housing Office",
+      "subject": "Request for a room change",
+      "tasks": [
+        {
+          "description": "Explain the noise problem with your roommate.",
+          "keywords": [
+            "noise",
+            "loud",
+            "late at night",
+            "disturbing",
+            "sleep"
+          ]
+        },
+        {
+          "description": "Mention that you have tried to resolve it directly.",
+          "keywords": [
+            "talked to",
+            "tried to resolve",
+            "spoke with",
+            "addressed"
+          ]
+        },
+        {
+          "description": "Request a room transfer for next semester.",
+          "keywords": [
+            "room change",
+            "transfer",
+            "move",
+            "next semester"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Mr. Coleman,\n\nI am writing to request a room change for next semester due to ongoing issues with my current roommate. For the past month, my roommate has consistently played loud music and had friends over late at night, often past midnight, which has made it very difficult for me to sleep and focus on my coursework.\n\nI want to assure you that I have tried to resolve this directly. I spoke with my roommate on several occasions and asked politely if we could agree on quieter hours, but the noise has continued without much improvement.\n\nGiven that this situation has not gotten better, I would like to formally request a room transfer starting next semester. I believe a change would allow both of us to have a better living situation. Please let me know what steps I need to take to begin this process. Thank you for your understanding.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 6,
+      "subject": "criminology",
+      "professor": "Dr. Kowalski",
+      "professorGender": "male",
+      "prompt": "Your criminology professor is leading a discussion on the goals of the criminal justice system. Write a post responding to the professor's question.\n\nDr. Kowalski: This week we've been examining the different philosophies that shape how societies punish crime. Some criminal justice systems prioritize rehabilitation, offering education, therapy, and job training so that offenders can reintegrate into society. Others emphasize punishment and deterrence, arguing that strict consequences are necessary to prevent future crime and deliver justice to victims. Both approaches have passionate supporters and real-world evidence behind them. Before our next session, I want you to respond to this question: Should criminal justice systems prioritize rehabilitating offenders, or should they focus primarily on punishment as a deterrent?",
+      "classmates": [
+        {
+          "name": "Tobias",
+          "gender": "male",
+          "opinion": "I strongly believe rehabilitation should be the primary goal of any justice system. Studies consistently show that purely punitive systems have extremely high recidivism rates, meaning offenders often reoffend after release because nothing about their circumstances or behavior actually changed. Programs that provide therapy, education, and vocational training address the root causes of criminal behavior, such as poverty, addiction, or lack of opportunity. Countries like Norway, which focus heavily on rehabilitation, report far lower reoffending rates than countries with harsher punitive systems. Ultimately, a justice system should aim to produce safer communities, and rehabilitation achieves this more effectively than punishment alone ever could."
+        },
+        {
+          "name": "Nadia",
+          "gender": "female",
+          "opinion": "While rehabilitation sounds appealing, I think punishment and deterrence must remain the priority. Victims of crime deserve to see meaningful consequences, and society needs assurance that serious offenses will not go lightly punished. Without strict consequences, there is little incentive for potential criminals to avoid breaking the law in the first place. Rehabilitation programs are also expensive and do not guarantee success, since some offenders simply are not willing to change regardless of the resources offered. A justice system that appears too lenient risks losing public trust and undermining the rule of law. Punishment sends a clear message that crime has real, unavoidable costs."
+        }
+      ],
+      "exampleResponse": "This is a difficult balance for any justice system to strike, and I think the question of whether punishment or rehabilitation should come first is worth considering carefully. While I see where Nadia is coming from when she argues that victims deserve visible consequences and that leniency might undermine public trust, I would argue that punishment alone rarely addresses why crimes happen in the first place. In this respect, I am inclined to agree with Tobias, who emphasizes that rehabilitation reduces recidivism by treating the underlying causes of criminal behavior. For example, offering addiction treatment to someone incarcerated for drug-related theft is far more likely to prevent future crime than simply extending their sentence. A justice system that combines firm accountability with genuine rehabilitation opportunities would likely serve both victims and society better than either extreme alone."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 6,
+      "location": "University Career Fair Booth",
+      "icon": "💼",
+      "speaker": "female",
+      "introText": "You are learning how to talk to students at the career fair booth. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to our career fair booth.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "We are currently hiring for summer internships.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Please leave your resume in this folder.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Our company values creativity and teamwork.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "Interviews will be scheduled sometime next week.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Feel free to ask questions about our training program for new hires.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "We look forward to reviewing your application within the coming days.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 6,
+      "topic": "Online Shopping",
+      "icon": "🛒",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about online shopping habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. To start, how often do you shop online, and what types of products do you usually buy?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer shopping online or visiting physical stores? Which do you think offers a better experience?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people think that online shopping is harming small local businesses. What is your opinion on this issue?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think online shopping will eventually replace traditional shopping completely? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

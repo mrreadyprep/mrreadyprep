@@ -1,0 +1,1783 @@
+{
+  "id": 1,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 1,
+          "topic": "Coral Reef Ecosystems",
+          "category": "Natural Science",
+          "paragraph": "Coral reefs are among the most diverse ecosystems on the planet, supporting an enormous variety of marine species. These structures are built over centuries by tiny organisms called coral polyps, which secrete calcium carbonate to form protective skeletons. Reefs provide shelter and food for countless fish, mollusks, and other creatures, making them essential to ocean biodiversity. Unfortunately, rising sea temperatures and ocean acidification have caused widespread coral bleaching, threatening the survival of these fragile habitats. Conservation efforts now focus on reducing pollution and establishing protected marine areas to help reefs recover.",
+          "blanks": [
+            {
+              "word": "diverse",
+              "visible": "di",
+              "hidden": "verse"
+            },
+            {
+              "word": "ecosystems",
+              "visible": "eco",
+              "hidden": "systems"
+            },
+            {
+              "word": "organisms",
+              "visible": "orga",
+              "hidden": "nisms"
+            },
+            {
+              "word": "secrete",
+              "visible": "sec",
+              "hidden": "rete"
+            },
+            {
+              "word": "skeletons",
+              "visible": "skel",
+              "hidden": "etons"
+            },
+            {
+              "word": "shelter",
+              "visible": "shel",
+              "hidden": "ter"
+            },
+            {
+              "word": "biodiversity",
+              "visible": "bio",
+              "hidden": "diversity"
+            },
+            {
+              "word": "acidification",
+              "visible": "acid",
+              "hidden": "ification"
+            },
+            {
+              "word": "bleaching",
+              "visible": "blea",
+              "hidden": "ching"
+            },
+            {
+              "word": "protected",
+              "visible": "prot",
+              "hidden": "ected"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 21,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Rooftop Terrace Closed",
+          "subtitle": "",
+          "text": "The rooftop terrace will be closed this weekend, June 14-15, for scheduled waterproofing repairs.\n\nResidents may use the ground-floor courtyard as an alternative outdoor space during this time.\n\nWe expect the terrace to reopen Monday morning.",
+          "questions": [
+            {
+              "question": "Why is the rooftop terrace closed?",
+              "options": [
+                "It is being converted into a parking area",
+                "It is undergoing waterproofing repairs",
+                "It has been permanently removed",
+                "It is reserved for a private event"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are residents advised to do this weekend?",
+              "options": [
+                "Avoid the building entirely",
+                "Contact building management for a refund",
+                "Use the ground-floor courtyard instead",
+                "Wait until next month to go outside"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 1,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Gym Membership Freeze",
+          "subtitle": "Dear Mr. Alvarez,",
+          "text": "We have received your request to place a temporary freeze on your membership at Crestview Fitness Center due to your upcoming relocation. Your freeze will take effect on June 1 and will run for a maximum of eight weeks, ending no later than July 26. If you return earlier than planned, you may reactivate your membership at any time through your online account, and your monthly rate will remain exactly as it was before the freeze began. Please note that access to the facility, including the pool and group classes, will be suspended for the entire freeze period, though you may still book personal training sessions in advance for after your return. Members who wish to extend the freeze beyond eight weeks must submit a written request at least one week prior to the scheduled end date; requests submitted later than this cannot be guaranteed processing in time, and standard billing will resume automatically regardless. We recommend reviewing your account settings now so that you are not caught off guard by any unexpected charges once the freeze period concludes.\n\nBest regards,\nCrestview Fitness Center",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To confirm a temporary suspension of a gym membership",
+                "To advertise a new fitness program",
+                "To notify a member of a fee increase",
+                "To cancel a membership permanently"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What will happen if Mr. Alvarez does not submit an extension request in time?",
+              "options": [
+                "He will be charged a penalty fee",
+                "His membership will be cancelled automatically",
+                "Standard billing will resume automatically",
+                "He will lose access to personal training bookings permanently"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "The word 'reactivate' in the email is closest in meaning to",
+              "options": [
+                "cancel",
+                "restart",
+                "upgrade",
+                "transfer"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 17,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Chem Final Study Session",
+          "subtitle": "",
+          "text": "Priya Nair (7:15 p.m.)\nHey team, are we still on for the study group before the chem final? I was thinking Saturday afternoon at the library.\n\nJordan Lee (7:18 p.m.)\nSaturday works for me. What time exactly? I have a shift until 1.\n\nPriya Nair (7:19 p.m.)\nHow about 2:30? That gives you time to grab lunch first.\n\nAmara Osei (7:22 p.m.)\nI can do 2:30, but the library closes early on Saturdays now, only until 6. Should we book a study room instead so we're not rushed?\n\nJordan Lee (7:24 p.m.)\nGood idea. I can reserve one online tonight if someone sends me the group booking code.\n\nPriya Nair (7:26 p.m.)\nI have it saved from last semester, sending it now. Let's aim for room 214, it has the whiteboard we used last time.\n\nAmara Osei (7:29 p.m.)\nPerfect. Should we split up the chapters beforehand so we're not just re-reading the same material together?\n\nJordan Lee (7:31 p.m.)\nGood call. I'll cover chapters 7 and 8 and bring a summary. Priya, can you take 9 and 10, and Amara, maybe pull together some practice problems from old exams?",
+          "questions": [
+            {
+              "question": "What is the main topic of this conversation?",
+              "options": [
+                "Planning a study group session for a chemistry final",
+                "Rescheduling a chemistry exam",
+                "Complaining about library hours",
+                "Choosing a new professor for the course"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does Amara suggest booking a study room?",
+              "options": [
+                "The whiteboard in the main area is broken",
+                "The library closes early on Saturdays, so they don't want to be rushed",
+                "Study rooms are free for all students",
+                "The library will be closed for a holiday"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about Priya?",
+              "options": [
+                "She has used study room 214 with the group before",
+                "She is not able to attend the study session",
+                "She works at the library on weekends",
+                "She is unfamiliar with the course material"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 1,
+          "title": "The Domestication of Maize",
+          "passage": "Maize, also known as corn, was first domesticated from a wild grass called teosinte in southern Mexico approximately nine thousand years ago. Early farmers selectively bred plants with larger kernels and sturdier stalks, gradually transforming a modest wild grass into one of the most productive food crops in human history. This process, known as domestication, unfolded over thousands of years and depended on careful selection by generations of farmers who lacked any formal understanding of plant genetics.\n\nThe transformation from teosinte to modern maize involved dramatic genetic changes. Teosinte produces only a handful of small, hard kernels enclosed in tough casings, making it difficult to eat or process. Over many generations, farmers favored plants whose kernels were larger, softer, and more numerous, eventually producing the dense, exposed rows of kernels seen on a modern corncob.\n\nAs maize cultivation spread northward and southward from its origin, it became a staple crop for numerous indigenous civilizations, including the Maya and the Aztec. These societies developed sophisticated agricultural techniques, such as intercropping maize with beans and squash, a method that improved soil fertility and provided a more balanced diet.\n\nWhen European explorers arrived in the Americas, they encountered maize and quickly recognized its potential as a hardy, high-yield crop. They carried it back across the Atlantic, where it was gradually adopted by farmers throughout Europe, Africa, and Asia. Today, maize is grown on every inhabited continent and remains one of the world's most important cereal crops.",
+          "passage_marked": "Maize, also known as corn, was first domesticated from a wild grass called teosinte in southern Mexico approximately nine thousand years ago. Early farmers selectively bred plants with larger kernels and sturdier stalks, gradually transforming a modest wild grass into one of the most productive food crops in human history. This process, known as domestication, unfolded over thousands of years and depended on careful selection by generations of farmers who lacked any formal understanding of plant genetics. [A]\n\nThe transformation from teosinte to modern maize involved dramatic genetic changes. Teosinte produces only a handful of small, hard kernels enclosed in tough casings, making it difficult to eat or process. [B] Over many generations, farmers favored plants whose kernels were larger, softer, and more numerous, eventually producing the dense, exposed rows of kernels seen on a modern corncob.\n\nAs maize cultivation spread northward and southward from its origin, it became a staple crop for numerous indigenous civilizations, including the Maya and the Aztec. These societies developed sophisticated agricultural techniques, such as intercropping maize with beans and squash, a method that improved soil fertility and provided a more balanced diet. [C]\n\nWhen European explorers arrived in the Americas, they encountered maize and quickly recognized its potential as a hardy, high-yield crop. [D] They carried it back across the Atlantic, where it was gradually adopted by farmers throughout Europe, Africa, and Asia. Today, maize is grown on every inhabited continent and remains one of the world's most important cereal crops.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'sturdier' in the passage is closest in meaning to",
+              "options": [
+                "weaker",
+                "more fragile",
+                "stronger",
+                "more colorful"
+              ],
+              "answer": 2
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, why is it difficult to eat teosinte kernels?",
+              "options": [
+                "They are extremely bitter",
+                "They are enclosed in tough casings",
+                "They are toxic when raw",
+                "They grow underground"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What method did the Maya and Aztec use to improve soil fertility?",
+              "options": [
+                "Rotating maize with wheat",
+                "Intercropping maize with beans and squash",
+                "Leaving fields fallow for a decade",
+                "Using synthetic fertilizers"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention European explorers?",
+              "options": [
+                "To show maize was first discovered in Europe",
+                "To explain how maize spread to other continents",
+                "To describe a war over maize trade",
+                "To argue that Europeans invented modern maize"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This dietary combination remains a defining feature of traditional Mesoamerican cuisine even today.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 2,
+          "topic": "The Invention of the Printing Press",
+          "category": "History",
+          "paragraph": "The invention of the printing press by Johannes Gutenberg in the fifteenth century transformed the way knowledge was distributed across Europe. Before this innovation, books were copied by hand, a slow and expensive process that limited literacy to a small elite. Gutenberg's press used movable metal type, allowing multiple copies of a text to be produced quickly and affordably. This breakthrough accelerated the spread of new ideas, fueling movements such as the Renaissance and the Reformation. As printed material became more accessible, literacy rates increased, and standardized spelling and grammar began to emerge across regions.",
+          "blanks": [
+            {
+              "word": "invention",
+              "visible": "inve",
+              "hidden": "ntion"
+            },
+            {
+              "word": "transformed",
+              "visible": "trans",
+              "hidden": "formed"
+            },
+            {
+              "word": "distributed",
+              "visible": "dist",
+              "hidden": "ributed"
+            },
+            {
+              "word": "innovation",
+              "visible": "inno",
+              "hidden": "vation"
+            },
+            {
+              "word": "expensive",
+              "visible": "expe",
+              "hidden": "nsive"
+            },
+            {
+              "word": "literacy",
+              "visible": "lite",
+              "hidden": "racy"
+            },
+            {
+              "word": "movable",
+              "visible": "mov",
+              "hidden": "able"
+            },
+            {
+              "word": "accelerated",
+              "visible": "acce",
+              "hidden": "lerated"
+            },
+            {
+              "word": "accessible",
+              "visible": "acces",
+              "hidden": "sible"
+            },
+            {
+              "word": "standardized",
+              "visible": "stand",
+              "hidden": "ardized"
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 2,
+          "title": "The Invention of Braille",
+          "passage": "Louis Braille, born in France in 1809, lost his sight in a childhood accident and later attended a school for blind students in Paris. At the time, blind students read large embossed Latin letters that were slow to read and costly to produce, since each book required specially cast metal type pressed into thick paper.\n\nBraille discovered an alternative developed by army captain Charles Barbier, who had created raised dots so soldiers could read messages silently at night without light. Barbier's version used twelve dots per cell to represent sounds, but it proved too complex for most people to master quickly, so Braille set out to simplify it.\n\nBy age fifteen, Braille had refined the idea into a six-dot cell representing every letter, number, and punctuation mark. A single fingertip could recognize a cell's pattern almost instantly, making reading far faster than embossed letters allowed. Despite this clear advantage, the system faced years of resistance from the school's administration.\n\nBraille's method was not officially adopted by his own school until after his death in 1852, but it gradually spread across Europe and the world. Today it remains the primary tactile reading system for blind people, adapted to represent nearly every written language and musical notation.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'refined' in the passage is closest in meaning to",
+              "options": [
+                "invented from nothing",
+                "improved through careful adjustment",
+                "abandoned completely",
+                "copied exactly"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what was the main problem with the embossed Latin letter system?",
+              "options": [
+                "It was too colorful for readers to focus on",
+                "It was slow to read and costly to produce",
+                "It could only represent numbers, not letters",
+                "It required electricity to operate"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "Why did Charles Barbier's original dot system prove impractical?",
+              "options": [
+                "It used too few dots to represent language accurately",
+                "It was designed only for use in daylight",
+                "It used twelve dots per cell, which made it too complex",
+                "It could not be embossed onto paper"
+              ],
+              "answer": 2
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention that Braille's own school did not adopt his system until after his death?",
+              "options": [
+                "To show that the system was flawed and needed revision",
+                "To illustrate that even a practical innovation can face institutional resistance",
+                "To argue that Braille was not the true inventor of the system",
+                "To explain why Braille abandoned the project"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This gain in speed made a real difference for students who had previously spent hours deciphering a single page.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ],
+          "passage_marked": "Louis Braille, born in France in 1809, lost his sight in a childhood accident and later attended a school for blind students in Paris. At the time, blind students read large embossed Latin letters that were slow to read and costly to produce, since each book required specially cast metal type pressed into thick paper. [A]\n\nBraille discovered an alternative developed by army captain Charles Barbier, who had created raised dots so soldiers could read messages silently at night without light. Barbier's version used twelve dots per cell to represent sounds, but it proved too complex for most people to master quickly, so Braille set out to simplify it. [B]\n\nBy age fifteen, Braille had refined the idea into a six-dot cell representing every letter, number, and punctuation mark. A single fingertip could recognize a cell's pattern almost instantly, making reading far faster than embossed letters allowed. [C] Despite this clear advantage, the system faced years of resistance from the school's administration.\n\nBraille's method was not officially adopted by his own school until after his death in 1852, but it gradually spread across Europe and the world. [D] Today it remains the primary tactile reading system for blind people, adapted to represent nearly every written language and musical notation."
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 3,
+          "topic": "Circadian Rhythms in Humans",
+          "category": "Natural Science",
+          "paragraph": "Circadian rhythms are internal biological processes that follow a roughly twenty-four-hour cycle, regulating sleep, hormone release, and body temperature. These rhythms are controlled by a small region of the brain that responds primarily to light and darkness in the environment. When natural light exposure is disrupted, such as during travel across time zones, the body's internal clock can become misaligned, leading to fatigue and difficulty concentrating. Researchers have found that maintaining consistent sleep schedules and reducing exposure to artificial light in the evening can help regulate circadian rhythms and improve overall health.",
+          "blanks": [
+            {
+              "word": "internal",
+              "visible": "inter",
+              "hidden": "nal"
+            },
+            {
+              "word": "biological",
+              "visible": "bio",
+              "hidden": "logical"
+            },
+            {
+              "word": "regulating",
+              "visible": "regu",
+              "hidden": "lating"
+            },
+            {
+              "word": "hormone",
+              "visible": "hor",
+              "hidden": "mone"
+            },
+            {
+              "word": "controlled",
+              "visible": "cont",
+              "hidden": "rolled"
+            },
+            {
+              "word": "responds",
+              "visible": "resp",
+              "hidden": "onds"
+            },
+            {
+              "word": "disrupted",
+              "visible": "disr",
+              "hidden": "upted"
+            },
+            {
+              "word": "misaligned",
+              "visible": "mis",
+              "hidden": "aligned"
+            },
+            {
+              "word": "concentrating",
+              "visible": "concen",
+              "hidden": "trating"
+            },
+            {
+              "word": "consistent",
+              "visible": "consi",
+              "hidden": "stent"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 26,
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "New Volunteer Orientation - Saturday",
+          "subtitle": "",
+          "text": "9:00 a.m. — Check-in and Welcome Coffee\n9:30 a.m. — Introduction to the Organization\n10:15 a.m. — Safety and Conduct Training\n11:15 a.m. — Department Tours\n12:15 p.m. — Lunch Provided\n1:00 p.m. — Sign-Up for Shifts",
+          "questions": [
+            {
+              "question": "What happens immediately after the safety and conduct training?",
+              "options": [
+                "Lunch is provided",
+                "Department tours begin",
+                "Volunteers sign up for shifts",
+                "The welcome coffee is served"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "At what time does lunch begin?",
+              "options": [
+                "9:30 a.m.",
+                "11:15 a.m.",
+                "12:15 p.m.",
+                "1:00 p.m."
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Dentist Appointment Reminder",
+          "subtitle": "Dear Ms. Park,",
+          "text": "This is a reminder that you have a dental check-up and cleaning scheduled for Thursday, March 14, at 10:30 a.m. with Dr. Emily Novak. Please arrive fifteen minutes early to complete an updated medical history form, as our records indicate that yours was last updated more than eighteen months ago. If this is your first visit in over a year, we recommend bringing a list of any medications you are currently taking, along with your insurance card, since coverage details occasionally change between visits. Patients who have had any recent oral surgery or who are currently taking blood thinners should inform the front desk before the appointment begins, as this may affect the cleaning procedure. Should you need to reschedule, please call our office at least 24 hours in advance; cancellations made with less notice than this are subject to a late cancellation fee equal to half the cost of the missed appointment. We look forward to seeing you and hope the updated form will help us provide more personalized care going forward.\n\nWarm regards,\nBrightsmile Dental Clinic",
+          "questions": [
+            {
+              "question": "What is the email mainly about?",
+              "options": [
+                "A reminder of an upcoming dental appointment",
+                "An invitation to a new dental clinic",
+                "A notice about a billing error",
+                "A request to change dentists"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the clinic want Ms. Park to update her medical history form?",
+              "options": [
+                "She has never visited the clinic before",
+                "Her current form was completed more than eighteen months ago",
+                "She recently changed her insurance provider",
+                "The clinic lost her previous records"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is suggested about patients taking blood thinners?",
+              "options": [
+                "They cannot be treated at this clinic",
+                "They must reschedule their appointment",
+                "They should notify the front desk before the appointment",
+                "They will automatically be charged an extra fee"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 1,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/1.mp3",
+          "transcript": "Can we split the electricity bill evenly this month?",
+          "context": "A man asks his roommate about a shared bill.",
+          "options": [
+            "The electricity company is downtown.",
+            "Sure, that sounds fair to me.",
+            "I usually pay my bills online.",
+            "The apartment has two bedrooms."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "1-1"
+        },
+        {
+          "id": 2,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/2.mp3",
+          "transcript": "I'm sorry, we're out of oat milk today.",
+          "context": "A barista is speaking to a customer at a coffee shop.",
+          "options": [
+            "That's fine, I'll just have regular milk instead.",
+            "Oat milk is made from oats.",
+            "The coffee shop opens at seven.",
+            "I usually order a large coffee."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "1-2"
+        },
+        {
+          "id": 3,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/3.mp3",
+          "transcript": "Your gym membership is set to expire at the end of this month.",
+          "context": "A front-desk worker is speaking to a gym member.",
+          "options": [
+            "Gyms usually have locker rooms.",
+            "I go to the gym three times a week.",
+            "Oh, thanks for letting me know. How do I renew it?",
+            "The treadmills are on the second floor."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "1-3"
+        },
+        {
+          "id": 4,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/4.mp3",
+          "transcript": "I'd like to set up a wire transfer to my sister's account.",
+          "context": "A customer is speaking to a bank teller.",
+          "options": [
+            "Banks are usually closed on Sundays.",
+            "Sure, I'll just need her account number and the amount.",
+            "Wire transfers were invented decades ago.",
+            "My sister lives in another city."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "1-4"
+        },
+        {
+          "id": 5,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/5.mp3",
+          "transcript": "It's supposed to rain all weekend. Should we still go on the hike?",
+          "context": "A woman is talking to a friend about weekend plans.",
+          "options": [
+            "Maybe we should reschedule for next weekend.",
+            "The trail is about six miles long.",
+            "I bought new hiking boots last week.",
+            "Rain is common in this region during spring."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "1-5"
+        },
+        {
+          "id": 6,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/6.mp3",
+          "transcript": "My laptop screen keeps freezing whenever I open two programs at once.",
+          "context": "A customer is speaking to a tech support representative.",
+          "options": [
+            "Laptops are lighter than desktop computers.",
+            "Let's try restarting it and see if that helps.",
+            "I bought this laptop two years ago.",
+            "Most programs need a lot of memory."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "1-6"
+        },
+        {
+          "id": 7,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/7.mp3",
+          "transcript": "Is today the last day to drop a class without a penalty?",
+          "context": "A student asks a registrar's office employee.",
+          "options": [
+            "Yes, the deadline is at midnight tonight.",
+            "The registrar's office is on the first floor.",
+            "Most students take five classes a semester.",
+            "Classes start again in the fall."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "1-7"
+        },
+        {
+          "id": 8,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/8.mp3",
+          "transcript": "I got a notice saying my package delivery was missed yesterday.",
+          "context": "A customer calls a delivery company's customer service line.",
+          "options": [
+            "Packages are usually left at the front door.",
+            "Deliveries happen Monday through Saturday.",
+            "I can schedule a redelivery for tomorrow afternoon.",
+            "The delivery truck was full yesterday."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "1-8"
+        },
+        {
+          "id": 9,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/9.mp3",
+          "transcript": "I'd like to schedule a cleaning appointment for next week.",
+          "context": "A patient is calling a dentist's office.",
+          "options": [
+            "We have an opening on Tuesday at ten.",
+            "Dental cleanings are recommended twice a year.",
+            "The dentist's office is next to the pharmacy.",
+            "Toothbrushes should be replaced every three months."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "2-9"
+        },
+        {
+          "id": 10,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/10.mp3",
+          "transcript": "The mechanic said your car needs a new timing belt.",
+          "context": "A service advisor is speaking to a car owner.",
+          "options": [
+            "About how much will that cost?",
+            "I bought this car three years ago.",
+            "Timing belts are found in most engines.",
+            "The repair shop opens at eight."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "2-10"
+        }
+      ],
+      "conv": [
+        {
+          "id": 1,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/1.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Did you end up finding an internship for the summer?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not yet. I applied to a few places, but I haven't heard back from any of them."
+            },
+            {
+              "speaker": "female",
+              "text": "Have you tried the career center? They post internships that aren't listed anywhere else."
+            },
+            {
+              "speaker": "male",
+              "text": "I didn't know that. I'll stop by there this week."
+            },
+            {
+              "speaker": "female",
+              "text": "Good idea, and bring an updated resume with you."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He missed the internship application deadline.",
+                "He hasn't heard back from any internship applications.",
+                "He doesn't have a resume ready.",
+                "He was rejected from every internship."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest the man do?",
+              "options": [
+                "Apply to fewer places.",
+                "Ask his professor for a recommendation.",
+                "Visit the career center for internship listings.",
+                "Wait a few more weeks before applying again."
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/2.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "My phone plan bill was almost double what I usually pay this month."
+            },
+            {
+              "speaker": "female",
+              "text": "That's strange. Did you go over your data limit?"
+            },
+            {
+              "speaker": "male",
+              "text": "I might have, actually. I was streaming a lot while traveling."
+            },
+            {
+              "speaker": "female",
+              "text": "You should call customer service. They can walk you through the charges."
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, I'll call them during my lunch break today."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "His phone stopped working.",
+                "His phone bill was much higher than usual.",
+                "He lost his phone while traveling.",
+                "He was charged for a plan he canceled."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest he do?",
+              "options": [
+                "Switch to a cheaper phone plan.",
+                "Stop using data while traveling.",
+                "Call customer service about the charges.",
+                "Return the phone to the store."
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/3.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm supposed to give a presentation tomorrow, but my slides keep crashing the projector software."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you tried saving it as a PDF instead? That usually works better."
+            },
+            {
+              "speaker": "female",
+              "text": "I hadn't thought of that. Do you think the formatting will still look right?"
+            },
+            {
+              "speaker": "male",
+              "text": "Mostly, yes, though animations won't play in a PDF."
+            },
+            {
+              "speaker": "female",
+              "text": "That's fine, I don't have any animations. I'll convert it tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She lost her presentation file.",
+                "Her slides keep crashing the projector software.",
+                "She forgot to prepare her presentation.",
+                "Her presentation is too long."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest she do?",
+              "options": [
+                "Ask someone else to present for her.",
+                "Save the presentation as a PDF file.",
+                "Remove all the images from her slides.",
+                "Postpone the presentation to another day."
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 1,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/1.mp3",
+          "speaker": "male",
+          "transcript": "Attention residents: the building's water supply will be shut off tomorrow from 9 a.m. to 1 p.m. for scheduled pipe maintenance. Residents are encouraged to store water in advance if needed. The maintenance team will also be inspecting the fire alarm system on the same day, so please do not be alarmed if you hear brief testing sounds during the afternoon.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To inform residents of a scheduled water shutoff for maintenance",
+                "To announce a new fire alarm system installation",
+                "To ask residents to reduce their water usage",
+                "To warn residents about a water leak"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What should residents do if they hear alarm testing sounds?",
+              "options": [
+                "Evacuate the building immediately",
+                "Call the maintenance office",
+                "Not be alarmed, since it is part of scheduled testing",
+                "Report it to building security"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/2.mp3",
+          "speaker": "female",
+          "transcript": "Good morning, students. The Office of Student Affairs would like to remind everyone that course evaluation surveys are now open and will remain available until the end of next week. Completing the survey for each of your courses takes about five minutes, and your responses are completely anonymous. Departments use this feedback to improve courses for future semesters, so we strongly encourage full participation.",
+          "questions": [
+            {
+              "question": "What is this announcement mainly about?",
+              "options": [
+                "A change to the exam schedule",
+                "The opening of course evaluation surveys",
+                "New requirements for graduation",
+                "A reminder about tuition payments"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the announcement, how are student responses handled?",
+              "options": [
+                "They are shared with instructors immediately",
+                "They are reviewed only by the Office of Student Affairs",
+                "They are kept completely anonymous",
+                "They are published on the university website"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 3,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/3.mp3",
+          "speaker": "male",
+          "transcript": "This is an announcement for all passengers waiting in Terminal B. Due to a temporary staffing shortage, security screening at checkpoint two will be closed for the next thirty minutes. Passengers with flights departing within the hour should proceed to checkpoint one instead, located near the main entrance. We apologize for any inconvenience this may cause and appreciate your patience as our staff work to resolve the situation as quickly as possible.",
+          "questions": [
+            {
+              "question": "Why is checkpoint two temporarily closed?",
+              "options": [
+                "A security threat was reported",
+                "There is a staffing shortage",
+                "The equipment is being repaired",
+                "It is being cleaned"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should passengers with flights leaving soon do?",
+              "options": [
+                "Wait thirty minutes at checkpoint two",
+                "Go to checkpoint one near the main entrance",
+                "Speak to a gate agent",
+                "Rebook their flight"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 1,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/1.mp3",
+          "speaker": "female",
+          "subject": "Environmental Science",
+          "transcript": "Today we're going to discuss something called the urban heat island effect. This refers to the phenomenon where cities are noticeably warmer than the rural areas surrounding them, sometimes by as much as five to ten degrees Fahrenheit, especially at night. Why does this happen? Cities replace natural surfaces like soil, grass, and trees with pavement, asphalt, and buildings, all of which absorb and retain heat far more effectively than vegetation does. During the day, these materials soak up solar energy, and at night, instead of cooling off quickly the way an open field would, they slowly release that stored heat back into the air. Tall buildings also play a role, since they can trap warm air between structures and block cooling winds from passing through. The choice of building material matters as well; dark asphalt and dark rooftops can reach surface temperatures well above one hundred and fifty degrees Fahrenheit on a sunny afternoon, considerably hotter than a nearby grassy field exposed to identical sunlight. Reduced vegetation compounds this problem, because plants normally cool their surroundings through evapotranspiration, releasing water vapor into the air, a natural cooling mechanism that pavement and concrete simply cannot replicate. Human activity adds to the effect as well: vehicle engines, air conditioning units, and factories all release additional heat directly into the urban environment. The consequences go beyond simple discomfort. Higher nighttime temperatures increase electricity demand, as more people run air conditioning to stay cool, which in turn increases emissions from power plants, creating something of a feedback loop. Public health researchers have also linked urban heat islands to increased rates of heat-related illness, particularly among elderly residents and those without reliable access to air conditioning. Urban planners and public health officials have therefore begun mapping heat islands at the neighborhood level, since the effect is rarely distributed evenly across a city; older, lower-income neighborhoods with fewer trees and more paved surfaces frequently experience the most severe temperature increases. Fortunately, cities have started experimenting with solutions. Some have painted rooftops white or light colors to reflect sunlight rather than absorb it. Others are investing in green roofs, covering buildings with vegetation that provides natural insulation while also improving air quality. Increasing the number of street trees is another commonly proposed solution, since shade alone can meaningfully lower surface temperatures in a neighborhood. Some cities are also experimenting with permeable, lighter-colored pavement that reflects sunlight and allows rainwater to evaporate, further cooling the surrounding air. Next time, we'll look at how urban planning decisions from decades ago continue to shape these patterns today.",
+          "questions": [
+            {
+              "question": "What is the talk mainly about?",
+              "options": [
+                "Why cities are becoming more energy efficient",
+                "The phenomenon of cities being warmer than surrounding rural areas",
+                "How air conditioning units are manufactured",
+                "The history of city planning"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, why do paved surfaces contribute to the effect?",
+              "options": [
+                "They reflect sunlight back into the atmosphere",
+                "They absorb heat during the day and release it slowly at night",
+                "They prevent rain from reaching the soil",
+                "They are typically painted dark colors"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention electricity demand and power plant emissions?",
+              "options": [
+                "To explain a feedback loop that worsens the effect",
+                "To criticize local governments",
+                "To compare different types of power plants",
+                "To describe how electricity is generated"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about green roofs?",
+              "options": [
+                "They are more expensive than white rooftops",
+                "They may help reduce urban temperatures while also improving air quality",
+                "They are only effective in rural areas",
+                "They require no maintenance at all"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 2,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/2.mp3",
+          "speaker": "male",
+          "subject": "Psychology",
+          "transcript": "Let's talk today about the bystander effect, a well-known phenomenon in social psychology. The bystander effect describes the tendency for individuals to be less likely to help a person in need when other people are present, compared to when they are alone. This might seem counterintuitive at first. You'd think that more people around would mean a higher chance someone steps in to help. But research has repeatedly shown the opposite pattern. One key explanation is something researchers call diffusion of responsibility. When only one person witnesses an emergency, all the responsibility to act falls on that individual. But when a crowd is present, each person may assume that someone else will step in, or that someone else is more qualified to help, and as a result, no one does. Another contributing factor is social influence, or what's sometimes called pluralistic ignorance. If everyone around you appears calm and isn't reacting, you might interpret the situation as less serious than it actually is, even if internally you feel uncertain. This effect was first rigorously demonstrated by psychologists John Darley and Bibb Latane in a series of classic experiments during the late 1960s. In one study, participants sat in a room that gradually filled with smoke, either alone or alongside passive confederates instructed not to react. Those who were alone reported the smoke quickly, while those seated with unresponsive strangers often stayed silent even as the room grew hard to see across. In a related experiment, participants overheard what sounded like someone having a seizure over an intercom; those who believed they were the only listener intervened almost immediately, while those who believed several others were also listening responded far more slowly, and some never sought help at all. This famous phenomenon gained widespread public attention following a tragic case in New York City in the 1960s, where a young woman was attacked while, according to initial newspaper reports, dozens of witnesses did nothing to intervene. Although later investigations found that some details of that case were exaggerated or inaccurate, the incident sparked decades of psychological research into why bystanders often fail to act. Interestingly, researchers have found ways to reduce the bystander effect. One effective strategy involves training people to recognize the psychological barriers at play, and another involves directly assigning responsibility, such as pointing at a specific individual and asking them by name to call for help, rather than shouting a general request to the crowd. Next class, we'll examine how this concept has influenced modern emergency response training programs.",
+          "questions": [
+            {
+              "question": "What is the main topic of the lecture?",
+              "options": [
+                "How emergency response teams are trained",
+                "The tendency for people to be less likely to help when others are present",
+                "A specific crime case from the 1960s",
+                "How social media influences public behavior"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what is diffusion of responsibility?",
+              "options": [
+                "The idea that helping is always dangerous",
+                "The tendency to assume someone else will act in a group setting",
+                "A legal principle used in court cases",
+                "A method used to train emergency responders"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention the 1960s New York City case?",
+              "options": [
+                "To argue that the case has been completely disproven",
+                "To explain the historical event that drew attention to this phenomenon",
+                "To criticize journalists of that time period",
+                "To compare crime rates in different cities"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about assigning responsibility directly to one bystander?",
+              "options": [
+                "It tends to make people less likely to help",
+                "It is only effective in medical emergencies",
+                "It can be an effective way to reduce the bystander effect",
+                "It has never been tested by researchers"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 17,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/17.mp3",
+          "transcript": "About how much would it cost to fix a flat tire on this bike?",
+          "context": "A customer is speaking to a worker at a bike repair shop.",
+          "options": [
+            "It's usually around fifteen dollars, including the new tube.",
+            "Bikes need regular maintenance.",
+            "The shop is open until six.",
+            "Flat tires are usually caused by sharp objects."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "3-17"
+        },
+        {
+          "id": 18,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/18.mp3",
+          "transcript": "Are we still meeting for our language exchange session on Friday?",
+          "context": "A woman is texting a language exchange partner.",
+          "options": [
+            "Yes, same time and place as usual.",
+            "Language exchanges help both people practice.",
+            "Friday is the last day of the week.",
+            "I've been studying Spanish for two years."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "3-18"
+        },
+        {
+          "id": 19,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/19.mp3",
+          "transcript": "Did the book club decide on next month's book yet?",
+          "context": "A member asks another member of a book club.",
+          "options": [
+            "We're reading a mystery novel this time.",
+            "The library has a large selection of books.",
+            "Book clubs usually meet once a month.",
+            "I finished the last book two weeks early."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "3-19"
+        },
+        {
+          "id": 20,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/20.mp3",
+          "transcript": "The elevator has been out of service since yesterday morning.",
+          "context": "A tenant is calling the landlord to complain.",
+          "options": [
+            "I'm sorry about that. A technician is coming this afternoon.",
+            "The building has twelve floors.",
+            "Elevators need regular inspections.",
+            "Most residents prefer to take the stairs."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "3-20"
+        },
+        {
+          "id": 21,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/21.mp3",
+          "transcript": "Excuse me, where can I pick up a map of the campus?",
+          "context": "A new student asks an orientation volunteer.",
+          "options": [
+            "There are maps available at the welcome desk over there.",
+            "The campus was built fifty years ago.",
+            "Orientation lasts about three days.",
+            "New students usually live in the dorms."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "3-21"
+        },
+        {
+          "id": 22,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/22.mp3",
+          "transcript": "I'm calling to follow up on the interview I had last week.",
+          "context": "A job applicant calls a recruiter.",
+          "options": [
+            "Thanks for checking in. We should have a decision by Friday.",
+            "The company was founded ten years ago.",
+            "Interviews usually last about an hour.",
+            "The office is located downtown."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "3-22"
+        }
+      ],
+      "at": [
+        {
+          "id": 3,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/3.mp3",
+          "speaker": "female",
+          "subject": "Biology",
+          "transcript": "Today's topic is circadian rhythm, and specifically, what happens when that rhythm is disrupted by shift work. Your circadian rhythm is essentially your body's internal twenty-four-hour clock, regulated primarily by a small region of the brain that responds to light and darkness. This clock controls far more than just when you feel sleepy. It also influences body temperature, hormone release, digestion, and even how your body processes medication. This master clock is known as the suprachiasmatic nucleus, a cluster of roughly twenty thousand neurons located in the hypothalamus. It receives direct input from specialized cells in the retina that detect ambient light levels, and it uses that information to synchronize the timing of hormone release throughout the body, most notably melatonin, which rises in the evening and signals that it is time to prepare for sleep. Left undisturbed, this internal clock runs on a cycle slightly longer than twenty-four hours and depends on regular exposure to morning light to reset itself each day. When that light cue arrives at an unusual hour, as it does for someone working through the night under artificial lighting, melatonin release becomes desynchronized from the actual sleep period. For most of human history, this rhythm was synchronized almost perfectly with the natural cycle of daylight. Shift work, particularly rotating or overnight shifts, forces the body to be awake and active during hours when its internal clock expects rest, and asleep during hours when it expects activity. The mismatch doesn't resolve quickly, either. Research suggests it can take the body several days to fully adjust to a new schedule, and workers whose shifts rotate frequently may never fully adjust at all before their schedule changes again. This chronic disruption has been linked to a range of health concerns beyond simple tiredness, including increased risk of cardiovascular problems, digestive issues, and difficulty concentrating, which is particularly concerning for professions like nursing and transportation where alertness is critical for safety. Light exposure turns out to be one of the most powerful tools for managing this disruption. Bright light exposure at the start of a night shift can help signal to the body that it's time to be alert, while wearing dark glasses on the commute home can help prevent morning sunlight from resetting the body's clock back to a daytime schedule. Some workplaces have also begun experimenting with keeping shift rotations consistent, rather than constantly rotating employees between day and night shifts, since consistency appears to reduce the health toll considerably. Next week, we'll explore how these findings are being applied in hospital scheduling policies.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "How the body's internal clock is disrupted by shift work",
+                "The history of hospital scheduling",
+                "How digestion affects sleep quality",
+                "Why humans need eight hours of sleep"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, what does the circadian rhythm influence besides sleepiness?",
+              "options": [
+                "Only mood and stress levels",
+                "Body temperature, hormones, digestion, and medication processing",
+                "Only heart rate during exercise",
+                "Vision and hearing sensitivity"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention nursing and transportation?",
+              "options": [
+                "To describe how these industries are regulated",
+                "To give examples of professions where alertness disruption is especially risky",
+                "To compare salaries across industries",
+                "To explain why these jobs require night shifts"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about keeping shift rotations consistent?",
+              "options": [
+                "It has no measurable effect on worker health",
+                "It may reduce the health impact compared to frequent rotation",
+                "It is only possible in the transportation industry",
+                "It eliminates the need for light exposure management"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/4.mp3",
+          "speaker": "female",
+          "subject": "Marine Biology",
+          "transcript": "Today we're going to discuss one of the most remarkable adaptations found in the ocean's deepest regions: bioluminescence, the biochemical production of light by living organisms. As you know, sunlight only penetrates the first thousand meters or so of seawater, and below roughly two hundred meters, it becomes too dim to support photosynthesis. Yet if you were to descend into this so-called twilight zone, you would find that darkness is far from silent, so to speak. It's alive with flashes, glows, and pulses of light produced by an enormous variety of creatures, from jellyfish and squid to anglerfish and bacteria.\n\nThe chemistry behind this light production is remarkably consistent across species. It generally involves a light-emitting molecule called luciferin reacting with oxygen in the presence of an enzyme, luciferase. This reaction releases energy almost entirely as light, with very little heat lost, which is why scientists call it 'cold light.' This efficiency is crucial; organisms living in an energy-poor environment simply cannot afford to waste calories generating heat.\n\nNow, why would an organism evolve to produce light in complete darkness? There are actually three broad functional categories. The first is predation, the anglerfish's glowing lure, for instance, attracts curious prey close enough to be swallowed. The second is defense. Many small organisms, when disturbed, release a cloud of glowing particles, essentially a burglar alarm that startles a predator or attracts an even larger predator to attack the first one. The third function is communication, particularly for finding mates in an environment where visual signals would otherwise be useless.\n\nWhat's particularly striking, and what my own research has focused on, is counter-illumination, a defensive strategy used by certain squid and small fish. These animals produce a soft glow on their undersides that matches the faint sunlight filtering down from above, effectively erasing their silhouette when viewed from below by a predator looking upward. It's a form of camouflage achieved not by hiding, but by matching light rather than blocking it.\n\nGiven that an estimated seventy-five percent of deep-sea species are bioluminescent, this is not some rare curiosity but rather one of the dominant ecological strategies of the largest habitat on Earth by volume. Understanding these light-based adaptations continues to reshape how marine biologists think about survival strategies in environments once assumed to be nearly lifeless.",
+          "questions": [
+            {
+              "question": "What is the professor mainly discussing?",
+              "options": [
+                "The chemical composition of seawater at various depths",
+                "The evolutionary functions and mechanisms of bioluminescence in deep-sea organisms",
+                "The migration patterns of anglerfish",
+                "The history of oceanographic exploration"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, why is the light produced by bioluminescent organisms called 'cold light'?",
+              "options": [
+                "Because it only occurs in the deepest, coldest parts of the ocean",
+                "Because it requires low temperatures to activate the luciferase enzyme",
+                "Because the chemical reaction releases energy almost entirely as light with very little heat",
+                "Because it is only visible to cold-blooded animals"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "Why does the professor mention the anglerfish?",
+              "options": [
+                "To illustrate how bioluminescence can be used to attract prey",
+                "To explain how fish survive extreme water pressure",
+                "To describe a species that lacks the ability to produce light",
+                "To compare its light with sunlight"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about counter-illumination based on the lecture?",
+              "options": [
+                "It is a rare adaptation limited to a handful of species",
+                "It allows predators to see their prey more easily",
+                "It functions as a form of camouflage by matching ambient light",
+                "It generates heat to keep organisms warm"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 25,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/25.mp3",
+          "transcript": "Can we split the electricity bill evenly this month?",
+          "context": "A man asks his roommate about a shared bill.",
+          "options": [
+            "I already paid the internet bill.",
+            "Sure, that sounds fair to me.",
+            "The stove is broken again.",
+            "I'll be home late tonight."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "4-25"
+        },
+        {
+          "id": 26,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/26.mp3",
+          "transcript": "Could I get an extension on the essay due Friday?",
+          "context": "A student asks her professor for more time on an assignment.",
+          "options": [
+            "The library closes at nine.",
+            "My printer ran out of ink.",
+            "The exam covers three chapters.",
+            "I'm afraid the deadline is fixed for everyone."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "4-26"
+        },
+        {
+          "id": 27,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/27.mp3",
+          "transcript": "Do you have the sales report ready for the meeting?",
+          "context": "A man asks his coworker about a report needed for a meeting.",
+          "options": [
+            "Yes, I just sent it to your email.",
+            "The coffee machine is out of order.",
+            "I parked in the wrong lot again.",
+            "Let's order lunch from the new place."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "4-27"
+        },
+        {
+          "id": 28,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/28.mp3",
+          "transcript": "I'd like to return this jacket, it doesn't fit.",
+          "context": "A woman speaks to a store clerk about returning an item.",
+          "options": [
+            "We close at eight on weekdays.",
+            "The fitting rooms are being cleaned.",
+            "Do you have the receipt with you?",
+            "Our sale starts next Monday."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "4-28"
+        },
+        {
+          "id": 29,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/29.mp3",
+          "transcript": "Would you like to see the dessert menu tonight?",
+          "context": "A waiter asks a customer at the end of a meal.",
+          "options": [
+            "The soup was cold earlier.",
+            "No thanks, just the check please.",
+            "I left my wallet in the car.",
+            "We booked a table for six."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "4-29"
+        },
+        {
+          "id": 30,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/30.mp3",
+          "transcript": "I need to reschedule my appointment for next week.",
+          "context": "A patient calls a doctor's office reception desk.",
+          "options": [
+            "The doctor recommends more exercise.",
+            "Your insurance card has expired.",
+            "The waiting room is being renovated.",
+            "Sure, how about Tuesday at 10 AM?"
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "4-30"
+        }
+      ],
+      "conv": [
+        {
+          "id": 4,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/4.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Did you end up finding an internship for the summer?"
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, actually, I just accepted an offer from a marketing firm downtown yesterday."
+            },
+            {
+              "speaker": "female",
+              "text": "That's great! How did you manage to land something so late in the semester?"
+            },
+            {
+              "speaker": "male",
+              "text": "Honestly, it was mostly luck. One of my professors knew the hiring manager and put in a good word for me."
+            },
+            {
+              "speaker": "female",
+              "text": "Well, congratulations. You must be relieved after all that searching."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man talking about?",
+              "options": [
+                "A problem with his class schedule",
+                "An internship offer he just accepted",
+                "A trip he is planning for the summer",
+                "A professor he is unhappy with"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How did the man get the internship?",
+              "options": [
+                "He applied through an online job board",
+                "A professor recommended him to the hiring manager",
+                "He walked in and asked for a job",
+                "His roommate referred him"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/5.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Hey, do you have a minute? I wanted to talk about the apartment."
+            },
+            {
+              "speaker": "female",
+              "text": "Sure, what's going on?"
+            },
+            {
+              "speaker": "male",
+              "text": "Well, the kitchen has been a mess lately, and I don't think it's fair for me to clean it every time."
+            },
+            {
+              "speaker": "female",
+              "text": "Oh, I'm sorry, I've been swamped with midterms. How about we make a cleaning schedule so it's more balanced?"
+            },
+            {
+              "speaker": "male",
+              "text": "That sounds like a good idea. Let's set it up this weekend."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He can't afford the rent",
+                "He feels he is doing more than his share of cleaning",
+                "He wants to move out",
+                "He is failing his midterms"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What do the speakers decide to do?",
+              "options": [
+                "Hire a cleaning service",
+                "Move to separate apartments",
+                "Create a cleaning schedule",
+                "Ask the landlord to intervene"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 4,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/4.mp3",
+          "speaker": "female",
+          "transcript": "Attention students: due to the upcoming final examination period, the main library will extend its operating hours starting this Monday. The building will now remain open until 2 a.m. on weekdays, and the third floor quiet study rooms will require a reservation through the online portal. Please note that food is still not permitted inside the building, though beverages in sealed containers are allowed. Students who need extended access to computer labs should check in at the front desk with their student identification card.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To advertise new library books",
+                "To inform students of extended library hours during exams",
+                "To announce the library's permanent closure",
+                "To recruit new library staff"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What must students do to use a quiet study room?",
+              "options": [
+                "Pay a small deposit",
+                "Bring their own chair",
+                "Make a reservation through the online portal",
+                "Sign up two weeks in advance"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/5.mp3",
+          "speaker": "male",
+          "transcript": "May I have your attention please. Flight 238 to Chicago, originally scheduled to depart from Gate 12, has been moved to Gate 27 due to a change in aircraft. Boarding will now begin at 4:45 p.m., thirty minutes later than planned. Passengers requiring wheelchair assistance are asked to speak with a representative at the check-in counter immediately. We apologize for any inconvenience this delay may cause and thank you for your patience and continued cooperation as our staff work to get you to your destination as quickly as possible.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To cancel flight 238 entirely",
+                "To inform passengers of a gate change and delay",
+                "To announce a new airline policy",
+                "To welcome passengers arriving from Chicago"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should passengers needing wheelchair assistance do?",
+              "options": [
+                "Wait at Gate 12",
+                "Call the airline's customer service line",
+                "Speak with a representative at the check-in counter",
+                "Board the plane first without notice"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 1,
+        "promptGender": "female",
+        "prompt": "Do you know why the coffee machine in the break room is out of order?",
+        "responseGender": "male",
+        "responsePrefix": "Someone",
+        "correctChunks": [
+          "said",
+          "it",
+          "needs",
+          "a new water filter"
+        ],
+        "distractorChunks": [
+          "needed"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 2,
+        "promptGender": "male",
+        "prompt": "Did anyone turn in a black umbrella to the front desk?",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Did",
+          "someone",
+          "already",
+          "check",
+          "the lost and found box"
+        ],
+        "distractorChunks": [
+          "checked"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 3,
+        "promptGender": "female",
+        "prompt": "I still have three books from the library that are overdue.",
+        "responseGender": "male",
+        "responsePrefix": "You",
+        "correctChunks": [
+          "should",
+          "return",
+          "them",
+          "before",
+          "the fine",
+          "gets",
+          "any bigger"
+        ],
+        "distractorChunks": [
+          "get"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 4,
+        "promptGender": "male",
+        "prompt": "Can we move tomorrow's meeting to a different time?",
+        "responseGender": "female",
+        "responsePrefix": "Let me",
+        "correctChunks": [
+          "find out",
+          "whether",
+          "everyone",
+          "is",
+          "available",
+          "on Thursday instead"
+        ],
+        "distractorChunks": [
+          "are"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 5,
+        "promptGender": "female",
+        "prompt": "I heard your flight got delayed yesterday.",
+        "responseGender": "male",
+        "responsePrefix": "Yes,",
+        "correctChunks": [
+          "the airline",
+          "explained",
+          "why",
+          "the delay",
+          "happened",
+          "so late"
+        ],
+        "distractorChunks": [
+          "happens"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 6,
+        "promptGender": "male",
+        "prompt": "This recipe calls for an ingredient I don't have.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "What time",
+          "does",
+          "the nearest grocery store",
+          "actually",
+          "close"
+        ],
+        "distractorChunks": [
+          "closes"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 7,
+        "promptGender": "female",
+        "prompt": "I can't remember the password for our shared streaming account.",
+        "responseGender": "male",
+        "responsePrefix": "I'll",
+        "correctChunks": [
+          "check",
+          "whether",
+          "it's",
+          "saved",
+          "in my email"
+        ],
+        "distractorChunks": [
+          "save"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 8,
+        "promptGender": "male",
+        "prompt": "How is the group project going so far?",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "The new members",
+          "handled",
+          "the research section",
+          "surprisingly well"
+        ],
+        "distractorChunks": [
+          "handles"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 9,
+        "promptGender": "female",
+        "prompt": "I still don't understand the new lease renewal process.",
+        "responseGender": "male",
+        "responsePrefix": "I'll walk you through",
+        "correctChunks": [
+          "how",
+          "the online form",
+          "works",
+          "step by step"
+        ],
+        "distractorChunks": [
+          "work"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 10,
+        "promptGender": "male",
+        "prompt": "The yoga class on Saturday seems to be canceled.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Have",
+          "they",
+          "already",
+          "rescheduled",
+          "it",
+          "for another day"
+        ],
+        "distractorChunks": [
+          "reschedule"
+        ],
+        "responseSuffix": "?"
+      }
+    ],
+    "email": {
+      "id": 1,
+      "scenario": "You missed a midterm exam because you were sick with a fever. You have a doctor's note and want to explain the situation to your professor and ask about taking a makeup exam.",
+      "recipient": "Professor Nakamura",
+      "subject": "Missed midterm exam due to illness",
+      "tasks": [
+        {
+          "description": "Explain that you missed the exam because you were sick.",
+          "keywords": [
+            "sick",
+            "ill",
+            "fever",
+            "illness",
+            "unwell"
+          ]
+        },
+        {
+          "description": "Mention that you have a doctor's note.",
+          "keywords": [
+            "doctor",
+            "note",
+            "documentation",
+            "doctor's note"
+          ]
+        },
+        {
+          "description": "Ask if you can take a makeup exam.",
+          "keywords": [
+            "makeup",
+            "make-up",
+            "reschedule",
+            "retake",
+            "another time"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Professor Nakamura,\n\nI am writing to explain why I was unable to take Monday's midterm exam. I woke up with a high fever and was too sick to leave my apartment, let alone concentrate on an exam.\n\nI visited the campus health center that afternoon, and I have a doctor's note confirming my illness, which I am happy to send you as an attachment.\n\nWould it be possible to take a makeup exam sometime this week? I want to make sure I complete the material without falling behind. Thank you for your understanding.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 1,
+      "subject": "psychology",
+      "professor": "Dr. Alvarado",
+      "professorGender": "male",
+      "prompt": "We've been discussing the effects of social media on teenagers' mental health, a topic that has drawn growing attention from researchers and parents alike. Some researchers argue that platforms should be required to limit how much time teenagers can spend on them each day, since excessive use is linked to anxiety and poor sleep. Others argue that limiting usage should remain a decision for parents and families, since every household is different. Should social media platforms be required to limit how much time teenagers spend on them? Why or why not?",
+      "classmates": [
+        {
+          "name": "Marcus",
+          "gender": "male",
+          "opinion": "I think platforms should be required to set limits. Teenagers often don't have the self-control to stop scrolling on their own, especially when apps are engineered with endless feeds and notifications designed to keep users engaged as long as possible. Companies have a responsibility not to build products that are intentionally addictive, particularly for users who are still developing the impulse control adults are expected to have. A daily limit wouldn't need to be extreme to make a real difference."
+        },
+        {
+          "name": "Sofia",
+          "gender": "female",
+          "opinion": "I'd leave this decision to parents rather than platforms. Every family and teenager is different in ways a single company-wide rule can't capture — some teenagers use social media mainly to stay connected with friends, while others clearly struggle with it, and parents are better placed to notice which applies to their own child. A blanket limit treats a responsible sixteen-year-old the same as someone who is struggling, which doesn't solve the actual problem."
+        }
+      ],
+      "exampleResponse": "The relationship between social media use and teenage mental health has become an important topic for researchers and families alike. The question of whether platforms should be required to limit usage time is worth considering carefully. While I see where Sofia is coming from when she argues that parents understand their own children's needs best, I would argue that companies still bear some responsibility, since many apps use design features specifically intended to keep users scrolling as long as possible. In this respect, I am inclined to agree with Marcus, who emphasizes that teenagers often lack the self-control to manage this on their own. For example, a platform could introduce a simple daily time limit for younger accounts while still allowing parents to adjust it, combining company responsibility with family flexibility."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 1,
+      "location": "University Cafeteria",
+      "icon": "🍽️",
+      "photoSlug": "cafeteria",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Cafeteria_at_lunch.jpg",
+      "speaker": "male",
+      "introText": "You are learning how to give a tour of the university cafeteria. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the cafeteria.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "Meals are served from seven to nine in the evening.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "You can pay with cash, card, or your meal plan.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Vegetarian options are available every day.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "If a table is reserved, please look for another one nearby.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "The cafeteria also offers grab-and-go snacks near the main entrance.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Please return your tray to the counter when you are finished eating.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 1,
+      "topic": "Student Work Experience",
+      "icon": "💼",
+      "photoSlug": "part-time-job",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Barista_at_work.jpg",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about part-time work among students. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. Let's start with work experience. Have you ever had a part-time job, and if so, what was it?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Some students prefer part-time jobs related to their field of study, while others just want any job that pays well. Which matters more to you, and why?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Do you think working part-time while studying helps or hurts a student's academic performance? Why do you think so?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Some people believe universities should help students find part-time jobs on campus. Do you agree this should be a priority? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

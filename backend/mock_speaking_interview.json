@@ -1,0 +1,676 @@
+[
+  {
+    "id": 1,
+    "topic": "Student Work Experience",
+    "icon": "💼",
+    "photoSlug": "part-time-job",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Barista_at_work.jpg",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about part-time work among students. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. Let's start with work experience. Have you ever had a part-time job, and if so, what was it?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Some students prefer part-time jobs related to their field of study, while others just want any job that pays well. Which matters more to you, and why?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Do you think working part-time while studying helps or hurts a student's academic performance? Why do you think so?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Some people believe universities should help students find part-time jobs on campus. Do you agree this should be a priority? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "topic": "Book Preferences",
+    "icon": "📖",
+    "photoSlug": "reading",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/63/Reading_a_book.jpg",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about book preferences and reading choices. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thanks for speaking with me. To begin, tell me about the last book you read for fun. What was it about?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "That sounds interesting.",
+        "text": "That sounds interesting. Some people prefer reading physical books, while others prefer e-books or audiobooks. Which format do you prefer, and why?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "Good point.",
+        "text": "Good point. Do you think people read less now than they did in the past because of phones and social media? Why or why not?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Last question.",
+        "text": "Last question. Some people think schools should let students choose their own books instead of assigning the same book to everyone. Which approach do you agree with, and why?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "topic": "Cooking and Nutrition",
+    "icon": "🍳",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about cooking and nutrition habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. Let's start with an easy one. How often do you cook meals for yourself, and what kind of dishes do you usually prepare?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer cooking at home or eating out at restaurants? Which one do you find more enjoyable, and why?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people believe that eating healthy food is more important than enjoying the taste of food. What is your opinion on this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think schools should teach students how to cook and eat healthily? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "topic": "Getting Around the City",
+    "icon": "🚌",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about public transportation in cities. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for taking the time to speak with me. To begin, could you describe the public transportation system in your city or town?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer using public transportation or driving your own vehicle? Which do you think is more convenient?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people think that governments should invest more money in public transportation instead of building new roads. What do you think about this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you believe public transportation will become more popular in the future? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "topic": "Growing Up",
+    "icon": "🧸",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about childhood memories and experiences. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. Let's begin with a simple question. What is one of your favorite memories from your childhood?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Did you prefer spending time playing outside or staying indoors when you were a child? Which did you enjoy more?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people believe that childhood today is very different from childhood in the past. Do you agree or disagree with this idea?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think children should be given more responsibilities at a young age? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "topic": "Online Shopping",
+    "icon": "🛒",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about online shopping habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. To start, how often do you shop online, and what types of products do you usually buy?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer shopping online or visiting physical stores? Which do you think offers a better experience?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people think that online shopping is harming small local businesses. What is your opinion on this issue?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think online shopping will eventually replace traditional shopping completely? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "topic": "Seasonal Preferences",
+    "icon": "⛅",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about weather and seasonal preferences. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. Let's start with an easy question. What is your favorite season of the year, and why do you like it?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer living in a place with four distinct seasons or a place with consistent weather year-round?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people believe that weather has a strong effect on people's mood and productivity. What is your opinion on this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think climate change is affecting the seasons in your region? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "topic": "Neighborhood Life",
+    "icon": "🏘️",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about neighborhood life and community relationships. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. Could you start by describing the neighborhood where you currently live?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer living in a quiet neighborhood or a lively one with a lot of activity? Which suits you better?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people think it is important to know your neighbors well, while others prefer to keep their distance. What is your view?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think community events help strengthen relationships between neighbors? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "topic": "Balancing Work and Study",
+    "icon": "💼",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about balancing part-time work and studies. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. To begin, have you ever had a part-time job? If so, what was it like?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you think students should work part-time jobs while studying, or should they focus only on their studies?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people believe that part-time work experience is more valuable than classroom learning. What is your opinion?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think companies should offer more flexible part-time positions for young people? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "topic": "Board Games and Puzzles",
+    "icon": "🎲",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about board games and puzzles. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. Let's start with a simple question. Do you enjoy playing board games or solving puzzles in your free time?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer playing games alone, like solving a puzzle by yourself, or playing games with other people?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people think that board games and puzzles are good for developing problem-solving skills. What is your opinion on this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think traditional board games can still compete with video games today? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "topic": "Home Organization",
+    "icon": "🗄️",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about home organization habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. To start, how do you usually keep your living space organized and clean?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer a minimalist living space with very few items, or do you like to keep many personal belongings around you?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people believe that a well-organized home leads to a more productive and peaceful life. What do you think about this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think people today struggle more with organizing their homes compared to previous generations? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "topic": "Community Service",
+    "icon": "🤝",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about volunteering and community service. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. Let's begin with an easy question. Have you ever volunteered for a cause or organization? What was that experience like?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer volunteering for local community projects or for larger international organizations?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people think that volunteering should be a required part of school education. What is your opinion on this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you believe volunteering has a meaningful impact on society? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "topic": "Local Traditions",
+    "icon": "🎉",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about local traditions and customs. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. To begin, could you describe a local tradition or custom that is important in your area?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer participating in traditional cultural events or trying new, modern activities?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people believe that local traditions are gradually disappearing because of globalization. What is your view on this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think it is important for younger generations to preserve local traditions? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "topic": "Personal Finance",
+    "icon": "💰",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about personal finance and money management. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. Let's start with a simple question. How do you usually manage your personal budget and expenses?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer saving your money for the future or spending it on things you enjoy right now?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people think that schools should teach students about personal finance and money management. What is your opinion on this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you believe that young people today are better at managing money than previous generations? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "topic": "Outdoor Activities",
+    "icon": "🥾",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about outdoor activities and recreation. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "id": 1,
+        "connector": "",
+        "text": "Thank you for joining me today. To begin, what kind of outdoor activities do you enjoy doing in your free time?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 2,
+        "connector": "Interesting.",
+        "text": "Interesting. Do you prefer engaging in outdoor activities alone or with a group of friends or family?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 3,
+        "connector": "I see.",
+        "text": "I see. Some people believe that spending time outdoors is essential for maintaining good mental health. What is your opinion on this?",
+        "recordSeconds": 45
+      },
+      {
+        "id": 4,
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think people today spend enough time outdoors compared to previous generations? Why or why not?",
+        "recordSeconds": 45
+      }
+    ]
+  },
+  {
+    "topic": "Study Habits",
+    "icon": "📚",
+    "photoSlug": "studying",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Student_studying.jpg",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about student study habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "connector": "",
+        "text": "Thanks for joining me today. To start, where do you usually prefer to study, and why?",
+        "recordSeconds": 45,
+        "id": 1
+      },
+      {
+        "connector": "That makes sense.",
+        "text": "That makes sense. Some students prefer studying alone, while others prefer studying in groups. Which do you prefer, and why?",
+        "recordSeconds": 45,
+        "id": 2
+      },
+      {
+        "connector": "Interesting.",
+        "text": "Interesting. Do you think technology, like phones or laptops, generally helps or hurts your ability to focus while studying?",
+        "recordSeconds": 45,
+        "id": 3
+      },
+      {
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Some people believe schools should teach study skills directly as part of the curriculum. Do you agree this should be a priority? Why or why not?",
+        "recordSeconds": 45,
+        "id": 4
+      }
+    ],
+    "id": 16
+  },
+  {
+    "topic": "City Living",
+    "icon": "🏙️",
+    "photoSlug": "city-living",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6c/City_street_view.jpg",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about attitudes toward city living. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "connector": "",
+        "text": "Thank you for joining me today. Let's begin with something simple. Do you prefer living in a big city or a smaller town, and why?",
+        "recordSeconds": 45,
+        "id": 1
+      },
+      {
+        "connector": "I see.",
+        "text": "I see. What do you think is the biggest advantage of living in a big city?",
+        "recordSeconds": 45,
+        "id": 2
+      },
+      {
+        "connector": "That's a good point.",
+        "text": "That's a good point. And what would you say is the biggest drawback of city living?",
+        "recordSeconds": 45,
+        "id": 3
+      },
+      {
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think cities are doing enough to remain affordable for young people? Why or why not?",
+        "recordSeconds": 45,
+        "id": 4
+      }
+    ],
+    "id": 17
+  },
+  {
+    "topic": "Healthy Habits",
+    "icon": "🥗",
+    "photoSlug": "healthy-habits",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/Healthy_food_bowl.jpg",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about healthy lifestyle habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "connector": "",
+        "text": "Thanks so much for joining me. To start, what does a typical healthy day look like for you?",
+        "recordSeconds": 45,
+        "id": 1
+      },
+      {
+        "connector": "That's helpful.",
+        "text": "That's helpful. What do you find to be the biggest challenge in maintaining healthy habits?",
+        "recordSeconds": 45,
+        "id": 2
+      },
+      {
+        "connector": "I understand.",
+        "text": "I understand. Do you think social media influences how people think about health and fitness? In what way?",
+        "recordSeconds": 45,
+        "id": 3
+      },
+      {
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Should employers encourage healthy habits among employees, for example with wellness programs? Why or why not?",
+        "recordSeconds": 45,
+        "id": 4
+      }
+    ],
+    "id": 18
+  },
+  {
+    "topic": "Technology and Friendship",
+    "icon": "📱",
+    "photoSlug": "technology-friends",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/8/85/Friends_using_phones.jpg",
+    "speaker": "female",
+    "introText": "You have agreed to take part in a research study about technology and friendships. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "connector": "",
+        "text": "Thank you for joining me today. First, how has technology changed the way you stay in touch with friends?",
+        "recordSeconds": 45,
+        "id": 1
+      },
+      {
+        "connector": "That's interesting.",
+        "text": "That's interesting. Do you think online friendships can be as meaningful as in-person ones? Why or why not?",
+        "recordSeconds": 45,
+        "id": 2
+      },
+      {
+        "connector": "I see what you mean.",
+        "text": "I see what you mean. What's one downside of relying heavily on technology to maintain friendships?",
+        "recordSeconds": 45,
+        "id": 3
+      },
+      {
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think people generally communicate better in person or through text? Why?",
+        "recordSeconds": 45,
+        "id": 4
+      }
+    ],
+    "id": 19
+  },
+  {
+    "topic": "Career Planning",
+    "icon": "🎯",
+    "photoSlug": "career-planning",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Career_planning_desk.jpg",
+    "speaker": "male",
+    "introText": "You have agreed to take part in a research study about how students plan their careers. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+    "questions": [
+      {
+        "connector": "",
+        "text": "Thanks for taking part today. To start, how did you decide on your current field of study or career path?",
+        "recordSeconds": 45,
+        "id": 1
+      },
+      {
+        "connector": "That's a great answer.",
+        "text": "That's a great answer. Do you think it's more important to follow your passion or to choose a career based on job stability? Why?",
+        "recordSeconds": 45,
+        "id": 2
+      },
+      {
+        "connector": "I understand.",
+        "text": "I understand. How much influence did your family have on your career decisions?",
+        "recordSeconds": 45,
+        "id": 3
+      },
+      {
+        "connector": "Great, one last question.",
+        "text": "Great, one last question. Do you think it's common for people to change careers entirely later in life? Is that a good thing?",
+        "recordSeconds": 45,
+        "id": 4
+      }
+    ],
+    "id": 20
+  }
+]

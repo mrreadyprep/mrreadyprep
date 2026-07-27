@@ -1,0 +1,1748 @@
+{
+  "id": 7,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 19,
+          "topic": "The Domestication of Dogs",
+          "category": "Biology",
+          "paragraph": "Dogs were the first animal species domesticated by humans, likely tens of thousands of years before any other. Genetic evidence suggests that wolves and early humans developed a mutually beneficial relationship, with wolves scavenging near human settlements and gradually growing more tolerant of people. Over many generations, the friendliest and least aggressive wolves were more successful at surviving near humans, a process researchers call self-domestication. Physical changes accompanied this behavioral shift, including smaller skulls, floppier ears, and a reduced tendency toward aggression compared to wild wolves. Modern genetic studies continue to refine our understanding of exactly where and when this remarkable transformation first occurred.",
+          "blanks": [
+            {
+              "word": "scavenging",
+              "visible": "scave",
+              "hidden": "nging"
+            },
+            {
+              "word": "tolerant",
+              "visible": "tole",
+              "hidden": "rant"
+            },
+            {
+              "word": "generations",
+              "visible": "gener",
+              "hidden": "ations"
+            },
+            {
+              "word": "aggressive",
+              "visible": "aggre",
+              "hidden": "ssive"
+            },
+            {
+              "word": "successful",
+              "visible": "succe",
+              "hidden": "ssful"
+            },
+            {
+              "word": "domestication",
+              "visible": "domes",
+              "hidden": "tication"
+            },
+            {
+              "word": "accompanied",
+              "visible": "accom",
+              "hidden": "panied"
+            },
+            {
+              "word": "skulls",
+              "visible": "sku",
+              "hidden": "lls"
+            },
+            {
+              "word": "reduced",
+              "visible": "red",
+              "hidden": "uced"
+            },
+            {
+              "word": "aggression",
+              "visible": "aggre",
+              "hidden": "ssion"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 31,
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Maple Street Bakery",
+          "subtitle": "Date: April 18, 2025 | Time: 8:20 a.m. | Order #4412",
+          "text": "Sourdough Loaf (x1) ......... $6.50 ........ $6.50\nCinnamon Rolls (x2) ......... $3.25 ........ $6.50\nDrip Coffee (x1) ............ $2.75 ........ $2.75\n\nSubtotal: $15.75\nTax (7%): $1.10\nTotal: $16.85\n\nPayment: Debit Card\n\nRewards members earn 1 point per dollar spent. Ask about our loyalty card!",
+          "questions": [
+            {
+              "question": "How was the order paid for?",
+              "options": [
+                "Cash",
+                "Debit card",
+                "Store credit",
+                "Mobile payment app"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are customers told about the rewards program?",
+              "options": [
+                "It requires a monthly fee",
+                "Points are earned per dollar spent",
+                "It is only available online",
+                "Points expire after one week"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Riverside Auto Repair",
+          "subtitle": "Date: September 2, 2025 | Time: 2:10 p.m. | Invoice #8891",
+          "text": "Oil Change (Synthetic) ...... $54.00\nTire Rotation ............... $25.00\nCabin Air Filter ............. $18.00\n\nLabor: $30.00\nParts Subtotal: $97.00\nTax (6%): $7.62\nTotal: $134.62\n\nPayment: Credit Card\n\nNext service recommended at 45,000 miles or in 6 months, whichever comes first.",
+          "questions": [
+            {
+              "question": "What is indicated about the next service?",
+              "options": [
+                "It is due immediately",
+                "It is recommended at 45,000 miles or in 6 months",
+                "It will be free of charge",
+                "It requires a new appointment within a week"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What services were performed on this visit?",
+              "options": [
+                "Only an oil change",
+                "An oil change, tire rotation, and cabin air filter replacement",
+                "A full engine rebuild",
+                "Tire replacement only"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 33,
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Willowbrook Dry Cleaners",
+          "subtitle": "Date: November 11, 2025 | Time: 4:05 p.m. | Ticket #2207",
+          "text": "Suit Jacket (x1) ............ $9.00\nDress Pants (x1) ............ $6.50\nSilk Blouse (x1) ............. $8.00\n\nSubtotal: $23.50\nExpress Service Fee: $5.00\nTax (5%): $1.43\nTotal: $29.93\n\nPayment: Cash\n\nReady for pickup after 5:00 p.m. tomorrow. Please bring this ticket.",
+          "questions": [
+            {
+              "question": "What is indicated about picking up the order?",
+              "options": [
+                "It can be picked up immediately",
+                "Customers must bring the ticket to collect it",
+                "It will be delivered by mail",
+                "No proof of purchase is needed"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What additional fee was charged on this order?",
+              "options": [
+                "A late fee",
+                "A delivery fee",
+                "An express service fee",
+                "A membership fee"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 13,
+          "title": "Circadian Rhythms and Sleep",
+          "passage": "Nearly all living organisms possess an internal biological clock that regulates physiological processes on an approximately twenty-four-hour cycle, known as the circadian rhythm. In humans, this clock is governed primarily by a small cluster of neurons called the suprachiasmatic nucleus, located within the hypothalamus, which coordinates timing signals sent throughout the rest of the body.\n\nLight serves as the dominant external cue, or zeitgeber, that synchronizes this internal clock with the actual day-night cycle. When light entering the eyes decreases in the evening, the brain's pineal gland increases production of melatonin, a hormone that promotes drowsiness and prepares the body for sleep. Exposure to bright light in the morning, conversely, suppresses melatonin and promotes alertness.\n\nWhen circadian rhythms are disrupted, whether through shift work, transmeridian travel, or irregular sleep schedules, the resulting misalignment can produce fatigue, impaired concentration, and mood disturbances. Long-term disruption has additionally been linked to more serious health consequences, including increased risk of cardiovascular disease, metabolic disorders, and weakened immune function, underscoring the biological importance of maintaining a stable sleep schedule.\n\nContemporary research increasingly focuses on how artificial light, particularly the blue-toned light emitted by phones and computer screens, interferes with natural melatonin production when used late at night. Sleep researchers generally recommend reducing screen exposure in the hours before bedtime and maintaining consistent sleep and wake times to help preserve the stability of the body's internal clock.",
+          "passage_marked": "Nearly all living organisms possess an internal biological clock that regulates physiological processes on an approximately twenty-four-hour cycle, known as the circadian rhythm. In humans, this clock is governed primarily by a small cluster of neurons called the suprachiasmatic nucleus, located within the hypothalamus, which coordinates timing signals sent throughout the rest of the body. [A]\n\nLight serves as the dominant external cue, or zeitgeber, that synchronizes this internal clock with the actual day-night cycle. When light entering the eyes decreases in the evening, the brain's pineal gland increases production of melatonin, a hormone that promotes drowsiness and prepares the body for sleep. [B] Exposure to bright light in the morning, conversely, suppresses melatonin and promotes alertness.\n\nWhen circadian rhythms are disrupted, whether through shift work, transmeridian travel, or irregular sleep schedules, the resulting misalignment can produce fatigue, impaired concentration, and mood disturbances. Long-term disruption has additionally been linked to more serious health consequences, including increased risk of cardiovascular disease, metabolic disorders, and weakened immune function, underscoring the biological importance of maintaining a stable sleep schedule. [C]\n\nContemporary research increasingly focuses on how artificial light, particularly the blue-toned light emitted by phones and computer screens, interferes with natural melatonin production when used late at night. Sleep researchers generally recommend reducing screen exposure in the hours before bedtime and maintaining consistent sleep and wake times to help preserve the stability of the body's internal clock. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'synchronizes' in the passage is closest in meaning to",
+              "options": [
+                "disrupts",
+                "aligns or coordinates in time",
+                "weakens",
+                "measures"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what is the function of the suprachiasmatic nucleus?",
+              "options": [
+                "It produces melatonin directly",
+                "It coordinates timing signals that regulate the body's internal clock",
+                "It controls only eye movement",
+                "It has no known function"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What are some consequences of long-term circadian rhythm disruption?",
+              "options": [
+                "Improved memory and focus",
+                "Increased risk of cardiovascular disease, metabolic disorders, and weakened immunity",
+                "Enhanced physical strength",
+                "No noticeable effects"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention blue-toned light from phones and computer screens?",
+              "options": [
+                "To recommend using screens more at night",
+                "To provide a modern, practical example of how artificial light disrupts melatonin production",
+                "To explain how screens are manufactured",
+                "To argue that all artificial light is harmless"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This hormonal cycle operates in reverse as dawn approaches.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 20,
+          "topic": "Volcanic Islands and Hotspot Formation",
+          "category": "Geology",
+          "paragraph": "Not all volcanic activity occurs at the boundaries between tectonic plates, and some of the most famous island chains on Earth owe their existence to a very different process. Deep beneath certain regions of the crust, unusually hot plumes of molten rock rise from the mantle, creating what geologists call a hotspot. As a tectonic plate slowly drifts over this stationary plume, magma periodically breaks through the crust, forming a volcano that eventually becomes an island. Because the plate keeps moving while the hotspot remains fixed, a chain of islands forms over millions of years, with the oldest islands farthest from the currently active hotspot. This process explains why island chains often show a clear age progression from one end to the other.",
+          "blanks": [
+            {
+              "word": "beneath",
+              "visible": "ben",
+              "hidden": "eath"
+            },
+            {
+              "word": "mantle",
+              "visible": "man",
+              "hidden": "tle"
+            },
+            {
+              "word": "geologists",
+              "visible": "geolo",
+              "hidden": "gists"
+            },
+            {
+              "word": "stationary",
+              "visible": "stati",
+              "hidden": "onary"
+            },
+            {
+              "word": "periodically",
+              "visible": "perio",
+              "hidden": "dically"
+            },
+            {
+              "word": "eventually",
+              "visible": "event",
+              "hidden": "ually"
+            },
+            {
+              "word": "farthest",
+              "visible": "fart",
+              "hidden": "hest"
+            },
+            {
+              "word": "currently",
+              "visible": "curr",
+              "hidden": "ently"
+            },
+            {
+              "word": "explains",
+              "visible": "expl",
+              "hidden": "ains"
+            },
+            {
+              "word": "progression",
+              "visible": "progr",
+              "hidden": "ession"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 14,
+          "title": "The Silk Road Trade Network",
+          "passage": "The Silk Road refers to an extensive network of trade routes connecting China to the Mediterranean world, established as early as the second century BCE. Although merchants and travelers had used sections of these routes for centuries, the term itself was coined only in the nineteenth century by the German geographer Ferdinand von Richthofen.\n\nChinese silk, prized throughout the ancient world for its luxurious texture, gave the network its name, but merchants also transported spices, precious stones, and glassware across vast distances. Beyond material goods, the Silk Road served as a conduit for ideas, technologies, and religious traditions, most notably facilitating the gradual spread of Buddhism from India into Central Asia and China.\n\nNo single merchant traveled the entire route from end to end. Instead, goods passed through a chain of regional traders, particularly Central Asian intermediaries who possessed crucial knowledge of local languages, terrain, and markets. Caravanserais, fortified roadside inns, provided merchants and their animals shelter, food, and security at regular intervals along the most heavily traveled desert and mountain stretches.\n\nOverland trade along the Silk Road eventually declined as merchants increasingly favored maritime routes, which could move larger cargoes more efficiently by sea. The rise and subsequent fragmentation of the Mongol Empire also disrupted the political stability that had once made overland travel safer. Nevertheless, the Silk Road left a lasting legacy of cultural and economic exchange across Eurasia.",
+          "passage_marked": "The Silk Road refers to an extensive network of trade routes connecting China to the Mediterranean world, established as early as the second century BCE. Although merchants and travelers had used sections of these routes for centuries, the term itself was coined only in the nineteenth century by the German geographer Ferdinand von Richthofen. [A]\n\nChinese silk, prized throughout the ancient world for its luxurious texture, gave the network its name, but merchants also transported spices, precious stones, and glassware across vast distances. [B] Beyond material goods, the Silk Road served as a conduit for ideas, technologies, and religious traditions, most notably facilitating the gradual spread of Buddhism from India into Central Asia and China.\n\nNo single merchant traveled the entire route from end to end. Instead, goods passed through a chain of regional traders, particularly Central Asian intermediaries who possessed crucial knowledge of local languages, terrain, and markets. Caravanserais, fortified roadside inns, provided merchants and their animals shelter, food, and security at regular intervals along the most heavily traveled desert and mountain stretches. [C]\n\nOverland trade along the Silk Road eventually declined as merchants increasingly favored maritime routes, which could move larger cargoes more efficiently by sea. The rise and subsequent fragmentation of the Mongol Empire also disrupted the political stability that had once made overland travel safer. Nevertheless, the Silk Road left a lasting legacy of cultural and economic exchange across Eurasia. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'conduit' in the passage is closest in meaning to",
+              "options": [
+                "an obstacle",
+                "a channel or pathway for transmission",
+                "a type of currency",
+                "a military alliance"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what did the Silk Road transport besides material goods?",
+              "options": [
+                "Only precious metals",
+                "Ideas, technologies, and religious traditions such as Buddhism",
+                "Nothing besides silk",
+                "Military weapons exclusively"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What role did caravanserais play along the Silk Road?",
+              "options": [
+                "They served as government tax offices",
+                "They provided merchants and animals with shelter, food, and security",
+                "They were used to store silk exclusively",
+                "They served as religious temples"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention the fragmentation of the Mongol Empire?",
+              "options": [
+                "To describe the founding of the Silk Road",
+                "To explain a factor that contributed to the decline of overland trade",
+                "To argue that the Mongols invented the Silk Road",
+                "To describe Buddhist traditions"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This enduring exchange of goods and ideas helped shape the interconnected world that followed.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 3
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 21,
+          "topic": "The Gold Standard and Currency History",
+          "category": "Economics",
+          "paragraph": "For much of modern history, many national currencies were directly tied to a fixed quantity of gold, a system known as the gold standard. Under this arrangement, a country's central bank promised to exchange its paper currency for a specific amount of gold upon request, which limited how much money could be printed. Supporters argued this discipline prevented runaway inflation and provided long-term price stability across international trade relationships. Critics countered that the rigid system left governments with little flexibility to respond to economic downturns, since expanding the money supply during a recession was effectively impossible. Most countries abandoned the gold standard during the twentieth century, favoring more flexible monetary policy instead.",
+          "blanks": [
+            {
+              "word": "arrangement",
+              "visible": "arran",
+              "hidden": "gement"
+            },
+            {
+              "word": "exchange",
+              "visible": "exch",
+              "hidden": "ange"
+            },
+            {
+              "word": "discipline",
+              "visible": "disci",
+              "hidden": "pline"
+            },
+            {
+              "word": "inflation",
+              "visible": "infl",
+              "hidden": "ation"
+            },
+            {
+              "word": "stability",
+              "visible": "stab",
+              "hidden": "ility"
+            },
+            {
+              "word": "flexibility",
+              "visible": "flexi",
+              "hidden": "bility"
+            },
+            {
+              "word": "downturns",
+              "visible": "down",
+              "hidden": "turns"
+            },
+            {
+              "word": "effectively",
+              "visible": "effec",
+              "hidden": "tively"
+            },
+            {
+              "word": "abandoned",
+              "visible": "aban",
+              "hidden": "doned"
+            },
+            {
+              "word": "monetary",
+              "visible": "mone",
+              "hidden": "tary"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 34,
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Sunrise Hardware Supply",
+          "subtitle": "Date: January 27, 2025 | Time: 10:40 a.m. | Register #3",
+          "text": "Interior Paint, 1 Gallon (x2) .. $32.00 .... $64.00\nPaint Roller Kit (x1) .......... $11.50 .... $11.50\nPainter's Tape (x3) ............ $4.25 ..... $12.75\n\nSubtotal: $88.25\nTax (8%): $7.06\nTotal: $95.31\n\nPayment: Store Credit Card\n\nReturns accepted within 30 days with receipt; opened paint cans are final sale.",
+          "questions": [
+            {
+              "question": "What is indicated about returning opened paint cans?",
+              "options": [
+                "They can be returned within 30 days",
+                "They are final sale and cannot be returned",
+                "They can only be exchanged, not refunded",
+                "They require manager approval to return"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How was this purchase paid for?",
+              "options": [
+                "Cash",
+                "Personal credit card",
+                "Store credit card",
+                "Check"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 35,
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Green Leaf Florist",
+          "subtitle": "Date: May 5, 2025 | Time: 1:15 p.m. | Order #6650",
+          "text": "Mixed Spring Bouquet (x1) ....... $45.00\nVase (x1) ........................ $8.00\nDelivery Fee ..................... $10.00\n\nSubtotal: $63.00\nTax (6%): $3.78\nTotal: $66.78\n\nPayment: Mobile App\n\nDelivery scheduled between 2:00 p.m. and 5:00 p.m. today. A signature will be required.",
+          "questions": [
+            {
+              "question": "What is indicated about the delivery?",
+              "options": [
+                "It requires a signature upon arrival",
+                "It will arrive before noon",
+                "It is free of charge",
+                "It can be rescheduled at any time"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "How was this order paid for?",
+              "options": [
+                "Cash on delivery",
+                "A mobile payment app",
+                "A gift card",
+                "Store credit"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 133,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/133.mp3",
+          "transcript": "I'm having trouble logging into my student account.",
+          "context": "A student calls the university's technical support line.",
+          "options": [
+            "Let's try resetting your password first.",
+            "The system was updated last semester.",
+            "Most students use their student ID to log in.",
+            "The help desk is open until five."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "17-133"
+        },
+        {
+          "id": 134,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/134.mp3",
+          "transcript": "Do we need to bring our own equipment to the climbing gym?",
+          "context": "A friend asks about visiting a climbing gym for the first time.",
+          "options": [
+            "No, you can rent everything there.",
+            "The gym opened two years ago.",
+            "Climbing is great exercise.",
+            "We should go on a weekday."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "17-134"
+        },
+        {
+          "id": 135,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/135.mp3",
+          "transcript": "The heating in my apartment hasn't been working since Monday.",
+          "context": "A tenant reports a problem to the building superintendent.",
+          "options": [
+            "I'll send someone up this afternoon.",
+            "The building was renovated last year.",
+            "Most units have their own thermostats.",
+            "Winters here can get quite cold."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "17-135"
+        },
+        {
+          "id": 136,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/136.mp3",
+          "transcript": "Could I get a refund if I return this jacket unworn?",
+          "context": "A customer asks a clerk about the store's return policy.",
+          "options": [
+            "As long as you have the receipt, yes.",
+            "This jacket comes in three colors.",
+            "Our winter sale starts next week.",
+            "The fitting rooms are around the corner."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "17-136"
+        },
+        {
+          "id": 137,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/137.mp3",
+          "transcript": "Do you have any tables available for four right now?",
+          "context": "A host greets guests at a restaurant.",
+          "options": [
+            "We can seat you in about ten minutes.",
+            "The kitchen closes at nine.",
+            "Our specials change weekly.",
+            "Reservations are recommended on weekends."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "18-137"
+        },
+        {
+          "id": 138,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/138.mp3",
+          "transcript": "I think I was overcharged on my last utility bill.",
+          "context": "A customer calls a utility company about a billing issue.",
+          "options": [
+            "Let me pull up your account and take a look.",
+            "Utility rates increased last month.",
+            "Most bills are due on the first.",
+            "You can pay online or by mail."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "18-138"
+        },
+        {
+          "id": 139,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/139.mp3",
+          "transcript": "Could you help me find a book on European history?",
+          "context": "A student asks a librarian for help.",
+          "options": [
+            "That section is on the second floor.",
+            "The library closes at ten tonight.",
+            "History classes are popular this semester.",
+            "You'll need your student ID to check out books."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "18-139"
+        },
+        {
+          "id": 140,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/140.mp3",
+          "transcript": "My flight got canceled and I need to rebook.",
+          "context": "A traveler speaks with an airline agent.",
+          "options": [
+            "I can find you a seat on the next available flight.",
+            "The airport has free wifi.",
+            "Most flights depart in the morning.",
+            "Your luggage will be at baggage claim."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "18-140"
+        },
+        {
+          "id": 141,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/141.mp3",
+          "transcript": "Is this seat taken?",
+          "context": "A passenger asks another passenger on a crowded train.",
+          "options": [
+            "No, go ahead and sit down.",
+            "The train arrives in ten minutes.",
+            "This line goes downtown.",
+            "I'm getting off at the next stop."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "18-141"
+        },
+        {
+          "id": 142,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/142.mp3",
+          "transcript": "Could I get this shirt in a smaller size?",
+          "context": "A customer asks a clerk in a clothing store.",
+          "options": [
+            "Let me check what we have in the back.",
+            "This shirt is on sale this week.",
+            "We open at ten on Sundays.",
+            "The fitting rooms are over there."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "18-142"
+        }
+      ],
+      "conv": [
+        {
+          "id": 31,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/31.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I can't decide between the two electives for next semester."
+            },
+            {
+              "speaker": "male",
+              "text": "What are you weighing them against?"
+            },
+            {
+              "speaker": "female",
+              "text": "One fits my schedule better, but the other sounds more interesting."
+            },
+            {
+              "speaker": "male",
+              "text": "Maybe sit in on the first lecture of each before deciding."
+            },
+            {
+              "speaker": "female",
+              "text": "That's smart, I didn't realize we could do that."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman trying to decide?",
+              "options": [
+                "Which elective course to take",
+                "Whether to drop a class",
+                "Which major to declare",
+                "Whether to study abroad"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Choosing based on schedule only",
+                "Sitting in on the first lecture of each",
+                "Asking a friend to decide for her",
+                "Taking both classes"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/32.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "My laptop crashed and I have a paper due tomorrow."
+            },
+            {
+              "speaker": "female",
+              "text": "Did you save it anywhere else, like the cloud?"
+            },
+            {
+              "speaker": "male",
+              "text": "I think I turned on auto-save last month, so maybe."
+            },
+            {
+              "speaker": "female",
+              "text": "Check your account from the library computers just in case."
+            },
+            {
+              "speaker": "male",
+              "text": "Good idea, I'll head there right now."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He lost his laptop",
+                "His laptop crashed before a deadline",
+                "He forgot to write his paper",
+                "His paper was rejected"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Ask the professor for an extension",
+                "Check his account from library computers",
+                "Buy a new laptop today",
+                "Rewrite the paper from memory"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 33,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/33.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "My visa paperwork for the study abroad program got delayed."
+            },
+            {
+              "speaker": "male",
+              "text": "That sounds stressful. How delayed is it?"
+            },
+            {
+              "speaker": "female",
+              "text": "They said it could take another three weeks."
+            },
+            {
+              "speaker": "male",
+              "text": "You should let the study abroad office know right away, just in case."
+            },
+            {
+              "speaker": "female",
+              "text": "You're right, I'll email them today."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "Her study abroad application was rejected",
+                "Her visa paperwork is delayed",
+                "She lost her passport",
+                "She missed her flight"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest she do?",
+              "options": [
+                "Cancel the trip",
+                "Notify the study abroad office",
+                "Apply for a different program",
+                "Wait without telling anyone"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 31,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/31.mp3",
+          "speaker": "female",
+          "transcript": "Attention library patrons: starting next Monday, the main library will extend its weekday hours until 2 a.m. to accommodate students during final exam preparation. The extended hours will remain in effect for the next three weeks. Please note that the cafe on the first floor will continue to close at its regular time of 9 p.m., so students wishing to bring food or drinks after that hour should plan accordingly.",
+          "questions": [
+            {
+              "question": "What is the announcement mainly about?",
+              "options": [
+                "A new library cafe menu",
+                "Extended library hours during finals",
+                "A change in library staff",
+                "New library borrowing rules"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will NOT change according to the announcement?",
+              "options": [
+                "The library's closing time",
+                "The cafe's closing time",
+                "The number of study rooms",
+                "The library's location"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 32,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/32.mp3",
+          "speaker": "male",
+          "transcript": "This is a notice for all students living in campus housing. The dining hall in the North Residential Complex will be closed for renovations from next Monday through the end of the month. During this period, residents can use their meal plans at either the South Complex dining hall or the Student Union food court. Shuttle service between the North Complex and these locations will run every fifteen minutes during meal hours.",
+          "questions": [
+            {
+              "question": "Why is the North Complex dining hall closing?",
+              "options": [
+                "Staff shortages",
+                "Renovations",
+                "A health inspection failure",
+                "Low student attendance"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative is provided for affected students?",
+              "options": [
+                "A refund on their meal plan",
+                "Free food delivery",
+                "Access to other dining locations with shuttle service",
+                "A temporary outdoor dining tent"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 33,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/33.mp3",
+          "speaker": "female",
+          "transcript": "Attention all commuter students: due to ongoing road construction near the west entrance, the campus shuttle route will be temporarily rerouted beginning tomorrow. Shuttles will instead pick up and drop off passengers at the temporary stop near the science building. This change is expected to remain in place for approximately two weeks, and updated schedules have been posted on the transportation office's website.",
+          "questions": [
+            {
+              "question": "Why is the shuttle route changing?",
+              "options": [
+                "A shortage of drivers",
+                "Road construction near the west entrance",
+                "A new parking policy",
+                "Low ridership on the current route"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where can students find the updated shuttle schedule?",
+              "options": [
+                "On posters in the dining hall",
+                "On the transportation office's website",
+                "By calling campus security",
+                "In the student newspaper"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 25,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/25.mp3",
+          "speaker": "female",
+          "subject": "Botany",
+          "transcript": "Today we're going to look at carnivorous plants, and specifically why they evolved to trap and digest insects despite being capable of photosynthesis like other plants. The key lies in the environments where these plants typically grow: bogs and marshes with soil that is extremely poor in nitrogen and phosphorus. While photosynthesis provides plants with energy from sunlight, it doesn't supply these essential nutrients needed for building proteins and DNA. So carnivorous plants like the Venus flytrap and pitcher plant evolved specialized structures to capture insects as an alternative nutrient source. The Venus flytrap, for instance, has modified leaves lined with trigger hairs; when an insect touches two hairs within about twenty seconds, the leaf snaps shut. Interestingly, the plant can distinguish between a raindrop, which triggers only one hair, and a moving insect, which is more likely to trigger two, conserving energy by not closing for false alarms. Pitcher plants take a passive approach instead, using slippery, nectar-lined tubes that insects fall into and cannot climb back out of, eventually being broken down by digestive enzymes. What's remarkable is that this carnivorous strategy evolved independently multiple times across different plant families, which suggests it was a particularly effective solution to the shared problem of nutrient-poor soil.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "Why carnivorous plants evolved to trap insects",
+                "How photosynthesis works in most plants",
+                "The history of botanical classification",
+                "Methods for growing plants in poor soil"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, what problem do carnivorous plants solve by trapping insects?",
+              "options": [
+                "A lack of sunlight in their habitat",
+                "A lack of nitrogen and phosphorus in the soil",
+                "Competition from other plant species",
+                "An inability to perform photosynthesis"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention raindrops touching the Venus flytrap?",
+              "options": [
+                "To explain how the plant gets water",
+                "To illustrate how the plant avoids closing for false triggers",
+                "To describe a threat to the plant's survival",
+                "To compare rain to insect movement"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about carnivorous traits evolving in multiple plant families?",
+              "options": [
+                "It was likely an effective response to a common environmental challenge",
+                "It happened purely by random chance with no advantage",
+                "It occurred only in plants located near water",
+                "It disproves the theory of natural selection"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 26,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/26.mp3",
+          "speaker": "male",
+          "subject": "Genetics",
+          "transcript": "Let's continue our discussion of epigenetics, which refers to changes in gene activity that don't involve alterations to the underlying DNA sequence itself. One well-studied mechanism is DNA methylation, where small chemical tags attach to DNA and can turn genes on or off without changing the genetic code. What makes this especially interesting is that these epigenetic changes can sometimes be influenced by environmental factors, such as diet, stress, or exposure to toxins, and in certain cases, they can even be passed down to offspring. A frequently cited example comes from studies of a Dutch famine that occurred during a wartime blockade; children conceived during that period of severe food scarcity showed distinct methylation patterns decades later, patterns linked to increased rates of certain metabolic conditions. Now, it's important to note that epigenetic inheritance across generations remains a somewhat controversial and actively researched area, and most epigenetic changes are actually reset between generations. Still, within a single organism's lifetime, epigenetic regulation plays a crucial role in normal development, allowing genetically identical cells to become very different cell types, like skin cells versus neurons, despite containing the exact same DNA.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "The structure of the DNA double helix",
+                "Epigenetic changes in gene activity",
+                "How cells divide during mitosis",
+                "The discovery of the human genome"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is DNA methylation, according to the professor?",
+              "options": [
+                "A process that rewrites the DNA sequence",
+                "A chemical tagging process that can turn genes on or off",
+                "A method for repairing damaged DNA",
+                "A technique used to clone organisms"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention the Dutch famine study?",
+              "options": [
+                "To show how war affects food production",
+                "To provide an example of environmentally influenced epigenetic change",
+                "To argue that famine causes permanent genetic mutations",
+                "To describe a failed scientific experiment"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor say about epigenetic changes across generations?",
+              "options": [
+                "They are always passed down unchanged",
+                "Most are reset between generations",
+                "They have never been observed in humans",
+                "They only occur in plants"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 143,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/143.mp3",
+          "transcript": "Do you know when the next bus to downtown arrives?",
+          "context": "A commuter asks another commuter at a bus stop.",
+          "options": [
+            "I think it should be here in about five minutes.",
+            "The bus fare is two dollars.",
+            "This stop was added last year.",
+            "Buses run every day of the week."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "18-143"
+        },
+        {
+          "id": 144,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/144.mp3",
+          "transcript": "I'd like to cancel my subscription, please.",
+          "context": "A customer calls a magazine company's customer service.",
+          "options": [
+            "I can help you with that right away.",
+            "Our next issue comes out in March.",
+            "Subscriptions renew automatically each year.",
+            "We offer both digital and print versions."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "18-144"
+        },
+        {
+          "id": 145,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/145.mp3",
+          "transcript": "Can I switch my seat to one closer to the front?",
+          "context": "A passenger asks a flight attendant.",
+          "options": [
+            "Let me check if anything is available.",
+            "The flight departs on time today.",
+            "Boarding begins in twenty minutes.",
+            "Your seatbelt sign is now off."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "19-145"
+        },
+        {
+          "id": 146,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/146.mp3",
+          "transcript": "How long is the wait for a table tonight?",
+          "context": "A customer asks a restaurant host.",
+          "options": [
+            "About twenty minutes right now.",
+            "Our menu changes seasonally.",
+            "We accept both cash and card.",
+            "The restaurant seats eighty guests."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "19-146"
+        },
+        {
+          "id": 147,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/147.mp3",
+          "transcript": "I think my package was delivered to the wrong address.",
+          "context": "A customer contacts a delivery company.",
+          "options": [
+            "Let's start a trace on that package.",
+            "Deliveries usually take three days.",
+            "You can track packages online.",
+            "Our warehouse is downtown."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "19-147"
+        },
+        {
+          "id": 148,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/148.mp3",
+          "transcript": "Would you be able to lower the music a little?",
+          "context": "A guest asks a host at a party.",
+          "options": [
+            "Sure, no problem at all.",
+            "The playlist has fifty songs.",
+            "The party started at eight.",
+            "We ordered pizza for everyone."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "19-148"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 27,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/27.mp3",
+          "speaker": "female",
+          "subject": "Musicology",
+          "transcript": "Today I want to talk about the concept of the leitmotif, a technique most famously associated with the composer Richard Wagner, though it has since become common in film scoring. A leitmotif is a short, recurring musical phrase associated with a particular character, place, or idea within a larger work. Unlike a simple theme that might just play once, a leitmotif returns throughout the piece, often transformed in tempo, key, or orchestration to reflect changes in the story. For example, a motif introduced as calm and gentle might later appear distorted and dissonant when that character faces conflict or corruption. This technique allows composers to communicate emotional and narrative information without words, essentially giving the audience musical cues about what's happening beneath the surface of the dialogue or action. Film composers adapted this technique extensively in the twentieth century; audiences might not consciously register a specific melody, but they still feel its emotional weight because of its earlier associations. This is part of why certain film scores feel so effective even when heard outside the context of the movie, since the recurring motifs have already built emotional meaning through repetition and variation.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "The history of orchestral instruments",
+                "The use of leitmotifs in musical composition",
+                "Wagner's personal biography",
+                "How film soundtracks are recorded"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does a leitmotif differ from a simple musical theme, according to the professor?",
+              "options": [
+                "It is played only once at the start of a piece",
+                "It recurs and can be transformed to reflect the story",
+                "It is always performed by a single instrument",
+                "It has no connection to characters or ideas"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why might a motif appear distorted or dissonant later in a piece?",
+              "options": [
+                "To indicate a technical error in the recording",
+                "To reflect a change such as conflict or corruption",
+                "To signal the end of the performance",
+                "To introduce a completely new character"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about why some film scores feel effective outside the movie?",
+              "options": [
+                "The recurring motifs carry emotional meaning built through repetition",
+                "The music was composed after the film's release",
+                "Audiences memorize the dialogue along with the music",
+                "The motifs are unrelated to the film's story"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 28,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/28.mp3",
+          "speaker": "male",
+          "subject": "Philosophy",
+          "transcript": "This week we're examining the trolley problem, a thought experiment widely used in discussions of ethics. In its classic form, you imagine a runaway trolley heading toward five people tied to the tracks; you can pull a lever to divert it onto a side track, where it will kill only one person instead. Most people say pulling the lever is the right choice, prioritizing the outcome of saving more lives, a position associated with consequentialist ethics. But philosophers then introduce a variation: instead of pulling a lever, you'd have to push a large stranger off a bridge to physically block the trolley, again saving five lives at the cost of one. Interestingly, most people who would pull the lever say they would not push the stranger, even though the outcome, one death instead of five, is mathematically identical. This inconsistency is exactly what makes the thought experiment so useful; it reveals that our moral judgments aren't based purely on calculating outcomes, but are also shaped by factors like physical directness of harm, or the difference between allowing something to happen versus actively causing it. Researchers in psychology have even used brain imaging during these dilemmas to study which brain regions become active during each version.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the trolley problem, according to the lecture?",
+              "options": [
+                "To prove that consequentialism is always correct",
+                "To reveal inconsistencies in everyday moral judgments",
+                "To test people's mathematical reasoning skills",
+                "To argue against all forms of ethical reasoning"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the key difference between the lever version and the bridge version?",
+              "options": [
+                "The lever version kills more people overall",
+                "The bridge version requires directly causing physical harm",
+                "The bridge version has no possible outcome to compare",
+                "The lever version was created much more recently"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention that outcomes are 'mathematically identical' in both versions?",
+              "options": [
+                "To show that both scenarios are entirely fictional",
+                "To highlight that people's differing responses aren't based purely on outcome",
+                "To argue that math has no place in ethics",
+                "To prove that the trolley problem has no real answer"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What has psychological research added to this discussion, according to the professor?",
+              "options": [
+                "Evidence disproving the existence of moral instincts",
+                "Brain imaging studies of activity during moral dilemmas",
+                "A definitive answer to which choice is correct",
+                "A survey showing everyone responds identically"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 149,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/149.mp3",
+          "transcript": "Is there a discount for students at this museum?",
+          "context": "A visitor asks a museum ticket clerk.",
+          "options": [
+            "Yes, just show your student ID.",
+            "The museum has four floors.",
+            "Admission includes a free audio guide.",
+            "The gift shop closes at five."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "19-149"
+        },
+        {
+          "id": 150,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/150.mp3",
+          "transcript": "Can you help me reset my email password?",
+          "context": "An employee asks the IT help desk for assistance.",
+          "options": [
+            "Sure, I'll send you a reset link now.",
+            "Email storage limits were increased last year.",
+            "The office network was updated recently.",
+            "You can also use the mobile app."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "19-150"
+        },
+        {
+          "id": 151,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/151.mp3",
+          "transcript": "Do you sell replacement parts for this vacuum?",
+          "context": "A customer asks an appliance store employee.",
+          "options": [
+            "Yes, we keep most parts in stock.",
+            "Vacuums typically last five years.",
+            "Our store opened last spring.",
+            "We offer free delivery on large items."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "19-151"
+        },
+        {
+          "id": 152,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/152.mp3",
+          "transcript": "I need to change the date on my hotel reservation.",
+          "context": "A guest speaks to a hotel front desk clerk.",
+          "options": [
+            "Let me see what dates are available.",
+            "Check-in time is at three.",
+            "The pool closes at nine.",
+            "Breakfast is served until ten."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "19-152"
+        },
+        {
+          "id": 153,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/153.mp3",
+          "transcript": "Could you validate my parking ticket?",
+          "context": "A customer asks a store clerk after making a purchase.",
+          "options": [
+            "Sure, I'll stamp it for you.",
+            "Parking here costs five dollars an hour.",
+            "The garage has three levels.",
+            "We close at nine tonight."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "20-153"
+        },
+        {
+          "id": 154,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/154.mp3",
+          "transcript": "Is this jacket machine washable?",
+          "context": "A customer asks a clerk in a clothing store.",
+          "options": [
+            "Let me check the label for you.",
+            "This jacket comes in four colors.",
+            "We're having a sale this weekend.",
+            "The jacket is made of cotton."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "20-154"
+        }
+      ],
+      "conv": [
+        {
+          "id": 34,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/34.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "My roommate wants to split the electric bill differently since I work from home more."
+            },
+            {
+              "speaker": "female",
+              "text": "Does that seem fair to you?"
+            },
+            {
+              "speaker": "male",
+              "text": "Honestly, I hadn't thought about it that way before."
+            },
+            {
+              "speaker": "female",
+              "text": "Maybe look at how much extra your usage actually adds before agreeing."
+            },
+            {
+              "speaker": "male",
+              "text": "That's a good idea, I'll check last month's bill."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is being discussed?",
+              "options": [
+                "Splitting rent evenly",
+                "Splitting the electric bill differently",
+                "Moving to a new apartment",
+                "Canceling a utility service"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Refuse the new arrangement",
+                "Check actual usage before agreeing",
+                "Ask the landlord to decide",
+                "Split everything equally regardless"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 35,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/35.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm applying to be a resident advisor next year."
+            },
+            {
+              "speaker": "male",
+              "text": "That's great! What's the application like?"
+            },
+            {
+              "speaker": "female",
+              "text": "There's a written application and then a group interview."
+            },
+            {
+              "speaker": "male",
+              "text": "You should ask current RAs what kinds of questions come up."
+            },
+            {
+              "speaker": "female",
+              "text": "That's a good idea, I know a couple I can ask."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman planning to do?",
+              "options": [
+                "Move off campus",
+                "Apply to be a resident advisor",
+                "Transfer to another school",
+                "Change her major"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Skip the group interview",
+                "Ask current RAs about the process",
+                "Apply next year instead",
+                "Write a shorter application"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 34,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/34.mp3",
+          "speaker": "male",
+          "transcript": "This is a routine fire drill announcement. In approximately ten minutes, the fire alarm will sound in all academic buildings as part of the university's scheduled safety training. All students and staff are required to exit the building calmly through the nearest marked exit and gather at the designated assembly points outside. Please do not use the elevators during this drill, and do not re-enter the building until campus safety officials confirm it is clear.",
+          "questions": [
+            {
+              "question": "What is about to happen according to the announcement?",
+              "options": [
+                "An actual fire emergency",
+                "A scheduled fire drill",
+                "A building evacuation due to a gas leak",
+                "A power outage test"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are people instructed not to do?",
+              "options": [
+                "Use the stairs",
+                "Use the elevators",
+                "Bring their belongings",
+                "Talk during the drill"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 35,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/35.mp3",
+          "speaker": "female",
+          "transcript": "Due to a severe winter storm warning, the university will be closed tomorrow, and all classes, including evening sessions, are canceled. Non-essential staff should not report to campus. Students living in residence halls should remain inside unless absolutely necessary, and dining services will operate on a limited schedule with only the Student Union food court remaining open. Updates will be posted on the university's emergency alert website as conditions change.",
+          "questions": [
+            {
+              "question": "Why is the university closing tomorrow?",
+              "options": [
+                "A power outage",
+                "A severe winter storm warning",
+                "A campus-wide power renovation",
+                "A scheduled holiday"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will remain open during the closure?",
+              "options": [
+                "All dining halls",
+                "Only the Student Union food court",
+                "The main library",
+                "The gymnasium"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 61,
+        "promptGender": "female",
+        "prompt": "Did the library extend its hours for finals week?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the library",
+          "had extended its hours for finals week"
+        ],
+        "distractorChunks": [
+          "has extended its hours for finals week"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 62,
+        "promptGender": "male",
+        "prompt": "Where is the nearest ATM on campus?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "where",
+          "the nearest ATM",
+          "was"
+        ],
+        "distractorChunks": [
+          "is"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 63,
+        "promptGender": "female",
+        "prompt": "Why did the meeting get rescheduled?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "why",
+          "the meeting",
+          "had been rescheduled"
+        ],
+        "distractorChunks": [
+          "has been rescheduled"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 64,
+        "promptGender": "male",
+        "prompt": "Is the bookstore accepting returns this week?",
+        "responseGender": "female",
+        "responsePrefix": "Could you tell me",
+        "correctChunks": [
+          "whether",
+          "the bookstore",
+          "was accepting returns this week"
+        ],
+        "distractorChunks": [
+          "is accepting returns this week"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 65,
+        "promptGender": "female",
+        "prompt": "How long will the road construction last?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "was",
+          "curious",
+          "about",
+          "how",
+          "long",
+          "the construction",
+          "would last"
+        ],
+        "distractorChunks": [
+          "will last"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 66,
+        "promptGender": "male",
+        "prompt": "Have you submitted the reimbursement form yet?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "I",
+          "had submitted the reimbursement form yet"
+        ],
+        "distractorChunks": [
+          "have submitted the reimbursement form yet"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 67,
+        "promptGender": "female",
+        "prompt": "What time does the shuttle leave in the morning?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "what",
+          "time",
+          "the shuttle",
+          "left in the morning"
+        ],
+        "distractorChunks": [
+          "leaves in the morning"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 68,
+        "promptGender": "male",
+        "prompt": "Who is teaching the seminar next semester?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "am",
+          "not",
+          "sure",
+          "who",
+          "was teaching the seminar next semester"
+        ],
+        "distractorChunks": [
+          "is teaching the seminar next semester"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 69,
+        "promptGender": "female",
+        "prompt": "Can students park in lot B after 6 p.m.?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "wondered",
+          "whether",
+          "students",
+          "were allowed to park in lot B after 6 p.m."
+        ],
+        "distractorChunks": [
+          "are allowed to park in lot B after 6 p.m."
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 70,
+        "promptGender": "male",
+        "prompt": "Why does the elevator keep making that noise?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "why",
+          "the elevator",
+          "kept making that noise"
+        ],
+        "distractorChunks": [
+          "keeps making that noise"
+        ],
+        "responseSuffix": "."
+      }
+    ],
+    "email": {
+      "id": 7,
+      "scenario": "You purchased a laptop from an online store, but it stopped turning on after only two weeks of use. You want to request a replacement or refund.",
+      "recipient": "Customer Service Team, TechMart",
+      "subject": "Defective laptop - request for replacement",
+      "tasks": [
+        {
+          "description": "Describe the problem with the laptop.",
+          "keywords": [
+            "stopped working",
+            "won't turn on",
+            "defective",
+            "malfunction"
+          ]
+        },
+        {
+          "description": "State when and where you purchased it.",
+          "keywords": [
+            "purchased",
+            "ordered",
+            "two weeks ago",
+            "order number"
+          ]
+        },
+        {
+          "description": "Request a replacement or refund.",
+          "keywords": [
+            "replacement",
+            "refund",
+            "exchange",
+            "return"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Customer Service Team,\n\nI am writing regarding a laptop I purchased from your online store, order number 48291. The laptop worked fine for about two weeks, but it suddenly stopped turning on and no longer responds, even after charging it overnight. I have tried restarting it multiple times, but the screen remains completely black.\n\nI ordered this laptop three weeks ago directly through your website, and I have kept the original receipt and packaging in case they are needed for verification.\n\nSince this appears to be a manufacturing defect rather than something caused by misuse, I would like to request a replacement laptop of the same model. If a replacement is not available, I would appreciate a full refund instead. Please let me know what information you need from me to process this request quickly, as I rely on this laptop for my schoolwork.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 7,
+      "subject": "veterinary science",
+      "professor": "Dr. Osei",
+      "professorGender": "female",
+      "prompt": "Your veterinary science professor is discussing animal welfare in captivity. Write a post responding to the professor's question.\n\nDr. Osei: As part of our unit on wildlife conservation, we've been discussing the role zoos play in protecting endangered species. Supporters argue that zoos provide crucial breeding programs, veterinary care, and public education that directly contribute to conservation efforts worldwide. Critics counter that confining wild animals, even in modern facilities, causes psychological stress and denies them their natural behaviors, regardless of the conservation benefits. Both perspectives raise important points about animal welfare and species survival. Before our next class, please respond to this question: Do the conservation benefits of zoos justify keeping wild animals in captivity?",
+      "classmates": [
+        {
+          "name": "Lars",
+          "gender": "male",
+          "opinion": "I believe zoos are essential for conservation, especially for species facing extinction in the wild. Modern accredited zoos run breeding programs that have successfully saved species like the California condor and the Przewalski's horse from disappearing entirely. Veterinary care available in zoos also allows scientists to study animal health and reproduction in ways that would be impossible in the wild. Additionally, zoos educate millions of visitors, especially children, who may never otherwise develop an appreciation for wildlife conservation. Without zoos, many endangered species would have far fewer resources dedicated to their survival. The benefits to biodiversity clearly outweigh the discomfort of captivity."
+        },
+        {
+          "name": "Amina",
+          "gender": "female",
+          "opinion": "I don't think conservation benefits justify keeping wild animals confined for their entire lives. Many species, particularly large mammals like elephants and big cats, exhibit clear signs of psychological distress in captivity, including repetitive pacing and abnormal behaviors rarely seen in the wild. Even well-funded zoos cannot replicate the vast territories or complex social structures these animals need to thrive. Conservation efforts could instead focus on protecting and restoring natural habitats, along with funding field research stations that study animals in their actual environments. Captivity may help a few species survive, but at a significant cost to the well-being of countless individual animals."
+        }
+      ],
+      "exampleResponse": "This debate highlights a genuine tension between species-level conservation and individual animal welfare. The question of whether captivity is justified by conservation outcomes is worth considering from both angles. While I see where Lars is coming from when he argues that zoos have directly saved species from extinction through breeding programs, I would argue that these benefits do not fully offset the psychological cost imposed on individual animals confined for life. In this respect, I am inclined to agree with Amina, who emphasizes that resources might be better spent protecting natural habitats where animals can express their full range of behaviors. For example, funding anti-poaching patrols and habitat restoration for African elephants may preserve the species more sustainably than housing a handful in even the most spacious enclosure. Conservation should prioritize approaches that respect both species survival and individual welfare wherever possible."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 7,
+      "location": "Bike Rental Shop",
+      "icon": "🚲",
+      "speaker": "male",
+      "introText": "You are learning how to help customers rent bicycles. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the bike rental shop.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "We offer hourly and daily rental rates.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Helmets are included with every rental.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Please return the bike before closing time.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "Mountain bikes are available for the trail route.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "A deposit is required and refunded when the bike is returned undamaged.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Let us know if you need a repair kit for a longer ride.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 7,
+      "topic": "Seasonal Preferences",
+      "icon": "⛅",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about weather and seasonal preferences. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. Let's start with an easy question. What is your favorite season of the year, and why do you like it?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer living in a place with four distinct seasons or a place with consistent weather year-round?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people believe that weather has a strong effect on people's mood and productivity. What is your opinion on this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think climate change is affecting the seasons in your region? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

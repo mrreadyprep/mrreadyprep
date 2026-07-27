@@ -1,0 +1,1752 @@
+{
+  "id": 20,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 58,
+          "topic": "The Spread of Coffee Culture",
+          "category": "History",
+          "paragraph": "Coffee originated in the highlands of Ethiopia before gradually spreading throughout the Arabian Peninsula and eventually across the broader world. Coffeehouses became remarkably popular social gathering places in many cities, serving as important venues for intellectual discussion, business negotiations, and political debate. This distinctive social function earned coffeehouses the informal nickname of penny universities in some regions, since patrons could exchange valuable knowledge for the relatively modest price of a single cup. European colonial expansion eventually introduced coffee cultivation to numerous tropical regions worldwide, dramatically increasing global production and making coffee accessible to a much wider population. Today, coffee remains one of the most widely traded agricultural commodities on the planet.",
+          "blanks": [
+            {
+              "word": "Coffeehouses",
+              "visible": "Coffe",
+              "hidden": "ehouses"
+            },
+            {
+              "word": "serving",
+              "visible": "ser",
+              "hidden": "ving"
+            },
+            {
+              "word": "business",
+              "visible": "busi",
+              "hidden": "ness"
+            },
+            {
+              "word": "function",
+              "visible": "func",
+              "hidden": "tion"
+            },
+            {
+              "word": "regions",
+              "visible": "reg",
+              "hidden": "ions"
+            },
+            {
+              "word": "valuable",
+              "visible": "valu",
+              "hidden": "able"
+            },
+            {
+              "word": "colonial",
+              "visible": "colo",
+              "hidden": "nial"
+            },
+            {
+              "word": "numerous",
+              "visible": "nume",
+              "hidden": "rous"
+            },
+            {
+              "word": "production",
+              "visible": "produ",
+              "hidden": "ction"
+            },
+            {
+              "word": "commodities",
+              "visible": "commo",
+              "hidden": "dities"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Sunrise Pharmacy",
+          "subtitle": "Date: February 20, 2025 | Time: 9:05 a.m. | Order #3390",
+          "text": "Multivitamins (x1) ... $12.99 ... $12.99\nHand Sanitizer (x2) ... $3.50 ... $7.00\nCough Drops (x1) ... $4.25 ... $4.25\n\nSubtotal: $24.24\nTax (5%): $1.21\nTotal: $25.45\n\nPayment: Insurance + Cash\n\nSave your receipt for your health savings account records.",
+          "questions": [
+            {
+              "question": "How was this order paid for?",
+              "options": [
+                "Cash only",
+                "Insurance and cash",
+                "Credit card only",
+                "Insurance only"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the receipt suggest keeping it?",
+              "options": [
+                "For a future discount",
+                "For health savings account records",
+                "To exchange an item",
+                "To enter a rewards contest"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 96
+        },
+        {
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Bright Leaf Bookstore",
+          "subtitle": "Date: October 4, 2025 | Time: 4:50 p.m. | Order #5528",
+          "text": "Novel: \"The Quiet Harbor\" (x1) ... $16.00 ... $16.00\nBookmark (x2) ... $1.50 ... $3.00\nNotebook (x1) ... $6.00 ... $6.00\n\nSubtotal: $25.00\nDiscount (Member 10%): -$2.50\nTax (7%): $1.58\nTotal: $24.08\n\nPayment: Store Credit\n\nThank you for shopping local!",
+          "questions": [
+            {
+              "question": "What discount was applied to this purchase?",
+              "options": [
+                "A student discount",
+                "A member discount of 10%",
+                "A holiday sale discount",
+                "No discount was applied"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How was this order paid for?",
+              "options": [
+                "Credit card",
+                "Store credit",
+                "Cash",
+                "Check"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 97
+        },
+        {
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Fresh Cut Salon",
+          "subtitle": "Date: May 11, 2025 | Time: 2:30 p.m. | Order #1145",
+          "text": "Haircut (x1) ... $35.00 ... $35.00\nHair Wash & Style (x1) ... $15.00 ... $15.00\n\nSubtotal: $50.00\nTip: $10.00\nTotal: $60.00\n\nPayment: Credit Card\n\nBook your next appointment online for 10% off.",
+          "questions": [
+            {
+              "question": "What is the total amount including tip?",
+              "options": [
+                "$35.00",
+                "$50.00",
+                "$60.00",
+                "$65.00"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "What incentive is offered for booking online?",
+              "options": [
+                "A free service",
+                "10% off the next appointment",
+                "A loyalty stamp",
+                "Free hair products"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 98
+        }
+      ],
+      "ap": [
+        {
+          "title": "Camouflage Strategies in the Animal Kingdom",
+          "passage": "Camouflage represents one of the most widespread and effective survival strategies found throughout the animal kingdom, employed by an enormous variety of species to avoid detection by predators or to more effectively ambush prey. While the general concept of blending into one's surroundings may seem simple, the specific mechanisms animals use to achieve camouflage are remarkably diverse and often highly sophisticated.\n\nThe most basic form of camouflage involves coloration that closely matches an animal's typical habitat, such as the mottled brown feathers of a ground-nesting bird or the green skin of a tree-dwelling frog. Some species take this strategy further through countershading, a pattern in which an animal's back is darker than its underside, helping to counteract the natural effect of sunlight and reduce the appearance of three-dimensional shape.\n\nMore advanced camouflage strategies involve disruptive coloration, in which bold patterns of contrasting colors break up an animal's outline, making it more difficult for predators to distinguish the animal from its surroundings at a glance. Certain species of octopus and cuttlefish take camouflage to an extraordinary level, possessing specialized skin cells that allow them to rapidly change both color and texture to match their immediate environment.\n\nSome animals rely on camouflage not merely for concealment but for active deception, mimicking the appearance of inedible objects, dangerous species, or even other organisms entirely to avoid predation or improve their own hunting success. This remarkable diversity of strategies illustrates how powerful a selective pressure predation has been throughout the history of animal evolution.",
+          "passage_marked": "Camouflage represents one of the most widespread and effective survival strategies found throughout the animal kingdom, employed by an enormous variety of species to avoid detection by predators or to more effectively ambush prey. While the general concept of blending into one's surroundings may seem simple, the specific mechanisms animals use to achieve camouflage are remarkably diverse and often highly sophisticated. [A]\n\nThe most basic form of camouflage involves coloration that closely matches an animal's typical habitat, such as the mottled brown feathers of a ground-nesting bird or the green skin of a tree-dwelling frog. [B] Some species take this strategy further through countershading, a pattern in which an animal's back is darker than its underside, helping to counteract the natural effect of sunlight and reduce the appearance of three-dimensional shape.\n\nMore advanced camouflage strategies involve disruptive coloration, in which bold patterns of contrasting colors break up an animal's outline, making it more difficult for predators to distinguish the animal from its surroundings at a glance. Certain species of octopus and cuttlefish take camouflage to an extraordinary level, possessing specialized skin cells that allow them to rapidly change both color and texture to match their immediate environment. [C]\n\nSome animals rely on camouflage not merely for concealment but for active deception, mimicking the appearance of inedible objects, dangerous species, or even other organisms entirely to avoid predation or improve their own hunting success. [D] This remarkable diversity of strategies illustrates how powerful a selective pressure predation has been throughout the history of animal evolution.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'mottled' in the passage is closest in meaning to",
+              "options": [
+                "shiny",
+                "smooth",
+                "brightly colored",
+                "irregularly patterned"
+              ],
+              "answer": 3
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What is the most basic form of camouflage described in the passage?",
+              "options": [
+                "Mimicking dangerous species",
+                "Coloration that matches an animal's habitat",
+                "Rapid color-changing skin",
+                "Disruptive contrasting patterns"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What is the purpose of countershading?",
+              "options": [
+                "To attract mates",
+                "To counteract sunlight and reduce the appearance of shape",
+                "To increase body temperature",
+                "To signal danger to predators"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What ability do octopuses and cuttlefish have that represents advanced camouflage?",
+              "options": [
+                "They can become invisible entirely",
+                "They can rapidly change color and texture to match their environment",
+                "They can only camouflage underwater at night",
+                "They rely solely on disruptive coloration"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This deceptive strategy can be just as effective as simply blending into the background.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 3
+            }
+          ],
+          "id": 39
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 59,
+          "topic": "The Discovery of DNA Structure",
+          "category": "Genetics",
+          "paragraph": "Understanding the physical structure of DNA represented a monumental breakthrough in the history of biological science. Researchers eventually determined that DNA consists of two intertwined strands forming a distinctive double helix shape, held together by pairs of chemical bases arranged in a specific and predictable pattern. This structural discovery immediately suggested a mechanism for how genetic information could be accurately copied and passed from one generation to the next. Building upon this foundational discovery, scientists gradually developed an increasingly sophisticated understanding of how genes actually direct the production of proteins within living cells. This breakthrough ultimately launched an entirely new scientific field dedicated to studying genetics at the molecular level.",
+          "blanks": [
+            {
+              "word": "Researchers",
+              "visible": "Resea",
+              "hidden": "rchers"
+            },
+            {
+              "word": "strands",
+              "visible": "str",
+              "hidden": "ands"
+            },
+            {
+              "word": "arranged",
+              "visible": "arra",
+              "hidden": "nged"
+            },
+            {
+              "word": "structural",
+              "visible": "struc",
+              "hidden": "tural"
+            },
+            {
+              "word": "mechanism",
+              "visible": "mech",
+              "hidden": "anism"
+            },
+            {
+              "word": "Building",
+              "visible": "Buil",
+              "hidden": "ding"
+            },
+            {
+              "word": "sophisticated",
+              "visible": "sophi",
+              "hidden": "sticated"
+            },
+            {
+              "word": "proteins",
+              "visible": "prot",
+              "hidden": "eins"
+            },
+            {
+              "word": "scientific",
+              "visible": "scien",
+              "hidden": "tific"
+            },
+            {
+              "word": "molecular",
+              "visible": "mole",
+              "hidden": "cular"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "The Discovery and Study of Exoplanets",
+          "passage": "For most of human history, planets beyond our own solar system, known as exoplanets, remained entirely theoretical, discussed only as a philosophical possibility rather than an observable reality. This changed dramatically in 1995, when astronomers announced the first confirmed detection of a planet orbiting a sun-like star beyond our solar system, marking the beginning of a new era in astronomical research.\n\nSince that initial discovery, astronomers have identified thousands of additional exoplanets using a variety of detection methods. One widely used technique, known as the transit method, involves measuring tiny, periodic dips in a star's brightness caused by a planet passing directly between the star and an observer's telescope, allowing scientists to infer the planet's size and orbital period.\n\nAnother important detection method, called the radial velocity method, measures slight wobbles in a star's motion caused by the gravitational pull of an orbiting planet, providing valuable information about the planet's mass. By combining data from multiple detection methods, astronomers can build an increasingly detailed picture of a distant planet's physical characteristics.\n\nPerhaps the most exciting goal of exoplanet research involves identifying planets located within a star's habitable zone, the region where conditions might allow liquid water to exist on a planet's surface. While no conclusive evidence of life beyond Earth has yet been found, the growing catalog of potentially habitable exoplanets continues to fuel both scientific investigation and public fascination with the possibility of life elsewhere in the universe.",
+          "passage_marked": "For most of human history, planets beyond our own solar system, known as exoplanets, remained entirely theoretical, discussed only as a philosophical possibility rather than an observable reality. This changed dramatically in 1995, when astronomers announced the first confirmed detection of a planet orbiting a sun-like star beyond our solar system, marking the beginning of a new era in astronomical research. [A]\n\nSince that initial discovery, astronomers have identified thousands of additional exoplanets using a variety of detection methods. [B] One widely used technique, known as the transit method, involves measuring tiny, periodic dips in a star's brightness caused by a planet passing directly between the star and an observer's telescope, allowing scientists to infer the planet's size and orbital period.\n\nAnother important detection method, called the radial velocity method, measures slight wobbles in a star's motion caused by the gravitational pull of an orbiting planet, providing valuable information about the planet's mass. By combining data from multiple detection methods, astronomers can build an increasingly detailed picture of a distant planet's physical characteristics. [C]\n\nPerhaps the most exciting goal of exoplanet research involves identifying planets located within a star's habitable zone, the region where conditions might allow liquid water to exist on a planet's surface. [D] While no conclusive evidence of life beyond Earth has yet been found, the growing catalog of potentially habitable exoplanets continues to fuel both scientific investigation and public fascination with the possibility of life elsewhere in the universe.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'infer' in the passage is closest in meaning to",
+              "options": [
+                "ignore",
+                "measure directly",
+                "deduce indirectly",
+                "photograph"
+              ],
+              "answer": 2
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "When was the first exoplanet orbiting a sun-like star confirmed?",
+              "options": [
+                "1965",
+                "1995",
+                "2005",
+                "2015"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "How does the transit method detect exoplanets?",
+              "options": [
+                "By measuring wobbles in a star's motion",
+                "By measuring periodic dips in a star's brightness",
+                "By directly photographing the planet",
+                "By analyzing radio signals from the planet"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What does the radial velocity method primarily reveal about a planet?",
+              "options": [
+                "Its exact color",
+                "Its mass",
+                "Its surface temperature",
+                "Its atmospheric composition"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This region is often referred to informally as the 'Goldilocks zone' because conditions there are neither too hot nor too cold.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 3
+            }
+          ],
+          "id": 40
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 60,
+          "topic": "The Physics of Sound Waves",
+          "category": "Physics",
+          "paragraph": "Sound travels through the air as a wave created by rapid vibrations of an object, such as a musical instrument or a human vocal cord. These vibrations cause nearby air molecules to compress and expand in a repeating pattern, transmitting energy outward from the original source. The frequency of these vibrations determines the pitch that a listener perceives, with faster vibrations producing higher pitched sounds and slower vibrations producing lower ones. Sound waves also require a physical medium to travel through, which explains why astronauts cannot hear sounds while working in the vacuum of outer space. Engineers apply these fundamental acoustic principles when designing everything from concert halls to noise-canceling headphones.",
+          "blanks": [
+            {
+              "word": "molecules",
+              "visible": "mole",
+              "hidden": "cules"
+            },
+            {
+              "word": "repeating",
+              "visible": "repe",
+              "hidden": "ating"
+            },
+            {
+              "word": "outward",
+              "visible": "out",
+              "hidden": "ward"
+            },
+            {
+              "word": "determines",
+              "visible": "deter",
+              "hidden": "mines"
+            },
+            {
+              "word": "producing",
+              "visible": "prod",
+              "hidden": "ucing"
+            },
+            {
+              "word": "physical",
+              "visible": "phys",
+              "hidden": "ical"
+            },
+            {
+              "word": "working",
+              "visible": "wor",
+              "hidden": "king"
+            },
+            {
+              "word": "acoustic",
+              "visible": "acou",
+              "hidden": "stic"
+            },
+            {
+              "word": "everything",
+              "visible": "every",
+              "hidden": "thing"
+            },
+            {
+              "word": "headphones",
+              "visible": "headp",
+              "hidden": "hones"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Metro Auto Repair",
+          "subtitle": "Date: August 22, 2025 | Time: 11:00 a.m. | Order #9012",
+          "text": "Oil Change (x1) ... $45.00 ... $45.00\nTire Rotation (x1) ... $20.00 ... $20.00\nAir Filter Replacement (x1) ... $18.00 ... $18.00\n\nSubtotal: $83.00\nTax (6%): $4.98\nTotal: $87.98\n\nPayment: Credit Card\n\nNext service recommended in 5,000 miles or 6 months.",
+          "questions": [
+            {
+              "question": "What service was performed in addition to the oil change?",
+              "options": [
+                "Brake replacement",
+                "Tire rotation and air filter replacement",
+                "Engine tune-up",
+                "Battery replacement"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When is the next service recommended?",
+              "options": [
+                "In 3,000 miles or 3 months",
+                "In 5,000 miles or 6 months",
+                "In 10,000 miles or 1 year",
+                "Only when a problem occurs"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 99
+        },
+        {
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Cedar Street Electronics",
+          "subtitle": "Date: January 15, 2025 | Time: 5:40 p.m. | Order #6634",
+          "text": "Wireless Earbuds (x1) ... $59.99 ... $59.99\nProtective Case (x1) ... $9.99 ... $9.99\nExtended Warranty (x1) ... $12.00 ... $12.00\n\nSubtotal: $81.98\nTax (7%): $5.74\nTotal: $87.72\n\nPayment: Credit Card\n\nExtended warranty covers accidental damage for 2 years.",
+          "questions": [
+            {
+              "question": "What does the extended warranty cover?",
+              "options": [
+                "Theft protection",
+                "Accidental damage for 2 years",
+                "Battery replacement only",
+                "Lost item replacement"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How many items were purchased in total?",
+              "options": [
+                "One",
+                "Two",
+                "Three",
+                "Four"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 100
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 419,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/419.mp3",
+          "transcript": "Do you know if the hardware store has a rental section?",
+          "context": "A customer asks another customer.",
+          "options": [
+            "Yes, they rent out tools in the back.",
+            "The store opens at seven.",
+            "They also sell paint and supplies.",
+            "I usually buy my tools instead of renting."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "53-419"
+        },
+        {
+          "id": 420,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/420.mp3",
+          "transcript": "I'd like to request extra pillows for my room.",
+          "context": "A guest calls hotel housekeeping.",
+          "options": [
+            "Of course, I'll send some right up.",
+            "Rooms come with two pillows standard.",
+            "Housekeeping is available around the clock.",
+            "You can also request extra towels."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "53-420"
+        },
+        {
+          "id": 421,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/421.mp3",
+          "transcript": "Could you check if this event has any age restrictions?",
+          "context": "A customer asks a ticket office employee.",
+          "options": [
+            "This event is open to all ages.",
+            "Tickets go on sale next week.",
+            "The venue holds about a thousand people.",
+            "Doors open one hour before the show."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "53-421"
+        },
+        {
+          "id": 422,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/422.mp3",
+          "transcript": "I noticed the office thermostat is set really low today.",
+          "context": "An employee tells a facilities coordinator.",
+          "options": [
+            "I'll adjust it to a more comfortable temperature.",
+            "The thermostat was replaced last year.",
+            "Some employees prefer cooler temperatures.",
+            "Facilities checks the system monthly."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "53-422"
+        },
+        {
+          "id": 423,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/423.mp3",
+          "transcript": "Would you mind trading shifts with me next Friday?",
+          "context": "A coworker asks another coworker.",
+          "options": [
+            "Sure, I don't mind at all.",
+            "Friday shifts tend to be busy.",
+            "I usually work Fridays anyway.",
+            "The schedule is posted weekly."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "53-423"
+        },
+        {
+          "id": 424,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/424.mp3",
+          "transcript": "Do you know if this coffee shop has outlets for laptops?",
+          "context": "A customer asks another customer.",
+          "options": [
+            "Yes, there are a few near the window.",
+            "This coffee shop opened last year.",
+            "They have great pastries here.",
+            "The shop gets crowded in the mornings."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "53-424"
+        },
+        {
+          "id": 425,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/425.mp3",
+          "transcript": "I think this blouse has a small tear near the sleeve.",
+          "context": "A customer speaks to a store employee.",
+          "options": [
+            "I'm sorry about that, let me get you a new one.",
+            "This blouse is part of our summer line.",
+            "We restock clothing every Tuesday.",
+            "The blouse is available in four colors."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "54-425"
+        },
+        {
+          "id": 426,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/426.mp3",
+          "transcript": "Could you tell me if this bike rental includes a helmet?",
+          "context": "A tourist asks a bike shop employee.",
+          "options": [
+            "Yes, a helmet is included with every rental.",
+            "We have several bike sizes available.",
+            "Rentals are by the hour or the day.",
+            "The shop closes at six in the evening."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "54-426"
+        },
+        {
+          "id": 427,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/427.mp3",
+          "transcript": "Do you know when the next farmers market vendor meeting is?",
+          "context": "A vendor asks the market organizer.",
+          "options": [
+            "It's scheduled for next Wednesday evening.",
+            "The market runs every weekend.",
+            "New vendors must apply in advance.",
+            "There are about forty vendors currently."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "54-427"
+        },
+        {
+          "id": 428,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/428.mp3",
+          "transcript": "I'd like to request a quieter room away from the elevator.",
+          "context": "A guest speaks to a hotel front desk clerk.",
+          "options": [
+            "Of course, let me find you a different room.",
+            "The elevator is serviced regularly.",
+            "Rooms near the elevator are actually popular.",
+            "Our hotel has quiet hours after ten."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "54-428"
+        }
+      ],
+      "conv": [
+        {
+          "id": 96,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/96.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Have you picked your courses for next semester yet?"
+            },
+            {
+              "speaker": "female",
+              "text": "Almost, I'm just waiting to see if I get into the seminar I want."
+            },
+            {
+              "speaker": "male",
+              "text": "What happens if you don't get in?"
+            },
+            {
+              "speaker": "female",
+              "text": "Then I'll take a different elective that's still open."
+            },
+            {
+              "speaker": "male",
+              "text": "Good backup plan, when does registration open?"
+            },
+            {
+              "speaker": "female",
+              "text": "Next Tuesday at eight in the morning."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman waiting on?",
+              "options": [
+                "Her financial aid decision",
+                "Whether she gets into a seminar",
+                "Her advisor's approval",
+                "Her housing assignment"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is her backup plan?",
+              "options": [
+                "Taking a semester off",
+                "Taking a different elective",
+                "Waiting until next year",
+                "Appealing the decision"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 97,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/97.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Did you manage to fix the formatting issue in your report?"
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, it turned out to be a simple margin setting."
+            },
+            {
+              "speaker": "female",
+              "text": "That's a relief, those formatting issues can be so frustrating."
+            },
+            {
+              "speaker": "male",
+              "text": "Definitely, I spent almost an hour trying to figure it out."
+            },
+            {
+              "speaker": "female",
+              "text": "Well, at least it's done now before the deadline."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What problem did the man have?",
+              "options": [
+                "A missing citation",
+                "A formatting issue with margins",
+                "A corrupted file",
+                "A grammar error"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How long did it take him to fix it?",
+              "options": [
+                "A few minutes",
+                "Almost an hour",
+                "An entire day",
+                "He never fixed it"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 98,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/98.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I'm thinking about getting a part-time job on campus."
+            },
+            {
+              "speaker": "female",
+              "text": "That could be a good idea, what kind of work are you looking for?"
+            },
+            {
+              "speaker": "male",
+              "text": "Maybe something in the library or a campus office."
+            },
+            {
+              "speaker": "female",
+              "text": "The library actually has a few openings posted right now."
+            },
+            {
+              "speaker": "male",
+              "text": "I'll check the student job board tonight then."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man considering?",
+              "options": [
+                "Studying abroad",
+                "Getting a part-time job on campus",
+                "Switching dorms",
+                "Joining a new club"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman mention?",
+              "options": [
+                "A scholarship opportunity",
+                "Library job openings",
+                "A new internship program",
+                "A tutoring position"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 96,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/96.mp3",
+          "speaker": "male",
+          "transcript": "Attention residents: due to scheduled road paving, on-street parking will be prohibited on Maple Street between eight in the morning and four in the afternoon this Thursday. Vehicles not moved by eight will be towed at the owner's expense. We appreciate your cooperation.",
+          "questions": [
+            {
+              "question": "What is happening on Maple Street this Thursday?",
+              "options": [
+                "A street festival",
+                "Scheduled road paving",
+                "A parade",
+                "Utility line repairs"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens to vehicles not moved in time?",
+              "options": [
+                "They receive a warning ticket",
+                "They are towed at the owner's expense",
+                "Nothing happens to them",
+                "They are relocated by the city for free"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 97,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/97.mp3",
+          "speaker": "female",
+          "transcript": "Attention gym members: starting this weekend, we will be introducing a new evening spin class every Tuesday and Thursday at six o'clock. Space is limited to twenty participants, so early sign-up is recommended through the front desk or our mobile app.",
+          "questions": [
+            {
+              "question": "What new offering is being announced?",
+              "options": [
+                "A new personal training program",
+                "An evening spin class",
+                "Extended gym hours",
+                "A nutrition workshop"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How can members reserve a spot?",
+              "options": [
+                "By calling customer service",
+                "Through the front desk or mobile app",
+                "By emailing the gym manager",
+                "Spots cannot be reserved in advance"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 98,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/98.mp3",
+          "speaker": "male",
+          "transcript": "Attention conference guests: lunch will be served in the east dining hall starting at twelve thirty today instead of the west hall as originally printed in your program. Please check with staff near the registration desk if you need directions. We apologize for any confusion.",
+          "questions": [
+            {
+              "question": "What has changed about lunch today?",
+              "options": [
+                "The time it will be served",
+                "The location where it will be served",
+                "The menu being offered",
+                "It has been canceled"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where can attendees get directions?",
+              "options": [
+                "The east dining hall entrance",
+                "Near the registration desk",
+                "The hotel lobby",
+                "The parking area"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 77,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/77.mp3",
+          "speaker": "female",
+          "subject": "History",
+          "transcript": "Today's lecture focuses on the Marshall Plan, the large-scale American economic assistance program initiated in 1948 to support the reconstruction of Western European economies devastated by the destruction of the Second World War. Named after United States Secretary of State George Marshall, who first proposed the initiative, the program ultimately provided billions of dollars in economic aid to participating Western European countries over a four-year period. Several distinct considerations motivated American policymakers to invest such an unprecedented and substantial sum in the postwar reconstruction of other nations' economies. First, there existed genuine humanitarian concern regarding the severe economic devastation and considerable human suffering that persisted across much of Europe in the years immediately following the war's conclusion. Second, and often considered equally significant historically, American officials grew increasingly concerned that continued severe economic hardship and instability could make Western European countries considerably more susceptible to growing communist political influence, particularly given the Soviet Union's expanding regional influence in Eastern Europe during this same postwar period. By helping stabilize European economies and demonstrably improve everyday living standards, American policymakers hoped to reduce the broader political appeal of communism within Western European countries specifically. Third, American policymakers also recognized clear longer-term economic self-interest in the plan, since a genuinely prosperous, economically stable Europe would represent a substantially larger and more valuable market for American exports, while a continuously depressed European economy would offer correspondingly much more limited economic opportunity for American businesses and trade going forward. The Marshall Plan is now widely regarded by most historians as having been remarkably successful in achieving its core stated objectives; participating European economies experienced substantial economic growth during the years the program was actively in effect, and the plan is generally credited with contributing significantly to the broader postwar economic stability that characterized much of Western Europe throughout the following decades. Beyond its direct measurable economic impact, the Marshall Plan is also frequently cited by historians and diplomats alike as an important influential model for how large-scale international economic aid, when carefully designed and thoughtfully implemented, can potentially serve both genuine humanitarian objectives and broader strategic foreign policy goals simultaneously.",
+          "questions": [
+            {
+              "question": "What was the Marshall Plan?",
+              "options": [
+                "A military alliance formed after World War Two",
+                "An American economic assistance program to help rebuild Western Europe",
+                "A treaty ending the Second World War",
+                "A trade agreement between European nations only"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What political concern motivated the Marshall Plan, according to the talk?",
+              "options": [
+                "Concern about the spread of communist influence in Western Europe",
+                "Concern about a resurgence of fascism",
+                "Concern about overpopulation in Europe",
+                "Concern about a new war with Japan"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What economic self-interest did American policymakers recognize?",
+              "options": [
+                "Reducing American taxes",
+                "A prosperous Europe would be a larger market for American exports",
+                "Gaining direct control over European industries",
+                "Eliminating competition from European businesses"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How do historians generally view the Marshall Plan's success?",
+              "options": [
+                "As a failure that worsened European economies",
+                "As largely successful in achieving its economic and political objectives",
+                "As having no measurable impact on Europe",
+                "As primarily beneficial only to the United States"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 78,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/78.mp3",
+          "speaker": "male",
+          "subject": "Biology",
+          "transcript": "Today's lecture examines the phenomenon of antibiotic resistance, an increasingly urgent challenge in modern medicine that illustrates evolutionary principles occurring on a remarkably observable, relatively short timescale. Antibiotic resistance develops through the fundamental process of natural selection: within any sufficiently large population of bacteria, naturally occurring random genetic mutations will occasionally produce individual bacteria that happen to possess some degree of resistance to a particular antibiotic drug, even before that specific bacterial population has ever actually been exposed to the drug in question. When a population of bacteria is subsequently treated with that particular antibiotic, the vast majority of susceptible, non-resistant bacteria are effectively killed off, but any individual bacteria that happen to carry a pre-existing resistance mutation are considerably more likely to survive treatment and continue reproducing successfully afterward. Over repeated successive treatment cycles, this straightforward selective survival and reproductive advantage can lead to resistant bacterial strains becoming significantly more common within the overall bacterial population, and in some especially concerning cases, resistant strains can eventually become entirely dominant within a given bacterial population if the same antibiotic continues to be used repeatedly and extensively over time. Several significant human practices have measurably accelerated this natural evolutionary process well beyond its typical baseline rate. The substantial overprescription of antibiotics for viral infections, against which antibiotics have no meaningful therapeutic effect whatsoever, unnecessarily exposes bacterial populations to selective evolutionary pressure without providing any genuine corresponding medical benefit to the patient. Similarly, patients failing to complete a full prescribed course of antibiotic treatment, as directed by their physician, can inadvertently leave behind a population of partially resistant bacteria that survived the incomplete treatment course, which may then continue to develop and refine additional resistance over subsequent time. The large-scale, widespread use of antibiotics specifically in agricultural livestock farming has also been strongly implicated as another significant contributing factor. Compounding this growing overall problem, bacteria possess a genuinely remarkable ability to directly transfer genetic material, including specific resistance genes, between entirely different bacterial species through a process called horizontal gene transfer, meaning resistance that initially develops within one particular bacterial species can potentially spread relatively quickly to other, entirely unrelated bacterial species as well.",
+          "questions": [
+            {
+              "question": "What is the main topic of the talk?",
+              "options": [
+                "The discovery of the first antibiotic",
+                "The process and causes of antibiotic resistance",
+                "How the immune system fights viral infections",
+                "The structure of bacterial cells"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does antibiotic resistance initially arise in a bacterial population?",
+              "options": [
+                "Bacteria intentionally develop resistance in response to treatment",
+                "Random genetic mutations occasionally produce resistant bacteria before drug exposure",
+                "Antibiotics directly cause resistance mutations to form",
+                "Resistance only develops after prolonged drug exposure begins"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does overprescribing antibiotics for viral infections contribute to resistance?",
+              "options": [
+                "It has no real effect on bacterial resistance",
+                "It exposes bacteria to selective pressure without providing any medical benefit",
+                "It directly kills all bacteria in the body",
+                "It strengthens the immune system's response"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is horizontal gene transfer, according to the talk?",
+              "options": [
+                "The passing of genes from parent to offspring bacteria",
+                "The direct transfer of genetic material, including resistance genes, between different bacterial species",
+                "A method doctors use to test for infection",
+                "The process by which antibiotics are manufactured"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 429,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/429.mp3",
+          "transcript": "Could you double-check if this flight has a layover?",
+          "context": "A traveler asks a travel agent.",
+          "options": [
+            "Let me look that up for you now.",
+            "Layovers can add a few hours to travel time.",
+            "Direct flights are usually more expensive.",
+            "This airline flies to many destinations."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "54-429"
+        },
+        {
+          "id": 430,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/430.mp3",
+          "transcript": "I noticed the sign says this exhibit is temporarily closed.",
+          "context": "A visitor asks a museum employee.",
+          "options": [
+            "Yes, it's closed for some minor repairs.",
+            "The exhibit usually draws large crowds.",
+            "It should reopen sometime next month.",
+            "There are several other exhibits to see."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "54-430"
+        },
+        {
+          "id": 431,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/431.mp3",
+          "transcript": "Would you be able to move the couch when you deliver it?",
+          "context": "A customer asks a furniture delivery coordinator.",
+          "options": [
+            "Sure, our team can place it wherever you'd like.",
+            "Delivery usually takes about a week.",
+            "The couch comes in several fabric options.",
+            "Assembly is included with delivery."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "54-431"
+        },
+        {
+          "id": 432,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/432.mp3",
+          "transcript": "Do you know if the community center has evening classes?",
+          "context": "A resident asks a community center staff member.",
+          "options": [
+            "Yes, several classes run after six.",
+            "The center is open seven days a week.",
+            "Membership includes access to the gym.",
+            "Classes fill up quickly in the fall."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "54-432"
+        },
+        {
+          "id": 433,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/433.mp3",
+          "transcript": "I think my insurance claim was denied by mistake.",
+          "context": "A customer calls an insurance company.",
+          "options": [
+            "Let's go over the details and see what happened.",
+            "Claims typically take two weeks to process.",
+            "You can submit claims online now.",
+            "Your policy renews at the end of the year."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "55-433"
+        },
+        {
+          "id": 434,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/434.mp3",
+          "transcript": "Could you tell me if this trail closes at night?",
+          "context": "A hiker asks a park ranger.",
+          "options": [
+            "Yes, the park closes at sunset.",
+            "The trail is about five miles round trip.",
+            "There's a parking lot at the trailhead.",
+            "Wildlife sightings are common here."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "55-434"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 79,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/79.mp3",
+          "speaker": "female",
+          "subject": "Psychology",
+          "transcript": "Today we'll explore the bystander effect, a well-documented social psychological phenomenon in which individuals are notably less likely to offer help to a victim in an emergency situation when other bystanders are also present, compared to when that same individual is entirely alone and directly witnesses the identical emergency situation. This phenomenon was first systematically studied following the widely publicized 1964 murder of Kitty Genovese in New York City, a case in which initial newspaper reports claimed, though these particular claims were later found to be considerably exaggerated, that numerous witnesses observed the attack occurring but failed to intervene or even contact the police for help. This troubling case prompted psychologists John Darley and Bibb Latané to conduct a systematic series of experiments specifically designed to investigate the underlying phenomenon more rigorously and scientifically. Their research identified several distinct psychological mechanisms that meaningfully contribute to the bystander effect. Diffusion of responsibility refers to the tendency for each individual bystander present to feel personally less responsible for taking direct action specifically because other capable people are also present and could potentially intervene instead, effectively spreading the underlying sense of personal responsibility to help across the entire group of bystanders rather than concentrating it fully on any single individual. Pluralistic ignorance describes a related but distinct related mechanism, in which individual bystanders look to the outward behavior and reactions of other people present in order to help determine and interpret whether a given situation genuinely constitutes an actual emergency requiring intervention, and if everyone else present appears outwardly calm and is correspondingly not visibly reacting or intervening, individuals may mistakenly conclude that the situation must not actually be a genuine emergency after all, even if it clearly and objectively is one. Evaluation apprehension refers to a further additional concern about how one's own potential intervention might be personally judged or perceived by other people who are also present and watching, which can also meaningfully inhibit someone from stepping forward to help directly. Darley and Latané's foundational research demonstrated experimentally that the specific number of bystanders present was inversely related to the overall likelihood that any given individual would actually intervene to help, a genuinely counterintuitive finding at the time, since many people initially assumed, quite reasonably on the surface, that having more people present would straightforwardly make help considerably more likely to occur, not measurably less likely as the actual research findings ultimately demonstrated.",
+          "questions": [
+            {
+              "question": "What is the bystander effect?",
+              "options": [
+                "Increased helping behavior when more people are present",
+                "Decreased likelihood of helping when other bystanders are present",
+                "A phenomenon only occurring in large cities",
+                "The tendency for people to call police immediately during emergencies"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What historical event prompted research into the bystander effect?",
+              "options": [
+                "A natural disaster in New York City",
+                "The murder of Kitty Genovese",
+                "A large-scale public protest",
+                "A significant scientific conference"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is diffusion of responsibility?",
+              "options": [
+                "The tendency to feel more responsible when others are present",
+                "The tendency to feel less personally responsible for action when others are present",
+                "A legal principle regarding group liability",
+                "The spreading of false information among a crowd"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did Darley and Latané's research demonstrate about the number of bystanders?",
+              "options": [
+                "More bystanders always increases the likelihood of help",
+                "The number of bystanders was inversely related to the likelihood any individual would help",
+                "The number of bystanders has no effect on helping behavior",
+                "Only lone bystanders ever fail to help"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 80,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/80.mp3",
+          "speaker": "male",
+          "subject": "Economics",
+          "transcript": "Today we're discussing the concept of behavioral economics, a field that combines insights from psychology with traditional economic theory to better explain how people actually make decisions, as opposed to how purely rational, self-interested actors would theoretically behave according to classical economic models. Traditional economics has long relied on the assumption of the rational actor, a hypothetical decision-maker who always has complete, accurate information, consistently weighs costs and benefits with perfect logical precision, and reliably chooses whatever option maximizes their own individual self-interest. Behavioral economists, drawing heavily on decades of psychological research, have identified numerous consistent, systematic ways in which real human decision-making actually deviates from this idealized rational model. One particularly well-documented example is loss aversion, a concept developed extensively by psychologists Daniel Kahneman and Amos Tversky, which demonstrates that people generally experience the psychological pain of losing a given amount of money considerably more intensely than they experience the pleasure of gaining that exact same amount. This asymmetry helps explain a range of otherwise seemingly puzzling real-world economic behaviors, including why investors frequently hold onto poorly performing stocks for far too long, hoping to avoid definitively realizing a loss, even when objectively selling and reinvesting elsewhere would clearly be the more financially rational course of action available to them. Another significant well-studied concept is anchoring, the surprisingly strong tendency for people's judgments and estimates to be disproportionately influenced by an initial piece of information they encounter, even when that particular initial number is essentially arbitrary or clearly irrelevant to the actual decision at hand. Retailers frequently exploit this particular cognitive tendency by prominently displaying a high original price directly alongside a discounted sale price, since that initial higher number serves as a psychological anchor point, making the subsequent discounted price appear considerably more attractive by direct comparison than it might otherwise seem when evaluated entirely on its own merits. These and numerous other related behavioral insights have gradually and substantially influenced public policy design as well, particularly through the increasingly popular concept of the nudge, a term describing subtle, low-cost changes to how choices are presented or structured that can meaningfully influence people's decisions in a generally beneficial direction without in any way restricting or eliminating their fundamental freedom to choose differently if they genuinely wish to.",
+          "questions": [
+            {
+              "question": "What is behavioral economics?",
+              "options": [
+                "A field studying only stock market behavior",
+                "A field combining psychology and economics to explain actual decision-making",
+                "A branch of economics focused solely on government policy",
+                "A theory proving humans are always perfectly rational"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is loss aversion, according to the talk?",
+              "options": [
+                "People value gains more than equivalent losses",
+                "People experience the pain of a loss more intensely than the pleasure of an equivalent gain",
+                "People are indifferent to gains and losses",
+                "People always avoid taking any financial risks"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is anchoring, as described in the lecture?",
+              "options": [
+                "A method for permanently fixing prices",
+                "The tendency for judgments to be influenced by an initial, often arbitrary piece of information",
+                "A legal requirement for pricing transparency",
+                "A technique used exclusively in stock trading"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is a 'nudge' in the context of behavioral economics?",
+              "options": [
+                "A mandatory government regulation",
+                "A subtle change in choice presentation that influences decisions without restricting freedom",
+                "A financial penalty for poor decisions",
+                "A form of direct financial incentive only"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 435,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/435.mp3",
+          "transcript": "Do you know if the print shop can bind these documents?",
+          "context": "A customer asks a print shop employee.",
+          "options": [
+            "Yes, we offer several binding options.",
+            "Printing usually takes about an hour.",
+            "We also offer same-day service.",
+            "The shop is open until seven."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "55-435"
+        },
+        {
+          "id": 436,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/436.mp3",
+          "transcript": "I'd like to move my moving date up by a few days.",
+          "context": "A customer calls a moving company.",
+          "options": [
+            "Let me check our schedule for an earlier slot.",
+            "Moves are usually booked weeks in advance.",
+            "We offer both local and long-distance moves.",
+            "Packing materials are available for purchase."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "55-436"
+        },
+        {
+          "id": 437,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/437.mp3",
+          "transcript": "Could you check if my insurance covers this procedure?",
+          "context": "A patient asks a clinic's billing staff.",
+          "options": [
+            "Let me verify your coverage before your visit.",
+            "The clinic accepts most major insurance plans.",
+            "Procedures are scheduled a few weeks out.",
+            "You can pay any remaining balance online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "55-437"
+        },
+        {
+          "id": 438,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/438.mp3",
+          "transcript": "I noticed the delivery truck left the package at the wrong door.",
+          "context": "A resident calls a delivery company.",
+          "options": [
+            "I'm sorry, let me help locate it for you.",
+            "Deliveries are usually made in the morning.",
+            "Drivers follow the address on the label.",
+            "You can request signature confirmation next time."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "55-438"
+        },
+        {
+          "id": 439,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/439.mp3",
+          "transcript": "Would you be able to give me a tour of the apartment before I sign the lease?",
+          "context": "A prospective tenant asks a leasing agent.",
+          "options": [
+            "Absolutely, are you free this afternoon?",
+            "The apartment includes a washer and dryer.",
+            "Leases typically run for twelve months.",
+            "Rent is due on the first of the month."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "55-439"
+        },
+        {
+          "id": 440,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/440.mp3",
+          "transcript": "Do you know if this insurance policy covers rental cars?",
+          "context": "A customer asks an insurance agent.",
+          "options": [
+            "Yes, rental coverage is included in your plan.",
+            "Policies are reviewed annually.",
+            "You can add extra coverage anytime.",
+            "Claims can be filed online or by phone."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "55-440"
+        }
+      ],
+      "conv": [
+        {
+          "id": 99,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/99.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I heard the theater department is putting on a new play this spring."
+            },
+            {
+              "speaker": "male",
+              "text": "Really? Do you know what it's about?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not exactly, but I heard auditions are open to all students."
+            },
+            {
+              "speaker": "male",
+              "text": "That's interesting, I might actually try out."
+            },
+            {
+              "speaker": "female",
+              "text": "You should, I didn't know you were into acting."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What are they discussing?",
+              "options": [
+                "A movie screening",
+                "A new theater department play",
+                "A dance performance",
+                "A music concert"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man decide?",
+              "options": [
+                "To skip the auditions",
+                "To possibly try out for the play",
+                "To help with the set design",
+                "To buy tickets in advance"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 100,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/100.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Did you switch dorms this semester?"
+            },
+            {
+              "speaker": "female",
+              "text": "I did, I moved to a quieter building on the other side of campus."
+            },
+            {
+              "speaker": "male",
+              "text": "How's the change been so far?"
+            },
+            {
+              "speaker": "female",
+              "text": "Really good actually, it's much easier to focus on studying now."
+            },
+            {
+              "speaker": "male",
+              "text": "That's great, I've been thinking about doing the same thing."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What did the woman do this semester?",
+              "options": [
+                "She moved off campus",
+                "She switched to a quieter dorm",
+                "She got a new roommate",
+                "She started living alone"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does she feel about the change?",
+              "options": [
+                "She regrets it",
+                "It has made studying easier",
+                "It hasn't made much difference",
+                "She wants to switch back"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 99,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/99.mp3",
+          "speaker": "female",
+          "transcript": "Attention passengers: due to a temporary closure of security checkpoint two, all passengers should proceed to checkpoint one for screening this morning. We expect checkpoint two to reopen by mid-afternoon. We apologize for any additional wait times this may cause.",
+          "questions": [
+            {
+              "question": "Why is checkpoint two closed?",
+              "options": [
+                "A staffing shortage",
+                "A temporary closure, reason not detailed but requiring rerouting",
+                "A security threat",
+                "Equipment malfunction requiring reroute"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should passengers do?",
+              "options": [
+                "Wait for checkpoint two to reopen",
+                "Proceed to checkpoint one",
+                "Use a different terminal entirely",
+                "Return to the ticket counter"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 100,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/100.mp3",
+          "speaker": "male",
+          "transcript": "Attention shoppers: please note that our return policy has been temporarily extended for all holiday purchases, allowing returns within sixty days instead of the usual thirty. This extension applies to items purchased both in store and online. Please bring your receipt for the fastest service.",
+          "questions": [
+            {
+              "question": "What change to policy is being announced?",
+              "options": [
+                "A price increase",
+                "An extended return window for holiday purchases",
+                "A change in store hours",
+                "A new loyalty program"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is needed for the fastest service?",
+              "options": [
+                "A photo ID",
+                "A receipt",
+                "A membership card",
+                "The original packaging only"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "The lab confirmed the results of the earlier test.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "reported",
+          "that",
+          "the lab",
+          "had confirmed the results of the earlier test"
+        ],
+        "distractorChunks": [
+          "has confirmed the results of the earlier test"
+        ],
+        "responseSuffix": ".",
+        "id": 191
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The airport plans to add a new terminal next year.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "said",
+          "that",
+          "the airport",
+          "planned to add a new terminal next year"
+        ],
+        "distractorChunks": [
+          "plans to add a new terminal next year"
+        ],
+        "responseSuffix": ".",
+        "id": 192
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The manager can approve the request by tomorrow.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "mentioned",
+          "that",
+          "the manager",
+          "could approve the request by tomorrow"
+        ],
+        "distractorChunks": [
+          "can approve the request by tomorrow"
+        ],
+        "responseSuffix": ".",
+        "id": 193
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Is the ferry running on its normal schedule today?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the ferry",
+          "was running on its normal schedule today"
+        ],
+        "distractorChunks": [
+          "is running on its normal schedule today"
+        ],
+        "responseSuffix": ".",
+        "id": 194
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Did the auditors finish reviewing the accounts?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "was",
+          "not",
+          "sure",
+          "whether",
+          "the auditors",
+          "had finished reviewing the accounts"
+        ],
+        "distractorChunks": [
+          "have finished reviewing the accounts"
+        ],
+        "responseSuffix": ".",
+        "id": 195
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Will the new bridge reduce traffic congestion?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "wondered",
+          "whether",
+          "the new bridge",
+          "would reduce traffic congestion"
+        ],
+        "distractorChunks": [
+          "will reduce traffic congestion"
+        ],
+        "responseSuffix": ".",
+        "id": 196
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Can the pharmacy transfer my prescription to another branch?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the pharmacy",
+          "could transfer his prescription to another branch"
+        ],
+        "distractorChunks": [
+          "can transfer his prescription to another branch"
+        ],
+        "responseSuffix": ".",
+        "id": 197
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Where did the crew store the extra equipment?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "could",
+          "not",
+          "recall",
+          "where",
+          "the crew",
+          "had stored the extra equipment"
+        ],
+        "distractorChunks": [
+          "has stored the extra equipment"
+        ],
+        "responseSuffix": ".",
+        "id": 198
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Why does the elevator make that strange noise?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "why",
+          "the elevator",
+          "made that strange noise"
+        ],
+        "distractorChunks": [
+          "makes that strange noise"
+        ],
+        "responseSuffix": ".",
+        "id": 199
+      },
+      {
+        "promptGender": "female",
+        "prompt": "How much did the venue charge for the extra hour?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "how",
+          "much",
+          "the venue",
+          "had charged for the extra hour"
+        ],
+        "distractorChunks": [
+          "has charged for the extra hour"
+        ],
+        "responseSuffix": ".",
+        "id": 200
+      }
+    ],
+    "email": {
+      "scenario": "You attended a job fair on campus and collected several business cards, but you realize you forgot to follow up with a recruiter you were especially interested in. You want to write a follow-up email thanking them and asking about next steps.",
+      "recipient": "Ms. Bennett, Recruiter",
+      "subject": "Following up from the campus job fair",
+      "tasks": [
+        {
+          "description": "Remind the recruiter where you met.",
+          "keywords": [
+            "job fair",
+            "met",
+            "campus",
+            "spoke"
+          ]
+        },
+        {
+          "description": "Thank them for their time.",
+          "keywords": [
+            "thank you",
+            "appreciate",
+            "time"
+          ]
+        },
+        {
+          "description": "Ask about the next steps in the application process.",
+          "keywords": [
+            "next steps",
+            "application",
+            "process",
+            "apply"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Ms. Bennett,\n\nI hope this message finds you well. We spoke briefly at the campus job fair last week about the marketing internship opportunities at your company.\n\nThank you for taking the time to answer my questions and for sharing more about the internship program.\n\nCould you let me know what the next steps in the application process would be? I would love to learn more and am very interested in applying. Thank you again for your time.\n\nSincerely,\n[Your Name]",
+      "id": 20
+    },
+    "disc": {
+      "subject": "urban planning",
+      "professor": "Dr. Castillo",
+      "professorGender": "female",
+      "prompt": "We've been discussing whether cities should prioritize building more bike lanes even if it means removing some car parking spaces and traffic lanes. Some argue this shift is necessary to reduce congestion and pollution, while others argue it unfairly burdens drivers and local businesses that depend on car traffic. Should cities prioritize bike lanes over car infrastructure in this way? Why or why not?",
+      "classmates": [
+        {
+          "name": "Hana",
+          "gender": "female",
+          "opinion": "I think cities should prioritize bike lanes. Long-term, reducing car dependency lowers pollution and traffic congestion, and cities that have made this shift have generally seen increased cycling rates within just a few years. Short-term inconvenience for drivers seems like a reasonable tradeoff for those longer-term benefits."
+        },
+        {
+          "name": "Owen",
+          "gender": "male",
+          "opinion": "I think this approach can seriously hurt small businesses that rely on customers being able to park nearby, especially stores that sell heavier items customers can't easily carry on a bike. Cities should expand bike infrastructure gradually and study the specific impact on local businesses before removing significant parking or lanes all at once."
+        }
+      ],
+      "exampleResponse": "I can see merit in both perspectives here, though I lean somewhat toward Hana's position on the overall direction cities should move in. Reducing car dependency does appear to produce meaningful long-term benefits for congestion and pollution, and many cities that made this shift have reported strong results after an adjustment period. That said, Owen's concern about specific local businesses feels like a legitimate practical issue that shouldn't be dismissed, particularly for stores selling bulky goods. Rather than choosing one approach entirely, cities could pursue Hana's broader vision while adopting Owen's suggestion of a more gradual, carefully studied rollout, perhaps piloting changes on a few streets first and adjusting based on the actual impact on nearby businesses before expanding further.",
+      "id": 20
+    }
+  },
+  "speaking": {
+    "lr": {
+      "location": "Art Studio",
+      "icon": "🎨",
+      "photoSlug": "art-studio",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Art_studio_interior.jpg",
+      "speaker": "female",
+      "introText": "You are learning how to welcome visitors to an art studio class. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "text": "Welcome to the studio.",
+          "length": "short",
+          "recordSeconds": 8,
+          "id": 1
+        },
+        {
+          "text": "Aprons are hanging by the door if you'd like one.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 2
+        },
+        {
+          "text": "Each easel already has paper and basic supplies.",
+          "length": "medium",
+          "recordSeconds": 8,
+          "id": 3
+        },
+        {
+          "text": "Feel free to choose any seat that's open.",
+          "length": "medium",
+          "recordSeconds": 8,
+          "id": 4
+        },
+        {
+          "text": "We'll start with a short warm-up sketch.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 5
+        },
+        {
+          "text": "Please clean your brushes in the sink before you leave.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 6
+        },
+        {
+          "text": "Finished pieces can be left on the drying rack near the window.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 7
+        }
+      ],
+      "id": 20
+    },
+    "interview": {
+      "topic": "Career Planning",
+      "icon": "🎯",
+      "photoSlug": "career-planning",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Career_planning_desk.jpg",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about how students plan their careers. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "connector": "",
+          "text": "Thanks for taking part today. To start, how did you decide on your current field of study or career path?",
+          "recordSeconds": 45,
+          "id": 1
+        },
+        {
+          "connector": "That's a great answer.",
+          "text": "That's a great answer. Do you think it's more important to follow your passion or to choose a career based on job stability? Why?",
+          "recordSeconds": 45,
+          "id": 2
+        },
+        {
+          "connector": "I understand.",
+          "text": "I understand. How much influence did your family have on your career decisions?",
+          "recordSeconds": 45,
+          "id": 3
+        },
+        {
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think it's common for people to change careers entirely later in life? Is that a good thing?",
+          "recordSeconds": 45,
+          "id": 4
+        }
+      ],
+      "id": 20
+    }
+  }
+}

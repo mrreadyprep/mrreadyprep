@@ -1,0 +1,1036 @@
+[
+  {
+    "id": 1,
+    "location": "University Cafeteria",
+    "icon": "🍽️",
+    "photoSlug": "cafeteria",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2a/Cafeteria_at_lunch.jpg",
+    "speaker": "male",
+    "introText": "You are learning how to give a tour of the university cafeteria. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the cafeteria.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "Meals are served from seven to nine in the evening.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "You can pay with cash, card, or your meal plan.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Vegetarian options are available every day.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "If a table is reserved, please look for another one nearby.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "The cafeteria also offers grab-and-go snacks near the main entrance.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Please return your tray to the counter when you are finished eating.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "location": "IT Help Desk",
+    "icon": "💻",
+    "photoSlug": "it-help-desk",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Help_desk.jpg",
+    "speaker": "female",
+    "introText": "You are learning how to explain the IT help desk to new students. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the IT help desk.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "You can request support online or in person.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Bring your student ID to verify your account.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Password resets usually take only a few minutes.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Laptop repairs may take a few business days to complete.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Software installation help is available every weekday afternoon in the computer lab.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "If your issue isn't resolved, please ask to speak with a supervisor.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "location": "Train Station Ticket Office",
+    "icon": "🚉",
+    "speaker": "male",
+    "introText": "You are learning how to buy a ticket at the train station. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the ticket office.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "One-way tickets are sold at counter one.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Round-trip tickets include a return discount.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Please have your student ID ready.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "The express train departs every thirty minutes.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "If you miss your train, your ticket is valid for the next departure.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Remember to validate your ticket before boarding the train.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "location": "Botanical Garden",
+    "icon": "🌿",
+    "speaker": "female",
+    "introText": "You are learning how to guide visitors through the botanical garden. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the botanical garden.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "The rose section is just ahead of us.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Please stay on the marked pathways.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Some plants here are extremely rare.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "The greenhouse maintains a tropical climate year-round.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Feel free to take photographs, but please do not touch the flowers.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "The garden tour ends near the fountain at the main entrance.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "location": "City Aquarium",
+    "icon": "🐠",
+    "speaker": "male",
+    "introText": "You are learning how to welcome guests to the city aquarium. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the city aquarium.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "The shark tank is on your left.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Feeding time begins at two o'clock.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Please keep your voice down near the tanks.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "The touch pool lets you feel starfish and rays.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Flash photography is not allowed because it disturbs the fish.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Our gift shop sells souvenirs shaped like your favorite sea creatures.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "location": "University Career Fair Booth",
+    "icon": "💼",
+    "speaker": "female",
+    "introText": "You are learning how to talk to students at the career fair booth. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to our career fair booth.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "We are currently hiring for summer internships.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Please leave your resume in this folder.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Our company values creativity and teamwork.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Interviews will be scheduled sometime next week.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Feel free to ask questions about our training program for new hires.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "We look forward to reviewing your application within the coming days.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "location": "Bike Rental Shop",
+    "icon": "🚲",
+    "speaker": "male",
+    "introText": "You are learning how to help customers rent bicycles. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the bike rental shop.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "We offer hourly and daily rental rates.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Helmets are included with every rental.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Please return the bike before closing time.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Mountain bikes are available for the trail route.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "A deposit is required and refunded when the bike is returned undamaged.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Let us know if you need a repair kit for a longer ride.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "location": "Community Recycling Center",
+    "icon": "♻️",
+    "speaker": "female",
+    "introText": "You are learning how to explain the recycling process to visitors. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the recycling center.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "Please sort your materials before dropping them off.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Glass and plastic go into separate bins.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Electronics are collected on the far side.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Cardboard boxes should be flattened before recycling.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Our staff can help you if you are unsure where an item belongs.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "The center also hosts workshops on reducing household waste each month.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "location": "Local Farmers Market",
+    "icon": "🥕",
+    "speaker": "male",
+    "introText": "You are learning how to sell produce at the farmers market. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the farmers market.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "These tomatoes were picked this morning.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "We accept both cash and card payments.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Our honey comes from local beehives.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Fresh bread arrives every Saturday around nine.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Ask about our weekly specials if you are buying in bulk.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Reusable bags are available near the entrance for a small fee.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "location": "Alpine Ski Rental Center",
+    "icon": "⛷️",
+    "speaker": "female",
+    "introText": "You are learning how to fit customers for ski equipment. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the ski rental shop.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "What is your boot size, please?",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "These skis are suited for beginners.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Poles and helmets are rented separately.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Please try the boots before leaving the counter.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Equipment can be exchanged if the fit is not comfortable.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Return everything by five o'clock to avoid an extra rental fee.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "location": "Sports Rehabilitation Clinic",
+    "icon": "🏥",
+    "speaker": "male",
+    "introText": "You are learning how to greet patients at the sports rehabilitation clinic. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the therapy clinic.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "Please fill out this intake form first.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Your therapist will see you shortly.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Wear comfortable clothing for your session.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Stretching exercises will begin your appointment today.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Ice packs are available if you experience any soreness afterward.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Your next appointment should be scheduled before you leave the clinic.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "location": "University Planetarium",
+    "icon": "🔭",
+    "speaker": "female",
+    "introText": "You are learning how to introduce a planetarium show. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the university planetarium.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "Tonight's show is about the solar system.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Please silence your phones before we begin.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "The dome above you simulates the night sky.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Our telescope session follows immediately after the show.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Feel free to ask the astronomer questions during the discussion period.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Souvenir star maps are available at the counter near the exit.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "location": "Airport Baggage Claim",
+    "icon": "🧳",
+    "speaker": "male",
+    "introText": "You are learning how to assist travelers at baggage claim. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to baggage claim area three.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "Your luggage will arrive on carousel five.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Please have your claim ticket ready.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Oversized bags are collected at the side counter.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "If your bag is missing, please visit our help desk.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Damaged luggage should be reported before you leave the airport terminal.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Our staff can track a delayed bag using your flight number.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "location": "Escape Room Front Desk",
+    "icon": "🔐",
+    "speaker": "female",
+    "introText": "You are learning how to welcome guests to an escape room. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to our escape room.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "Your group has sixty minutes to escape.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Please store your bags in these lockers.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Three hints are available during your game.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "A staff member will explain the rules briefly.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Cameras inside the room let us monitor your progress at all times.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "Photos are allowed only after your session has completely finished.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "location": "Public Library Reference Desk",
+    "icon": "📖",
+    "speaker": "male",
+    "introText": "You are learning how to help visitors at the reference desk. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "id": 1,
+        "text": "Welcome to the reference desk.",
+        "length": "short",
+        "recordSeconds": 8
+      },
+      {
+        "id": 2,
+        "text": "I can help you find any book.",
+        "length": "medium",
+        "recordSeconds": 8
+      },
+      {
+        "id": 3,
+        "text": "Our database includes academic journals and articles.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 4,
+        "text": "Please keep your voice low in this area.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 5,
+        "text": "Study rooms can be reserved for group projects.",
+        "length": "medium",
+        "recordSeconds": 10
+      },
+      {
+        "id": 6,
+        "text": "Let me know if you need help citing a source correctly.",
+        "length": "long",
+        "recordSeconds": 12
+      },
+      {
+        "id": 7,
+        "text": "The library stays open late during final exam week each semester.",
+        "length": "long",
+        "recordSeconds": 12
+      }
+    ]
+  },
+  {
+    "location": "Campus Health Center",
+    "icon": "🩺",
+    "photoSlug": "health-center",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Doctor_office.jpg",
+    "speaker": "female",
+    "introText": "You are learning how to give a tour of the campus health center. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "text": "Welcome to the health center.",
+        "length": "short",
+        "recordSeconds": 8,
+        "id": 1
+      },
+      {
+        "text": "The front desk can help you check in for your appointment.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 2
+      },
+      {
+        "text": "Walk-in visits are accepted every weekday morning.",
+        "length": "medium",
+        "recordSeconds": 8,
+        "id": 3
+      },
+      {
+        "text": "Please bring your student ID and insurance card.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 4
+      },
+      {
+        "text": "The pharmacy is located just down the hallway.",
+        "length": "medium",
+        "recordSeconds": 8,
+        "id": 5
+      },
+      {
+        "text": "If you need urgent care after hours, call the number posted at the entrance.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 6
+      },
+      {
+        "text": "Counseling services are also available by appointment on the second floor.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 7
+      }
+    ],
+    "id": 16
+  },
+  {
+    "location": "Train Station",
+    "icon": "🚉",
+    "photoSlug": "train-station",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Train_station_platform.jpg",
+    "speaker": "male",
+    "introText": "You are learning how to give directions inside a train station. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "text": "Welcome to Central Station.",
+        "length": "short",
+        "recordSeconds": 8,
+        "id": 1
+      },
+      {
+        "text": "Ticket machines are located near the main entrance.",
+        "length": "medium",
+        "recordSeconds": 8,
+        "id": 2
+      },
+      {
+        "text": "Platform three is down the escalator on your left.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 3
+      },
+      {
+        "text": "Trains to the airport depart every twenty minutes.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 4
+      },
+      {
+        "text": "Please keep your ticket until you exit the station.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 5
+      },
+      {
+        "text": "Restrooms and a small café are located near platform one.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 6
+      },
+      {
+        "text": "If you miss your train, the next one departs from the same platform.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 7
+      }
+    ],
+    "id": 17
+  },
+  {
+    "location": "Community Garden",
+    "icon": "🌱",
+    "photoSlug": "community-garden",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/95/Community_garden.jpg",
+    "speaker": "female",
+    "introText": "You are learning how to welcome new members to a community garden. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "text": "Welcome to the community garden.",
+        "length": "short",
+        "recordSeconds": 8,
+        "id": 1
+      },
+      {
+        "text": "Each member is assigned their own small plot.",
+        "length": "medium",
+        "recordSeconds": 8,
+        "id": 2
+      },
+      {
+        "text": "Tools are stored in the shed near the entrance.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 3
+      },
+      {
+        "text": "Watering is allowed every morning and evening.",
+        "length": "medium",
+        "recordSeconds": 8,
+        "id": 4
+      },
+      {
+        "text": "Please label your plants so others know what you're growing.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 5
+      },
+      {
+        "text": "A composting area is available at the back of the garden.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 6
+      },
+      {
+        "text": "We hold a volunteer cleanup day on the first Saturday of every month.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 7
+      }
+    ],
+    "id": 18
+  },
+  {
+    "location": "Car Rental Counter",
+    "icon": "🚗",
+    "photoSlug": "car-rental",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/8/86/Car_rental_office.jpg",
+    "speaker": "male",
+    "introText": "You are learning how to assist customers at a car rental counter. Listen to the speaker and repeat what he says. Repeat only once.",
+    "sentences": [
+      {
+        "text": "Welcome, how can I help you today.",
+        "length": "short",
+        "recordSeconds": 8,
+        "id": 1
+      },
+      {
+        "text": "May I see your license and reservation confirmation.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 2
+      },
+      {
+        "text": "Your car comes with a full tank of gas.",
+        "length": "medium",
+        "recordSeconds": 8,
+        "id": 3
+      },
+      {
+        "text": "Please return the vehicle by six in the evening.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 4
+      },
+      {
+        "text": "Insurance coverage can be added for a small daily fee.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 5
+      },
+      {
+        "text": "The vehicle is parked in space twelve near the exit.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 6
+      },
+      {
+        "text": "If you need roadside assistance, call the number on your rental agreement.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 7
+      }
+    ],
+    "id": 19
+  },
+  {
+    "location": "Art Studio",
+    "icon": "🎨",
+    "photoSlug": "art-studio",
+    "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/1/17/Art_studio_interior.jpg",
+    "speaker": "female",
+    "introText": "You are learning how to welcome visitors to an art studio class. Listen to the speaker and repeat what she says. Repeat only once.",
+    "sentences": [
+      {
+        "text": "Welcome to the studio.",
+        "length": "short",
+        "recordSeconds": 8,
+        "id": 1
+      },
+      {
+        "text": "Aprons are hanging by the door if you'd like one.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 2
+      },
+      {
+        "text": "Each easel already has paper and basic supplies.",
+        "length": "medium",
+        "recordSeconds": 8,
+        "id": 3
+      },
+      {
+        "text": "Feel free to choose any seat that's open.",
+        "length": "medium",
+        "recordSeconds": 8,
+        "id": 4
+      },
+      {
+        "text": "We'll start with a short warm-up sketch.",
+        "length": "medium",
+        "recordSeconds": 10,
+        "id": 5
+      },
+      {
+        "text": "Please clean your brushes in the sink before you leave.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 6
+      },
+      {
+        "text": "Finished pieces can be left on the drying rack near the window.",
+        "length": "long",
+        "recordSeconds": 12,
+        "id": 7
+      }
+    ],
+    "id": 20
+  }
+]

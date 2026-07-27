@@ -1,0 +1,1746 @@
+{
+  "id": 18,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 52,
+          "topic": "The History of the Compass",
+          "category": "History",
+          "paragraph": "The magnetic compass was originally developed for purposes unrelated to navigation. Early versions of the device were primarily used for geomancy, a practice involving the arrangement of buildings and objects according to perceived spiritual harmony with the surrounding landscape. Eventually, sailors recognized that a magnetized needle could reliably indicate geographic direction regardless of weather conditions or visibility at sea. This crucial discovery transformed long-distance maritime travel by allowing navigators to maintain a consistent heading even when clouds obscured the stars and sun. The widespread adoption of compass technology is often credited with enabling many of the ambitious exploratory voyages that reshaped global trade and geography.",
+          "blanks": [
+            {
+              "word": "geomancy",
+              "visible": "geom",
+              "hidden": "ancy"
+            },
+            {
+              "word": "objects",
+              "visible": "obj",
+              "hidden": "ects"
+            },
+            {
+              "word": "harmony",
+              "visible": "har",
+              "hidden": "mony"
+            },
+            {
+              "word": "magnetized",
+              "visible": "magne",
+              "hidden": "tized"
+            },
+            {
+              "word": "weather",
+              "visible": "wea",
+              "hidden": "ther"
+            },
+            {
+              "word": "discovery",
+              "visible": "disc",
+              "hidden": "overy"
+            },
+            {
+              "word": "maintain",
+              "visible": "main",
+              "hidden": "tain"
+            },
+            {
+              "word": "adoption",
+              "visible": "adop",
+              "hidden": "tion"
+            },
+            {
+              "word": "enabling",
+              "visible": "enab",
+              "hidden": "ling"
+            },
+            {
+              "word": "geography",
+              "visible": "geog",
+              "hidden": "raphy"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Gym Equipment Upgrade",
+          "subtitle": "",
+          "text": "The cardio equipment area will be closed for installation of new machines from Monday to Wednesday next week.\n\nAll other areas of the gym, including free weights and group classes, will remain open as usual.\n\nWe appreciate your patience as we upgrade our facility.",
+          "questions": [
+            {
+              "question": "What area of the gym will be closed?",
+              "options": [
+                "The entire gym",
+                "The cardio equipment area",
+                "The group class studio",
+                "The locker rooms"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will remain open during the closure?",
+              "options": [
+                "Nothing else is open",
+                "Free weights and group classes",
+                "Only the front desk",
+                "The pool area"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 86
+        },
+        {
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Community Center Workshop Series",
+          "subtitle": "",
+          "text": "Monday — Beginner Pottery, 6:00 p.m.\nTuesday — Watercolor Painting, 6:30 p.m.\nWednesday — Woodworking Basics, 7:00 p.m.\nThursday — Jewelry Making, 6:00 p.m.\nFriday — Open Studio (all mediums), 5:00 p.m.",
+          "questions": [
+            {
+              "question": "What class is offered on Wednesday?",
+              "options": [
+                "Beginner Pottery",
+                "Watercolor Painting",
+                "Woodworking Basics",
+                "Jewelry Making"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "Which day has the earliest start time?",
+              "options": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Friday"
+              ],
+              "answer": 3
+            }
+          ],
+          "id": 87
+        },
+        {
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "City Bus Route 12 - Weekday Schedule",
+          "subtitle": "",
+          "text": "Downtown Station — 7:00, 7:30, 8:00, 8:30 a.m.\nMaple Avenue — 7:12, 7:42, 8:12, 8:42 a.m.\nRiverside Park — 7:25, 7:55, 8:25, 8:55 a.m.\nEastgate Mall — 7:40, 8:10, 8:40, 9:10 a.m.",
+          "questions": [
+            {
+              "question": "What time does the 7:00 bus from Downtown Station arrive at Riverside Park?",
+              "options": [
+                "7:12 a.m.",
+                "7:25 a.m.",
+                "7:40 a.m.",
+                "7:55 a.m."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How many buses depart Downtown Station during this schedule?",
+              "options": [
+                "Two",
+                "Three",
+                "Four",
+                "Five"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 88
+        }
+      ],
+      "ap": [
+        {
+          "title": "The Water Cycle and Its Role in Climate",
+          "passage": "The water cycle describes the continuous movement of water through Earth's atmosphere, land, and oceans, driven primarily by solar energy and gravity. This ongoing process involves several key stages, including evaporation, condensation, precipitation, and collection, each of which plays a critical role in distributing fresh water across the planet's surface.\n\nSolar radiation heats the surface of oceans, lakes, and rivers, causing liquid water to evaporate and rise into the atmosphere as water vapor. As this vapor rises and cools at higher altitudes, it condenses around tiny particles of dust or pollen to form clouds, a process that releases latent heat and influences local weather patterns.\n\nEventually, water droplets within clouds grow large and heavy enough to fall back to Earth's surface as precipitation, in the form of rain, snow, or hail depending on atmospheric conditions. This water then collects in rivers, lakes, and underground aquifers, or flows directly back into the ocean, completing the cycle and beginning the process anew.\n\nBeyond simply redistributing fresh water, the water cycle plays an essential role in regulating global climate by transporting enormous quantities of heat energy between the equator and polar regions. Disruptions to this cycle, whether from deforestation, urbanization, or global climate change, can have far-reaching consequences for regional weather patterns, agricultural productivity, and the availability of fresh drinking water.",
+          "passage_marked": "The water cycle describes the continuous movement of water through Earth's atmosphere, land, and oceans, driven primarily by solar energy and gravity. This ongoing process involves several key stages, including evaporation, condensation, precipitation, and collection, each of which plays a critical role in distributing fresh water across the planet's surface. [A]\n\nSolar radiation heats the surface of oceans, lakes, and rivers, causing liquid water to evaporate and rise into the atmosphere as water vapor. [B] As this vapor rises and cools at higher altitudes, it condenses around tiny particles of dust or pollen to form clouds, a process that releases latent heat and influences local weather patterns.\n\nEventually, water droplets within clouds grow large and heavy enough to fall back to Earth's surface as precipitation, in the form of rain, snow, or hail depending on atmospheric conditions. This water then collects in rivers, lakes, and underground aquifers, or flows directly back into the ocean, completing the cycle and beginning the process anew. [C]\n\nBeyond simply redistributing fresh water, the water cycle plays an essential role in regulating global climate by transporting enormous quantities of heat energy between the equator and polar regions. [D] Disruptions to this cycle, whether from deforestation, urbanization, or global climate change, can have far-reaching consequences for regional weather patterns, agricultural productivity, and the availability of fresh drinking water.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'latent' in the passage is closest in meaning to",
+              "options": [
+                "visible",
+                "stored",
+                "excessive",
+                "immediate"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What primarily drives the water cycle?",
+              "options": [
+                "Ocean currents alone",
+                "Solar energy and gravity",
+                "Human activity",
+                "Volcanic activity"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What happens when water vapor condenses at high altitudes?",
+              "options": [
+                "It immediately falls as rain",
+                "It forms clouds around particles of dust or pollen",
+                "It disappears completely",
+                "It turns directly into ice on the ground"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "How does the water cycle help regulate global climate?",
+              "options": [
+                "By reducing the total amount of water on Earth",
+                "By transporting heat energy between the equator and polar regions",
+                "By eliminating the need for rainfall",
+                "By keeping all water in the oceans"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This release of energy during cloud formation can have a noticeable effect on surrounding atmospheric conditions.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 35
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 53,
+          "topic": "Ant Colony Communication",
+          "category": "Entomology",
+          "paragraph": "Ant colonies function as remarkably coordinated societies despite lacking any centralized leadership directing their activities. Individual ants communicate primarily through chemical signals called pheromones, which they deposit along trails leading toward food sources or away from potential dangers. When an ant discovers a particularly abundant food source, it releases a stronger pheromone trail that attracts increasing numbers of nestmates to follow the same path. This decentralized communication system allows the colony to efficiently allocate its collective foraging effort without any single ant needing to understand the overall situation. Scientists studying this behavior have found striking similarities between ant colony organization and certain algorithms used in modern computer networking.",
+          "blanks": [
+            {
+              "word": "Individual",
+              "visible": "Indiv",
+              "hidden": "idual"
+            },
+            {
+              "word": "pheromones",
+              "visible": "phero",
+              "hidden": "mones"
+            },
+            {
+              "word": "potential",
+              "visible": "pote",
+              "hidden": "ntial"
+            },
+            {
+              "word": "abundant",
+              "visible": "abun",
+              "hidden": "dant"
+            },
+            {
+              "word": "attracts",
+              "visible": "attr",
+              "hidden": "acts"
+            },
+            {
+              "word": "communication",
+              "visible": "commu",
+              "hidden": "nication"
+            },
+            {
+              "word": "foraging",
+              "visible": "fora",
+              "hidden": "ging"
+            },
+            {
+              "word": "Scientists",
+              "visible": "Scien",
+              "hidden": "tists"
+            },
+            {
+              "word": "similarities",
+              "visible": "simil",
+              "hidden": "arities"
+            },
+            {
+              "word": "networking",
+              "visible": "netwo",
+              "hidden": "rking"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "The Neuroscience of Habit Formation",
+          "passage": "Habits are behaviors that become automatic through repetition, allowing individuals to perform routine tasks with minimal conscious effort or deliberate thought. Neuroscientists have identified a region deep within the brain called the basal ganglia as playing a central role in the formation and execution of habitual behavior.\n\nResearchers describe habit formation as following a repeating three-part pattern often referred to as the habit loop, consisting of a cue, a routine, and a reward. The cue serves as a trigger that initiates the behavior, the routine represents the behavior itself, and the reward reinforces the association between the cue and the routine, gradually strengthening the neural pathways involved.\n\nAs a habit becomes increasingly ingrained through repetition, brain activity associated with conscious decision-making tends to decrease, while activity within the basal ganglia increases, reflecting the behavior's transition from a deliberate choice into an automatic response. This shift explains why long-established habits can feel remarkably difficult to consciously override, even when an individual actively wishes to change their behavior.\n\nUnderstanding the mechanics of habit formation has proven valuable in fields ranging from psychology to public health, informing strategies for breaking harmful habits and establishing beneficial ones. Many effective behavioral interventions focus not on eliminating a cue entirely, which is often impractical, but on replacing the routine associated with that cue with a healthier alternative.",
+          "passage_marked": "Habits are behaviors that become automatic through repetition, allowing individuals to perform routine tasks with minimal conscious effort or deliberate thought. Neuroscientists have identified a region deep within the brain called the basal ganglia as playing a central role in the formation and execution of habitual behavior. [A]\n\nResearchers describe habit formation as following a repeating three-part pattern often referred to as the habit loop, consisting of a cue, a routine, and a reward. [B] The cue serves as a trigger that initiates the behavior, the routine represents the behavior itself, and the reward reinforces the association between the cue and the routine, gradually strengthening the neural pathways involved.\n\nAs a habit becomes increasingly ingrained through repetition, brain activity associated with conscious decision-making tends to decrease, while activity within the basal ganglia increases, reflecting the behavior's transition from a deliberate choice into an automatic response. This shift explains why long-established habits can feel remarkably difficult to consciously override, even when an individual actively wishes to change their behavior. [C]\n\nUnderstanding the mechanics of habit formation has proven valuable in fields ranging from psychology to public health, informing strategies for breaking harmful habits and establishing beneficial ones. [D] Many effective behavioral interventions focus not on eliminating a cue entirely, which is often impractical, but on replacing the routine associated with that cue with a healthier alternative.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'ingrained' in the passage is closest in meaning to",
+              "options": [
+                "deeply established",
+                "temporarily present",
+                "widely known",
+                "easily forgotten"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What role does the basal ganglia play according to the passage?",
+              "options": [
+                "It controls conscious decision-making exclusively",
+                "It plays a central role in habit formation and execution",
+                "It has no connection to habitual behavior",
+                "It only affects physical movement"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What are the three components of the habit loop?",
+              "options": [
+                "Trigger, memory, and outcome",
+                "Cue, routine, and reward",
+                "Thought, action, and consequence",
+                "Stimulus, response, and punishment"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why can established habits be difficult to consciously change?",
+              "options": [
+                "They are stored only in short-term memory",
+                "Brain activity shifts from conscious decision-making toward the basal ganglia",
+                "They are controlled entirely by external factors",
+                "They do not involve the brain at all"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This gradual reinforcement is what makes habits feel effortless once they are firmly established.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 36
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 54,
+          "topic": "The Domestication of Rice",
+          "category": "Agricultural Science",
+          "paragraph": "Rice cultivation began independently in several different regions of Asia thousands of years ago. Early farmers gradually selected wild rice plants that produced larger seeds and remained attached to the stalk longer, making the grain considerably easier to harvest efficiently. Over many generations of careful selection, these modifications produced domesticated rice varieties that differed substantially from their wild ancestors in both appearance and productivity. The spread of rice cultivation eventually supported dramatically larger population densities across much of Asia, since a single field could reliably feed considerably more people than most alternative crops. Rice remains one of the most important staple foods worldwide, feeding billions of people every single day.",
+          "blanks": [
+            {
+              "word": "farmers",
+              "visible": "far",
+              "hidden": "mers"
+            },
+            {
+              "word": "remained",
+              "visible": "rema",
+              "hidden": "ined"
+            },
+            {
+              "word": "harvest",
+              "visible": "har",
+              "hidden": "vest"
+            },
+            {
+              "word": "careful",
+              "visible": "car",
+              "hidden": "eful"
+            },
+            {
+              "word": "domesticated",
+              "visible": "domes",
+              "hidden": "ticated"
+            },
+            {
+              "word": "ancestors",
+              "visible": "ance",
+              "hidden": "stors"
+            },
+            {
+              "word": "productivity",
+              "visible": "produ",
+              "hidden": "ctivity"
+            },
+            {
+              "word": "densities",
+              "visible": "dens",
+              "hidden": "ities"
+            },
+            {
+              "word": "important",
+              "visible": "impo",
+              "hidden": "rtant"
+            },
+            {
+              "word": "billions",
+              "visible": "bill",
+              "hidden": "ions"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Employee Training Day Agenda",
+          "subtitle": "",
+          "text": "8:30 a.m. — Registration and Breakfast\n9:00 a.m. — Company Overview\n10:00 a.m. — Safety Procedures Training\n11:30 a.m. — Break\n11:45 a.m. — Department-Specific Training\n1:00 p.m. — Lunch\n2:00 p.m. — Q&A with Management",
+          "questions": [
+            {
+              "question": "What takes place right before the break?",
+              "options": [
+                "Company Overview",
+                "Safety Procedures Training",
+                "Department-Specific Training",
+                "Lunch"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is scheduled for 2:00 p.m.?",
+              "options": [
+                "Lunch",
+                "Department-Specific Training",
+                "Q&A with Management",
+                "Registration"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 89
+        },
+        {
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Local Theater Showtimes - Friday",
+          "subtitle": "",
+          "text": "Screen 1: \"Ocean's Horizon\" — 4:00, 7:00, 9:45 p.m.\nScreen 2: \"The Last Orchard\" — 5:15, 8:00 p.m.\nScreen 3: \"Midnight Runner\" — 6:30, 9:15 p.m.",
+          "questions": [
+            {
+              "question": "How many showtimes does \"Ocean's Horizon\" have?",
+              "options": [
+                "One",
+                "Two",
+                "Three",
+                "Four"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "Which movie has a showtime at 5:15?",
+              "options": [
+                "Ocean's Horizon",
+                "The Last Orchard",
+                "Midnight Runner",
+                "None of them"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 90
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 375,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/375.mp3",
+          "transcript": "Do you know if this store price matches online prices?",
+          "context": "A customer asks a store manager.",
+          "options": [
+            "Yes, just show me the listing on your phone.",
+            "Online prices change frequently.",
+            "The store has a loyalty program.",
+            "We restock items every week."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "47-375"
+        },
+        {
+          "id": 376,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/376.mp3",
+          "transcript": "Could you help me understand this line on my paycheck?",
+          "context": "An employee asks someone in human resources.",
+          "options": [
+            "Of course, let's go over it together.",
+            "Paychecks are issued twice a month.",
+            "You can view past paychecks online.",
+            "Tax rates vary depending on income."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "47-376"
+        },
+        {
+          "id": 377,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/377.mp3",
+          "transcript": "I think the AC in my room isn't working properly.",
+          "context": "A hotel guest calls the front desk.",
+          "options": [
+            "I'm sorry, I'll send maintenance up right away.",
+            "The hotel was renovated last year.",
+            "All rooms come with air conditioning.",
+            "Housekeeping visits once a day."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "48-377"
+        },
+        {
+          "id": 378,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/378.mp3",
+          "transcript": "Could you tell me if this course counts toward my major?",
+          "context": "A student asks an academic advisor.",
+          "options": [
+            "Let me check your degree requirements.",
+            "The course meets twice a week.",
+            "Registration opens next Monday.",
+            "This class is taught by a new professor."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "48-378"
+        },
+        {
+          "id": 379,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/379.mp3",
+          "transcript": "Do you know if the farmers market accepts credit cards?",
+          "context": "A shopper asks a market vendor.",
+          "options": [
+            "Most vendors do, though a few are cash only.",
+            "The market runs every Saturday morning.",
+            "We sell fresh vegetables and fruit.",
+            "The market has over thirty vendors."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "48-379"
+        },
+        {
+          "id": 380,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/380.mp3",
+          "transcript": "I'd like to request a wheelchair for my arrival.",
+          "context": "A traveler calls an airline's customer service.",
+          "options": [
+            "Of course, I'll note that on your reservation.",
+            "Wheelchairs are available at every gate.",
+            "Boarding begins thirty minutes before departure.",
+            "You should arrive two hours early."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "48-380"
+        },
+        {
+          "id": 381,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/381.mp3",
+          "transcript": "Could you double check if my reservation went through?",
+          "context": "A customer calls a restaurant.",
+          "options": [
+            "Sure, let me pull up your reservation now.",
+            "We're open until ten tonight.",
+            "Reservations can be made online too.",
+            "Our busiest night is usually Saturday."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "48-381"
+        },
+        {
+          "id": 382,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/382.mp3",
+          "transcript": "I noticed the crosswalk signal isn't working at this corner.",
+          "context": "A pedestrian tells a traffic officer.",
+          "options": [
+            "Thanks for reporting that, I'll notify the city.",
+            "This intersection gets a lot of traffic.",
+            "The signal was installed a few years ago.",
+            "There's another crosswalk down the block."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "48-382"
+        },
+        {
+          "id": 383,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/383.mp3",
+          "transcript": "Would you be able to alter this dress before the weekend?",
+          "context": "A customer asks a tailor.",
+          "options": [
+            "I can have it ready by Friday.",
+            "This dress is a popular style.",
+            "Alterations depend on the fabric.",
+            "We also offer dry cleaning services."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "48-383"
+        },
+        {
+          "id": 384,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/384.mp3",
+          "transcript": "Do you know if the library has a copy of this journal?",
+          "context": "A researcher asks a librarian.",
+          "options": [
+            "Let me search our database to check.",
+            "The library has an extensive periodicals section.",
+            "Journals are usually kept on the third floor.",
+            "You can request items through interlibrary loan."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "48-384"
+        }
+      ],
+      "conv": [
+        {
+          "id": 86,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/86.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Have you decided which club to volunteer for this semester?"
+            },
+            {
+              "speaker": "female",
+              "text": "I'm torn between the environmental club and the tutoring program."
+            },
+            {
+              "speaker": "male",
+              "text": "What draws you to each one?"
+            },
+            {
+              "speaker": "female",
+              "text": "The environmental club matches my major, but tutoring feels more rewarding personally."
+            },
+            {
+              "speaker": "male",
+              "text": "Maybe you could try tutoring first and switch later if it doesn't work out."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman deciding between?",
+              "options": [
+                "Two different majors",
+                "The environmental club and the tutoring program",
+                "Two different internships",
+                "Two study abroad programs"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Choosing based on convenience",
+                "Trying tutoring first and switching later",
+                "Doing both at the same time",
+                "Asking a professor to decide"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 87,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/87.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I finally submitted my scholarship application this morning."
+            },
+            {
+              "speaker": "male",
+              "text": "That's great, how long did the whole process take?"
+            },
+            {
+              "speaker": "female",
+              "text": "Longer than I expected, mostly because of the essay questions."
+            },
+            {
+              "speaker": "male",
+              "text": "When will you hear back?"
+            },
+            {
+              "speaker": "female",
+              "text": "They said results should come out sometime next month."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What did the woman submit?",
+              "options": [
+                "A job application",
+                "A scholarship application",
+                "A housing application",
+                "A club membership form"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What part took the most time?",
+              "options": [
+                "Gathering recommendation letters",
+                "The essay questions",
+                "Filling out personal information",
+                "Uploading transcripts"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 88,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/88.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Do you know if the campus health center offers counseling services?"
+            },
+            {
+              "speaker": "female",
+              "text": "Yes, they do, and I think the first few sessions are free for students."
+            },
+            {
+              "speaker": "male",
+              "text": "That's good to know, I've been thinking about scheduling one."
+            },
+            {
+              "speaker": "female",
+              "text": "You can usually book online through the student portal."
+            },
+            {
+              "speaker": "male",
+              "text": "Thanks, I'll look into that this afternoon."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man interested in?",
+              "options": [
+                "Physical therapy",
+                "Counseling services",
+                "Nutrition advice",
+                "Tutoring services"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How can appointments be booked?",
+              "options": [
+                "By walking in only",
+                "Through the student portal online",
+                "By calling a hotline",
+                "Through a professor's referral"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 86,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/86.mp3",
+          "speaker": "male",
+          "transcript": "Attention shoppers: beginning next week, our store will introduce a new self-checkout area near the front entrance to help reduce wait times during busy hours. Staff will be available nearby to assist customers unfamiliar with the new system. We hope this addition improves your overall shopping experience.",
+          "questions": [
+            {
+              "question": "What new addition is being announced?",
+              "options": [
+                "A new parking lot",
+                "A self-checkout area",
+                "An expanded produce section",
+                "A new customer loyalty program"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the purpose of this addition?",
+              "options": [
+                "To increase product variety",
+                "To reduce wait times during busy hours",
+                "To offer more discounts",
+                "To expand store hours"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 87,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/87.mp3",
+          "speaker": "female",
+          "transcript": "Attention residents: the building's laundry room will be closed tomorrow morning for equipment servicing. Technicians expect to complete the work by noon, after which normal laundry room hours will resume. We apologize for any inconvenience this brief closure may cause.",
+          "questions": [
+            {
+              "question": "Why is the laundry room closing?",
+              "options": [
+                "A water shutoff",
+                "Equipment servicing",
+                "A renovation project",
+                "A safety inspection"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When is the work expected to be finished?",
+              "options": [
+                "By noon",
+                "By evening",
+                "The next day",
+                "By the end of the week"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 88,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/88.mp3",
+          "speaker": "male",
+          "transcript": "Attention passengers: due to a temporary staffing shortage, check-in for international flights will be limited to two counters this morning instead of the usual four. We recommend allowing extra time to check in for your flight. We apologize for any inconvenience this may cause.",
+          "questions": [
+            {
+              "question": "Why are fewer check-in counters open?",
+              "options": [
+                "A computer system failure",
+                "A temporary staffing shortage",
+                "Low passenger volume",
+                "A change in airline policy"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is recommended to passengers?",
+              "options": [
+                "Checking in online only",
+                "Allowing extra time to check in",
+                "Arriving exactly at departure time",
+                "Skipping check-in entirely"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 69,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/69.mp3",
+          "speaker": "female",
+          "subject": "Meteorology",
+          "transcript": "Today's lecture focuses on the El Niño Southern Oscillation, commonly referred to as ENSO, a naturally occurring climate pattern involving periodic fluctuations in ocean surface temperatures across the central and eastern tropical Pacific Ocean, along with corresponding shifts in atmospheric circulation patterns above that same region. ENSO cycles between three distinct phases: El Niño, La Niña, and a neutral phase in between. During an El Niño event, surface waters in the central and eastern Pacific become significantly warmer than the long-term historical average, which happens because the trade winds that normally push warm surface water westward across the Pacific weaken considerably, allowing that accumulated warm water to shift back eastward instead. This shift in ocean temperature has far-reaching effects on global weather patterns well beyond the Pacific region itself, since it alters typical patterns of atmospheric convection and jet stream position in ways that can influence weather across much of the globe. Regions that typically experience El Niño-related effects include parts of South America, which often experience significantly increased rainfall and heightened flooding risk during El Niño years, while parts of Southeast Asia and Australia frequently experience the opposite pattern, with drier conditions and an elevated risk of drought and wildfire activity. La Niña represents essentially the opposite phase, characterized by cooler than average surface waters in the central and eastern Pacific, generally intensifying the normal trade wind pattern rather than weakening it, and tending to produce roughly opposite regional weather effects compared to El Niño conditions in many of the same affected areas. These ENSO cycles typically occur every two to seven years, though the specific timing remains difficult to predict with high precision very far in advance, and each individual event's specific strength and precise regional impacts can vary considerably between different occurrences. Because ENSO's influence extends so broadly across the globe, meteorologists and climate scientists closely monitor Pacific Ocean temperature patterns as a critical part of longer-range seasonal weather forecasting efforts worldwide.",
+          "questions": [
+            {
+              "question": "What is ENSO, according to the talk?",
+              "options": [
+                "A type of hurricane",
+                "A recurring climate pattern involving Pacific Ocean temperature fluctuations",
+                "A measurement of global sea level",
+                "A seasonal wind pattern unique to South America"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens to trade winds during an El Niño event?",
+              "options": [
+                "They strengthen significantly",
+                "They weaken, allowing warm water to shift eastward",
+                "They reverse direction entirely and permanently",
+                "They have no connection to El Niño"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does La Niña generally differ from El Niño, according to the professor?",
+              "options": [
+                "It involves warmer Pacific waters and weaker trade winds",
+                "It involves cooler Pacific waters and generally intensified trade winds",
+                "It has identical effects to El Niño",
+                "It only affects the Atlantic Ocean"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why do meteorologists monitor ENSO closely, according to the talk?",
+              "options": [
+                "It has no real impact on global weather",
+                "Its influence extends broadly across the globe, aiding seasonal forecasting",
+                "It only matters for ocean shipping routes",
+                "It predicts earthquake activity"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 70,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/70.mp3",
+          "speaker": "male",
+          "subject": "Education",
+          "transcript": "Today we'll discuss the concept of the growth mindset, a psychological framework developed largely through the research of psychologist Carol Dweck, which has had considerable influence on educational theory and classroom teaching practices over the past few decades. Dweck's research distinguishes between two broad, contrasting mindsets people can hold regarding their own abilities and intelligence. Individuals with what she terms a fixed mindset tend to believe that intelligence and talent are largely static, inborn traits, essentially fixed at birth and not particularly changeable through effort or practice over time. In contrast, individuals with a growth mindset believe that abilities can be meaningfully developed and improved over time through dedicated effort, effective strategies, and constructive input and guidance from others. Dweck's research found that these differing underlying beliefs have measurable, significant consequences for how students actually respond to academic challenges and setbacks. Students holding a predominantly fixed mindset tend to avoid challenging tasks specifically because failure feels threatening to their fundamental sense of innate ability, and they're more likely to give up relatively quickly when they encounter genuine academic difficulty, since struggling seems to confirm an underlying lack of natural talent in their own minds. Students with a growth mindset, however, tend to view challenges and even outright failure as valuable opportunities for meaningful learning and improvement, generally persisting longer when work becomes genuinely difficult. Based on these findings, many schools have implemented various growth mindset interventions, often specifically focusing on changing how teachers and parents deliver praise to children. Dweck's research suggested that praising a child's underlying intelligence directly, telling them they're simply smart, can actually inadvertently reinforce a fixed mindset over time, whereas praising a child's effort, strategy, and process instead tends to encourage a growth mindset more effectively. It's worth noting that more recent research attempting to replicate some of the original growth mindset findings has produced genuinely mixed results, with some studies finding smaller overall effects than originally reported, leading to an ongoing, active debate within the field about exactly how significant these particular mindset interventions truly are in real classroom settings.",
+          "questions": [
+            {
+              "question": "What is the main topic of the talk?",
+              "options": [
+                "Standardized testing methods",
+                "The growth mindset framework and its effects on learning",
+                "The history of public education",
+                "How intelligence tests are scored"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does a fixed mindset differ from a growth mindset?",
+              "options": [
+                "A fixed mindset believes abilities can be developed through effort",
+                "A fixed mindset believes intelligence is static, while growth mindset believes it can be developed",
+                "There is no meaningful difference between them",
+                "A growth mindset only applies to young children"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did Dweck's research suggest about praising intelligence directly?",
+              "options": [
+                "It always improves student performance",
+                "It may inadvertently reinforce a fixed mindset",
+                "It has no effect on students at all",
+                "It is the most effective form of praise"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor say about recent research on growth mindset?",
+              "options": [
+                "It has fully confirmed all of Dweck's original findings",
+                "It has produced mixed results, leading to ongoing debate",
+                "It has completely disproven the concept",
+                "No further research has been conducted"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 385,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/385.mp3",
+          "transcript": "I think there's been a mix-up with my hotel room type.",
+          "context": "A guest speaks to a hotel manager.",
+          "options": [
+            "I apologize, let me sort that out for you.",
+            "The hotel offers several room categories.",
+            "Rooms are cleaned daily by housekeeping.",
+            "Checkout is at eleven tomorrow."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "49-385"
+        },
+        {
+          "id": 386,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/386.mp3",
+          "transcript": "Could you tell me if there's a fee for canceling my membership?",
+          "context": "A customer asks a gym employee.",
+          "options": [
+            "There's no fee as long as you give thirty days' notice.",
+            "Memberships include access to all locations.",
+            "The gym offers monthly and annual plans.",
+            "New members receive a free assessment."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "49-386"
+        },
+        {
+          "id": 387,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/387.mp3",
+          "transcript": "Do you know if this medication has any side effects?",
+          "context": "A patient asks a pharmacist.",
+          "options": [
+            "Some people experience mild drowsiness.",
+            "This medication is taken once daily.",
+            "It should be stored at room temperature.",
+            "The prescription can be refilled twice."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "49-387"
+        },
+        {
+          "id": 388,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/388.mp3",
+          "transcript": "I'd like to move my furniture delivery to a later date.",
+          "context": "A customer calls a furniture store.",
+          "options": [
+            "Sure, what date would work better for you?",
+            "Delivery usually takes place within a week.",
+            "We also offer assembly services.",
+            "The furniture is currently in stock."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "49-388"
+        },
+        {
+          "id": 389,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/389.mp3",
+          "transcript": "Could you check if this size runs true or small?",
+          "context": "A customer asks a clothing store employee.",
+          "options": [
+            "This style tends to run a bit small.",
+            "We have several sizes in stock.",
+            "This item is part of our new collection.",
+            "The fabric is a cotton blend."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "49-389"
+        },
+        {
+          "id": 390,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/390.mp3",
+          "transcript": "I noticed my flight got moved to a different gate.",
+          "context": "A traveler speaks to an airport staff member.",
+          "options": [
+            "Yes, it's now departing from gate twenty-two.",
+            "The airport has over thirty gates.",
+            "Boarding usually begins on time.",
+            "You can check the monitors for updates."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "49-390"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 71,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/71.mp3",
+          "speaker": "female",
+          "subject": "Engineering",
+          "transcript": "Today's lecture introduces the fundamental concept of the fatigue limit in materials science and mechanical engineering, an important consideration in designing structures and components that must withstand repeated, cyclical loading over an extended period of time. Material fatigue refers to the gradual weakening of a material that occurs when it's subjected to repeated cycles of stress, even when each individual instance of stress remains well below the material's ultimate tensile strength, the maximum stress the material could theoretically withstand in a single, one-time application of force. This gradual weakening process typically occurs because repeated stress cycles cause microscopic cracks to form, usually beginning at small existing surface imperfections or internal material flaws. With each additional stress cycle the material experiences, these microscopic cracks can potentially grow larger, incrementally, until eventually the material's remaining effective cross-sectional area becomes too small to support the applied load any longer, resulting in sudden, often unexpected structural failure, frequently occurring at stress levels considerably lower than what the material could have safely withstood under a single static load application. Certain materials, notably many steel alloys, exhibit a specific property engineers call a fatigue limit, essentially a stress threshold below which the material can theoretically endure a functionally infinite number of stress cycles without ever failing due to fatigue. However, this reassuring property doesn't hold true for all materials; aluminum alloys, for example, generally lack a well-defined true fatigue limit, meaning they will eventually fail from fatigue given a sufficient number of loading cycles, regardless of how genuinely low the applied stress level happens to be in each individual cycle. This particular material characteristic carries considerable practical significance for aircraft design specifically, since aircraft components are constructed predominantly from aluminum alloys and are subjected to a very large number of repeated stress cycles throughout their operational service life, primarily due to the cycle of pressurization and depressurization that occurs during each individual flight. As a direct result, aircraft components require careful, rigorous fatigue analysis during the design process and regular scheduled inspection throughout their entire operational lifespan, rather than engineers simply relying on a fixed safe stress threshold as they reasonably might when instead designing certain steel structures.",
+          "questions": [
+            {
+              "question": "What is material fatigue, as described in the talk?",
+              "options": [
+                "Immediate failure under a single heavy load",
+                "Gradual weakening from repeated cycles of stress below the material's maximum strength",
+                "A chemical reaction that corrodes metal",
+                "The natural aging process of all materials over time"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What causes fatigue failure to occur, according to the professor?",
+              "options": [
+                "Sudden temperature changes",
+                "Microscopic cracks growing larger with repeated stress cycles",
+                "A single overwhelming force applied once",
+                "Exposure to sunlight"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How do aluminum alloys differ from many steel alloys regarding fatigue?",
+              "options": [
+                "Aluminum alloys have a true fatigue limit while steel does not",
+                "Aluminum alloys generally lack a well-defined true fatigue limit",
+                "There is no meaningful difference between them",
+                "Aluminum alloys never experience fatigue failure"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is fatigue analysis particularly important in aircraft design?",
+              "options": [
+                "Aircraft are made entirely of materials immune to fatigue",
+                "Aircraft components experience many stress cycles from pressurization during flights",
+                "Aircraft never experience repeated stress cycles",
+                "Fatigue only matters for ground vehicles"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 72,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/72.mp3",
+          "speaker": "male",
+          "subject": "Astronomy",
+          "transcript": "Today we'll discuss the search for exoplanets within a star's habitable zone, sometimes informally called the Goldilocks zone, referring to the range of orbital distances from a star where conditions might be neither too hot nor too cold to allow liquid water to exist stably on a planet's surface, a condition widely considered essential for life as we currently understand it. The boundaries of a habitable zone depend heavily on the host star's temperature and luminosity, meaning the zone's exact location and width vary considerably from one star system to another. Stars that are hotter and more luminous than our sun have habitable zones located much farther out, while cooler, dimmer stars, including the very common red dwarf stars found throughout the galaxy, have correspondingly much closer, narrower habitable zones. This distinction turns out to matter considerably for planets orbiting red dwarf stars specifically, since a planet located within such a narrow, close-in habitable zone would likely experience powerful tidal forces from its nearby star, potentially causing the planet to become tidally locked, meaning the same side of the planet would permanently face its star, much like how the same side of our moon always faces Earth. A tidally locked planet would experience an extreme, permanent temperature difference between its perpetually sunlit side and its perpetually dark side, potentially posing serious additional challenges for the presence and stability of surface liquid water, even if the planet's overall orbital distance technically falls within the calculated habitable zone boundaries. It's also important to note that being located within a habitable zone is merely a necessary starting condition, not by itself a definitive guarantee of actual habitability. Other significant factors, including a planet's atmospheric composition and thickness, its overall geological activity, and the specific presence or absence of a protective planetary magnetic field, all play a critical additional role in determining whether liquid water and, by extension, life as we understand it, could actually be sustained successfully on a given planet's surface over long periods of time.",
+          "questions": [
+            {
+              "question": "What is the habitable zone, as defined in the talk?",
+              "options": [
+                "The region of a galaxy where stars can form",
+                "The range of distances from a star where liquid water could exist on a planet's surface",
+                "The area of a planet suitable for agriculture",
+                "The distance a spacecraft can travel from Earth"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does a star's temperature affect its habitable zone?",
+              "options": [
+                "Hotter stars have closer, narrower habitable zones",
+                "Hotter, more luminous stars have habitable zones located farther out",
+                "Star temperature has no effect on the habitable zone",
+                "Only cooler stars have habitable zones"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What challenge do planets around red dwarf stars potentially face?",
+              "options": [
+                "Extremely short orbital periods only",
+                "Potential tidal locking, causing extreme temperature differences",
+                "A complete lack of any habitable zone",
+                "Excessive distance from their star"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor say about being located within a habitable zone?",
+              "options": [
+                "It guarantees a planet has life",
+                "It is a necessary condition but not a guarantee of actual habitability",
+                "It is irrelevant to a planet's potential habitability",
+                "It only applies to planets like Earth"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 391,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/391.mp3",
+          "transcript": "Would it be possible to get an itemized receipt?",
+          "context": "A customer asks a cashier.",
+          "options": [
+            "Sure, here's a detailed copy for you.",
+            "Receipts are kept on file for a year.",
+            "We accept returns within thirty days.",
+            "The total includes tax."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "49-391"
+        },
+        {
+          "id": 392,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/392.mp3",
+          "transcript": "Do you know if this apartment complex allows pets?",
+          "context": "A prospective tenant asks a leasing agent.",
+          "options": [
+            "Yes, though there is a small pet deposit.",
+            "The complex has a pool and gym.",
+            "Leases typically run for one year.",
+            "Units are available starting next month."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "49-392"
+        },
+        {
+          "id": 393,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/393.mp3",
+          "transcript": "I think my order confirmation email never arrived.",
+          "context": "A customer contacts online store support.",
+          "options": [
+            "Let me resend that confirmation to you now.",
+            "Orders are usually processed within a day.",
+            "You can also check your order status online.",
+            "Confirmation emails include a tracking number."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "50-393"
+        },
+        {
+          "id": 394,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/394.mp3",
+          "transcript": "Could you tell me what time the last ferry departs?",
+          "context": "A traveler asks a ferry terminal worker.",
+          "options": [
+            "The last one leaves at nine tonight.",
+            "Ferries run every hour during the day.",
+            "Tickets can be bought at the counter.",
+            "The ferry ride takes about thirty minutes."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "50-394"
+        },
+        {
+          "id": 395,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/395.mp3",
+          "transcript": "Do you offer any student discounts on software?",
+          "context": "A student asks a computer store employee.",
+          "options": [
+            "Yes, just show your student ID at checkout.",
+            "This software requires a yearly subscription.",
+            "We also sell laptops and accessories.",
+            "The software was updated last month."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "50-395"
+        },
+        {
+          "id": 396,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/396.mp3",
+          "transcript": "I'd like to request a different roommate for next semester.",
+          "context": "A student speaks to a housing office employee.",
+          "options": [
+            "I understand, let's discuss your options.",
+            "Room assignments are made each semester.",
+            "Housing applications open in the spring.",
+            "Most dorms house two students per room."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "50-396"
+        }
+      ],
+      "conv": [
+        {
+          "id": 89,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/89.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Did you switch to the new meal plan this semester?"
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, I upgraded to the unlimited plan."
+            },
+            {
+              "speaker": "female",
+              "text": "Has it been worth it so far?"
+            },
+            {
+              "speaker": "male",
+              "text": "Definitely, I eat at the dining hall almost every day now."
+            },
+            {
+              "speaker": "female",
+              "text": "I might switch too then, mine runs out too quickly."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What did the man do this semester?",
+              "options": [
+                "Canceled his meal plan",
+                "Upgraded to the unlimited meal plan",
+                "Started cooking his own meals",
+                "Moved off campus"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is the woman considering switching?",
+              "options": [
+                "Her current plan is too expensive",
+                "Her current plan runs out too quickly",
+                "She dislikes the dining hall food",
+                "She wants more variety"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 90,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/90.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Do you have any tips for managing time during finals week?"
+            },
+            {
+              "speaker": "female",
+              "text": "I usually make a detailed study schedule a week in advance."
+            },
+            {
+              "speaker": "male",
+              "text": "That sounds helpful, do you stick to it strictly?"
+            },
+            {
+              "speaker": "female",
+              "text": "Mostly, though I always build in some flexibility for unexpected things."
+            },
+            {
+              "speaker": "male",
+              "text": "I think I'll try something similar this year."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What does the woman do to prepare for finals?",
+              "options": [
+                "She studies only the night before",
+                "She makes a detailed study schedule in advance",
+                "She forms a large study group",
+                "She skips classes to study"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does she include in her schedule?",
+              "options": [
+                "No breaks at all",
+                "Some flexibility for unexpected events",
+                "Extra classes",
+                "Only group study sessions"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 89,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/89.mp3",
+          "speaker": "female",
+          "transcript": "Attention students: the campus bookstore will be extending its hours this week to accommodate the start of the new semester. The store will now remain open until nine in the evening, two hours later than usual, through this Friday. Regular hours will resume the following Monday.",
+          "questions": [
+            {
+              "question": "Why are bookstore hours being extended?",
+              "options": [
+                "A special sale event",
+                "The start of the new semester",
+                "A change in ownership",
+                "Increased holiday shopping"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Until when will the extended hours last?",
+              "options": [
+                "This Wednesday",
+                "This Friday",
+                "The end of the month",
+                "The entire semester"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 90,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/90.mp3",
+          "speaker": "male",
+          "transcript": "Attention shoppers: please be aware that the north parking lot will be closed today for resurfacing work. Vehicles should use the south lot instead, which has additional overflow space available. We expect the north lot to reopen tomorrow morning, weather permitting.",
+          "questions": [
+            {
+              "question": "Why is the north parking lot closed?",
+              "options": [
+                "A private event",
+                "Resurfacing work",
+                "A security concern",
+                "Flooding from recent rain"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are shoppers advised to do?",
+              "options": [
+                "Park on the street instead",
+                "Use the south lot",
+                "Come back another day",
+                "Use public transportation"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "Is the swimming pool heated during winter?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the swimming pool",
+          "was heated during winter"
+        ],
+        "distractorChunks": [
+          "is heated during winter"
+        ],
+        "responseSuffix": ".",
+        "id": 171
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Did the accountant reconcile last quarter's numbers?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "confirmed",
+          "whether",
+          "the accountant",
+          "had reconciled last quarter's numbers"
+        ],
+        "distractorChunks": [
+          "has reconciled last quarter's numbers"
+        ],
+        "responseSuffix": ".",
+        "id": 172
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Will the university extend the application deadline?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "heard",
+          "that",
+          "the university",
+          "would extend the application deadline"
+        ],
+        "distractorChunks": [
+          "will extend the application deadline"
+        ],
+        "responseSuffix": ".",
+        "id": 173
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Can the new hire start training next Monday?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the new hire",
+          "could start training next Monday"
+        ],
+        "distractorChunks": [
+          "can start training next Monday"
+        ],
+        "responseSuffix": ".",
+        "id": 174
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Has the shipment been inspected by customs officials?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "whether",
+          "the shipment",
+          "had been inspected by customs officials"
+        ],
+        "distractorChunks": [
+          "has been inspected by customs officials"
+        ],
+        "responseSuffix": ".",
+        "id": 175
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Does the hotel provide airport transportation?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the hotel",
+          "provided airport transportation"
+        ],
+        "distractorChunks": [
+          "provides airport transportation"
+        ],
+        "responseSuffix": ".",
+        "id": 176
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Is the bridge closed for repairs this week?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "checked",
+          "whether",
+          "the bridge",
+          "was closed for repairs this week"
+        ],
+        "distractorChunks": [
+          "is closed for repairs this week"
+        ],
+        "responseSuffix": ".",
+        "id": 177
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Will the committee reconsider the budget cuts?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the committee",
+          "would reconsider the budget cuts"
+        ],
+        "distractorChunks": [
+          "will reconsider the budget cuts"
+        ],
+        "responseSuffix": ".",
+        "id": 178
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Where did the technician install the new router?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "forgot",
+          "where",
+          "the technician",
+          "had installed the new router"
+        ],
+        "distractorChunks": [
+          "has installed the new router"
+        ],
+        "responseSuffix": ".",
+        "id": 179
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Why was the shipment delayed at the port?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "explained",
+          "why",
+          "the shipment",
+          "had been delayed at the port"
+        ],
+        "distractorChunks": [
+          "has been delayed at the port"
+        ],
+        "responseSuffix": ".",
+        "id": 180
+      }
+    ],
+    "email": {
+      "scenario": "You noticed that the heating in your dorm room has not been working for the past two days, and the temperature has dropped significantly at night. You want to report the issue to the housing office and ask for a quick repair.",
+      "recipient": "Housing Office",
+      "subject": "Heating not working in dorm room",
+      "tasks": [
+        {
+          "description": "Explain that the heating has not been working for two days.",
+          "keywords": [
+            "heating",
+            "not working",
+            "broken",
+            "two days"
+          ]
+        },
+        {
+          "description": "Mention that the room gets very cold at night.",
+          "keywords": [
+            "cold",
+            "night",
+            "temperature",
+            "freezing"
+          ]
+        },
+        {
+          "description": "Ask for a quick repair.",
+          "keywords": [
+            "repair",
+            "fix",
+            "as soon as possible",
+            "technician"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Housing Office,\n\nI am writing to report that the heating in my dorm room, Room 315 in Maple Hall, has not been working for the past two days.\n\nThe room has become quite cold at night, which is making it difficult to sleep or study comfortably.\n\nCould you please send a technician to repair the heating as soon as possible? I would appreciate a quick resolution given how cold it has gotten. Thank you for your help.\n\nSincerely,\n[Your Name]",
+      "id": 18
+    },
+    "disc": {
+      "subject": "computer science",
+      "professor": "Dr. Kim",
+      "professorGender": "male",
+      "prompt": "We've been discussing whether artificial intelligence tools should be allowed for use in student coursework. Some argue that banning these tools is unrealistic and that students should instead be taught to use them responsibly, while others argue that unrestricted use undermines genuine learning and skill development. Should universities restrict the use of AI tools in coursework? Why or why not?",
+      "classmates": [
+        {
+          "name": "Elena",
+          "gender": "female",
+          "opinion": "I think universities should teach responsible use rather than ban these tools outright. Students are going to encounter AI tools throughout their careers regardless, so learning how to use them effectively and ethically as a starting point for further work seems far more useful than pretending they don't exist."
+        },
+        {
+          "name": "Jamal",
+          "gender": "male",
+          "opinion": "I lean toward stricter restrictions, at least for foundational courses. If a student uses an AI tool to write their first programming assignments, they never actually build the fundamental problem-solving skills those assignments are designed to teach, which creates real gaps that show up later in more advanced coursework."
+        }
+      ],
+      "exampleResponse": "This is a genuinely difficult balance to strike, since both classmates raise valid points. I find Jamal's concern about foundational skills particularly persuasive, because early coursework is specifically designed to build problem-solving abilities that later, more advanced work depends on, and relying on AI tools too early could undermine that foundation. At the same time, I agree with Elena that these tools aren't going away, so completely ignoring them doesn't prepare students well either. A reasonable approach might be restricting AI tool use in introductory courses where fundamental skills are being built, while gradually introducing responsible, transparent use in more advanced courses where students already have a solid foundation to build on.",
+      "id": 18
+    }
+  },
+  "speaking": {
+    "lr": {
+      "location": "Community Garden",
+      "icon": "🌱",
+      "photoSlug": "community-garden",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/95/Community_garden.jpg",
+      "speaker": "female",
+      "introText": "You are learning how to welcome new members to a community garden. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "text": "Welcome to the community garden.",
+          "length": "short",
+          "recordSeconds": 8,
+          "id": 1
+        },
+        {
+          "text": "Each member is assigned their own small plot.",
+          "length": "medium",
+          "recordSeconds": 8,
+          "id": 2
+        },
+        {
+          "text": "Tools are stored in the shed near the entrance.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 3
+        },
+        {
+          "text": "Watering is allowed every morning and evening.",
+          "length": "medium",
+          "recordSeconds": 8,
+          "id": 4
+        },
+        {
+          "text": "Please label your plants so others know what you're growing.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 5
+        },
+        {
+          "text": "A composting area is available at the back of the garden.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 6
+        },
+        {
+          "text": "We hold a volunteer cleanup day on the first Saturday of every month.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 7
+        }
+      ],
+      "id": 18
+    },
+    "interview": {
+      "topic": "Healthy Habits",
+      "icon": "🥗",
+      "photoSlug": "healthy-habits",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/2/29/Healthy_food_bowl.jpg",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about healthy lifestyle habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "connector": "",
+          "text": "Thanks so much for joining me. To start, what does a typical healthy day look like for you?",
+          "recordSeconds": 45,
+          "id": 1
+        },
+        {
+          "connector": "That's helpful.",
+          "text": "That's helpful. What do you find to be the biggest challenge in maintaining healthy habits?",
+          "recordSeconds": 45,
+          "id": 2
+        },
+        {
+          "connector": "I understand.",
+          "text": "I understand. Do you think social media influences how people think about health and fitness? In what way?",
+          "recordSeconds": 45,
+          "id": 3
+        },
+        {
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Should employers encourage healthy habits among employees, for example with wellness programs? Why or why not?",
+          "recordSeconds": 45,
+          "id": 4
+        }
+      ],
+      "id": 18
+    }
+  }
+}

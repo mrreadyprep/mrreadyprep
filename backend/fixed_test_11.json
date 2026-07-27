@@ -1,0 +1,1794 @@
+{
+  "id": 11,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 31,
+          "topic": "Colonial Trade and the Spice Islands",
+          "category": "History",
+          "paragraph": "During the sixteenth and seventeenth centuries, European powers competed fiercely for control over a small cluster of islands in present-day Indonesia known for producing valuable spices found nowhere else in the world. Nutmeg and cloves, both native exclusively to these islands, commanded extraordinarily high prices in European markets, since demand vastly exceeded the limited natural supply available. Trading companies established fortified outposts throughout the region, sometimes resorting to brutal tactics to maintain a monopoly over the lucrative spice trade. This intense competition eventually reshaped global commerce, encouraging the development of new shipping routes, financial institutions, and colonial administrative systems that would influence world trade for centuries. The spice trade's enormous profitability helped finance the rise of several major European trading empires.",
+          "blanks": [
+            {
+              "word": "exclusively",
+              "visible": "exclu",
+              "hidden": "sively"
+            },
+            {
+              "word": "extraordinarily",
+              "visible": "extra",
+              "hidden": "ordinarily"
+            },
+            {
+              "word": "exceeded",
+              "visible": "exce",
+              "hidden": "eded"
+            },
+            {
+              "word": "fortified",
+              "visible": "fort",
+              "hidden": "ified"
+            },
+            {
+              "word": "monopoly",
+              "visible": "mono",
+              "hidden": "poly"
+            },
+            {
+              "word": "lucrative",
+              "visible": "lucr",
+              "hidden": "ative"
+            },
+            {
+              "word": "reshaped",
+              "visible": "resh",
+              "hidden": "aped"
+            },
+            {
+              "word": "institutions",
+              "visible": "insti",
+              "hidden": "tutions"
+            },
+            {
+              "word": "administrative",
+              "visible": "admin",
+              "hidden": "istrative"
+            },
+            {
+              "word": "profitability",
+              "visible": "profi",
+              "hidden": "tability"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 51,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Splitting Grocery Duties",
+          "subtitle": "",
+          "text": "Alex (6:10 p.m.)\nI think we're almost out of basically everything in the kitchen.\n\nJordan (6:12 p.m.)\nSame here. Want to split a big grocery run this weekend?\n\nAlex (6:14 p.m.)\nYeah, let's make a shared list so we don't forget anything.\n\nJordan (6:15 p.m.)\nI'll start one in our notes app right now.\n\nAlex (6:16 p.m.)\nPerfect, I'll add to it tonight after I check the fridge.",
+          "questions": [
+            {
+              "question": "What are Alex and Jordan planning to do?",
+              "options": [
+                "Eat out this weekend",
+                "Do a shared grocery run",
+                "Cancel their grocery delivery",
+                "Move to a new apartment"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Jordan offer to do?",
+              "options": [
+                "Pay for all the groceries",
+                "Start a shared shopping list",
+                "Cook dinner tonight",
+                "Drive them to the store"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will Alex do tonight?",
+              "options": [
+                "Go to the store alone",
+                "Check the fridge and add to the list",
+                "Order food delivery",
+                "Call the landlord"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 52,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Change to Weekly Team Meeting",
+          "subtitle": "Dear Team,",
+          "text": "Starting next week, our regular Monday team meeting will move to Wednesday at 2 p.m. This change is being made to accommodate scheduling conflicts several of you raised regarding the Monday morning slot. The meeting location and format will remain the same, and the agenda will continue to be shared the day before each meeting. If Wednesday afternoon presents a new conflict for you, please let me know by the end of this week so we can look into alternative arrangements. Thank you for your flexibility as we work out the best schedule for everyone.\n\nBest,\nTeam Lead",
+          "questions": [
+            {
+              "question": "What is the main purpose of this email?",
+              "options": [
+                "To cancel the weekly team meeting",
+                "To announce a change in the meeting day and time",
+                "To introduce a new team member",
+                "To request feedback on a new project"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why was this change made?",
+              "options": [
+                "The meeting room was no longer available",
+                "Several team members raised scheduling conflicts",
+                "The meeting was being shortened",
+                "The team lead is going on leave"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should someone do if the new time doesn't work for them?",
+              "options": [
+                "Simply skip the meeting",
+                "Let the team lead know by the end of the week",
+                "Wait for the next schedule change",
+                "Attend a different team's meeting instead"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 53,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Apartment Maintenance Visit Confirmation",
+          "subtitle": "Dear Ms. Torres,",
+          "text": "This email confirms that a maintenance technician is scheduled to visit your unit this Thursday between 10 a.m. and 12 p.m. to repair the reported issue with your kitchen faucet. Please ensure someone is available to provide access during this window, as our technicians are unable to enter units without a resident present. If this time no longer works for you, please contact the office at least 24 hours in advance to reschedule. Otherwise, no further action is needed on your part, and the repair should take approximately thirty minutes to complete.\n\nSincerely,\nProperty Management Office",
+          "questions": [
+            {
+              "question": "What is this email mainly about?",
+              "options": [
+                "Confirming a scheduled maintenance visit",
+                "Notifying a resident of a rent increase",
+                "Announcing a building inspection",
+                "Requesting permission to enter a unit permanently"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the resident need to do?",
+              "options": [
+                "Fix the faucet themselves",
+                "Be available during the scheduled window",
+                "Pay for the repair in advance",
+                "Move out during the repair"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should Ms. Torres do if Thursday doesn't work?",
+              "options": [
+                "Ignore the appointment",
+                "Contact the office at least 24 hours in advance",
+                "Wait for a new email automatically",
+                "Cancel her lease"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 21,
+          "title": "Echolocation in Bats",
+          "passage": "Many species of bats navigate and hunt in complete darkness using a remarkable biological sonar system known as echolocation. By emitting rapid bursts of high-frequency sound, far beyond the range of human hearing, bats can construct a detailed acoustic picture of their surroundings based on the returning echoes.\n\nAs a bat emits a sound pulse, it listens carefully for the echo that bounces back after striking nearby objects. By analyzing tiny differences in timing, pitch, and intensity between the emitted call and its echo, the bat's brain can determine an object's distance, size, texture, and even whether it is moving.\n\nThis system is remarkably precise. Some bat species can detect a single insect in complete darkness while simultaneously avoiding obstacles as fine as a thin wire, adjusting their calls in real time depending on how cluttered their surroundings are or how close they are getting to their target prey.\n\nInterestingly, some moth species have evolved countermeasures against bat echolocation, including specialized ears that can detect a bat's ultrasonic calls, giving the moth a chance to take evasive action before being caught, and this ongoing evolutionary contest continues to shape the behavior of both predator and prey.",
+          "passage_marked": "Many species of bats navigate and hunt in complete darkness using a remarkable biological sonar system known as echolocation. By emitting rapid bursts of high-frequency sound, far beyond the range of human hearing, bats can construct a detailed acoustic picture of their surroundings based on the returning echoes. [A]\n\nAs a bat emits a sound pulse, it listens carefully for the echo that bounces back after striking nearby objects. By analyzing tiny differences in timing, pitch, and intensity between the emitted call and its echo, the bat's brain can determine an object's distance, size, texture, and even whether it is moving. [B]\n\nThis system is remarkably precise. Some bat species can detect a single insect in complete darkness while simultaneously avoiding obstacles as fine as a thin wire, adjusting their calls in real time depending on how cluttered their surroundings are or how close they are getting to their target prey. [C]\n\nInterestingly, some moth species have evolved countermeasures against bat echolocation, including specialized ears that can detect a bat's ultrasonic calls, giving the moth a chance to take evasive action before being caught, and this ongoing evolutionary contest continues to shape the behavior of both predator and prey. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'precise' in the passage is closest in meaning to",
+              "options": [
+                "accurate",
+                "random",
+                "weak",
+                "delayed"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, how does a bat determine an object's characteristics?",
+              "options": [
+                "By touching the object directly",
+                "By analyzing differences between the emitted call and its echo",
+                "By using its sense of smell",
+                "By following other bats"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What is mentioned as an example of echolocation's precision?",
+              "options": [
+                "Detecting a single insect while avoiding a thin wire",
+                "Communicating with other bat species",
+                "Flying only during the day",
+                "Hibernating for long periods"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention certain moth species?",
+              "options": [
+                "To describe how moths use echolocation themselves",
+                "To explain an evolved countermeasure against bat echolocation",
+                "To argue that moths are immune to all predators",
+                "To compare moth and bat diets"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This constant adjustment allows the bat to hunt efficiently even in rapidly changing environments.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 32,
+          "topic": "Symbolic Interactionism in Sociology",
+          "category": "Sociology",
+          "paragraph": "Symbolic interactionism is a sociological perspective that focuses on how individuals create and interpret meaning through everyday social interaction rather than through large-scale social structures. According to this view, objects, gestures, and words do not carry inherent meaning on their own, but instead acquire significance through shared social agreement, which can shift depending on context. Sociologists working in this tradition often study how people negotiate their identities during face-to-face interactions, constantly adjusting their behavior based on subtle cues from others. This approach contrasts sharply with structural theories that emphasize how broad institutions and social forces shape individual behavior from above. Symbolic interactionism has proven especially influential in studies of deviance, identity formation, and small group dynamics.",
+          "blanks": [
+            {
+              "word": "inherent",
+              "visible": "inhe",
+              "hidden": "rent"
+            },
+            {
+              "word": "acquire",
+              "visible": "acq",
+              "hidden": "uire"
+            },
+            {
+              "word": "significance",
+              "visible": "signi",
+              "hidden": "ficance"
+            },
+            {
+              "word": "tradition",
+              "visible": "trad",
+              "hidden": "ition"
+            },
+            {
+              "word": "negotiate",
+              "visible": "nego",
+              "hidden": "tiate"
+            },
+            {
+              "word": "interactions",
+              "visible": "inter",
+              "hidden": "actions"
+            },
+            {
+              "word": "constantly",
+              "visible": "const",
+              "hidden": "antly"
+            },
+            {
+              "word": "contrasts",
+              "visible": "cont",
+              "hidden": "rasts"
+            },
+            {
+              "word": "structural",
+              "visible": "struc",
+              "hidden": "tural"
+            },
+            {
+              "word": "influential",
+              "visible": "influ",
+              "hidden": "ential"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 22,
+          "title": "The Bronze Age Collapse",
+          "passage": "Around 1200 BCE, several advanced civilizations across the eastern Mediterranean and Near East experienced a sudden and dramatic decline within a relatively short span of time, an event historians now refer to as the Bronze Age Collapse.\n\nMajor cities across the region were destroyed or abandoned, long-distance trade networks that had connected these civilizations for centuries broke down almost entirely, and written records in several regions stopped appearing for generations, leaving historians with frustratingly little direct evidence about what actually happened.\n\nHistorians have proposed numerous contributing causes, and most now believe the collapse resulted from a combination of factors rather than any single event. These include prolonged drought and crop failures, devastating earthquakes, internal political rebellions, and invasions by mysterious seafaring raiders referred to in ancient Egyptian texts as the Sea Peoples.\n\nThe consequences of this collapse were long-lasting. Many regions entered a period of reduced population and diminished cultural output that in some cases lasted for centuries, and the abrupt disruption of trade networks meant that even bronze itself, which required tin typically obtained through long-distance trade, became increasingly difficult to produce.",
+          "passage_marked": "Around 1200 BCE, several advanced civilizations across the eastern Mediterranean and Near East experienced a sudden and dramatic decline within a relatively short span of time, an event historians now refer to as the Bronze Age Collapse. [A]\n\nMajor cities across the region were destroyed or abandoned, long-distance trade networks that had connected these civilizations for centuries broke down almost entirely, and written records in several regions stopped appearing for generations, leaving historians with frustratingly little direct evidence about what actually happened. [B]\n\nHistorians have proposed numerous contributing causes, and most now believe the collapse resulted from a combination of factors rather than any single event. These include prolonged drought and crop failures, devastating earthquakes, internal political rebellions, and invasions by mysterious seafaring raiders referred to in ancient Egyptian texts as the Sea Peoples. [C]\n\nThe consequences of this collapse were long-lasting. Many regions entered a period of reduced population and diminished cultural output that in some cases lasted for centuries, and the abrupt disruption of trade networks meant that even bronze itself, which required tin typically obtained through long-distance trade, became increasingly difficult to produce. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'diminished' in the passage is closest in meaning to",
+              "options": [
+                "increased",
+                "reduced",
+                "celebrated",
+                "unchanged"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what happened to written records in several regions after the collapse?",
+              "options": [
+                "They increased significantly",
+                "They stopped appearing for generations",
+                "They were translated into new languages",
+                "They were preserved perfectly"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What do most historians now believe caused the Bronze Age Collapse?",
+              "options": [
+                "A single sudden invasion",
+                "A combination of multiple factors",
+                "A volcanic eruption alone",
+                "A disease outbreak alone"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention bronze production after the collapse?",
+              "options": [
+                "To show how trade disruption affected material production",
+                "To argue that bronze was no longer valuable",
+                "To describe a new bronze-making technique",
+                "To compare bronze with iron tools"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Despite decades of research, no single explanation has been able to fully account for such a widespread and simultaneous decline.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 33,
+          "topic": "The Discovery of Antibiotics",
+          "category": "Biology",
+          "paragraph": "The discovery of the first widely used antibiotic occurred somewhat by accident, when a researcher noticed that a stray mold contaminating one of his bacterial cultures appeared to be killing the surrounding bacteria. Further investigation revealed that the mold produced a substance capable of destroying a wide range of harmful bacteria without significantly damaging human cells, a combination that made it remarkably valuable as a medical treatment. Producing this substance in large enough quantities for widespread medical use proved surprisingly difficult, requiring years of additional research before it could be manufactured on an industrial scale. Once mass production became possible, this discovery transformed medicine, dramatically reducing deaths from bacterial infections that had previously been nearly untreatable. Unfortunately, the widespread and sometimes excessive use of antibiotics has since led to growing concerns about bacterial resistance.",
+          "blanks": [
+            {
+              "word": "investigation",
+              "visible": "inves",
+              "hidden": "tigation"
+            },
+            {
+              "word": "destroying",
+              "visible": "destr",
+              "hidden": "oying"
+            },
+            {
+              "word": "significantly",
+              "visible": "signi",
+              "hidden": "ficantly"
+            },
+            {
+              "word": "quantities",
+              "visible": "quant",
+              "hidden": "ities"
+            },
+            {
+              "word": "surprisingly",
+              "visible": "surpr",
+              "hidden": "isingly"
+            },
+            {
+              "word": "manufactured",
+              "visible": "manuf",
+              "hidden": "actured"
+            },
+            {
+              "word": "transformed",
+              "visible": "trans",
+              "hidden": "formed"
+            },
+            {
+              "word": "dramatically",
+              "visible": "drama",
+              "hidden": "tically"
+            },
+            {
+              "word": "untreatable",
+              "visible": "untre",
+              "hidden": "atable"
+            },
+            {
+              "word": "resistance",
+              "visible": "resis",
+              "hidden": "tance"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 54,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Registration Reminder for Fall Courses",
+          "subtitle": "Dear Student,",
+          "text": "This is a reminder that course registration for the fall semester opens this Friday at 8 a.m. and will remain open on a rolling basis according to your class standing. Seniors and graduate students may register beginning Friday, while all other students will be assigned specific registration windows over the following week. We strongly recommend reviewing your degree audit and meeting with your academic advisor before your registration window opens, since popular courses tend to fill quickly. If you have a registration hold on your account, it must be resolved before you will be able to register.\n\nRegards,\nOffice of the Registrar",
+          "questions": [
+            {
+              "question": "What is the main purpose of this email?",
+              "options": [
+                "To announce final exam dates",
+                "To remind students about upcoming course registration",
+                "To cancel a course due to low enrollment",
+                "To inform students of a tuition increase"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the email, who can register first?",
+              "options": [
+                "First-year students",
+                "Seniors and graduate students",
+                "Only students with holds resolved",
+                "Students who registered late last semester"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the email recommend doing before registration opens?",
+              "options": [
+                "Paying tuition in full",
+                "Meeting with an academic advisor",
+                "Dropping all current courses",
+                "Applying for financial aid"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 55,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Delayed Furniture Delivery",
+          "subtitle": "Dear Mr. Whitfield,",
+          "text": "We are writing to inform you that your recent furniture order has been delayed due to an unexpected shortage of materials from our supplier. Your original delivery date of this Friday will now be pushed back to the following Wednesday. We understand this delay may be inconvenient, and as an apology, we are including a ten percent discount on your next purchase with us. You will receive an automatic email notification once your order has shipped, along with an updated tracking number. Please contact our customer service line if the new delivery date poses a significant problem for you.\n\nThank you for your patience,\nCustomer Service Team",
+          "questions": [
+            {
+              "question": "Why was the delivery delayed?",
+              "options": [
+                "The customer changed the order",
+                "A shortage of materials from the supplier",
+                "The delivery truck broke down",
+                "The item was out of stock permanently"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the company offering as an apology?",
+              "options": [
+                "A full refund",
+                "A ten percent discount on the next purchase",
+                "Free shipping for life",
+                "A replacement item"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will the customer receive once the order ships?",
+              "options": [
+                "A phone call",
+                "An automatic email with a tracking number",
+                "A paper letter",
+                "Nothing further"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 221,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/221.mp3",
+          "transcript": "Do you know if this app works without an internet connection?",
+          "context": "A user asks a friend about a mobile app.",
+          "options": [
+            "Some features work offline, but not all.",
+            "The app was updated last week.",
+            "It's available for free download.",
+            "The app has over a million users."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "28-221"
+        },
+        {
+          "id": 222,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/222.mp3",
+          "transcript": "Could you check if there's a warranty on this appliance?",
+          "context": "A customer asks a salesperson at an appliance store.",
+          "options": [
+            "Yes, it comes with a two-year warranty.",
+            "This model is our best seller.",
+            "Delivery is available for an extra fee.",
+            "The appliance uses less energy than older models."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "28-222"
+        },
+        {
+          "id": 223,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/223.mp3",
+          "transcript": "Is there a limit on how many books I can check out?",
+          "context": "A patron asks a librarian about borrowing limits.",
+          "options": [
+            "You can check out up to ten at a time.",
+            "The library added new titles this month.",
+            "Overdue fines are ten cents a day.",
+            "E-books can be borrowed too."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "28-223"
+        },
+        {
+          "id": 224,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/224.mp3",
+          "transcript": "Could you confirm the delivery time for this order?",
+          "context": "A customer calls a furniture store about delivery scheduling.",
+          "options": [
+            "Sure, it's scheduled for Thursday afternoon.",
+            "Delivery includes assembly at no extra cost.",
+            "The store offers financing options.",
+            "This item is currently on backorder."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "28-224"
+        },
+        {
+          "id": 225,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/225.mp3",
+          "transcript": "Do you know if this restaurant takes reservations for large groups?",
+          "context": "A customer calls a restaurant to plan a birthday dinner.",
+          "options": [
+            "Yes, for parties of eight or more we ask you to call ahead.",
+            "The restaurant has outdoor seating.",
+            "Our chef changes the menu seasonally.",
+            "We're open until eleven on weekends."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "29-225"
+        },
+        {
+          "id": 226,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/226.mp3",
+          "transcript": "Could you tell me if my loan application was approved?",
+          "context": "A customer calls a bank about a loan application.",
+          "options": [
+            "Let me pull up your file and check.",
+            "Loan applications take about a week.",
+            "The interest rate depends on your credit score.",
+            "You can apply for a loan online too."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "29-226"
+        },
+        {
+          "id": 227,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/227.mp3",
+          "transcript": "Is it possible to upgrade my seat on this train?",
+          "context": "A passenger asks a train conductor.",
+          "options": [
+            "Yes, there are a few seats available in first class.",
+            "This train has a dining car.",
+            "The trip takes about three hours.",
+            "Tickets can be upgraded online in advance."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "29-227"
+        },
+        {
+          "id": 228,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/228.mp3",
+          "transcript": "Could you let me know when the next batch of cookies comes out?",
+          "context": "A customer asks a bakery employee.",
+          "options": [
+            "Sure, they should be ready in about ten minutes.",
+            "We bake fresh bread every morning.",
+            "The bakery opened five years ago.",
+            "Cookies are two dollars each."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "29-228"
+        },
+        {
+          "id": 229,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/229.mp3",
+          "transcript": "Do you know if this park allows dogs off-leash?",
+          "context": "A visitor asks a park worker about pet policies.",
+          "options": [
+            "Only in the designated dog park area.",
+            "The park has several walking trails.",
+            "Picnic areas can be reserved online.",
+            "The park closes at sunset."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "29-229"
+        },
+        {
+          "id": 230,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/230.mp3",
+          "transcript": "Could you check if there's an earlier appointment available this week?",
+          "context": "A patient calls a clinic to reschedule.",
+          "options": [
+            "Let me see what we have open on Wednesday.",
+            "The clinic recently hired a new doctor.",
+            "Appointments usually run on time.",
+            "We send text reminders before visits."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "29-230"
+        }
+      ],
+      "conv": [
+        {
+          "id": 51,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/51.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "The bookstore is out of the textbook I need for tomorrow's class."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you checked if it's available as an e-book?"
+            },
+            {
+              "speaker": "female",
+              "text": "I hadn't thought to look for a digital version."
+            },
+            {
+              "speaker": "male",
+              "text": "That might be your fastest option before class starts."
+            },
+            {
+              "speaker": "female",
+              "text": "I'll check right now, thanks for the idea."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She forgot to buy her textbook",
+                "The bookstore is out of the textbook she needs",
+                "She lost her textbook",
+                "Her textbook was too expensive"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Borrow a copy from a friend",
+                "Check for a digital version",
+                "Skip class tomorrow",
+                "Wait for the bookstore to restock"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 52,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/52.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Two of my clubs scheduled their meetings at the exact same time this week."
+            },
+            {
+              "speaker": "female",
+              "text": "That's frustrating. Which one is more important to you?"
+            },
+            {
+              "speaker": "male",
+              "text": "Honestly, I care about both, so it's a tough call."
+            },
+            {
+              "speaker": "female",
+              "text": "Maybe ask one club if you could join partway through or get notes afterward."
+            },
+            {
+              "speaker": "male",
+              "text": "That could work, I'll message the officer now."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He was removed from a club",
+                "Two club meetings overlap this week",
+                "He forgot about a club meeting",
+                "His club was canceled"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Quit one club entirely",
+                "Ask to join partway through or get notes",
+                "Skip both meetings",
+                "Ask a professor to intervene"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 53,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/53.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "My research lab schedule keeps conflicting with my afternoon classes."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you talked to your lab supervisor about it?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not directly, I was worried it might seem like I'm not committed."
+            },
+            {
+              "speaker": "male",
+              "text": "Most supervisors would rather know early than have you miss shifts unexpectedly."
+            },
+            {
+              "speaker": "female",
+              "text": "That's a good point, I'll bring it up at our next meeting."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She was removed from the research lab",
+                "Her lab schedule conflicts with her classes",
+                "She failed a lab assignment",
+                "She lost access to the lab"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Quit the lab immediately",
+                "Talk to her lab supervisor about the conflict",
+                "Skip her classes instead",
+                "Ignore the conflict for now"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 51,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/51.mp3",
+          "speaker": "female",
+          "transcript": "This is a reminder for graduating seniors that tickets for the spring commencement ceremony must be requested online by the end of next week. Each graduate will initially receive four guest tickets, with the possibility of requesting additional tickets later if space allows. Students who do not request tickets by the deadline may have difficulty securing seating for their guests, so early submission is strongly encouraged.",
+          "questions": [
+            {
+              "question": "What is this announcement about?",
+              "options": [
+                "Requesting commencement tickets",
+                "Ordering a cap and gown",
+                "Submitting final grades",
+                "Applying for a diploma"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "How many guest tickets does each graduate initially receive?",
+              "options": [
+                "Two",
+                "Four",
+                "Six",
+                "Unlimited"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 52,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/52.mp3",
+          "speaker": "male",
+          "transcript": "Registration for the summer session is now open for all currently enrolled students. This year, the university is offering an expanded selection of online courses in addition to the usual in-person offerings, making it easier for students who plan to work or intern over the summer to still make academic progress. Students should note that summer session financial aid is limited and processed separately from the regular academic year.",
+          "questions": [
+            {
+              "question": "What is new about this year's summer session?",
+              "options": [
+                "A shorter session length",
+                "An expanded selection of online courses",
+                "Free tuition for all students",
+                "A new campus location"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should students note about summer financial aid?",
+              "options": [
+                "It is unavailable this year",
+                "It is processed separately and is limited",
+                "It automatically carries over from the fall",
+                "It only applies to online courses"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 53,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/53.mp3",
+          "speaker": "female",
+          "transcript": "The campus mail room would like to inform students that, due to a recent increase in package volume, pickup hours will be extended on weekdays until 7 p.m. for the remainder of the semester. Students will continue to receive an email notification when a package arrives. Please note that packages not picked up within thirty days will be returned to the sender, so students are encouraged to collect their items promptly.",
+          "questions": [
+            {
+              "question": "Why are mail room hours being extended?",
+              "options": [
+                "A staffing increase",
+                "A recent increase in package volume",
+                "A change in campus policy",
+                "Complaints from students"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens to packages not picked up within thirty days?",
+              "options": [
+                "They are donated to charity",
+                "They are returned to the sender",
+                "They are held indefinitely",
+                "They are opened by staff"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 41,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/41.mp3",
+          "speaker": "female",
+          "subject": "Media Studies",
+          "transcript": "Let's examine the concept of agenda-setting theory, a foundational idea in media studies that describes how news media, while not necessarily telling audiences what to think, can strongly influence what audiences think about. The theory suggests that by choosing which stories to cover, how prominently to feature them, and how much repetition they receive, media outlets shape the public's perception of which issues are most important, regardless of the outlets' explicit opinions on those issues. Early research supporting this theory compared the amount of coverage certain political issues received in the months before an election with surveys asking voters which issues they considered most important, finding a strong correlation between media coverage volume and perceived public importance. Since then, researchers have expanded the theory to distinguish between different levels of agenda-setting. First-level agenda-setting refers to which topics get covered at all, while second-level agenda-setting, sometimes called framing, refers to which specific attributes or aspects of those topics get emphasized. In the era of social media and personalized news feeds, researchers are now studying how algorithmic curation, which is often invisible to users, may be creating a new, more fragmented and individualized version of agenda-setting across different audiences.",
+          "questions": [
+            {
+              "question": "What is the main idea of agenda-setting theory?",
+              "options": [
+                "Media outlets tell people exactly what to believe",
+                "Media coverage influences what issues audiences consider important",
+                "News coverage has no effect on public opinion",
+                "All media outlets cover the same stories equally"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did early research on agenda-setting theory find?",
+              "options": [
+                "No correlation between coverage and perceived importance",
+                "A strong correlation between coverage volume and perceived public importance",
+                "That audiences ignore political coverage entirely",
+                "That elections have no relationship to media coverage"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the difference between first-level and second-level agenda-setting?",
+              "options": [
+                "First-level concerns which topics are covered, second-level concerns which aspects are emphasized",
+                "First-level only applies to television, second-level only to print",
+                "There is no meaningful difference between them",
+                "Second-level agenda-setting predates first-level"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What new area are researchers studying regarding social media, according to the lecture?",
+              "options": [
+                "How algorithmic curation creates a more fragmented agenda-setting effect",
+                "Why social media has eliminated agenda-setting entirely",
+                "How to ban algorithms from curating news",
+                "Why print newspapers are becoming more popular"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 42,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/42.mp3",
+          "speaker": "male",
+          "subject": "Criminology",
+          "transcript": "Today's topic is the broken windows theory, a criminological concept proposing that visible signs of disorder and neglect in a neighborhood, such as broken windows, graffiti, or litter, can encourage further crime and antisocial behavior. The underlying idea is that these visible signs signal to potential offenders that a community isn't being monitored or cared for, effectively lowering the perceived risk of getting caught for committing crimes there. Based on this theory, some cities in the 1990s adopted policing strategies focused on addressing minor infractions and visible disorder, under the assumption that cracking down on small issues would prevent more serious crime from taking root. Proponents pointed to drops in crime rates in cities that adopted these strategies as supporting evidence. However, the theory has faced substantial criticism over the years. Critics argue that the observed crime drops may have been caused by other simultaneous factors, such as broader economic improvements or changes in drug markets, rather than the policing strategy itself. There's also significant concern that aggressive enforcement of minor offenses disproportionately targeted certain communities, leading to broken trust between residents and police without clear evidence of long-term benefit. As a result, many criminologists today view the broken windows theory as, at best, an oversimplified explanation of a complex social phenomenon.",
+          "questions": [
+            {
+              "question": "What is the main idea of the broken windows theory?",
+              "options": [
+                "Visible neighborhood disorder can encourage further crime",
+                "All crime is caused by economic factors",
+                "Police presence has no effect on crime rates",
+                "Broken windows are the leading cause of poverty"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "How did some cities apply this theory in the 1990s?",
+              "options": [
+                "By ignoring minor infractions entirely",
+                "By focusing policing on minor infractions and visible disorder",
+                "By eliminating police forces altogether",
+                "By focusing only on violent crime"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What criticism of the theory does the professor mention?",
+              "options": [
+                "It has never been tested in any city",
+                "Crime drops may have resulted from other factors, not the policing strategy",
+                "It caused crime rates to rise dramatically everywhere",
+                "No cities ever adopted the theory"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How do many criminologists view the theory today, according to the lecture?",
+              "options": [
+                "As a fully proven and complete explanation of crime",
+                "As an oversimplified explanation of a complex phenomenon",
+                "As entirely disproven with no valid points",
+                "As the only accepted theory of urban crime"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 231,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/231.mp3",
+          "transcript": "Is this backpack waterproof?",
+          "context": "A customer asks a salesperson at an outdoor gear store.",
+          "options": [
+            "It's water-resistant, but not fully waterproof.",
+            "This backpack comes in three sizes.",
+            "We're having a sale on hiking gear.",
+            "The store just restocked this item."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "29-231"
+        },
+        {
+          "id": 232,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/232.mp3",
+          "transcript": "Could you confirm what time the store closes on holidays?",
+          "context": "A customer calls a store to check holiday hours.",
+          "options": [
+            "We close at six on most holidays.",
+            "The store is closed on New Year's Day.",
+            "Holiday sales start next week.",
+            "Gift cards never expire."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "29-232"
+        },
+        {
+          "id": 233,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/233.mp3",
+          "transcript": "Do you know if this class fulfills a science requirement?",
+          "context": "A student asks an advisor about course requirements.",
+          "options": [
+            "Yes, it counts toward your lab science credit.",
+            "The class meets twice a week.",
+            "Enrollment is limited to thirty students.",
+            "The textbook is available at the bookstore."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "30-233"
+        },
+        {
+          "id": 234,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/234.mp3",
+          "transcript": "Could you look into a refund for this canceled flight?",
+          "context": "A traveler calls an airline about a canceled flight.",
+          "options": [
+            "Of course, I'll process that refund now.",
+            "The next available flight is tomorrow.",
+            "Weather caused several delays today.",
+            "You can rebook online as well."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "30-234"
+        },
+        {
+          "id": 235,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/235.mp3",
+          "transcript": "Is there an extra charge for checked luggage on this airline?",
+          "context": "A traveler asks a check-in agent about baggage fees.",
+          "options": [
+            "Yes, the first bag is thirty dollars.",
+            "Carry-on bags are free with every ticket.",
+            "Boarding starts thirty minutes before departure.",
+            "Overweight bags may cost more."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "30-235"
+        },
+        {
+          "id": 236,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/236.mp3",
+          "transcript": "Could you show me how to adjust the thermostat in my apartment?",
+          "context": "A new tenant asks the building superintendent for help.",
+          "options": [
+            "Sure, it's pretty simple, let me show you.",
+            "The building was renovated recently.",
+            "Heating costs are included in rent.",
+            "Most units have similar thermostats."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "30-236"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 43,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/43.mp3",
+          "speaker": "female",
+          "subject": "Oceanography",
+          "transcript": "Let's discuss thermohaline circulation, sometimes called the global ocean conveyor belt, a massive system of deep ocean currents driven by differences in water temperature and salinity rather than wind. In the North Atlantic, cold, salty water becomes dense enough to sink toward the ocean floor, and this sinking motion pulls more warm surface water northward to replace it, a process that helps distribute heat around the planet and contributes significantly to the relatively mild climate of Western Europe. This deep water then flows slowly along the ocean floor, eventually resurfacing in other parts of the world, such as the Pacific and Indian Oceans, in a journey that can take a thousand years or more to complete an entire cycle. Scientists are particularly interested in this system because of concerns that climate change could disrupt it. As polar ice melts, it introduces large amounts of fresh water into the North Atlantic, which could reduce the water's salinity and density, potentially weakening or even slowing the sinking process that drives the entire circulation. Some climate models suggest that a significant slowdown could paradoxically cause regional cooling in parts of Europe, even as global average temperatures continue to rise, illustrating how complex and sometimes counterintuitive climate systems can be.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "Tidal patterns in coastal regions",
+                "Thermohaline circulation in the global ocean",
+                "The formation of ocean trenches",
+                "How ocean currents are measured"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What primarily drives thermohaline circulation, according to the professor?",
+              "options": [
+                "Wind patterns across the ocean surface",
+                "Differences in water temperature and salinity",
+                "The gravitational pull of the moon",
+                "Volcanic activity on the ocean floor"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why are scientists concerned about melting polar ice in relation to this system?",
+              "options": [
+                "It could increase the ocean's salinity dramatically",
+                "It could introduce fresh water that weakens the sinking process",
+                "It has no connection to thermohaline circulation",
+                "It would speed up the entire circulation permanently"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What counterintuitive effect do some climate models predict?",
+              "options": [
+                "Regional cooling in parts of Europe despite global warming",
+                "A complete stop of all ocean currents",
+                "Warmer temperatures only in polar regions",
+                "No change in European climate at all"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 44,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/44.mp3",
+          "speaker": "male",
+          "subject": "Agricultural Science",
+          "transcript": "Today we'll look at the concept of crop rotation, a farming practice with a history stretching back thousands of years, but one that remains highly relevant to modern sustainable agriculture. Rather than planting the same crop in the same field year after year, farmers alternate between different types of crops across growing seasons. One major benefit involves soil nutrients; different crops draw different amounts and types of nutrients from the soil, so rotating crops helps prevent the depletion of any single nutrient. Legumes, such as beans and peas, are especially valuable in rotation because they host bacteria in their roots capable of converting atmospheric nitrogen into a form usable by plants, effectively replenishing soil nitrogen that other crops, like corn, tend to deplete heavily. Crop rotation also helps interrupt the life cycles of pests and diseases that tend to specialize in a single crop species; when that crop isn't planted in the same field the following year, the pest population adapted to it often declines significantly due to a lack of food source. Modern industrial agriculture, with its heavy reliance on monoculture, the continuous planting of a single crop, has led some farmers to move away from rotation in favor of maximizing short-term yields, but this approach often requires much heavier use of synthetic fertilizers and pesticides to compensate for the benefits that rotation would otherwise provide naturally.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "The invention of synthetic fertilizer",
+                "Crop rotation and its agricultural benefits",
+                "The history of industrial farming equipment",
+                "How to identify plant diseases"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why are legumes especially valuable in crop rotation, according to the professor?",
+              "options": [
+                "They require no water to grow",
+                "They replenish soil nitrogen through bacteria in their roots",
+                "They are resistant to all pests",
+                "They grow faster than any other crop"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does crop rotation help control pests, according to the lecture?",
+              "options": [
+                "It kills pests directly using chemicals",
+                "It interrupts pest life cycles by removing their food source",
+                "It attracts natural predators to the field",
+                "It has no effect on pest populations"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor say about modern industrial agriculture's move toward monoculture?",
+              "options": [
+                "It has eliminated the need for pesticides",
+                "It often requires heavier use of synthetic fertilizers and pesticides",
+                "It has completely replaced crop rotation worldwide",
+                "It increases soil nitrogen naturally"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 237,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/237.mp3",
+          "transcript": "Do you know if there's a fee to cancel this reservation?",
+          "context": "A guest asks a hotel about its cancellation policy.",
+          "options": [
+            "Cancellations made 24 hours in advance are free.",
+            "The hotel has a rewards program.",
+            "Check-in starts at three.",
+            "We offer late check-out for a fee."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "30-237"
+        },
+        {
+          "id": 238,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/238.mp3",
+          "transcript": "Could you tell me if this trail has any water fountains along the way?",
+          "context": "A hiker asks a park ranger before starting a hike.",
+          "options": [
+            "There's one about halfway up the trail.",
+            "The trail is about four miles round trip.",
+            "Wildlife sightings are common in the morning.",
+            "This trail was recently repaved."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "30-238"
+        },
+        {
+          "id": 239,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/239.mp3",
+          "transcript": "Is it possible to split the bill between two cards?",
+          "context": "A customer asks a server at the end of a meal.",
+          "options": [
+            "Sure, that's not a problem at all.",
+            "The total comes to forty dollars.",
+            "We accept tips in cash or card.",
+            "Our specials change every week."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "30-239"
+        },
+        {
+          "id": 240,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/240.mp3",
+          "transcript": "Could you tell me if my gym membership includes the pool?",
+          "context": "A member asks a front desk employee at a gym.",
+          "options": [
+            "Yes, pool access is included with every membership.",
+            "The gym added new equipment this month.",
+            "Personal training sessions cost extra.",
+            "Locker rentals are available for a small fee."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "30-240"
+        },
+        {
+          "id": 241,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/241.mp3",
+          "transcript": "Do you know if there's a student rate for this concert?",
+          "context": "A student asks a ticket booth attendant.",
+          "options": [
+            "Yes, just show your student ID at the door.",
+            "The concert starts at eight tonight.",
+            "Tickets are also available online.",
+            "The venue holds about two thousand people."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "31-241"
+        },
+        {
+          "id": 242,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/242.mp3",
+          "transcript": "Could you check if this size shoe is available in another color?",
+          "context": "A customer asks a shoe store employee.",
+          "options": [
+            "Let me check what we have in the back.",
+            "This style just came out this season.",
+            "We're having a sale on shoes this week.",
+            "The store restocks every Friday."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "31-242"
+        }
+      ],
+      "conv": [
+        {
+          "id": 54,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/54.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "A few of us went out to dinner, and now we can't agree on how to split the bill."
+            },
+            {
+              "speaker": "female",
+              "text": "What's the disagreement about?"
+            },
+            {
+              "speaker": "male",
+              "text": "Some people ordered a lot more than others."
+            },
+            {
+              "speaker": "female",
+              "text": "You could use an app that splits the bill based on what each person actually ordered."
+            },
+            {
+              "speaker": "male",
+              "text": "That would definitely make it fairer, I'll suggest it next time."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "The restaurant overcharged the group",
+                "The group disagrees on how to split the bill",
+                "He forgot his wallet",
+                "The restaurant lost their order"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Split the bill evenly regardless",
+                "Use an app that splits based on individual orders",
+                "Ask the restaurant to decide",
+                "Have one person pay for everyone"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 55,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/55.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm thinking about switching from my current gym to the one on campus."
+            },
+            {
+              "speaker": "male",
+              "text": "What's making you consider switching?"
+            },
+            {
+              "speaker": "female",
+              "text": "The campus gym is closer and included in my tuition already."
+            },
+            {
+              "speaker": "male",
+              "text": "Just make sure you check if your current gym has a cancellation fee first."
+            },
+            {
+              "speaker": "female",
+              "text": "Good point, I'll check my membership contract tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman considering?",
+              "options": [
+                "Canceling her gym membership entirely",
+                "Switching to the campus gym",
+                "Joining a second gym",
+                "Hiring a personal trainer"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man remind her to check?",
+              "options": [
+                "The campus gym's opening hours",
+                "Whether her current gym charges a cancellation fee",
+                "Whether the campus gym has a pool",
+                "The distance between the two gyms"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 54,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/54.mp3",
+          "speaker": "male",
+          "transcript": "The Academic Success Center would like to remind students that free peer tutoring is available for most introductory courses, including math, chemistry, and writing. Sessions can be booked online or attended on a walk-in basis during posted hours. With midterms approaching, students are encouraged to book sessions early, as availability tends to fill up quickly during the two weeks before exams.",
+          "questions": [
+            {
+              "question": "What service is being promoted?",
+              "options": [
+                "Paid private tutoring",
+                "Free peer tutoring",
+                "Online course enrollment",
+                "Academic probation counseling"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why are students encouraged to book early?",
+              "options": [
+                "Tutors are leaving after this semester",
+                "Availability fills up quickly before exams",
+                "The service is ending soon",
+                "Only seniors can book sessions"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 55,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/55.mp3",
+          "speaker": "female",
+          "transcript": "Students are reminded that printing quotas for the semester will reset at the start of next month. Any unused pages from this month's allotment will not carry over. Students who need to print large volumes of material, such as thesis drafts or lab reports, are encouraged to do so before the reset if they wish to make full use of their current balance rather than losing the remaining pages.",
+          "questions": [
+            {
+              "question": "What is happening at the start of next month?",
+              "options": [
+                "Printing quotas will double",
+                "Printing quotas will reset",
+                "Printing services will be discontinued",
+                "Printing costs will increase"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is true about unused pages from this month?",
+              "options": [
+                "They will carry over automatically",
+                "They will not carry over",
+                "They can be exchanged for a refund",
+                "They can be donated to other students"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 101,
+        "promptGender": "female",
+        "prompt": "Is the software update mandatory for all employees?",
+        "responseGender": "male",
+        "responsePrefix": "Do you know",
+        "correctChunks": [
+          "whether",
+          "the software update",
+          "was mandatory for all employees"
+        ],
+        "distractorChunks": [
+          "is mandatory for all employees"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 102,
+        "promptGender": "male",
+        "prompt": "How often does the newsletter get sent out?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "how",
+          "often",
+          "the newsletter",
+          "got sent out"
+        ],
+        "distractorChunks": [
+          "gets sent out"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 103,
+        "promptGender": "female",
+        "prompt": "Will the new policy apply to current students?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "wondered",
+          "whether",
+          "the new policy",
+          "would apply to current students"
+        ],
+        "distractorChunks": [
+          "will apply to current students"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 104,
+        "promptGender": "male",
+        "prompt": "What made the traffic so bad this morning?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "what",
+          "had made the traffic so bad this morning"
+        ],
+        "distractorChunks": [
+          "has made the traffic so bad this morning"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 105,
+        "promptGender": "female",
+        "prompt": "Are the seminar recordings available online?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "whether",
+          "the seminar recordings",
+          "were available online"
+        ],
+        "distractorChunks": [
+          "are available online"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 106,
+        "promptGender": "male",
+        "prompt": "Why did the vending machine reject my card?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "why",
+          "the vending machine",
+          "had rejected her card"
+        ],
+        "distractorChunks": [
+          "has rejected her card"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 107,
+        "promptGender": "female",
+        "prompt": "Does the library charge a fine for late returns?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "whether",
+          "the library",
+          "charged a fine for late returns"
+        ],
+        "distractorChunks": [
+          "charges a fine for late returns"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 108,
+        "promptGender": "male",
+        "prompt": "When does registration close for the workshop?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "when",
+          "registration",
+          "closed for the workshop"
+        ],
+        "distractorChunks": [
+          "closes for the workshop"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 109,
+        "promptGender": "female",
+        "prompt": "Is the rooftop terrace open to all residents?",
+        "responseGender": "male",
+        "responsePrefix": "Could you tell me",
+        "correctChunks": [
+          "whether",
+          "the rooftop terrace",
+          "was open to all residents"
+        ],
+        "distractorChunks": [
+          "is open to all residents"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 110,
+        "promptGender": "male",
+        "prompt": "Who scheduled the maintenance for this weekend?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "am",
+          "not",
+          "sure",
+          "who",
+          "had scheduled the maintenance for this weekend"
+        ],
+        "distractorChunks": [
+          "has scheduled the maintenance for this weekend"
+        ],
+        "responseSuffix": "."
+      }
+    ],
+    "email": {
+      "id": 11,
+      "scenario": "You have a severe food allergy, and the dining hall staff recently served you a dish containing an ingredient you cannot eat, despite your dietary form on file. You want to raise this safety concern.",
+      "recipient": "Dining Services Manager",
+      "subject": "Concern about food allergy safety",
+      "tasks": [
+        {
+          "description": "Describe what happened when you were served the dish.",
+          "keywords": [
+            "served",
+            "contained",
+            "allergy",
+            "reaction"
+          ]
+        },
+        {
+          "description": "Remind them that your dietary restrictions are on file.",
+          "keywords": [
+            "dietary form",
+            "on file",
+            "registered",
+            "informed"
+          ]
+        },
+        {
+          "description": "Ask what steps will be taken to prevent this in the future.",
+          "keywords": [
+            "prevent",
+            "future",
+            "steps",
+            "ensure",
+            "safety"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Dining Services Manager,\n\nI am writing to raise a serious concern about my safety in the dining hall. Yesterday evening, I was served a pasta dish that contained peanuts, an ingredient I am severely allergic to. Fortunately, I noticed before eating enough to cause a serious reaction, but I did experience mild swelling and had to seek medical attention.\n\nI want to remind you that my dietary restrictions have been on file with dining services since the beginning of the semester, and I specifically registered my peanut allergy through the online form provided.\n\nGiven how serious this could have been, I would like to know what steps will be taken to prevent this from happening again in the future. Could staff be reminded to double-check dietary records before serving students with known allergies? I would appreciate a prompt response, as this is a matter of my health and safety.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 11,
+      "subject": "robotics",
+      "professor": "Dr. Fischer",
+      "professorGender": "female",
+      "prompt": "Your robotics professor is discussing the growing role of autonomous machines in emergency situations. Write a post responding to the professor's question.\n\nDr. Fischer: Robotics engineers are increasingly developing autonomous robots capable of making independent decisions during search and rescue operations, such as choosing which victims to prioritize when resources are limited. Supporters argue that robots can process information faster than humans and make more consistent, unbiased decisions in chaotic environments. Critics worry that removing human judgment from life-or-death decisions is ethically dangerous, since robots cannot fully grasp the moral complexity of a situation the way a human rescuer can. Before our next class, I would like you to respond to this question: Should autonomous robots be allowed to make independent life-or-death decisions during emergency situations?",
+      "classmates": [
+        {
+          "name": "Farid",
+          "gender": "male",
+          "opinion": "I think autonomous robots should be allowed to make independent decisions in emergencies, at least within carefully defined parameters. In chaotic disaster scenarios, robots can process sensor data, assess structural risks, and identify survivors far faster than human rescuers who may be overwhelmed by stress or limited visibility. This speed could mean the difference between life and death when every second counts. Robots are also not subject to fatigue, panic, or unconscious bias, which means their decisions could actually be more consistent and fair than those made by exhausted human responders. With rigorous testing and clear ethical guidelines built into their programming, autonomous robots could save far more lives than they endanger."
+        },
+        {
+          "name": "Zanele",
+          "gender": "female",
+          "opinion": "I don't think robots should ever be given full authority over life-or-death decisions, no matter how advanced their programming becomes. Emergency situations often involve nuanced moral judgments that require empathy, context, and an understanding of human values that machines simply cannot replicate. A robot might follow a strict algorithm to prioritize survivors based on statistical likelihood of survival, ignoring important human factors like a parent's presence or a victim's specific circumstances. If something goes wrong, it also becomes unclear who is responsible for the outcome, the engineers, the operators, or the machine itself. Humans should always remain in the loop to make the final call in such critical moments."
+        }
+      ],
+      "exampleResponse": "The use of autonomous robots in emergencies raises profound questions about speed, accuracy, and moral responsibility. Whether robots should be trusted with independent life-or-death decisions is worth considering from multiple angles. While I see where Zanele is coming from when she argues that emergencies require human empathy and that accountability becomes unclear when machines make the final call, I would argue that speed can be just as critical as judgment when lives are at stake in chaotic situations. In this respect, I am inclined to agree with Farid, who emphasizes that robots can process information and identify survivors faster and more consistently than exhausted human responders. For example, in a collapsed building, a robot equipped with thermal sensors could locate trapped survivors within seconds, far faster than a human search team. Perhaps the best solution keeps humans making final calls while robots rapidly supply the critical information needed to make them."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 11,
+      "location": "Sports Rehabilitation Clinic",
+      "icon": "🏥",
+      "speaker": "male",
+      "introText": "You are learning how to greet patients at the sports rehabilitation clinic. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the therapy clinic.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "Please fill out this intake form first.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Your therapist will see you shortly.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Wear comfortable clothing for your session.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "Stretching exercises will begin your appointment today.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Ice packs are available if you experience any soreness afterward.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Your next appointment should be scheduled before you leave the clinic.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 11,
+      "topic": "Home Organization",
+      "icon": "🗄️",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about home organization habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. To start, how do you usually keep your living space organized and clean?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer a minimalist living space with very few items, or do you like to keep many personal belongings around you?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people believe that a well-organized home leads to a more productive and peaceful life. What do you think about this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think people today struggle more with organizing their homes compared to previous generations? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

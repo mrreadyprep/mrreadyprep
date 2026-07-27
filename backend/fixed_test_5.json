@@ -1,0 +1,1771 @@
+{
+  "id": 5,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 13,
+          "topic": "Cultural Anthropology and Kinship Systems",
+          "category": "Anthropology",
+          "paragraph": "Within the social sciences, anthropologists study the diverse ways human societies organize family relationships, a field known as kinship studies. These systems determine how individuals are related through blood, marriage, or social recognition, shaping inheritance and social identity across generations. Research has revealed remarkable variation in how cultures define family roles, some emphasizing strict hierarchies while others distribute authority equally. Marriage practices also vary, ranging from monogamous unions to arrangements involving multiple spouses, and rituals surrounding birth and marriage often reinforce communal identity, revealing the remarkable diversity of cultural adaptation worldwide.",
+          "blanks": [
+            {
+              "word": "systems",
+              "visible": "sys",
+              "hidden": "tems"
+            },
+            {
+              "word": "inheritance",
+              "visible": "inher",
+              "hidden": "itance"
+            },
+            {
+              "word": "generations",
+              "visible": "gener",
+              "hidden": "ations"
+            },
+            {
+              "word": "variation",
+              "visible": "vari",
+              "hidden": "ation"
+            },
+            {
+              "word": "hierarchies",
+              "visible": "hiera",
+              "hidden": "rchies"
+            },
+            {
+              "word": "monogamous",
+              "visible": "monog",
+              "hidden": "amous"
+            },
+            {
+              "word": "arrangements",
+              "visible": "arran",
+              "hidden": "gements"
+            },
+            {
+              "word": "rituals",
+              "visible": "rit",
+              "hidden": "uals"
+            },
+            {
+              "word": "communal",
+              "visible": "comm",
+              "hidden": "unal"
+            },
+            {
+              "word": "diversity",
+              "visible": "dive",
+              "hidden": "rsity"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 19,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Weekend Trip Planning",
+          "subtitle": "",
+          "text": "Maya Chen (6:40 p.m.)\nOkay, so for the cabin trip, should we leave Friday night or early Saturday morning?\n\nEthan Cole (6:42 p.m.)\nI'd rather leave Friday night so we're not stuck in weekend traffic. I can get off work by 6.\n\nSofia Ruiz (6:44 p.m.)\nFriday night works for me too. Should we split up who's bringing what for food, or just split the cost?\n\nMaya Chen (6:46 p.m.)\nLet's split up tasks, it'll be easier than splitting receipts later. I can handle breakfast stuff for both mornings.\n\nEthan Cole (6:48 p.m.)\nI'll grab firewood and snacks for the drive. Sofia, are you still good to bring the grill?\n\nSofia Ruiz (6:50 p.m.)\nYes, I have it in my trunk already. I'll also bring stuff for dinner Saturday night if someone else covers Friday dinner.\n\nMaya Chen (6:52 p.m.)\nI can pick up sandwiches on the way up for Friday, that's easy since we're driving through town anyway.\n\nEthan Cole (6:54 p.m.)\nSounds like a plan. Let's meet at my place at 6:15 Friday so we can load the car together.",
+          "questions": [
+            {
+              "question": "What is the main topic of this conversation?",
+              "options": [
+                "Planning logistics for a weekend cabin trip",
+                "Deciding whether to cancel a trip",
+                "Arguing about who should drive",
+                "Choosing a new cabin rental location"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does Ethan want to leave on Friday night?",
+              "options": [
+                "The cabin is only available on Friday",
+                "To avoid weekend traffic",
+                "He has to work early Saturday morning",
+                "The weather forecast is bad for Saturday"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about Sofia?",
+              "options": [
+                "She already has a grill ready to bring on the trip",
+                "She is not able to join the trip",
+                "She dislikes cooking outdoors",
+                "She plans to drive separately from the group"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Live Chat",
+          "subtitle": "",
+          "text": "Devon Brooks (11:02 a.m.)\nHi, I ordered a pair of hiking boots last week but they arrived a half size too small. Can I exchange them?\n\nSupport Agent - Casey (11:03 a.m.)\nHi Devon, I'm sorry for the inconvenience! I can definitely help. Could you provide your order number?\n\nDevon Brooks (11:04 a.m.)\nSure, it's ORD-56213.\n\nSupport Agent - Casey (11:06 a.m.)\nThanks, I see the order. Since it's within our 30-day exchange window, we can send a prepaid return label. Would you like the next size up in the same color?\n\nDevon Brooks (11:07 a.m.)\nYes, that would be great. Will the new pair ship before you receive the return, or do I have to wait?\n\nSupport Agent - Casey (11:09 a.m.)\nGood news, we offer advance exchanges for footwear, so we'll ship the new pair today. You'll have 14 days to send the original pair back using the label once you receive it.\n\nDevon Brooks (11:10 a.m.)\nThat's perfect, thank you. Is there a charge if I don't send them back in time?\n\nSupport Agent - Casey (11:12 a.m.)\nYes, if we don't receive the original boots within 14 days, a charge equal to their purchase price will be applied to the card on file. I'll email you the label and tracking details shortly.",
+          "questions": [
+            {
+              "question": "What is the main topic of this conversation?",
+              "options": [
+                "Exchanging a pair of hiking boots for a larger size",
+                "Requesting a refund for a damaged product",
+                "Complaining about a late delivery",
+                "Reporting a billing error on an account"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why will the new pair of boots ship before the original pair is received?",
+              "options": [
+                "The company ran out of the smaller size",
+                "The company offers advance exchanges for footwear",
+                "Devon paid extra for expedited shipping",
+                "The original boots were never actually shipped"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred if Devon does not return the original boots within 14 days?",
+              "options": [
+                "He will receive a discount on his next purchase",
+                "His account will be suspended",
+                "He will be charged for the boots",
+                "The exchange will be automatically cancelled"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Book Return Slot Out of Service",
+          "subtitle": "",
+          "text": "The exterior book return slot is temporarily out of service due to a mechanical fault.\n\nPlease return all items directly to the front desk during regular operating hours until further notice.\n\nLate fees will not apply to items affected by this closure.",
+          "questions": [
+            {
+              "question": "What is the purpose of this sign?",
+              "options": [
+                "To announce new library hours",
+                "To explain that the book return slot is not working",
+                "To advertise a book sale",
+                "To announce a change in library fees"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the sign say about late fees?",
+              "options": [
+                "They have been doubled",
+                "They will not apply to affected items",
+                "They must be paid at the front desk",
+                "They no longer exist"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 9,
+          "title": "The Origins of Agriculture in the Fertile Crescent",
+          "passage": "Roughly ten thousand years ago, human communities in the Fertile Crescent, a region spanning parts of the modern Middle East, began shifting from foraging and hunting toward cultivating crops. This area's fertile soil, seasonal rivers, and wild ancestors of wheat and barley made it an especially favorable environment for the earliest experiments in agriculture.\n\nEarly farmers gradually domesticated wild grasses by repeatedly selecting and replanting seeds from plants with desirable traits, such as larger kernels or stalks that did not shatter and scatter their seeds before harvest. Over many generations, this selective process produced wheat and barley varieties dependent on human cultivation, unable to spread effectively without deliberate planting and harvesting by people.\n\nAlongside plant domestication, communities began taming animals including goats, sheep, and later cattle, which provided meat, milk, and hides. Domesticated herds allowed people to settle more permanently near reliable food sources rather than following wild game across the landscape. These emerging villages marked a profound shift away from the mobile lifestyles that had characterized nearly all of human history before this point.\n\nAgriculture ultimately supported larger, denser populations and enabled the accumulation of surplus food, which in turn allowed some individuals to specialize in tasks other than food production, laying groundwork for social stratification. Yet this transition also introduced new difficulties, including increased vulnerability to crop failure, harder physical labor, and greater exposure to diseases spread within crowded, permanent settlements.",
+          "passage_marked": "Roughly ten thousand years ago, human communities in the Fertile Crescent, a region spanning parts of the modern Middle East, began shifting from foraging and hunting toward cultivating crops. This area's fertile soil, seasonal rivers, and wild ancestors of wheat and barley made it an especially favorable environment for the earliest experiments in agriculture. [A]\n\nEarly farmers gradually domesticated wild grasses by repeatedly selecting and replanting seeds from plants with desirable traits, such as larger kernels or stalks that did not shatter and scatter their seeds before harvest. [B] Over many generations, this selective process produced wheat and barley varieties dependent on human cultivation, unable to spread effectively without deliberate planting and harvesting by people.\n\nAlongside plant domestication, communities began taming animals including goats, sheep, and later cattle, which provided meat, milk, and hides. Domesticated herds allowed people to settle more permanently near reliable food sources rather than following wild game across the landscape. These emerging villages marked a profound shift away from the mobile lifestyles that had characterized nearly all of human history before this point. [C]\n\nAgriculture ultimately supported larger, denser populations and enabled the accumulation of surplus food, which in turn allowed some individuals to specialize in tasks other than food production, laying groundwork for social stratification. Yet this transition also introduced new difficulties, including increased vulnerability to crop failure, harder physical labor, and greater exposure to diseases spread within crowded, permanent settlements. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'shatter' in the passage is closest in meaning to",
+              "options": [
+                "ripen",
+                "break apart and scatter",
+                "grow taller",
+                "turn a different color"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, how did early farmers domesticate wild grasses?",
+              "options": [
+                "By randomly gathering any available seeds",
+                "By repeatedly selecting and replanting seeds with desirable traits",
+                "By burning fields to encourage new growth",
+                "By importing seeds from distant regions"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What effect did animal domestication have on human settlement patterns?",
+              "options": [
+                "It forced people to move more frequently in search of game",
+                "It allowed people to settle more permanently near reliable food sources",
+                "It had no effect on where people lived",
+                "It caused population decline"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention the new difficulties introduced by agriculture, such as crop failure and disease?",
+              "options": [
+                "To argue that agriculture was a purely negative development",
+                "To show that the transition to farming involved significant tradeoffs, not only benefits",
+                "To describe modern farming problems",
+                "To explain why agriculture was abandoned"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "In this way, the very innovation that allowed human societies to flourish also created entirely new sources of hardship.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 3
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 14,
+          "topic": "Plate Tectonics and Earthquakes",
+          "category": "Geology",
+          "paragraph": "The theory of plate tectonics explains how the Earth's rigid outer shell is divided into large fragments that move slowly over the underlying mantle. These plates interact along their boundaries by colliding, separating, or sliding past one another. Where oceanic plates meet continental plates, subduction often occurs, generating volcanic activity along the boundary, and earthquakes occur when accumulated stress along a fault suddenly releases. Using specialized instruments, seismologists measure these vibrations and estimate the magnitude of seismic events, helping governments prepare for potentially catastrophic geological hazards.",
+          "blanks": [
+            {
+              "word": "plates",
+              "visible": "pla",
+              "hidden": "tes"
+            },
+            {
+              "word": "interact",
+              "visible": "inte",
+              "hidden": "ract"
+            },
+            {
+              "word": "boundaries",
+              "visible": "bound",
+              "hidden": "aries"
+            },
+            {
+              "word": "colliding",
+              "visible": "coll",
+              "hidden": "iding"
+            },
+            {
+              "word": "subduction",
+              "visible": "subdu",
+              "hidden": "ction"
+            },
+            {
+              "word": "volcanic",
+              "visible": "volc",
+              "hidden": "anic"
+            },
+            {
+              "word": "earthquakes",
+              "visible": "earth",
+              "hidden": "quakes"
+            },
+            {
+              "word": "seismologists",
+              "visible": "seism",
+              "hidden": "ologists"
+            },
+            {
+              "word": "magnitude",
+              "visible": "magn",
+              "hidden": "itude"
+            },
+            {
+              "word": "catastrophic",
+              "visible": "catas",
+              "hidden": "trophic"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 10,
+          "title": "Plate Tectonics and Continental Drift",
+          "passage": "In 1912, German scientist Alfred Wegener proposed that Earth's continents were once joined in a single landmass, which he called Pangaea, before gradually drifting apart. He supported this idea with evidence such as the matching coastlines of South America and Africa, along with identical fossil species found on continents now separated by vast oceans.\n\nDespite this compelling evidence, most geologists of Wegener's era rejected his hypothesis, largely because he could not identify a plausible mechanism capable of moving entire continents across the ocean floor. Without an explanation for the force driving this motion, continental drift remained a marginal and widely dismissed idea for several decades.\n\nThe theory gained credibility in the mid-twentieth century following the discovery of seafloor spreading, in which new oceanic crust forms at mid-ocean ridges and pushes older crust outward. Studies of paleomagnetism, the record of Earth's magnetic field preserved in rock, confirmed that the seafloor was indeed spreading symmetrically from these ridges, providing the missing mechanistic evidence Wegener's critics had demanded.\n\nThese discoveries evolved into the modern theory of plate tectonics, which holds that Earth's rigid outer shell is divided into plates that move atop a slowly flowing mantle driven by convection currents. This framework now explains a wide range of geological phenomena, including earthquakes, volcanic activity, and the formation of mountain ranges where plates collide or slide past one another.",
+          "passage_marked": "In 1912, German scientist Alfred Wegener proposed that Earth's continents were once joined in a single landmass, which he called Pangaea, before gradually drifting apart. He supported this idea with evidence such as the matching coastlines of South America and Africa, along with identical fossil species found on continents now separated by vast oceans. [A]\n\nDespite this compelling evidence, most geologists of Wegener's era rejected his hypothesis, largely because he could not identify a plausible mechanism capable of moving entire continents across the ocean floor. [B] Without an explanation for the force driving this motion, continental drift remained a marginal and widely dismissed idea for several decades.\n\nThe theory gained credibility in the mid-twentieth century following the discovery of seafloor spreading, in which new oceanic crust forms at mid-ocean ridges and pushes older crust outward. Studies of paleomagnetism, the record of Earth's magnetic field preserved in rock, confirmed that the seafloor was indeed spreading symmetrically from these ridges, providing the missing mechanistic evidence Wegener's critics had demanded. [C]\n\nThese discoveries evolved into the modern theory of plate tectonics, which holds that Earth's rigid outer shell is divided into plates that move atop a slowly flowing mantle driven by convection currents. This framework now explains a wide range of geological phenomena, including earthquakes, volcanic activity, and the formation of mountain ranges where plates collide or slide past one another. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'mechanism' in the passage is closest in meaning to",
+              "options": [
+                "a written record",
+                "a process or method by which something works",
+                "a type of rock",
+                "a geographic boundary"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, why did most geologists initially reject Wegener's hypothesis?",
+              "options": [
+                "The fossil evidence contradicted his claims",
+                "He could not explain what force caused continents to move",
+                "He never presented any supporting evidence",
+                "He was not a trained scientist"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What is seafloor spreading?",
+              "options": [
+                "The shrinking of ocean basins over time",
+                "The process by which new oceanic crust forms at mid-ocean ridges and pushes older crust outward",
+                "The melting of polar ice into the ocean",
+                "A method of measuring ocean depth"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention studies of paleomagnetism?",
+              "options": [
+                "To describe how compasses are manufactured",
+                "To provide the evidence that confirmed seafloor spreading and supported continental drift",
+                "To explain how fossils form",
+                "To disprove Wegener's theory"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This evidence, though suggestive, was far from conclusive proof to Wegener's contemporaries.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 15,
+          "topic": "Genetics and Heredity",
+          "category": "Biology",
+          "paragraph": "The science of genetics studies how traits are passed from parents to offspring through units of heredity called genes. During reproduction, offspring inherit a combination of genes from both parents, resulting in unique traits. Changes in the DNA sequence, known as mutations, can arise spontaneously or due to environmental exposure, sometimes producing traits that are beneficial, harmful, or neutral. Over long periods, beneficial mutations can spread through populations, driving evolutionary change. To study inheritance patterns and address genetic disorders, geneticists use techniques including sequencing and gene editing, transforming medicine and agriculture.",
+          "blanks": [
+            {
+              "word": "reproduction",
+              "visible": "repro",
+              "hidden": "duction"
+            },
+            {
+              "word": "offspring",
+              "visible": "offs",
+              "hidden": "pring"
+            },
+            {
+              "word": "sequence",
+              "visible": "sequ",
+              "hidden": "ence"
+            },
+            {
+              "word": "mutations",
+              "visible": "muta",
+              "hidden": "tions"
+            },
+            {
+              "word": "spontaneously",
+              "visible": "spont",
+              "hidden": "aneously"
+            },
+            {
+              "word": "exposure",
+              "visible": "expo",
+              "hidden": "sure"
+            },
+            {
+              "word": "beneficial",
+              "visible": "benef",
+              "hidden": "icial"
+            },
+            {
+              "word": "evolutionary",
+              "visible": "evolu",
+              "hidden": "tionary"
+            },
+            {
+              "word": "inheritance",
+              "visible": "inher",
+              "hidden": "itance"
+            },
+            {
+              "word": "geneticists",
+              "visible": "genet",
+              "hidden": "icists"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 23,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Fitness Studio Floor Being Resurfaced",
+          "subtitle": "",
+          "text": "The main fitness studio floor is being resurfaced this Thursday and Friday and will be unavailable for classes.\n\nAll scheduled classes will be relocated to Studio B on the second floor.\n\nMembers should check the front desk for updated room assignments.",
+          "questions": [
+            {
+              "question": "What is happening to the main fitness studio?",
+              "options": [
+                "It is being permanently closed",
+                "Its floor is being resurfaced",
+                "It is being expanded",
+                "It is being repainted"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where will classes be held on Thursday and Friday?",
+              "options": [
+                "Outdoors in the parking lot",
+                "At a different branch location",
+                "In Studio B on the second floor",
+                "Classes will be cancelled entirely"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 24,
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Loading Dock Access Change",
+          "subtitle": "",
+          "text": "Beginning next Monday, all deliveries must use the loading dock on Elm Street instead of the Main Street entrance.\n\nThis change is due to ongoing sidewalk repairs near the Main Street doors.\n\nDelivery drivers should check in with the security desk upon arrival.",
+          "questions": [
+            {
+              "question": "Why is the delivery entrance being changed?",
+              "options": [
+                "The Main Street entrance is being permanently closed",
+                "Sidewalk repairs are underway near the Main Street doors",
+                "The Elm Street dock is closer to the loading area",
+                "New security cameras are being installed"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should delivery drivers do when they arrive?",
+              "options": [
+                "Park on Main Street and wait",
+                "Check in with the security desk",
+                "Call ahead before arriving",
+                "Use a separate entrance for pedestrians"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 89,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/89.mp3",
+          "transcript": "What would you recommend for a mild headache?",
+          "context": "A customer asks a pharmacist for an over-the-counter medicine suggestion.",
+          "options": [
+            "The pharmacy is open until nine.",
+            "This pain reliever works well for that.",
+            "Your prescription is ready now.",
+            "Cold medicine is on aisle three."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "12-89"
+        },
+        {
+          "id": 90,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/90.mp3",
+          "transcript": "I want to try a lighter color this time.",
+          "context": "A client requests a hair color change from a hairdresser.",
+          "options": [
+            "Your last appointment was in March.",
+            "The salon added new services.",
+            "Haircuts take about thirty minutes.",
+            "Sure, let's look at some shades."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "12-90"
+        },
+        {
+          "id": 91,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/91.mp3",
+          "transcript": "My order was delivered to the wrong address.",
+          "context": "A customer reports a delivery mistake.",
+          "options": [
+            "I'm sorry, we'll send it to you right away.",
+            "The delivery fee has been removed.",
+            "Your order was placed yesterday.",
+            "We deliver between nine and five."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "12-91"
+        },
+        {
+          "id": 92,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/92.mp3",
+          "transcript": "I noticed the menu changed, is the pasta still available?",
+          "context": "A student asks about a cafeteria menu update.",
+          "options": [
+            "The cafeteria closes at eight.",
+            "Prices went up this semester.",
+            "Yes, it's still on the menu today.",
+            "We added a new salad bar."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "12-92"
+        },
+        {
+          "id": 93,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/93.mp3",
+          "transcript": "Can we move the ceremony start time to five instead of four?",
+          "context": "A bride asks her wedding planner to adjust the schedule.",
+          "options": [
+            "The flowers arrive tomorrow morning.",
+            "That should be possible, let me check with the venue.",
+            "Your guest list has two hundred names.",
+            "The caterer needs a final headcount."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "12-93"
+        },
+        {
+          "id": 94,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/94.mp3",
+          "transcript": "What time does the next guided tour begin?",
+          "context": "A museum visitor asks about the schedule for tours.",
+          "options": [
+            "The gift shop is near the entrance.",
+            "Photography isn't allowed inside.",
+            "Admission is free on Sundays.",
+            "The next one starts in fifteen minutes."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "12-94"
+        },
+        {
+          "id": 95,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/95.mp3",
+          "transcript": "My car makes a strange noise whenever I brake.",
+          "context": "A customer describes a car problem to a mechanic.",
+          "options": [
+            "Let's take a look at the brake pads.",
+            "Your oil change is due soon.",
+            "The tires look worn out.",
+            "We're closed this weekend."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "12-95"
+        },
+        {
+          "id": 96,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/96.mp3",
+          "transcript": "I think I'm missing one shirt from my order.",
+          "context": "A customer reports a missing item at a dry cleaner.",
+          "options": [
+            "Your order will be ready Friday.",
+            "We offer same-day service too.",
+            "Let me check the back for you.",
+            "The price went up this month."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "12-96"
+        },
+        {
+          "id": 97,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/97.mp3",
+          "transcript": "Can we make a cleaning schedule for the kitchen?",
+          "context": "A woman suggests organizing chores with her roommate.",
+          "options": [
+            "The dishwasher broke last week.",
+            "That's a good idea, let's split the days.",
+            "I bought new dish soap yesterday.",
+            "The trash goes out on Tuesdays."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "13-97"
+        },
+        {
+          "id": 98,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/98.mp3",
+          "transcript": "Am I still eligible for the scholarship next semester?",
+          "context": "A student asks an academic advisor about scholarship eligibility.",
+          "options": [
+            "The application deadline was last month.",
+            "Tuition increased slightly this year.",
+            "Your advisor meeting is on Friday.",
+            "Yes, as long as you maintain your GPA."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "13-98"
+        }
+      ],
+      "conv": [
+        {
+          "id": 21,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/21.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Someone jammed the lock on my bike outside the science building."
+            },
+            {
+              "speaker": "female",
+              "text": "Oh no, can you still get it open?"
+            },
+            {
+              "speaker": "male",
+              "text": "No, it's completely stuck. I might need bolt cutters."
+            },
+            {
+              "speaker": "female",
+              "text": "Campus security has tools like that. You could ask them for help."
+            },
+            {
+              "speaker": "male",
+              "text": "I didn't think of that. I'll head over there now."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "His bike was stolen.",
+                "His bike's lock is jammed and won't open.",
+                "He forgot where he parked his bike.",
+                "His bike has a flat tire."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest he do?",
+              "options": [
+                "Buy a new lock.",
+                "Ask campus security for help.",
+                "Leave the bike there overnight.",
+                "Call a locksmith downtown."
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/22.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I wanted to sign up for the yoga class at the gym, but it says it's full."
+            },
+            {
+              "speaker": "male",
+              "text": "That class fills up fast. Did you check if there's a waitlist?"
+            },
+            {
+              "speaker": "female",
+              "text": "I didn't see one on the website."
+            },
+            {
+              "speaker": "male",
+              "text": "You could call the front desk directly. Sometimes spots open up from cancellations."
+            },
+            {
+              "speaker": "female",
+              "text": "Good idea, I'll give them a call this afternoon."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She cannot afford a gym membership.",
+                "The yoga class she wants to join is full.",
+                "She missed the first day of yoga class.",
+                "The gym is closed for renovations."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest she do?",
+              "options": [
+                "Choose a different class entirely.",
+                "Call the front desk about openings.",
+                "Wait until next semester.",
+                "Ask a friend to save her a spot."
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/23.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "My group project partner keeps missing our meetings, and the deadline is close."
+            },
+            {
+              "speaker": "female",
+              "text": "Have you tried reaching out to see what's going on?"
+            },
+            {
+              "speaker": "male",
+              "text": "I've texted a few times, but I haven't heard back."
+            },
+            {
+              "speaker": "female",
+              "text": "You might want to let the professor know soon, in case it affects your grade."
+            },
+            {
+              "speaker": "male",
+              "text": "I was hoping to avoid that, but you're right, I should send an email today."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "His group project partner keeps missing meetings.",
+                "He forgot about the project deadline.",
+                "His group chose the wrong topic.",
+                "He cannot find a group to join."
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the woman recommend?",
+              "options": [
+                "Finish the project alone.",
+                "Inform the professor about the situation.",
+                "Wait until after the deadline to act.",
+                "Switch to a different group."
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 21,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/21.mp3",
+          "speaker": "male",
+          "transcript": "Attention diners: starting next week, the main cafeteria will be introducing a new dedicated station offering plant-based meal options at every lunch and dinner service. This change comes after a survey last semester showed strong student interest in more vegetarian and vegan choices. The new station will be located near the salad bar, and a full rotating menu will be posted online each week.",
+          "questions": [
+            {
+              "question": "What change is being announced?",
+              "options": [
+                "The cafeteria is closing permanently",
+                "A new plant-based meal station is being added",
+                "Meal prices are increasing",
+                "The cafeteria's hours are being reduced"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why was this change made?",
+              "options": [
+                "Due to a shortage of meat products",
+                "Because of a survey showing student interest",
+                "Due to a new state regulation",
+                "Because the old station broke down"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 22,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/22.mp3",
+          "speaker": "female",
+          "transcript": "Please be advised that the west parking garage will be closed for repaving beginning this Friday and continuing through the following Tuesday. Vehicles currently parked in the garage must be relocated by Thursday evening, or they may be towed at the owner's expense. Displaced permit holders may park temporarily in the overflow lot behind the athletics building at no additional charge during the closure.",
+          "questions": [
+            {
+              "question": "What is the main purpose of this announcement?",
+              "options": [
+                "To announce the permanent closure of a parking garage",
+                "To inform drivers of a temporary closure for repaving",
+                "To announce new parking permit prices",
+                "To report a car accident in the garage"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should permit holders do if displaced?",
+              "options": [
+                "Find parking off campus",
+                "Park temporarily in the overflow lot at no charge",
+                "Pay for a new permit",
+                "Wait until the garage reopens to park anywhere"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 23,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/23.mp3",
+          "speaker": "male",
+          "transcript": "A reminder to all students that the campus bookstore will be extending its hours during final exam week. Starting Monday, the store will open at seven in the morning and remain open until midnight, seven days a week, to give students more flexibility for purchasing school supplies and study materials. Regular hours will resume the following Monday once exams have concluded.",
+          "questions": [
+            {
+              "question": "What is being announced?",
+              "options": [
+                "The bookstore is closing for the semester",
+                "The bookstore is extending its hours during finals week",
+                "The bookstore is offering discounts on textbooks",
+                "The bookstore is moving to a new building"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When will regular hours resume?",
+              "options": [
+                "Immediately after the announcement",
+                "The following Monday after exams conclude",
+                "At the start of next semester",
+                "They will not change back"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 17,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/17.mp3",
+          "speaker": "female",
+          "subject": "Geology",
+          "transcript": "Let's continue our discussion of rock formation by focusing today on sedimentary rocks, which record Earth's history in a way igneous and metamorphic rocks generally cannot. Sedimentary rocks form through a process that begins with weathering, where wind, water, and temperature changes gradually break larger rocks into smaller fragments called sediment. These fragments are then transported, often by rivers, and eventually deposited in layers, typically in low-lying areas such as riverbeds, lakes, or ocean basins. Over long periods of time, as more layers accumulate, the weight of the material above compresses the lower layers, squeezing out water and reducing pore space, a process known as compaction. Following compaction, minerals dissolved in groundwater precipitate and bind the sediment particles together in a process called cementation, ultimately transforming loose sediment into solid rock. This combined process is often referred to as lithification. Because sediment is deposited in layers over time, sedimentary rocks typically display visible horizontal bands called strata, and geologists rely on a principle called the law of superposition, which states that in an undisturbed sequence, older layers lie beneath younger ones. This allows geologists to essentially read a stack of sedimentary rock like a timeline, with the oldest events at the bottom. What makes sedimentary rocks especially valuable to scientists is their tendency to preserve fossils. When an organism dies and becomes buried in sediment relatively quickly, its remains can be protected from decay long enough for mineral replacement to occur, gradually creating a fossilized version of the organism. Because we can often determine the relative age of the surrounding sedimentary layers, fossils provide crucial evidence for reconstructing the history of life on Earth. Sedimentary rocks are typically classified into three broad categories based on how they form. Clastic sedimentary rocks, like sandstone and shale, form from fragments of other rocks. Chemical sedimentary rocks, such as limestone in some cases, form when dissolved minerals precipitate directly out of water. Organic sedimentary rocks, like coal, form from the compressed remains of once-living organisms, primarily plant material in swampy environments. Understanding which type of sedimentary rock is present in a region can tell geologists a great deal about past environmental conditions, since certain rock types only form under specific circumstances, such as shallow, warm seas or ancient river deltas. Next time, we'll examine how these environmental clues are used to reconstruct ancient coastlines and climate patterns.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "How sedimentary rocks form and what they reveal about Earth's history",
+                "The classification of igneous rocks",
+                "How volcanic eruptions create new landforms",
+                "The chemical composition of ocean water"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, what does the law of superposition state?",
+              "options": [
+                "Younger rock layers always lie beneath older ones",
+                "In an undisturbed sequence, older layers lie beneath younger ones",
+                "All rock layers form at the same time",
+                "Rock layers cannot be dated accurately"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention fossils?",
+              "options": [
+                "To explain why sedimentary rocks are valuable for reconstructing the history of life",
+                "To argue that fossils are rarely found in sedimentary rocks",
+                "To describe how fossils are sold commercially",
+                "To compare fossils found in igneous rocks"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about organic sedimentary rocks like coal?",
+              "options": [
+                "They form primarily from compressed plant material in swampy environments",
+                "They form only in deep ocean trenches",
+                "They contain no evidence of past environments",
+                "They form through volcanic activity"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 18,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/18.mp3",
+          "speaker": "male",
+          "subject": "Neuroscience",
+          "transcript": "Today's topic is neuroplasticity, the brain's remarkable ability to reorganize itself by forming new neural connections throughout life. For much of the twentieth century, scientists believed the brain's structure was largely fixed after childhood, meaning that once neural pathways were established, they could not meaningfully change. Research over the past several decades has overturned this view. We now understand that the brain continues to adapt in response to experience, learning, injury, and even changes in behavior, well into old age. One of the clearest demonstrations of neuroplasticity comes from studies of skill acquisition. When someone learns a new motor skill, such as playing a musical instrument, brain imaging studies show measurable changes in the regions associated with that skill. In one well-known study, researchers found that the region of the brain controlling finger movements in string musicians was noticeably larger and more developed than in non-musicians, and the effect was more pronounced in those who had been playing since childhood. This suggests that repeated practice can physically reshape brain structure over time, not just improve performance through some abstract form of learning. Neuroplasticity is also central to recovery after brain injury, such as a stroke. When a stroke damages a particular brain region, nearby healthy areas can sometimes take over functions previously handled by the damaged tissue, a process that underlies many rehabilitation therapies. Physical and occupational therapists design exercises specifically to encourage this kind of reorganization, essentially retraining the brain to route around damaged areas. However, this capacity for change is not unlimited or automatic. The brain generally shows greater plasticity in younger individuals, though it never completely disappears. Researchers have also identified specific factors that seem to encourage neuroplasticity, including regular physical exercise, adequate sleep, and engaging in mentally challenging or novel activities, while chronic stress appears to have the opposite effect, potentially impairing the brain's ability to reorganize effectively. This has led to considerable interest in whether certain types of cognitive training programs, sometimes marketed as brain games, can meaningfully improve overall cognitive function, though the scientific evidence for broad, transferable benefits remains a matter of ongoing debate among researchers. What does seem clear is that neuroplasticity gives us good reason to think of the brain not as a fixed organ, but as a dynamic system continuously shaped by our experiences and behaviors. Next class, we'll look specifically at how neuroplasticity research has influenced modern approaches to stroke rehabilitation.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "The brain's ability to reorganize itself through neuroplasticity",
+                "The anatomy of the human brain",
+                "How strokes are diagnosed",
+                "The history of brain surgery"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the professor mention the study of string musicians?",
+              "options": [
+                "To show that musical training has no effect on the brain",
+                "To provide evidence that practice can physically reshape brain structure",
+                "To argue that musicians have naturally larger brains from birth",
+                "To explain how music is processed by the ears"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what happens after a stroke damages part of the brain?",
+              "options": [
+                "The damaged region always fully repairs itself",
+                "Nearby healthy areas can sometimes take over lost functions",
+                "The brain permanently loses that function",
+                "Neuroplasticity stops occurring entirely"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about chronic stress and neuroplasticity?",
+              "options": [
+                "Chronic stress has no measurable effect on the brain",
+                "Chronic stress may impair the brain's ability to reorganize",
+                "Chronic stress always improves cognitive training results",
+                "Chronic stress only affects children"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 99,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/99.mp3",
+          "transcript": "I won't be able to come in tomorrow, I'm feeling sick.",
+          "context": "An employee informs a manager about taking sick leave.",
+          "options": [
+            "Feel better, I'll cover your shift.",
+            "The meeting is rescheduled to Monday.",
+            "Your paycheck arrives on Friday.",
+            "The office is closed for a holiday."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "13-99"
+        },
+        {
+          "id": 100,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/100.mp3",
+          "transcript": "This blender stopped working after just two days.",
+          "context": "A customer reports a defective product to a manager.",
+          "options": [
+            "The warranty lasts one year.",
+            "We restocked that item yesterday.",
+            "I'm sorry, let's get you a replacement.",
+            "The store opens at ten today."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "13-100"
+        },
+        {
+          "id": 101,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/101.mp3",
+          "transcript": "Should we just split the bill evenly or pay for what we ordered?",
+          "context": "A woman asks a friend how to divide a restaurant bill.",
+          "options": [
+            "The waiter forgot our drinks.",
+            "Let's just split it evenly, it's easier.",
+            "This restaurant takes reservations only.",
+            "The dessert menu looks great."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "13-101"
+        },
+        {
+          "id": 102,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/102.mp3",
+          "transcript": "Let's start with some stretches for your shoulder today.",
+          "context": "A physical therapist begins a session with a patient.",
+          "options": [
+            "My appointment was rescheduled once.",
+            "The clinic added a new parking lot.",
+            "Insurance covers ten sessions a year.",
+            "Okay, just tell me what to do."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "13-102"
+        },
+        {
+          "id": 103,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/103.mp3",
+          "transcript": "My subway card isn't working at the turnstile.",
+          "context": "A passenger reports an issue with a transit card.",
+          "options": [
+            "Let me check the balance for you.",
+            "The next train arrives in five minutes.",
+            "This station is being renovated.",
+            "Fares increased last month."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "13-103"
+        },
+        {
+          "id": 104,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/104.mp3",
+          "transcript": "You'll need to update your software before the meeting.",
+          "context": "An IT staff member instructs an employee about an update.",
+          "options": [
+            "The meeting room is booked already.",
+            "My laptop is three years old.",
+            "Okay, I'll do that right now.",
+            "The update took an hour last time."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "13-104"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 19,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/19.mp3",
+          "speaker": "female",
+          "subject": "Behavioral Economics",
+          "transcript": "Today we're going to examine a concept from behavioral economics called loss aversion, which challenges a basic assumption of traditional economic theory. Classical economic models generally assume that people make decisions rationally, weighing potential gains and losses equally to maximize their overall benefit. Research by psychologists Daniel Kahneman and Amos Tversky, however, found that people do not treat gains and losses symmetrically at all. Their experiments repeatedly showed that the psychological pain of losing a certain amount of money is felt roughly twice as strongly as the pleasure of gaining that same amount. This asymmetry, known as loss aversion, has significant implications for how people actually behave in real economic situations, often in ways that appear irrational from a purely mathematical standpoint. Consider a simple example. Imagine being offered a coin flip where heads means you win one hundred dollars, and tails means you lose one hundred dollars. Mathematically, this is a fair bet with an expected value of zero. Yet most people decline this bet, because the anticipated pain of losing one hundred dollars outweighs the anticipated pleasure of winning the same amount. Interestingly, researchers have found that for many people, the potential gain would need to be roughly twice the potential loss before they would find such a bet appealing. Loss aversion helps explain a wide range of real-world behaviors that classical economic theory struggled to account for. For instance, investors often hold onto losing stocks far longer than is financially sensible, hoping to avoid realizing a loss, even when selling and reinvesting elsewhere would be the more rational choice. This tendency is sometimes called the disposition effect. Loss aversion also helps explain why people often overvalue items they already own compared to identical items they don't yet possess, a related phenomenon known as the endowment effect. In one classic experiment, participants who were given a coffee mug demanded roughly twice as much money to sell it as other participants were willing to pay to buy an identical mug, even though the mug itself had no special sentimental value. Businesses and policymakers have found practical applications for these insights. Framing a choice in terms of what someone stands to lose, rather than what they stand to gain, tends to be a far more powerful motivator, which is why so much marketing language emphasizes avoiding loss rather than simply promoting benefits. Understanding loss aversion doesn't mean people behave irrationally in every situation, but it does mean that a purely mathematical model of decision-making misses an important part of how humans actually evaluate risk. Next time, we'll discuss how loss aversion interacts with another key concept in behavioral economics: mental accounting.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "The concept of loss aversion in behavioral economics",
+                "How to calculate expected value in gambling",
+                "The history of classical economic theory",
+                "How stock markets are regulated"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, how strongly is the pain of loss felt compared to the pleasure of an equivalent gain?",
+              "options": [
+                "About half as strongly",
+                "Roughly the same",
+                "Roughly twice as strongly",
+                "Ten times as strongly"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "Why does the professor mention the coffee mug experiment?",
+              "options": [
+                "To illustrate the endowment effect",
+                "To explain how mugs are priced in stores",
+                "To argue that mugs have universal sentimental value",
+                "To compare mug prices across different countries"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about the disposition effect in investing?",
+              "options": [
+                "It causes investors to sell winning stocks too early and hold losing stocks too long",
+                "It only affects professional investors",
+                "It has no connection to loss aversion",
+                "It causes investors to always make rational choices"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 20,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/20.mp3",
+          "speaker": "male",
+          "subject": "History",
+          "transcript": "Today we're returning to fifteenth-century Europe to examine a shift often described as the printing revolution, and its broader effects on European society beyond simply making books more available. Before movable type printing became widespread, producing a single book could take a scribe many months of careful handwriting, meaning that books were rare, expensive, and largely limited to wealthy individuals, religious institutions, and universities. As printing presses spread rapidly across Europe in the decades following their introduction, the cost of producing books fell dramatically, and the sheer volume of material in circulation increased at an extraordinary pace. Historians estimate that by the year 1500, European presses had already produced millions of books, a staggering figure compared to the centuries before. This increased availability had consequences that extended well beyond literature and religion. One significant effect was on the standardization of language itself. Before printing, spelling and grammar varied considerably from region to region, even within the same country, since written language was passed down largely through local scribal traditions. As printers began producing texts for wider distribution, they gradually adopted more consistent spelling and grammatical conventions in order to reach the broadest possible audience, which in turn influenced how ordinary people wrote and eventually spoke. The printing revolution also transformed the spread of scientific ideas. Where a new discovery or theory once might have taken decades to reach scholars in other regions, printed works could now circulate across Europe within a matter of months, accelerating scientific collaboration and debate considerably. Some historians argue this acceleration was a key ingredient in what later became the Scientific Revolution. Religious reform movements were similarly transformed. Printed pamphlets allowed reformers to distribute their ideas far more widely and quickly than had previously been possible, reaching audiences well beyond the reach of any single preacher or local church authority. This ability to rapidly disseminate controversial ideas is one reason historians consider the printing press to be closely tied to the religious upheavals of the sixteenth century. It's worth noting, however, that literacy rates rose only gradually following the printing revolution, and for many decades printed material remained concentrated among an educated minority, even as prices continued to fall. The full democratization of reading would take several more centuries to unfold. Next class, we'll look specifically at how print culture shaped early modern scientific institutions.",
+          "questions": [
+            {
+              "question": "What is the lecture mainly about?",
+              "options": [
+                "The broader social effects of the printing revolution in Europe",
+                "The invention of paper in medieval Europe",
+                "The biography of a famous fifteenth-century scholar",
+                "The decline of European universities"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the professor, how did printing affect language?",
+              "options": [
+                "It had no effect on language at all",
+                "It contributed to more standardized spelling and grammar",
+                "It caused regional dialects to become more distinct",
+                "It eliminated the need for written language"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention religious reform movements?",
+              "options": [
+                "To argue that printing had nothing to do with religion",
+                "To explain how printed pamphlets helped spread reform ideas quickly",
+                "To describe how religious texts were banned",
+                "To compare printing in Europe and Asia"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about literacy rates after the printing revolution?",
+              "options": [
+                "They rose instantly and completely across all of Europe",
+                "They rose only gradually over many decades",
+                "They declined sharply due to printing",
+                "They were unaffected by the availability of books"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 105,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/105.mp3",
+          "transcript": "I'm looking for sources for my research paper on climate change.",
+          "context": "A student asks a librarian for help finding research materials.",
+          "options": [
+            "The library closes early on Sundays.",
+            "I can show you our database section.",
+            "Printing costs ten cents a page.",
+            "Group study rooms need reservations."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "14-105"
+        },
+        {
+          "id": 106,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/106.mp3",
+          "transcript": "I'd like to cancel my gym membership this month.",
+          "context": "A gym member requests to cancel their subscription.",
+          "options": [
+            "The gym is adding new classes.",
+            "Your last payment was on the fifth.",
+            "We have a referral discount program.",
+            "Sure, I'll process that for you."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "14-106"
+        },
+        {
+          "id": 107,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/107.mp3",
+          "transcript": "Can I exchange some dollars for euros before my trip?",
+          "context": "A customer asks a bank teller about currency exchange.",
+          "options": [
+            "Of course, how much would you like to exchange?",
+            "The exchange rate improved last week.",
+            "Your account balance is sufficient.",
+            "International wire transfers take two days."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "14-107"
+        },
+        {
+          "id": 108,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/108.mp3",
+          "transcript": "Is it possible to get a late checkout tomorrow?",
+          "context": "A hotel guest asks about extending their stay past checkout time.",
+          "options": [
+            "Breakfast ends at ten.",
+            "Your room was upgraded already.",
+            "I can extend it to one o'clock for you.",
+            "Housekeeping comes twice a day."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "14-108"
+        },
+        {
+          "id": 109,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/109.mp3",
+          "transcript": "Grandma, are you free for a call this weekend?",
+          "context": "A young man arranges a phone call with his grandmother.",
+          "options": [
+            "The weather has been quite cold lately.",
+            "Yes, Saturday afternoon works for me.",
+            "Your cousin visited last week.",
+            "I planted new flowers in the garden."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "14-109"
+        },
+        {
+          "id": 110,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/110.mp3",
+          "transcript": "Do you want to play a match before the tournament starts?",
+          "context": "A chess club member invites a friend to practice.",
+          "options": [
+            "The tournament is next Saturday.",
+            "I need to review some strategies.",
+            "Our club meets twice a week.",
+            "Sure, let's set up the board."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "14-110"
+        }
+      ],
+      "conv": [
+        {
+          "id": 24,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/24.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I really need to talk to Professor Kim about my essay, but I keep missing office hours."
+            },
+            {
+              "speaker": "male",
+              "text": "Why do you keep missing them?"
+            },
+            {
+              "speaker": "female",
+              "text": "They overlap with my part-time job shift every week."
+            },
+            {
+              "speaker": "male",
+              "text": "You could email her and ask if she'd be willing to meet at a different time."
+            },
+            {
+              "speaker": "female",
+              "text": "That makes sense. I'll send her a message tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "Her essay was rejected by the professor.",
+                "Her work schedule conflicts with office hours.",
+                "She forgot to write her essay.",
+                "She lost the professor's contact information."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Quit her part-time job.",
+                "Email the professor to request a different meeting time.",
+                "Skip the assignment entirely.",
+                "Ask a classmate for notes."
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/25.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I got two summer job offers, and I can't decide which one to take."
+            },
+            {
+              "speaker": "female",
+              "text": "What are the two options?"
+            },
+            {
+              "speaker": "male",
+              "text": "One pays more, but the other is directly related to my major."
+            },
+            {
+              "speaker": "female",
+              "text": "If you're thinking long term, the relevant experience might matter more than the pay."
+            },
+            {
+              "speaker": "male",
+              "text": "That's true. I'll probably go with the one related to my field."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man trying to decide?",
+              "options": [
+                "Whether to work this summer at all.",
+                "Which of two summer job offers to accept.",
+                "Whether to change his major.",
+                "Which internship application to submit."
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman point out?",
+              "options": [
+                "The higher-paying job is always the better choice.",
+                "Relevant experience might matter more than pay long term.",
+                "He should ask for more time to decide.",
+                "Both jobs sound equally unappealing."
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 24,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/24.mp3",
+          "speaker": "female",
+          "transcript": "This is a notice for all residents in campus housing. The wireless network will undergo a scheduled upgrade this Thursday night beginning at 11 p.m. and lasting approximately four hours. During this window, internet access in all residence halls will be intermittent or completely unavailable. We recommend downloading any materials you may need in advance and apologize for any disruption to your evening.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To announce a new wifi provider",
+                "To notify residents of a scheduled network upgrade",
+                "To report a permanent internet outage",
+                "To announce new internet fees"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are residents encouraged to do beforehand?",
+              "options": [
+                "Move to a different building",
+                "Download needed materials in advance",
+                "Contact technical support",
+                "Purchase a personal router"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 25,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/25.mp3",
+          "speaker": "male",
+          "transcript": "Attention students interested in tonight's guest lecture on renewable energy: due to higher than expected registration, the event has been moved from the small seminar room to the main auditorium in the science building. The start time remains unchanged at 6 p.m. Seating is available on a first-come, first-served basis, and the talk will be followed by a question and answer session.",
+          "questions": [
+            {
+              "question": "Why is this announcement being made?",
+              "options": [
+                "To cancel the lecture",
+                "To announce a change in the lecture's location",
+                "To change the speaker for the lecture",
+                "To reschedule the lecture to another day"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will happen after the lecture?",
+              "options": [
+                "A reception will be held",
+                "A question and answer session",
+                "The speaker will sign books",
+                "Students will submit written responses"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 41,
+        "promptGender": "female",
+        "prompt": "The printer keeps jamming every time I try to print.",
+        "responseGender": "male",
+        "responsePrefix": "It",
+        "correctChunks": [
+          "probably",
+          "needs",
+          "a new toner cartridge"
+        ],
+        "distractorChunks": [
+          "need"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 42,
+        "promptGender": "male",
+        "prompt": "I'm worried the cake won't be ready in time for the party.",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "can",
+          "help",
+          "you",
+          "finish",
+          "it",
+          "this afternoon"
+        ],
+        "distractorChunks": [
+          "helped"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 43,
+        "promptGender": "female",
+        "prompt": "The train was delayed again this morning.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Does",
+          "that",
+          "happen",
+          "every",
+          "Monday"
+        ],
+        "distractorChunks": [
+          "happens"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 44,
+        "promptGender": "male",
+        "prompt": "My phone battery drains really fast lately.",
+        "responseGender": "female",
+        "responsePrefix": "You",
+        "correctChunks": [
+          "might",
+          "want",
+          "to",
+          "replace",
+          "the battery",
+          "soon"
+        ],
+        "distractorChunks": [
+          "replacing"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 45,
+        "promptGender": "female",
+        "prompt": "I forgot to water the office plants again this week.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Do",
+          "they",
+          "usually",
+          "survive",
+          "a few missed waterings"
+        ],
+        "distractorChunks": [
+          "does"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 46,
+        "promptGender": "male",
+        "prompt": "The landlord still hasn't fixed the leaky faucet.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Have",
+          "you",
+          "sent",
+          "him",
+          "a written request yet"
+        ],
+        "distractorChunks": [
+          "sending"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 47,
+        "promptGender": "female",
+        "prompt": "I think the milk in the fridge has gone bad.",
+        "responseGender": "male",
+        "responsePrefix": "It",
+        "correctChunks": [
+          "probably",
+          "needs",
+          "to be",
+          "thrown out"
+        ],
+        "distractorChunks": [
+          "need"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 48,
+        "promptGender": "male",
+        "prompt": "Our internet has been really slow all week.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Did",
+          "you",
+          "already",
+          "restart",
+          "the router"
+        ],
+        "distractorChunks": [
+          "restarted"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 49,
+        "promptGender": "female",
+        "prompt": "I can't decide which apartment to rent.",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "think",
+          "the one",
+          "near campus",
+          "makes",
+          "more sense"
+        ],
+        "distractorChunks": [
+          "make"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 50,
+        "promptGender": "male",
+        "prompt": "The professor never replied to my email about the extension.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Did",
+          "you",
+          "try",
+          "emailing",
+          "her",
+          "a second time"
+        ],
+        "distractorChunks": [
+          "emails"
+        ],
+        "responseSuffix": "?"
+      }
+    ],
+    "email": {
+      "id": 5,
+      "scenario": "Your professor, Dr. Whitman, wrote you a strong letter of recommendation for a study abroad program, and you have just been accepted. You want to share the good news and thank her for her support.",
+      "recipient": "Dr. Whitman",
+      "subject": "I got accepted - thank you!",
+      "tasks": [
+        {
+          "description": "Thank her for writing the recommendation letter.",
+          "keywords": [
+            "thank you",
+            "appreciate",
+            "grateful",
+            "kind of you"
+          ]
+        },
+        {
+          "description": "Share the news that you were accepted into the program.",
+          "keywords": [
+            "accepted",
+            "admitted",
+            "good news",
+            "offer"
+          ]
+        },
+        {
+          "description": "Ask if you could meet briefly before you leave to discuss preparation.",
+          "keywords": [
+            "meet",
+            "discuss",
+            "before I leave",
+            "prepare",
+            "office hours"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Dr. Whitman,\n\nI want to sincerely thank you for the recommendation letter you wrote for my study abroad application. I know how busy your schedule is, and it was incredibly kind of you to take the time to support me. Your letter clearly made a strong impression on the admissions committee, and I am very grateful for your effort.\n\nI am excited to share some good news: I have officially been accepted into the study abroad program in Madrid for next spring! This is an opportunity I have been hoping for, and your recommendation played a major role in making it possible.\n\nBefore I leave, I would love to meet with you briefly to discuss how I can best prepare academically and make the most of this experience. Would you have any availability during your office hours next week? Thank you again for everything.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 5,
+      "subject": "marketing",
+      "professor": "Dr. Nakamura",
+      "professorGender": "female",
+      "prompt": "Your professor for your marketing course is teaching a unit on digital advertising strategy. Write a post responding to the professor's question.\n\nDr. Nakamura: For next week, I would like you to consider a debate that many companies are facing right now. Increasingly, brands rely on algorithms that track consumers' online behavior to deliver hyper-personalized advertisements. Some argue this approach is simply good business, since it connects people with products they actually want. Others worry that it crosses an ethical line by exploiting private data without genuine consent. Before our next class, please respond to this question: Should companies be allowed to use personal data to create highly targeted advertising, or does this practice do more harm than good?",
+      "classmates": [
+        {
+          "name": "Kenji",
+          "gender": "male",
+          "opinion": "I think targeted advertising benefits both companies and consumers. When ads are personalized, people are shown products that actually match their interests instead of being bombarded with irrelevant content. This makes shopping more efficient and even helps small businesses reach niche audiences they could never afford to target through traditional mass advertising. Companies are usually transparent about data collection through privacy policies, and users technically consent when they accept terms of service. As long as data is anonymized and not sold to malicious third parties, I see no real harm. In my opinion, banning this practice would only make advertising less useful and more annoying for everyone."
+        },
+        {
+          "name": "Bianca",
+          "gender": "female",
+          "opinion": "I disagree with using personal data for targeted ads because most people never truly understand what they are agreeing to. Privacy policies are long and full of legal jargon, so consent is often meaningless in practice. Companies track browsing habits, locations, and even conversations to build detailed profiles, which feels invasive rather than helpful. There have also been numerous data breaches where this sensitive information was leaked or sold without users' knowledge. I believe convenience should never come at the cost of privacy. Instead, companies should rely on general demographic advertising and let consumers choose to opt in if they want more personalized recommendations."
+        }
+      ],
+      "exampleResponse": "Both classmates raise valid points about a genuinely complicated issue in modern marketing. The question of whether targeted advertising is acceptable or exploitative is worth considering carefully. While I see where Bianca is coming from when she argues that consent is often meaningless because privacy policies are too complex for most users to understand, I would argue that data collection itself is not inherently harmful when it is properly regulated and transparent. In this respect, I am inclined to agree with Kenji, who emphasizes that personalization can genuinely benefit consumers by connecting them with relevant products rather than irrelevant clutter. For example, a small independent bookstore could use targeted ads to reach readers who enjoy a specific genre, something impossible with expensive traditional advertising. The real solution lies in stricter regulation and simpler consent processes, not banning personalization altogether."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 5,
+      "location": "City Aquarium",
+      "icon": "🐠",
+      "speaker": "male",
+      "introText": "You are learning how to welcome guests to the city aquarium. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the city aquarium.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "The shark tank is on your left.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Feeding time begins at two o'clock.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Please keep your voice down near the tanks.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "The touch pool lets you feel starfish and rays.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Flash photography is not allowed because it disturbs the fish.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Our gift shop sells souvenirs shaped like your favorite sea creatures.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 5,
+      "topic": "Growing Up",
+      "icon": "🧸",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about childhood memories and experiences. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. Let's begin with a simple question. What is one of your favorite memories from your childhood?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Did you prefer spending time playing outside or staying indoors when you were a child? Which did you enjoy more?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people believe that childhood today is very different from childhood in the past. Do you agree or disagree with this idea?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think children should be given more responsibilities at a young age? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1801 @@
+{
+  "id": 13,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 37,
+          "topic": "Bioluminescence in the Deep Sea",
+          "category": "Marine Biology",
+          "paragraph": "Many creatures living in the deepest parts of the ocean have evolved the remarkable ability to produce their own light. This biological phenomenon, called bioluminescence, occurs through a chemical reaction inside specialized cells within the organism's body. Deep-sea creatures use bioluminescence for several different purposes, including attracting prey, communicating with potential mates, and startling predators long enough to escape. Because sunlight cannot penetrate the deepest ocean depths, this self-generated light source has become an essential survival mechanism for numerous species living in complete darkness. Researchers continue studying these organisms to better understand how such complex chemical processes evolved independently across so many unrelated species.",
+          "blanks": [
+            {
+              "word": "biological",
+              "visible": "biolo",
+              "hidden": "gical"
+            },
+            {
+              "word": "reaction",
+              "visible": "reac",
+              "hidden": "tion"
+            },
+            {
+              "word": "organism",
+              "visible": "orga",
+              "hidden": "nism"
+            },
+            {
+              "word": "communicating",
+              "visible": "commu",
+              "hidden": "nicating"
+            },
+            {
+              "word": "sunlight",
+              "visible": "sunl",
+              "hidden": "ight"
+            },
+            {
+              "word": "generated",
+              "visible": "gene",
+              "hidden": "rated"
+            },
+            {
+              "word": "numerous",
+              "visible": "nume",
+              "hidden": "rous"
+            },
+            {
+              "word": "studying",
+              "visible": "stud",
+              "hidden": "ying"
+            },
+            {
+              "word": "complex",
+              "visible": "com",
+              "hidden": "plex"
+            },
+            {
+              "word": "unrelated",
+              "visible": "unre",
+              "hidden": "lated"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Apartment Maintenance Visit Confirmation",
+          "subtitle": "Dear Resident,",
+          "text": "This confirms that a maintenance technician will visit your unit this Wednesday between one and four in the afternoon to repair the reported leak under the kitchen sink. Please ensure the area beneath the sink is clear of any personal items before the scheduled visit. If you are unable to be present, you may leave a spare key with the front office so the technician can still complete the repair. There is no charge for this service since it falls under routine maintenance.",
+          "questions": [
+            {
+              "question": "What is the technician scheduled to repair?",
+              "options": [
+                "A broken window",
+                "A leak under the kitchen sink",
+                "A faulty light switch",
+                "A damaged door lock"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should the resident do before the visit?",
+              "options": [
+                "Pay a maintenance fee",
+                "Clear the area beneath the sink",
+                "Take a day off work",
+                "Call to confirm the appointment"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can the resident do if they cannot be present?",
+              "options": [
+                "Reschedule for the following week",
+                "Leave a spare key with the front office",
+                "Cancel the repair entirely",
+                "Ask a neighbor to supervise"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 61
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Conference Registration Confirmation",
+          "subtitle": "Dear Dr. Nakamura,",
+          "text": "Thank you for registering for the International Symposium on Renewable Energy. Your registration includes access to all three days of sessions, a printed program, and lunch each day. Your badge and materials will be available for pickup at the registration desk starting at seven on the first morning. Please note that the early bird workshop on solar technology requires a separate sign-up, as space is limited to fifty attendees. We look forward to seeing you at the symposium.",
+          "questions": [
+            {
+              "question": "What does the registration include?",
+              "options": [
+                "Hotel accommodation",
+                "Access to all sessions, a program, and lunch",
+                "Round-trip airfare",
+                "A certificate of attendance only"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What requires a separate sign-up?",
+              "options": [
+                "The printed program",
+                "The early bird workshop on solar technology",
+                "Badge pickup",
+                "Lunch on the first day"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is separate sign-up required for the workshop?",
+              "options": [
+                "It costs extra money",
+                "Space is limited to fifty attendees",
+                "It takes place off-site",
+                "It is only for keynote speakers"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 62
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Product Recall Notice",
+          "subtitle": "Dear Customer,",
+          "text": "We are contacting you because our records indicate you purchased a StoveTop electric kettle model EK-200 within the past year. A small number of these units have been found to have a defective heating element that poses a fire risk. Please stop using the kettle immediately and visit our website to request a free replacement unit. You will need your order number, which can be found on your original receipt or in your account order history. We sincerely apologize for any inconvenience this may cause.",
+          "questions": [
+            {
+              "question": "Why is the company contacting the customer?",
+              "options": [
+                "To offer a discount on a new product",
+                "To recall a defective kettle model",
+                "To confirm a delivery address",
+                "To announce a store closing"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should the customer do immediately?",
+              "options": [
+                "Continue using the kettle carefully",
+                "Stop using the kettle",
+                "Return it for a cash refund only",
+                "Repair it themselves"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is needed to request a replacement?",
+              "options": [
+                "A photo of the kettle",
+                "The order number",
+                "A signed complaint form",
+                "Proof of residence"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 63
+        }
+      ],
+      "ap": [
+        {
+          "title": "The Function of Bee Waggle Dances",
+          "passage": "Honeybees possess one of the most remarkable communication systems found among insects, allowing individual foragers to convey precise information about the location of food sources to other members of their colony. This system, commonly referred to as the waggle dance, was first systematically studied and decoded by the biologist Karl von Frisch in the mid-twentieth century.\n\nDuring a waggle dance, a returning forager moves in a repeated figure-eight pattern while vigorously vibrating its abdomen along the straight portion of the path. The angle of this straight run relative to vertical indicates the direction of the food source relative to the sun, while the duration of the waggling portion communicates the approximate distance.\n\nOther bees in the hive closely follow the dancing bee, using their antennae to detect the vibrations and interpret the encoded information. Remarkably, bees are able to adjust their interpretation of the dance based on the changing position of the sun throughout the day, even when they cannot directly observe the sun themselves inside the dark hive.\n\nThis sophisticated system allows a colony to efficiently allocate its foraging workforce toward the most productive food sources available at any given time. Researchers continue to study the waggle dance today, as it remains one of the clearest examples of symbolic communication observed outside of human language.",
+          "passage_marked": "Honeybees possess one of the most remarkable communication systems found among insects, allowing individual foragers to convey precise information about the location of food sources to other members of their colony. This system, commonly referred to as the waggle dance, was first systematically studied and decoded by the biologist Karl von Frisch in the mid-twentieth century. [A]\n\nDuring a waggle dance, a returning forager moves in a repeated figure-eight pattern while vigorously vibrating its abdomen along the straight portion of the path. [B] The angle of this straight run relative to vertical indicates the direction of the food source relative to the sun, while the duration of the waggling portion communicates the approximate distance.\n\nOther bees in the hive closely follow the dancing bee, using their antennae to detect the vibrations and interpret the encoded information. Remarkably, bees are able to adjust their interpretation of the dance based on the changing position of the sun throughout the day, even when they cannot directly observe the sun themselves inside the dark hive. [C]\n\nThis sophisticated system allows a colony to efficiently allocate its foraging workforce toward the most productive food sources available at any given time. [D] Researchers continue to study the waggle dance today, as it remains one of the clearest examples of symbolic communication observed outside of human language.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'vigorously' in the passage is closest in meaning to",
+              "options": [
+                "gently",
+                "energetically",
+                "silently",
+                "occasionally"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What did Karl von Frisch contribute to the study of bees?",
+              "options": [
+                "He discovered bees could produce honey",
+                "He decoded the meaning of the waggle dance",
+                "He invented modern beekeeping",
+                "He proved bees cannot see color"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What does the angle of the waggle dance's straight run indicate?",
+              "options": [
+                "The temperature of the hive",
+                "The direction of the food source relative to the sun",
+                "The size of the food source",
+                "The age of the dancing bee"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "How are bees able to interpret the dance despite the darkness of the hive?",
+              "options": [
+                "They rely on scent alone",
+                "They use their antennae to detect vibrations",
+                "They follow the dancer outside",
+                "They wait until sunrise"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This adjustment demonstrates an impressive internal sense of time that compensates for the sun's movement.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 25
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 38,
+          "topic": "The Fall of Constantinople",
+          "category": "History",
+          "paragraph": "Constantinople had served as the capital of the Byzantine Empire for over a thousand years before its eventual capture. The city's massive defensive walls had successfully repelled numerous invasions throughout its long history, earning it a reputation for being nearly impenetrable. However, the introduction of powerful new artillery capable of breaching even the strongest fortifications eventually shifted the balance of military technology. After a prolonged siege lasting nearly two months, the attacking forces finally overwhelmed the city's defenses and captured Constantinople, marking a significant turning point in world history. This dramatic event is often used by historians to symbolize the transition from the medieval period to the early modern era.",
+          "blanks": [
+            {
+              "word": "massive",
+              "visible": "mas",
+              "hidden": "sive"
+            },
+            {
+              "word": "numerous",
+              "visible": "nume",
+              "hidden": "rous"
+            },
+            {
+              "word": "earning",
+              "visible": "ear",
+              "hidden": "ning"
+            },
+            {
+              "word": "powerful",
+              "visible": "powe",
+              "hidden": "rful"
+            },
+            {
+              "word": "strongest",
+              "visible": "stro",
+              "hidden": "ngest"
+            },
+            {
+              "word": "technology",
+              "visible": "techn",
+              "hidden": "ology"
+            },
+            {
+              "word": "finally",
+              "visible": "fin",
+              "hidden": "ally"
+            },
+            {
+              "word": "significant",
+              "visible": "signi",
+              "hidden": "ficant"
+            },
+            {
+              "word": "dramatic",
+              "visible": "dram",
+              "hidden": "atic"
+            },
+            {
+              "word": "medieval",
+              "visible": "medi",
+              "hidden": "eval"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "The Rise of the Printing Press in Europe",
+          "passage": "Before the mid-fifteenth century, books in Europe were produced almost entirely by hand, a slow and expensive process that limited the spread of written knowledge to a small, privileged segment of society. The invention of the mechanical printing press using movable metal type fundamentally altered this situation, dramatically increasing the speed and reducing the cost of book production.\n\nJohannes Gutenberg is widely credited with developing the first practical printing press in Europe around 1440, combining several existing technologies, including oil-based ink and a modified wine press mechanism, into a single efficient system. Within decades, printing presses had spread to major cities throughout the continent, producing books at a scale previously unimaginable.\n\nThe consequences of this technological shift extended far beyond simple convenience. As books became more affordable, literacy rates gradually increased across many parts of Europe, and access to religious, scientific, and philosophical texts expanded well beyond the clergy and nobility who had previously controlled most written knowledge.\n\nHistorians often point to the printing press as a critical factor enabling the rapid spread of the Protestant Reformation and later the Scientific Revolution, since both movements depended heavily on the ability to distribute ideas quickly and widely. Without this technology, the pace of intellectual and religious change in Europe would likely have unfolded far more slowly.",
+          "passage_marked": "Before the mid-fifteenth century, books in Europe were produced almost entirely by hand, a slow and expensive process that limited the spread of written knowledge to a small, privileged segment of society. The invention of the mechanical printing press using movable metal type fundamentally altered this situation, dramatically increasing the speed and reducing the cost of book production. [A]\n\nJohannes Gutenberg is widely credited with developing the first practical printing press in Europe around 1440, combining several existing technologies, including oil-based ink and a modified wine press mechanism, into a single efficient system. [B] Within decades, printing presses had spread to major cities throughout the continent, producing books at a scale previously unimaginable.\n\nThe consequences of this technological shift extended far beyond simple convenience. As books became more affordable, literacy rates gradually increased across many parts of Europe, and access to religious, scientific, and philosophical texts expanded well beyond the clergy and nobility who had previously controlled most written knowledge. [C]\n\nHistorians often point to the printing press as a critical factor enabling the rapid spread of the Protestant Reformation and later the Scientific Revolution, since both movements depended heavily on the ability to distribute ideas quickly and widely. [D] Without this technology, the pace of intellectual and religious change in Europe would likely have unfolded far more slowly.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'privileged' in the passage is closest in meaning to",
+              "options": [
+                "advantaged",
+                "impoverished",
+                "uneducated",
+                "distant"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What is the main topic of the passage?",
+              "options": [
+                "The history of European libraries",
+                "The invention and impact of the printing press",
+                "The life of Johannes Gutenberg",
+                "The decline of handwritten manuscripts"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What technologies did Gutenberg combine to create his press?",
+              "options": [
+                "Papermaking and bookbinding",
+                "Oil-based ink and a modified wine press mechanism",
+                "Electricity and mechanical gears",
+                "Woodblock carving and dye production"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "According to the passage, what happened as books became more affordable?",
+              "options": [
+                "Literacy rates decreased",
+                "Literacy rates gradually increased",
+                "Books became less accurate",
+                "Fewer people wanted to read"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This affordability meant that written knowledge was no longer restricted to a narrow elite.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 26
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 39,
+          "topic": "Photosynthesis in Extreme Environments",
+          "category": "Botany",
+          "paragraph": "Plants have adapted to survive in an extraordinarily wide range of environmental conditions across the planet. In extremely dry environments, certain plant species have evolved specialized mechanisms that allow them to perform photosynthesis while minimizing water loss through their leaves. These adaptations often involve unusual structural modifications, such as thickened waxy coatings that dramatically reduce evaporation from the plant's surface. Some desert plants have also developed the remarkable capability to open their pores only during the cooler nighttime hours, further conserving precious water resources. Understanding these adaptations has become increasingly valuable as researchers search for ways to develop more drought-resistant agricultural crops.",
+          "blanks": [
+            {
+              "word": "extremely",
+              "visible": "extr",
+              "hidden": "emely"
+            },
+            {
+              "word": "specialized",
+              "visible": "speci",
+              "hidden": "alized"
+            },
+            {
+              "word": "photosynthesis",
+              "visible": "photo",
+              "hidden": "synthesis"
+            },
+            {
+              "word": "unusual",
+              "visible": "unu",
+              "hidden": "sual"
+            },
+            {
+              "word": "thickened",
+              "visible": "thic",
+              "hidden": "kened"
+            },
+            {
+              "word": "developed",
+              "visible": "deve",
+              "hidden": "loped"
+            },
+            {
+              "word": "nighttime",
+              "visible": "nigh",
+              "hidden": "ttime"
+            },
+            {
+              "word": "resources",
+              "visible": "reso",
+              "hidden": "urces"
+            },
+            {
+              "word": "researchers",
+              "visible": "resea",
+              "hidden": "rchers"
+            },
+            {
+              "word": "agricultural",
+              "visible": "agric",
+              "hidden": "ultural"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "University Course Waitlist Update",
+          "subtitle": "Dear Student,",
+          "text": "You have been moved from the waitlist into Introduction to Marine Biology, section 002, which meets Tuesdays and Thursdays at eleven. You must confirm your enrollment through the student portal within forty-eight hours or your spot will be offered to the next student on the list. Required textbooks are available at the campus bookstore, though the first two chapters are also posted on the course website. Lab sections will be assigned separately next week.",
+          "questions": [
+            {
+              "question": "What must the student do within forty-eight hours?",
+              "options": [
+                "Purchase the required textbook",
+                "Confirm enrollment through the student portal",
+                "Attend the first lecture",
+                "Choose a lab section"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens if the student does not confirm in time?",
+              "options": [
+                "They are automatically enrolled anyway",
+                "Their spot is offered to another student",
+                "They receive a warning email only",
+                "Nothing happens"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where can the first two chapters be found?",
+              "options": [
+                "Only at the campus bookstore",
+                "On the course website",
+                "In the library reserve section",
+                "Emailed directly to students"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 64
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Insurance Claim Status Update",
+          "subtitle": "Dear Ms. Whitmore,",
+          "text": "We have completed our initial review of your claim regarding water damage to your basement. Additional documentation is required before we can proceed, specifically photographs of the affected area and a repair cost estimate from a licensed contractor. Please submit these materials through our online portal within fifteen business days to avoid delays in processing. Once received, a claims adjuster will contact you within five business days to schedule an in-person inspection, if necessary.",
+          "questions": [
+            {
+              "question": "What does the company need from Ms. Whitmore?",
+              "options": [
+                "A police report",
+                "Photographs and a repair cost estimate",
+                "A copy of her lease agreement",
+                "Proof of ownership"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens if the documents are not submitted within fifteen days?",
+              "options": [
+                "The claim is automatically approved",
+                "Processing will be delayed",
+                "The policy will be canceled",
+                "A late fee is charged"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What might happen after the materials are received?",
+              "options": [
+                "An immediate refund is issued",
+                "A claims adjuster may schedule an inspection",
+                "The case is closed automatically",
+                "Nothing further occurs"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 65
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 265,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/265.mp3",
+          "transcript": "Could I get this pizza with extra cheese?",
+          "context": "A customer orders at a pizza counter.",
+          "options": [
+            "Of course, that'll just be an extra charge.",
+            "The pizza takes twenty minutes to bake.",
+            "We also offer gluten-free crust.",
+            "Our pizzas come in three sizes."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "34-265"
+        },
+        {
+          "id": 266,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/266.mp3",
+          "transcript": "I noticed the due date on this library book already passed.",
+          "context": "A student speaks to a librarian.",
+          "options": [
+            "Don't worry, the fine is very small.",
+            "The library closes at eight tonight.",
+            "This book has a sequel.",
+            "We have several copies available."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "34-266"
+        },
+        {
+          "id": 267,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/267.mp3",
+          "transcript": "Can you tell me if this train stops at Central Station?",
+          "context": "A passenger asks a conductor.",
+          "options": [
+            "Yes, that's actually the next stop.",
+            "This train started its route this morning.",
+            "The train has eight cars.",
+            "Tickets can be purchased online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "34-267"
+        },
+        {
+          "id": 268,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/268.mp3",
+          "transcript": "My package was supposed to arrive yesterday.",
+          "context": "A customer speaks to a shipping company representative.",
+          "options": [
+            "I'm sorry for the delay, let me track it for you.",
+            "Most packages arrive within a week.",
+            "Shipping costs vary by weight.",
+            "We deliver to over fifty countries."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "34-268"
+        },
+        {
+          "id": 269,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/269.mp3",
+          "transcript": "Is it okay if I bring my dog into the store?",
+          "context": "A customer asks a pet store employee.",
+          "options": [
+            "Of course, dogs are always welcome here.",
+            "We sell a variety of dog food brands.",
+            "The store has been open for ten years.",
+            "Dogs need regular exercise."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "34-269"
+        },
+        {
+          "id": 270,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/270.mp3",
+          "transcript": "Could you explain how the group project will be graded?",
+          "context": "A student asks a professor.",
+          "options": [
+            "Sure, each member is graded individually and as a team.",
+            "The project is due at the end of the semester.",
+            "Group projects encourage collaboration.",
+            "You can choose your own group members."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "34-270"
+        },
+        {
+          "id": 271,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/271.mp3",
+          "transcript": "I think there's a mistake on my hotel bill.",
+          "context": "A guest speaks to a hotel front desk clerk.",
+          "options": [
+            "I apologize, let me take a look at that for you.",
+            "Checkout time is at eleven.",
+            "Our hotel has a rooftop pool.",
+            "Breakfast is included with your stay."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "34-271"
+        },
+        {
+          "id": 272,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/272.mp3",
+          "transcript": "Do you have any tables available for four people tonight?",
+          "context": "A customer calls a restaurant.",
+          "options": [
+            "Let me check our reservation book for you.",
+            "Our specials change every week.",
+            "The restaurant seats about eighty guests.",
+            "We're open until ten on weekdays."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "34-272"
+        },
+        {
+          "id": 273,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/273.mp3",
+          "transcript": "Excuse me, could you tell me where the nearest pharmacy is?",
+          "context": "A tourist asks a local resident.",
+          "options": [
+            "Sure, there's one just two blocks from here.",
+            "Pharmacies usually open at nine.",
+            "You can also order medicine online.",
+            "This area has a lot of shops."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "35-273"
+        },
+        {
+          "id": 274,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/274.mp3",
+          "transcript": "I'd like to cancel my subscription, please.",
+          "context": "A customer calls a magazine company.",
+          "options": [
+            "I understand, may I ask why you're canceling?",
+            "Our next issue comes out in May.",
+            "Subscriptions include free shipping.",
+            "You can renew anytime online."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "35-274"
+        }
+      ],
+      "conv": [
+        {
+          "id": 61,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/61.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I can't figure out why my code keeps crashing during the loop."
+            },
+            {
+              "speaker": "male",
+              "text": "Can I see it? Sometimes it's just a small indexing error."
+            },
+            {
+              "speaker": "female",
+              "text": "Sure, here, it happens right after the fifth iteration."
+            },
+            {
+              "speaker": "male",
+              "text": "Ah, I see it. You're going one index past the end of the array."
+            },
+            {
+              "speaker": "female",
+              "text": "Oh, that makes sense now. Thanks for catching that."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What problem is the woman having?",
+              "options": [
+                "Her program keeps crashing",
+                "Her code won't compile",
+                "She lost her project file",
+                "Her computer is too slow"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the man identify as the issue?",
+              "options": [
+                "A missing semicolon",
+                "An indexing error past the array's end",
+                "A typo in a variable name",
+                "An incorrect loop condition"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 62,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/62.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Did you sign up for the study abroad info session yet?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not yet, I've been debating whether to go this semester or next."
+            },
+            {
+              "speaker": "male",
+              "text": "I'd recommend going to the session either way, they cover a lot of useful details."
+            },
+            {
+              "speaker": "female",
+              "text": "That's a good point. When is it again?"
+            },
+            {
+              "speaker": "male",
+              "text": "This Thursday at noon in the international center."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman unsure about?",
+              "options": [
+                "Whether to study abroad at all",
+                "Which semester to study abroad",
+                "Which country to visit",
+                "How to apply for a visa"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where will the info session take place?",
+              "options": [
+                "The library",
+                "The international center",
+                "The student union",
+                "The main auditorium"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 63,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/63.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I noticed you switched your major last semester."
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, I moved from biology to environmental science."
+            },
+            {
+              "speaker": "female",
+              "text": "What made you decide to switch?"
+            },
+            {
+              "speaker": "male",
+              "text": "I realized I was more interested in policy and sustainability than lab work."
+            },
+            {
+              "speaker": "female",
+              "text": "That makes sense, I think that suits you well actually."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What did the man change?",
+              "options": [
+                "His minor",
+                "His major",
+                "His advisor",
+                "His class schedule"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why did he switch?",
+              "options": [
+                "He disliked his professors",
+                "He was more interested in policy and sustainability",
+                "His grades were too low",
+                "He wanted an easier program"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 61,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/61.mp3",
+          "speaker": "female",
+          "transcript": "Attention shoppers: for the next thirty minutes, all bakery items in aisle five are marked down by twenty-five percent as part of our end-of-day sale. Please see a bakery associate if you need assistance. This offer applies only to items currently on the shelf and cannot be combined with other coupons.",
+          "questions": [
+            {
+              "question": "What is being offered in this announcement?",
+              "options": [
+                "A discount on bakery items",
+                "Free samples in the bakery section",
+                "A new bakery product line",
+                "Extended bakery hours"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What is a restriction on the offer?",
+              "options": [
+                "It only applies to online orders",
+                "It cannot be combined with other coupons",
+                "It requires a minimum purchase",
+                "It is only for store members"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 62,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/62.mp3",
+          "speaker": "male",
+          "transcript": "Attention passengers waiting in Terminal B: due to a temporary equipment issue, boarding for flight 482 to Denver will begin fifteen minutes later than originally scheduled. We appreciate your patience and will provide updates as they become available. Please remain near the gate area for further announcements.",
+          "questions": [
+            {
+              "question": "What is causing the delay?",
+              "options": [
+                "Bad weather",
+                "A temporary equipment issue",
+                "A crew shortage",
+                "A security check"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are passengers asked to do?",
+              "options": [
+                "Move to a different terminal",
+                "Remain near the gate area",
+                "Check in online immediately",
+                "Proceed to a different gate"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 63,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/63.mp3",
+          "speaker": "female",
+          "transcript": "Good morning, students. This is a reminder that today's fire drill will take place at ten thirty. When the alarm sounds, please exit the building calmly through the nearest marked exit and proceed to the designated assembly area in the front parking lot. Teachers will take attendance once students have gathered outside.",
+          "questions": [
+            {
+              "question": "What is scheduled for ten thirty?",
+              "options": [
+                "A school assembly",
+                "A fire drill",
+                "A guest speaker event",
+                "A class photo session"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will teachers do once outside?",
+              "options": [
+                "Dismiss students for the day",
+                "Take attendance",
+                "Begin a new lesson",
+                "Collect assignments"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 49,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/49.mp3",
+          "speaker": "female",
+          "subject": "Sociology",
+          "transcript": "Today's topic is social capital, a concept that refers to the networks of relationships, trust, and shared norms that enable people within a community to work together effectively. Unlike financial capital or physical capital, social capital isn't something an individual owns outright; rather, it exists in the connections between people. Sociologist Robert Putnam popularized this concept in his research examining civic engagement in the United States, arguing that participation in community organizations, from bowling leagues to parent-teacher associations, had been steadily declining for decades, a trend he described using the phrase bowling alone. Putnam distinguished between two types of social capital. Bonding social capital refers to strong connections within a relatively homogeneous group, such as close family members or a tight-knit ethnic community, providing emotional support and a strong sense of belonging. Bridging social capital, on the other hand, refers to weaker connections that span different social groups, such as acquaintances from work or casual community contacts, and these connections tend to be especially valuable for accessing new information and opportunities that wouldn't be available within one's immediate close circle. Research has consistently shown that communities with higher levels of social capital tend to experience lower crime rates, better public health outcomes, and more effective local governance, since trust between neighbors makes cooperative solutions to shared problems considerably easier to achieve. Critics of Putnam's original thesis have pointed out that traditional civic organizations may simply be getting replaced by newer forms of connection, including online communities and social media groups, which can also build meaningful social capital, even though they don't fit the traditional model of in-person community organizations that Putnam originally studied.",
+          "questions": [
+            {
+              "question": "What is the main topic of the lecture?",
+              "options": [
+                "The decline of local governments",
+                "The concept of social capital and its role in communities",
+                "How financial capital is distributed in society",
+                "The history of civic organizations"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the difference between bonding and bridging social capital?",
+              "options": [
+                "Bonding involves strangers, bridging involves family",
+                "Bonding involves strong ties within similar groups, bridging involves weaker ties across different groups",
+                "Bonding is online, bridging is in-person",
+                "There is no meaningful difference between them"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention Robert Putnam's phrase 'bowling alone'?",
+              "options": [
+                "To describe a specific sport's popularity",
+                "To illustrate declining civic participation in America",
+                "To criticize modern technology",
+                "To explain a new economic theory"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What do critics argue about Putnam's original thesis?",
+              "options": [
+                "That social capital doesn't actually matter",
+                "That new forms of connection like online communities may also build social capital",
+                "That bonding capital is more valuable than bridging capital",
+                "That civic participation has actually increased dramatically"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 50,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/50.mp3",
+          "speaker": "male",
+          "subject": "Chemistry",
+          "transcript": "Today we'll look at catalysts and their role in chemical reactions. A catalyst is a substance that increases the rate of a chemical reaction without being consumed in the process itself. It accomplishes this by providing an alternative reaction pathway with a lower activation energy, the minimum amount of energy required for reactants to transform into products. Because less energy is needed to reach this lower threshold, a much larger proportion of molecules possess sufficient energy to react at any given moment, dramatically speeding up the overall reaction. It's important to note that a catalyst does not change the overall energy difference between reactants and products, meaning it doesn't affect whether a reaction is thermodynamically favorable, only how quickly that reaction proceeds. Catalysts appear throughout both industrial chemistry and biological systems. In industry, catalysts are essential for large-scale chemical manufacturing; the Haber process, which produces ammonia for fertilizer using an iron catalyst, is a prime example, and this single industrial process is credited with supporting a substantial portion of global food production by making synthetic fertilizer widely available. In biological systems, enzymes serve as highly specialized catalysts, each typically designed to accelerate one specific reaction with remarkable efficiency and precision. Enzymes achieve this specificity through their unique three-dimensional shape, which allows only certain molecules, called substrates, to bind properly at what's known as the active site. Temperature and pH can dramatically affect enzyme function, since extreme conditions can cause an enzyme to lose its precise shape, a process called denaturation, which typically destroys its catalytic ability entirely. This is why our bodies maintain such tightly regulated internal temperature and pH levels, since even small deviations could significantly impair the countless enzymatic reactions necessary for basic bodily functions.",
+          "questions": [
+            {
+              "question": "What is a catalyst's primary function according to the talk?",
+              "options": [
+                "To change the products of a reaction",
+                "To increase reaction rate by lowering activation energy",
+                "To add extra energy to a reaction",
+                "To permanently become part of the final product"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor say about a catalyst's effect on reaction thermodynamics?",
+              "options": [
+                "It makes unfavorable reactions favorable",
+                "It does not change the energy difference between reactants and products",
+                "It increases the total energy released",
+                "It has no measurable effect on reaction rate"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention the Haber process?",
+              "options": [
+                "To criticize industrial chemical manufacturing",
+                "To give a real-world example of a catalyst's industrial importance",
+                "To explain how ammonia was first discovered",
+                "To describe a biological enzyme"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can cause an enzyme to lose its function, according to the talk?",
+              "options": [
+                "Exposure to light",
+                "Extreme temperature or pH causing denaturation",
+                "Contact with other enzymes",
+                "A decrease in reaction rate"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 275,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/275.mp3",
+          "transcript": "Could I borrow your notes from yesterday's lecture?",
+          "context": "A student asks a classmate.",
+          "options": [
+            "Sure, I'll send you a photo of them tonight.",
+            "The lecture covered three chapters.",
+            "I usually take notes by hand.",
+            "Yesterday's class started late."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "35-275"
+        },
+        {
+          "id": 276,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/276.mp3",
+          "transcript": "Is there an extra charge for a room with a view?",
+          "context": "A guest asks a hotel receptionist.",
+          "options": [
+            "Yes, it's about twenty dollars more per night.",
+            "Our rooms all have air conditioning.",
+            "The hotel overlooks the harbor.",
+            "Check-in begins at three."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "35-276"
+        },
+        {
+          "id": 277,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/277.mp3",
+          "transcript": "I think this milk might have already gone bad.",
+          "context": "A customer speaks to a grocery store employee.",
+          "options": [
+            "Let me get you a fresh carton right away.",
+            "We restock dairy every morning.",
+            "This brand is locally produced.",
+            "Milk should be kept refrigerated."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "35-277"
+        },
+        {
+          "id": 278,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/278.mp3",
+          "transcript": "Could you send me the meeting notes from this morning?",
+          "context": "A coworker asks another coworker.",
+          "options": [
+            "Sure, I'll email them to you this afternoon.",
+            "The meeting lasted about an hour.",
+            "We meet every Monday morning.",
+            "I took notes on my laptop."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "35-278"
+        },
+        {
+          "id": 279,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/279.mp3",
+          "transcript": "Do you know if this coupon is still valid?",
+          "context": "A customer asks a cashier.",
+          "options": [
+            "Let me scan it and find out.",
+            "Coupons are usually mailed monthly.",
+            "This store offers a loyalty program.",
+            "The sale ends this weekend."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "35-279"
+        },
+        {
+          "id": 280,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/280.mp3",
+          "transcript": "My car has been making a strange noise lately.",
+          "context": "A customer speaks to a mechanic.",
+          "options": [
+            "Let's take a look and see what's going on.",
+            "Oil changes are recommended every few months.",
+            "This shop has been open for years.",
+            "We also service motorcycles."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "35-280"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 51,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/51.mp3",
+          "speaker": "female",
+          "subject": "Anthropology",
+          "transcript": "Today I'd like to discuss the concept of cultural relativism, an idea that has profoundly shaped modern anthropology since its development in the early twentieth century, largely through the work of Franz Boas and his students. Cultural relativism holds that a person's beliefs, values, and practices should be understood based on that individual's own culture, rather than being judged against the standards of another culture. This stands in sharp contrast to an earlier approach called ethnocentrism, in which observers judge other cultures using their own culture's values as the presumed universal standard, often concluding, usually incorrectly, that unfamiliar practices are primitive or inferior. Boas argued strongly against this earlier approach, which had been common among many nineteenth-century anthropologists, some of whom ranked cultures along a single scale of supposed civilizational progress, with European societies invariably placed at the top. Boas instead insisted that anthropologists needed to study each culture on its own terms, seeking to understand the internal logic and function of specific practices within their particular cultural context, rather than assuming there was one single correct way for a society to organize itself. This shift had major methodological implications for how anthropological fieldwork was conducted, encouraging extended immersion within a community and closer attention to a culture's own internal perspective rather than quick, comparative judgments from an outside observer. It's worth noting that cultural relativism as a research method is somewhat different from moral relativism as an ethical stance, and this distinction has generated ongoing debate within the field. Some critics argue that taken to an extreme, cultural relativism could seem to prevent any moral criticism of practices widely considered harmful, while defenders argue that the anthropological principle is primarily a methodological tool for understanding, not necessarily a claim that all practices are equally justifiable from an ethical standpoint.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "The history of European colonialism",
+                "The concept of cultural relativism in anthropology",
+                "Modern methods of archaeological dating",
+                "The biography of Franz Boas"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does cultural relativism differ from ethnocentrism?",
+              "options": [
+                "Cultural relativism judges cultures by a single universal standard",
+                "Ethnocentrism judges other cultures using one's own culture as the standard, while cultural relativism does not",
+                "They are essentially identical concepts",
+                "Ethnocentrism was developed by Franz Boas"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did nineteenth-century anthropologists often do, according to the professor?",
+              "options": [
+                "Studied cultures using extended immersion",
+                "Ranked cultures along a scale with European societies at the top",
+                "Rejected the idea of cultural comparison entirely",
+                "Focused exclusively on economic systems"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What distinction does the professor draw near the end of the talk?",
+              "options": [
+                "Between anthropology and sociology",
+                "Between cultural relativism as a method and moral relativism as an ethical stance",
+                "Between fieldwork and laboratory research",
+                "Between ancient and modern anthropology"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 52,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/52.mp3",
+          "speaker": "male",
+          "subject": "Computer Science",
+          "transcript": "Today's lecture covers the basics of how search engines rank web pages, focusing specifically on the algorithm known as PageRank, originally developed by Google's founders while they were graduate students. Before PageRank, early search engines primarily ranked pages based on how frequently a search term appeared on that page, a method that was easy to manipulate and often produced low-quality results, since a page could simply repeat a keyword excessively to rank higher regardless of its actual usefulness. PageRank took a fundamentally different approach, treating links between web pages somewhat like votes of confidence. The core idea is that a link from one page to another can be interpreted as an endorsement, and pages that receive links from many other pages, particularly from pages that are themselves considered important, are treated as more authoritative and therefore rank higher in search results. This creates a kind of recursive calculation, since a page's importance depends on the importance of the pages linking to it, which in turn depends on the importance of the pages linking to those pages, and so on. Mathematically, this can be modeled using what's essentially a massive system of linear equations, solved efficiently using techniques from linear algebra applied to an enormous matrix representing the entire structure of the web. One elegant aspect of the algorithm is its resistance to simple manipulation; while a website owner can add as many outgoing links from their own page as they want, they cannot easily control how many other independent pages choose to link back to them, at least not without engaging in more elaborate manipulation schemes that search engines have continually worked to detect and penalize. Of course, modern search engines have evolved considerably since PageRank's original introduction, now incorporating hundreds of additional ranking factors, including page loading speed, content relevance, and user engagement metrics, but the fundamental link-based insight behind PageRank remains a foundational concept in how search engines evaluate credibility across the web.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "The history of the internet",
+                "How the PageRank algorithm ranks web pages",
+                "The design of modern web browsers",
+                "How keyword searches originally worked"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What was a weakness of early search engines mentioned in the talk?",
+              "options": [
+                "They were too slow to load results",
+                "They could be manipulated by repeating keywords excessively",
+                "They only worked on specific browsers",
+                "They required payment to use"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does PageRank determine a page's importance?",
+              "options": [
+                "By counting how many images are on the page",
+                "Based on links from other pages, especially important ones",
+                "By measuring how long the page has existed",
+                "By analyzing the page's font size"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor say PageRank resists simple manipulation?",
+              "options": [
+                "Because it ignores links entirely",
+                "Because a page owner cannot easily control links from other independent sites",
+                "Because search engines ban all outgoing links",
+                "Because it only considers a page's own content"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 281,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/281.mp3",
+          "transcript": "Could you help me find a book on European history?",
+          "context": "A student asks a librarian.",
+          "options": [
+            "Sure, they're located on the second floor.",
+            "The library just got new furniture.",
+            "History books are popular right now.",
+            "We have extended hours during finals."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "36-281"
+        },
+        {
+          "id": 282,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/282.mp3",
+          "transcript": "I'm afraid I won't be able to make it to dinner tonight.",
+          "context": "A friend calls another friend.",
+          "options": [
+            "No worries, let's reschedule for another night.",
+            "The restaurant has great reviews.",
+            "Dinner usually starts around seven.",
+            "I already made a reservation."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "36-282"
+        },
+        {
+          "id": 283,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/283.mp3",
+          "transcript": "Do you know if this bus goes past the airport?",
+          "context": "A traveler asks a fellow passenger.",
+          "options": [
+            "Yes, it stops there in about twenty minutes.",
+            "The airport has two terminals.",
+            "Buses run every half hour.",
+            "This route was added last year."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "36-283"
+        },
+        {
+          "id": 284,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/284.mp3",
+          "transcript": "Could we push our study session back an hour?",
+          "context": "A student asks a classmate.",
+          "options": [
+            "Sure, that works better for me too.",
+            "The library closes at midnight.",
+            "Our exam covers five chapters.",
+            "I already reviewed most of the material."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "36-284"
+        },
+        {
+          "id": 285,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/285.mp3",
+          "transcript": "I noticed there's a typo on the flyer we printed.",
+          "context": "An employee tells a coworker.",
+          "options": [
+            "Good catch, let's fix it before we send more copies.",
+            "The flyer advertises our spring sale.",
+            "We printed two hundred copies.",
+            "The design took a few hours to finish."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "36-285"
+        },
+        {
+          "id": 286,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/286.mp3",
+          "transcript": "Would it be possible to get a window seat instead?",
+          "context": "A passenger asks a flight attendant.",
+          "options": [
+            "Let me check if one is available.",
+            "The flight departs on time today.",
+            "Boarding begins in fifteen minutes.",
+            "Meals will be served after takeoff."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "36-286"
+        }
+      ],
+      "conv": [
+        {
+          "id": 64,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/64.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Have you started working on the group presentation yet?"
+            },
+            {
+              "speaker": "female",
+              "text": "A little, I put together an outline but haven't made any slides."
+            },
+            {
+              "speaker": "male",
+              "text": "Good, I can start on the slides tonight if you send me the outline."
+            },
+            {
+              "speaker": "female",
+              "text": "Sounds good, I'll email it to you in a few minutes."
+            },
+            {
+              "speaker": "male",
+              "text": "Great, let's meet tomorrow to go over everything together."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What has the woman already done?",
+              "options": [
+                "Finished the entire presentation",
+                "Created an outline",
+                "Recorded the presentation",
+                "Booked a meeting room"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What do they plan to do tomorrow?",
+              "options": [
+                "Submit the presentation",
+                "Meet to review everything together",
+                "Present to the class",
+                "Cancel the project"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 65,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/65.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm thinking about applying for that research assistant position."
+            },
+            {
+              "speaker": "male",
+              "text": "You should, I heard the professor is looking for someone with programming skills."
+            },
+            {
+              "speaker": "female",
+              "text": "That's good to hear, I have some experience with data analysis."
+            },
+            {
+              "speaker": "male",
+              "text": "Definitely mention that in your application then."
+            },
+            {
+              "speaker": "female",
+              "text": "I will, thanks for the tip."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What position is the woman considering?",
+              "options": [
+                "A teaching assistant role",
+                "A research assistant position",
+                "An internship at a company",
+                "A tutoring job"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What skill does the man mention the professor wants?",
+              "options": [
+                "Public speaking",
+                "Programming skills",
+                "Writing skills",
+                "Foreign language ability"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 64,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/64.mp3",
+          "speaker": "male",
+          "transcript": "Attention gym members: the pool area will be closed this afternoon from one to three for routine chemical testing. All other facilities, including the weight room and group fitness studio, will remain open as usual during this time. We apologize for any inconvenience and appreciate your understanding.",
+          "questions": [
+            {
+              "question": "What part of the gym is closing?",
+              "options": [
+                "The weight room",
+                "The pool area",
+                "The group fitness studio",
+                "The entire gym"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will remain open?",
+              "options": [
+                "Nothing else will be open",
+                "The weight room and fitness studio",
+                "Only the locker rooms",
+                "Only the front desk"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 65,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/65.mp3",
+          "speaker": "female",
+          "transcript": "Attention passengers on the 2 o'clock ferry to Harbor Island: due to strong winds, this sailing has been temporarily postponed. We expect to resume service within the hour, and updated departure times will be posted at the ticket counter. We apologize for any inconvenience this delay may cause.",
+          "questions": [
+            {
+              "question": "Why was the ferry postponed?",
+              "options": [
+                "Mechanical failure",
+                "Strong winds",
+                "A staffing shortage",
+                "High passenger volume"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where will updated times be posted?",
+              "options": [
+                "On the ferry itself",
+                "At the ticket counter",
+                "Sent by email",
+                "On the company website only"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "Where did the manager leave the delivery keys?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "could",
+          "not",
+          "remember",
+          "where",
+          "the manager",
+          "had left the delivery keys"
+        ],
+        "distractorChunks": [
+          "has left the delivery keys"
+        ],
+        "responseSuffix": ".",
+        "id": 121
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Why was the flight rerouted to a different airport?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "why",
+          "the flight",
+          "had been rerouted to a different airport"
+        ],
+        "distractorChunks": [
+          "has been rerouted to a different airport"
+        ],
+        "responseSuffix": ".",
+        "id": 122
+      },
+      {
+        "promptGender": "female",
+        "prompt": "How long will the road construction continue?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "how",
+          "long",
+          "the road construction",
+          "would continue"
+        ],
+        "distractorChunks": [
+          "will continue"
+        ],
+        "responseSuffix": ".",
+        "id": 123
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Who approved the changes to the schedule?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "was",
+          "not",
+          "sure",
+          "who",
+          "had approved the changes to the schedule"
+        ],
+        "distractorChunks": [
+          "has approved the changes to the schedule"
+        ],
+        "responseSuffix": ".",
+        "id": 124
+      },
+      {
+        "promptGender": "female",
+        "prompt": "What time does the last shuttle depart?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "what",
+          "time",
+          "the last shuttle",
+          "departed"
+        ],
+        "distractorChunks": [
+          "departs"
+        ],
+        "responseSuffix": ".",
+        "id": 125
+      },
+      {
+        "promptGender": "male",
+        "prompt": "How much did the repair end up costing?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "mentioned",
+          "how",
+          "much",
+          "the repair",
+          "had ended up costing"
+        ],
+        "distractorChunks": [
+          "has ended up costing"
+        ],
+        "responseSuffix": ".",
+        "id": 126
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Where is the nearest recycling center located?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "where",
+          "the nearest recycling center",
+          "was located"
+        ],
+        "distractorChunks": [
+          "is located"
+        ],
+        "responseSuffix": ".",
+        "id": 127
+      },
+      {
+        "promptGender": "male",
+        "prompt": "When will the elevator be back in service?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "wondered",
+          "when",
+          "the elevator",
+          "would be back in service"
+        ],
+        "distractorChunks": [
+          "will be back in service"
+        ],
+        "responseSuffix": ".",
+        "id": 128
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Why did the meeting get postponed?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "explained",
+          "why",
+          "the meeting",
+          "had gotten postponed"
+        ],
+        "distractorChunks": [
+          "has gotten postponed"
+        ],
+        "responseSuffix": ".",
+        "id": 129
+      },
+      {
+        "promptGender": "male",
+        "prompt": "What caused the delay at the border crossing?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "still",
+          "did",
+          "not",
+          "know",
+          "what",
+          "had caused the delay at the border crossing"
+        ],
+        "distractorChunks": [
+          "has caused the delay at the border crossing"
+        ],
+        "responseSuffix": ".",
+        "id": 130
+      }
+    ],
+    "email": {
+      "id": 13,
+      "scenario": "You just received an internship offer from a company after your interview last week. You want to formally accept the offer and thank your supervisor for the opportunity.",
+      "recipient": "Mr. Nguyen, Internship Supervisor",
+      "subject": "Accepting the internship offer",
+      "tasks": [
+        {
+          "description": "Thank him for offering you the internship position.",
+          "keywords": [
+            "thank you",
+            "grateful",
+            "appreciate",
+            "offer"
+          ]
+        },
+        {
+          "description": "Formally accept the position.",
+          "keywords": [
+            "accept",
+            "confirm",
+            "pleased to accept",
+            "look forward"
+          ]
+        },
+        {
+          "description": "Ask about next steps or paperwork needed before starting.",
+          "keywords": [
+            "next steps",
+            "paperwork",
+            "documents",
+            "before starting",
+            "start date"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Mr. Nguyen,\n\nThank you so much for offering me the marketing internship position following our interview last week. I really appreciate the opportunity, and I am grateful that you and your team believe I would be a good fit for the role.\n\nI am pleased to formally accept the internship offer. This position aligns closely with my career goals, and I am looking forward to contributing to the team and learning from everyone throughout the summer.\n\nCould you please let me know about any next steps I should take, such as paperwork I need to complete or documents I should bring before my start date? I want to make sure everything is in order before I begin. Thank you again for this wonderful opportunity, and I look forward to working with you and the rest of the team soon.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 13,
+      "subject": "gender studies",
+      "professor": "Dr. Hendricks",
+      "professorGender": "female",
+      "prompt": "Your gender studies professor is examining strategies to address workplace inequality. Write a post responding to the professor's question.\n\nDr. Hendricks: This week we've been discussing gender quotas, which are policies requiring a minimum percentage of women in corporate boardrooms or political office. Supporters argue that quotas are necessary to break down entrenched barriers and biases that have historically kept women out of leadership positions, even when they are equally qualified. Critics argue that quotas undermine merit-based selection and may cause qualified candidates, regardless of gender, to be overlooked simply to meet a numerical target. Before our next class, please respond to this question: Should governments and companies implement mandatory gender quotas for leadership positions, or should leadership selection remain based purely on merit?",
+      "classmates": [
+        {
+          "name": "Bao",
+          "gender": "male",
+          "opinion": "I support mandatory gender quotas because they directly address a problem that voluntary efforts have failed to solve for decades. Despite women making up roughly half the workforce, they remain drastically underrepresented in executive and political leadership, which suggests that bias, not lack of qualification, is the real barrier. Countries like Norway, which mandated a minimum percentage of women on corporate boards, saw meaningful increases in female representation without any decline in company performance. Quotas force organizations to actively seek out qualified women who might otherwise be overlooked due to unconscious bias in traditional hiring and promotion processes. Without this kind of intervention, meaningful change could take generations to occur naturally."
+        },
+        {
+          "name": "Anika",
+          "gender": "female",
+          "opinion": "I think quotas, despite good intentions, ultimately undermine the principle of merit-based selection. Choosing candidates to satisfy a numerical target, rather than purely based on their qualifications, risks placing underqualified individuals in important positions and unfairly disadvantaging equally or more qualified candidates who happen to be the wrong gender. Quotas can also create a perception, however unfair, that women in leadership positions were selected because of a mandate rather than genuine competence, which can undermine their authority. I believe the better solution is addressing bias at its root through mentorship programs, transparent hiring practices, and better parental leave policies that allow women to pursue leadership roles without being forced into arbitrary numerical targets."
+        }
+      ],
+      "exampleResponse": "Addressing gender inequality in leadership is a complex challenge with no easy solution. Whether mandatory quotas or a strictly merit-based approach is more effective is worth considering carefully. While I see where Anika is coming from when she argues that quotas risk undermining perceptions of competence and could sideline qualified candidates, I would argue that decades of voluntary efforts have failed to produce meaningful change on their own. In this respect, I am inclined to agree with Bao, who emphasizes that quotas force organizations to confront and overcome unconscious bias that has kept qualified women out of leadership for too long. For example, Norway's corporate board quota led to a significant, sustained increase in female representation without harming company performance, suggesting bias rather than a lack of talent was the true barrier. Quotas may simply be a necessary, temporary tool to correct an imbalance that merit alone has not managed to fix."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 13,
+      "location": "Airport Baggage Claim",
+      "icon": "🧳",
+      "speaker": "male",
+      "introText": "You are learning how to assist travelers at baggage claim. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to baggage claim area three.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "Your luggage will arrive on carousel five.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Please have your claim ticket ready.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Oversized bags are collected at the side counter.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "If your bag is missing, please visit our help desk.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Damaged luggage should be reported before you leave the airport terminal.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Our staff can track a delayed bag using your flight number.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 13,
+      "topic": "Local Traditions",
+      "icon": "🎉",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about local traditions and customs. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. To begin, could you describe a local tradition or custom that is important in your area?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer participating in traditional cultural events or trying new, modern activities?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people believe that local traditions are gradually disappearing because of globalization. What is your view on this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think it is important for younger generations to preserve local traditions? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

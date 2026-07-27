@@ -1,0 +1,18 @@
+# Root-level ignore rules that apply across the whole repo (backend/ and frontend/ have their
+# own more specific .gitignore files too).
+
+.DS_Store
+__pycache__/
+*.pyc
+.env
+*.local
+
+# Stray scratch/backup file, not part of the app (superseded by read_in_daily_life_1.json).
+backend/ReadInDailyLife.jsx new
+
+# Student database -- never commit real user data (accounts, password hashes, progress).
+backend/results.db
+
+# Generated audio files are too large for a normal git repo (hundreds of MB). These are deployed
+# separately (Render persistent disk / object storage), not via git. See backend/AUDIO_DEPLOYMENT.md.
+backend/audio/

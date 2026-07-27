@@ -1,0 +1,402 @@
+[
+  {
+    "id": 1,
+    "subject": "psychology",
+    "professor": "Dr. Alvarado",
+    "professorGender": "male",
+    "prompt": "We've been discussing the effects of social media on teenagers' mental health, a topic that has drawn growing attention from researchers and parents alike. Some researchers argue that platforms should be required to limit how much time teenagers can spend on them each day, since excessive use is linked to anxiety and poor sleep. Others argue that limiting usage should remain a decision for parents and families, since every household is different. Should social media platforms be required to limit how much time teenagers spend on them? Why or why not?",
+    "classmates": [
+      {
+        "name": "Marcus",
+        "gender": "male",
+        "opinion": "I think platforms should be required to set limits. Teenagers often don't have the self-control to stop scrolling on their own, especially when apps are engineered with endless feeds and notifications designed to keep users engaged as long as possible. Companies have a responsibility not to build products that are intentionally addictive, particularly for users who are still developing the impulse control adults are expected to have. A daily limit wouldn't need to be extreme to make a real difference."
+      },
+      {
+        "name": "Sofia",
+        "gender": "female",
+        "opinion": "I'd leave this decision to parents rather than platforms. Every family and teenager is different in ways a single company-wide rule can't capture — some teenagers use social media mainly to stay connected with friends, while others clearly struggle with it, and parents are better placed to notice which applies to their own child. A blanket limit treats a responsible sixteen-year-old the same as someone who is struggling, which doesn't solve the actual problem."
+      }
+    ],
+    "exampleResponse": "The relationship between social media use and teenage mental health has become an important topic for researchers and families alike. The question of whether platforms should be required to limit usage time is worth considering carefully. While I see where Sofia is coming from when she argues that parents understand their own children's needs best, I would argue that companies still bear some responsibility, since many apps use design features specifically intended to keep users scrolling as long as possible. In this respect, I am inclined to agree with Marcus, who emphasizes that teenagers often lack the self-control to manage this on their own. For example, a platform could introduce a simple daily time limit for younger accounts while still allowing parents to adjust it, combining company responsibility with family flexibility."
+  },
+  {
+    "id": 2,
+    "subject": "higher education",
+    "professor": "Dr. Petrova",
+    "professorGender": "female",
+    "prompt": "We've been examining how universities decide which applicants to admit, a process that shapes opportunity for students from very different backgrounds. Some admissions officers argue that standardized test scores should carry the most weight, since they allow an objective comparison between applicants from different schools. Others argue that a holistic approach, considering essays, extracurriculars, and personal circumstances, gives a fairer and more complete picture of each applicant. Which approach do you think universities should rely on more: test scores or a holistic review? Why?",
+    "classmates": [
+      {
+        "name": "Ben",
+        "gender": "male",
+        "opinion": "I think test scores should matter more. They're the same test taken under the same conditions by every applicant, regardless of school, which cuts through real differences in school quality and grading standards. Essays and extracurriculars can be heavily shaped by the resources a student's family can afford, like private counselors or expensive activities, which makes those parts of an application much harder to compare fairly between wealthy and lower-income applicants."
+      },
+      {
+        "name": "Amara",
+        "gender": "female",
+        "opinion": "I'd favor holistic review instead. Test scores alone don't capture qualities like resilience or leadership, and two students can earn the same score while being very different in what they'd bring to a university. A holistic review accounts for context a raw number can't reflect, like a student who worked a part-time job every night while still maintaining strong grades. That context gives a fairer picture of an applicant's potential."
+      }
+    ],
+    "exampleResponse": "University admissions policy plays a major role in determining opportunity for students from very different backgrounds. The question of whether test scores or a holistic review should carry more weight is worth exploring. While I see where Ben is coming from when he argues that standardized tests offer a consistent measure across schools, I would argue that this consistency can be misleading, since access to test preparation resources varies enormously between students. In this respect, I am inclined to agree with Amara, who emphasizes that a holistic view captures qualities a single test score cannot. For example, an applicant who worked part-time to support their family while maintaining good grades demonstrates resilience that a test score alone would never reveal."
+  },
+  {
+    "id": 3,
+    "subject": "education technology",
+    "professor": "Dr. Lindqvist",
+    "professorGender": "male",
+    "prompt": "We've been discussing how artificial intelligence tools are increasingly used by students to complete writing assignments, a trend that has accelerated as these tools have become more accessible. Some educators argue that AI writing tools should be banned from coursework entirely, since relying on them undermines students' own writing and critical thinking skills. Others argue that AI tools should be embraced, since students will need similar technology throughout their careers. Should schools ban AI writing tools, or integrate them into coursework? Why?",
+    "classmates": [
+      {
+        "name": "Jonas",
+        "gender": "male",
+        "opinion": "I think schools should ban AI tools for graded assignments, at least while students are still developing core writing ability. If a tool writes most of the essay for you, you never practice organizing your own thoughts or working through revising a weak paragraph, which is really the point of a writing assignment. Skipping that struggle might save time, but it leaves students without a skill they'll need later, like defending an argument under pressure."
+      },
+      {
+        "name": "Wei",
+        "gender": "female",
+        "opinion": "I'd integrate AI tools into coursework instead of banning them. Students are going to use these tools constantly in almost every future job, and pretending they don't exist doesn't prepare students for that reality — it just means they'll learn to use them poorly after graduation with no guidance. Schools should teach students to use AI responsibly, for example by requiring them to fact-check AI-generated claims before including them in their own work."
+      }
+    ],
+    "exampleResponse": "The rise of AI writing tools has forced educators to reconsider how writing assignments should be structured. The question of whether these tools should be banned or integrated into coursework is worth examining closely. While I see where Wei is coming from when she argues that students will need these skills in future careers, I would argue that foundational writing ability should be developed before students rely on any tool to do that thinking for them. In this respect, I am inclined to agree with Jonas, who emphasizes that assignments exist specifically to build a student's own reasoning and organizational skills. For example, a school could restrict AI tools during early writing courses, then gradually introduce responsible AI use once students have already developed strong independent writing skills."
+  },
+  {
+    "id": 4,
+    "subject": "urban planning",
+    "professor": "Dr. Osei",
+    "professorGender": "female",
+    "prompt": "We've been discussing how cities should invest limited transportation budgets, a decision that shapes commute times and pollution levels for decades. Some transportation planners argue that cities should prioritize expanding public transportation, such as buses and trains, since it reduces both congestion and pollution. Others argue that expanding highways should come first, since most residents currently rely on cars and would benefit more directly from reduced driving times. Should cities prioritize public transportation or highway expansion? Why?",
+    "classmates": [
+      {
+        "name": "Camille",
+        "gender": "female",
+        "opinion": "I think public transportation should come first. Every dollar spent widening highways tends to attract more cars onto the road within a few years, largely canceling out any reduction in congestion. Good public transit actually gives people a real alternative to driving at all, instead of just making driving marginally faster for a short period. I've seen a widened highway near me refill with traffic within about two years, while a new train line kept gaining riders."
+      },
+      {
+        "name": "Tariq",
+        "gender": "male",
+        "opinion": "I'd prioritize highways instead. Most people in this city don't live near a reliable transit line, and that isn't going to change quickly no matter how much gets invested starting today. Until routes actually reach the neighborhoods where people live and work, expanding roads will help the majority of current residents get to their jobs faster right now, rather than years from now once a hypothetical transit network is built out."
+      }
+    ],
+    "exampleResponse": "Transportation policy shapes how residents move through a city every single day. The question of whether cities should prioritize public transportation or highway expansion is worth considering. While I see where Tariq is coming from when he argues that most residents currently depend on cars, I would argue that this dependence exists partly because transit options are so limited, not because driving is inherently preferable. In this respect, I am inclined to agree with Camille, who emphasizes that expanding highways tends to generate more traffic over time rather than solving congestion. For example, a city that invests in a reliable train line can gradually shift commuter habits, whereas a wider highway often fills back up with new drivers within a few years."
+  },
+  {
+    "id": 5,
+    "subject": "marketing",
+    "professor": "Dr. Nakamura",
+    "professorGender": "female",
+    "prompt": "Your professor for your marketing course is teaching a unit on digital advertising strategy. Write a post responding to the professor's question.\n\nDr. Nakamura: For next week, I would like you to consider a debate that many companies are facing right now. Increasingly, brands rely on algorithms that track consumers' online behavior to deliver hyper-personalized advertisements. Some argue this approach is simply good business, since it connects people with products they actually want. Others worry that it crosses an ethical line by exploiting private data without genuine consent. Before our next class, please respond to this question: Should companies be allowed to use personal data to create highly targeted advertising, or does this practice do more harm than good?",
+    "classmates": [
+      {
+        "name": "Kenji",
+        "gender": "male",
+        "opinion": "I think targeted advertising benefits both companies and consumers. When ads are personalized, people are shown products that actually match their interests instead of being bombarded with irrelevant content. This makes shopping more efficient and even helps small businesses reach niche audiences they could never afford to target through traditional mass advertising. Companies are usually transparent about data collection through privacy policies, and users technically consent when they accept terms of service. As long as data is anonymized and not sold to malicious third parties, I see no real harm. In my opinion, banning this practice would only make advertising less useful and more annoying for everyone."
+      },
+      {
+        "name": "Bianca",
+        "gender": "female",
+        "opinion": "I disagree with using personal data for targeted ads because most people never truly understand what they are agreeing to. Privacy policies are long and full of legal jargon, so consent is often meaningless in practice. Companies track browsing habits, locations, and even conversations to build detailed profiles, which feels invasive rather than helpful. There have also been numerous data breaches where this sensitive information was leaked or sold without users' knowledge. I believe convenience should never come at the cost of privacy. Instead, companies should rely on general demographic advertising and let consumers choose to opt in if they want more personalized recommendations."
+      }
+    ],
+    "exampleResponse": "Both classmates raise valid points about a genuinely complicated issue in modern marketing. The question of whether targeted advertising is acceptable or exploitative is worth considering carefully. While I see where Bianca is coming from when she argues that consent is often meaningless because privacy policies are too complex for most users to understand, I would argue that data collection itself is not inherently harmful when it is properly regulated and transparent. In this respect, I am inclined to agree with Kenji, who emphasizes that personalization can genuinely benefit consumers by connecting them with relevant products rather than irrelevant clutter. For example, a small independent bookstore could use targeted ads to reach readers who enjoy a specific genre, something impossible with expensive traditional advertising. The real solution lies in stricter regulation and simpler consent processes, not banning personalization altogether."
+  },
+  {
+    "id": 6,
+    "subject": "criminology",
+    "professor": "Dr. Kowalski",
+    "professorGender": "male",
+    "prompt": "Your criminology professor is leading a discussion on the goals of the criminal justice system. Write a post responding to the professor's question.\n\nDr. Kowalski: This week we've been examining the different philosophies that shape how societies punish crime. Some criminal justice systems prioritize rehabilitation, offering education, therapy, and job training so that offenders can reintegrate into society. Others emphasize punishment and deterrence, arguing that strict consequences are necessary to prevent future crime and deliver justice to victims. Both approaches have passionate supporters and real-world evidence behind them. Before our next session, I want you to respond to this question: Should criminal justice systems prioritize rehabilitating offenders, or should they focus primarily on punishment as a deterrent?",
+    "classmates": [
+      {
+        "name": "Tobias",
+        "gender": "male",
+        "opinion": "I strongly believe rehabilitation should be the primary goal of any justice system. Studies consistently show that purely punitive systems have extremely high recidivism rates, meaning offenders often reoffend after release because nothing about their circumstances or behavior actually changed. Programs that provide therapy, education, and vocational training address the root causes of criminal behavior, such as poverty, addiction, or lack of opportunity. Countries like Norway, which focus heavily on rehabilitation, report far lower reoffending rates than countries with harsher punitive systems. Ultimately, a justice system should aim to produce safer communities, and rehabilitation achieves this more effectively than punishment alone ever could."
+      },
+      {
+        "name": "Nadia",
+        "gender": "female",
+        "opinion": "While rehabilitation sounds appealing, I think punishment and deterrence must remain the priority. Victims of crime deserve to see meaningful consequences, and society needs assurance that serious offenses will not go lightly punished. Without strict consequences, there is little incentive for potential criminals to avoid breaking the law in the first place. Rehabilitation programs are also expensive and do not guarantee success, since some offenders simply are not willing to change regardless of the resources offered. A justice system that appears too lenient risks losing public trust and undermining the rule of law. Punishment sends a clear message that crime has real, unavoidable costs."
+      }
+    ],
+    "exampleResponse": "This is a difficult balance for any justice system to strike, and I think the question of whether punishment or rehabilitation should come first is worth considering carefully. While I see where Nadia is coming from when she argues that victims deserve visible consequences and that leniency might undermine public trust, I would argue that punishment alone rarely addresses why crimes happen in the first place. In this respect, I am inclined to agree with Tobias, who emphasizes that rehabilitation reduces recidivism by treating the underlying causes of criminal behavior. For example, offering addiction treatment to someone incarcerated for drug-related theft is far more likely to prevent future crime than simply extending their sentence. A justice system that combines firm accountability with genuine rehabilitation opportunities would likely serve both victims and society better than either extreme alone."
+  },
+  {
+    "id": 7,
+    "subject": "veterinary science",
+    "professor": "Dr. Osei",
+    "professorGender": "female",
+    "prompt": "Your veterinary science professor is discussing animal welfare in captivity. Write a post responding to the professor's question.\n\nDr. Osei: As part of our unit on wildlife conservation, we've been discussing the role zoos play in protecting endangered species. Supporters argue that zoos provide crucial breeding programs, veterinary care, and public education that directly contribute to conservation efforts worldwide. Critics counter that confining wild animals, even in modern facilities, causes psychological stress and denies them their natural behaviors, regardless of the conservation benefits. Both perspectives raise important points about animal welfare and species survival. Before our next class, please respond to this question: Do the conservation benefits of zoos justify keeping wild animals in captivity?",
+    "classmates": [
+      {
+        "name": "Lars",
+        "gender": "male",
+        "opinion": "I believe zoos are essential for conservation, especially for species facing extinction in the wild. Modern accredited zoos run breeding programs that have successfully saved species like the California condor and the Przewalski's horse from disappearing entirely. Veterinary care available in zoos also allows scientists to study animal health and reproduction in ways that would be impossible in the wild. Additionally, zoos educate millions of visitors, especially children, who may never otherwise develop an appreciation for wildlife conservation. Without zoos, many endangered species would have far fewer resources dedicated to their survival. The benefits to biodiversity clearly outweigh the discomfort of captivity."
+      },
+      {
+        "name": "Amina",
+        "gender": "female",
+        "opinion": "I don't think conservation benefits justify keeping wild animals confined for their entire lives. Many species, particularly large mammals like elephants and big cats, exhibit clear signs of psychological distress in captivity, including repetitive pacing and abnormal behaviors rarely seen in the wild. Even well-funded zoos cannot replicate the vast territories or complex social structures these animals need to thrive. Conservation efforts could instead focus on protecting and restoring natural habitats, along with funding field research stations that study animals in their actual environments. Captivity may help a few species survive, but at a significant cost to the well-being of countless individual animals."
+      }
+    ],
+    "exampleResponse": "This debate highlights a genuine tension between species-level conservation and individual animal welfare. The question of whether captivity is justified by conservation outcomes is worth considering from both angles. While I see where Lars is coming from when he argues that zoos have directly saved species from extinction through breeding programs, I would argue that these benefits do not fully offset the psychological cost imposed on individual animals confined for life. In this respect, I am inclined to agree with Amina, who emphasizes that resources might be better spent protecting natural habitats where animals can express their full range of behaviors. For example, funding anti-poaching patrols and habitat restoration for African elephants may preserve the species more sustainably than housing a handful in even the most spacious enclosure. Conservation should prioritize approaches that respect both species survival and individual welfare wherever possible."
+  },
+  {
+    "id": 8,
+    "subject": "food science",
+    "professor": "Dr. Bertrand",
+    "professorGender": "male",
+    "prompt": "Your food science professor is exploring the future of protein production. Write a post responding to the professor's question.\n\nDr. Bertrand: This week we have been discussing cultivated meat, which is grown from animal cells in a laboratory rather than raised and slaughtered on farms. Proponents claim this technology could dramatically reduce greenhouse gas emissions, land use, and animal suffering associated with traditional livestock farming. Skeptics question whether consumers will ever fully accept lab-grown meat, and they raise concerns about the long-term health effects and the economic disruption it could cause to traditional farming communities. Before our next class, I would like you to respond to this question: Should cultivated meat replace traditional livestock farming as the primary source of meat production?",
+    "classmates": [
+      {
+        "name": "Chidi",
+        "gender": "male",
+        "opinion": "I think cultivated meat represents one of the most promising solutions to the environmental damage caused by industrial livestock farming. Traditional meat production requires enormous amounts of land, water, and feed, while also generating significant methane emissions that contribute to climate change. Cultivated meat could produce the same protein with a fraction of the resources and without the need to raise and slaughter billions of animals every year. Early studies suggest the health and safety profile of cultivated meat is comparable to conventional meat once production scales up. As the technology matures and costs decrease, I believe it will become an essential part of a sustainable food system."
+      },
+      {
+        "name": "Freya",
+        "gender": "female",
+        "opinion": "I remain skeptical that cultivated meat should replace traditional farming any time soon. The technology is still extremely expensive to produce at scale, and many consumers are understandably hesitant to eat meat grown in a lab rather than raised on a farm. There are also legitimate questions about long-term safety, since cultivated meat has not been studied over many decades the way traditional meat has. Beyond that, millions of people worldwide depend on livestock farming for their livelihoods, and a sudden shift away from traditional methods could devastate rural economies. I think traditional farming should be improved through better practices rather than replaced entirely by an unproven technology."
+      }
+    ],
+    "exampleResponse": "The future of meat production raises important questions about sustainability, safety, and economic impact. Whether cultivated meat should replace traditional farming entirely is worth considering carefully. While I see where Freya is coming from when she argues that the technology remains unproven and could devastate farming communities that depend on livestock, I would argue that the environmental cost of industrial farming is too severe to ignore in the long run. In this respect, I am inclined to agree with Chidi, who emphasizes that cultivated meat could drastically reduce land use, water consumption, and emissions compared to conventional livestock. For example, producing a single cultivated burger patty requires a small fraction of the water needed to raise a cow through traditional ranching. Rather than a sudden full replacement, a gradual transition that supports farmers while scaling cultivated meat production seems like the most realistic path forward."
+  },
+  {
+    "id": 9,
+    "subject": "geography",
+    "professor": "Dr. Larsen",
+    "professorGender": "female",
+    "prompt": "Your geography professor is examining how coastal communities should respond to climate change. Write a post responding to the professor's question.\n\nDr. Larsen: As sea levels continue to rise, many coastal cities face a difficult choice about their future. Some experts advocate for managed retreat, which means gradually relocating residents and infrastructure away from vulnerable coastlines before disaster strikes. Others argue that cities should invest heavily in engineering solutions such as sea walls, levees, and elevated foundations to protect existing communities in place. Each approach involves significant costs, and each disrupts communities in different ways. Before our next class, please respond to this question: Should vulnerable coastal cities prioritize managed retreat, or should they invest in engineering defenses to remain where they are?",
+    "classmates": [
+      {
+        "name": "Rashid",
+        "gender": "male",
+        "opinion": "I think managed retreat is the more realistic long-term strategy for coastal cities facing rising seas. Engineering defenses like sea walls are enormously expensive to build and maintain, and they often only delay the inevitable rather than solving the underlying problem. Some projections show sea levels rising by several feet over the coming century, which would eventually overwhelm even the most advanced infrastructure. By relocating communities gradually and proactively, governments can avoid the far greater costs and human suffering associated with sudden flooding disasters. Managed retreat also allows for careful planning, ensuring that displaced residents receive support and new communities are built sustainably rather than in a panic."
+      },
+      {
+        "name": "Solveig",
+        "gender": "female",
+        "opinion": "I believe investing in engineering defenses makes more sense than abandoning coastal cities. Many of these cities are economic and cultural centers with irreplaceable infrastructure, history, and communities that took generations to build. Countries like the Netherlands have successfully used levees and advanced water management systems for centuries to protect land below sea level. Relocating entire populations is not only extremely expensive but also incredibly disruptive to people's lives, livelihoods, and sense of identity. With continued investment in modern engineering and technology, I think many coastal cities can remain safe and functional for a very long time without needing to retreat."
+      }
+    ],
+    "exampleResponse": "Coastal cities around the world are grappling with genuinely difficult tradeoffs as sea levels rise. Whether managed retreat or engineering defenses is the better strategy is worth considering in light of both cost and community impact. While I see where Solveig is coming from when she argues that engineering solutions like those in the Netherlands can protect valuable cities without displacing their populations, I would argue that such defenses become unsustainable once sea level rise exceeds a certain threshold. In this respect, I am inclined to agree with Rashid, who emphasizes that proactive, planned relocation avoids the greater costs and suffering caused by eventual disaster. For example, a city built barely above current sea level might spend billions on levees only to face catastrophic flooding decades later regardless. A combined approach, defending certain critical areas while gradually relocating the most vulnerable neighborhoods, may ultimately prove wisest."
+  },
+  {
+    "id": 10,
+    "subject": "theater studies",
+    "professor": "Dr. Okafor",
+    "professorGender": "male",
+    "prompt": "Your theater studies professor is leading a discussion on staging classic works. Write a post responding to the professor's question.\n\nDr. Okafor: This week we have been discussing how directors approach staging classic plays written centuries ago. Some directors choose to modernize these works, updating settings, costumes, and even language to make the themes feel more relevant and accessible to contemporary audiences. Others argue that classic plays should be performed as faithfully as possible to their original historical context, preserving the playwright's original vision and the cultural context in which the work was written. Both approaches have devoted supporters among theater professionals and audiences. Before our next class, please respond to this question: Should classic plays be modernized for contemporary audiences, or should they be staged in their original historical form?",
+    "classmates": [
+      {
+        "name": "Mateus",
+        "gender": "male",
+        "opinion": "I think modernizing classic plays is essential for keeping theater relevant and engaging. Many younger audience members find it difficult to connect with settings and language from centuries ago, no matter how powerful the underlying themes are. By updating the setting, costumes, or dialogue, directors can highlight how universal themes like ambition, jealousy, and love still apply to modern life. A modernized production of a Shakespeare play, for instance, can make audiences realize that these stories are not just historical artifacts but living, breathing commentary on human nature that remains relevant today. Without reinterpretation, I fear classic theater risks becoming inaccessible and eventually fading from public interest."
+      },
+      {
+        "name": "Yuki",
+        "gender": "female",
+        "opinion": "I believe classic plays should generally be staged in their original historical form to preserve the playwright's authentic vision. These works were written within specific cultural and historical contexts that shape their meaning in ways that can be lost or distorted through modernization. When directors change too much, they risk imposing their own interpretation onto the material rather than allowing audiences to engage with the original text as intended. Original staging also offers valuable educational insight into the historical period, helping audiences understand how people lived, thought, and expressed themselves at the time. I think theaters should offer modernized adaptations separately rather than replacing the traditional approach entirely."
+      }
+    ],
+    "exampleResponse": "Staging classic plays involves a genuine tension between accessibility and historical authenticity. Whether modernization or original staging better serves these works is worth considering carefully. While I see where Yuki is coming from when she argues that original staging preserves the playwright's authentic vision and offers valuable historical insight, I would argue that a play which fails to connect with contemporary audiences ultimately loses much of its cultural relevance and impact. In this respect, I am inclined to agree with Mateus, who emphasizes that modernized productions can reveal how universal certain themes truly are. For example, setting a tragedy about political ambition in a modern corporate boardroom can make its warnings about power feel immediate rather than distant. Ideally, theaters could offer both original and modernized productions, allowing audiences to appreciate a work's historical roots while also experiencing its enduring relevance."
+  },
+  {
+    "id": 11,
+    "subject": "robotics",
+    "professor": "Dr. Fischer",
+    "professorGender": "female",
+    "prompt": "Your robotics professor is discussing the growing role of autonomous machines in emergency situations. Write a post responding to the professor's question.\n\nDr. Fischer: Robotics engineers are increasingly developing autonomous robots capable of making independent decisions during search and rescue operations, such as choosing which victims to prioritize when resources are limited. Supporters argue that robots can process information faster than humans and make more consistent, unbiased decisions in chaotic environments. Critics worry that removing human judgment from life-or-death decisions is ethically dangerous, since robots cannot fully grasp the moral complexity of a situation the way a human rescuer can. Before our next class, I would like you to respond to this question: Should autonomous robots be allowed to make independent life-or-death decisions during emergency situations?",
+    "classmates": [
+      {
+        "name": "Farid",
+        "gender": "male",
+        "opinion": "I think autonomous robots should be allowed to make independent decisions in emergencies, at least within carefully defined parameters. In chaotic disaster scenarios, robots can process sensor data, assess structural risks, and identify survivors far faster than human rescuers who may be overwhelmed by stress or limited visibility. This speed could mean the difference between life and death when every second counts. Robots are also not subject to fatigue, panic, or unconscious bias, which means their decisions could actually be more consistent and fair than those made by exhausted human responders. With rigorous testing and clear ethical guidelines built into their programming, autonomous robots could save far more lives than they endanger."
+      },
+      {
+        "name": "Zanele",
+        "gender": "female",
+        "opinion": "I don't think robots should ever be given full authority over life-or-death decisions, no matter how advanced their programming becomes. Emergency situations often involve nuanced moral judgments that require empathy, context, and an understanding of human values that machines simply cannot replicate. A robot might follow a strict algorithm to prioritize survivors based on statistical likelihood of survival, ignoring important human factors like a parent's presence or a victim's specific circumstances. If something goes wrong, it also becomes unclear who is responsible for the outcome, the engineers, the operators, or the machine itself. Humans should always remain in the loop to make the final call in such critical moments."
+      }
+    ],
+    "exampleResponse": "The use of autonomous robots in emergencies raises profound questions about speed, accuracy, and moral responsibility. Whether robots should be trusted with independent life-or-death decisions is worth considering from multiple angles. While I see where Zanele is coming from when she argues that emergencies require human empathy and that accountability becomes unclear when machines make the final call, I would argue that speed can be just as critical as judgment when lives are at stake in chaotic situations. In this respect, I am inclined to agree with Farid, who emphasizes that robots can process information and identify survivors faster and more consistently than exhausted human responders. For example, in a collapsed building, a robot equipped with thermal sensors could locate trapped survivors within seconds, far faster than a human search team. Perhaps the best solution keeps humans making final calls while robots rapidly supply the critical information needed to make them."
+  },
+  {
+    "id": 12,
+    "subject": "oceanography",
+    "professor": "Dr. Delgado",
+    "professorGender": "male",
+    "prompt": "Your oceanography professor is examining the debate over deep-sea mining. Write a post responding to the professor's question.\n\nDr. Delgado: This week we've been discussing deep-sea mining, which involves extracting valuable minerals like cobalt and manganese from the ocean floor. These minerals are essential for manufacturing batteries used in electric vehicles and renewable energy technology, and mining companies argue that deep-sea extraction is less environmentally destructive than traditional land-based mining. However, marine scientists warn that deep-sea ecosystems are poorly understood and extremely fragile, and mining could cause irreversible damage to species that have not even been discovered yet. Before our next class, please respond to this question: Should deep-sea mining be permitted to meet growing demand for critical minerals, or should the deep ocean be protected from industrial extraction?",
+    "classmates": [
+      {
+        "name": "Olumide",
+        "gender": "male",
+        "opinion": "I think deep-sea mining should be permitted, at least under strict environmental regulations, because the world urgently needs these minerals for the clean energy transition. Electric vehicle batteries and renewable energy storage systems depend heavily on cobalt and manganese, and land-based mining for these minerals often causes severe deforestation, water pollution, and human rights abuses in developing countries. Deep-sea mining could actually reduce this harm by shifting extraction to less populated, though still sensitive, environments. With proper oversight and continued research into minimizing ecological disruption, I believe deep-sea mining can responsibly supply the materials needed to fight climate change without repeating the mistakes of traditional mining industries."
+      },
+      {
+        "name": "Ingrid",
+        "gender": "female",
+        "opinion": "I strongly believe the deep ocean should be protected from industrial mining. Scientists have discovered that deep-sea ecosystems, despite existing in complete darkness under immense pressure, host incredibly diverse and unique species found nowhere else on Earth, many of which have not even been formally studied yet. Mining operations would stir up sediment plumes that could smother marine life across vast areas, and because these ecosystems recover so slowly, any damage could be essentially permanent. We simply do not understand these environments well enough to mine them responsibly. I think we should prioritize recycling existing minerals and developing alternative battery technologies rather than risking irreversible destruction of a largely unexplored part of our planet."
+      }
+    ],
+    "exampleResponse": "Deep-sea mining sits at the intersection of climate action and ocean conservation, making it a genuinely difficult issue. Whether the benefits of mining critical minerals outweigh the risks to fragile ecosystems is worth considering carefully. While I see where Olumide is coming from when he argues that deep-sea mining could reduce the human and environmental costs associated with land-based mining, I would argue that our limited scientific understanding of these ecosystems makes the risk of irreversible damage too great to accept right now. In this respect, I am inclined to agree with Ingrid, who emphasizes that deep-sea habitats are unique, slow to recover, and still largely unexplored. For example, sediment plumes from a single mining operation could spread for miles, potentially smothering species that scientists have not even had the chance to identify yet. Expanding recycling programs and investing in alternative battery materials seems like a safer path forward than mining an ecosystem we barely understand."
+  },
+  {
+    "id": 13,
+    "subject": "gender studies",
+    "professor": "Dr. Hendricks",
+    "professorGender": "female",
+    "prompt": "Your gender studies professor is examining strategies to address workplace inequality. Write a post responding to the professor's question.\n\nDr. Hendricks: This week we've been discussing gender quotas, which are policies requiring a minimum percentage of women in corporate boardrooms or political office. Supporters argue that quotas are necessary to break down entrenched barriers and biases that have historically kept women out of leadership positions, even when they are equally qualified. Critics argue that quotas undermine merit-based selection and may cause qualified candidates, regardless of gender, to be overlooked simply to meet a numerical target. Before our next class, please respond to this question: Should governments and companies implement mandatory gender quotas for leadership positions, or should leadership selection remain based purely on merit?",
+    "classmates": [
+      {
+        "name": "Bao",
+        "gender": "male",
+        "opinion": "I support mandatory gender quotas because they directly address a problem that voluntary efforts have failed to solve for decades. Despite women making up roughly half the workforce, they remain drastically underrepresented in executive and political leadership, which suggests that bias, not lack of qualification, is the real barrier. Countries like Norway, which mandated a minimum percentage of women on corporate boards, saw meaningful increases in female representation without any decline in company performance. Quotas force organizations to actively seek out qualified women who might otherwise be overlooked due to unconscious bias in traditional hiring and promotion processes. Without this kind of intervention, meaningful change could take generations to occur naturally."
+      },
+      {
+        "name": "Anika",
+        "gender": "female",
+        "opinion": "I think quotas, despite good intentions, ultimately undermine the principle of merit-based selection. Choosing candidates to satisfy a numerical target, rather than purely based on their qualifications, risks placing underqualified individuals in important positions and unfairly disadvantaging equally or more qualified candidates who happen to be the wrong gender. Quotas can also create a perception, however unfair, that women in leadership positions were selected because of a mandate rather than genuine competence, which can undermine their authority. I believe the better solution is addressing bias at its root through mentorship programs, transparent hiring practices, and better parental leave policies that allow women to pursue leadership roles without being forced into arbitrary numerical targets."
+      }
+    ],
+    "exampleResponse": "Addressing gender inequality in leadership is a complex challenge with no easy solution. Whether mandatory quotas or a strictly merit-based approach is more effective is worth considering carefully. While I see where Anika is coming from when she argues that quotas risk undermining perceptions of competence and could sideline qualified candidates, I would argue that decades of voluntary efforts have failed to produce meaningful change on their own. In this respect, I am inclined to agree with Bao, who emphasizes that quotas force organizations to confront and overcome unconscious bias that has kept qualified women out of leadership for too long. For example, Norway's corporate board quota led to a significant, sustained increase in female representation without harming company performance, suggesting bias rather than a lack of talent was the true barrier. Quotas may simply be a necessary, temporary tool to correct an imbalance that merit alone has not managed to fix."
+  },
+  {
+    "id": 14,
+    "subject": "public administration",
+    "professor": "Dr. Mensah",
+    "professorGender": "male",
+    "prompt": "Your public administration professor is examining approaches to social welfare policy. Write a post responding to the professor's question.\n\nDr. Mensah: This week we have been comparing two approaches to social welfare: universal basic income, which provides every citizen with a regular, unconditional cash payment regardless of income or employment status, and targeted welfare programs, which direct assistance specifically to those who demonstrate financial need. Supporters of universal basic income argue that it simplifies bureaucracy, reduces stigma, and provides a safety net as automation displaces workers. Critics argue that targeted programs are more cost-effective because they concentrate limited resources on those who need help most. Before our next class, please respond to this question: Should governments implement universal basic income, or should they continue relying on targeted welfare programs?",
+    "classmates": [
+      {
+        "name": "Dmitri",
+        "gender": "male",
+        "opinion": "I support universal basic income because it eliminates many of the inefficiencies and indignities associated with traditional welfare systems. Means-tested programs require extensive bureaucracy to verify eligibility, which is expensive to administer and often excludes people who need help but fall just outside strict qualification criteria. Universal basic income removes this stigma entirely, since everyone receives the same payment regardless of circumstance. As automation continues to eliminate jobs across many industries, I believe a guaranteed income will become essential for maintaining economic stability and giving people the security to pursue education or entrepreneurship without fear of falling into poverty. Several pilot programs have already shown promising results in reducing poverty and improving well-being."
+      },
+      {
+        "name": "Petra",
+        "gender": "female",
+        "opinion": "I think targeted welfare programs remain the more responsible and cost-effective approach. Government budgets are limited, and providing the same payment to wealthy citizens who do not need assistance as to those in poverty seems like a significant waste of public resources. Targeted programs allow governments to concentrate greater support on the people who genuinely need it most, such as low-income families, the elderly, or people with disabilities. While bureaucracy can be improved, that is a solvable administrative problem rather than a reason to abandon targeting altogether. I believe reforming and streamlining existing welfare programs would achieve better outcomes than replacing them entirely with a costly universal payment given to everyone."
+      }
+    ],
+    "exampleResponse": "Welfare policy design involves balancing efficiency, fairness, and cost, making this a genuinely difficult tradeoff. Whether universal basic income or targeted welfare programs serve society better is worth considering from a practical standpoint. While I see where Petra is coming from when she argues that targeting resources toward those most in need is more cost-effective than paying everyone equally, I would argue that the bureaucratic costs and exclusion errors of targeted systems are often underestimated. In this respect, I am inclined to agree with Dmitri, who emphasizes that universal basic income removes stigma and could provide crucial stability as automation reshapes the job market. For example, several basic income pilot programs have shown recipients using the funds to pursue further education or start small businesses rather than simply surviving. A carefully designed universal payment, funded through progressive taxation, could ultimately reduce poverty more effectively than a bureaucratic patchwork of targeted programs."
+  },
+  {
+    "id": 15,
+    "subject": "epidemiology",
+    "professor": "Dr. Sørensen",
+    "professorGender": "female",
+    "prompt": "Your epidemiology professor is discussing public health policy and individual rights. Write a post responding to the professor's question.\n\nDr. Sørensen: This week we have been examining the debate surrounding mandatory vaccination policies. Public health officials argue that requiring vaccinations for school enrollment or certain jobs is necessary to maintain herd immunity and protect vulnerable populations who cannot be vaccinated for medical reasons. Opponents argue that mandatory vaccination policies infringe on personal autonomy and that individuals should have the right to make their own medical decisions, including the choice to decline vaccination based on personal or religious beliefs. Before our next class, please respond to this question: Should governments be allowed to mandate vaccinations for the general population, or should vaccination remain entirely a matter of personal choice?",
+    "classmates": [
+      {
+        "name": "Kwame",
+        "gender": "male",
+        "opinion": "I believe mandatory vaccination policies are justified because public health decisions inevitably affect more than just the individual making them. Herd immunity only works when a sufficiently high percentage of the population is vaccinated, and unvaccinated individuals directly increase the risk of outbreaks that can harm immunocompromised people, infants, and others who cannot receive vaccines for legitimate medical reasons. History shows that diseases like measles, once nearly eradicated, have resurged in communities with low vaccination rates. Personal choice should not extend to decisions that put entire communities at risk of preventable disease outbreaks. Reasonable mandates, such as requiring vaccination for school enrollment, strike a fair balance between individual rights and collective public health responsibility."
+      },
+      {
+        "name": "Niamh",
+        "gender": "female",
+        "opinion": "I think vaccination should ultimately remain a matter of personal choice rather than government mandate. Bodily autonomy is a fundamental right, and forcing medical procedures on individuals, even well-intentioned ones, sets a concerning precedent for government overreach into personal healthcare decisions. Some people have legitimate concerns about vaccine ingredients or personal medical history that mandates fail to account for on an individual basis. Rather than mandates, I believe governments should focus on public education campaigns that clearly communicate the benefits and safety of vaccines, along with making them as accessible and affordable as possible. Trust and transparency are likely to achieve higher voluntary vaccination rates than coercive policies that may provoke resistance and distrust."
+      }
+    ],
+    "exampleResponse": "Vaccination policy is a classic example of individual rights coming into tension with collective public health. Whether governments should mandate vaccination or leave it to personal choice is worth considering carefully. While I see where Niamh is coming from when she argues that bodily autonomy is a fundamental right that mandates risk violating, I would argue that infectious disease uniquely differs from purely personal health decisions because it directly endangers others who cannot protect themselves. In this respect, I am inclined to agree with Kwame, who emphasizes that herd immunity depends on high vaccination rates and that unvaccinated individuals can put vulnerable community members at serious risk. For example, the resurgence of measles outbreaks in communities with declining vaccination rates demonstrates how quickly preventable diseases can return once collective immunity weakens. Reasonable, narrowly tailored mandates, such as school entry requirements with medical exemptions, seem to balance both concerns better than treating vaccination as purely optional."
+  },
+  {
+    "subject": "education",
+    "professor": "Dr. Whitfield",
+    "professorGender": "male",
+    "prompt": "We've been discussing whether university attendance should be mandatory for lecture-based courses. Some argue that requiring attendance improves student performance and engagement, while others argue that students should be free to manage their own learning, especially since lectures are often recorded. Should attendance be mandatory in university lecture courses? Why or why not?",
+    "classmates": [
+      {
+        "name": "Derek",
+        "gender": "male",
+        "opinion": "I think attendance should be mandatory. Even when lectures are recorded, students who watch from home often multitask or fall behind, and being physically present tends to keep people more focused. Attendance also creates opportunities for students to ask questions in real time rather than being left confused until the exam."
+      },
+      {
+        "name": "Priya",
+        "gender": "female",
+        "opinion": "I disagree, mandatory attendance treats all students the same even though people learn differently. Some students actually absorb material better by rewatching a recorded lecture at their own pace, pausing to take notes, than by sitting passively in a large hall. Forcing attendance doesn't guarantee engagement anyway, since a student can show up and still not pay attention."
+      }
+    ],
+    "exampleResponse": "The question of mandatory attendance in university lectures raises an interesting tension between structure and personal responsibility. While I understand Derek's point that in-person attendance can reduce distractions, I find myself agreeing more with Priya's view that forcing attendance doesn't necessarily lead to genuine engagement. A student who is required to sit in a lecture but is mentally checked out isn't learning any more effectively than one who watches a recording attentively at home. That said, a reasonable middle ground might be for professors to build in graded in-class activities that reward engaged attendance without making it a strict requirement, which would give students like Priya described the flexibility to learn in the way that suits them best while still encouraging participation.",
+    "id": 16
+  },
+  {
+    "subject": "environmental science",
+    "professor": "Dr. Alvarez",
+    "professorGender": "female",
+    "prompt": "We've been discussing whether cities should ban single-use plastic bags entirely. Some argue a full ban is necessary to meaningfully reduce plastic pollution, while others argue that a small fee on plastic bags is more practical and achieves similar results without inconveniencing shoppers. Should cities implement a full ban on single-use plastic bags? Why or why not?",
+    "classmates": [
+      {
+        "name": "Naomi",
+        "gender": "female",
+        "opinion": "I support a full ban. A small fee still allows people who can afford it to keep using plastic bags without much thought, which limits how much actual behavior change occurs. A full ban forces everyone to adapt, which is uncomfortable at first but leads to much larger reductions in plastic waste over time."
+      },
+      {
+        "name": "Tomas",
+        "gender": "male",
+        "opinion": "I think a fee is the better approach. It still reduces usage significantly, since research shows even small fees discourage a lot of people, but it avoids penalizing situations where someone genuinely forgot a reusable bag. A full ban can feel overly restrictive and creates enforcement headaches for small businesses that a fee doesn't."
+      }
+    ],
+    "exampleResponse": "The debate between a full plastic bag ban and a small fee comes down to weighing effectiveness against practicality. Naomi makes a compelling point that a fee alone may not push everyone toward meaningful change, since people who can easily afford it might not adjust their behavior much. At the same time, Tomas raises a fair concern about flexibility for occasional situations, and about the burden a ban could place on smaller businesses trying to enforce it. Personally, I lean toward agreeing with Naomi that a full ban produces a larger overall impact, though I think cities could ease the transition by providing free reusable bags to lower-income households during the initial rollout, addressing some of Tomas's concerns about fairness without abandoning the stronger environmental benefits of a full ban.",
+    "id": 17
+  },
+  {
+    "subject": "computer science",
+    "professor": "Dr. Kim",
+    "professorGender": "male",
+    "prompt": "We've been discussing whether artificial intelligence tools should be allowed for use in student coursework. Some argue that banning these tools is unrealistic and that students should instead be taught to use them responsibly, while others argue that unrestricted use undermines genuine learning and skill development. Should universities restrict the use of AI tools in coursework? Why or why not?",
+    "classmates": [
+      {
+        "name": "Elena",
+        "gender": "female",
+        "opinion": "I think universities should teach responsible use rather than ban these tools outright. Students are going to encounter AI tools throughout their careers regardless, so learning how to use them effectively and ethically as a starting point for further work seems far more useful than pretending they don't exist."
+      },
+      {
+        "name": "Jamal",
+        "gender": "male",
+        "opinion": "I lean toward stricter restrictions, at least for foundational courses. If a student uses an AI tool to write their first programming assignments, they never actually build the fundamental problem-solving skills those assignments are designed to teach, which creates real gaps that show up later in more advanced coursework."
+      }
+    ],
+    "exampleResponse": "This is a genuinely difficult balance to strike, since both classmates raise valid points. I find Jamal's concern about foundational skills particularly persuasive, because early coursework is specifically designed to build problem-solving abilities that later, more advanced work depends on, and relying on AI tools too early could undermine that foundation. At the same time, I agree with Elena that these tools aren't going away, so completely ignoring them doesn't prepare students well either. A reasonable approach might be restricting AI tool use in introductory courses where fundamental skills are being built, while gradually introducing responsible, transparent use in more advanced courses where students already have a solid foundation to build on.",
+    "id": 18
+  },
+  {
+    "subject": "public health",
+    "professor": "Dr. Osei",
+    "professorGender": "male",
+    "prompt": "We've been discussing whether employers should be allowed to require employees to get vaccinated against seasonal illnesses like the flu as a condition of employment. Some argue this policy protects public health in shared workplaces, while others argue it infringes on personal medical decisions. Should employers be allowed to require vaccination as a condition of employment? Why or why not?",
+    "classmates": [
+      {
+        "name": "Grace",
+        "gender": "female",
+        "opinion": "I think employers should be allowed to require this, especially in workplaces like hospitals or schools where employees interact closely with vulnerable populations. Protecting the health of coworkers and the public should take priority in these specific settings, and reasonable medical exemptions can still be provided for people who genuinely need them."
+      },
+      {
+        "name": "Victor",
+        "gender": "male",
+        "opinion": "I disagree with employers mandating this broadly. Medical decisions should remain between a person and their doctor, not their employer. There are less invasive alternatives, like promoting optional vaccination or offering sick leave that makes staying home when ill more feasible, that address the underlying health concern without controlling personal medical choices."
+      }
+    ],
+    "exampleResponse": "Both classmates raise important considerations, but I think the right answer depends heavily on the specific workplace involved rather than a single blanket policy. I agree with Grace that in high-risk settings like hospitals, where employees regularly interact with vulnerable patients, the public health benefit can reasonably outweigh personal preference, particularly when exemptions remain available. However, I also share some of Victor's concern about extending this requirement to workplaces where the public health stakes are considerably lower, such as a typical office job. In those cases, Victor's suggestion of encouraging vaccination through incentives and improving sick leave policies seems like a more proportionate response that respects personal medical autonomy while still supporting overall workplace health.",
+    "id": 19
+  },
+  {
+    "subject": "urban planning",
+    "professor": "Dr. Castillo",
+    "professorGender": "female",
+    "prompt": "We've been discussing whether cities should prioritize building more bike lanes even if it means removing some car parking spaces and traffic lanes. Some argue this shift is necessary to reduce congestion and pollution, while others argue it unfairly burdens drivers and local businesses that depend on car traffic. Should cities prioritize bike lanes over car infrastructure in this way? Why or why not?",
+    "classmates": [
+      {
+        "name": "Hana",
+        "gender": "female",
+        "opinion": "I think cities should prioritize bike lanes. Long-term, reducing car dependency lowers pollution and traffic congestion, and cities that have made this shift have generally seen increased cycling rates within just a few years. Short-term inconvenience for drivers seems like a reasonable tradeoff for those longer-term benefits."
+      },
+      {
+        "name": "Owen",
+        "gender": "male",
+        "opinion": "I think this approach can seriously hurt small businesses that rely on customers being able to park nearby, especially stores that sell heavier items customers can't easily carry on a bike. Cities should expand bike infrastructure gradually and study the specific impact on local businesses before removing significant parking or lanes all at once."
+      }
+    ],
+    "exampleResponse": "I can see merit in both perspectives here, though I lean somewhat toward Hana's position on the overall direction cities should move in. Reducing car dependency does appear to produce meaningful long-term benefits for congestion and pollution, and many cities that made this shift have reported strong results after an adjustment period. That said, Owen's concern about specific local businesses feels like a legitimate practical issue that shouldn't be dismissed, particularly for stores selling bulky goods. Rather than choosing one approach entirely, cities could pursue Hana's broader vision while adopting Owen's suggestion of a more gradual, carefully studied rollout, perhaps piloting changes on a few streets first and adjusting based on the actual impact on nearby businesses before expanding further.",
+    "id": 20
+  }
+]

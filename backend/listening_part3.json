@@ -1,0 +1,4202 @@
+[
+  {
+    "id": 1,
+    "audio_url": "http://localhost:8000/audio/listening_p3/1.mp3",
+    "speaker": "female",
+    "transcript": "Attention students: starting this Monday, the main library will extend its hours during final exams week. The building will remain open until 2 a.m. from Monday through Friday, and the third-floor quiet study rooms will be available on a first-come, first-served basis. Please bring your student ID, as it will be required for entry after 10 p.m.",
+    "questions": [
+      {
+        "question": "What is the main purpose of the announcement?",
+        "options": [
+          "To announce a new library location",
+          "To inform students about extended library hours during finals week",
+          "To advertise a new student ID system",
+          "To ask students to return overdue books"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What must students do to enter the library after 10 p.m.?",
+        "options": [
+          "Sign up in advance",
+          "Pay a small fee",
+          "Show their student ID",
+          "Reserve a study room online"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "audio_url": "http://localhost:8000/audio/listening_p3/2.mp3",
+    "speaker": "male",
+    "transcript": "This is a reminder to all students and staff. Beginning next week, the campus shuttle's north route will be temporarily rerouted due to construction near the science building. The shuttle will instead stop at the visitor parking lot, about a five-minute walk from its usual stop. This change is expected to remain in effect for the rest of the semester.",
+    "questions": [
+      {
+        "question": "Why is the shuttle route being changed?",
+        "options": [
+          "The shuttle broke down",
+          "There is construction near the science building",
+          "The visitor parking lot is closed",
+          "Fewer students are using the shuttle"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long will the new route likely stay in effect?",
+        "options": [
+          "Only for one day",
+          "For the rest of the semester",
+          "Until construction begins",
+          "It has not been decided yet"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "audio_url": "http://localhost:8000/audio/listening_p3/3.mp3",
+    "speaker": "female",
+    "transcript": "Good afternoon. The Career Development Center will host its annual spring career fair next Wednesday in the main gymnasium from 10 a.m. to 3 p.m. Over fifty employers from various industries will be attending, and students are encouraged to bring several copies of their resume. A free professional headshot booth will also be available for those who register in advance online.",
+    "questions": [
+      {
+        "question": "What is the announcement mainly about?",
+        "options": [
+          "A new resume-writing course",
+          "An upcoming career fair on campus",
+          "Changes to the Career Development Center's hours",
+          "A job opening at the university"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should students do if they want a free professional headshot?",
+        "options": [
+          "Bring extra copies of their resume",
+          "Arrive before 10 a.m.",
+          "Register in advance online",
+          "Speak to an employer at the fair"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "audio_url": "http://localhost:8000/audio/listening_p3/4.mp3",
+    "speaker": "female",
+    "transcript": "Attention students: the main library will offer extended hours during the week before final exams. Starting Monday, the building will remain open until 1 a.m., and the group study rooms on the second floor will be reservable in two-hour blocks through the online system. Please note that food is not permitted in the quiet study areas on the fourth floor.",
+    "questions": [
+      {
+        "question": "What is the announcement mainly about?",
+        "options": [
+          "A permanent change to library hours",
+          "Extended library hours before final exams",
+          "New library membership fees",
+          "The library's closing for renovations"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is not permitted on the fourth floor?",
+        "options": [
+          "Laptops",
+          "Food",
+          "Group study",
+          "Talking quietly"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "audio_url": "http://localhost:8000/audio/listening_p3/5.mp3",
+    "speaker": "male",
+    "transcript": "This is a notice for all students using the east campus shuttle. Due to a water main repair on Elm Street, the shuttle will be rerouted through Maple Avenue starting tomorrow morning. This detour is expected to add about five minutes to the regular travel time. Updated schedules are posted at all shuttle stops and on the transportation website.",
+    "questions": [
+      {
+        "question": "Why is the shuttle route being changed?",
+        "options": [
+          "A road is being repaved",
+          "A water main repair on Elm Street",
+          "The shuttle broke down",
+          "Construction of a new dormitory"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How much extra time will the detour likely add?",
+        "options": [
+          "About five minutes",
+          "About thirty minutes",
+          "About one hour",
+          "No extra time"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "audio_url": "http://localhost:8000/audio/listening_p3/6.mp3",
+    "speaker": "female",
+    "transcript": "The annual spring career fair will take place next Thursday in the student union ballroom from ten in the morning until three in the afternoon. More than sixty employers across various industries are expected to attend. Students are encouraged to dress professionally and bring several printed copies of their resume. A coat check will be available near the main entrance.",
+    "questions": [
+      {
+        "question": "What is the main purpose of this announcement?",
+        "options": [
+          "To promote a new career counseling service",
+          "To inform students about the spring career fair",
+          "To announce a change in career fair location",
+          "To recruit student volunteers for the fair"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students encouraged to bring?",
+        "options": [
+          "A laptop",
+          "Several printed copies of their resume",
+          "A business card holder",
+          "Formal recommendation letters"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "audio_url": "http://localhost:8000/audio/listening_p3/7.mp3",
+    "speaker": "male",
+    "transcript": "Please note that the campus recreation center will operate on a modified schedule during the upcoming holiday weekend. The main gym will close at six in the evening on Friday and remain closed all day Saturday and Sunday. Regular hours will resume Monday morning. The pool will follow its normal weekday schedule throughout the weekend.",
+    "questions": [
+      {
+        "question": "What is the announcement about?",
+        "options": [
+          "The gym's permanent closure",
+          "A modified holiday weekend schedule",
+          "New gym membership rates",
+          "A new pool facility opening"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will happen with the pool during the weekend?",
+        "options": [
+          "It will be closed entirely",
+          "It will follow its normal weekday schedule",
+          "It will open only for swim team members",
+          "It will close early each day"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "audio_url": "http://localhost:8000/audio/listening_p3/8.mp3",
+    "speaker": "female",
+    "transcript": "Starting next Monday, the West Dining Hall will introduce a new rotating menu featuring more plant-based options at every meal. This change comes after student feedback collected through last semester's dining survey. A full list of the new menu items will be posted outside the dining hall entrance and on the dining services website.",
+    "questions": [
+      {
+        "question": "What prompted this menu change?",
+        "options": [
+          "A decision by outside consultants",
+          "Student feedback from a dining survey",
+          "A change in food supplier",
+          "A new university-wide policy"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where can students find the full new menu?",
+        "options": [
+          "Only inside the dining hall",
+          "Posted outside the entrance and on the website",
+          "Sent by email only",
+          "Announced daily by staff"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "audio_url": "http://localhost:8000/audio/listening_p3/9.mp3",
+    "speaker": "male",
+    "transcript": "This is a notice to inform the campus community that construction on the new science building will begin next week. As a result, the pathway between the library and the engineering building will be temporarily closed. Pedestrians are asked to use the detour route marked with orange signs. The project is expected to continue through the end of the semester.",
+    "questions": [
+      {
+        "question": "What will be temporarily closed?",
+        "options": [
+          "The library",
+          "The pathway between the library and the engineering building",
+          "The entire engineering building",
+          "The campus parking garage"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long is the construction expected to last?",
+        "options": [
+          "One week",
+          "Through the end of the semester",
+          "Only during weekends",
+          "Indefinitely"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "audio_url": "http://localhost:8000/audio/listening_p3/10.mp3",
+    "speaker": "female",
+    "transcript": "Due to the severe winter storm warning issued for our area, the university will be closed tomorrow, including all classes and non-essential offices. Students living in residence halls should remain indoors as much as possible. Updates regarding Wednesday's schedule will be posted on the university website by six o'clock this evening.",
+    "questions": [
+      {
+        "question": "Why is the university closing tomorrow?",
+        "options": [
+          "A power outage",
+          "A severe winter storm warning",
+          "A scheduled holiday",
+          "A campus-wide event"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When will updates about Wednesday be posted?",
+        "options": [
+          "Immediately",
+          "By six o'clock this evening",
+          "Tomorrow morning",
+          "Only if the storm worsens"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "audio_url": "http://localhost:8000/audio/listening_p3/11.mp3",
+    "speaker": "male",
+    "transcript": "The student health center will host a free flu vaccination clinic in the student union lobby this Wednesday and Thursday from nine in the morning until four in the afternoon. No appointment is necessary, but students should bring their student ID. Faculty and staff are also welcome to attend during their lunch break.",
+    "questions": [
+      {
+        "question": "What is being offered at the clinic?",
+        "options": [
+          "Free eye exams",
+          "Free flu vaccinations",
+          "Free dental checkups",
+          "Free blood pressure screenings"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What do students need to bring?",
+        "options": [
+          "A doctor's referral",
+          "Their student ID",
+          "Proof of insurance",
+          "A parental consent form"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "audio_url": "http://localhost:8000/audio/listening_p3/12.mp3",
+    "speaker": "female",
+    "transcript": "Attention drivers: Lot C will be closed this weekend for resurfacing. Vehicles parked there must be moved by Friday at five in the afternoon, or they will be towed at the owner's expense. Alternative parking is available in Lot D, located just north of the athletics complex, at no additional cost during the closure.",
+    "questions": [
+      {
+        "question": "Why is Lot C being closed?",
+        "options": [
+          "For a special event",
+          "For resurfacing",
+          "Due to flooding",
+          "For a construction project"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative does the announcement mention?",
+        "options": [
+          "A shuttle service to another campus",
+          "Parking in Lot D at no additional cost",
+          "A refund for parking permits",
+          "Street parking only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "audio_url": "http://localhost:8000/audio/listening_p3/13.mp3",
+    "speaker": "male",
+    "transcript": "This is a reminder that the university's online course registration system will be unavailable this Saturday from midnight until six in the morning for scheduled maintenance. Students are advised to complete any necessary registration changes before the maintenance window begins. Normal access will resume automatically once the update is complete.",
+    "questions": [
+      {
+        "question": "What is happening on Saturday?",
+        "options": [
+          "A new registration system will launch",
+          "Scheduled maintenance on the registration system",
+          "The registration deadline",
+          "A campus-wide internet outage"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students advised to do?",
+        "options": [
+          "Avoid using the internet all weekend",
+          "Complete registration changes before the maintenance window",
+          "Contact IT support immediately",
+          "Wait until Monday to register"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "audio_url": "http://localhost:8000/audio/listening_p3/14.mp3",
+    "speaker": "female",
+    "transcript": "Campus security is asking students to remain alert following a report of an attempted theft near the north parking structure late last night. No injuries were reported. Students are reminded to walk in groups when possible after dark and to use the campus safety escort service, which is available twenty-four hours a day by calling the number on the back of your student ID.",
+    "questions": [
+      {
+        "question": "What incident is mentioned in the announcement?",
+        "options": [
+          "A fire in a parking structure",
+          "An attempted theft near the north parking structure",
+          "A traffic accident",
+          "A power outage"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What service does the announcement mention?",
+        "options": [
+          "A free taxi service",
+          "The campus safety escort service",
+          "A new security camera system",
+          "A student patrol volunteer program"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "audio_url": "http://localhost:8000/audio/listening_p3/15.mp3",
+    "speaker": "male",
+    "transcript": "Due to unforeseen circumstances, tonight's guest lecture in the humanities building has been canceled. The event will be rescheduled for a later date, which will be announced through the department's website and email newsletter. We apologize for any inconvenience and thank students for their understanding.",
+    "questions": [
+      {
+        "question": "What has been canceled?",
+        "options": [
+          "A final exam",
+          "Tonight's guest lecture",
+          "A club meeting",
+          "A campus tour"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How will students learn about the rescheduled date?",
+        "options": [
+          "Through a phone call",
+          "Through the department's website and email newsletter",
+          "Through a posted flyer only",
+          "It will not be rescheduled"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "audio_url": "http://localhost:8000/audio/listening_p3/16.mp3",
+    "speaker": "female",
+    "transcript": "This is a reminder that housing selection for returning students begins next Monday. Students must have their housing deposit submitted by Friday in order to participate in the selection process. Time slots will be assigned based on class standing, with priority given to students with the most completed credit hours.",
+    "questions": [
+      {
+        "question": "What is the main purpose of this announcement?",
+        "options": [
+          "To announce new dormitory construction",
+          "To remind students about housing selection procedures",
+          "To announce a change in housing costs",
+          "To cancel housing selection this year"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How are time slots assigned?",
+        "options": [
+          "Randomly by lottery",
+          "Based on class standing and completed credit hours",
+          "First come, first served",
+          "Based on GPA"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "audio_url": "http://localhost:8000/audio/listening_p3/17.mp3",
+    "speaker": "male",
+    "transcript": "The office of international programs will hold an information session about semester-long study abroad opportunities this Thursday at four in the afternoon in the international center. Representatives from partner universities in Europe, Asia, and South America will be present to answer questions. Light refreshments will be provided.",
+    "questions": [
+      {
+        "question": "What is the purpose of the session?",
+        "options": [
+          "To finalize study abroad applications",
+          "To provide information about study abroad opportunities",
+          "To announce new visa requirements",
+          "To collect study abroad program fees"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who will be present at the session?",
+        "options": [
+          "Only current study abroad students",
+          "Representatives from partner universities",
+          "Only the dean of international programs",
+          "Immigration officials"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "audio_url": "http://localhost:8000/audio/listening_p3/18.mp3",
+    "speaker": "female",
+    "transcript": "The student union will host a blood drive this Friday from ten in the morning until three in the afternoon in cooperation with the regional blood center. Walk-ins are welcome, though appointments are encouraged to reduce wait times. All donors will receive a free t-shirt and light snacks after donating.",
+    "questions": [
+      {
+        "question": "What is being organized this Friday?",
+        "options": [
+          "A charity auction",
+          "A blood drive",
+          "A health fair",
+          "A fundraising walk"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will donors receive?",
+        "options": [
+          "A cash payment",
+          "A free t-shirt and light snacks",
+          "A gift card",
+          "Extra credit for a class"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "audio_url": "http://localhost:8000/audio/listening_p3/19.mp3",
+    "speaker": "female",
+    "transcript": "The campus bookstore will hold its annual spring clearance sale beginning this Monday and running through the end of the week. All campus apparel will be discounted by thirty percent, and select textbooks from previous semesters will be available at reduced prices. Sale items are final sale and cannot be returned or exchanged.",
+    "questions": [
+      {
+        "question": "What is on sale at the bookstore?",
+        "options": [
+          "Electronics only",
+          "Campus apparel and select textbooks",
+          "Furniture",
+          "Food items"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is noted about sale items?",
+        "options": [
+          "They can be exchanged for other sizes",
+          "They are final sale with no returns",
+          "They come with an extended warranty",
+          "They require a membership to purchase"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "audio_url": "http://localhost:8000/audio/listening_p3/20.mp3",
+    "speaker": "male",
+    "transcript": "Beginning this Saturday, a farmers market will be held every weekend in the central quad from nine in the morning until one in the afternoon through the end of the semester. Local vendors will be selling fresh produce, baked goods, and handmade crafts. Students with a valid ID can also use dining dollars at select vendor stands.",
+    "questions": [
+      {
+        "question": "What is happening in the central quad?",
+        "options": [
+          "A weekly farmers market",
+          "A campus job fair",
+          "A used book sale",
+          "A student art exhibition"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What can students use at select vendor stands?",
+        "options": [
+          "Meal swipes",
+          "Dining dollars",
+          "Library fines",
+          "Parking credits"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "audio_url": "http://localhost:8000/audio/listening_p3/21.mp3",
+    "speaker": "female",
+    "transcript": "The counseling center is launching a new wellness workshop series this month, covering topics such as stress management, healthy sleep habits, and mindfulness practices. Workshops will be held every Wednesday afternoon in the student wellness center. No registration is required, and all sessions are free and open to all students.",
+    "questions": [
+      {
+        "question": "What topics will the workshops cover?",
+        "options": [
+          "Financial planning and budgeting",
+          "Stress management, sleep, and mindfulness",
+          "Nutrition and cooking skills",
+          "Time management for exams only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about registration?",
+        "options": [
+          "Registration is required a week in advance",
+          "No registration is required",
+          "Only graduate students may register",
+          "Registration fills up quickly each week"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "audio_url": "http://localhost:8000/audio/listening_p3/22.mp3",
+    "speaker": "male",
+    "transcript": "Please be advised that a scheduled fire drill will take place in all residence halls this Thursday between ten and eleven in the morning. When the alarm sounds, residents should exit the building immediately using the nearest stairwell and gather at the designated meeting point outside. This is a mandatory drill required by university safety policy.",
+    "questions": [
+      {
+        "question": "What is scheduled for Thursday?",
+        "options": [
+          "A power outage test",
+          "A fire drill in residence halls",
+          "A campus safety seminar",
+          "Building inspections"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should residents do when the alarm sounds?",
+        "options": [
+          "Wait in their rooms for instructions",
+          "Exit immediately and gather at the meeting point",
+          "Call campus security first",
+          "Use the elevator to exit quickly"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "audio_url": "http://localhost:8000/audio/listening_p3/23.mp3",
+    "speaker": "female",
+    "transcript": "As warmer weather brings more cyclists to campus, campus safety would like to remind everyone to follow bike safety guidelines. Bicycles should only be parked in designated racks, and helmets are strongly recommended for all riders. Free bike safety inspections are available this week at the recreation center.",
+    "questions": [
+      {
+        "question": "What is the purpose of this announcement?",
+        "options": [
+          "To ban bicycles on campus",
+          "To remind cyclists of safety guidelines",
+          "To announce new bike lanes",
+          "To sell bicycles to students"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is available this week?",
+        "options": [
+          "Free bike safety inspections",
+          "Free bike rentals",
+          "A cycling competition",
+          "New parking permits for bikes"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "audio_url": "http://localhost:8000/audio/listening_p3/24.mp3",
+    "speaker": "male",
+    "transcript": "The sustainability office is expanding the campus recycling program to include compostable food waste starting next semester. New bins will be installed in all dining halls and several outdoor locations. Students interested in learning more can attend an informational session next Tuesday in the student union.",
+    "questions": [
+      {
+        "question": "What is being expanded?",
+        "options": [
+          "The campus recycling program to include composting",
+          "The dining hall menu options",
+          "The campus shuttle system",
+          "The student union building"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "Where will new bins be installed?",
+        "options": [
+          "Only in dormitories",
+          "In dining halls and outdoor locations",
+          "Only in academic buildings",
+          "Only in the student union"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "audio_url": "http://localhost:8000/audio/listening_p3/25.mp3",
+    "speaker": "female",
+    "transcript": "Please note that the campus mail room will have adjusted hours during the upcoming winter break. The mail room will be open Monday through Friday from ten in the morning until two in the afternoon only. Packages will not be forwarded during this period, so please arrange pickup accordingly.",
+    "questions": [
+      {
+        "question": "What is changing during winter break?",
+        "options": [
+          "The mail room's location",
+          "The mail room's hours",
+          "The mail room's staff",
+          "The cost of package pickup"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about forwarding packages?",
+        "options": [
+          "Packages will be forwarded automatically",
+          "Packages will not be forwarded during this period",
+          "Forwarding requires an extra fee",
+          "Only international packages will be forwarded"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "audio_url": "http://localhost:8000/audio/listening_p3/26.mp3",
+    "speaker": "male",
+    "transcript": "The coffee shop located in the engineering building will be closed for renovations starting next week. The closure is expected to last approximately three weeks. During this time, students can visit the temporary coffee cart set up near the main entrance of the building.",
+    "questions": [
+      {
+        "question": "Why is the coffee shop closing?",
+        "options": [
+          "Due to low sales",
+          "For renovations",
+          "Because of a staffing shortage",
+          "Due to a health code violation"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative is mentioned?",
+        "options": [
+          "A nearby off-campus café",
+          "A temporary coffee cart near the entrance",
+          "Vending machines only",
+          "No alternative is provided"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "audio_url": "http://localhost:8000/audio/listening_p3/27.mp3",
+    "speaker": "female",
+    "transcript": "The library will host its annual used book fair this weekend in the main lobby. Thousands of donated books will be available for purchase at low prices, with proceeds supporting the library's community literacy programs. The fair runs from ten in the morning until five in the evening on both Saturday and Sunday.",
+    "questions": [
+      {
+        "question": "What is the purpose of the book fair?",
+        "options": [
+          "To sell new textbooks",
+          "To raise funds for literacy programs through used book sales",
+          "To recruit library volunteers",
+          "To promote a new library branch"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are the fair's hours?",
+        "options": [
+          "Ten in the morning until five in the evening",
+          "All day and night",
+          "Only during weekday evenings",
+          "Nine in the morning until noon only"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "audio_url": "http://localhost:8000/audio/listening_p3/28.mp3",
+    "speaker": "male",
+    "transcript": "This is a reminder that unclaimed items in the campus lost and found will be donated to a local charity at the end of this month. Students who believe they may have lost an item on campus are encouraged to check the lost and found office in the student union before the deadline.",
+    "questions": [
+      {
+        "question": "What will happen to unclaimed items?",
+        "options": [
+          "They will be thrown away",
+          "They will be donated to a local charity",
+          "They will be sold at auction",
+          "They will be kept indefinitely"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students encouraged to do?",
+        "options": [
+          "Wait until next semester",
+          "Check the lost and found office before the deadline",
+          "Report lost items to campus police only",
+          "Ignore the notice if the item is inexpensive"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "audio_url": "http://localhost:8000/audio/listening_p3/29.mp3",
+    "speaker": "female",
+    "transcript": "New students, please note that orientation week begins this Sunday with a welcome ceremony in the main auditorium at ten in the morning. Throughout the week, sessions will cover academic advising, campus resources, and social activities designed to help you meet fellow students. A full schedule is available on the orientation website.",
+    "questions": [
+      {
+        "question": "What begins this Sunday?",
+        "options": [
+          "Final exams",
+          "Orientation week",
+          "Move-out day",
+          "Homecoming weekend"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will orientation sessions cover?",
+        "options": [
+          "Only academic advising",
+          "Academic advising, campus resources, and social activities",
+          "Only social activities",
+          "Job placement services"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "audio_url": "http://localhost:8000/audio/listening_p3/30.mp3",
+    "speaker": "male",
+    "transcript": "Please note that due to a scheduling conflict, the final exam for Introduction to Psychology has been moved from Tuesday morning to Wednesday afternoon. All other exam times remain unchanged. Students with questions about this specific change should contact the psychology department directly.",
+    "questions": [
+      {
+        "question": "What has changed?",
+        "options": [
+          "The exam schedule for all courses",
+          "The final exam time for Introduction to Psychology",
+          "The exam location for all courses",
+          "The grading policy for the final exam"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who should students contact with questions?",
+        "options": [
+          "The registrar's office",
+          "The psychology department",
+          "Their academic advisor",
+          "Campus security"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "audio_url": "http://localhost:8000/audio/listening_p3/31.mp3",
+    "speaker": "female",
+    "transcript": "This is a notice that the elevator in the humanities building will be out of service for scheduled maintenance this Friday from eight in the morning until noon. Individuals who require elevator access during this time should use the accessible entrance on the east side of the building, where staff will be available to assist.",
+    "questions": [
+      {
+        "question": "What is happening on Friday?",
+        "options": [
+          "The elevator will be replaced permanently",
+          "The elevator will be out of service for maintenance",
+          "The building will be closed",
+          "A new elevator will be installed"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should those needing elevator access do?",
+        "options": [
+          "Wait until Monday",
+          "Use the accessible entrance on the east side",
+          "Contact facilities management for a special pass",
+          "Use the stairs only, with no alternative available"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "audio_url": "http://localhost:8000/audio/listening_p3/32.mp3",
+    "speaker": "male",
+    "transcript": "The information technology department will be upgrading the campus wifi network this weekend to improve speed and reliability. Brief service interruptions may occur throughout Saturday as the new equipment is installed. Full service is expected to be restored by Sunday morning, with significantly improved connectivity across all buildings.",
+    "questions": [
+      {
+        "question": "What is happening this weekend?",
+        "options": [
+          "A new computer lab will open",
+          "The campus wifi network will be upgraded",
+          "Internet service will be permanently discontinued",
+          "A new IT help desk will open"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When is full service expected to be restored?",
+        "options": [
+          "Immediately",
+          "By Sunday morning",
+          "Not until next month",
+          "It will not be restored"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "audio_url": "http://localhost:8000/audio/listening_p3/33.mp3",
+    "speaker": "female",
+    "transcript": "Several new vending machines offering healthier snack and beverage options have been installed in the science building and the student union. These machines accept both cash and campus dining cards. Student feedback led directly to this change, following requests for more nutritious options across campus.",
+    "questions": [
+      {
+        "question": "What has been installed?",
+        "options": [
+          "New printers",
+          "New vending machines with healthier options",
+          "New study lounges",
+          "New water fountains"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What prompted this change?",
+        "options": [
+          "A decision by outside vendors",
+          "Student feedback requesting more nutritious options",
+          "A change in campus dining contracts",
+          "A university health mandate"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "audio_url": "http://localhost:8000/audio/listening_p3/34.mp3",
+    "speaker": "male",
+    "transcript": "Beginning next month, the campus store will extend its weekday hours, opening at eight in the morning instead of nine, to better accommodate students with early classes. Weekend hours will remain unchanged. This adjustment follows a survey conducted last semester regarding student shopping habits.",
+    "questions": [
+      {
+        "question": "What is changing at the campus store?",
+        "options": [
+          "Its location",
+          "Its weekday opening hours",
+          "Its return policy",
+          "Its accepted payment methods"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What prompted this change?",
+        "options": [
+          "A decrease in sales",
+          "A survey about student shopping habits",
+          "New management",
+          "A request from faculty"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "audio_url": "http://localhost:8000/audio/listening_p3/35.mp3",
+    "speaker": "female",
+    "transcript": "The transportation office would like to remind students that parking permits for the upcoming academic year are now available for purchase online. Early bird pricing is in effect until the end of this month, after which prices will increase by twenty dollars. Permits will be mailed directly to your registered address.",
+    "questions": [
+      {
+        "question": "What is now available?",
+        "options": [
+          "Free parking for all students",
+          "Parking permits for the upcoming year",
+          "New shuttle routes",
+          "Bicycle rental memberships"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens after the early bird period ends?",
+        "options": [
+          "Permits will no longer be available",
+          "Prices will increase by twenty dollars",
+          "Only seniors can purchase permits",
+          "Permits will be free"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "audio_url": "http://localhost:8000/audio/listening_p3/36.mp3",
+    "speaker": "male",
+    "transcript": "Next week is mental health awareness week on campus, featuring a series of free events including guided meditation sessions, a resource fair, and a panel discussion with mental health professionals. All events are open to the entire campus community and require no registration.",
+    "questions": [
+      {
+        "question": "What is happening next week?",
+        "options": [
+          "Final exams",
+          "Mental health awareness week",
+          "A career fair",
+          "A fundraising drive"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is required to attend the events?",
+        "options": [
+          "A ticket purchase",
+          "Nothing, no registration is required",
+          "A referral from a counselor",
+          "Proof of enrollment in a specific class"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "audio_url": "http://localhost:8000/audio/listening_p3/37.mp3",
+    "speaker": "female",
+    "transcript": "The university has announced a new sustainability initiative aimed at reducing campus energy consumption by twenty percent over the next three years. As part of this effort, several buildings will receive upgraded lighting systems and improved insulation over the coming months. Students interested in getting involved can join the sustainability committee.",
+    "questions": [
+      {
+        "question": "What is the goal of the new initiative?",
+        "options": [
+          "Increasing campus enrollment",
+          "Reducing campus energy consumption by twenty percent",
+          "Building a new dormitory",
+          "Expanding the recycling program only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can students get involved?",
+        "options": [
+          "By donating money",
+          "By joining the sustainability committee",
+          "By attending a mandatory seminar",
+          "By signing a petition"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "audio_url": "http://localhost:8000/audio/listening_p3/38.mp3",
+    "speaker": "male",
+    "transcript": "We are pleased to announce that the newly renovated North Dining Hall will officially open to students next Monday. The facility features an expanded seating area, a new international cuisine station, and extended evening hours. A ribbon-cutting ceremony will be held at eleven in the morning, with free samples available to the first hundred visitors.",
+    "questions": [
+      {
+        "question": "What is opening next Monday?",
+        "options": [
+          "A new bookstore",
+          "The renovated North Dining Hall",
+          "A new gymnasium",
+          "A new library wing"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will the first hundred visitors receive?",
+        "options": [
+          "A discount coupon",
+          "Free samples",
+          "A commemorative t-shirt",
+          "A reusable water bottle"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "audio_url": "http://localhost:8000/audio/listening_p3/39.mp3",
+    "speaker": "female",
+    "transcript": "Alumni weekend is approaching, with events scheduled from Friday through Sunday, including a welcome reception, campus tours, and a formal dinner celebrating graduates from the past fifty years. Current students are invited to attend select events and network with visiting alumni from various industries.",
+    "questions": [
+      {
+        "question": "Who is invited to attend select events?",
+        "options": [
+          "Only graduating seniors",
+          "Current students",
+          "Only faculty members",
+          "Only alumni from the past ten years"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is one of the scheduled events?",
+        "options": [
+          "A career fair",
+          "A formal dinner celebrating graduates",
+          "A sports tournament",
+          "A study session"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "audio_url": "http://localhost:8000/audio/listening_p3/40.mp3",
+    "speaker": "male",
+    "transcript": "This year's homecoming celebration will take place over the last weekend of October, featuring a parade through campus, a football game against our rival university, and a concert on Saturday evening. Tickets for the concert go on sale this Friday and are expected to sell out quickly.",
+    "questions": [
+      {
+        "question": "What events are part of homecoming this year?",
+        "options": [
+          "A parade, football game, and concert",
+          "Only a football game",
+          "A career fair and job expo",
+          "A graduation ceremony"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the announcement say about concert tickets?",
+        "options": [
+          "They are free for students",
+          "They go on sale Friday and may sell out quickly",
+          "They are only for alumni",
+          "They are unlimited and always available"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "audio_url": "http://localhost:8000/audio/listening_p3/41.mp3",
+    "speaker": "female",
+    "transcript": "The student activities board is excited to announce this year's spring concert lineup, featuring three musical acts performing on the main quad next Saturday evening. Tickets are free for students but must be reserved in advance through the student activities website, as space is limited to the first two thousand attendees.",
+    "questions": [
+      {
+        "question": "What is announced in this notice?",
+        "options": [
+          "A change in the concert venue",
+          "This year's spring concert lineup",
+          "A concert cancellation",
+          "New concert ticket prices"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What must students do to attend?",
+        "options": [
+          "Pay for a ticket at the door",
+          "Reserve a free ticket in advance",
+          "Bring a guest pass",
+          "Register a month in advance in person"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "audio_url": "http://localhost:8000/audio/listening_p3/42.mp3",
+    "speaker": "male",
+    "transcript": "The residence life office will host an outdoor movie night this Friday on the main lawn, weather permitting. The screening begins at dusk, and students are encouraged to bring blankets and lawn chairs. Free popcorn and drinks will be provided while supplies last.",
+    "questions": [
+      {
+        "question": "What is happening this Friday?",
+        "options": [
+          "An indoor movie screening",
+          "An outdoor movie night on the main lawn",
+          "A concert",
+          "A campus festival"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students encouraged to bring?",
+        "options": [
+          "Their own snacks",
+          "Blankets and lawn chairs",
+          "Umbrellas",
+          "Portable speakers"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "audio_url": "http://localhost:8000/audio/listening_p3/43.mp3",
+    "speaker": "female",
+    "transcript": "The campus radio station is excited to announce its official relaunch this week after months of studio renovations. New programming will include student-hosted talk shows, local music features, and live sports commentary. Listeners can tune in online or through the station's new mobile app.",
+    "questions": [
+      {
+        "question": "What is being announced?",
+        "options": [
+          "The radio station's permanent closure",
+          "The station's official relaunch",
+          "A new radio station location",
+          "A change in radio station ownership"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can listeners tune in?",
+        "options": [
+          "Only through a physical radio",
+          "Online or through the mobile app",
+          "By subscription only",
+          "Through cable television only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "audio_url": "http://localhost:8000/audio/listening_p3/44.mp3",
+    "speaker": "male",
+    "transcript": "Elections for next year's student government positions will be held online during the first week of April. Students interested in running for a position must submit their candidacy forms by the end of this month. Campaigning is permitted starting the following week, subject to university guidelines.",
+    "questions": [
+      {
+        "question": "When will elections be held?",
+        "options": [
+          "The first week of April",
+          "The last week of March",
+          "During finals week",
+          "Over the summer"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What must interested candidates do by the end of this month?",
+        "options": [
+          "Give a campaign speech",
+          "Submit their candidacy forms",
+          "Collect five hundred signatures",
+          "Meet with the current student body president"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "audio_url": "http://localhost:8000/audio/listening_p3/45.mp3",
+    "speaker": "female",
+    "transcript": "The annual club fair will take place this Wednesday on the main quad from eleven in the morning until two in the afternoon. Over a hundred student organizations will have tables set up, offering information and sign-up sheets for interested students. This is a great opportunity to get involved in campus life.",
+    "questions": [
+      {
+        "question": "What is happening this Wednesday?",
+        "options": [
+          "A job fair",
+          "The annual club fair",
+          "A textbook exchange",
+          "A campus tour for prospective students"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How many organizations will participate?",
+        "options": [
+          "About ten",
+          "Over a hundred",
+          "Exactly fifty",
+          "Only academic clubs"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "audio_url": "http://localhost:8000/audio/listening_p3/46.mp3",
+    "speaker": "male",
+    "transcript": "The business school is launching a new guest speaker series this semester, featuring industry leaders discussing career paths and current trends. The first session will take place next Tuesday evening in the business building auditorium, and seating will be available on a first come, first served basis.",
+    "questions": [
+      {
+        "question": "What is the new series about?",
+        "options": [
+          "Study abroad opportunities",
+          "Industry leaders discussing career paths and trends",
+          "Campus safety procedures",
+          "Financial aid options"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How will seating be handled?",
+        "options": [
+          "Assigned in advance",
+          "First come, first served",
+          "Reserved for business majors only",
+          "By lottery"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "audio_url": "http://localhost:8000/audio/listening_p3/47.mp3",
+    "speaker": "female",
+    "transcript": "The writing center will offer a series of workshops this month focused on different aspects of academic writing, including thesis statements, citation styles, and revision strategies. Each workshop is standalone, so students may attend any or all sessions based on their needs. Registration is available online.",
+    "questions": [
+      {
+        "question": "What will the workshops focus on?",
+        "options": [
+          "Public speaking skills",
+          "Aspects of academic writing",
+          "Creative fiction writing",
+          "Foreign language learning"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about attendance?",
+        "options": [
+          "Students must attend all sessions",
+          "Each workshop is standalone, so students can attend any session",
+          "Only graduate students may attend",
+          "Attendance is mandatory for all English majors"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "audio_url": "http://localhost:8000/audio/listening_p3/48.mp3",
+    "speaker": "male",
+    "transcript": "The tutoring center will extend its hours during the final two weeks of the semester to accommodate increased demand. The center will now be open until midnight on weekdays, with additional tutors available for math and science subjects. No appointment is necessary during extended hours.",
+    "questions": [
+      {
+        "question": "What is changing at the tutoring center?",
+        "options": [
+          "Its location",
+          "Its hours during the final two weeks",
+          "Its staff qualifications",
+          "Its subject offerings permanently"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about appointments?",
+        "options": [
+          "Appointments are required during extended hours",
+          "No appointment is necessary during extended hours",
+          "Only seniors can walk in without an appointment",
+          "Appointments must be made a week in advance"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "audio_url": "http://localhost:8000/audio/listening_p3/49.mp3",
+    "speaker": "female",
+    "transcript": "The theater department invites the campus community to this semester's main stage production, opening this Friday evening in the performing arts center. Tickets are available at the box office or online, with a student discount available upon presentation of a valid ID. The show runs for two consecutive weekends.",
+    "questions": [
+      {
+        "question": "What is opening this Friday?",
+        "options": [
+          "An art exhibit",
+          "The theater department's main stage production",
+          "A music festival",
+          "A film screening"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is available to students?",
+        "options": [
+          "Free admission",
+          "A discount with valid ID",
+          "Backstage tours only",
+          "Reserved front-row seating"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "audio_url": "http://localhost:8000/audio/listening_p3/50.mp3",
+    "speaker": "male",
+    "transcript": "The campus art gallery will open a new exhibit this Thursday evening featuring works by graduating studio art majors. The opening reception begins at six in the evening and includes light refreshments. The exhibit will remain on display for the following month, open during regular gallery hours.",
+    "questions": [
+      {
+        "question": "What is the new exhibit about?",
+        "options": [
+          "Historical artifacts",
+          "Works by graduating studio art majors",
+          "Photography from local newspapers",
+          "Sculptures by visiting artists"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long will the exhibit be on display?",
+        "options": [
+          "One week",
+          "The following month",
+          "Only for the opening reception",
+          "The entire academic year"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "audio_url": "http://localhost:8000/audio/listening_p3/51.mp3",
+    "speaker": "female",
+    "transcript": "This week, disability services is hosting a series of awareness events to promote accessibility and inclusion on campus. Activities include a sensitivity workshop, an accessible technology demonstration, and a panel of students sharing their experiences. All events are open to the public and held in the student union.",
+    "questions": [
+      {
+        "question": "What is the purpose of this week's events?",
+        "options": [
+          "To fundraise for new campus buildings",
+          "To promote accessibility and inclusion",
+          "To recruit new disability services staff",
+          "To announce policy changes"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is one of the activities mentioned?",
+        "options": [
+          "A career fair",
+          "An accessible technology demonstration",
+          "A campus tour",
+          "A blood drive"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "audio_url": "http://localhost:8000/audio/listening_p3/52.mp3",
+    "speaker": "male",
+    "transcript": "The veterans resource center will host an open house this Wednesday afternoon to introduce new and returning student veterans to available campus resources, including academic advising, mental health support, and benefits counseling. Refreshments will be served, and staff will be available to answer individual questions.",
+    "questions": [
+      {
+        "question": "What is the purpose of the open house?",
+        "options": [
+          "To recruit new veterans center staff",
+          "To introduce student veterans to campus resources",
+          "To announce new veteran scholarships",
+          "To celebrate a holiday"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What resources are mentioned?",
+        "options": [
+          "Only academic advising",
+          "Academic advising, mental health support, and benefits counseling",
+          "Only benefits counseling",
+          "Housing assistance only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "audio_url": "http://localhost:8000/audio/listening_p3/53.mp3",
+    "speaker": "female",
+    "transcript": "The housing office would like to remind residents of the updated campus pet policy. Small caged pets such as fish and hamsters are permitted in residence halls without prior approval, while all other pets, including emotional support animals, require documentation submitted to the housing office in advance.",
+    "questions": [
+      {
+        "question": "What is this announcement about?",
+        "options": [
+          "A ban on all pets in residence halls",
+          "The updated campus pet policy",
+          "A new pet adoption event",
+          "A veterinary clinic opening on campus"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is required for emotional support animals?",
+        "options": [
+          "Nothing, they are automatically approved",
+          "Documentation submitted to the housing office in advance",
+          "A veterinarian's visit to campus",
+          "Approval from other residents"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "audio_url": "http://localhost:8000/audio/listening_p3/54.mp3",
+    "speaker": "male",
+    "transcript": "The library will be replacing its public printers and copiers with newer models next week. During the transition, printing services may be temporarily limited on Tuesday and Wednesday. Students are encouraged to complete urgent printing needs before the transition begins.",
+    "questions": [
+      {
+        "question": "What is happening next week?",
+        "options": [
+          "The library will close entirely",
+          "Printers and copiers will be replaced with newer models",
+          "New computers will be installed",
+          "The library will extend its hours"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students encouraged to do?",
+        "options": [
+          "Avoid the library entirely that week",
+          "Complete urgent printing before the transition",
+          "Bring their own printer",
+          "Wait until the following month to print"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "audio_url": "http://localhost:8000/audio/listening_p3/55.mp3",
+    "speaker": "female",
+    "transcript": "The transportation office has launched a new mobile app that allows students to track campus shuttle locations in real time. The app also sends notifications about route changes or delays. It is available for free download on both major app stores.",
+    "questions": [
+      {
+        "question": "What does the new app allow students to do?",
+        "options": [
+          "Purchase parking permits",
+          "Track campus shuttle locations in real time",
+          "Report maintenance issues",
+          "Rent bicycles"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How much does the app cost?",
+        "options": [
+          "A small one-time fee",
+          "It is free to download",
+          "A monthly subscription fee",
+          "It is only available to staff"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "audio_url": "http://localhost:8000/audio/listening_p3/56.mp3",
+    "speaker": "male",
+    "transcript": "The campus food pantry, located in the student union basement, is now open to all students facing food insecurity, no questions asked. The pantry is stocked with non-perishable items, fresh produce when available, and basic toiletries. Hours have also been expanded to include weekend availability.",
+    "questions": [
+      {
+        "question": "Who can use the campus food pantry?",
+        "options": [
+          "Only students with financial aid",
+          "All students facing food insecurity",
+          "Only graduate students",
+          "Only students living on campus"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What has changed about the pantry's hours?",
+        "options": [
+          "They have been reduced",
+          "They have been expanded to include weekends",
+          "They remain the same as before",
+          "The pantry is now open only by appointment"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "audio_url": "http://localhost:8000/audio/listening_p3/57.mp3",
+    "speaker": "female",
+    "transcript": "The student union will open a new esports lounge next Monday, featuring high-performance gaming computers, console stations, and a dedicated streaming area. The lounge will be open to all students with a valid ID, and reservations for gaming stations can be made through the campus recreation app.",
+    "questions": [
+      {
+        "question": "What is opening next Monday?",
+        "options": [
+          "A new computer lab",
+          "An esports lounge",
+          "A movie theater",
+          "A recording studio"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can students reserve gaming stations?",
+        "options": [
+          "By calling the student union",
+          "Through the campus recreation app",
+          "In person only",
+          "Reservations are not needed"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "audio_url": "http://localhost:8000/audio/listening_p3/58.mp3",
+    "speaker": "male",
+    "transcript": "The university debate team will hold tryouts for new members this Saturday morning in the communications building. No prior debate experience is required, though applicants should prepare a short two-minute speech on a topic of their choice. Results will be announced within one week.",
+    "questions": [
+      {
+        "question": "What is required for tryouts?",
+        "options": [
+          "Prior debate team experience",
+          "A prepared two-minute speech",
+          "A written essay submission",
+          "A letter of recommendation"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When will results be announced?",
+        "options": [
+          "Immediately after tryouts",
+          "Within one week",
+          "At the end of the semester",
+          "Results are not announced"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "audio_url": "http://localhost:8000/audio/listening_p3/59.mp3",
+    "speaker": "female",
+    "transcript": "The university choir will perform its annual spring concert this Sunday evening in the concert hall. The program includes a mix of classical and contemporary pieces, and admission is free for students with a valid ID. Doors open thirty minutes before the performance begins.",
+    "questions": [
+      {
+        "question": "What is happening this Sunday?",
+        "options": [
+          "A theater production",
+          "The university choir's spring concert",
+          "An orchestra audition",
+          "A dance recital"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about admission?",
+        "options": [
+          "It costs ten dollars for students",
+          "It is free for students with valid ID",
+          "It requires advance reservation only",
+          "It is open to the public for a fee"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "audio_url": "http://localhost:8000/audio/listening_p3/60.mp3",
+    "speaker": "male",
+    "transcript": "Registration is now open for the annual campus five-kilometer run, taking place next month to raise funds for student scholarships. Participants can register online, and all proceeds will go directly to the university's emergency scholarship fund. Early registration includes a free event t-shirt.",
+    "questions": [
+      {
+        "question": "What is the purpose of the run?",
+        "options": [
+          "To promote a new gym",
+          "To raise funds for student scholarships",
+          "To celebrate homecoming",
+          "To recruit new athletes"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What do early registrants receive?",
+        "options": [
+          "A cash prize",
+          "A free event t-shirt",
+          "Priority parking",
+          "A discount on tuition"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "audio_url": "http://localhost:8000/audio/listening_p3/61.mp3",
+    "speaker": "female",
+    "transcript": "This is a reminder that routine room inspections will take place in all residence halls next week to check for safety compliance, including working smoke detectors and clear exit pathways. Residents do not need to be present, but should ensure rooms are reasonably tidy beforehand.",
+    "questions": [
+      {
+        "question": "What is the purpose of the inspections?",
+        "options": [
+          "To check for damage to furniture",
+          "To check safety compliance such as smoke detectors",
+          "To confirm occupancy for billing",
+          "To distribute new keys"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Do residents need to be present?",
+        "options": [
+          "Yes, attendance is mandatory",
+          "No, but rooms should be reasonably tidy",
+          "Only if requested in advance",
+          "Only first-year students need to attend"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "audio_url": "http://localhost:8000/audio/listening_p3/62.mp3",
+    "speaker": "male",
+    "transcript": "This is a reminder that rented textbooks from the campus bookstore must be returned by the end of finals week to avoid additional charges. Students can return books in person at the bookstore or by mail using the prepaid shipping label included with their order.",
+    "questions": [
+      {
+        "question": "What is the reminder about?",
+        "options": [
+          "Buying new textbooks",
+          "Returning rented textbooks by the deadline",
+          "A textbook price increase",
+          "A new textbook rental program launching"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can students return their books?",
+        "options": [
+          "Only in person",
+          "In person or by mail with a prepaid label",
+          "Only by mail",
+          "Through a drop box in the library only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "audio_url": "http://localhost:8000/audio/listening_p3/63.mp3",
+    "speaker": "female",
+    "transcript": "Prospective students and their families are invited to tour the newly completed academic innovation building this Saturday. Guided tours will run every thirty minutes starting at ten in the morning, showcasing the building's classrooms, research labs, and collaborative study spaces.",
+    "questions": [
+      {
+        "question": "Who is the tour intended for?",
+        "options": [
+          "Current faculty only",
+          "Prospective students and their families",
+          "Graduate students only",
+          "Alumni visiting for reunion weekend"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How often will guided tours run?",
+        "options": [
+          "Once per hour",
+          "Every thirty minutes",
+          "Only once at ten in the morning",
+          "Continuously throughout the day without scheduled times"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "audio_url": "http://localhost:8000/audio/listening_p3/64.mp3",
+    "speaker": "female",
+    "transcript": "Career services will host a mock interview day this Thursday, giving students the opportunity to practice interview skills with local employers in a low-pressure setting. Sessions last twenty minutes each and must be reserved in advance through the career services website. Business attire is recommended but not required.",
+    "questions": [
+      {
+        "question": "What is the purpose of mock interview day?",
+        "options": [
+          "To finalize job offers",
+          "To let students practice interview skills",
+          "To recruit new career services staff",
+          "To assess student resumes only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about attire?",
+        "options": [
+          "It is mandatory",
+          "It is recommended but not required",
+          "Casual clothing is required",
+          "No specific guidance is given"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "audio_url": "http://localhost:8000/audio/listening_p3/65.mp3",
+    "speaker": "male",
+    "transcript": "The student government is organizing a textbook exchange event this Saturday in the student union, where students can trade or sell used textbooks directly with one another. Sellers should bring their own price tags, and all transactions are handled independently between students.",
+    "questions": [
+      {
+        "question": "What is the event for?",
+        "options": [
+          "Donating old furniture",
+          "Trading or selling used textbooks",
+          "Recycling electronics",
+          "Selling dorm decorations"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How are transactions handled?",
+        "options": [
+          "Through the bookstore",
+          "Independently between students",
+          "Only with a university-issued voucher",
+          "By mail after the event"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "audio_url": "http://localhost:8000/audio/listening_p3/66.mp3",
+    "speaker": "female",
+    "transcript": "The career center will host an alumni panel this Tuesday evening, featuring graduates from various fields discussing their career journeys since leaving the university. The event is open to all majors and will include a question and answer session at the end.",
+    "questions": [
+      {
+        "question": "Who will speak at the panel?",
+        "options": [
+          "Current faculty members",
+          "Graduates discussing their career journeys",
+          "Prospective employers only",
+          "Current students"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will happen at the end of the event?",
+        "options": [
+          "A networking dinner",
+          "A question and answer session",
+          "A resume workshop",
+          "A campus tour"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "audio_url": "http://localhost:8000/audio/listening_p3/67.mp3",
+    "speaker": "male",
+    "transcript": "The facilities department is organizing a campus-wide spring cleanup event this Saturday morning, and volunteers are needed to help clean common outdoor areas. Gloves and trash bags will be provided, and volunteers who complete two hours of service will receive a free campus sustainability t-shirt.",
+    "questions": [
+      {
+        "question": "What is being organized this Saturday?",
+        "options": [
+          "A campus-wide cleanup event",
+          "A campus construction project",
+          "A recycling competition",
+          "A landscaping demonstration"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What do volunteers receive after two hours of service?",
+        "options": [
+          "Extra credit",
+          "A free sustainability t-shirt",
+          "A cash payment",
+          "A parking pass"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "audio_url": "http://localhost:8000/audio/listening_p3/68.mp3",
+    "speaker": "female",
+    "transcript": "Campus security has launched a new safety app that allows students to request a safety escort, report suspicious activity, and access emergency contacts directly from their phone. The app is free to download and works both on and off campus within a designated radius.",
+    "questions": [
+      {
+        "question": "What can students do with the new app?",
+        "options": [
+          "Only check the weather",
+          "Request an escort and report suspicious activity",
+          "Order food delivery",
+          "Pay parking fines"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about the app's coverage?",
+        "options": [
+          "It only works inside buildings",
+          "It works on and off campus within a designated radius",
+          "It requires a paid subscription",
+          "It only works during daytime hours"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "audio_url": "http://localhost:8000/audio/listening_p3/69.mp3",
+    "speaker": "male",
+    "transcript": "The financial aid office will host a workshop next week to help students understand how to complete their financial aid renewal forms for the upcoming academic year. Staff will be available to answer individual questions, and students are encouraged to bring their tax documents if possible.",
+    "questions": [
+      {
+        "question": "What is the workshop about?",
+        "options": [
+          "Scholarship essay writing",
+          "Completing financial aid renewal forms",
+          "Student loan repayment options",
+          "Budgeting for college expenses"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students encouraged to bring?",
+        "options": [
+          "Their laptop",
+          "Their tax documents",
+          "A copy of their transcript",
+          "Their housing contract"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "audio_url": "http://localhost:8000/audio/listening_p3/70.mp3",
+    "speaker": "female",
+    "transcript": "The new north campus parking garage will officially open to students next Monday, adding over five hundred new parking spaces. Students with a valid parking permit for that zone may begin using the garage immediately. A grand opening event with light refreshments will be held at the entrance.",
+    "questions": [
+      {
+        "question": "What is opening next Monday?",
+        "options": [
+          "A new dormitory",
+          "A new parking garage",
+          "A new dining hall",
+          "A new bookstore"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How many new spaces will the garage add?",
+        "options": [
+          "About one hundred",
+          "Over five hundred",
+          "Exactly fifty",
+          "Over two thousand"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "audio_url": "http://localhost:8000/audio/listening_p3/71.mp3",
+    "speaker": "male",
+    "transcript": "This is a reminder that the deadline to enroll in or waive the university's student health insurance plan is this Friday. Students who do not take action by the deadline will be automatically enrolled and billed for the plan. Questions can be directed to the student health insurance office.",
+    "questions": [
+      {
+        "question": "What is the deadline for?",
+        "options": [
+          "Registering for classes",
+          "Enrolling in or waiving student health insurance",
+          "Applying for financial aid",
+          "Submitting immunization records"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens if students take no action by the deadline?",
+        "options": [
+          "Their insurance will be canceled",
+          "They will be automatically enrolled and billed",
+          "They will receive a warning email only",
+          "Nothing will happen"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "audio_url": "http://localhost:8000/audio/listening_p3/72.mp3",
+    "speaker": "female",
+    "transcript": "The campus print shop now offers same-day printing and binding services for theses, dissertations, and class projects. Orders placed before noon are typically ready for pickup by five in the evening the same day. Rush services are available for an additional fee.",
+    "questions": [
+      {
+        "question": "What new service does the print shop offer?",
+        "options": [
+          "Free printing for all students",
+          "Same-day printing and binding services",
+          "Textbook printing only",
+          "Poster design services only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When are orders placed before noon typically ready?",
+        "options": [
+          "The next morning",
+          "By five in the evening the same day",
+          "Within one week",
+          "Only on weekends"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "audio_url": "http://localhost:8000/audio/listening_p3/73.mp3",
+    "speaker": "male",
+    "transcript": "The recreation center is hosting a free outdoor yoga session on the main lawn every Wednesday morning this month, weather permitting. Participants should bring their own mat, and sessions are suitable for all experience levels, including complete beginners.",
+    "questions": [
+      {
+        "question": "What is being offered every Wednesday?",
+        "options": [
+          "A free outdoor yoga session",
+          "A dance class",
+          "A running club meeting",
+          "A swimming lesson"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What should participants bring?",
+        "options": [
+          "Their own towel only",
+          "Their own mat",
+          "Water and snacks only",
+          "Nothing is needed"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "audio_url": "http://localhost:8000/audio/listening_p3/74.mp3",
+    "speaker": "female",
+    "transcript": "The campus chess club will host its semesterly tournament this Saturday in the student union game room. Players of all skill levels are welcome to compete, and the tournament will follow a single-elimination format. Prizes will be awarded to the top three finishers.",
+    "questions": [
+      {
+        "question": "What format will the tournament follow?",
+        "options": [
+          "Round robin",
+          "Single elimination",
+          "Team based only",
+          "Timed blitz rounds only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who is welcome to compete?",
+        "options": [
+          "Only club members",
+          "Players of all skill levels",
+          "Only advanced players",
+          "Only faculty and staff"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "audio_url": "http://localhost:8000/audio/listening_p3/75.mp3",
+    "speaker": "male",
+    "transcript": "The engineering department will host its annual robotics competition next Friday in the engineering building gymnasium. Student teams will showcase robots built throughout the semester, competing in various challenges. The event is free and open to the public, including prospective students and their families.",
+    "questions": [
+      {
+        "question": "What will student teams do at the competition?",
+        "options": [
+          "Present research papers",
+          "Showcase robots in various challenges",
+          "Compete in a coding exam",
+          "Debate engineering ethics"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who can attend the event?",
+        "options": [
+          "Only engineering majors",
+          "The public, including prospective students and families",
+          "Only competition judges",
+          "Only current robotics club members"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "audio_url": "http://localhost:8000/audio/listening_p3/76.mp3",
+    "speaker": "female",
+    "transcript": "The campus radio station is looking for volunteer sound technicians and show producers for the upcoming semester. No prior experience is necessary, as training will be provided. Interested students should attend an informational meeting this Thursday evening in the media building.",
+    "questions": [
+      {
+        "question": "What positions is the radio station looking to fill?",
+        "options": [
+          "On-air hosts only",
+          "Sound technicians and show producers",
+          "Marketing interns",
+          "Music selection committee members"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about experience?",
+        "options": [
+          "Extensive experience is required",
+          "No prior experience is necessary, training will be provided",
+          "Only broadcasting majors may apply",
+          "Experience is preferred but optional"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "audio_url": "http://localhost:8000/audio/listening_p3/77.mp3",
+    "speaker": "male",
+    "transcript": "The office of international programs is hosting a photo contest for students who have studied abroad, with submissions accepted through the end of the month. Winning photos will be featured in next year's study abroad promotional materials, and the grand prize winner will receive a travel gift card.",
+    "questions": [
+      {
+        "question": "What is the contest for?",
+        "options": [
+          "Photography students only",
+          "Students who have studied abroad",
+          "Faculty who have traveled internationally",
+          "Prospective study abroad applicants"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will winning photos be used for?",
+        "options": [
+          "A campus art exhibit",
+          "Next year's study abroad promotional materials",
+          "A university calendar for sale",
+          "A permanent gallery display"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "audio_url": "http://localhost:8000/audio/listening_p3/78.mp3",
+    "speaker": "female",
+    "transcript": "The campus store would like to remind students of its updated return policy: most items may be returned within thirty days of purchase with a receipt, though electronics must be returned within fourteen days and in original packaging. Clearance items remain final sale.",
+    "questions": [
+      {
+        "question": "What is the general return window for most items?",
+        "options": [
+          "Fourteen days",
+          "Thirty days",
+          "Sixty days",
+          "No returns are accepted"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is required to return electronics?",
+        "options": [
+          "Nothing special is required",
+          "Return within fourteen days and original packaging",
+          "A manager's approval",
+          "Proof of student enrollment"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "audio_url": "http://localhost:8000/audio/listening_p3/79.mp3",
+    "speaker": "male",
+    "transcript": "The registrar's office has launched a new online academic advising system, replacing the previous paper-based process. Students can now schedule advising appointments, view degree progress, and message their advisor directly through the new student portal. Training videos are available on the university's help center website.",
+    "questions": [
+      {
+        "question": "What has been launched?",
+        "options": [
+          "A new grading system",
+          "A new online academic advising system",
+          "A new class registration deadline",
+          "A new tuition payment system"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can students do through the new portal?",
+        "options": [
+          "Pay tuition bills only",
+          "Schedule appointments and message their advisor",
+          "Apply for financial aid",
+          "Order textbooks"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "audio_url": "http://localhost:8000/audio/listening_p3/80.mp3",
+    "speaker": "female",
+    "transcript": "The dance program will present its annual spring showcase this weekend in the performing arts center, featuring student choreography across multiple dance styles. Performances are scheduled for Friday and Saturday evening, and tickets can be purchased at the door or reserved online in advance.",
+    "questions": [
+      {
+        "question": "What is being presented this weekend?",
+        "options": [
+          "A theater play",
+          "The dance program's annual spring showcase",
+          "A music recital",
+          "An art exhibition"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can tickets be obtained?",
+        "options": [
+          "Only at the door",
+          "At the door or reserved online",
+          "Only through a mail-in form",
+          "They are not required"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "audio_url": "http://localhost:8000/audio/listening_p3/81.mp3",
+    "speaker": "male",
+    "transcript": "The science department will host its annual undergraduate research fair next Wednesday in the science building atrium. Students will present posters summarizing their research projects, and judges will award prizes in several categories. The event is open to all students and faculty.",
+    "questions": [
+      {
+        "question": "What will students do at the fair?",
+        "options": [
+          "Compete in a trivia contest",
+          "Present posters summarizing research projects",
+          "Attend guest lectures only",
+          "Submit written lab reports"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who is the event open to?",
+        "options": [
+          "Only science majors",
+          "All students and faculty",
+          "Only graduate students",
+          "Only fair participants"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "audio_url": "http://localhost:8000/audio/listening_p3/82.mp3",
+    "speaker": "female",
+    "transcript": "The English department will host a poetry slam this Friday evening in the student union coffee lounge. Students interested in performing original work can sign up at the door, and audience members will vote for their favorite performances. Light refreshments will be available throughout the event.",
+    "questions": [
+      {
+        "question": "What is happening this Friday?",
+        "options": [
+          "A poetry slam",
+          "A creative writing workshop",
+          "A book club meeting",
+          "A film screening"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "How can students participate as performers?",
+        "options": [
+          "By submitting work in advance",
+          "By signing up at the door",
+          "By auditioning a week prior",
+          "Participation is by invitation only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "audio_url": "http://localhost:8000/audio/listening_p3/83.mp3",
+    "speaker": "male",
+    "transcript": "The sustainability office will host its annual green fair next Thursday on the main quad, featuring local environmental organizations, sustainable product vendors, and interactive exhibits about reducing waste. Free reusable tote bags will be given to the first two hundred attendees.",
+    "questions": [
+      {
+        "question": "What is featured at the fair?",
+        "options": [
+          "Only food vendors",
+          "Environmental organizations and sustainable vendors",
+          "Career recruiters",
+          "Study abroad programs"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will the first two hundred attendees receive?",
+        "options": [
+          "A cash prize",
+          "Free reusable tote bags",
+          "A free meal",
+          "A campus tour"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "audio_url": "http://localhost:8000/audio/listening_p3/84.mp3",
+    "speaker": "female",
+    "transcript": "The international students association will host its annual food festival this Saturday in the student union ballroom, featuring dishes prepared by students representing over twenty different countries. Tickets are available at the door, with proceeds supporting the association's scholarship fund.",
+    "questions": [
+      {
+        "question": "What is the food festival celebrating?",
+        "options": [
+          "A single country's cuisine",
+          "Dishes from over twenty different countries",
+          "Campus dining hall menus",
+          "Local restaurant partnerships"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where do ticket proceeds go?",
+        "options": [
+          "The dining hall budget",
+          "The association's scholarship fund",
+          "A local charity unrelated to the university",
+          "Event staff wages"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "audio_url": "http://localhost:8000/audio/listening_p3/85.mp3",
+    "speaker": "male",
+    "transcript": "Career services is collecting gently used professional clothing donations for its career closet program, which provides free interview attire to students in need. Donation bins are located in the career services office and the student union. The drive runs through the end of the month.",
+    "questions": [
+      {
+        "question": "What is the career closet program?",
+        "options": [
+          "A paid clothing rental service",
+          "A program providing free interview attire to students",
+          "A fashion design competition",
+          "A used bookstore"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where can donations be dropped off?",
+        "options": [
+          "Only at the career services office",
+          "The career services office and student union",
+          "Only at the bookstore",
+          "Only online"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "audio_url": "http://localhost:8000/audio/listening_p3/86.mp3",
+    "speaker": "female",
+    "transcript": "The campus a cappella group will hold auditions for new members this Saturday afternoon in the music building. Applicants should prepare a one-minute solo of their choice, and no instrumental accompaniment is needed. Callbacks will be held the following week for selected applicants.",
+    "questions": [
+      {
+        "question": "What should applicants prepare?",
+        "options": [
+          "A group performance",
+          "A one-minute solo",
+          "A written music theory test",
+          "A dance routine"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens the following week?",
+        "options": [
+          "Final performances",
+          "Callbacks for selected applicants",
+          "New member orientation",
+          "The group's first concert"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "audio_url": "http://localhost:8000/audio/listening_p3/87.mp3",
+    "speaker": "male",
+    "transcript": "The political science department will host a model United Nations conference next month, inviting delegations from universities across the region. Students interested in participating as delegates should attend an informational meeting this Thursday to learn about country assignments and committee topics.",
+    "questions": [
+      {
+        "question": "What is happening next month?",
+        "options": [
+          "A political science exam",
+          "A model United Nations conference",
+          "A guest lecture series",
+          "A study abroad fair"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will Thursday's meeting cover?",
+        "options": [
+          "Final exam review",
+          "Country assignments and committee topics",
+          "Scholarship applications",
+          "Graduation requirements"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "audio_url": "http://localhost:8000/audio/listening_p3/88.mp3",
+    "speaker": "female",
+    "transcript": "The philosophy club will host an open discussion this Tuesday evening on the topic of artificial intelligence and ethics. No background in philosophy is required to attend, and students are encouraged to bring questions or differing viewpoints. The discussion will be held in the humanities building lounge.",
+    "questions": [
+      {
+        "question": "What is the discussion topic?",
+        "options": [
+          "Ancient Greek philosophy",
+          "Artificial intelligence and ethics",
+          "Career paths for philosophy majors",
+          "The history of the philosophy club"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about attending?",
+        "options": [
+          "A philosophy background is required",
+          "No background in philosophy is required",
+          "Only club members may attend",
+          "Attendance requires advance registration"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "audio_url": "http://localhost:8000/audio/listening_p3/89.mp3",
+    "speaker": "male",
+    "transcript": "The campus newspaper is now offering free digital subscriptions to all current students, providing access to daily updates, opinion pieces, and an archive of past issues. Students can sign up using their university email address on the newspaper's website.",
+    "questions": [
+      {
+        "question": "What is now available to students?",
+        "options": [
+          "A paid print subscription",
+          "A free digital subscription",
+          "A weekly print newsletter",
+          "A radio broadcast"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How do students sign up?",
+        "options": [
+          "By visiting the newspaper office in person",
+          "Using their university email address online",
+          "By mailing a signup form",
+          "Subscriptions are automatic for all students"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "audio_url": "http://localhost:8000/audio/listening_p3/90.mp3",
+    "speaker": "female",
+    "transcript": "The recreation center is forming a marathon training group for students preparing for the city marathon in the spring. The group will meet three times a week for guided runs of varying distances, suitable for both beginners and experienced runners. Sign-up sheets are available at the recreation center front desk.",
+    "questions": [
+      {
+        "question": "What is the training group for?",
+        "options": [
+          "A campus fun run",
+          "The city marathon in the spring",
+          "A triathlon",
+          "A charity walk"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How often will the group meet?",
+        "options": [
+          "Once a week",
+          "Three times a week",
+          "Daily",
+          "Only on weekends"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "audio_url": "http://localhost:8000/audio/listening_p3/91.mp3",
+    "speaker": "male",
+    "transcript": "The film studies department will host a free screening series this semester, showcasing classic and contemporary international films every other Thursday evening. Each screening will be followed by a brief discussion led by a faculty member. All screenings are open to the public.",
+    "questions": [
+      {
+        "question": "What follows each film screening?",
+        "options": [
+          "A quiz about the film",
+          "A brief discussion led by a faculty member",
+          "A question submission form",
+          "A student vote on the next film"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How often will screenings take place?",
+        "options": [
+          "Every week",
+          "Every other Thursday evening",
+          "Once a month",
+          "Only during finals week"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "audio_url": "http://localhost:8000/audio/listening_p3/92.mp3",
+    "speaker": "female",
+    "transcript": "The campus community garden is looking for student volunteers to help with planting and maintenance this spring. No gardening experience is necessary, and tools will be provided. Volunteers can sign up for weekly shifts through the sustainability office's website.",
+    "questions": [
+      {
+        "question": "What does the garden need?",
+        "options": [
+          "Financial donations",
+          "Student volunteers for planting and maintenance",
+          "New equipment purchases",
+          "A larger plot of land"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about experience?",
+        "options": [
+          "Prior gardening experience is required",
+          "No gardening experience is necessary",
+          "Only agriculture majors may volunteer",
+          "Training takes several months"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "audio_url": "http://localhost:8000/audio/listening_p3/93.mp3",
+    "speaker": "male",
+    "transcript": "The performing arts center would like to clarify its ticket refund policy for the upcoming season. Refunds will only be issued if a performance is canceled by the venue. For all other circumstances, tickets may be exchanged for a different performance date, subject to availability, up to 24 hours before the show.",
+    "questions": [
+      {
+        "question": "When will refunds be issued?",
+        "options": [
+          "For any reason at all",
+          "Only if a performance is canceled by the venue",
+          "Only for students",
+          "Never, under any circumstances"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can ticket holders do in other circumstances?",
+        "options": [
+          "Nothing, tickets are non-transferable",
+          "Exchange for a different date, subject to availability",
+          "Receive a partial refund automatically",
+          "Sell tickets to other students only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "audio_url": "http://localhost:8000/audio/listening_p3/94.mp3",
+    "speaker": "female",
+    "transcript": "The physics department will open the campus observatory to the public this Friday evening, weather permitting, for a stargazing event featuring views of Saturn and several distant nebulae. Telescopes will be set up on the observatory rooftop, and physics graduate students will be on hand to answer questions.",
+    "questions": [
+      {
+        "question": "What is happening at the observatory this Friday?",
+        "options": [
+          "A lecture on astrophysics",
+          "A public stargazing event",
+          "A telescope repair workshop",
+          "A fundraising dinner"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who will be available to answer questions?",
+        "options": [
+          "Local astronomers",
+          "Physics graduate students",
+          "High school volunteers",
+          "Museum staff"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "audio_url": "http://localhost:8000/audio/listening_p3/95.mp3",
+    "speaker": "male",
+    "transcript": "A new quiet meditation and reflection room is now open in the student wellness center, available to all students seeking a calm space during the day. The room is open from eight in the morning until eight in the evening, and reservations are not required for individual use.",
+    "questions": [
+      {
+        "question": "What has newly opened?",
+        "options": [
+          "A new fitness studio",
+          "A meditation and reflection room",
+          "A new counseling office",
+          "A nap pod facility"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about reservations?",
+        "options": [
+          "They are required a day in advance",
+          "They are not required for individual use",
+          "Only groups need reservations",
+          "Reservations must be made monthly"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "audio_url": "http://localhost:8000/audio/listening_p3/96.mp3",
+    "speaker": "female",
+    "transcript": "The student employment office will host a part-time job fair this Wednesday in the student union, connecting students with on-campus and local off-campus employers. Attendees are encouraged to bring copies of their resume, and several employers will conduct brief on-the-spot interviews.",
+    "questions": [
+      {
+        "question": "What is the purpose of the fair?",
+        "options": [
+          "To connect students with part-time employers",
+          "To offer full-time career placement",
+          "To recruit graduate assistants only",
+          "To provide resume printing services"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What might happen at the fair?",
+        "options": [
+          "Formal job offers will be finalized",
+          "On-the-spot interviews may be conducted",
+          "Only online applications will be accepted",
+          "Employers will not interact with students directly"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "audio_url": "http://localhost:8000/audio/listening_p3/97.mp3",
+    "speaker": "male",
+    "transcript": "The mathematics department has expanded its drop-in help center hours for the remainder of the semester, now open seven days a week in the science building. No appointment is needed, and tutors are available for courses ranging from introductory algebra to advanced calculus.",
+    "questions": [
+      {
+        "question": "What change is being announced?",
+        "options": [
+          "The help center is closing",
+          "The help center's hours have been expanded",
+          "The help center is moving locations",
+          "Tutors now require appointments"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What courses do tutors cover?",
+        "options": [
+          "Only advanced calculus",
+          "Courses from introductory algebra to advanced calculus",
+          "Only statistics",
+          "Only courses for math majors"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "audio_url": "http://localhost:8000/audio/listening_p3/98.mp3",
+    "speaker": "female",
+    "transcript": "Due to high demand, tickets for the spring musical will be distributed through an online lottery system this year rather than first come, first served. Students can enter the lottery through the box office website, with winners notified by email one week before each performance.",
+    "questions": [
+      {
+        "question": "How will tickets be distributed this year?",
+        "options": [
+          "First come, first served",
+          "Through an online lottery system",
+          "By seniority",
+          "Through a raffle at the box office"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When will lottery winners be notified?",
+        "options": [
+          "Immediately after entering",
+          "One week before each performance",
+          "The day of the performance",
+          "They will not be notified individually"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "audio_url": "http://localhost:8000/audio/listening_p3/99.mp3",
+    "speaker": "male",
+    "transcript": "As part of the library's spring cleaning efforts, all items currently held in the library's lost and found will be donated or discarded at the end of this week. Students who believe they have lost an item in the library should stop by the front desk before Friday.",
+    "questions": [
+      {
+        "question": "What is happening to lost and found items?",
+        "options": [
+          "They will be returned to owners automatically",
+          "They will be donated or discarded at the end of the week",
+          "They will be stored indefinitely",
+          "They will be sold at an auction"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should students do if they lost something?",
+        "options": [
+          "Wait for a notification",
+          "Stop by the front desk before Friday",
+          "File a report with campus police",
+          "Nothing can be done at this point"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "audio_url": "http://localhost:8000/audio/listening_p3/100.mp3",
+    "speaker": "female",
+    "transcript": "The bookstore is asking faculty members to submit their textbook adoption forms for next semester as soon as possible, ideally by the end of this month. Early submissions help ensure sufficient stock and allow students more time to find affordable options, including used and rental copies.",
+    "questions": [
+      {
+        "question": "What is the bookstore asking faculty to do?",
+        "options": [
+          "Attend a training session",
+          "Submit textbook adoption forms early",
+          "Reduce the number of required textbooks",
+          "Switch to digital-only textbooks"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why does early submission help students?",
+        "options": [
+          "It lowers tuition costs",
+          "It allows more time to find affordable options",
+          "It guarantees free textbooks",
+          "It shortens the semester"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 101,
+    "audio_url": "http://localhost:8000/audio/listening_p3/101.mp3",
+    "speaker": "male",
+    "transcript": "The transportation office has introduced three new electric shuttle buses to the campus fleet, replacing older diesel models on the main campus loop route. The new buses are quieter and produce zero emissions, supporting the university's broader sustainability goals.",
+    "questions": [
+      {
+        "question": "What has been introduced to the shuttle fleet?",
+        "options": [
+          "New diesel buses",
+          "New electric shuttle buses",
+          "New bicycle rental stations",
+          "A new bus fare system"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is one benefit of the new buses mentioned?",
+        "options": [
+          "They are faster than the old buses",
+          "They produce zero emissions",
+          "They hold more passengers",
+          "They cost less to operate"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 102,
+    "audio_url": "http://localhost:8000/audio/listening_p3/102.mp3",
+    "speaker": "female",
+    "transcript": "For students who signed up for club mailing lists at last week's organization fair, please note that some clubs may take a few days to send their first email. If you haven't received any communication within a week, we recommend reaching out to the club directly through the student organizations portal.",
+    "questions": [
+      {
+        "question": "What is this announcement addressing?",
+        "options": [
+          "A change in club membership fees",
+          "A delay in receiving club communications",
+          "The cancellation of the organization fair",
+          "New rules for club recruitment"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should students do if they don't hear from a club within a week?",
+        "options": [
+          "Assume they weren't accepted",
+          "Reach out through the student organizations portal",
+          "Sign up again at a table",
+          "Contact the dean of students"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 103,
+    "audio_url": "http://localhost:8000/audio/listening_p3/103.mp3",
+    "speaker": "male",
+    "transcript": "In response to student requests, one floor of the main library will now remain open twenty-four hours a day for the remainder of the semester. Access after regular library hours will require students to swipe their student ID at the designated entrance.",
+    "questions": [
+      {
+        "question": "What change has been made to the library?",
+        "options": [
+          "The entire library is now open 24 hours",
+          "One floor will remain open 24 hours a day",
+          "The library is reducing its hours",
+          "A new library branch has opened"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is required for access after regular hours?",
+        "options": [
+          "A reservation made in advance",
+          "Swiping a student ID at the designated entrance",
+          "A staff escort",
+          "Nothing, the doors remain unlocked"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 104,
+    "audio_url": "http://localhost:8000/audio/listening_p3/104.mp3",
+    "speaker": "female",
+    "transcript": "The language department is starting weekly conversation tables this semester, where students can practice speaking French, Spanish, or Mandarin in an informal setting over coffee. Each table meets once a week in the student union café, and all proficiency levels are welcome.",
+    "questions": [
+      {
+        "question": "What is the purpose of the conversation tables?",
+        "options": [
+          "To grade students' speaking skills",
+          "To let students practice speaking informally",
+          "To recruit language majors",
+          "To prepare students for placement exams"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who can participate?",
+        "options": [
+          "Only advanced speakers",
+          "All proficiency levels",
+          "Only declared language majors",
+          "Only graduate students"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 105,
+    "audio_url": "http://localhost:8000/audio/listening_p3/105.mp3",
+    "speaker": "male",
+    "transcript": "The campus store is now offering a technology trade-in program, allowing students to exchange old laptops, tablets, and phones for store credit toward new purchases. Devices will be evaluated on the spot, and trade-in values depend on the device's age and condition.",
+    "questions": [
+      {
+        "question": "What does the new program allow students to do?",
+        "options": [
+          "Rent electronics for free",
+          "Trade in old devices for store credit",
+          "Repair broken devices for free",
+          "Recycle electronics for a cash refund"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What determines the trade-in value?",
+        "options": [
+          "The original purchase price",
+          "The device's age and condition",
+          "The student's year in school",
+          "The number of devices traded in"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 106,
+    "audio_url": "http://localhost:8000/audio/listening_p3/106.mp3",
+    "speaker": "female",
+    "transcript": "The student wellness center will host its annual wellness fair next Tuesday in the student union, featuring free health screenings, nutrition consultations, and stress-relief activities. Local healthcare providers will also be present to answer questions about services available in the community.",
+    "questions": [
+      {
+        "question": "What is offered at the wellness fair?",
+        "options": [
+          "Only free snacks",
+          "Free health screenings and nutrition consultations",
+          "Discounted gym memberships only",
+          "Career counseling services"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who else will be present at the fair?",
+        "options": [
+          "Local healthcare providers",
+          "University administrators only",
+          "Financial aid counselors",
+          "Local restaurant owners"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 107,
+    "audio_url": "http://localhost:8000/audio/listening_p3/107.mp3",
+    "speaker": "male",
+    "transcript": "Dining services will host a special guest chef dinner next Thursday evening in the main dining hall, featuring a menu prepared by a locally renowned chef. Meal plan swipes will be accepted, though space is limited, so students are encouraged to reserve a seat in advance online.",
+    "questions": [
+      {
+        "question": "What is happening next Thursday?",
+        "options": [
+          "A cooking class",
+          "A guest chef dinner",
+          "A food truck festival",
+          "A dining hall renovation unveiling"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students encouraged to do?",
+        "options": [
+          "Bring a special ticket purchased separately",
+          "Reserve a seat in advance online",
+          "Arrive an hour early",
+          "Pay an extra fee beyond their meal plan"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 108,
+    "audio_url": "http://localhost:8000/audio/listening_p3/108.mp3",
+    "speaker": "female",
+    "transcript": "Starting this week, the library's top floor will be designated as a strictly silent study zone, with no group work or phone conversations permitted. Students seeking collaborative study space should use the group study rooms located on the second and third floors instead.",
+    "questions": [
+      {
+        "question": "What change is being made to the top floor?",
+        "options": [
+          "It will become a group study area",
+          "It will become a strictly silent study zone",
+          "It will be closed for renovations",
+          "It will host a new café"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where should students go for collaborative work?",
+        "options": [
+          "The top floor",
+          "The second and third floor group study rooms",
+          "The main lobby",
+          "Off campus"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 109,
+    "audio_url": "http://localhost:8000/audio/listening_p3/109.mp3",
+    "speaker": "male",
+    "transcript": "The student activities board will set up a temporary escape room in the student union basement this weekend, featuring puzzles related to campus history and trivia. Groups of four to six students can register for a time slot online, and prizes will be awarded to the fastest teams.",
+    "questions": [
+      {
+        "question": "What is being set up this weekend?",
+        "options": [
+          "A haunted house",
+          "A temporary escape room",
+          "A trivia competition",
+          "A scavenger hunt"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How do students participate?",
+        "options": [
+          "Walking in without registration",
+          "Registering for a time slot online",
+          "Buying a ticket at the door",
+          "Signing up in groups of ten or more"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 110,
+    "audio_url": "http://localhost:8000/audio/listening_p3/110.mp3",
+    "speaker": "female",
+    "transcript": "The student union will host trivia night this Wednesday evening, with categories ranging from pop culture to campus history. Teams of up to six can register at the door, and the winning team will receive gift cards to the campus bookstore.",
+    "questions": [
+      {
+        "question": "What kind of event is trivia night?",
+        "options": [
+          "A solo competition",
+          "A team-based trivia competition",
+          "An academic exam review",
+          "A karaoke contest"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will the winning team receive?",
+        "options": [
+          "Cash prizes",
+          "Gift cards to the campus bookstore",
+          "Free meal plan credits",
+          "Concert tickets"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 111,
+    "audio_url": "http://localhost:8000/audio/listening_p3/111.mp3",
+    "speaker": "male",
+    "transcript": "The student union will host a karaoke night this Friday evening in the coffee lounge, open to all students regardless of singing experience. Sign-ups for performance slots begin at seven, and the event runs until ten. Light snacks and drinks will be available for purchase.",
+    "questions": [
+      {
+        "question": "What is happening this Friday?",
+        "options": [
+          "A live band performance",
+          "A karaoke night",
+          "A movie screening",
+          "A dance competition"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about experience?",
+        "options": [
+          "Only experienced singers may participate",
+          "It is open to all regardless of experience",
+          "Auditions are required in advance",
+          "Only music majors may sign up"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 112,
+    "audio_url": "http://localhost:8000/audio/listening_p3/112.mp3",
+    "speaker": "female",
+    "transcript": "Auditions for this year's campus talent show will be held next Tuesday in the performing arts center. Students interested in performing should prepare a three-minute act, whether it be singing, dancing, comedy, or another form of performance. The final show will take place in three weeks.",
+    "questions": [
+      {
+        "question": "What is required for auditions?",
+        "options": [
+          "A written application only",
+          "A prepared three-minute act",
+          "A recommendation from a professor",
+          "A group of at least three performers"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When will the final show take place?",
+        "options": [
+          "The same day as auditions",
+          "In three weeks",
+          "At the end of the semester",
+          "During finals week"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 113,
+    "audio_url": "http://localhost:8000/audio/listening_p3/113.mp3",
+    "speaker": "male",
+    "transcript": "As spring break approaches, campus safety would like to remind students traveling to share their itinerary with a friend or family member and to register international travel with the office of global safety. Students are also encouraged to keep photocopies of important travel documents in a separate location.",
+    "questions": [
+      {
+        "question": "What does campus safety recommend?",
+        "options": [
+          "Traveling in large groups only",
+          "Sharing itineraries and registering international travel",
+          "Avoiding all international travel",
+          "Carrying large amounts of cash"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What else is recommended?",
+        "options": [
+          "Purchasing travel insurance only",
+          "Keeping photocopies of documents in a separate location",
+          "Leaving all documents at home",
+          "Registering with local police abroad"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 114,
+    "audio_url": "http://localhost:8000/audio/listening_p3/114.mp3",
+    "speaker": "female",
+    "transcript": "The university has begun installing solar panels on the roof of the student union as part of its long-term renewable energy plan. The installation is expected to be completed within two months and will supply a portion of the building's electricity needs once operational.",
+    "questions": [
+      {
+        "question": "What is being installed on the student union roof?",
+        "options": [
+          "New security cameras",
+          "Solar panels",
+          "A new ventilation system",
+          "Additional seating areas"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What will the panels do once operational?",
+        "options": [
+          "Supply water to the building",
+          "Supply a portion of the building's electricity",
+          "Provide free wifi",
+          "Heat the building during winter"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 115,
+    "audio_url": "http://localhost:8000/audio/listening_p3/115.mp3",
+    "speaker": "male",
+    "transcript": "The main dining hall has introduced a new dedicated vegan dining station, offering fully plant-based meals prepared separately to avoid cross-contamination with animal products. The station will be open during all regular dining hall hours starting this week.",
+    "questions": [
+      {
+        "question": "What has been introduced to the dining hall?",
+        "options": [
+          "A new dessert bar",
+          "A dedicated vegan dining station",
+          "A new international cuisine section",
+          "A gluten-free bakery"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why is the station prepared separately?",
+        "options": [
+          "To reduce food costs",
+          "To avoid cross-contamination with animal products",
+          "To speed up service times",
+          "To comply with a new law"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 116,
+    "audio_url": "http://localhost:8000/audio/listening_p3/116.mp3",
+    "speaker": "female",
+    "transcript": "The engineering library has opened a new 3D printing lab, available to all students for class projects and personal use. Print time can be reserved online, and material costs are charged based on the weight of the finished print. Staff will be on hand to assist first-time users.",
+    "questions": [
+      {
+        "question": "What is now available in the engineering library?",
+        "options": [
+          "A new computer lab",
+          "A 3D printing lab",
+          "A robotics workshop",
+          "A new study lounge"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How are material costs determined?",
+        "options": [
+          "A flat fee per print",
+          "Based on the weight of the finished print",
+          "Based on printing time only",
+          "There is no cost to students"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 117,
+    "audio_url": "http://localhost:8000/audio/listening_p3/117.mp3",
+    "speaker": "male",
+    "transcript": "The counseling center has partnered with a popular mindfulness app to provide free premium access to all enrolled students. The app offers guided meditations, sleep stories, and stress-relief exercises. Students can activate their free account using their university email address.",
+    "questions": [
+      {
+        "question": "What has the counseling center arranged?",
+        "options": [
+          "Free therapy sessions",
+          "Free premium access to a mindfulness app",
+          "Free yoga classes",
+          "Free sleep aid products"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How do students activate their account?",
+        "options": [
+          "By visiting the counseling center in person",
+          "Using their university email address",
+          "By paying a reduced student fee",
+          "Through a referral from a counselor"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 118,
+    "audio_url": "http://localhost:8000/audio/listening_p3/118.mp3",
+    "speaker": "female",
+    "transcript": "Career services is launching a new job shadow program, allowing students to spend a day observing professionals in their field of interest. Placements will be arranged based on student preferences and alumni availability. Interested students should submit an application by the end of the month.",
+    "questions": [
+      {
+        "question": "What does the job shadow program allow students to do?",
+        "options": [
+          "Complete a paid internship",
+          "Observe professionals for a day",
+          "Receive academic credit automatically",
+          "Work part-time throughout the semester"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How are placements arranged?",
+        "options": [
+          "Randomly assigned",
+          "Based on student preferences and alumni availability",
+          "First come, first served only",
+          "Determined by GPA"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 119,
+    "audio_url": "http://localhost:8000/audio/listening_p3/119.mp3",
+    "speaker": "male",
+    "transcript": "Tickets for this year's spring formal dance are now on sale at the student union information desk. The event will take place at a downtown venue, with transportation provided by university shuttles departing from campus every thirty minutes that evening. Formal attire is required.",
+    "questions": [
+      {
+        "question": "Where will the spring formal take place?",
+        "options": [
+          "On the main quad",
+          "At a downtown venue",
+          "In the student union ballroom",
+          "At a nearby hotel"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is provided for the event?",
+        "options": [
+          "Free formal wear rentals",
+          "Transportation via university shuttles",
+          "Complimentary dinner",
+          "Professional photography"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 120,
+    "audio_url": "http://localhost:8000/audio/listening_p3/120.mp3",
+    "speaker": "female",
+    "transcript": "As part of a new textbook cost transparency initiative, course listings in the registration system will now display estimated textbook costs alongside each class. This change is intended to help students better plan their budgets before the semester begins.",
+    "questions": [
+      {
+        "question": "What will now be displayed alongside course listings?",
+        "options": [
+          "Professor ratings",
+          "Estimated textbook costs",
+          "Class size information",
+          "Prerequisite requirements"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the purpose of this change?",
+        "options": [
+          "To reduce the number of required textbooks",
+          "To help students plan their budgets",
+          "To increase bookstore sales",
+          "To eliminate physical textbooks"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 121,
+    "audio_url": "http://localhost:8000/audio/listening_p3/121.mp3",
+    "speaker": "male",
+    "transcript": "This is a reminder that the university will conduct its monthly emergency alert system test this Wednesday at noon. Students will receive a test text message and email, and outdoor speakers will broadcast a brief test announcement. No action is required, this is only a test of the system.",
+    "questions": [
+      {
+        "question": "What is happening this Wednesday at noon?",
+        "options": [
+          "An actual emergency",
+          "A monthly test of the emergency alert system",
+          "A fire drill",
+          "A campus-wide meeting"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should students do?",
+        "options": [
+          "Evacuate immediately",
+          "Nothing, no action is required",
+          "Call campus security",
+          "Report to a designated meeting point"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 122,
+    "audio_url": "http://localhost:8000/audio/listening_p3/122.mp3",
+    "speaker": "female",
+    "transcript": "Three new bike share stations have been installed around campus, located near the library, the student union, and the north residence halls. Students can unlock bikes using the campus transportation app, with the first thirty minutes of each ride free for registered students.",
+    "questions": [
+      {
+        "question": "What has been installed around campus?",
+        "options": [
+          "New parking meters",
+          "New bike share stations",
+          "New bus stops",
+          "New pedestrian crosswalks"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is free for registered students?",
+        "options": [
+          "Unlimited rides all day",
+          "The first thirty minutes of each ride",
+          "Bike maintenance services",
+          "Helmet rentals"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 123,
+    "audio_url": "http://localhost:8000/audio/listening_p3/123.mp3",
+    "speaker": "male",
+    "transcript": "The alumni association is offering guided tours of the university's oldest and most historic buildings this Saturday, in celebration of the university's founding anniversary. Tours depart every hour from the main administration building and last approximately forty-five minutes.",
+    "questions": [
+      {
+        "question": "What is being offered this Saturday?",
+        "options": [
+          "Tours of new campus buildings",
+          "Guided tours of historic buildings",
+          "A campus construction update",
+          "A tour of student housing"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How often do tours depart?",
+        "options": [
+          "Every thirty minutes",
+          "Every hour",
+          "Only once in the morning",
+          "Continuously without scheduled departure times"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 124,
+    "audio_url": "http://localhost:8000/audio/listening_p3/124.mp3",
+    "speaker": "female",
+    "transcript": "The counseling center will bring certified therapy dogs to the student union this Friday afternoon to help students de-stress during midterms. The event is free and open to all students, no appointment necessary. Hand sanitizer will be available for use before and after interacting with the dogs.",
+    "questions": [
+      {
+        "question": "What is the purpose of the therapy dog visit?",
+        "options": [
+          "To train service animals",
+          "To help students de-stress during midterms",
+          "To promote pet adoption",
+          "To raise funds for an animal shelter"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the announcement say about attending?",
+        "options": [
+          "An appointment is required",
+          "No appointment is necessary",
+          "Only seniors may attend",
+          "Students must bring their own pet"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 125,
+    "audio_url": "http://localhost:8000/audio/listening_p3/125.mp3",
+    "speaker": "male",
+    "transcript": "New microwave stations have been added to the first floor of the library for student use, in response to frequent requests for food heating options during long study sessions. Please remember to clean up after use and dispose of food waste properly.",
+    "questions": [
+      {
+        "question": "What has been added to the library's first floor?",
+        "options": [
+          "New vending machines",
+          "New microwave stations",
+          "New charging stations",
+          "New printers"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students reminded to do?",
+        "options": [
+          "Bring their own utensils",
+          "Clean up after use and dispose of waste properly",
+          "Limit use to five minutes",
+          "Reserve a time slot in advance"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 126,
+    "audio_url": "http://localhost:8000/audio/listening_p3/126.mp3",
+    "speaker": "female",
+    "transcript": "The transportation office is asking students who have used the new campus shuttle app to leave a rating and feedback through the app store. Your feedback helps the office identify bugs and prioritize new features for future updates.",
+    "questions": [
+      {
+        "question": "What is the transportation office asking students to do?",
+        "options": [
+          "Stop using the app",
+          "Leave a rating and feedback for the app",
+          "Pay for a premium app subscription",
+          "Report a specific bug in person"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why does the office want feedback?",
+        "options": [
+          "To decide whether to discontinue the app",
+          "To identify bugs and prioritize new features",
+          "To determine ticket pricing",
+          "To select a new app developer"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 127,
+    "audio_url": "http://localhost:8000/audio/listening_p3/127.mp3",
+    "speaker": "male",
+    "transcript": "The financial aid office is launching a four-week financial wellness challenge, encouraging students to build better budgeting habits through weekly online modules and optional check-in sessions. Students who complete all four weeks will be entered into a raffle for a cash prize.",
+    "questions": [
+      {
+        "question": "What is the challenge designed to encourage?",
+        "options": [
+          "Increased spending during the semester",
+          "Better budgeting habits",
+          "Applying for more student loans",
+          "Opening a new credit card"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens if students complete all four weeks?",
+        "options": [
+          "They receive extra financial aid automatically",
+          "They are entered into a raffle for a cash prize",
+          "They receive a certificate only",
+          "They are exempt from certain fees"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 128,
+    "audio_url": "http://localhost:8000/audio/listening_p3/128.mp3",
+    "speaker": "female",
+    "transcript": "The campus radio station is launching a new weekly call-in show where students can share opinions on current campus issues live on air. The show airs every Monday evening, and students interested in calling in can find the studio number on the station's website.",
+    "questions": [
+      {
+        "question": "What is new about the radio show?",
+        "options": [
+          "It features only music",
+          "It allows students to call in and share opinions live",
+          "It airs only prerecorded content",
+          "It focuses solely on sports"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When does the show air?",
+        "options": [
+          "Every Monday evening",
+          "Every weekday morning",
+          "Only on weekends",
+          "Once a month"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 129,
+    "audio_url": "http://localhost:8000/audio/listening_p3/129.mp3",
+    "speaker": "male",
+    "transcript": "Self-service printing kiosks have been installed in several new locations across campus, including the student union, the science building lobby, and two residence halls. These kiosks accept both cash and campus dining dollars for payment.",
+    "questions": [
+      {
+        "question": "What has been installed in new locations?",
+        "options": [
+          "New vending machines",
+          "Self-service printing kiosks",
+          "New study carrels",
+          "New charging lockers"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What payment methods do the kiosks accept?",
+        "options": [
+          "Only credit cards",
+          "Cash and campus dining dollars",
+          "Only campus dining dollars",
+          "Only mobile payment apps"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 130,
+    "audio_url": "http://localhost:8000/audio/listening_p3/130.mp3",
+    "speaker": "female",
+    "transcript": "This is a reminder that registration priority for spring semester courses is based on completed credit hours, with graduating seniors receiving the earliest registration times. Students can check their specific registration time slot through the student portal starting next week.",
+    "questions": [
+      {
+        "question": "What determines registration priority?",
+        "options": [
+          "GPA",
+          "Completed credit hours",
+          "Alphabetical order by last name",
+          "Date of application"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who receives the earliest registration times?",
+        "options": [
+          "First-year students",
+          "Graduating seniors",
+          "Students with the most extracurricular activities",
+          "Students living on campus"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 131,
+    "audio_url": "http://localhost:8000/audio/listening_p3/131.mp3",
+    "speaker": "male",
+    "transcript": "Due to high demand during finals week, the campus store will extend its textbook buyback hours, remaining open until eight in the evening each day through the end of the week. Students are reminded to bring a valid student ID when selling back textbooks.",
+    "questions": [
+      {
+        "question": "What is being extended?",
+        "options": [
+          "Library hours",
+          "Textbook buyback hours",
+          "Dining hall hours",
+          "Bookstore return policy"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should students bring?",
+        "options": [
+          "Their original receipt",
+          "A valid student ID",
+          "A course syllabus",
+          "Proof of purchase price"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 132,
+    "audio_url": "http://localhost:8000/audio/listening_p3/132.mp3",
+    "speaker": "female",
+    "transcript": "The bookstore would like to remind students renting textbooks this semester that a five-day grace period is available after the official return deadline before late fees apply. However, books returned after the grace period will incur a daily late fee.",
+    "questions": [
+      {
+        "question": "What does the grace period allow?",
+        "options": [
+          "Free textbook rentals",
+          "Five extra days before late fees apply",
+          "An extension of the entire rental period",
+          "A full refund if returned late"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What happens after the grace period ends?",
+        "options": [
+          "Nothing changes",
+          "A daily late fee applies",
+          "The book is automatically purchased",
+          "The student's account is suspended"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 133,
+    "audio_url": "http://localhost:8000/audio/listening_p3/133.mp3",
+    "speaker": "male",
+    "transcript": "Interactive digital map kiosks have been installed at major entrances across campus to help visitors and new students navigate more easily. The kiosks provide building directories, accessible route information, and real-time event listings happening on campus that day.",
+    "questions": [
+      {
+        "question": "What has been installed at major entrances?",
+        "options": [
+          "New security checkpoints",
+          "Interactive digital map kiosks",
+          "New information desks staffed by volunteers",
+          "New parking payment stations"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What information do the kiosks provide?",
+        "options": [
+          "Only building directories",
+          "Building directories, accessible routes, and event listings",
+          "Only weather updates",
+          "Only emergency contact numbers"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 134,
+    "audio_url": "http://localhost:8000/audio/listening_p3/134.mp3",
+    "speaker": "female",
+    "transcript": "The housing office is offering a summer storage program for students who don't want to move all their belongings home for the summer. Storage bins can be reserved for a small fee, and items will be securely stored in a designated facility until students return in the fall.",
+    "questions": [
+      {
+        "question": "What does the summer storage program offer?",
+        "options": [
+          "Free moving trucks",
+          "Storage bins for a small fee",
+          "Summer housing for all students",
+          "A discount on fall tuition"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where will items be stored?",
+        "options": [
+          "In students' original dorm rooms",
+          "In a designated storage facility",
+          "At an off-campus location chosen by students",
+          "In the library basement"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 135,
+    "audio_url": "http://localhost:8000/audio/listening_p3/135.mp3",
+    "speaker": "male",
+    "transcript": "Campus security is expanding its safety walk program, allowing students to request a staff member to walk with them to their car or residence hall after dark. Requests can be made by phone or through the campus safety app, with an average wait time of under ten minutes.",
+    "questions": [
+      {
+        "question": "What does the safety walk program provide?",
+        "options": [
+          "Self-defense classes",
+          "A staff member to walk with students after dark",
+          "Free rides across campus",
+          "Security cameras for dorm rooms"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can students make a request?",
+        "options": [
+          "Only in person at the security office",
+          "By phone or through the campus safety app",
+          "By emailing campus security",
+          "Requests must be made a day in advance"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 136,
+    "audio_url": "http://localhost:8000/audio/listening_p3/136.mp3",
+    "speaker": "female",
+    "transcript": "As final exams approach, the dean of students would like to remind all students of the university's academic honor code. Violations, including unauthorized collaboration and use of unapproved materials during exams, can result in serious academic consequences. Students with questions about permitted resources should consult their course syllabus or contact their professor directly.",
+    "questions": [
+      {
+        "question": "What is the announcement reminding students about?",
+        "options": [
+          "The exam schedule",
+          "The academic honor code",
+          "Library policies",
+          "Housing regulations"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should students do if they have questions about permitted resources?",
+        "options": [
+          "Ask a classmate",
+          "Consult their syllabus or contact their professor",
+          "Assume all materials are allowed",
+          "Wait until after the exam"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 137,
+    "audio_url": "http://localhost:8000/audio/listening_p3/137.mp3",
+    "speaker": "male",
+    "transcript": "New outdoor seating areas with shaded tables and charging stations have been installed near the student union and the science building. These spaces are intended to give students more options for studying or relaxing outdoors as the weather warms up.",
+    "questions": [
+      {
+        "question": "What has been installed near the student union?",
+        "options": [
+          "A new fountain",
+          "Outdoor seating areas with charging stations",
+          "A new parking area",
+          "A community garden"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the purpose of these spaces?",
+        "options": [
+          "To host large events",
+          "To give students more outdoor study and relaxation options",
+          "To replace indoor study spaces",
+          "To serve as a new bus stop"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 138,
+    "audio_url": "http://localhost:8000/audio/listening_p3/138.mp3",
+    "speaker": "female",
+    "transcript": "The campus store has launched a new loyalty rewards program, allowing students to earn points on every purchase that can later be redeemed for discounts or merchandise. Students can sign up for free at checkout using their student ID number.",
+    "questions": [
+      {
+        "question": "What is the new loyalty program?",
+        "options": [
+          "A subscription box service",
+          "A points-based rewards program",
+          "A student discount card requiring payment",
+          "A referral program for new students"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How do students sign up?",
+        "options": [
+          "Through a separate mobile app only",
+          "For free at checkout using their student ID",
+          "By paying an annual membership fee",
+          "Only during orientation week"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 139,
+    "audio_url": "http://localhost:8000/audio/listening_p3/139.mp3",
+    "speaker": "male",
+    "transcript": "The computer science department will host an open house next Thursday evening for students considering the major or minor. Current students and faculty will be available to answer questions about coursework, research opportunities, and career paths. Light refreshments will be served.",
+    "questions": [
+      {
+        "question": "Who is the open house intended for?",
+        "options": [
+          "Current computer science majors only",
+          "Students considering the major or minor",
+          "Faculty members only",
+          "Prospective graduate students"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What can attendees learn about?",
+        "options": [
+          "Only research opportunities",
+          "Coursework, research opportunities, and career paths",
+          "Only tuition costs",
+          "Only application deadlines"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 140,
+    "audio_url": "http://localhost:8000/audio/listening_p3/140.mp3",
+    "speaker": "female",
+    "transcript": "Twelve new water bottle refill stations have been installed across campus, including in every academic building and residence hall. Each station includes a counter tracking the number of plastic bottles saved, as part of the university's ongoing sustainability efforts.",
+    "questions": [
+      {
+        "question": "What has been installed across campus?",
+        "options": [
+          "New vending machines",
+          "Water bottle refill stations",
+          "New drinking fountains without refill features",
+          "New recycling bins only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does each station track?",
+        "options": [
+          "Water usage costs",
+          "The number of plastic bottles saved",
+          "The number of users per day",
+          "Water temperature"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 141,
+    "audio_url": "http://localhost:8000/audio/listening_p3/141.mp3",
+    "speaker": "male",
+    "transcript": "During final exam week, quiet hours in all residence halls will be extended to twenty-four hours a day. Residents are asked to be especially considerate of neighbors during this time, and any violations should be reported to the resident assistant on duty.",
+    "questions": [
+      {
+        "question": "What is changing during final exam week?",
+        "options": [
+          "Quiet hours will be eliminated",
+          "Quiet hours will be extended to twenty-four hours a day",
+          "Quiet hours will only apply on weekends",
+          "Quiet hours will be shortened"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What should residents do if they notice a violation?",
+        "options": [
+          "Confront the resident directly",
+          "Report it to the resident assistant on duty",
+          "Call campus police immediately",
+          "Ignore it until after finals"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 142,
+    "audio_url": "http://localhost:8000/audio/listening_p3/142.mp3",
+    "speaker": "female",
+    "transcript": "The theater department has announced its lineup for next season, featuring four productions ranging from classic drama to contemporary comedy. Season passes go on sale next week and offer a significant discount compared to purchasing individual tickets throughout the year.",
+    "questions": [
+      {
+        "question": "What has the theater department announced?",
+        "options": [
+          "A new theater building",
+          "Its production lineup for next season",
+          "A change in ticket prices for last season",
+          "A new director"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the benefit of a season pass?",
+        "options": [
+          "Free parking at performances",
+          "A significant discount compared to individual tickets",
+          "Priority seating for one show only",
+          "Backstage access"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 143,
+    "audio_url": "http://localhost:8000/audio/listening_p3/143.mp3",
+    "speaker": "male",
+    "transcript": "The university app has been updated with several new features, including real-time dining hall menus, a searchable campus event calendar, and integrated shuttle tracking. Students are encouraged to update to the latest version through their device's app store.",
+    "questions": [
+      {
+        "question": "What new features have been added to the app?",
+        "options": [
+          "A social media feed",
+          "Real-time menus, event calendar, and shuttle tracking",
+          "A grade tracking tool",
+          "A job application portal"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What are students encouraged to do?",
+        "options": [
+          "Delete the old app first",
+          "Update to the latest version",
+          "Create a new account",
+          "Contact IT support before updating"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 144,
+    "audio_url": "http://localhost:8000/audio/listening_p3/144.mp3",
+    "speaker": "female",
+    "transcript": "As the semester winds down, the sustainability office is organizing a donation drive for gently used clothing, furniture, and household items students no longer need. Donation bins will be placed in each residence hall lobby through the end of the month.",
+    "questions": [
+      {
+        "question": "What is the donation drive collecting?",
+        "options": [
+          "Only books",
+          "Gently used clothing, furniture, and household items",
+          "Only electronics",
+          "Only food items"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where will donation bins be placed?",
+        "options": [
+          "Only in the student union",
+          "In each residence hall lobby",
+          "Only in academic buildings",
+          "Off campus at a donation center"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 145,
+    "audio_url": "http://localhost:8000/audio/listening_p3/145.mp3",
+    "speaker": "male",
+    "transcript": "The tutoring center is recruiting peer leaders for next semester, particularly students who have excelled in introductory math and science courses. Peer leaders receive paid training and a flexible weekly schedule. Applications are due by the end of this month.",
+    "questions": [
+      {
+        "question": "Who is the tutoring center looking to recruit?",
+        "options": [
+          "Graduate students only",
+          "Students who excelled in intro math and science courses",
+          "Faculty members",
+          "First-year students only"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What do peer leaders receive?",
+        "options": [
+          "Only volunteer hours",
+          "Paid training and a flexible schedule",
+          "Free tuition",
+          "Course credit only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 146,
+    "audio_url": "http://localhost:8000/audio/listening_p3/146.mp3",
+    "speaker": "female",
+    "transcript": "The library is offering a fine forgiveness week starting Monday, during which all overdue fines will be waived for students who return their late materials. This is a one-time opportunity intended to encourage students to clear their accounts before the end of the semester.",
+    "questions": [
+      {
+        "question": "What is happening during fine forgiveness week?",
+        "options": [
+          "Fines will be doubled",
+          "Overdue fines will be waived for returned materials",
+          "The library will close early",
+          "New fines will be introduced"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the purpose of this initiative?",
+        "options": [
+          "To increase library revenue",
+          "To encourage students to clear their accounts",
+          "To reduce the number of library books",
+          "To promote a new library app"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 147,
+    "audio_url": "http://localhost:8000/audio/listening_p3/147.mp3",
+    "speaker": "male",
+    "transcript": "Dining services has released its annual sustainability report, highlighting a fifteen percent reduction in food waste over the past year through improved portion planning and a new food donation partnership with a local shelter. The full report is available on the dining services website.",
+    "questions": [
+      {
+        "question": "What did the sustainability report highlight?",
+        "options": [
+          "A decrease in dining hall attendance",
+          "A fifteen percent reduction in food waste",
+          "An increase in menu prices",
+          "A new dining hall opening"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What contributed to this reduction?",
+        "options": [
+          "Reduced dining hall hours",
+          "Improved portion planning and a food donation partnership",
+          "Fewer dining hall options",
+          "Higher meal plan prices"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 148,
+    "audio_url": "http://localhost:8000/audio/listening_p3/148.mp3",
+    "speaker": "female",
+    "transcript": "The campus shuttle system now offers real-time tracking through the university app, allowing students to see exactly when the next shuttle will arrive at their stop. This feature aims to reduce wait times and improve overall reliability of the shuttle service.",
+    "questions": [
+      {
+        "question": "What new feature has been added to the shuttle system?",
+        "options": [
+          "New shuttle routes",
+          "Real-time tracking through the university app",
+          "Free shuttle rides for all students",
+          "Larger shuttle buses"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is the goal of this feature?",
+        "options": [
+          "To increase shuttle fares",
+          "To reduce wait times and improve reliability",
+          "To reduce the number of shuttle stops",
+          "To replace the shuttle service entirely"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 149,
+    "audio_url": "http://localhost:8000/audio/listening_p3/149.mp3",
+    "speaker": "male",
+    "transcript": "The student health center now offers telehealth appointments for non-emergency medical concerns, allowing students to consult with a healthcare provider remotely through a secure video platform. This option is particularly useful for students living off campus or those with mobility challenges.",
+    "questions": [
+      {
+        "question": "What new option does the health center offer?",
+        "options": [
+          "In-person appointments only",
+          "Telehealth appointments through a secure video platform",
+          "Emergency room referrals only",
+          "Free prescription delivery"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Who might find this option particularly useful?",
+        "options": [
+          "Only first-year students",
+          "Students living off campus or with mobility challenges",
+          "Only international students",
+          "Only student athletes"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 150,
+    "audio_url": "http://localhost:8000/audio/listening_p3/150.mp3",
+    "speaker": "female",
+    "transcript": "As move-out approaches, the housing office is partnering with a local charity to collect items students no longer wish to keep, including clothing, furniture, and non-perishable food. Donation stations will be set up outside each residence hall during the final week of the semester.",
+    "questions": [
+      {
+        "question": "What is the purpose of the move-out donation program?",
+        "options": [
+          "To sell items back to students",
+          "To collect unwanted items for a local charity",
+          "To recycle only electronics",
+          "To fund a scholarship program"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where will donation stations be located?",
+        "options": [
+          "Only in the student union",
+          "Outside each residence hall",
+          "Only in the parking lots",
+          "At the campus exit gates"
+        ],
+        "answer": 1
+      }
+    ]
+  }
+]

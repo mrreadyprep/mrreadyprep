@@ -1,2 +1,8 @@
 uvicorn[standard]
 fastapi
+edge-tts
+imageio-ffmpeg
+bcrypt
+PyJWT
+pydantic[email]
+google-auth

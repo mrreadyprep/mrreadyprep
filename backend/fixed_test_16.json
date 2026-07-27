@@ -1,0 +1,1791 @@
+{
+  "id": 16,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 46,
+          "topic": "The Development of Vaccines",
+          "category": "Immunology",
+          "paragraph": "Vaccines represent one of the most significant achievements in the history of medicine. Early vaccine development often involved exposing patients to a weakened or inactivated version of a pathogen, prompting their immune system to develop protective defenses without causing serious illness. This groundbreaking approach dramatically reduced deaths from diseases that had previously killed enormous numbers of people throughout human history. Modern vaccine technology has continued advancing considerably, incorporating new scientific techniques that allow researchers to develop protective treatments more quickly than ever before. Despite these remarkable achievements, convincing skeptical populations of a vaccine's safety and effectiveness remains an ongoing public health challenge worldwide.",
+          "blanks": [
+            {
+              "word": "vaccine",
+              "visible": "vac",
+              "hidden": "cine"
+            },
+            {
+              "word": "weakened",
+              "visible": "weak",
+              "hidden": "ened"
+            },
+            {
+              "word": "prompting",
+              "visible": "prom",
+              "hidden": "pting"
+            },
+            {
+              "word": "serious",
+              "visible": "ser",
+              "hidden": "ious"
+            },
+            {
+              "word": "diseases",
+              "visible": "dise",
+              "hidden": "ases"
+            },
+            {
+              "word": "throughout",
+              "visible": "throu",
+              "hidden": "ghout"
+            },
+            {
+              "word": "incorporating",
+              "visible": "incor",
+              "hidden": "porating"
+            },
+            {
+              "word": "quickly",
+              "visible": "qui",
+              "hidden": "ckly"
+            },
+            {
+              "word": "skeptical",
+              "visible": "skep",
+              "hidden": "tical"
+            },
+            {
+              "word": "worldwide",
+              "visible": "worl",
+              "hidden": "dwide"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Work Chat",
+          "subtitle": "",
+          "text": "Nadia (2:00 p.m.)\nThe client pushed the meeting from three to four thirty. Can everyone still make it?\n\nBen (2:03 p.m.)\nWorks for me, I'll just adjust my afternoon schedule.\n\nOmar (2:08 p.m.)\nI have a hard stop at five for a doctor's appointment, but four thirty should still give us enough time.\n\nNadia (2:10 p.m.)\nGood, I'll keep the agenda tight so we can wrap up by then. I'll send the updated invite now.\n\nBen (2:11 p.m.)\nSounds good. Should we prep anything beforehand?\n\nNadia (2:13 p.m.)\nJust review the proposal draft I sent yesterday, that should be enough.",
+          "questions": [
+            {
+              "question": "What time was the meeting moved to?",
+              "options": [
+                "Three o'clock",
+                "Four thirty",
+                "Five o'clock",
+                "Two o'clock"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does Omar mention a doctor's appointment?",
+              "options": [
+                "He wants to reschedule the meeting",
+                "He needs the meeting to end before five",
+                "He is canceling the meeting",
+                "He will miss the meeting entirely"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Nadia ask the team to do beforehand?",
+              "options": [
+                "Prepare a presentation",
+                "Review the proposal draft",
+                "Call the client directly",
+                "Book a conference room"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 76
+        },
+        {
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Neighbor Chat",
+          "subtitle": "",
+          "text": "Grace (11:00 a.m.)\nHi! I noticed a package on your porch while you were away. I brought it inside my place to keep it safe from the rain.\n\nHector (11:20 a.m.)\nOh thank you so much, I completely forgot I ordered something. I'm actually still out of town until tomorrow.\n\nGrace (11:22 a.m.)\nNo worries, it'll be safe here. Just let me know when you're back and I'll bring it right over.\n\nHector (11:25 a.m.)\nI really appreciate it. I'll message you tomorrow afternoon once I'm home.\n\nGrace (11:26 a.m.)\nSounds perfect, have a safe trip back!",
+          "questions": [
+            {
+              "question": "Why did Grace bring the package inside?",
+              "options": [
+                "It was addressed to her by mistake",
+                "To keep it safe from the rain",
+                "Hector asked her to",
+                "It was too heavy to leave outside"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where is Hector currently?",
+              "options": [
+                "At home",
+                "Out of town",
+                "At work",
+                "At the post office"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will Hector do tomorrow?",
+              "options": [
+                "Pick up the package himself",
+                "Message Grace once he's home",
+                "Cancel the order",
+                "Ask another neighbor for help"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 77
+        },
+        {
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Study Group Chat",
+          "subtitle": "",
+          "text": "Liam (8:00 p.m.)\nDoes anyone want to meet at the library tomorrow to go over chapter seven before the quiz?\n\nAisha (8:04 p.m.)\nI'm in. What time works?\n\nLiam (8:06 p.m.)\nMaybe two? That gives us a couple hours before the quiz at five.\n\nNoah (8:10 p.m.)\nI can't make two, I have a class until three. Could we push it to three thirty instead?\n\nAisha (8:12 p.m.)\nThree thirty works for me too, that's still enough time before the quiz.\n\nLiam (8:14 p.m.)\nOkay, three thirty it is. I'll reserve a study room so we have some privacy.",
+          "questions": [
+            {
+              "question": "What are the students planning to do?",
+              "options": [
+                "Attend a lecture together",
+                "Study for a quiz",
+                "Submit a group project",
+                "Celebrate finishing exams"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does Noah suggest changing the time?",
+              "options": [
+                "He has a class until three",
+                "He is not feeling well",
+                "He forgot about the plan",
+                "He prefers studying alone"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does Liam offer to do at the end?",
+              "options": [
+                "Bring snacks",
+                "Reserve a study room",
+                "Print extra notes",
+                "Cancel the meeting"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 78
+        }
+      ],
+      "ap": [
+        {
+          "title": "The Chemistry Behind Rusting",
+          "passage": "Rust, the reddish-brown flaky substance that forms on iron and steel objects exposed to moisture, results from a chemical process called oxidation. Although commonly viewed simply as a form of damage or decay, rusting is actually a well-understood electrochemical reaction involving iron, oxygen, and water.\n\nWhen iron is exposed to both oxygen and moisture simultaneously, electrons transfer from iron atoms to oxygen molecules, forming iron oxide. This newly formed compound has a much larger volume than the original metal, causing rust to flake and crumble away from the surface rather than forming a protective layer, unlike the oxide coatings that naturally protect metals such as aluminum.\n\nThe presence of salt or other electrolytes significantly accelerates the rusting process by improving the conductivity of the moisture layer on the metal's surface, allowing electrons to transfer more readily between reaction sites. This explains why vehicles and infrastructure in coastal regions or areas that use road salt tend to rust considerably faster than those in drier, salt-free environments.\n\nEngineers have developed numerous strategies to prevent or slow rust formation, including applying protective paint coatings, galvanizing steel with a layer of zinc, and using corrosion-resistant alloys such as stainless steel. Understanding the underlying chemistry of rust has proven essential for extending the lifespan of bridges, vehicles, and countless other iron-based structures.",
+          "passage_marked": "Rust, the reddish-brown flaky substance that forms on iron and steel objects exposed to moisture, results from a chemical process called oxidation. Although commonly viewed simply as a form of damage or decay, rusting is actually a well-understood electrochemical reaction involving iron, oxygen, and water. [A]\n\nWhen iron is exposed to both oxygen and moisture simultaneously, electrons transfer from iron atoms to oxygen molecules, forming iron oxide. [B] This newly formed compound has a much larger volume than the original metal, causing rust to flake and crumble away from the surface rather than forming a protective layer, unlike the oxide coatings that naturally protect metals such as aluminum.\n\nThe presence of salt or other electrolytes significantly accelerates the rusting process by improving the conductivity of the moisture layer on the metal's surface, allowing electrons to transfer more readily between reaction sites. This explains why vehicles and infrastructure in coastal regions or areas that use road salt tend to rust considerably faster than those in drier, salt-free environments. [C]\n\nEngineers have developed numerous strategies to prevent or slow rust formation, including applying protective paint coatings, galvanizing steel with a layer of zinc, and using corrosion-resistant alloys such as stainless steel. [D] Understanding the underlying chemistry of rust has proven essential for extending the lifespan of bridges, vehicles, and countless other iron-based structures.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'accelerates' in the passage is closest in meaning to",
+              "options": [
+                "prevents",
+                "speeds up",
+                "reverses",
+                "measures"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What causes rust to form on iron?",
+              "options": [
+                "Exposure to extreme heat",
+                "A chemical process involving oxygen and water",
+                "Direct sunlight alone",
+                "Contact with other metals only"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "Why does rust flake off rather than protect the metal underneath?",
+              "options": [
+                "It has a much larger volume than the original metal",
+                "It is chemically identical to the original metal",
+                "It dissolves immediately in water",
+                "It forms only in cold temperatures"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why do coastal regions experience faster rusting?",
+              "options": [
+                "Lower humidity levels",
+                "Salt improves the conductivity of the moisture layer",
+                "Coastal metals are of lower quality",
+                "There is less oxygen near the ocean"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "One common preventive method involves coating steel with a thin layer of zinc, a process known as galvanizing.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 3
+            }
+          ],
+          "id": 31
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 47,
+          "topic": "Volcanic Ash and Climate",
+          "category": "Volcanology",
+          "paragraph": "Large volcanic eruptions can inject enormous quantities of ash and gas particles high into the atmosphere. When these particles reach the upper atmosphere, they can spread across vast distances, occasionally circling the entire planet within just a few weeks. This atmospheric material reflects a portion of incoming sunlight back into space, which can temporarily lower global temperatures following a particularly powerful eruption. Historical records indicate that several major volcanic eruptions have caused noticeable global cooling lasting one or two years afterward, sometimes disrupting agricultural harvests in distant regions. Scientists continue monitoring active volcanoes closely, hoping to better predict how future eruptions might influence weather patterns worldwide.",
+          "blanks": [
+            {
+              "word": "distances",
+              "visible": "dist",
+              "hidden": "ances"
+            },
+            {
+              "word": "circling",
+              "visible": "circ",
+              "hidden": "ling"
+            },
+            {
+              "word": "incoming",
+              "visible": "inco",
+              "hidden": "ming"
+            },
+            {
+              "word": "particularly",
+              "visible": "parti",
+              "hidden": "cularly"
+            },
+            {
+              "word": "records",
+              "visible": "rec",
+              "hidden": "ords"
+            },
+            {
+              "word": "cooling",
+              "visible": "coo",
+              "hidden": "ling"
+            },
+            {
+              "word": "disrupting",
+              "visible": "disru",
+              "hidden": "pting"
+            },
+            {
+              "word": "regions",
+              "visible": "reg",
+              "hidden": "ions"
+            },
+            {
+              "word": "predict",
+              "visible": "pre",
+              "hidden": "dict"
+            },
+            {
+              "word": "worldwide",
+              "visible": "worl",
+              "hidden": "dwide"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "Symbiotic Relationships in Coral Reef Ecosystems",
+          "passage": "Coral reefs represent one of the most biologically productive and diverse ecosystems on Earth, despite typically forming in nutrient-poor tropical waters. This apparent contradiction is explained largely by a remarkable symbiotic relationship between coral polyps and microscopic algae called zooxanthellae that live within the coral's tissues.\n\nThe algae perform photosynthesis, converting sunlight into chemical energy and producing sugars that they share directly with their coral host, providing up to ninety percent of the coral's energy requirements in some species. In exchange, the coral provides the algae with a protected environment and access to compounds necessary for photosynthesis, including carbon dioxide and essential nutrients.\n\nThis mutually beneficial relationship allows coral reefs to thrive in waters that would otherwise support relatively little marine life, since the recycling of nutrients between coral and algae dramatically reduces the ecosystem's dependence on external nutrient sources. The algae are also responsible for the vibrant colors typically associated with healthy coral reefs.\n\nWhen environmental stressors, such as elevated water temperatures, disrupt this delicate partnership, corals may expel their algae in a process known as bleaching, leaving the coral colorless and significantly weakened. Without their primary energy source, bleached corals become considerably more vulnerable to disease and, if conditions do not improve promptly, are at serious risk of dying.",
+          "passage_marked": "Coral reefs represent one of the most biologically productive and diverse ecosystems on Earth, despite typically forming in nutrient-poor tropical waters. This apparent contradiction is explained largely by a remarkable symbiotic relationship between coral polyps and microscopic algae called zooxanthellae that live within the coral's tissues. [A]\n\nThe algae perform photosynthesis, converting sunlight into chemical energy and producing sugars that they share directly with their coral host, providing up to ninety percent of the coral's energy requirements in some species. [B] In exchange, the coral provides the algae with a protected environment and access to compounds necessary for photosynthesis, including carbon dioxide and essential nutrients.\n\nThis mutually beneficial relationship allows coral reefs to thrive in waters that would otherwise support relatively little marine life, since the recycling of nutrients between coral and algae dramatically reduces the ecosystem's dependence on external nutrient sources. The algae are also responsible for the vibrant colors typically associated with healthy coral reefs. [C]\n\nWhen environmental stressors, such as elevated water temperatures, disrupt this delicate partnership, corals may expel their algae in a process known as bleaching, leaving the coral colorless and significantly weakened. [D] Without their primary energy source, bleached corals become considerably more vulnerable to disease and, if conditions do not improve promptly, are at serious risk of dying.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'mutually beneficial' in the passage is closest in meaning to",
+              "options": [
+                "advantageous to both parties",
+                "harmful to one side",
+                "temporary and unstable",
+                "purely accidental"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "Why is it surprising that coral reefs are so biologically productive?",
+              "options": [
+                "They form in nutrient-poor tropical waters",
+                "They only exist in cold climates",
+                "They contain no plant life",
+                "They receive very little sunlight"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What do the algae provide to the coral?",
+              "options": [
+                "Protection from predators only",
+                "Sugars produced through photosynthesis",
+                "A hard skeletal structure",
+                "Fresh water"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What happens to coral during bleaching?",
+              "options": [
+                "It grows more colorful",
+                "It expels its algae and becomes colorless and weakened",
+                "It reproduces more rapidly",
+                "It becomes immune to disease"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This close nutrient exchange is a major reason coral reefs can flourish despite the scarcity of nutrients in surrounding waters.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 32
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 48,
+          "topic": "The Migration of Monarch Butterflies",
+          "category": "Zoology",
+          "paragraph": "Monarch butterflies undertake one of the most remarkable migrations found anywhere in the natural world. Each autumn, millions of monarchs travel thousands of miles from North America to specific overwintering sites in central Mexico, guided by mechanisms that scientists still do not fully understand. Astonishingly, no single butterfly completes the entire round-trip journey, since the return migration northward actually takes multiple generations to finish. Researchers have proposed that monarchs rely on a combination of environmental cues, including the position of the sun and possibly the Earth's magnetic field, to navigate correctly. Conservationists have grown increasingly concerned about declining monarch populations, largely attributing the decline to habitat loss and pesticide use.",
+          "blanks": [
+            {
+              "word": "millions",
+              "visible": "mill",
+              "hidden": "ions"
+            },
+            {
+              "word": "specific",
+              "visible": "spec",
+              "hidden": "ific"
+            },
+            {
+              "word": "scientists",
+              "visible": "scien",
+              "hidden": "tists"
+            },
+            {
+              "word": "journey",
+              "visible": "jou",
+              "hidden": "rney"
+            },
+            {
+              "word": "multiple",
+              "visible": "mult",
+              "hidden": "iple"
+            },
+            {
+              "word": "combination",
+              "visible": "combi",
+              "hidden": "nation"
+            },
+            {
+              "word": "possibly",
+              "visible": "poss",
+              "hidden": "ibly"
+            },
+            {
+              "word": "concerned",
+              "visible": "conc",
+              "hidden": "erned"
+            },
+            {
+              "word": "largely",
+              "visible": "lar",
+              "hidden": "gely"
+            },
+            {
+              "word": "pesticide",
+              "visible": "pest",
+              "hidden": "icide"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Elevator Out of Service",
+          "subtitle": "",
+          "text": "The east elevator is temporarily out of service for scheduled maintenance.\n\nPlease use the west elevator or the stairwell located near the main lobby.\n\nWe expect service to resume by Thursday afternoon. We apologize for any inconvenience.",
+          "questions": [
+            {
+              "question": "Why is the east elevator out of service?",
+              "options": [
+                "It broke down unexpectedly",
+                "Scheduled maintenance",
+                "A power outage",
+                "A safety inspection failure"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative is suggested?",
+              "options": [
+                "Wait until it reopens",
+                "Use the west elevator or stairwell",
+                "Use a service elevator only",
+                "Take a different building entrance"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 79
+        },
+        {
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "Farmers Market: Saturday Hours Update",
+          "subtitle": "",
+          "text": "Starting this weekend, the farmers market will open one hour earlier, from seven in the morning until one in the afternoon.\n\nThis change is due to increasing summer heat and vendor requests for cooler working hours.\n\nRegular Sunday hours remain unchanged at nine to two.",
+          "questions": [
+            {
+              "question": "Why did the Saturday hours change?",
+              "options": [
+                "Fewer vendors were available",
+                "Increasing summer heat and vendor requests",
+                "A new parking restriction",
+                "Lower customer turnout"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What time does the market now open on Saturdays?",
+              "options": [
+                "Six in the morning",
+                "Seven in the morning",
+                "Nine in the morning",
+                "Eight in the morning"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 80
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 331,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/331.mp3",
+          "transcript": "Do you know if the museum offers guided tours?",
+          "context": "A visitor asks a museum staff member.",
+          "options": [
+            "Yes, tours start every hour on the hour.",
+            "The museum has over ten exhibit halls.",
+            "Admission includes access to all exhibits.",
+            "The gift shop is near the main entrance."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "42-331"
+        },
+        {
+          "id": 332,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/332.mp3",
+          "transcript": "Could we reschedule our call to tomorrow morning?",
+          "context": "A colleague asks another colleague.",
+          "options": [
+            "Sure, would ten o'clock work for you?",
+            "The call was originally set for today.",
+            "We usually talk on Mondays.",
+            "I'll need to check my calendar first."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "42-332"
+        },
+        {
+          "id": 333,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/333.mp3",
+          "transcript": "I noticed my package arrived with some damage.",
+          "context": "A customer calls a company's customer service line.",
+          "options": [
+            "I'm so sorry, let's arrange a replacement right away.",
+            "Packages are inspected before shipping.",
+            "Most orders arrive within a week.",
+            "You can track your package online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "42-333"
+        },
+        {
+          "id": 334,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/334.mp3",
+          "transcript": "Would it be okay if I brought a guest to the event?",
+          "context": "An employee asks an event organizer.",
+          "options": [
+            "Of course, just let us know the guest's name.",
+            "The event starts at six in the evening.",
+            "Tickets are non-refundable.",
+            "The venue can hold about two hundred people."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "42-334"
+        },
+        {
+          "id": 335,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/335.mp3",
+          "transcript": "Do you have a charger I could borrow for a few minutes?",
+          "context": "A student asks a classmate.",
+          "options": [
+            "Sure, here you go, I have an extra one.",
+            "My phone battery lasts all day.",
+            "I usually charge my laptop overnight.",
+            "The library has charging stations too."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "42-335"
+        },
+        {
+          "id": 336,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/336.mp3",
+          "transcript": "Could you check whether this coat comes in a larger size?",
+          "context": "A customer asks a store employee.",
+          "options": [
+            "Let me check the back for you.",
+            "This coat is water-resistant.",
+            "We just got new coats in for winter.",
+            "The coat is available in three colors."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "42-336"
+        },
+        {
+          "id": 337,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/337.mp3",
+          "transcript": "Could you tell me if this medication needs to be taken with food?",
+          "context": "A patient asks a pharmacist.",
+          "options": [
+            "Yes, it's best to take it with a meal.",
+            "This medication comes in tablet form.",
+            "Refills can be requested online.",
+            "The pharmacy closes at nine tonight."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "43-337"
+        },
+        {
+          "id": 338,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/338.mp3",
+          "transcript": "I think I left my jacket at the restaurant last night.",
+          "context": "A customer calls a restaurant.",
+          "options": [
+            "Let me check our lost and found for you.",
+            "The restaurant opens at eleven.",
+            "We're fully booked this weekend.",
+            "Our specials change every night."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "43-338"
+        },
+        {
+          "id": 339,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/339.mp3",
+          "transcript": "Do you know if this train has a dining car?",
+          "context": "A passenger asks a train attendant.",
+          "options": [
+            "Yes, it's three cars down from here.",
+            "This train travels overnight.",
+            "Tickets can be upgraded on board.",
+            "The train has Wi-Fi throughout."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "43-339"
+        },
+        {
+          "id": 340,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/340.mp3",
+          "transcript": "Could you help me carry these boxes upstairs?",
+          "context": "A person asks a neighbor.",
+          "options": [
+            "Sure, just give me a second.",
+            "The stairs were just repainted.",
+            "I usually take the elevator instead.",
+            "These boxes look pretty heavy."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "43-340"
+        }
+      ],
+      "conv": [
+        {
+          "id": 76,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/76.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I heard the bookstore is having a sale on used textbooks."
+            },
+            {
+              "speaker": "female",
+              "text": "Really? I need a few for next semester."
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, it starts this weekend and lasts through Monday."
+            },
+            {
+              "speaker": "female",
+              "text": "Perfect timing, I'll head over there Saturday morning."
+            },
+            {
+              "speaker": "male",
+              "text": "Good idea, the popular titles tend to sell out fast."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is happening at the bookstore?",
+              "options": [
+                "A book donation drive",
+                "A sale on used textbooks",
+                "A new book release event",
+                "A store closing sale"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man warn about?",
+              "options": [
+                "The store closing early",
+                "Popular titles selling out fast",
+                "Prices increasing later",
+                "Limited store hours"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 77,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/77.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm nervous about presenting my thesis proposal next week."
+            },
+            {
+              "speaker": "male",
+              "text": "I'm sure you'll do great, you've been preparing for months."
+            },
+            {
+              "speaker": "female",
+              "text": "I know, but public speaking still makes me anxious."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you thought about practicing in front of a small group first?"
+            },
+            {
+              "speaker": "female",
+              "text": "That's actually a good idea, maybe I'll ask a few classmates."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman nervous about?",
+              "options": [
+                "Finishing her research",
+                "Presenting her thesis proposal",
+                "Finding a thesis advisor",
+                "Submitting her application"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Postponing the presentation",
+                "Practicing in front of a small group first",
+                "Writing a script to read from",
+                "Skipping the presentation entirely"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 78,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/78.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Did you end up going to the career fair yesterday?"
+            },
+            {
+              "speaker": "female",
+              "text": "I did, it was pretty crowded but worth it."
+            },
+            {
+              "speaker": "male",
+              "text": "Did you talk to any companies that interested you?"
+            },
+            {
+              "speaker": "female",
+              "text": "Yeah, a couple of tech companies were recruiting for summer internships."
+            },
+            {
+              "speaker": "male",
+              "text": "That's great, did you hand out your resume?"
+            },
+            {
+              "speaker": "female",
+              "text": "I did, to about five different recruiters."
+            }
+          ],
+          "questions": [
+            {
+              "question": "Where did the woman go yesterday?",
+              "options": [
+                "A job interview",
+                "A career fair",
+                "A networking dinner",
+                "A guest lecture"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did the woman do at the event?",
+              "options": [
+                "Attended a workshop only",
+                "Handed out her resume to recruiters",
+                "Signed up for a class",
+                "Volunteered at a booth"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 76,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/76.mp3",
+          "speaker": "male",
+          "transcript": "Attention shoppers: our electronics department will be relocating to the second floor starting next Monday to make room for an expanded home goods section. Current electronics inventory will be available at a temporary discount this week to reduce moving costs. Thank you for shopping with us.",
+          "questions": [
+            {
+              "question": "What change is being announced?",
+              "options": [
+                "A store closing",
+                "The electronics department relocating",
+                "A new store opening",
+                "A change in store hours"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is offered this week?",
+              "options": [
+                "Free shipping",
+                "A temporary discount on electronics",
+                "Extended store hours",
+                "A loyalty program signup bonus"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 77,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/77.mp3",
+          "speaker": "female",
+          "transcript": "Attention passengers: the 9:40 departure to Millbrook has been moved to platform six instead of platform two due to a scheduling change. Please make your way to platform six promptly, as the train will depart on time despite the platform change. We apologize for any confusion.",
+          "questions": [
+            {
+              "question": "What has changed about this train?",
+              "options": [
+                "Its departure time",
+                "Its departure platform",
+                "Its final destination",
+                "Its ticket price"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Will the train still depart on time?",
+              "options": [
+                "No, it will be delayed",
+                "Yes, it will depart on time",
+                "It has been canceled",
+                "The departure time is unknown"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 78,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/78.mp3",
+          "speaker": "male",
+          "transcript": "Attention residents: the community center pool will be closed for the remainder of the week due to a mechanical issue with the filtration system. Repair technicians have been scheduled, and we expect the pool to reopen by Monday. We apologize for the inconvenience and appreciate your patience.",
+          "questions": [
+            {
+              "question": "Why is the pool closed?",
+              "options": [
+                "A staffing shortage",
+                "A mechanical issue with the filtration system",
+                "Scheduled cleaning",
+                "Low attendance"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When is the pool expected to reopen?",
+              "options": [
+                "Tomorrow",
+                "By Monday",
+                "In two weeks",
+                "It is permanently closed"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 61,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/61.mp3",
+          "speaker": "female",
+          "subject": "Art History",
+          "transcript": "Today we'll explore the emergence of Impressionism in nineteenth-century France, a movement that fundamentally challenged the artistic conventions dominant at the time. Prior to Impressionism, academic painting in France was governed by strict standards set by the official Salon, the powerful state-sponsored art exhibition that largely determined which artists achieved recognition and commercial success. Academic painting favored highly detailed, carefully finished works, typically depicting historical, mythological, or religious subject matter, painted primarily within the controlled environment of an artist's studio. The Impressionists, a group that included artists such as Claude Monet, Pierre-Auguste Renoir, and Berthe Morisot, rejected many of these established conventions. Instead, they frequently painted outdoors, a practice known by the French term en plein air, attempting to directly capture the fleeting effects of natural light and atmospheric conditions as they appeared in a specific momentary instant, rather than idealized or historical scenes carefully composed after the fact within a studio setting. This approach demanded a dramatically different technique, characterized by visible, often quick and loose brushstrokes, and a notable de-emphasis on fine, precise detail, since capturing a fleeting momentary impression of a scene mattered considerably more to these artists than achieving photographic accuracy. The movement's name itself originated somewhat unexpectedly from a dismissive critical review of Monet's painting titled Impression, Sunrise, in which a critic used the term impression in a mocking, sarcastic manner, intending it as an insult suggesting the work was merely an unfinished sketch rather than a completed painting. The artists themselves, however, ultimately embraced this originally derisive label. Beyond their distinctive technique, the Impressionists also expanded the range of acceptable subject matter considerably, choosing to depict scenes of everyday modern life, including bustling city streets, popular leisure activities, and ordinary landscapes, rather than restricting themselves to the grand historical or mythological themes the traditional art establishment had long favored and expected of serious painters.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "The invention of oil paint",
+                "The emergence and characteristics of Impressionism",
+                "The history of the Paris art market",
+                "The biography of Claude Monet"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How did Impressionist painting technique differ from academic painting?",
+              "options": [
+                "It used highly detailed, carefully finished brushwork",
+                "It used visible, loose brushstrokes with less emphasis on fine detail",
+                "It avoided the use of color entirely",
+                "It was always completed indoors in a studio"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where does the term 'Impressionism' come from?",
+              "options": [
+                "A term the artists invented to describe their technique",
+                "A dismissive critical review of a painting by Monet",
+                "An official name given by the Salon",
+                "A translation of a French art movement from centuries earlier"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What subject matter did Impressionist painters often choose?",
+              "options": [
+                "Only religious and mythological scenes",
+                "Scenes of everyday modern life",
+                "Portraits of royalty exclusively",
+                "Abstract geometric patterns"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 62,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/62.mp3",
+          "speaker": "male",
+          "subject": "Physics",
+          "transcript": "Today we're going to look at the phenomenon of superconductivity, a remarkable state in which certain materials, when cooled below a specific critical temperature, lose all electrical resistance entirely, allowing electric current to flow through them indefinitely without any energy loss whatsoever. This phenomenon was first discovered in 1911 by the physicist Heike Kamerlingh Onnes, who observed that mercury's electrical resistance dropped suddenly and completely to zero when cooled to just a few degrees above absolute zero using liquid helium. For decades afterward, achieving superconductivity required extremely low temperatures very close to absolute zero, making practical, everyday applications quite limited due to the substantial cost and complexity of maintaining such extreme cooling conditions continuously. The underlying explanation for conventional superconductivity wasn't fully understood until 1957, when physicists John Bardeen, Leon Cooper, and John Schrieffer developed what became known as BCS theory. According to this theory, at sufficiently low temperatures, electrons within certain materials can form loosely bound pairs, now called Cooper pairs, through subtle interactions mediated by vibrations in the material's crystal lattice structure. These paired electrons behave collectively in a coordinated way that allows them to move through the material's atomic lattice without scattering off individual atoms, which is precisely the scattering process that normally causes ordinary electrical resistance in typical conducting materials. A major breakthrough occurred in 1986, when researchers discovered an entirely new class of materials, now called high-temperature superconductors, which achieve superconductivity at considerably higher, though still quite cold, temperatures than conventional BCS theory alone would have predicted. This discovery dramatically reduced the cooling costs required for certain practical applications, since some of these newer materials could become superconducting using comparatively cheaper liquid nitrogen for cooling rather than the far more expensive liquid helium previously required. Today, superconductors are already used in a range of important applications, including the powerful magnets found in MRI machines and experimental particle accelerators, and researchers continue actively searching for new superconducting materials that might eventually function at temperatures closer to typical room temperature.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "The discovery of electricity",
+                "Superconductivity and its underlying physics",
+                "The invention of MRI machines",
+                "How liquid helium is produced"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did Heike Kamerlingh Onnes discover in 1911?",
+              "options": [
+                "That mercury's electrical resistance dropped to zero when cooled sufficiently",
+                "The first room-temperature superconductor",
+                "A new method for producing electricity",
+                "The structure of the atom"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to BCS theory, how do Cooper pairs enable superconductivity?",
+              "options": [
+                "They increase electrical resistance intentionally",
+                "They allow electrons to move through a material without scattering off atoms",
+                "They convert electricity directly into light",
+                "They eliminate the need for electrons entirely"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why was the 1986 discovery of high-temperature superconductors significant?",
+              "options": [
+                "It eliminated the need for any cooling at all",
+                "It allowed some materials to become superconducting using cheaper liquid nitrogen cooling",
+                "It proved BCS theory was incorrect",
+                "It created the first superconductor ever discovered"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 341,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/341.mp3",
+          "transcript": "I noticed the copier is jammed again.",
+          "context": "An employee tells the office manager.",
+          "options": [
+            "I'll call the repair technician right away.",
+            "The copier is used constantly.",
+            "We bought this copier last year.",
+            "There's a spare copier on the third floor."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "43-341"
+        },
+        {
+          "id": 342,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/342.mp3",
+          "transcript": "Would you be able to gift wrap this for me?",
+          "context": "A customer asks a store employee.",
+          "options": [
+            "Of course, it'll just take a moment.",
+            "This item just arrived in stock.",
+            "We offer free shipping on orders over fifty.",
+            "This is one of our most popular gifts."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "43-342"
+        },
+        {
+          "id": 343,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/343.mp3",
+          "transcript": "Is it possible to upgrade my seat on this flight?",
+          "context": "A passenger asks an airline representative.",
+          "options": [
+            "Let me check what's available for an upgrade.",
+            "The flight has two hundred seats.",
+            "Boarding starts in twenty minutes.",
+            "Economy seats recline slightly."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "43-343"
+        },
+        {
+          "id": 344,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/344.mp3",
+          "transcript": "Could you tell me if this yogurt is past its expiration date?",
+          "context": "A customer asks a grocery store employee.",
+          "options": [
+            "Let me check the date for you.",
+            "We restock dairy every morning.",
+            "This brand is very popular.",
+            "Yogurt should be kept cold."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "43-344"
+        },
+        {
+          "id": 345,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/345.mp3",
+          "transcript": "Do you offer any tutoring services for calculus?",
+          "context": "A student asks a tutoring center employee.",
+          "options": [
+            "Yes, we have several tutors available this semester.",
+            "Calculus is required for many majors.",
+            "The tutoring center opens at nine.",
+            "Sessions usually last one hour."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "44-345"
+        },
+        {
+          "id": 346,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/346.mp3",
+          "transcript": "I think my laptop screen isn't turning on.",
+          "context": "A student speaks to the campus IT desk.",
+          "options": [
+            "Let's take a look and run some diagnostics.",
+            "Most laptops last around five years.",
+            "The IT desk is open until six.",
+            "You can also submit a repair ticket online."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "44-346"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 63,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/63.mp3",
+          "speaker": "female",
+          "subject": "Zoology",
+          "transcript": "Today's talk focuses on eusociality, an unusual and highly cooperative social structure found in only a small number of animal species, most notably ants, bees, wasps, and termites, as well as a few rare mammalian examples like naked mole rats. Eusocial species share three defining characteristics that together set them apart from other social animals. First, they exhibit cooperative care of offspring, meaning individuals help raise young that aren't necessarily their own direct genetic offspring. Second, eusocial colonies show a clear overlap of generations, with older and younger individuals coexisting and contributing to the colony simultaneously, rather than each generation dispersing independently. Third, and perhaps most strikingly, eusocial species display a reproductive division of labor, where typically only one or a very small number of individuals, often called queens, actually reproduce, while the vast majority of colony members become effectively sterile workers who dedicate their entire lives to supporting the colony rather than reproducing themselves. This raises an obvious evolutionary puzzle: why would natural selection favor individuals giving up their own reproduction entirely to help raise the offspring of just one or a few other individuals? One influential explanation involves a concept called kin selection, built on the mathematical insight that genes can spread effectively through a population not only through an individual's own direct offspring, but also by helping close genetic relatives survive and reproduce successfully. In many eusocial insects, an unusual genetic system called haplodiploidy creates worker females that are more closely genetically related to their sisters than they would be to their own potential offspring, providing an unusually strong genetic incentive to help raise sisters rather than reproduce independently themselves. This particular genetic quirk has been proposed as one possible explanation for why eusociality evolved independently multiple separate times specifically within the insect order that includes ants, bees, and wasps, though researchers note that other significant ecological factors, such as the substantial benefits of cooperative colony defense against predators, likely played an important supporting role as well.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "Animal migration patterns",
+                "Eusociality and cooperative animal societies",
+                "The classification of insect species",
+                "How ants build their nests"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is one of the three defining characteristics of eusociality?",
+              "options": [
+                "Individuals always live alone",
+                "A reproductive division of labor with few individuals reproducing",
+                "All individuals reproduce equally",
+                "Generations never overlap"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What evolutionary puzzle does the professor mention?",
+              "options": [
+                "Why some species migrate long distances",
+                "Why individuals would give up their own reproduction to help others",
+                "Why some animals hibernate",
+                "Why certain species are becoming extinct"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does haplodiploidy relate to kin selection in the talk?",
+              "options": [
+                "It has no connection to kin selection",
+                "It creates unusually strong genetic relatedness between worker sisters",
+                "It prevents workers from helping their sisters",
+                "It only applies to mammal species"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 64,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/64.mp3",
+          "speaker": "male",
+          "subject": "Political Science",
+          "transcript": "Today we examine the concept of soft power, a term coined by political scientist Joseph Nye to describe a country's ability to influence others through attraction and persuasion, rather than through coercion or direct payment, which Nye referred to instead as hard power. According to this framework, a nation's soft power typically derives from three main sources: its culture, when that culture is genuinely appealing and admired by people in other countries; its political values, particularly when a country appears to consistently live up to those values both domestically and in its foreign policy; and its foreign policies themselves, especially when other nations perceive those policies as legitimate and possessing genuine moral authority, rather than being viewed as self-serving. Nye argued that soft power matters considerably in international relations because it can help a country achieve its broader goals without needing to rely on expensive military force or costly economic incentives, since other countries may voluntarily align with a nation's preferences simply because they find that nation's culture, values, or general example genuinely appealing and worth emulating. Examples of soft power in action include the global popularity and spread of a country's films, music, and consumer products, as well as international students choosing to study at that country's universities, or other governments voluntarily adopting similar political or economic institutional models. Critics of the soft power concept have raised several objections. Some argue that soft power is inherently difficult to measure precisely and quantify compared to more concrete metrics like military spending or GDP, making it considerably harder to systematically analyze in rigorous academic or policy research. Others contend that soft power and hard power aren't nearly as cleanly separable in practice as Nye's framework initially suggests, since a country's cultural appeal and its military or economic strength often reinforce and interact with one another in complex ways that resist neat theoretical categorization.",
+          "questions": [
+            {
+              "question": "What is soft power, as defined in the talk?",
+              "options": [
+                "The ability to influence others through military force",
+                "The ability to influence others through attraction and persuasion rather than coercion",
+                "A country's total economic output",
+                "A type of diplomatic treaty"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are the three main sources of soft power mentioned?",
+              "options": [
+                "Military strength, population size, and geography",
+                "Culture, political values, and foreign policies",
+                "Trade agreements, currency value, and natural resources",
+                "Language, religion, and climate"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does soft power matter, according to Nye's framework?",
+              "options": [
+                "It guarantees military victory",
+                "It can help achieve goals without relying on force or costly incentives",
+                "It replaces the need for diplomacy entirely",
+                "It only applies to small countries"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What criticism of soft power is mentioned in the talk?",
+              "options": [
+                "It is too easy to measure precisely",
+                "It is difficult to measure and not cleanly separable from hard power",
+                "It has never been observed in practice",
+                "It only applies to ancient civilizations"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 347,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/347.mp3",
+          "transcript": "Could you let me know when the next shipment arrives?",
+          "context": "A customer asks a store manager.",
+          "options": [
+            "Sure, it should be here by Friday.",
+            "Shipments usually come twice a week.",
+            "The store gets busy on weekends.",
+            "We just received a shipment yesterday."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "44-347"
+        },
+        {
+          "id": 348,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/348.mp3",
+          "transcript": "I'd like to change the delivery address on my order.",
+          "context": "A customer contacts an online store's support.",
+          "options": [
+            "No problem, what's the new address?",
+            "Orders typically ship within two days.",
+            "You'll receive a tracking number by email.",
+            "We deliver to most locations nationwide."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "44-348"
+        },
+        {
+          "id": 349,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/349.mp3",
+          "transcript": "Do you know if the conference room is free this afternoon?",
+          "context": "An employee asks a receptionist.",
+          "options": [
+            "Let me check the booking calendar.",
+            "The conference room seats about ten people.",
+            "It's usually busy on Mondays.",
+            "There's a whiteboard in the room."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "44-349"
+        },
+        {
+          "id": 350,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/350.mp3",
+          "transcript": "Could you show me how to use this self-checkout machine?",
+          "context": "A customer asks a store employee.",
+          "options": [
+            "Sure, just scan each item like this.",
+            "Self-checkout was added last year.",
+            "The machine accepts cash and card.",
+            "There are four self-checkout stations."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "44-350"
+        },
+        {
+          "id": 351,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/351.mp3",
+          "transcript": "I noticed the gym's water fountain isn't working.",
+          "context": "A member tells the front desk staff.",
+          "options": [
+            "Thanks for letting us know, we'll get it fixed.",
+            "The gym has bottled water for sale.",
+            "Water fountains are checked weekly.",
+            "There's another fountain near the locker room."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "44-351"
+        },
+        {
+          "id": 352,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/352.mp3",
+          "transcript": "Would it be possible to split the bill between us?",
+          "context": "A customer asks a restaurant server.",
+          "options": [
+            "Of course, I'll bring separate checks.",
+            "The bill includes a service charge.",
+            "We accept all major credit cards.",
+            "Tonight's total comes to sixty dollars."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "44-352"
+        }
+      ],
+      "conv": [
+        {
+          "id": 79,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/79.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm trying to decide which lab section to register for."
+            },
+            {
+              "speaker": "male",
+              "text": "What are your options?"
+            },
+            {
+              "speaker": "female",
+              "text": "There's one on Monday afternoon and one on Wednesday morning."
+            },
+            {
+              "speaker": "male",
+              "text": "Do you have any conflicts with either?"
+            },
+            {
+              "speaker": "female",
+              "text": "The Monday one overlaps with my work shift, so Wednesday seems better."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman deciding between?",
+              "options": [
+                "Two different professors",
+                "Two lab section times",
+                "Two different courses",
+                "Two lab locations"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does she prefer Wednesday?",
+              "options": [
+                "It's closer to her dorm",
+                "It doesn't conflict with her work shift",
+                "It has a better instructor",
+                "It's shorter than the other section"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 80,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/80.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I can't decide what to get my roommate for his birthday."
+            },
+            {
+              "speaker": "female",
+              "text": "What does he usually like?"
+            },
+            {
+              "speaker": "male",
+              "text": "He's really into hiking and outdoor gear."
+            },
+            {
+              "speaker": "female",
+              "text": "Maybe a gift card to an outdoor store would be a safe choice."
+            },
+            {
+              "speaker": "male",
+              "text": "That's actually a great idea, thanks."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man trying to figure out?",
+              "options": [
+                "A gift for his roommate",
+                "A place to go hiking",
+                "A birthday party location",
+                "A new hobby to try"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "A new hiking backpack",
+                "A gift card to an outdoor store",
+                "Tickets to a concert",
+                "A cooking class"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 79,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/79.mp3",
+          "speaker": "female",
+          "transcript": "Good afternoon, shoppers. As part of our anniversary celebration, we're offering a free gift with any purchase over fifty dollars at the customer service counter today only. Supplies are limited, so we encourage you to take advantage of this offer while it lasts. Thank you for being a loyal customer.",
+          "questions": [
+            {
+              "question": "What is being offered today?",
+              "options": [
+                "A free gift with purchases over fifty dollars",
+                "A store-wide discount",
+                "Free shipping on all orders",
+                "A raffle entry with any purchase"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What limitation is mentioned about the offer?",
+              "options": [
+                "It only applies to new customers",
+                "Supplies are limited",
+                "It requires a coupon",
+                "It is only valid online"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 80,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/80.mp3",
+          "speaker": "male",
+          "transcript": "Attention passengers boarding flight 305 to Seattle: due to a full flight, we are requesting volunteers to check their carry-on bags at the gate free of charge. Bags checked at the gate can be picked up at baggage claim upon arrival. We appreciate your cooperation and thank you for your patience.",
+          "questions": [
+            {
+              "question": "What is being requested from passengers?",
+              "options": [
+                "To arrive earlier for boarding",
+                "Volunteers to check carry-on bags at the gate",
+                "To pay an extra fee for luggage",
+                "To switch to a later flight"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where can checked bags be picked up?",
+              "options": [
+                "At the gate upon landing",
+                "At baggage claim",
+                "At the ticket counter",
+                "They will be delivered to hotels"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "Where should we store the extra supplies?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "where",
+          "we",
+          "should store the extra supplies"
+        ],
+        "distractorChunks": [
+          "should have stored the extra supplies"
+        ],
+        "responseSuffix": ".",
+        "id": 151
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Why did the vendor cancel the contract?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "explained",
+          "why",
+          "the vendor",
+          "had canceled the contract"
+        ],
+        "distractorChunks": [
+          "has canceled the contract"
+        ],
+        "responseSuffix": ".",
+        "id": 152
+      },
+      {
+        "promptGender": "female",
+        "prompt": "How often does the newsletter get sent out?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "how",
+          "often",
+          "the newsletter",
+          "got sent out"
+        ],
+        "distractorChunks": [
+          "gets sent out"
+        ],
+        "responseSuffix": ".",
+        "id": 153
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Who scheduled the fire drill for this afternoon?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "was",
+          "not",
+          "sure",
+          "who",
+          "had scheduled the fire drill for this afternoon"
+        ],
+        "distractorChunks": [
+          "has scheduled the fire drill for this afternoon"
+        ],
+        "responseSuffix": ".",
+        "id": 154
+      },
+      {
+        "promptGender": "female",
+        "prompt": "What time does the pharmacy close on weekends?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "what",
+          "time",
+          "the pharmacy",
+          "closed on weekends"
+        ],
+        "distractorChunks": [
+          "closes on weekends"
+        ],
+        "responseSuffix": ".",
+        "id": 155
+      },
+      {
+        "promptGender": "male",
+        "prompt": "How far is the campsite from the main trailhead?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "how",
+          "far",
+          "the campsite",
+          "was from the main trailhead"
+        ],
+        "distractorChunks": [
+          "is from the main trailhead"
+        ],
+        "responseSuffix": ".",
+        "id": 156
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Where did the committee post the meeting minutes?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "could",
+          "not",
+          "find",
+          "where",
+          "the committee",
+          "had posted the meeting minutes"
+        ],
+        "distractorChunks": [
+          "has posted the meeting minutes"
+        ],
+        "responseSuffix": ".",
+        "id": 157
+      },
+      {
+        "promptGender": "male",
+        "prompt": "When will the new policy take effect?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "asked",
+          "when",
+          "the new policy",
+          "would take effect"
+        ],
+        "distractorChunks": [
+          "will take effect"
+        ],
+        "responseSuffix": ".",
+        "id": 158
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Why is the printer showing an error message?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "was",
+          "not",
+          "sure",
+          "why",
+          "the printer",
+          "was showing an error message"
+        ],
+        "distractorChunks": [
+          "is showing an error message"
+        ],
+        "responseSuffix": ".",
+        "id": 159
+      },
+      {
+        "promptGender": "male",
+        "prompt": "What led to the sudden increase in orders?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "still",
+          "did",
+          "not",
+          "understand",
+          "what",
+          "had led to the sudden increase in orders"
+        ],
+        "distractorChunks": [
+          "has led to the sudden increase in orders"
+        ],
+        "responseSuffix": ".",
+        "id": 160
+      }
+    ],
+    "email": {
+      "scenario": "You reserved a study room at the library for a group project, but when your group arrived, another group was already using it. You want to explain the situation to the library staff and ask for help finding another room.",
+      "recipient": "Library Services",
+      "subject": "Reserved study room already occupied",
+      "tasks": [
+        {
+          "description": "Explain that your reserved study room was already occupied.",
+          "keywords": [
+            "reserved",
+            "occupied",
+            "already",
+            "taken",
+            "booked"
+          ]
+        },
+        {
+          "description": "Mention the reservation time and room number.",
+          "keywords": [
+            "reservation",
+            "time",
+            "room number",
+            "booked for"
+          ]
+        },
+        {
+          "description": "Ask for help finding another available room.",
+          "keywords": [
+            "another room",
+            "available",
+            "help",
+            "find"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Library Services,\n\nI am writing about a study room I reserved for this afternoon. My group had booked Room 204 from two to four, but when we arrived another group was already using it.\n\nI have the confirmation email for our reservation if you need to verify the booking time.\n\nCould someone help us find another available room for the remainder of our session? We have a project deadline tomorrow and really need the space. Thank you for your help.\n\nSincerely,\n[Your Name]",
+      "id": 16
+    },
+    "disc": {
+      "subject": "education",
+      "professor": "Dr. Whitfield",
+      "professorGender": "male",
+      "prompt": "We've been discussing whether university attendance should be mandatory for lecture-based courses. Some argue that requiring attendance improves student performance and engagement, while others argue that students should be free to manage their own learning, especially since lectures are often recorded. Should attendance be mandatory in university lecture courses? Why or why not?",
+      "classmates": [
+        {
+          "name": "Derek",
+          "gender": "male",
+          "opinion": "I think attendance should be mandatory. Even when lectures are recorded, students who watch from home often multitask or fall behind, and being physically present tends to keep people more focused. Attendance also creates opportunities for students to ask questions in real time rather than being left confused until the exam."
+        },
+        {
+          "name": "Priya",
+          "gender": "female",
+          "opinion": "I disagree, mandatory attendance treats all students the same even though people learn differently. Some students actually absorb material better by rewatching a recorded lecture at their own pace, pausing to take notes, than by sitting passively in a large hall. Forcing attendance doesn't guarantee engagement anyway, since a student can show up and still not pay attention."
+        }
+      ],
+      "exampleResponse": "The question of mandatory attendance in university lectures raises an interesting tension between structure and personal responsibility. While I understand Derek's point that in-person attendance can reduce distractions, I find myself agreeing more with Priya's view that forcing attendance doesn't necessarily lead to genuine engagement. A student who is required to sit in a lecture but is mentally checked out isn't learning any more effectively than one who watches a recording attentively at home. That said, a reasonable middle ground might be for professors to build in graded in-class activities that reward engaged attendance without making it a strict requirement, which would give students like Priya described the flexibility to learn in the way that suits them best while still encouraging participation.",
+      "id": 16
+    }
+  },
+  "speaking": {
+    "lr": {
+      "location": "Campus Health Center",
+      "icon": "🩺",
+      "photoSlug": "health-center",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Doctor_office.jpg",
+      "speaker": "female",
+      "introText": "You are learning how to give a tour of the campus health center. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "text": "Welcome to the health center.",
+          "length": "short",
+          "recordSeconds": 8,
+          "id": 1
+        },
+        {
+          "text": "The front desk can help you check in for your appointment.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 2
+        },
+        {
+          "text": "Walk-in visits are accepted every weekday morning.",
+          "length": "medium",
+          "recordSeconds": 8,
+          "id": 3
+        },
+        {
+          "text": "Please bring your student ID and insurance card.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 4
+        },
+        {
+          "text": "The pharmacy is located just down the hallway.",
+          "length": "medium",
+          "recordSeconds": 8,
+          "id": 5
+        },
+        {
+          "text": "If you need urgent care after hours, call the number posted at the entrance.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 6
+        },
+        {
+          "text": "Counseling services are also available by appointment on the second floor.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 7
+        }
+      ],
+      "id": 16
+    },
+    "interview": {
+      "topic": "Study Habits",
+      "icon": "📚",
+      "photoSlug": "studying",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Student_studying.jpg",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about student study habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "connector": "",
+          "text": "Thanks for joining me today. To start, where do you usually prefer to study, and why?",
+          "recordSeconds": 45,
+          "id": 1
+        },
+        {
+          "connector": "That makes sense.",
+          "text": "That makes sense. Some students prefer studying alone, while others prefer studying in groups. Which do you prefer, and why?",
+          "recordSeconds": 45,
+          "id": 2
+        },
+        {
+          "connector": "Interesting.",
+          "text": "Interesting. Do you think technology, like phones or laptops, generally helps or hurts your ability to focus while studying?",
+          "recordSeconds": 45,
+          "id": 3
+        },
+        {
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Some people believe schools should teach study skills directly as part of the curriculum. Do you agree this should be a priority? Why or why not?",
+          "recordSeconds": 45,
+          "id": 4
+        }
+      ],
+      "id": 16
+    }
+  }
+}

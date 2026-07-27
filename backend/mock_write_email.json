@@ -1,0 +1,738 @@
+[
+  {
+    "id": 1,
+    "scenario": "You missed a midterm exam because you were sick with a fever. You have a doctor's note and want to explain the situation to your professor and ask about taking a makeup exam.",
+    "recipient": "Professor Nakamura",
+    "subject": "Missed midterm exam due to illness",
+    "tasks": [
+      {
+        "description": "Explain that you missed the exam because you were sick.",
+        "keywords": [
+          "sick",
+          "ill",
+          "fever",
+          "illness",
+          "unwell"
+        ]
+      },
+      {
+        "description": "Mention that you have a doctor's note.",
+        "keywords": [
+          "doctor",
+          "note",
+          "documentation",
+          "doctor's note"
+        ]
+      },
+      {
+        "description": "Ask if you can take a makeup exam.",
+        "keywords": [
+          "makeup",
+          "make-up",
+          "reschedule",
+          "retake",
+          "another time"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Nakamura,\n\nI am writing to explain why I was unable to take Monday's midterm exam. I woke up with a high fever and was too sick to leave my apartment, let alone concentrate on an exam.\n\nI visited the campus health center that afternoon, and I have a doctor's note confirming my illness, which I am happy to send you as an attachment.\n\nWould it be possible to take a makeup exam sometime this week? I want to make sure I complete the material without falling behind. Thank you for your understanding.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 2,
+    "scenario": "You live in an apartment without air conditioning, and the summer heat has become unbearable. You want to ask your building management whether you are allowed to install a portable air conditioning unit in your window.",
+    "recipient": "Ms. Carver",
+    "subject": "Question about installing an air conditioning unit",
+    "tasks": [
+      {
+        "description": "Explain that your apartment gets extremely hot in the summer.",
+        "keywords": [
+          "hot",
+          "heat",
+          "unbearable",
+          "warm",
+          "uncomfortable"
+        ]
+      },
+      {
+        "description": "Ask whether you are permitted to install a portable air conditioning unit.",
+        "keywords": [
+          "air conditioning",
+          "ac unit",
+          "install",
+          "permitted",
+          "allowed"
+        ]
+      },
+      {
+        "description": "Ask if there are any rules or restrictions you should know about.",
+        "keywords": [
+          "rules",
+          "restrictions",
+          "requirements",
+          "guidelines",
+          "policy"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Carver,\n\nI'm writing about the heat in my apartment. Unit 4B faces west, and by late afternoon the temperature indoors becomes almost unbearable, especially without any air conditioning.\n\nI was wondering if I would be permitted to install a portable air conditioning unit in one of my windows. I understand some buildings have restrictions on this, so I wanted to check first before making any purchase.\n\nCould you let me know if there are specific rules or guidelines I should follow, such as installation requirements or window modifications that aren't allowed? Thank you for your help with this.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 3,
+    "scenario": "You checked a suitcase on a recent flight, but it never arrived at baggage claim. The airline's tracking system shows no updates for over two days, and you need some of the items for a work trip.",
+    "recipient": "Customer Relations",
+    "subject": "Lost checked baggage - flight 482",
+    "tasks": [
+      {
+        "description": "Explain that your checked suitcase never arrived at baggage claim.",
+        "keywords": [
+          "lost",
+          "never arrived",
+          "missing",
+          "didn't arrive",
+          "not arrived"
+        ]
+      },
+      {
+        "description": "Mention that the tracking system hasn't updated in over two days.",
+        "keywords": [
+          "tracking",
+          "no updates",
+          "two days",
+          "hasn't updated",
+          "not updated"
+        ]
+      },
+      {
+        "description": "Ask what compensation or next steps are available.",
+        "keywords": [
+          "compensation",
+          "next steps",
+          "reimbursement",
+          "what happens",
+          "options"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Customer Relations,\n\nI am writing about my checked suitcase from flight 482, which never arrived at baggage claim on Tuesday evening. I filed a report at the airport, but the tracking system still shows no updates more than two days later.\n\nThis is especially frustrating because several items I need for an upcoming work trip were packed inside that suitcase.\n\nCould you tell me what compensation is available for lost luggage, and what the next steps are for locating my bag? I would appreciate a quick response, since I need to plan around this. Thank you for your attention to this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 4,
+    "scenario": "You are applying to a graduate program and need a letter of recommendation. You want to ask your former statistics professor, who taught you two years ago, if she would be willing to write one.",
+    "recipient": "Dr. Simmons",
+    "subject": "Request for a letter of recommendation",
+    "tasks": [
+      {
+        "description": "Explain that you are applying to a graduate program and need a recommendation letter.",
+        "keywords": [
+          "graduate program",
+          "recommendation",
+          "letter",
+          "applying",
+          "grad school"
+        ]
+      },
+      {
+        "description": "Remind her which course you took with her and when.",
+        "keywords": [
+          "statistics",
+          "course",
+          "took your class",
+          "two years ago",
+          "your class"
+        ]
+      },
+      {
+        "description": "Ask if she would be willing to write the letter and mention the deadline.",
+        "keywords": [
+          "willing",
+          "deadline",
+          "would you be able",
+          "due",
+          "by"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dr. Simmons,\n\nI hope you are doing well. I am applying to a graduate program in data analytics, and I need a letter of recommendation from someone familiar with my academic work.\n\nI took your introductory statistics course two years ago and really enjoyed the way you explained complex concepts, which is part of why I became interested in this field.\n\nWould you be willing to write a recommendation letter for me? The application deadline is in five weeks, and I would be glad to send my resume and personal statement to help refresh your memory. Thank you very much for considering my request.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 5,
+    "scenario": "Your professor, Dr. Whitman, wrote you a strong letter of recommendation for a study abroad program, and you have just been accepted. You want to share the good news and thank her for her support.",
+    "recipient": "Dr. Whitman",
+    "subject": "I got accepted - thank you!",
+    "tasks": [
+      {
+        "description": "Thank her for writing the recommendation letter.",
+        "keywords": [
+          "thank you",
+          "appreciate",
+          "grateful",
+          "kind of you"
+        ]
+      },
+      {
+        "description": "Share the news that you were accepted into the program.",
+        "keywords": [
+          "accepted",
+          "admitted",
+          "good news",
+          "offer"
+        ]
+      },
+      {
+        "description": "Ask if you could meet briefly before you leave to discuss preparation.",
+        "keywords": [
+          "meet",
+          "discuss",
+          "before I leave",
+          "prepare",
+          "office hours"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dr. Whitman,\n\nI want to sincerely thank you for the recommendation letter you wrote for my study abroad application. I know how busy your schedule is, and it was incredibly kind of you to take the time to support me. Your letter clearly made a strong impression on the admissions committee, and I am very grateful for your effort.\n\nI am excited to share some good news: I have officially been accepted into the study abroad program in Madrid for next spring! This is an opportunity I have been hoping for, and your recommendation played a major role in making it possible.\n\nBefore I leave, I would love to meet with you briefly to discuss how I can best prepare academically and make the most of this experience. Would you have any availability during your office hours next week? Thank you again for everything.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 6,
+    "scenario": "You have been having ongoing conflicts with your roommate about noise late at night, and you want to request a room change through the housing office.",
+    "recipient": "Mr. Coleman, Housing Office",
+    "subject": "Request for a room change",
+    "tasks": [
+      {
+        "description": "Explain the noise problem with your roommate.",
+        "keywords": [
+          "noise",
+          "loud",
+          "late at night",
+          "disturbing",
+          "sleep"
+        ]
+      },
+      {
+        "description": "Mention that you have tried to resolve it directly.",
+        "keywords": [
+          "talked to",
+          "tried to resolve",
+          "spoke with",
+          "addressed"
+        ]
+      },
+      {
+        "description": "Request a room transfer for next semester.",
+        "keywords": [
+          "room change",
+          "transfer",
+          "move",
+          "next semester"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Mr. Coleman,\n\nI am writing to request a room change for next semester due to ongoing issues with my current roommate. For the past month, my roommate has consistently played loud music and had friends over late at night, often past midnight, which has made it very difficult for me to sleep and focus on my coursework.\n\nI want to assure you that I have tried to resolve this directly. I spoke with my roommate on several occasions and asked politely if we could agree on quieter hours, but the noise has continued without much improvement.\n\nGiven that this situation has not gotten better, I would like to formally request a room transfer starting next semester. I believe a change would allow both of us to have a better living situation. Please let me know what steps I need to take to begin this process. Thank you for your understanding.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 7,
+    "scenario": "You purchased a laptop from an online store, but it stopped turning on after only two weeks of use. You want to request a replacement or refund.",
+    "recipient": "Customer Service Team, TechMart",
+    "subject": "Defective laptop - request for replacement",
+    "tasks": [
+      {
+        "description": "Describe the problem with the laptop.",
+        "keywords": [
+          "stopped working",
+          "won't turn on",
+          "defective",
+          "malfunction"
+        ]
+      },
+      {
+        "description": "State when and where you purchased it.",
+        "keywords": [
+          "purchased",
+          "ordered",
+          "two weeks ago",
+          "order number"
+        ]
+      },
+      {
+        "description": "Request a replacement or refund.",
+        "keywords": [
+          "replacement",
+          "refund",
+          "exchange",
+          "return"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Customer Service Team,\n\nI am writing regarding a laptop I purchased from your online store, order number 48291. The laptop worked fine for about two weeks, but it suddenly stopped turning on and no longer responds, even after charging it overnight. I have tried restarting it multiple times, but the screen remains completely black.\n\nI ordered this laptop three weeks ago directly through your website, and I have kept the original receipt and packaging in case they are needed for verification.\n\nSince this appears to be a manufacturing defect rather than something caused by misuse, I would like to request a replacement laptop of the same model. If a replacement is not available, I would appreciate a full refund instead. Please let me know what information you need from me to process this request quickly, as I rely on this laptop for my schoolwork.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 8,
+    "scenario": "You applied for a summer internship at a marketing firm three weeks ago and have not heard back. You want to politely follow up on your application status.",
+    "recipient": "Ms. Patterson, Hiring Manager",
+    "subject": "Following up on my internship application",
+    "tasks": [
+      {
+        "description": "Remind her that you applied for the internship.",
+        "keywords": [
+          "applied",
+          "submitted",
+          "application",
+          "three weeks ago"
+        ]
+      },
+      {
+        "description": "Express your continued interest in the position.",
+        "keywords": [
+          "still interested",
+          "enthusiastic",
+          "excited",
+          "eager"
+        ]
+      },
+      {
+        "description": "Ask about the timeline for a decision.",
+        "keywords": [
+          "timeline",
+          "decision",
+          "update",
+          "status",
+          "when"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Patterson,\n\nI hope this email finds you well. I am writing to follow up on my application for the summer marketing internship, which I submitted three weeks ago through your company's careers portal. I understand that reviewing applications takes time, so I wanted to check in politely.\n\nI remain very interested in this position and would welcome the opportunity to contribute to your team this summer. Learning more about your company's recent campaigns has only made me more enthusiastic about the role.\n\nCould you let me know the expected timeline for a hiring decision, or whether any additional materials are needed from me at this stage? I completely understand if the process is still ongoing, and I appreciate you taking the time to consider my application. Thank you for your attention, and I look forward to hearing from you soon.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 9,
+    "scenario": "You volunteered at a local animal shelter last weekend but were unable to complete your shift due to a sudden illness. You want to apologize and offer to make up the missed hours.",
+    "recipient": "Ms. Alvarez, Volunteer Coordinator",
+    "subject": "Apology for missing my volunteer shift",
+    "tasks": [
+      {
+        "description": "Apologize for missing the shift.",
+        "keywords": [
+          "apologize",
+          "sorry",
+          "missed",
+          "unable to attend"
+        ]
+      },
+      {
+        "description": "Explain that you were suddenly ill.",
+        "keywords": [
+          "sudden illness",
+          "got sick",
+          "fever",
+          "unwell"
+        ]
+      },
+      {
+        "description": "Offer to make up the missed hours.",
+        "keywords": [
+          "make up",
+          "reschedule",
+          "additional shift",
+          "extra hours"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Alvarez,\n\nI want to sincerely apologize for missing part of my volunteer shift at the shelter last weekend. I know the team was counting on me, and I feel bad for not being able to complete my responsibilities as planned.\n\nThe reason I had to leave early was a sudden illness; I developed a high fever and stomach pain shortly after arriving, which made it impossible for me to continue working safely around the animals. I did not want to risk spreading anything to the staff or other volunteers.\n\nI am feeling much better now, and I would like to offer to make up the missed hours this coming weekend or on any day that works best for your schedule. Please let me know how I can help, as I truly value the work we do at the shelter and don't want this to happen again.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 10,
+    "scenario": "You tried to register for a required course online, but the system shows it is full even though you were told there would be seats reserved for your major. You want to resolve this before the semester starts.",
+    "recipient": "Registrar's Office",
+    "subject": "Course registration issue",
+    "tasks": [
+      {
+        "description": "Explain that the course appears full despite reserved seats.",
+        "keywords": [
+          "full",
+          "closed",
+          "no seats",
+          "reserved"
+        ]
+      },
+      {
+        "description": "Mention that this course is required for your major.",
+        "keywords": [
+          "required",
+          "mandatory",
+          "major",
+          "degree"
+        ]
+      },
+      {
+        "description": "Ask for help enrolling before the semester begins.",
+        "keywords": [
+          "enroll",
+          "add me",
+          "before the semester",
+          "resolve"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Registrar's Office,\n\nI am writing about an issue with registering for BIO 210, a course required for my major. When I tried to enroll online this morning, the system showed the course as completely full, even though my advisor told me last month that seats would be reserved for Biology majors.\n\nThis course is mandatory for my degree, and it is only offered once a year, so being unable to register would significantly delay my graduation timeline.\n\nSince the semester begins in less than two weeks, I would greatly appreciate your help resolving this as soon as possible. Could you please check whether a reserved seat is still available for me, or let me know what steps I should take to be added to the course? Thank you very much for your time and assistance with this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 11,
+    "scenario": "You have a severe food allergy, and the dining hall staff recently served you a dish containing an ingredient you cannot eat, despite your dietary form on file. You want to raise this safety concern.",
+    "recipient": "Dining Services Manager",
+    "subject": "Concern about food allergy safety",
+    "tasks": [
+      {
+        "description": "Describe what happened when you were served the dish.",
+        "keywords": [
+          "served",
+          "contained",
+          "allergy",
+          "reaction"
+        ]
+      },
+      {
+        "description": "Remind them that your dietary restrictions are on file.",
+        "keywords": [
+          "dietary form",
+          "on file",
+          "registered",
+          "informed"
+        ]
+      },
+      {
+        "description": "Ask what steps will be taken to prevent this in the future.",
+        "keywords": [
+          "prevent",
+          "future",
+          "steps",
+          "ensure",
+          "safety"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dining Services Manager,\n\nI am writing to raise a serious concern about my safety in the dining hall. Yesterday evening, I was served a pasta dish that contained peanuts, an ingredient I am severely allergic to. Fortunately, I noticed before eating enough to cause a serious reaction, but I did experience mild swelling and had to seek medical attention.\n\nI want to remind you that my dietary restrictions have been on file with dining services since the beginning of the semester, and I specifically registered my peanut allergy through the online form provided.\n\nGiven how serious this could have been, I would like to know what steps will be taken to prevent this from happening again in the future. Could staff be reminded to double-check dietary records before serving students with known allergies? I would appreciate a prompt response, as this is a matter of my health and safety.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 12,
+    "scenario": "You booked a hotel room for a family event, but upon arrival you were given a smaller, lower-quality room than the one you reserved. You want to complain and request compensation.",
+    "recipient": "Guest Relations, Harbor View Hotel",
+    "subject": "Complaint about room downgrade",
+    "tasks": [
+      {
+        "description": "Explain that you received a different room than booked.",
+        "keywords": [
+          "different room",
+          "downgraded",
+          "smaller",
+          "not what I booked"
+        ]
+      },
+      {
+        "description": "Mention the inconvenience this caused during your stay.",
+        "keywords": [
+          "inconvenience",
+          "uncomfortable",
+          "disappointed",
+          "affected"
+        ]
+      },
+      {
+        "description": "Request compensation or a partial refund.",
+        "keywords": [
+          "compensation",
+          "refund",
+          "discount",
+          "reimbursement"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Guest Relations Team,\n\nI am writing to express my disappointment about my recent stay at Harbor View Hotel for my family's reunion. I had reserved a deluxe room with a view, but upon arrival, I was given a much smaller, standard room facing the parking lot instead, with no explanation offered at check-in.\n\nThis downgrade caused real inconvenience during an important family event, as we had specifically chosen that room type to comfortably host relatives visiting from out of town. The mismatch between what I booked and what we received was disappointing and affected our overall experience.\n\nGiven this situation, I would like to request compensation, such as a partial refund or a discount on a future stay, to reflect the difference in the room we actually received. I have attached my booking confirmation for reference. Thank you for looking into this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 13,
+    "scenario": "You just received an internship offer from a company after your interview last week. You want to formally accept the offer and thank your supervisor for the opportunity.",
+    "recipient": "Mr. Nguyen, Internship Supervisor",
+    "subject": "Accepting the internship offer",
+    "tasks": [
+      {
+        "description": "Thank him for offering you the internship position.",
+        "keywords": [
+          "thank you",
+          "grateful",
+          "appreciate",
+          "offer"
+        ]
+      },
+      {
+        "description": "Formally accept the position.",
+        "keywords": [
+          "accept",
+          "confirm",
+          "pleased to accept",
+          "look forward"
+        ]
+      },
+      {
+        "description": "Ask about next steps or paperwork needed before starting.",
+        "keywords": [
+          "next steps",
+          "paperwork",
+          "documents",
+          "before starting",
+          "start date"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Mr. Nguyen,\n\nThank you so much for offering me the marketing internship position following our interview last week. I really appreciate the opportunity, and I am grateful that you and your team believe I would be a good fit for the role.\n\nI am pleased to formally accept the internship offer. This position aligns closely with my career goals, and I am looking forward to contributing to the team and learning from everyone throughout the summer.\n\nCould you please let me know about any next steps I should take, such as paperwork I need to complete or documents I should bring before my start date? I want to make sure everything is in order before I begin. Thank you again for this wonderful opportunity, and I look forward to working with you and the rest of the team soon.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 14,
+    "scenario": "You are organizing a charity fundraiser for a local shelter, and you want to invite a community organization's director to participate as a guest speaker.",
+    "recipient": "Ms. Bennett, Director of Hope Center",
+    "subject": "Invitation to speak at our charity fundraiser",
+    "tasks": [
+      {
+        "description": "Introduce the fundraising event and its purpose.",
+        "keywords": [
+          "fundraiser",
+          "charity event",
+          "purpose",
+          "raise money",
+          "shelter"
+        ]
+      },
+      {
+        "description": "Invite her to be a guest speaker.",
+        "keywords": [
+          "guest speaker",
+          "invite",
+          "speak",
+          "join us"
+        ]
+      },
+      {
+        "description": "Ask her to confirm her availability by a certain date.",
+        "keywords": [
+          "confirm",
+          "availability",
+          "let me know",
+          "specific date"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Bennett,\n\nI am organizing a charity fundraiser next month to raise money and support for our local homeless shelter, and I am reaching out because I would love for you to be involved. The event will include a dinner, a silent auction, and short presentations about the shelter's mission and impact on the community.\n\nGiven your extensive experience running the Hope Center, I believe your insights would be incredibly valuable to our guests, and I would like to formally invite you to join us as a guest speaker for the evening.\n\nWould you be available to speak for about fifteen minutes about your organization's work? If so, could you please confirm your availability by August 10th so we can finalize the event program? Thank you very much for considering this invitation, and I hope you can join us.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 15,
+    "scenario": "You have decided you want to switch your major from Biology to Psychology, and you want to inform your academic advisor and ask for guidance on the process.",
+    "recipient": "Professor Hartley, Academic Advisor",
+    "subject": "Considering a change of major",
+    "tasks": [
+      {
+        "description": "Explain that you are considering switching your major to Psychology.",
+        "keywords": [
+          "switch",
+          "change my major",
+          "considering",
+          "Psychology"
+        ]
+      },
+      {
+        "description": "Briefly explain your reason for wanting the change.",
+        "keywords": [
+          "reason",
+          "more interested",
+          "realized",
+          "passion"
+        ]
+      },
+      {
+        "description": "Ask for guidance on the steps required to make the change.",
+        "keywords": [
+          "steps",
+          "process",
+          "guidance",
+          "how do I",
+          "requirements"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Hartley,\n\nI hope you are doing well. I am writing to let you know that I am seriously considering switching my major from Biology to Psychology, and I wanted to discuss this decision with you as my academic advisor before moving forward.\n\nOver the past year, I have realized that I am far more interested in human behavior and mental processes than in the laboratory-focused coursework required for Biology. My recent introductory psychology class confirmed this passion, and I feel this new path would suit my strengths and interests much better.\n\nSince I am not entirely familiar with the requirements involved, could you guide me through the steps needed to officially change my major? I would also appreciate knowing how this change might affect my graduation timeline. Thank you very much for your continued support.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "scenario": "You reserved a study room at the library for a group project, but when your group arrived, another group was already using it. You want to explain the situation to the library staff and ask for help finding another room.",
+    "recipient": "Library Services",
+    "subject": "Reserved study room already occupied",
+    "tasks": [
+      {
+        "description": "Explain that your reserved study room was already occupied.",
+        "keywords": [
+          "reserved",
+          "occupied",
+          "already",
+          "taken",
+          "booked"
+        ]
+      },
+      {
+        "description": "Mention the reservation time and room number.",
+        "keywords": [
+          "reservation",
+          "time",
+          "room number",
+          "booked for"
+        ]
+      },
+      {
+        "description": "Ask for help finding another available room.",
+        "keywords": [
+          "another room",
+          "available",
+          "help",
+          "find"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Library Services,\n\nI am writing about a study room I reserved for this afternoon. My group had booked Room 204 from two to four, but when we arrived another group was already using it.\n\nI have the confirmation email for our reservation if you need to verify the booking time.\n\nCould someone help us find another available room for the remainder of our session? We have a project deadline tomorrow and really need the space. Thank you for your help.\n\nSincerely,\n[Your Name]",
+    "id": 16
+  },
+  {
+    "scenario": "You ordered a textbook online for your course, but the wrong edition arrived. You need the correct edition before your exam next week and want to request an exchange.",
+    "recipient": "Customer Support",
+    "subject": "Received wrong textbook edition",
+    "tasks": [
+      {
+        "description": "Explain that you received the wrong edition of the textbook.",
+        "keywords": [
+          "wrong edition",
+          "incorrect",
+          "mistake"
+        ]
+      },
+      {
+        "description": "Mention that you need the correct edition before your exam.",
+        "keywords": [
+          "exam",
+          "before",
+          "need it by",
+          "deadline"
+        ]
+      },
+      {
+        "description": "Request an exchange for the correct edition.",
+        "keywords": [
+          "exchange",
+          "replace",
+          "correct edition",
+          "send"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Customer Support,\n\nI recently ordered the textbook for my chemistry course, but the fourth edition arrived instead of the fifth edition I actually need.\n\nMy exam is next week, so I need the correct edition as soon as possible.\n\nCould you please arrange an exchange and send the fifth edition right away? I am happy to return the incorrect copy using a prepaid label if needed. Thank you for your quick attention to this.\n\nSincerely,\n[Your Name]",
+    "id": 17
+  },
+  {
+    "scenario": "You noticed that the heating in your dorm room has not been working for the past two days, and the temperature has dropped significantly at night. You want to report the issue to the housing office and ask for a quick repair.",
+    "recipient": "Housing Office",
+    "subject": "Heating not working in dorm room",
+    "tasks": [
+      {
+        "description": "Explain that the heating has not been working for two days.",
+        "keywords": [
+          "heating",
+          "not working",
+          "broken",
+          "two days"
+        ]
+      },
+      {
+        "description": "Mention that the room gets very cold at night.",
+        "keywords": [
+          "cold",
+          "night",
+          "temperature",
+          "freezing"
+        ]
+      },
+      {
+        "description": "Ask for a quick repair.",
+        "keywords": [
+          "repair",
+          "fix",
+          "as soon as possible",
+          "technician"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Housing Office,\n\nI am writing to report that the heating in my dorm room, Room 315 in Maple Hall, has not been working for the past two days.\n\nThe room has become quite cold at night, which is making it difficult to sleep or study comfortably.\n\nCould you please send a technician to repair the heating as soon as possible? I would appreciate a quick resolution given how cold it has gotten. Thank you for your help.\n\nSincerely,\n[Your Name]",
+    "id": 18
+  },
+  {
+    "scenario": "You signed up for a campus fitness class, but you just realized it conflicts with one of your lab sessions. You want to explain the situation to the recreation center and ask about switching to a different class time.",
+    "recipient": "Recreation Center Staff",
+    "subject": "Schedule conflict with fitness class",
+    "tasks": [
+      {
+        "description": "Explain that the fitness class conflicts with your lab session.",
+        "keywords": [
+          "conflict",
+          "lab session",
+          "overlap",
+          "same time"
+        ]
+      },
+      {
+        "description": "Mention which class you originally signed up for.",
+        "keywords": [
+          "signed up",
+          "originally",
+          "registered for"
+        ]
+      },
+      {
+        "description": "Ask about switching to a different class time.",
+        "keywords": [
+          "switch",
+          "different time",
+          "another session",
+          "change"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Recreation Center Staff,\n\nI recently signed up for the Tuesday evening yoga class, but I just realized it overlaps with a required lab session for one of my courses.\n\nSince I cannot attend the Tuesday session, I was hoping to switch to a different class time instead.\n\nCould you let me know what other yoga sessions are currently available this semester? I would appreciate any help finding a time that works with my schedule. Thank you.\n\nSincerely,\n[Your Name]",
+    "id": 19
+  },
+  {
+    "scenario": "You attended a job fair on campus and collected several business cards, but you realize you forgot to follow up with a recruiter you were especially interested in. You want to write a follow-up email thanking them and asking about next steps.",
+    "recipient": "Ms. Bennett, Recruiter",
+    "subject": "Following up from the campus job fair",
+    "tasks": [
+      {
+        "description": "Remind the recruiter where you met.",
+        "keywords": [
+          "job fair",
+          "met",
+          "campus",
+          "spoke"
+        ]
+      },
+      {
+        "description": "Thank them for their time.",
+        "keywords": [
+          "thank you",
+          "appreciate",
+          "time"
+        ]
+      },
+      {
+        "description": "Ask about the next steps in the application process.",
+        "keywords": [
+          "next steps",
+          "application",
+          "process",
+          "apply"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Bennett,\n\nI hope this message finds you well. We spoke briefly at the campus job fair last week about the marketing internship opportunities at your company.\n\nThank you for taking the time to answer my questions and for sharing more about the internship program.\n\nCould you let me know what the next steps in the application process would be? I would love to learn more and am very interested in applying. Thank you again for your time.\n\nSincerely,\n[Your Name]",
+    "id": 20
+  }
+]

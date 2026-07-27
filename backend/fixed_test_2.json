@@ -1,0 +1,1818 @@
+{
+  "id": 2,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 4,
+          "topic": "The History of Cartography",
+          "category": "History",
+          "paragraph": "Long before satellites could photograph the planet from orbit, mapmakers relied on careful measurement and observation to represent the world on paper. Ancient Babylonian clay tablets show some of the earliest known attempts at cartography, depicting cities and rivers in simplified form. Greek scholars later calculated the circumference of the Earth and developed coordinate systems that could describe any location with precision. During the medieval period, European maps often prioritized religious symbolism over geographic accuracy. The Age of Exploration transformed cartography, as sailors demanded charts reliable enough to prevent shipwrecks. Modern cartography now combines satellite imagery with centuries of accumulated technique.",
+          "blanks": [
+            {
+              "word": "Babylonian",
+              "visible": "Babyl",
+              "hidden": "onian"
+            },
+            {
+              "word": "cartography",
+              "visible": "carto",
+              "hidden": "graphy"
+            },
+            {
+              "word": "circumference",
+              "visible": "circu",
+              "hidden": "mference"
+            },
+            {
+              "word": "coordinate",
+              "visible": "coord",
+              "hidden": "inate"
+            },
+            {
+              "word": "medieval",
+              "visible": "medi",
+              "hidden": "eval"
+            },
+            {
+              "word": "symbolism",
+              "visible": "symb",
+              "hidden": "olism"
+            },
+            {
+              "word": "geographic",
+              "visible": "geogr",
+              "hidden": "aphic"
+            },
+            {
+              "word": "Exploration",
+              "visible": "Explo",
+              "hidden": "ration"
+            },
+            {
+              "word": "reliable",
+              "visible": "reli",
+              "hidden": "able"
+            },
+            {
+              "word": "satellite",
+              "visible": "sate",
+              "hidden": "llite"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 3,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Package Delivery Delay",
+          "subtitle": "Dear Mr. Osei,",
+          "text": "We are writing to inform you that your recent order, tracking number SW-48213, has been delayed due to unexpected weather conditions affecting our regional distribution center. Your package was originally scheduled to arrive on Tuesday, but based on updated logistics reports, it is now expected to be delivered by Friday of this week, provided that road conditions continue to improve as forecast. We understand that this delay may be frustrating, particularly since two of the items in your order were intended as a gift, and we sincerely apologize for any inconvenience this may cause. As a courtesy, a discount code for 15 percent off your next purchase has been added to your account, valid for the next ninety days. You can track your package's updated status at any time using the link below, and you will receive an automatic notification the moment it leaves our regional facility. If the package has not arrived by the following Monday, please contact our support team directly rather than waiting for a further automatic update, since delays beyond that point are handled on a case-by-case basis.\n\nSincerely,\nSwiftParcel Customer Service",
+          "questions": [
+            {
+              "question": "Why was the package delayed?",
+              "options": [
+                "The item was out of stock",
+                "Weather conditions affected the distribution center",
+                "The customer changed the delivery address",
+                "There was an error in the order"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the email suggest Mr. Osei should do if the package still has not arrived by the following Monday?",
+              "options": [
+                "Wait for another automatic notification",
+                "Request a full refund immediately",
+                "Contact the support team directly",
+                "Reorder the items from a different supplier"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "What is indicated about the discount code offered to Mr. Osei?",
+              "options": [
+                "It never expires",
+                "It is valid for ninety days",
+                "It can only be used once the package arrives",
+                "It applies only to gift items"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 4,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Community Yoga Class Schedule Change",
+          "subtitle": "Dear Participants,",
+          "text": "Please note that starting next Monday, the community yoga class will move from its current 6:00 p.m. time slot to 7:30 p.m. This change is being made to accommodate the growing number of participants who have requested a later session after work, following a survey we circulated last month in which nearly two-thirds of respondents indicated that the current time conflicted with their commute. The location remains the same, in Studio B at the Riverside Community Center, and class size will still be capped at twenty-five participants to maintain a comfortable environment. Mats and blocks will continue to be provided, though you are welcome to bring your own if you prefer a particular thickness or material. If the new time does not work for your schedule, a make-up session covering the same material will be offered on Saturday mornings at 9:00 a.m., though space in that session is limited and registration will be handled on a first-come, first-served basis starting this Friday. We appreciate your patience as we work to accommodate everyone's needs as fairly as possible.\n\nThank you,\nRiverside Community Center",
+          "questions": [
+            {
+              "question": "What is the purpose of this email?",
+              "options": [
+                "To announce a change in a class schedule",
+                "To cancel the yoga class permanently",
+                "To introduce a new instructor",
+                "To increase the price of the class"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the email, why is the class time being changed?",
+              "options": [
+                "The studio is no longer available in the evening",
+                "A survey showed the current time conflicted with many participants' commutes",
+                "The instructor's schedule changed",
+                "The center is renovating Studio B"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is indicated about the Saturday make-up session?",
+              "options": [
+                "It covers different material from the regular class",
+                "It has no limit on the number of participants",
+                "Registration is limited and given on a first-come, first-served basis",
+                "It will replace the regular class permanently"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 5,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Live Chat",
+          "subtitle": "",
+          "text": "Priya Nair (7:15 p.m.)\nHey team, don't forget the apartment cleaning schedule starts this week. I've got kitchen duty tonight, but I noticed the dish rack is still broken from last week.\n\nJordan Lee (7:18 p.m.)\nGot it. I'm on bathroom duty, but I won't be home until late tonight because of a work event. Is it okay if I do it tomorrow morning instead?\n\nSam Okafor (7:20 p.m.)\nThat should be fine, Jordan, as long as it's done before Priya leaves for work at nine. I'll handle the living room and common areas today since I'm around all evening.\n\nPriya Nair (7:22 p.m.)\nSounds good. Sam, you're always so reliable with this stuff — could you also take a look at the dish rack while you're at it? I think a screw came loose.\n\nSam Okafor (7:24 p.m.)\nSure, I'll check it after dinner. If it's more than a quick fix, I'll just order a replacement online.\n\nJordan Lee (7:27 p.m.)\nThanks, Sam. Let's also remember to take the trash out before Wednesday morning pickup — I'll set a reminder for Tuesday night since I'll already be up late anyway.\n\nPriya Nair (7:29 p.m.)\nPerfect, that covers everything. See everyone tomorrow.",
+          "questions": [
+            {
+              "question": "What is the main topic of this conversation?",
+              "options": [
+                "Planning a trip together",
+                "Coordinating apartment cleaning duties",
+                "Discussing a rent increase",
+                "Organizing a dinner party"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does Jordan want to change the schedule?",
+              "options": [
+                "Jordan is out of town this week",
+                "Jordan does not want to do bathroom duty",
+                "Jordan will not be home until late tonight because of a work event",
+                "Jordan already cleaned the bathroom yesterday"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "What can be inferred about Sam Okafor?",
+              "options": [
+                "Sam is often dependable with household tasks",
+                "Sam forgot about the cleaning schedule",
+                "Sam will be away on Wednesday",
+                "Sam refuses to take out the trash"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 3,
+          "title": "The Development of Sign Languages",
+          "passage": "Sign languages are complete, natural languages that developed independently among deaf communities around the world, each with its own grammar, vocabulary, and syntax distinct from the spoken languages used in the same regions. Contrary to a common misconception, sign languages are not simply gestural versions of spoken language but fully autonomous linguistic systems, capable of expressing abstract ideas, humor, and poetry just as fluently as any spoken tongue.\n\nOne of the most well-documented cases of sign language emergence occurred in Nicaragua during the 1980s. When deaf children were brought together in a new school for the first time, they began combining their individual home signs into a shared communication system. Within a single generation, this system evolved into a complete language with consistent grammatical rules.\n\nLinguists consider this case particularly valuable because it offers a rare opportunity to observe language formation happening in real time, rather than reconstructing history from ancient texts. Researchers who studied Nicaraguan Sign Language found that younger students, who learned the language from older peers, produced more grammatically consistent signs than the very first generation of students.\n\nThis finding suggests that children play a crucial role in refining and standardizing language structure, a pattern also observed in the study of creole languages. Today, researchers continue to study emerging sign languages around the world, as each new case provides further insight into how the human brain naturally organizes and structures language regardless of the medium used.",
+          "passage_marked": "Sign languages are complete, natural languages that developed independently among deaf communities around the world, each with its own grammar, vocabulary, and syntax distinct from the spoken languages used in the same regions. Contrary to a common misconception, sign languages are not simply gestural versions of spoken language but fully autonomous linguistic systems, capable of expressing abstract ideas, humor, and poetry just as fluently as any spoken tongue. [A]\n\nOne of the most well-documented cases of sign language emergence occurred in Nicaragua during the 1980s. When deaf children were brought together in a new school for the first time, they began combining their individual home signs into a shared communication system. [B] Within a single generation, this system evolved into a complete language with consistent grammatical rules.\n\nLinguists consider this case particularly valuable because it offers a rare opportunity to observe language formation happening in real time, rather than reconstructing history from ancient texts. [C] Researchers who studied Nicaraguan Sign Language found that younger students, who learned the language from older peers, produced more grammatically consistent signs than the very first generation of students.\n\nThis finding suggests that children play a crucial role in refining and standardizing language structure, a pattern also observed in the study of creole languages. [D] Today, researchers continue to study emerging sign languages around the world, as each new case provides further insight into how the human brain naturally organizes and structures language regardless of the medium used.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'autonomous' in the passage is closest in meaning to",
+              "options": [
+                "dependent on other systems",
+                "independent and self-contained",
+                "temporary",
+                "poorly organized"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What is a common misconception about sign languages mentioned in the passage?",
+              "options": [
+                "That they have no grammar at all",
+                "That they are simply gestural versions of spoken language",
+                "That they are only used in Nicaragua",
+                "That they cannot be studied by linguists"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "Why do linguists consider the Nicaraguan case particularly valuable?",
+              "options": [
+                "It proves sign languages are inferior to spoken languages",
+                "It allows researchers to observe language formation as it happens",
+                "It shows that language cannot develop without formal schooling",
+                "It confirms that older generations create better grammar"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What did researchers find about younger Nicaraguan students compared to the first generation?",
+              "options": [
+                "They produced less consistent grammar",
+                "They produced more grammatically consistent signs",
+                "They refused to use the new sign system",
+                "They preferred spoken language instead"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This pattern indicates that a shared language can emerge spontaneously once a community has the opportunity to communicate regularly.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 3
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 5,
+          "topic": "Memory and the Brain",
+          "category": "Psychology",
+          "paragraph": "Human memory is a complex cognitive process that allows individuals to encode, store, and retrieve information over time. Short-term memory holds small amounts of information temporarily, while long-term memory can preserve knowledge for years. The hippocampus, a small structure deep within the brain, plays a crucial role in forming new memories and consolidating experiences during sleep. Emotional events are often remembered more vividly than neutral ones, a phenomenon linked to the amygdala. In addition, researchers have found that memory can be distorted by suggestion, bias, or time. Understanding these mechanisms has important implications for education and therapy.",
+          "blanks": [
+            {
+              "word": "temporarily",
+              "visible": "tempo",
+              "hidden": "rarily"
+            },
+            {
+              "word": "knowledge",
+              "visible": "know",
+              "hidden": "ledge"
+            },
+            {
+              "word": "hippocampus",
+              "visible": "hippo",
+              "hidden": "campus"
+            },
+            {
+              "word": "consolidating",
+              "visible": "conso",
+              "hidden": "lidating"
+            },
+            {
+              "word": "experiences",
+              "visible": "exper",
+              "hidden": "iences"
+            },
+            {
+              "word": "vividly",
+              "visible": "viv",
+              "hidden": "idly"
+            },
+            {
+              "word": "amygdala",
+              "visible": "amyg",
+              "hidden": "dala"
+            },
+            {
+              "word": "researchers",
+              "visible": "resea",
+              "hidden": "rchers"
+            },
+            {
+              "word": "distorted",
+              "visible": "dist",
+              "hidden": "orted"
+            },
+            {
+              "word": "implications",
+              "visible": "impli",
+              "hidden": "cations"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 4,
+          "title": "The Origins of Cuneiform Writing",
+          "passage": "Cuneiform, among the earliest writing systems, emerged in Sumer around 3400 BCE. Scribes pressed a reed stylus into damp clay, leaving wedge-shaped marks that gave the script its name, derived from the Latin word for wedge. At first, the system served practical needs, chiefly recording grain harvests, trade transactions, and tax payments.\n\nThe earliest signs were pictographic, simple drawings of the objects they depicted, such as a jar for beer or a head for a person. Over generations, scribes simplified these pictures into abstract wedge combinations, trading visual clarity for speed. This shift let the script capture sounds and abstract ideas, not merely objects, enabling far richer expression.\n\nAs Mesopotamian civilization spread, cuneiform proved adaptable and was adopted by speakers of unrelated languages, including Akkadian, Elamite, and later Hittite and Old Persian. It became the medium for royal inscriptions, literary works such as the Epic of Gilgamesh, and legal codes, most notably that of Hammurabi. Thousands of clay tablets from this era survive today.\n\nCuneiform faded after the first century CE, supplanted by simpler alphabetic scripts. For centuries the wedge marks sat as an unreadable curiosity on ruined palace walls. The breakthrough came in the nineteenth century, when Henry Rawlinson used a trilingual inscription at Behistun to unlock the script, finally letting modern scholars read the voices of ancient Mesopotamia.",
+          "passage_marked": "Cuneiform, among the earliest writing systems, emerged in Sumer around 3400 BCE. Scribes pressed a reed stylus into damp clay, leaving wedge-shaped marks that gave the script its name, derived from the Latin word for wedge. At first, the system served practical needs, chiefly recording grain harvests, trade transactions, and tax payments. [A]\n\nThe earliest signs were pictographic, simple drawings of the objects they depicted, such as a jar for beer or a head for a person. Over generations, scribes simplified these pictures into abstract wedge combinations, trading visual clarity for speed. [B] This shift let the script capture sounds and abstract ideas, not merely objects, enabling far richer expression.\n\nAs Mesopotamian civilization spread, cuneiform proved adaptable and was adopted by speakers of unrelated languages, including Akkadian, Elamite, and later Hittite and Old Persian. It became the medium for royal inscriptions, literary works such as the Epic of Gilgamesh, and legal codes, most notably that of Hammurabi. Thousands of clay tablets from this era survive today. [C]\n\nCuneiform faded after the first century CE, supplanted by simpler alphabetic scripts. For centuries the wedge marks sat as an unreadable curiosity on ruined palace walls. The breakthrough came in the nineteenth century, when Henry Rawlinson used a trilingual inscription at Behistun to unlock the script, finally letting modern scholars read the voices of ancient Mesopotamia. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'adaptable' in the passage is closest in meaning to",
+              "options": [
+                "rigid and resistant to change",
+                "capable of being modified for different uses",
+                "extremely uncommon",
+                "limited to a single purpose"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what was cuneiform originally used for?",
+              "options": [
+                "Composing epic poetry and literature",
+                "Recording economic activities such as harvests and taxes",
+                "Writing legal codes like Hammurabi's",
+                "Communicating with foreign rulers"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "How did cuneiform signs change over time?",
+              "options": [
+                "They became more detailed and pictorial",
+                "They were simplified from pictures into abstract wedge shapes",
+                "They were replaced entirely by alphabetic letters",
+                "They stopped representing sounds and only represented objects"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention the Behistun inscription?",
+              "options": [
+                "To show where cuneiform was first invented",
+                "To explain how scholars were eventually able to decipher cuneiform",
+                "To describe a religious ceremony",
+                "To compare Persian and Sumerian art"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This scholarly breakthrough finally opened a window into a civilization that had been silent for nearly two thousand years.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 3
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 6,
+          "topic": "The Formation of Stars",
+          "category": "Astronomy",
+          "paragraph": "Stars form within enormous clouds of gas and dust known as nebulae, where gravity gradually pulls matter together into dense clumps. As these clumps contract, the pressure and temperature at their core rise until nuclear fusion ignites, marking the birth of a new star. This process converts hydrogen into helium, releasing energy that stabilizes the star, and massive stars consume their fuel rapidly, often ending their lives in dramatic explosions called supernovae that scatter heavy elements through space. In recent decades, astronomers have studied these processes using telescopes that detect light across different wavelengths.",
+          "blanks": [
+            {
+              "word": "contract",
+              "visible": "cont",
+              "hidden": "ract"
+            },
+            {
+              "word": "temperature",
+              "visible": "tempe",
+              "hidden": "rature"
+            },
+            {
+              "word": "nuclear",
+              "visible": "nuc",
+              "hidden": "lear"
+            },
+            {
+              "word": "fusion",
+              "visible": "fus",
+              "hidden": "ion"
+            },
+            {
+              "word": "ignites",
+              "visible": "ign",
+              "hidden": "ites"
+            },
+            {
+              "word": "hydrogen",
+              "visible": "hydr",
+              "hidden": "ogen"
+            },
+            {
+              "word": "massive",
+              "visible": "mas",
+              "hidden": "sive"
+            },
+            {
+              "word": "supernovae",
+              "visible": "super",
+              "hidden": "novae"
+            },
+            {
+              "word": "astronomers",
+              "visible": "astro",
+              "hidden": "nomers"
+            },
+            {
+              "word": "wavelengths",
+              "visible": "wavel",
+              "hidden": "engths"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 6,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Live Chat",
+          "subtitle": "",
+          "text": "Diego Ramos (4:02 p.m.)\nHi everyone, are we still meeting at the library tomorrow to prepare for the economics exam? I want to make sure we cover the chapters on monetary policy as well as market structures.\n\nHana Kim (4:05 p.m.)\nYes, I booked the study room on the third floor from 2 to 5 p.m. I'll bring my notes on market structures, but I haven't gotten very far into monetary policy yet.\n\nLeah Whitfield (4:09 p.m.)\nGreat, I can go over the chapters on fiscal policy since I already made a summary sheet for those, and I can probably combine it with a quick overview of monetary policy if I have time tonight.\n\nDiego Ramos (4:11 p.m.)\nPerfect. I'll focus on the practice problems then and print extra copies for everyone, including a few from last year's exam that the professor said were similar in style.\n\nHana Kim (4:13 p.m.)\nSounds like a solid plan. Should we also ask Marcus to join? He mentioned he was struggling with the graphs last week.\n\nLeah Whitfield (4:15 p.m.)\nGood idea, I'll message him now. If the room fills up though, we may need to split into two smaller groups.\n\nDiego Ramos (4:18 p.m.)\nThat works. See you all at 2 tomorrow, and let's aim to start with the practice problems before we run out of energy.",
+          "questions": [
+            {
+              "question": "What is the purpose of this message exchange?",
+              "options": [
+                "To cancel a study session",
+                "To plan a group study session for an exam",
+                "To discuss exam results",
+                "To reschedule a library reservation"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about Hana Kim's preparation so far?",
+              "options": [
+                "She has finished reviewing monetary policy",
+                "She has made more progress on market structures than on monetary policy",
+                "She has not started studying at all",
+                "She is only responsible for printing practice problems"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the group decide to do if the study room becomes too crowded?",
+              "options": [
+                "Cancel the session entirely",
+                "Move to a different library",
+                "Split into two smaller groups",
+                "Ask Marcus not to attend"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Lease Renewal Notice",
+          "subtitle": "Dear Ms. Chen,",
+          "text": "Your current lease agreement for Apartment 4B at Willow Creek Apartments is set to expire on September 30. We would like to offer you the opportunity to renew your lease for an additional twelve months.\n\nDue to rising maintenance and utility costs across the property, the monthly rent for a renewed lease will increase from $1,150 to $1,225, effective October 1. All other terms of your current agreement, including the two-parking-space allowance and pet policy, will remain unchanged.\n\nIf you would like to renew, please sign and return the attached renewal form to the leasing office by September 10. If we do not hear from you by that date, we will assume you do not intend to renew, and you will need to vacate the unit and return your keys no later than September 30.\n\nShould you decide not to renew, a move-out inspection must be scheduled at least two weeks in advance. Please contact our office to arrange a convenient time.\n\nWe have enjoyed having you as a tenant and hope you will choose to stay another year.\n\nBest regards,\nDiane Osei\nProperty Manager, Willow Creek Apartments",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To offer the tenant a lease renewal with updated terms",
+                "To announce that the apartment complex is being sold",
+                "To complain about damage to the apartment",
+                "To advertise a new apartment complex nearby"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "According to the email, what must Ms. Chen do by September 10?",
+              "options": [
+                "Pay a security deposit increase",
+                "Sign and return the renewal form",
+                "Move out of the apartment",
+                "Schedule a maintenance inspection"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "The word 'vacate' in the email is closest in meaning to",
+              "options": [
+                "renovate",
+                "leave",
+                "purchase",
+                "inspect"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 11,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/11.mp3",
+          "transcript": "Do you offer a discount for groups of ten or more?",
+          "context": "A visitor is asking about tickets at a museum.",
+          "options": [
+            "The museum has three floors of exhibits.",
+            "Yes, groups of that size get fifteen percent off.",
+            "Our newest exhibit opened last month.",
+            "Tickets can be purchased online or at the door."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "2-11"
+        },
+        {
+          "id": 12,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/12.mp3",
+          "transcript": "I signed up to volunteer, but I never got an email about my shift.",
+          "context": "A volunteer is speaking to a coordinator at a community event.",
+          "options": [
+            "Let me check the schedule and get back to you.",
+            "The event starts at nine in the morning.",
+            "We had over a hundred volunteers last year.",
+            "Volunteering looks great on a resume."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "2-12"
+        },
+        {
+          "id": 13,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/13.mp3",
+          "transcript": "Has the photography club's meeting time changed for this month?",
+          "context": "A club member asks the club president.",
+          "options": [
+            "Yes, we moved it to Thursday evenings instead of Mondays.",
+            "The club meets in the art building.",
+            "Photography requires good lighting.",
+            "Our club has about twenty members."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "2-13"
+        },
+        {
+          "id": 14,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/14.mp3",
+          "transcript": "I'd like to cancel my streaming subscription, please.",
+          "context": "A customer calls a streaming service's support line.",
+          "options": [
+            "I can help you with that. Can I ask why you're canceling?",
+            "Our service has hundreds of movies and shows.",
+            "Subscriptions renew automatically every month.",
+            "The app is available on most devices."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "2-14"
+        },
+        {
+          "id": 15,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/15.mp3",
+          "transcript": "One of the washing machines on the third floor isn't working again.",
+          "context": "A tenant is speaking to the building's maintenance staff.",
+          "options": [
+            "I'll take a look at it this afternoon.",
+            "The laundry room is open all day.",
+            "Washing machines use a lot of water.",
+            "There are six machines on that floor."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "2-15"
+        },
+        {
+          "id": 16,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/16.mp3",
+          "transcript": "Excuse me, has the gate for flight 220 changed?",
+          "context": "A traveler asks an airport staff member.",
+          "options": [
+            "Yes, it's now boarding from gate fourteen.",
+            "The airport has free Wi-Fi.",
+            "Flights are usually delayed during storms.",
+            "Security lines can be long in the morning."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "2-16"
+        },
+        {
+          "id": 23,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/23.mp3",
+          "transcript": "My tomato plants keep wilting even though I water them daily.",
+          "context": "A customer asks an employee at a garden center for advice.",
+          "options": [
+            "You might actually be overwatering them.",
+            "Tomatoes are a popular garden vegetable.",
+            "The garden center opens at nine.",
+            "Gardening tools are on the back shelf."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "3-23"
+        },
+        {
+          "id": 24,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/24.mp3",
+          "transcript": "The recipe calls for buttermilk, but I don't have any at home.",
+          "context": "A student asks the instructor during a cooking class.",
+          "options": [
+            "You can mix regular milk with a bit of lemon juice instead.",
+            "Buttermilk is used in many baking recipes.",
+            "This recipe takes about forty minutes.",
+            "The grocery store is a few blocks away."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "3-24"
+        },
+        {
+          "id": 31,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/31.mp3",
+          "transcript": "This bus doesn't stop near the mall anymore.",
+          "context": "A bus driver informs a passenger about a route change.",
+          "options": [
+            "Oh no, how do I get there now?",
+            "The fare just went up last week.",
+            "I forgot my umbrella today.",
+            "The next bus arrives in ten minutes."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "4-31"
+        },
+        {
+          "id": 32,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/32.mp3",
+          "transcript": "Have you tried restarting your computer?",
+          "context": "An IT support worker asks a caller about a technical problem.",
+          "options": [
+            "My badge doesn't open the door.",
+            "The printer is on the third floor.",
+            "Yes, but the screen still freezes.",
+            "I ordered a new keyboard yesterday."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "4-32"
+        }
+      ],
+      "conv": [
+        {
+          "id": 6,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/6.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "My laptop crashed right before I could save my research paper, and now I don't know if I lost everything."
+            },
+            {
+              "speaker": "male",
+              "text": "Oh no, did you have it backed up anywhere, like on a cloud drive?"
+            },
+            {
+              "speaker": "female",
+              "text": "I think I turned on automatic backup a few weeks ago, but I'm not sure it actually saved the recent changes."
+            },
+            {
+              "speaker": "male",
+              "text": "You should check the campus IT help desk. They can sometimes recover files even if the backup didn't work."
+            },
+            {
+              "speaker": "female",
+              "text": "That's a good idea. I'll head over there this afternoon before the library closes."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She lost her laptop charger",
+                "Her laptop crashed and she may have lost her paper",
+                "She missed the deadline for her paper",
+                "Her cloud storage account was hacked"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest she do?",
+              "options": [
+                "Rewrite the paper from memory",
+                "Ask her professor for an extension",
+                "Visit the campus IT help desk",
+                "Buy a new laptop"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/7.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "You weren't in Professor Lee's lecture yesterday. Everything okay?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not really, I've had a pretty bad flu since Monday. I could barely get out of bed."
+            },
+            {
+              "speaker": "male",
+              "text": "That's rough. Did you miss the review for the midterm?"
+            },
+            {
+              "speaker": "female",
+              "text": "Yeah, and I'm worried because I don't know anyone else well enough in that class to ask for notes."
+            },
+            {
+              "speaker": "male",
+              "text": "Don't worry, I took detailed notes. I can send you a copy tonight."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She failed the midterm exam",
+                "She has been sick and missed an important review session",
+                "She lost her class notes",
+                "She overslept and missed the bus"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man offer to do?",
+              "options": [
+                "Talk to the professor for her",
+                "Give her his notes from the lecture",
+                "Tutor her for the midterm",
+                "Lend her his textbook"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/8.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Are you all set for your study abroad trip next week?"
+            },
+            {
+              "speaker": "male",
+              "text": "Almost, but I just found out my flight got rescheduled to a much earlier time, and now it overlaps with my last final."
+            },
+            {
+              "speaker": "female",
+              "text": "That's a tricky situation. Have you talked to your professor about it?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not yet, but I'm planning to email her today to see if I can take the exam a day early."
+            },
+            {
+              "speaker": "female",
+              "text": "That sounds like your best option. Most professors are usually pretty understanding about travel conflicts."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He lost his passport",
+                "His rescheduled flight conflicts with a final exam",
+                "He can't afford the plane ticket",
+                "He forgot to pack his luggage"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man plan to do?",
+              "options": [
+                "Cancel his trip abroad",
+                "Ask to take the exam early",
+                "Skip the final exam entirely",
+                "Change his flight back"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 6,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/6.mp3",
+          "speaker": "female",
+          "transcript": "Attention shoppers: this is a reminder that our annual store-wide inventory count will take place this Sunday, and the store will close three hours early at 6 p.m. All returns and exchanges must be completed before closing time, as our systems will be temporarily offline for the count. Customers currently shopping in the electronics and home goods departments should proceed to checkout within the next twenty minutes. We appreciate your understanding and invite you to visit us again during our regular hours starting Monday morning.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To promote a weekend sale",
+                "To inform customers of an early closing for inventory",
+                "To announce a new store location",
+                "To warn customers about a security issue"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should customers in electronics and home goods do?",
+              "options": [
+                "Wait for a staff escort",
+                "Proceed to checkout within twenty minutes",
+                "Move to the customer service desk",
+                "Leave the store immediately without purchasing"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 7,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/7.mp3",
+          "speaker": "male",
+          "transcript": "Attention passengers: due to ongoing road construction on Maple Avenue, bus route 14 will be temporarily detoured beginning tomorrow morning. Buses will skip the Maple Avenue and Fifth Street stops and instead serve a temporary stop located in front of the community center on Oak Lane. This detour is expected to remain in effect for approximately two weeks. Riders who normally board at the affected stops should walk to the temporary location, and updated schedules are available on the transit authority's website and mobile application.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To announce a fare increase",
+                "To inform riders about a temporary route detour",
+                "To introduce a brand-new bus line",
+                "To report an accident on the highway"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should riders who use the Maple Avenue stop do?",
+              "options": [
+                "Take a taxi instead",
+                "Wait two weeks before traveling",
+                "Walk to the temporary stop on Oak Lane",
+                "Call the transit authority for a refund"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/8.mp3",
+          "speaker": "female",
+          "transcript": "Good afternoon, everyone. This is a reminder that tonight's guest lecture on renewable energy technology, originally scheduled for the Science Auditorium, has been relocated to the Performing Arts Center due to expected high attendance. The event will still begin at 7 p.m., and doors will open thirty minutes prior for seating. Students attending for extra credit must sign the attendance sheet at the entrance table before taking their seats. Light refreshments will be provided in the lobby following the question and answer session.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To cancel the guest lecture",
+                "To announce a change in the lecture's location",
+                "To introduce the guest speaker's biography",
+                "To reschedule the lecture to next week"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What must students do to receive extra credit?",
+              "options": [
+                "Submit a written summary the next day",
+                "Sign the attendance sheet at the entrance",
+                "Email the professor in advance",
+                "Arrive exactly at 7 p.m."
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 5,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/5.mp3",
+          "speaker": "male",
+          "subject": "Cognitive Psychology",
+          "transcript": "Today I want to talk about a concept that lies at the very core of how we process information moment to moment: working memory, and specifically, a strategy our minds use to get around its surprisingly narrow limits, chunking.\n\nBack in 1956, the psychologist George Miller published an influential paper suggesting that human working memory can hold approximately seven items at once, plus or minus two. This became known, half-jokingly, as the 'magic number seven.' Try to remember a random ten-digit number after hearing it just once, and you'll notice how quickly it slips away. Subsequent research has actually revised this estimate downward, many cognitive psychologists today believe the true capacity for entirely novel, meaningless information is closer to four items. Still, the underlying point holds: working memory, the mental workspace we use to temporarily hold and manipulate information, is a genuinely scarce resource.\n\nSo how do we function at all, given how easily we memorize phone numbers, song lyrics, or long strings of instructions? The answer lies in chunking, the process of grouping individual pieces of information into larger, more meaningful units. Consider a string of letters like F-B-I-C-I-A-I-B-M. Presented as nine separate letters, it exceeds most people's capacity. But if you recognize the three familiar chunks, FBI, CIA, IBM, you've effectively reduced nine items to three. Each chunk still counts as a single unit in working memory, regardless of how much information it contains internally.\n\nThis is precisely why experienced chess players can glance at a mid-game board for just a few seconds and later reconstruct the position of every piece almost perfectly, while a novice cannot. The expert isn't storing thirty-two individual piece locations; they're recognizing five or six familiar configurations built from years of practice, attacking formations, common defensive setups, and so on. Interestingly, when the same experts are shown randomly scattered pieces that don't correspond to any plausible game, their advantage disappears almost entirely, because there are no meaningful patterns left to chunk.\n\nThis tells us something important about expertise more broadly. Becoming skilled at a domain isn't simply a matter of having a better memory in some general sense. Rather, it involves building a rich library of stored patterns that allow raw information to be compressed into fewer, denser units. In effect, expertise doesn't expand the size of working memory, it changes what counts as a single 'item' within it.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "How working memory capacity limits language learning",
+                "Chunking as a strategy for overcoming working memory limitations",
+                "The history of psychological research methods",
+                "Differences in memory between children and adults"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what did George Miller propose in 1956?",
+              "options": [
+                "Working memory can hold about seven items at once",
+                "Chess experts have significantly larger brains",
+                "Chunking was discovered through chess research",
+                "Long-term memory has unlimited capacity"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "Why does the professor discuss the chess experiment?",
+              "options": [
+                "To show that chess players have better long-term memory than novices",
+                "To demonstrate how chunking allows experts to process complex information efficiently",
+                "To argue that memory capacity cannot be improved through practice",
+                "To explain why random information is easier to memorize than patterned information"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred from the professor's concluding remarks about expertise?",
+              "options": [
+                "Expertise increases the overall size of working memory",
+                "Expertise mainly depends on innate talent rather than practice",
+                "Expertise allows information to be organized into fewer, more meaningful units",
+                "Expertise eliminates the need for working memory altogether"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 6,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/6.mp3",
+          "speaker": "female",
+          "subject": "Art History",
+          "transcript": "Today we'll examine a technique that fundamentally transformed European painting in the late sixteenth and early seventeenth centuries: chiaroscuro, the dramatic use of light and shadow to create a sense of volume and heightened emotional intensity.\n\nThe term itself combines two Italian words, chiaro, meaning 'light,' and scuro, meaning 'dark.' While earlier Renaissance painters had certainly used shading to model three-dimensional form, think of Leonardo's soft, gradual transitions known as sfumato, it was the Baroque painter Caravaggio who pushed the contrast between light and dark to an entirely new extreme, a style sometimes called tenebrism, from the Italian word for 'darkness.'\n\nIn Caravaggio's paintings, figures often emerge from an almost pitch-black background, illuminated by a single, seemingly theatrical shaft of light entering from outside the frame. There's rarely any soft transitional shadow; instead, the light source appears sharp and directional, almost like a modern stage spotlight, carving the figures out of darkness rather than gently modeling them. Consider his painting 'The Calling of Saint Matthew.' The composition places several figures around a table in a dim tavern, and a single beam of light cuts diagonally across the scene, falling on Matthew's face at precisely the moment he is called by Christ, whose hand gestures from the shadowy right side of the canvas. The light isn't merely decorative here; it's doing narrative work, directing the viewer's eye and, some art historians argue, symbolizing divine intervention breaking into an otherwise ordinary, dim scene.\n\nWhy did this technique resonate so powerfully at that particular historical moment? Part of the answer lies in the broader context of the Counter-Reformation. The Catholic Church, responding to the Protestant Reformation, wanted religious art that was emotionally immediate and accessible to ordinary worshippers, rather than the more idealized, aristocratic imagery of the High Renaissance. Caravaggio's models were often drawn from the streets, beggars, laborers, ordinary Romans, and his dramatic lighting made sacred scenes feel startlingly present and human, as though they were happening right in front of the viewer rather than in some distant, idealized past.\n\nThis approach proved enormously influential. Painters across Europe, including Artemisia Gentileschi, Georges de La Tour, and even the young Rembrandt, adopted and adapted tenebrism, each finding their own way to use extreme contrast for psychological and narrative effect. In this sense, Caravaggio's innovation wasn't simply a technical trick with light, it fundamentally reshaped how painters could use visual drama to draw viewers emotionally into a scene.",
+          "questions": [
+            {
+              "question": "What is the main purpose of this lecture?",
+              "options": [
+                "To compare Renaissance and Baroque architecture",
+                "To explain the technique of chiaroscuro and its impact on Baroque painting",
+                "To describe the life of Caravaggio in detail",
+                "To trace the history of Italian art museums"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, how does tenebrism differ from earlier techniques like sfumato?",
+              "options": [
+                "It uses soft, gradual transitions between light and dark",
+                "It avoids using shadow altogether",
+                "It creates sharp, dramatic contrasts with little transitional shading",
+                "It was developed before sfumato"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "Why does the professor mention 'The Calling of Saint Matthew'?",
+              "options": [
+                "To illustrate how Caravaggio used light to direct attention and convey meaning",
+                "To show that Caravaggio painted only religious subjects",
+                "To compare Caravaggio's work with Leonardo's",
+                "To explain the layout of a Roman tavern"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about the Counter-Reformation's influence on Caravaggio's art?",
+              "options": [
+                "It discouraged the use of ordinary people as models",
+                "It had no real effect on the style of religious painting",
+                "It encouraged art that felt emotionally direct and accessible to common worshippers",
+                "It required artists to depict only idealized, aristocratic figures"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 33,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/33.mp3",
+          "transcript": "This book is already checked out by someone else.",
+          "context": "A librarian tells a student about a book's availability.",
+          "options": [
+            "The library fine is two dollars a day.",
+            "Can you put it on hold for me?",
+            "I need a quiet room to study.",
+            "My laptop battery died an hour ago."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "5-33"
+        },
+        {
+          "id": 34,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/34.mp3",
+          "transcript": "Your membership card isn't scanning at the gate.",
+          "context": "A gym receptionist tells a member about an entry problem.",
+          "options": [
+            "The treadmills are all in use right now.",
+            "I signed up for the yoga class.",
+            "The locker room is on the left.",
+            "That's strange, let me show you my ID instead."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "5-34"
+        },
+        {
+          "id": 35,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/35.mp3",
+          "transcript": "I'm sorry, but you'll need a second form of ID to open this account.",
+          "context": "A bank teller explains a requirement to a customer.",
+          "options": [
+            "I have my passport in my bag.",
+            "The interest rate changed last month.",
+            "My card was declined yesterday.",
+            "The bank closes early on Fridays."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "5-35"
+        },
+        {
+          "id": 36,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/36.mp3",
+          "transcript": "Check-in isn't until three, but we can hold your bags.",
+          "context": "A hotel receptionist speaks to an arriving guest.",
+          "options": [
+            "The pool is closed for cleaning.",
+            "I booked a room with a view.",
+            "That would be great, thank you.",
+            "Breakfast is served until ten."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "5-36"
+        },
+        {
+          "id": 37,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/37.mp3",
+          "transcript": "Mom wants us to call her back tonight.",
+          "context": "A woman reminds her brother about calling their mother.",
+          "options": [
+            "The car needs an oil change.",
+            "Sure, I'll call after dinner.",
+            "I finished the dishes already.",
+            "Dad is coming home late."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "5-37"
+        },
+        {
+          "id": 38,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/38.mp3",
+          "transcript": "Are you joining the painting workshop this weekend?",
+          "context": "A woman invites her friend to a painting workshop at a community club.",
+          "options": [
+            "The paint store is out of red.",
+            "My brush broke last time.",
+            "The gallery opens at noon.",
+            "Yes, I can't wait to try it."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "5-38"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 7,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/7.mp3",
+          "speaker": "male",
+          "subject": "Macroeconomics",
+          "transcript": "Today's topic is one of the more counterintuitive ideas in macroeconomics, something economists call the paradox of thrift. On the surface, saving money seems like an unambiguously good thing, both for individuals and, you'd think, for the economy as a whole. Yet under certain conditions, when everyone tries to save more at the same time, the result can actually be a poorer economy overall, with lower total savings than before.\n\nLet's walk through the logic. Imagine a recession is looming, and households across the economy, feeling anxious about job security, decide to cut back on spending and save a larger share of their income. That seems perfectly rational at the individual level, it's prudent to build up a financial cushion during uncertain times. But remember that one person's spending is another person's income. If millions of households simultaneously reduce their consumption, businesses see falling sales. Falling sales lead firms to cut production, lay off workers, or reduce wages. And those laid-off workers, now earning less or nothing at all, are forced to reduce their own spending further, reinforcing the very downturn everyone was originally trying to protect themselves against.\n\nThis is a clear example of what economists call a fallacy of composition, something that's true for an individual isn't necessarily true when everyone does it simultaneously. This concept was central to John Maynard Keynes's General Theory, published in 1936, in the aftermath of the Great Depression. Keynes argued that during a severe downturn, aggregate demand, the total spending in an economy, could fall well short of the economy's productive capacity, leading to persistent unemployment rather than a quick, self-correcting adjustment.\n\nNow, does this mean saving is always harmful? Not at all, and this is a crucial nuance. The paradox tends to apply specifically during periods of weak demand and underutilized resources, when there's genuine slack in the economy. During a healthy expansion, when the economy is near full employment, higher saving can actually be beneficial, since it frees up resources for investment without necessarily depressing overall spending.\n\nThis is precisely why Keynesian economists have historically argued that governments should increase their own spending during recessions, essentially stepping in to compensate for the collective pullback in private spending, thereby breaking the self-reinforcing cycle of falling income and falling demand. It's a striking illustration of how macroeconomic behavior can diverge sharply from what simple individual-level intuition would predict.",
+          "questions": [
+            {
+              "question": "What is the main idea of this lecture?",
+              "options": [
+                "Individual saving always strengthens the overall economy",
+                "Increased saving during a recession can paradoxically reduce overall economic output",
+                "Governments should never intervene in private spending decisions",
+                "Keynes disagreed with the idea of aggregate demand"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what happens when many households cut spending at the same time during a downturn?",
+              "options": [
+                "Business sales and production increase",
+                "Falling sales lead to layoffs, which further reduce spending",
+                "Wages rise across most industries",
+                "Government spending automatically decreases"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention the 'fallacy of composition'?",
+              "options": [
+                "To argue that saving is never beneficial to individuals",
+                "To explain why something true for one person isn't necessarily true when everyone does it",
+                "To describe a historical economic policy",
+                "To criticize Keynes's theory"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about the paradox of thrift from the professor's concluding remarks?",
+              "options": [
+                "It applies equally regardless of the state of the economy",
+                "It mainly occurs during periods of weak demand and slack resources",
+                "It suggests governments should reduce spending during recessions",
+                "It proves that saving is always harmful to economic growth"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 8,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/8.mp3",
+          "speaker": "female",
+          "subject": "Volcanology",
+          "transcript": "Today we're going to explore why some volcanoes erupt in relatively gentle, flowing streams of lava, while others explode with catastrophic, ash-spewing violence. The key factor behind this difference, as it turns out, isn't simply how much magma is present, but rather the viscosity of that magma, essentially, how easily it flows, along with the amount of dissolved gas it contains.\n\nLet's start with viscosity. Magma composition varies considerably depending on its silica content. Basaltic magma, which is relatively low in silica, tends to be quite fluid, somewhat like warm syrup. This is the type of magma you find at places like Hawaii's Kilauea. Because it flows easily, gases dissolved within it, mostly water vapor, carbon dioxide, and sulfur dioxide, can escape relatively smoothly as bubbles rise and pop at the surface, much like carbonation escaping from a glass of soda that's been left open. The result is typically effusive eruptions: rivers of glowing lava flowing across the landscape, dramatic to watch, but rarely explosive or immediately life-threatening if you keep your distance.\n\nNow contrast that with rhyolitic magma, which has a much higher silica content and is therefore far more viscous, more like cold honey or even taffy. In this thick magma, gas bubbles struggle to escape. They become trapped, and as the magma rises toward the surface and pressure decreases, these trapped bubbles expand rapidly. Eventually, the pressure becomes so great that the surrounding rock can no longer contain it, and the result is a violent, explosive eruption, sudden fragmentation of magma into ash, pumice, and volcanic gases, blasted high into the atmosphere. Mount St. Helens in 1980 and Mount Pinatubo in 1991 are classic examples of this explosive style, associated with what we call stratovolcanoes.\n\nThis distinction matters enormously for hazard prediction. Volcanologists monitoring a stratovolcano pay very close attention to changes in seismic activity, ground deformation, and gas emissions, because a shift toward more viscous, gas-rich magma reaching shallower depths can signal that an eruption is transitioning from relatively harmless venting toward something far more dangerous, including pyroclastic flows, fast-moving currents of superheated gas and volcanic debris that can travel down a mountainside at over a hundred kilometers per hour.\n\nSo, in short, when evaluating volcanic hazard, it's not enough to ask how much magma is beneath a volcano. We need to know its chemical composition, because that composition determines viscosity, and viscosity, in turn, determines whether an eruption releases its energy gradually as flowing lava, or catastrophically as an explosive blast.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "The history of famous volcanic eruptions",
+                "How magma viscosity and gas content determine the type of volcanic eruption",
+                "Methods for predicting earthquakes near volcanoes",
+                "The chemical composition of Earth's mantle"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, why does basaltic magma typically produce effusive rather than explosive eruptions?",
+              "options": [
+                "It contains no dissolved gases at all",
+                "It is low in silica and flows easily, allowing gases to escape smoothly",
+                "It only occurs in stratovolcanoes",
+                "It cools before reaching the surface"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention Mount St. Helens and Mount Pinatubo?",
+              "options": [
+                "To give examples of explosive eruptions caused by viscous, gas-rich magma",
+                "To describe volcanoes that never erupted explosively",
+                "To compare their locations geographically",
+                "To explain how lava flows form rivers"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred about hazard prediction from the professor's concluding remarks?",
+              "options": [
+                "Seismic activity is irrelevant to predicting eruption type",
+                "Monitoring magma's chemical composition helps predict whether an eruption will be gradual or explosive",
+                "All volcanoes present the same level of danger",
+                "Pyroclastic flows only occur after effusive eruptions"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 39,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/39.mp3",
+          "transcript": "Could you keep an eye on my mail while I'm away?",
+          "context": "A man asks his neighbor for a small favor before a trip.",
+          "options": [
+            "Of course, just leave me a spare key.",
+            "The mail carrier comes at noon.",
+            "I'm painting my fence this weekend.",
+            "Our internet went down yesterday."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "5-39"
+        },
+        {
+          "id": 40,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/40.mp3",
+          "transcript": "The plumber will come to fix your sink tomorrow morning.",
+          "context": "A landlord informs a tenant about a repair appointment.",
+          "options": [
+            "The rent is due on the first.",
+            "My lease ends in June.",
+            "Okay, I'll make sure I'm home.",
+            "The hallway light is flickering."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "5-40"
+        },
+        {
+          "id": 41,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/41.mp3",
+          "transcript": "Your prescription won't be ready for another hour.",
+          "context": "A pharmacist tells a customer about a delay.",
+          "options": [
+            "I need cough syrup as well.",
+            "No problem, I'll come back later.",
+            "My doctor's office is closed today.",
+            "The pharmacy discount card expired."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "6-41"
+        },
+        {
+          "id": 42,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/42.mp3",
+          "transcript": "How short would you like the sides today?",
+          "context": "A barber asks a client about a haircut preference.",
+          "options": [
+            "I'm growing my beard out.",
+            "The salon down the street is cheaper.",
+            "I just got a haircut yesterday.",
+            "Pretty short, like last time."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "6-42"
+        },
+        {
+          "id": 43,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/43.mp3",
+          "transcript": "I have a package for you, but it needs a signature.",
+          "context": "A delivery driver speaks to a resident at the door.",
+          "options": [
+            "Sure, let me sign for it.",
+            "I ordered that two weeks ago.",
+            "The mailbox is around the corner.",
+            "My neighbor isn't home right now."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "6-43"
+        },
+        {
+          "id": 44,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/44.mp3",
+          "transcript": "It looks like it's going to rain during the game later.",
+          "context": "A student comments on the weather to a classmate before an outdoor event.",
+          "options": [
+            "The game starts at seven sharp.",
+            "Our team lost the last match.",
+            "I'll bring an umbrella just in case.",
+            "The stadium seats are uncomfortable."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "6-44"
+        }
+      ],
+      "conv": [
+        {
+          "id": 9,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/9.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "You look stressed. What's up?"
+            },
+            {
+              "speaker": "female",
+              "text": "I just got a notice that my scholarship might not renew next semester because my GPA dropped slightly last term."
+            },
+            {
+              "speaker": "male",
+              "text": "Oh no, is there anything you can do about it?"
+            },
+            {
+              "speaker": "female",
+              "text": "I found out there's an appeal process where I can explain the circumstances, like when I was sick during finals."
+            },
+            {
+              "speaker": "male",
+              "text": "You should definitely file that appeal. It sounds like you have a solid case."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She lost her student ID",
+                "Her scholarship may not be renewed due to her GPA",
+                "She cannot pay her tuition at all",
+                "She was denied financial aid completely"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Drop out for a semester",
+                "Take out a loan instead",
+                "File an appeal explaining the circumstances",
+                "Transfer to a cheaper school"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/10.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "How's the group project coming along?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not great, honestly. One of my group members hasn't submitted his section, and the deadline is tomorrow."
+            },
+            {
+              "speaker": "female",
+              "text": "Have you tried reaching out to him directly?"
+            },
+            {
+              "speaker": "male",
+              "text": "I've emailed him twice with no response. I'm thinking about asking the professor for a short extension instead."
+            },
+            {
+              "speaker": "female",
+              "text": "That seems reasonable, especially if you explain the situation honestly and show what you've already completed."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He forgot about the deadline entirely",
+                "A group member has not submitted his part of the project",
+                "He disagrees with his group's topic",
+                "He was assigned too much work by the professor"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man decide to do?",
+              "options": [
+                "Complete the missing part himself overnight",
+                "Report the group member to the dean",
+                "Ask the professor for a short extension",
+                "Drop the class"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 9,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/9.mp3",
+          "speaker": "male",
+          "transcript": "Attention all occupants: this is an emergency notice. A gas odor has been detected on the second floor, and as a precaution, the entire building must be evacuated immediately. Please proceed calmly to the nearest stairwell; do not use the elevators under any circumstances. Once outside, gather in the designated assembly area located in the north parking lot, away from the building entrance. Maintenance and fire safety personnel are already on site investigating the source, and further instructions will be provided once the situation has been resolved.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To schedule a routine fire drill",
+                "To order an emergency evacuation due to a gas odor",
+                "To announce building renovations",
+                "To report a water leak on the second floor"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where should occupants gather after leaving the building?",
+              "options": [
+                "In the second-floor hallway",
+                "Near the building's main entrance",
+                "In the north parking lot assembly area",
+                "At the maintenance office"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/10.mp3",
+          "speaker": "male",
+          "transcript": "Attention residents of Hallway Hall: the building's water supply will be shut off tomorrow from 9 a.m. until approximately 1 p.m. so that maintenance crews can repair a broken pipe in the basement. Residents are encouraged to fill containers with water tonight for drinking and washing during the outage. The building's restrooms on the ground floor will remain open, as they are connected to a separate line. We apologize for the inconvenience and thank residents for their patience while repairs are completed.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To advertise a plumbing service",
+                "To inform residents of a scheduled water shutoff",
+                "To announce a rent increase",
+                "To report a flood in the basement"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are residents advised to do before the shutoff?",
+              "options": [
+                "Leave the building overnight",
+                "Fill containers with water in advance",
+                "Contact the front desk for bottled water",
+                "Move to a different floor"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 11,
+        "promptGender": "female",
+        "prompt": "I filed a claim after the car accident last week.",
+        "responseGender": "male",
+        "responsePrefix": "Let me know",
+        "correctChunks": [
+          "whether",
+          "the insurance company",
+          "responds",
+          "by Monday"
+        ],
+        "distractorChunks": [
+          "respond"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 12,
+        "promptGender": "male",
+        "prompt": "Did the study room get reserved for our group tonight?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "said",
+          "someone",
+          "will",
+          "confirm",
+          "the reservation",
+          "by five o'clock"
+        ],
+        "distractorChunks": [
+          "confirms"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 13,
+        "promptGender": "female",
+        "prompt": "I ordered food twenty minutes ago and it still hasn't arrived.",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Can",
+          "you",
+          "go",
+          "check",
+          "whether",
+          "it's",
+          "outside"
+        ],
+        "distractorChunks": [
+          "checked"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 14,
+        "promptGender": "male",
+        "prompt": "What did the professor say about office hours this week?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "mentioned",
+          "that",
+          "office hours",
+          "might",
+          "be",
+          "moved online"
+        ],
+        "distractorChunks": [
+          "moves"
+        ],
+        "responseSuffix": " this week."
+      },
+      {
+        "id": 15,
+        "promptGender": "female",
+        "prompt": "The conference wifi wasn't working during the first session.",
+        "responseGender": "male",
+        "responsePrefix": "Yes,",
+        "correctChunks": [
+          "the staff",
+          "explained",
+          "why",
+          "the network",
+          "was",
+          "overloaded"
+        ],
+        "distractorChunks": [
+          "explains"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 16,
+        "promptGender": "male",
+        "prompt": "Do you know if hotel checkout got extended today?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "heard",
+          "it",
+          "must",
+          "be",
+          "requested",
+          "at the front desk"
+        ],
+        "distractorChunks": [
+          "request"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 17,
+        "promptGender": "female",
+        "prompt": "Why did the delivery company ask for your signature?",
+        "responseGender": "male",
+        "responsePrefix": "",
+        "correctChunks": [
+          "They",
+          "needed",
+          "to confirm",
+          "whether",
+          "I",
+          "was",
+          "the one",
+          "to receive"
+        ],
+        "distractorChunks": [
+          "confirmed"
+        ],
+        "responseSuffix": " the package."
+      },
+      {
+        "id": 18,
+        "promptGender": "male",
+        "prompt": "The volunteer schedule changed again this week.",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "wonder",
+          "whether",
+          "the coordinator",
+          "has",
+          "updated",
+          "everyone's shift"
+        ],
+        "distractorChunks": [
+          "updates"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 19,
+        "promptGender": "female",
+        "prompt": "What did the technician say about fixing your phone?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "suggested",
+          "that",
+          "I",
+          "replace",
+          "the cracked screen"
+        ],
+        "distractorChunks": [
+          "replaced"
+        ],
+        "responseSuffix": " first."
+      },
+      {
+        "id": 20,
+        "promptGender": "male",
+        "prompt": "The museum's special exhibit seems confusing to navigate.",
+        "responseGender": "female",
+        "responsePrefix": "",
+        "correctChunks": [
+          "Let's",
+          "ask",
+          "the guide",
+          "how",
+          "the new layout",
+          "should",
+          "be explained"
+        ],
+        "distractorChunks": [
+          "explain"
+        ],
+        "responseSuffix": "."
+      }
+    ],
+    "email": {
+      "id": 2,
+      "scenario": "You live in an apartment without air conditioning, and the summer heat has become unbearable. You want to ask your building management whether you are allowed to install a portable air conditioning unit in your window.",
+      "recipient": "Ms. Carver",
+      "subject": "Question about installing an air conditioning unit",
+      "tasks": [
+        {
+          "description": "Explain that your apartment gets extremely hot in the summer.",
+          "keywords": [
+            "hot",
+            "heat",
+            "unbearable",
+            "warm",
+            "uncomfortable"
+          ]
+        },
+        {
+          "description": "Ask whether you are permitted to install a portable air conditioning unit.",
+          "keywords": [
+            "air conditioning",
+            "ac unit",
+            "install",
+            "permitted",
+            "allowed"
+          ]
+        },
+        {
+          "description": "Ask if there are any rules or restrictions you should know about.",
+          "keywords": [
+            "rules",
+            "restrictions",
+            "requirements",
+            "guidelines",
+            "policy"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Ms. Carver,\n\nI'm writing about the heat in my apartment. Unit 4B faces west, and by late afternoon the temperature indoors becomes almost unbearable, especially without any air conditioning.\n\nI was wondering if I would be permitted to install a portable air conditioning unit in one of my windows. I understand some buildings have restrictions on this, so I wanted to check first before making any purchase.\n\nCould you let me know if there are specific rules or guidelines I should follow, such as installation requirements or window modifications that aren't allowed? Thank you for your help with this.\n\nBest regards,\n[Your Name]"
+    },
+    "disc": {
+      "id": 2,
+      "subject": "higher education",
+      "professor": "Dr. Petrova",
+      "professorGender": "female",
+      "prompt": "We've been examining how universities decide which applicants to admit, a process that shapes opportunity for students from very different backgrounds. Some admissions officers argue that standardized test scores should carry the most weight, since they allow an objective comparison between applicants from different schools. Others argue that a holistic approach, considering essays, extracurriculars, and personal circumstances, gives a fairer and more complete picture of each applicant. Which approach do you think universities should rely on more: test scores or a holistic review? Why?",
+      "classmates": [
+        {
+          "name": "Ben",
+          "gender": "male",
+          "opinion": "I think test scores should matter more. They're the same test taken under the same conditions by every applicant, regardless of school, which cuts through real differences in school quality and grading standards. Essays and extracurriculars can be heavily shaped by the resources a student's family can afford, like private counselors or expensive activities, which makes those parts of an application much harder to compare fairly between wealthy and lower-income applicants."
+        },
+        {
+          "name": "Amara",
+          "gender": "female",
+          "opinion": "I'd favor holistic review instead. Test scores alone don't capture qualities like resilience or leadership, and two students can earn the same score while being very different in what they'd bring to a university. A holistic review accounts for context a raw number can't reflect, like a student who worked a part-time job every night while still maintaining strong grades. That context gives a fairer picture of an applicant's potential."
+        }
+      ],
+      "exampleResponse": "University admissions policy plays a major role in determining opportunity for students from very different backgrounds. The question of whether test scores or a holistic review should carry more weight is worth exploring. While I see where Ben is coming from when he argues that standardized tests offer a consistent measure across schools, I would argue that this consistency can be misleading, since access to test preparation resources varies enormously between students. In this respect, I am inclined to agree with Amara, who emphasizes that a holistic view captures qualities a single test score cannot. For example, an applicant who worked part-time to support their family while maintaining good grades demonstrates resilience that a test score alone would never reveal."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 2,
+      "location": "IT Help Desk",
+      "icon": "💻",
+      "photoSlug": "it-help-desk",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Help_desk.jpg",
+      "speaker": "female",
+      "introText": "You are learning how to explain the IT help desk to new students. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the IT help desk.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "You can request support online or in person.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Bring your student ID to verify your account.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Password resets usually take only a few minutes.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "Laptop repairs may take a few business days to complete.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Software installation help is available every weekday afternoon in the computer lab.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "If your issue isn't resolved, please ask to speak with a supervisor.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 2,
+      "topic": "Book Preferences",
+      "icon": "📖",
+      "photoSlug": "reading",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/63/Reading_a_book.jpg",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about book preferences and reading choices. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thanks for speaking with me. To begin, tell me about the last book you read for fun. What was it about?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "That sounds interesting.",
+          "text": "That sounds interesting. Some people prefer reading physical books, while others prefer e-books or audiobooks. Which format do you prefer, and why?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "Good point.",
+          "text": "Good point. Do you think people read less now than they did in the past because of phones and social media? Why or why not?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Last question.",
+          "text": "Last question. Some people think schools should let students choose their own books instead of assigning the same book to everyone. Which approach do you agree with, and why?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1808 @@
+{
+  "id": 3,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 7,
+          "topic": "Inflation and Monetary Policy",
+          "category": "Economics",
+          "paragraph": "Inflation refers to the general rise in prices across an economy, which gradually erodes the purchasing power of money. Central banks monitor inflation closely because extreme rates can destabilize economic growth. When inflation accelerates too quickly, consumers lose confidence in the currency. To counteract this, monetary authorities often raise interest rates, making borrowing more expensive, while during deflation they may lower rates instead. These policy decisions require careful calibration, since aggressive interventions can trigger recessions, and economists rely on indicators like the consumer price index to track price stability, one of the core objectives of economic governance.",
+          "blanks": [
+            {
+              "word": "destabilize",
+              "visible": "desta",
+              "hidden": "bilize"
+            },
+            {
+              "word": "accelerates",
+              "visible": "accel",
+              "hidden": "erates"
+            },
+            {
+              "word": "confidence",
+              "visible": "confi",
+              "hidden": "dence"
+            },
+            {
+              "word": "currency",
+              "visible": "curr",
+              "hidden": "ency"
+            },
+            {
+              "word": "authorities",
+              "visible": "autho",
+              "hidden": "rities"
+            },
+            {
+              "word": "borrowing",
+              "visible": "borr",
+              "hidden": "owing"
+            },
+            {
+              "word": "deflation",
+              "visible": "defl",
+              "hidden": "ation"
+            },
+            {
+              "word": "calibration",
+              "visible": "calib",
+              "hidden": "ration"
+            },
+            {
+              "word": "economists",
+              "visible": "econo",
+              "hidden": "mists"
+            },
+            {
+              "word": "objectives",
+              "visible": "objec",
+              "hidden": "tives"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 8,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Shipment Delay Notification",
+          "subtitle": "Dear Mr. Thompson,",
+          "text": "We are writing to let you know that your recent order (Confirmation #48213), a standing desk converter, has been delayed due to severe winter storms affecting our regional distribution center. The item was originally scheduled to arrive on January 14, but we now expect it to reach you by January 22.\n\nWe understand this delay may be inconvenient, especially since you selected expedited shipping. As an apology for the inconvenience, we have refunded the $12.99 expedited shipping fee to your original payment method, and no action is required on your part to receive this refund.\n\nIf the new delivery date does not work for your schedule, you have two options. First, you may cancel the order for a full refund by replying to this email before January 20. Second, you may choose to receive a $15 store credit in addition to keeping your order once it arrives.\n\nYou can track the shipment at any time using the tracking number provided in your account dashboard. We will send another update if there are any further changes to the delivery schedule.\n\nWe appreciate your patience and apologize again for the delay.\n\nBest regards,\nCustomer Service Team\nHomeWorks Office Supply",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To cancel the customer's order without notice",
+                "To inform the customer about a shipping delay and offer compensation",
+                "To request payment for an overdue invoice",
+                "To advertise a sale on office furniture"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why was the shipment delayed?",
+              "options": [
+                "The item was out of stock",
+                "The customer changed the delivery address",
+                "Severe winter storms affected the distribution center",
+                "The payment method was declined"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "The word 'expedited' in the email is closest in meaning to",
+              "options": [
+                "delayed",
+                "expensive",
+                "fast",
+                "free"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 9,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Course Registration Confirmation",
+          "subtitle": "Dear Ms. Alvarado,",
+          "text": "This email confirms that you have been successfully registered for the following course for the Spring semester: BIO 210, Introduction to Cellular Biology, meeting Tuesdays and Thursdays from 10:00 a.m. to 11:15 a.m. in Baker Hall, Room 204.\n\nPlease note that this course has a mandatory laboratory component, which will be held every other Friday from 1:00 p.m. to 3:00 p.m. in the Science Annex. Your first lab session is scheduled for January 30. Attendance at all lab sessions is required, and missing more than one lab without an approved excuse may result in a reduction of your final grade.\n\nThe add/drop period for this course ends on February 6. If you wish to withdraw or switch sections after this date, you will need to submit a petition to the Registrar's Office, and approval is not guaranteed.\n\nA list of required textbooks and lab materials has been posted to the course page on the online learning portal. We recommend purchasing these materials before the first lab session so that you are fully prepared.\n\nIf you have any questions about your schedule, please contact the Registrar's Office directly.\n\nBest regards,\nOffice of the Registrar\nFairview State University",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To confirm the student's course registration and provide key details",
+                "To notify the student that a course has been cancelled",
+                "To ask the student to pay outstanding tuition fees",
+                "To invite the student to a campus orientation event"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What happens if a student misses more than one lab session without an approved excuse?",
+              "options": [
+                "The student is automatically withdrawn from the course",
+                "The student's final grade may be reduced",
+                "The student must retake the entire course",
+                "The student loses access to the online portal"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about switching sections after February 6?",
+              "options": [
+                "It is automatically approved for all students",
+                "It is no longer possible under any circumstances",
+                "It requires a petition and is not guaranteed to be approved",
+                "It only requires an email to the professor"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Account Overdraft Notice",
+          "subtitle": "Dear Mr. Rossi,",
+          "text": "We are contacting you regarding your checking account ending in 4471. On July 18, your account balance fell below zero after a scheduled payment of $340.00 to Eastview Insurance was processed, resulting in an overdraft of $52.16.\n\nAs outlined in your account agreement, an overdraft fee of $35.00 has been applied to your account. To avoid additional fees, we recommend depositing enough funds to bring your balance to zero or above as soon as possible. If the account remains negative for more than 14 consecutive days, an extended overdraft fee of $8.00 per day will begin to apply.\n\nYou may enroll in our free Overdraft Alert service, which sends a text message whenever your balance drops below a threshold you choose. This can help you avoid similar situations in the future. To enroll, log in to your online banking account and visit the Alerts section under Account Settings.\n\nIf you believe this overdraft occurred due to an error, such as a duplicate charge, please contact our customer support line within 60 days so that we can investigate the matter.\n\nWe value your business and are happy to assist with any questions.\n\nSincerely,\nCustomer Accounts Department\nMeridian National Bank",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To notify the customer of an overdraft and the resulting fee",
+                "To offer the customer a new credit card",
+                "To announce a change in bank branch hours",
+                "To confirm a successful loan application"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What caused the account to become negative?",
+              "options": [
+                "An unauthorized withdrawal",
+                "A scheduled insurance payment",
+                "A wire transfer fee",
+                "An ATM malfunction"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about the Overdraft Alert service?",
+              "options": [
+                "It automatically covers overdraft fees",
+                "It could help the customer avoid future overdrafts",
+                "It costs an additional monthly fee",
+                "It closes the account after repeated overdrafts"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": [
+        {
+          "id": 5,
+          "title": "Coral Reef Bleaching",
+          "passage": "Coral reefs, often called the rainforests of the sea, owe their vivid colors to microscopic algae called zooxanthellae that live within coral tissue. These algae photosynthesize, supplying the coral with most of its energy, while the coral provides the algae shelter and access to sunlight. This partnership sustains some of the ocean's most diverse ecosystems.\n\nWhen ocean temperatures rise even slightly above normal for a sustained period, corals become stressed and expel their algal partners. Without the algae, the coral's tissue turns pale or white, a phenomenon known as bleaching. Although the coral itself is not immediately dead, it loses its primary energy source and becomes far more vulnerable to disease and starvation.\n\nMass bleaching events can devastate entire reef systems, eliminating habitat for thousands of fish and invertebrate species that depend on healthy coral structures. The consequences extend beyond ecology: coastal communities that rely on reefs for fishing, tourism, and storm protection can suffer significant economic losses when bleaching becomes widespread and reefs fail to recover.\n\nRecovery is possible if warm conditions subside quickly, allowing algae to recolonize the coral. Scientists are also experimenting with selective breeding of heat-resistant coral strains and establishing marine protected areas to reduce additional stressors like pollution. These efforts aim to buy time for reefs while broader climate action addresses the root cause of rising ocean temperatures.",
+          "passage_marked": "Coral reefs, often called the rainforests of the sea, owe their vivid colors to microscopic algae called zooxanthellae that live within coral tissue. These algae photosynthesize, supplying the coral with most of its energy, while the coral provides the algae shelter and access to sunlight. This partnership sustains some of the ocean's most diverse ecosystems. [A]\n\nWhen ocean temperatures rise even slightly above normal for a sustained period, corals become stressed and expel their algal partners. Without the algae, the coral's tissue turns pale or white, a phenomenon known as bleaching. [B] Although the coral itself is not immediately dead, it loses its primary energy source and becomes far more vulnerable to disease and starvation.\n\nMass bleaching events can devastate entire reef systems, eliminating habitat for thousands of fish and invertebrate species that depend on healthy coral structures. The consequences extend beyond ecology: coastal communities that rely on reefs for fishing, tourism, and storm protection can suffer significant economic losses when bleaching becomes widespread and reefs fail to recover. [C]\n\nRecovery is possible if warm conditions subside quickly, allowing algae to recolonize the coral. Scientists are also experimenting with selective breeding of heat-resistant coral strains and establishing marine protected areas to reduce additional stressors like pollution. These efforts aim to buy time for reefs while broader climate action addresses the root cause of rising ocean temperatures. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'vulnerable' in the passage is closest in meaning to",
+              "options": [
+                "protected from harm",
+                "likely to be harmed",
+                "completely recovered",
+                "brightly colored"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to the passage, what role do zooxanthellae play for coral?",
+              "options": [
+                "They protect coral from predators",
+                "They provide most of the coral's energy through photosynthesis",
+                "They cause coral to turn white",
+                "They help coral reproduce"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What happens to coral tissue during a bleaching event?",
+              "options": [
+                "It grows a hard protective shell",
+                "It turns pale or white after expelling its algae",
+                "It immediately dies",
+                "It becomes more colorful"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention coastal communities that depend on fishing and tourism?",
+              "options": [
+                "To argue that reefs have no economic value",
+                "To illustrate that bleaching's effects extend beyond the ecosystem itself",
+                "To explain how tourism causes bleaching",
+                "To describe a solution to bleaching"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "In some regions, entire local economies have collapsed following repeated, severe bleaching events.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 8,
+          "topic": "Artificial Intelligence and Machine Learning",
+          "category": "Technology",
+          "paragraph": "Artificial intelligence has rapidly transformed numerous industries by enabling machines to perform tasks that once required human intelligence. Machine learning allows algorithms to improve their performance by analyzing large datasets rather than following explicit instructions. Neural networks are particularly effective at recognizing patterns in images, speech, and text, but training them requires substantial computational resources, since biased datasets can lead to unreliable predictions. Despite impressive advances, AI systems still struggle with tasks that demand common sense reasoning. Researchers continue to debate accountability and the need for transparency as these systems become integrated into everyday decision-making.",
+          "blanks": [
+            {
+              "word": "algorithms",
+              "visible": "algor",
+              "hidden": "ithms"
+            },
+            {
+              "word": "performance",
+              "visible": "perfo",
+              "hidden": "rmance"
+            },
+            {
+              "word": "datasets",
+              "visible": "data",
+              "hidden": "sets"
+            },
+            {
+              "word": "networks",
+              "visible": "netw",
+              "hidden": "orks"
+            },
+            {
+              "word": "computational",
+              "visible": "compu",
+              "hidden": "tational"
+            },
+            {
+              "word": "biased",
+              "visible": "bia",
+              "hidden": "sed"
+            },
+            {
+              "word": "unreliable",
+              "visible": "unrel",
+              "hidden": "iable"
+            },
+            {
+              "word": "reasoning",
+              "visible": "reas",
+              "hidden": "oning"
+            },
+            {
+              "word": "accountability",
+              "visible": "accou",
+              "hidden": "ntability"
+            },
+            {
+              "word": "transparency",
+              "visible": "trans",
+              "hidden": "parency"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "id": 6,
+          "title": "The Halo Effect in Social Perception",
+          "passage": "In 1920, psychologist Edward Thorndike published a study showing that when military officers rated soldiers on separate qualities such as intelligence, leadership, and physical bearing, the scores were unexpectedly correlated. An officer rated highly on one trait tended to be rated highly on the others too, regardless of whether the traits were logically related.\n\nThorndike named this pattern the halo effect: the tendency for an overall positive or negative impression of a person to color judgments of that person's specific, unrelated traits. A single flattering characteristic, such as physical attractiveness, can create a general assumption of competence or kindness, even without supporting evidence.\n\nLater research confirmed the halo effect across many settings. Teachers rate the essays of physically attractive students more favorably, and interviewers rank candidates with a confident handshake higher on unrelated qualities such as technical skill. The effect can also work in reverse, producing a so-called horn effect, in which one negative trait unfairly lowers judgments of a person's other qualities.\n\nAwareness of the halo effect has led some organizations to redesign their evaluation processes. Blind auditions in orchestras, for example, conceal a musician's appearance behind a screen, letting panels judge performance alone. Such changes show how understanding a cognitive bias can lead directly to fairer decisions.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'correlated' in the passage is closest in meaning to",
+              "options": [
+                "completely unrelated",
+                "connected or associated with one another",
+                "reversed in order",
+                "measured incorrectly"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "According to Thorndike's study, what happened when an officer was rated highly on one trait?",
+              "options": [
+                "He was rated lower on all other traits",
+                "He tended to be rated highly on the other traits too, even unrelated ones",
+                "His other ratings were unaffected",
+                "He was excluded from further evaluation"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What is the 'horn effect' mentioned in the passage?",
+              "options": [
+                "A version of the halo effect in which a negative trait unfairly lowers other judgments",
+                "A method used to train military officers",
+                "A statistical error found only in old research",
+                "A technique used to eliminate bias in hiring"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why does the author mention blind auditions in orchestras?",
+              "options": [
+                "To criticize the practice of hiring musicians",
+                "To give an example of how organizations reduce the influence of the halo effect",
+                "To argue that musical skill cannot be judged fairly at all",
+                "To describe how Thorndike conducted his original study"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This meant that a soldier judged to have excellent posture was also, without clear justification, rated as more intelligent and a better leader.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 0
+            }
+          ],
+          "passage_marked": "In 1920, psychologist Edward Thorndike published a study showing that when military officers rated soldiers on separate qualities such as intelligence, leadership, and physical bearing, the scores were unexpectedly correlated. An officer rated highly on one trait tended to be rated highly on the others too, regardless of whether the traits were logically related. [A]\n\nThorndike named this pattern the halo effect: the tendency for an overall positive or negative impression of a person to color judgments of that person's specific, unrelated traits. A single flattering characteristic, such as physical attractiveness, can create a general assumption of competence or kindness, even without supporting evidence. [B]\n\nLater research confirmed the halo effect across many settings. Teachers rate the essays of physically attractive students more favorably, and interviewers rank candidates with a confident handshake higher on unrelated qualities such as technical skill. The effect can also work in reverse, producing a so-called horn effect, in which one negative trait unfairly lowers judgments of a person's other qualities. [C]\n\nAwareness of the halo effect has led some organizations to redesign their evaluation processes. Blind auditions in orchestras, for example, conceal a musician's appearance behind a screen, letting panels judge performance alone. [D] Such changes show how understanding a cognitive bias can lead directly to fairer decisions."
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 9,
+          "topic": "Urbanization and Social Change",
+          "category": "Sociology",
+          "paragraph": "Urbanization refers to the process by which increasing proportions of a population come to live in cities. This demographic shift was driven historically by industrialization, as factories concentrated employment opportunities within urban centers, attracting migrants from diverse backgrounds despite growing overcrowding and strained infrastructure. Long interested in this shift, sociologists have studied how dense populations influence social behavior, noting that distinct identities often develop among neighborhoods shaped by the socioeconomic status of their residents. Meanwhile, policymakers face the ongoing challenge of designing cities that promote inclusivity while addressing issues such as inequality.",
+          "blanks": [
+            {
+              "word": "demographic",
+              "visible": "demog",
+              "hidden": "raphic"
+            },
+            {
+              "word": "industrialization",
+              "visible": "indus",
+              "hidden": "trialization"
+            },
+            {
+              "word": "opportunities",
+              "visible": "oppor",
+              "hidden": "tunities"
+            },
+            {
+              "word": "migrants",
+              "visible": "migr",
+              "hidden": "ants"
+            },
+            {
+              "word": "overcrowding",
+              "visible": "overc",
+              "hidden": "rowding"
+            },
+            {
+              "word": "sociologists",
+              "visible": "socio",
+              "hidden": "logists"
+            },
+            {
+              "word": "neighborhoods",
+              "visible": "neigh",
+              "hidden": "borhoods"
+            },
+            {
+              "word": "socioeconomic",
+              "visible": "socio",
+              "hidden": "economic"
+            },
+            {
+              "word": "policymakers",
+              "visible": "polic",
+              "hidden": "ymakers"
+            },
+            {
+              "word": "inequality",
+              "visible": "inequ",
+              "hidden": "ality"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "id": 11,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Appointment Reschedule Notice",
+          "subtitle": "Dear Mrs. Kaplan,",
+          "text": "We are writing to inform you that Dr. Patel will be attending a professional conference on the day of your upcoming appointment, originally scheduled for August 4 at 2:30 p.m. for your six-month cleaning and checkup. As a result, we need to reschedule your visit.\n\nWe have tentatively reserved August 6 at 3:15 p.m. for your new appointment. If this time does not work for your schedule, our office also has openings on August 5 at 9:00 a.m. and August 7 at 1:00 p.m. Please call our front desk at (555) 019-2231 by July 30 to confirm one of these times or to request a different date entirely.\n\nAs a reminder, please arrive 15 minutes early to complete an updated medical history form, as it has been over a year since your last update. If you are currently taking any new medications, please bring a list with you to your appointment.\n\nWe apologize for any inconvenience this change may cause and appreciate your flexibility. Our staff looks forward to seeing you soon.\n\nWarm regards,\nFront Desk Team\nBright Smile Dental Associates",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To cancel Mrs. Kaplan's dental coverage",
+                "To notify Mrs. Kaplan that her appointment must be rescheduled",
+                "To remind Mrs. Kaplan to pay an outstanding bill",
+                "To introduce a new dentist joining the practice"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is the appointment being rescheduled?",
+              "options": [
+                "The office is closing for renovations",
+                "The dentist is attending a professional conference",
+                "The patient requested a different date",
+                "The clinic is short-staffed that week"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "The word 'tentatively' in the email is closest in meaning to",
+              "options": [
+                "permanently",
+                "urgently",
+                "provisionally",
+                "immediately"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Car Rental Reservation Update",
+          "subtitle": "Dear Mr. Dubois,",
+          "text": "Thank you for your recent reservation with Coastal Car Rentals for a midsize sedan at our downtown airport location. We are writing to inform you of an important change to your reservation, confirmation number CR-88245.\n\nDue to an unusually high volume of reservations during the upcoming holiday weekend, the vehicle class you originally selected is no longer available for your pickup date of August 15. To honor your reservation, we have automatically upgraded you to a full-size SUV at no additional cost. Your pickup time of 10:00 a.m. and drop-off date of August 19 remain unchanged.\n\nIf you would prefer a smaller vehicle instead of the SUV, please contact our reservations line at least 48 hours before your pickup time, and we will do our best to accommodate a compact or economy vehicle, subject to availability at that time.\n\nPlease remember to bring a valid driver's license, proof of insurance, and the credit card used to make this reservation when you arrive at the counter. Renters who arrive without these documents may not be able to pick up their vehicle.\n\nWe apologize for any inconvenience and look forward to serving you.\n\nSincerely,\nReservations Department\nCoastal Car Rentals",
+          "questions": [
+            {
+              "question": "What is the main purpose of the email?",
+              "options": [
+                "To cancel Mr. Dubois's reservation entirely",
+                "To inform Mr. Dubois of a free upgrade due to unavailability",
+                "To request an additional payment for the reservation",
+                "To advertise a new rental location"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why was the customer's vehicle changed to a full-size SUV?",
+              "options": [
+                "The customer requested a larger vehicle",
+                "The original vehicle class was unavailable due to high demand",
+                "The sedan failed a safety inspection",
+                "The rental company discontinued that vehicle class"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred about renters who arrive without the required documents?",
+              "options": [
+                "They will receive a discount instead",
+                "They may not be able to pick up their vehicle",
+                "They will be automatically upgraded",
+                "They must wait one extra day"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 45,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/45.mp3",
+          "transcript": "Can you help me set up the chairs for the office party?",
+          "context": "A woman asks a coworker to help prepare for a celebration.",
+          "options": [
+            "The cake hasn't arrived yet.",
+            "Sure, where do you want them?",
+            "I already sent out the invitations.",
+            "The music playlist is ready."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "6-45"
+        },
+        {
+          "id": 46,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/46.mp3",
+          "transcript": "Photography isn't allowed in this section of the museum.",
+          "context": "A museum tour guide informs a visitor about a rule.",
+          "options": [
+            "The gift shop closes at five.",
+            "This painting is over two hundred years old.",
+            "The next tour starts in ten minutes.",
+            "Oh, sorry, I didn't know that."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "6-46"
+        },
+        {
+          "id": 47,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/47.mp3",
+          "transcript": "Your brake pads are worn and need replacing soon.",
+          "context": "A mechanic explains a car issue to a customer.",
+          "options": [
+            "How much will that cost?",
+            "The tires look fine to me.",
+            "I just washed the car yesterday.",
+            "The engine light turned off on its own."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "6-47"
+        },
+        {
+          "id": 48,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/48.mp3",
+          "transcript": "Machine number four isn't draining properly.",
+          "context": "A laundromat worker warns a customer about a broken machine.",
+          "options": [
+            "The detergent dispenser is empty.",
+            "I left my clothes in the dryer.",
+            "Thanks for letting me know, I'll use another one.",
+            "The change machine doesn't take coins."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "6-48"
+        },
+        {
+          "id": 49,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/49.mp3",
+          "transcript": "Could you turn the music down? I'm trying to study.",
+          "context": "A woman asks her roommate to lower the volume.",
+          "options": [
+            "The exam is next Tuesday.",
+            "Sorry, I didn't realize it was that loud.",
+            "I bought new speakers last week.",
+            "My study group meets at six."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "7-49"
+        },
+        {
+          "id": 50,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/50.mp3",
+          "transcript": "Can you send me your part of the group project tonight?",
+          "context": "A student asks a teammate for their portion of a shared assignment.",
+          "options": [
+            "Our presentation is on Thursday.",
+            "The professor changed the topic.",
+            "I printed the slides already.",
+            "Yeah, I'll email it before ten."
+          ],
+          "answer": 3,
+          "speaker": "male",
+          "_uid": "7-50"
+        },
+        {
+          "id": 51,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/51.mp3",
+          "transcript": "We need to move the deadline up to Wednesday.",
+          "context": "A manager tells an employee about a schedule change.",
+          "options": [
+            "Okay, I'll adjust my plan.",
+            "The client called this morning.",
+            "I finished the report early.",
+            "The meeting room is booked."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "7-51"
+        },
+        {
+          "id": 52,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/52.mp3",
+          "transcript": "Is this the final price, or is there a discount today?",
+          "context": "A customer asks a clerk about the price of an item.",
+          "options": [
+            "The store opens at nine.",
+            "We're out of that size.",
+            "There's a ten percent discount right now.",
+            "The manager is on lunch break."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "7-52"
+        },
+        {
+          "id": 53,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/53.mp3",
+          "transcript": "I'd like to book a table for four at seven o'clock.",
+          "context": "A customer calls a restaurant to make a reservation.",
+          "options": [
+            "The kitchen closes at eleven.",
+            "Let me check our availability.",
+            "We don't accept walk-ins tonight.",
+            "The chef recommends the pasta."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "7-53"
+        },
+        {
+          "id": 54,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/54.mp3",
+          "transcript": "You'll need to come back for a follow-up cleaning in six months.",
+          "context": "A dental assistant informs a patient about a future appointment.",
+          "options": [
+            "My tooth stopped hurting yesterday.",
+            "The waiting room has new magazines.",
+            "I forgot my insurance card today.",
+            "Sure, I'll schedule it before I leave."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "7-54"
+        }
+      ],
+      "conv": [
+        {
+          "id": 11,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/11.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Did you sleep okay last night? You look exhausted."
+            },
+            {
+              "speaker": "female",
+              "text": "Not really. The people in the room next to mine were playing loud music until almost 2 a.m."
+            },
+            {
+              "speaker": "male",
+              "text": "That's frustrating. Did you say anything to them or contact the RA?"
+            },
+            {
+              "speaker": "female",
+              "text": "I knocked once, but nothing changed, so I think I need to file a formal complaint with the resident advisor."
+            },
+            {
+              "speaker": "male",
+              "text": "That's probably the best move. They usually take noise complaints pretty seriously."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "Her roommate moved out unexpectedly",
+                "Loud neighbors kept her awake at night",
+                "She was locked out of her dorm room",
+                "Her room does not have working heat"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man think the woman should do?",
+              "options": [
+                "Move to a different dorm immediately",
+                "File a formal complaint with the RA",
+                "Ignore the issue since it's temporary",
+                "Confront the neighbors again herself"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/12.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I heard you got a part-time job at the library. How's that going?"
+            },
+            {
+              "speaker": "male",
+              "text": "It's good, but my manager just changed my shifts, and now they overlap with my chemistry lab."
+            },
+            {
+              "speaker": "female",
+              "text": "That's a problem. Have you talked to your manager about switching shifts with someone?"
+            },
+            {
+              "speaker": "male",
+              "text": "I was thinking about that, but I'm not sure who else would want to trade with me."
+            },
+            {
+              "speaker": "female",
+              "text": "Try posting in the staff group chat. Someone might be happy to swap for a shift that works better for them."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He was fired from his job",
+                "His new work shifts conflict with his chemistry lab",
+                "He is not being paid on time",
+                "He cannot find a part-time job"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Quit the job immediately",
+                "Ask the professor to change the lab time",
+                "Post in the staff group chat to find a shift swap",
+                "Skip the lab session instead"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/13.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "What happened to your ankle? You're limping."
+            },
+            {
+              "speaker": "female",
+              "text": "I twisted it pretty badly during soccer practice last night. The doctor said I need to stay off it for a week."
+            },
+            {
+              "speaker": "male",
+              "text": "That sounds painful. Doesn't your team have a big game coming up?"
+            },
+            {
+              "speaker": "female",
+              "text": "Yeah, this Saturday, and I'm the starting goalkeeper, so I'm worried about letting everyone down."
+            },
+            {
+              "speaker": "male",
+              "text": "You should talk to your coach now instead of waiting. They'll need time to prepare a backup plan anyway."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She was cut from the soccer team",
+                "She injured her ankle before an important game",
+                "She failed her physical education class",
+                "She lost her scholarship for sports"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest she do?",
+              "options": [
+                "Play in the game despite the injury",
+                "Talk to her coach right away",
+                "Quit the soccer team",
+                "See a different doctor for a second opinion"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 11,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/11.mp3",
+          "speaker": "female",
+          "transcript": "Good afternoon, visitors. Please note that due to overwhelming interest, the special exhibit on ancient Egyptian artifacts will now remain open one additional hour, until 6 p.m., every Friday this month. Timed tickets purchased for the earlier closing time will still be honored throughout the extended hours. Visitors are reminded that flash photography is not permitted near the fragile textile displays. The museum gift shop will also stay open to match the exhibit's new closing time, so please visit before you leave.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To announce the exhibit's permanent closure",
+                "To inform visitors of extended exhibit hours on Fridays",
+                "To introduce a new artifact collection",
+                "To announce a change in ticket prices"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are visitors reminded not to do near the textile displays?",
+              "options": [
+                "Touch the artifacts",
+                "Bring food or drinks",
+                "Use flash photography",
+                "Speak loudly in groups"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/12.mp3",
+          "speaker": "male",
+          "transcript": "Attention tenants: elevator number two will be out of service starting this evening for scheduled maintenance and is expected to reopen by Thursday morning. During this time, please use elevator number one or the stairwell located near the west entrance. Tenants on the upper floors who require mobility assistance should contact building security in advance so alternate arrangements can be made. We recognize this may cause some delay during peak hours and appreciate your patience while our technicians complete the necessary repairs.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To announce a new elevator installation",
+                "To inform tenants of temporary elevator maintenance",
+                "To report an elevator malfunction emergency",
+                "To introduce a new building security policy"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should tenants needing mobility assistance do?",
+              "options": [
+                "Wait until Thursday to leave",
+                "Use the stairwell near the west entrance",
+                "Contact building security in advance",
+                "File a complaint with management"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": 13,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/13.mp3",
+          "speaker": "female",
+          "transcript": "Attention members: the recreation center's swimming pool will be closed for routine cleaning and chemical balancing this Wednesday and Thursday. All scheduled swim classes during this period will be moved to the auxiliary pool on the second floor, and instructors will contact registered members individually with updated times. The main pool is expected to reopen Friday morning at its regular hour. Members using the sauna and locker rooms will not be affected by this closure and may continue to use those facilities as usual.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To announce the pool's permanent closure",
+                "To inform members of a temporary pool closure for cleaning",
+                "To advertise new swim classes",
+                "To report a chemical spill accident"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where will swim classes be held during the closure?",
+              "options": [
+                "At a nearby community pool",
+                "In the auxiliary pool on the second floor",
+                "In the sauna area",
+                "Classes will be cancelled entirely"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 9,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/9.mp3",
+          "speaker": "male",
+          "subject": "Cultural Anthropology",
+          "transcript": "Today I want to introduce a concept that challenges some of our everyday assumptions about exchange and generosity: the gift economy, and in particular, the idea that gifts are never truly free.\n\nIn many market economies, we tend to draw a sharp line between a gift, given freely and without expectation of return, and a commercial transaction, governed by explicit price and immediate exchange. The French anthropologist Marcel Mauss, in his influential 1925 essay 'The Gift,' argued that this distinction is largely a modern invention, and that in many societies around the world, gift-giving operates according to a powerful, often unspoken set of obligations: the obligation to give, the obligation to receive, and, crucially, the obligation to reciprocate.\n\nConsider the potlatch ceremonies practiced by Indigenous peoples of the Pacific Northwest Coast, such as the Kwakwaka'wakw and Tlingit. During a potlatch, a host family would distribute enormous quantities of goods, blankets, food, carved items, sometimes even valuable copper shields, to guests from other clans. To an outside observer accustomed to market logic, this might look like simple, one-directional generosity, or even wasteful excess. But anthropologists recognized that potlatch was doing much more complex social work. The act of giving lavishly established and publicly demonstrated the host's status, wealth, and prestige. Guests who received these gifts incurred a social debt; they were now obligated to reciprocate, often with an even more generous potlatch of their own at a later date. Status, in this system, wasn't accumulated by hoarding wealth, but by circulating it.\n\nMauss argued that something similar, though far less dramatic, persists even in supposedly impersonal modern societies. Think about receiving a birthday gift from a close friend. Even though no explicit contract exists, most of us feel a genuine, if unspoken, pull to reciprocate, perhaps not immediately, and rarely with an item of identical value, but eventually, in some form. Failing to do so repeatedly tends to strain or even end a relationship. In this light, the 'free gift' is something of a fiction, or at least an oversimplification; gifts create and sustain relationships precisely through the ongoing obligations they generate.\n\nWhy does this matter for anthropology more broadly? Because it suggests that economic behavior cannot be fully understood merely through the narrow lens of self-interested market transactions. Exchange, in many cultural contexts, is inseparable from questions of social bonding, status, honor, and long-term relationships between individuals, families, and communities. Recognizing this helps us avoid imposing a purely market-based framework onto systems of exchange that are, at their core, deeply social rather than purely economic.",
+          "questions": [
+            {
+              "question": "What is the main idea of this talk?",
+              "options": [
+                "Gift-giving in traditional societies is identical to modern market transactions",
+                "Gifts often carry implicit social obligations rather than being purely free acts",
+                "The potlatch ceremony has disappeared from modern Indigenous communities",
+                "Marcel Mauss rejected the idea that gifts create obligations"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what were the three obligations Mauss identified in gift economies?",
+              "options": [
+                "To buy, to sell, and to trade",
+                "To give, to receive, and to reciprocate",
+                "To hoard, to display, and to destroy",
+                "To negotiate, to bargain, and to refuse"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor discuss the potlatch ceremony?",
+              "options": [
+                "To illustrate how gift-giving can establish status and create obligations of reciprocity",
+                "To argue that Indigenous peoples had no formal economic systems",
+                "To show that gift-giving is purely wasteful behavior",
+                "To compare Pacific Northwest cultures with European monarchies"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred from the professor's concluding remarks about economic behavior?",
+              "options": [
+                "Economic exchange can only be understood through market self-interest",
+                "Understanding exchange requires considering social bonds and obligations, not just markets",
+                "Anthropology has no relevance to the study of economics",
+                "Modern societies have completely eliminated gift-based obligations"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 10,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/10.mp3",
+          "speaker": "female",
+          "subject": "Astrophysics",
+          "transcript": "Today's lecture concerns one of the most profound discoveries in modern astrophysics: the fact that nearly every element heavier than hydrogen and helium in your body and in the world around you was forged inside the core of a star. This process is known as stellar nucleosynthesis.\n\nTo understand it, we need to start with what a star actually is: an enormous ball of gas, primarily hydrogen, held together by gravity and generating energy through nuclear fusion. In a star's core, the immense pressure and temperature, tens of millions of degrees, force hydrogen nuclei to fuse together, forming helium and releasing tremendous energy in the process. This is what powers a star's light and heat for most of its life, a stable phase astronomers call the main sequence.\n\nBut hydrogen fusion cannot continue forever. Once the hydrogen in the core is largely depleted, the star's internal balance shifts. Gravity, no longer sufficiently counteracted by the outward pressure of fusion, causes the core to contract further, which raises the temperature even higher. In sufficiently massive stars, this rising temperature enables helium nuclei themselves to begin fusing, producing carbon and oxygen. In the most massive stars, this process continues through successive stages, fusing progressively heavier elements, carbon, neon, oxygen, and eventually silicon, each stage requiring higher temperatures and proceeding more rapidly than the last.\n\nThis sequence of fusion reactions, however, has a natural stopping point at iron. Iron's nucleus is exceptionally stable, meaning that fusing iron into heavier elements would actually consume energy rather than release it. So once a massive star's core becomes predominantly iron, fusion can no longer support the star against gravity's pull. The core collapses catastrophically within a fraction of a second, and the outer layers rebound violently outward in what we observe as a supernova explosion.\n\nHere's the truly remarkable part: it's precisely within this violent supernova explosion that elements heavier than iron, gold, silver, platinum, uranium, are created, through rapid neutron capture processes that occur only in such extreme, brief, high-energy environments. The supernova then scatters all of these newly formed elements, the lighter ones built up gradually during the star's life, and the heaviest ones formed in the explosion itself, out into interstellar space, where they eventually become incorporated into new stars, planets, and, on at least one planet that we know of, living organisms.\n\nThis is the basis for the well-known statement that we are, quite literally, made of stardust. The calcium in your bones, the oxygen you breathe, the iron in your blood, all of it was cooked inside a star that lived and died long before our solar system ever formed.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "How planets form from cosmic dust",
+                "How stars produce elements through nuclear fusion and supernova explosions",
+                "The lifespan of the sun",
+                "The discovery of black holes"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, why does fusion stop at iron in a massive star's core?",
+              "options": [
+                "Iron is too rare to be produced in large quantities",
+                "Fusing iron into heavier elements would consume energy rather than release it",
+                "Iron cannot withstand the star's gravity",
+                "Stars run out of hydrogen before reaching the iron stage"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention supernova explosions?",
+              "options": [
+                "To explain how elements heavier than iron, such as gold and uranium, are formed and dispersed",
+                "To describe how stars are born",
+                "To compare the sizes of different stars",
+                "To argue that supernovae are rare events"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred from the professor's closing statement about 'stardust'?",
+              "options": [
+                "Life on Earth developed independently of stellar processes",
+                "The elements that make up living organisms originated inside stars",
+                "Only heavy elements like gold were produced by stars",
+                "Supernovae have no connection to the formation of planets"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 55,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/55.mp3",
+          "transcript": "Could you take the highway instead of downtown? I'm in a hurry.",
+          "context": "A passenger requests a faster route from a taxi driver.",
+          "options": [
+            "Sure, that should save us some time.",
+            "The fare meter is broken today.",
+            "Traffic downtown is usually light.",
+            "This car just got washed."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "7-55"
+        },
+        {
+          "id": 56,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/56.mp3",
+          "transcript": "Your phone screen will take two days to repair.",
+          "context": "A repair technician tells a customer about a phone fix timeline.",
+          "options": [
+            "The battery lasts all day now.",
+            "I dropped my phone in water.",
+            "That's fine, I can use my old phone.",
+            "The case cracked during shipping."
+          ],
+          "answer": 2,
+          "speaker": "male",
+          "_uid": "7-56"
+        },
+        {
+          "id": 57,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/57.mp3",
+          "transcript": "I think I returned this book late, how much is the fine?",
+          "context": "A student asks a librarian about a late fee.",
+          "options": [
+            "The book is available upstairs.",
+            "It's fifty cents per day.",
+            "You can renew it online.",
+            "The library closes early today."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "8-57"
+        },
+        {
+          "id": 58,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/58.mp3",
+          "transcript": "My locker won't open, the key seems stuck.",
+          "context": "A gym member reports a locker problem to staff.",
+          "options": [
+            "The pool schedule changed today.",
+            "Membership renewals are due Friday.",
+            "The new equipment arrived yesterday.",
+            "Let me get the spare key for you."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "8-58"
+        },
+        {
+          "id": 59,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/59.mp3",
+          "transcript": "I'd like to apply for a small business loan.",
+          "context": "A customer speaks to a bank loan officer.",
+          "options": [
+            "Let's go over the requirements together.",
+            "Your account balance looks good.",
+            "The bank added a new branch downtown.",
+            "Interest rates dropped last quarter."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "8-59"
+        },
+        {
+          "id": 60,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/60.mp3",
+          "transcript": "What time do I need to check out tomorrow?",
+          "context": "A hotel guest asks the receptionist about checkout time.",
+          "options": [
+            "Breakfast is served in the lobby.",
+            "The elevator is under maintenance.",
+            "Checkout is at eleven in the morning.",
+            "Your room key needs to be reactivated."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "8-60"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 11,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/11.mp3",
+          "speaker": "male",
+          "subject": "Behavioral Ecology",
+          "transcript": "Today's topic is optimal foraging theory, a framework behavioral ecologists use to predict how animals make decisions about what to eat, where to search for food, and when to give up looking and move on.\n\nThe core assumption behind optimal foraging theory is deceptively simple: natural selection should favor foraging strategies that maximize net energy gain relative to the time and risk invested in acquiring food. In other words, animals should behave, in effect, as though they're solving a cost-benefit calculation, even though no actual arithmetic is taking place in their heads. This doesn't mean animals are consciously calculating anything; rather, over many generations, natural selection tends to favor individuals whose instinctive foraging behaviors happen to approximate this optimal outcome, while less efficient foragers are more likely to starve or fail to reproduce.\n\nOne especially well-studied model within this framework is called the marginal value theorem, which addresses a very practical question: when an animal is feeding within a patch of food, say, a bush loaded with berries, at what point should it leave that patch and travel to find another one? Initially, feeding within a patch yields food quickly, but as the animal continues, it depletes the readily available food in that patch, so the rate of energy intake gradually declines. The marginal value theorem predicts that the animal should leave the patch once its current intake rate drops to match the average intake rate available across the entire habitat, factoring in the travel time required to reach the next patch.\n\nThis might sound abstract, but it generates a very testable prediction: when patches are far apart, requiring long travel times, animals should stay longer in each patch before leaving, even as their feeding rate within that patch declines. Researchers studying birds such as great tits, for example, have found that when experimenters increased the distance between artificial feeding patches, the birds indeed remained longer in each patch before moving on, adjusting their behavior in ways closely matching the theorem's predictions.\n\nOf course, real foraging behavior is shaped by more than just energy intake alone. Predation risk matters enormously, an animal foraging in an exposed patch may leave earlier than the pure energy calculation would suggest, simply to reduce its exposure to predators. Nutritional balance matters too; animals often need a mix of nutrients that a single food type cannot provide. So while optimal foraging theory doesn't capture every nuance of real-world behavior, it remains a remarkably powerful starting point, offering testable, quantitative predictions in a field that might otherwise seem hopelessly complex and difficult to formalize mathematically.",
+          "questions": [
+            {
+              "question": "What is the main purpose of this lecture?",
+              "options": [
+                "To describe the migratory patterns of birds",
+                "To introduce optimal foraging theory and how it predicts animal feeding behavior",
+                "To explain how predators select their prey",
+                "To argue that animals cannot adapt their behavior"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what does the marginal value theorem predict about leaving a food patch?",
+              "options": [
+                "Animals should leave a patch as soon as they arrive",
+                "Animals should leave when their intake rate matches the average rate across the habitat, accounting for travel time",
+                "Animals should never leave a patch once they begin feeding",
+                "Animals should stay in a patch only if no predators are nearby"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention the study on great tits?",
+              "options": [
+                "To show that birds ignore travel time when foraging",
+                "To provide evidence supporting the predictions of the marginal value theorem",
+                "To argue that optimal foraging theory is incorrect",
+                "To describe the diet of great tits in detail"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can be inferred from the professor's concluding remarks about optimal foraging theory?",
+              "options": [
+                "It fully explains all aspects of animal foraging behavior without exception",
+                "It is a useful but incomplete model, since factors like predation risk also shape behavior",
+                "It has been disproven by studies on birds",
+                "It applies only to animals that live in groups"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 12,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/12.mp3",
+          "speaker": "female",
+          "subject": "Linguistics",
+          "transcript": "Today we turn to a question that has fascinated linguists, anthropologists, and philosophers alike for nearly a century: does the language we speak shape the way we think? This idea is often referred to as linguistic relativity, or more informally, the Sapir-Whorf hypothesis, named after linguist Edward Sapir and his student Benjamin Lee Whorf.\n\nIn its strongest form, sometimes called linguistic determinism, the hypothesis claims that language doesn't just influence thought but actually constrains it entirely, meaning speakers of different languages would be fundamentally incapable of understanding certain concepts unless their language provided the words for them. This strong version has largely been rejected by contemporary linguists. It doesn't hold up well empirically; people can clearly grasp and even describe concepts for which their native language has no single word, though perhaps with more difficulty or in a roundabout way.\n\nHowever, a weaker, more defensible version of the hypothesis has found substantial empirical support in recent decades: language may not determine thought, but it can meaningfully influence habitual patterns of perception and attention. A frequently cited example involves how different languages handle spatial orientation. Most languages, including English, use what's called an egocentric frame of reference for everyday directions, left, right, in front of, behind, all defined relative to the speaker's own body. But some languages, such as Guugu Yimithirr, spoken by an Aboriginal community in Australia, rely almost exclusively on absolute cardinal directions, north, south, east, west, even at small scales, saying something like 'move your cup slightly to the north' rather than 'move it to your left.'\n\nResearchers studying speakers of such languages have found something remarkable: these speakers maintain a constant, almost unconscious awareness of cardinal direction, capable of accurately pointing north even inside unfamiliar buildings with no external landmarks visible, a task that leaves most English speakers essentially guessing. This suggests that the grammatical necessity of using cardinal directions in everyday speech, practiced from early childhood, cultivates a genuinely different, highly refined form of spatial cognition.\n\nSimilarly, studies examining how languages categorize color have shown that speakers of languages with more finely differentiated color vocabularies can distinguish between certain adjacent shades slightly faster than speakers whose language groups those same shades under a single broader term.\n\nSo where does this leave us? Most linguists today would say that language doesn't imprison thought within rigid boundaries, but it does appear to subtly direct habitual attention toward certain distinctions over others. It's less like a cage and more like a well-worn path: nothing prevents you from stepping off it, but your language quietly makes some routes of thinking a bit more effortless than others.",
+          "questions": [
+            {
+              "question": "What is the main topic of this lecture?",
+              "options": [
+                "The origins of the world's major language families",
+                "Whether and how language influences thought and perception",
+                "The grammatical structure of Aboriginal Australian languages",
+                "How children acquire their first language"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the professor, what does the strong version of the Sapir-Whorf hypothesis claim?",
+              "options": [
+                "Language subtly influences habitual attention",
+                "Language completely constrains and determines what a person can think",
+                "All languages have identical spatial reference systems",
+                "Thought exists independently of language entirely"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor mention speakers of Guugu Yimithirr?",
+              "options": [
+                "To show that absolute directional language cultivates a distinct form of spatial awareness",
+                "To argue that Aboriginal languages lack grammatical complexity",
+                "To prove that all humans have identical spatial cognition",
+                "To compare Australian and European geography"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What can be inferred from the professor's concluding analogy comparing language to a 'path' rather than a 'cage'?",
+              "options": [
+                "Language makes certain ways of thinking easier without making others impossible",
+                "Language has no measurable effect on cognition",
+                "People are entirely unable to think outside their native language's categories",
+                "Only cardinal-direction languages affect cognition"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 61,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/61.mp3",
+          "transcript": "Can I borrow your charger? Mine stopped working.",
+          "context": "A man asks his sister to borrow a phone charger.",
+          "options": [
+            "I'm going out later tonight.",
+            "Sure, it's on my desk.",
+            "Mom called earlier about dinner.",
+            "The wifi has been slow all day."
+          ],
+          "answer": 1,
+          "speaker": "male",
+          "_uid": "8-61"
+        },
+        {
+          "id": 62,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/62.mp3",
+          "transcript": "Did you finish the book for this week's discussion?",
+          "context": "A woman asks a fellow book club member about their reading progress.",
+          "options": [
+            "The coffee shop changed its menu.",
+            "Our next meeting is at the library.",
+            "I bought a new bookshelf recently.",
+            "Almost, I have two chapters left."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "8-62"
+        },
+        {
+          "id": 63,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/63.mp3",
+          "transcript": "Could I borrow your ladder for a few hours?",
+          "context": "A man asks his neighbor to lend him a tool.",
+          "options": [
+            "Sure, it's in the garage.",
+            "My fence needs painting too.",
+            "The weather looks nice today.",
+            "I'm trimming the hedges this weekend."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "8-63"
+        },
+        {
+          "id": 64,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/64.mp3",
+          "transcript": "The heater in my apartment stopped working last night.",
+          "context": "A tenant reports a broken heater to the landlord.",
+          "options": [
+            "The rent increase starts next month.",
+            "Your lease renewal is ready.",
+            "I'll send someone to fix it today.",
+            "The building inspection is next week."
+          ],
+          "answer": 2,
+          "speaker": "female",
+          "_uid": "8-64"
+        },
+        {
+          "id": 65,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/65.mp3",
+          "transcript": "Can I refill my prescription without a new note from my doctor?",
+          "context": "A customer asks a pharmacist about refilling medication.",
+          "options": [
+            "The pharmacy opens at eight.",
+            "Yes, this one still has refills left.",
+            "Your insurance covers generic brands.",
+            "The flu shots are available now."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "9-65"
+        },
+        {
+          "id": 66,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/66.mp3",
+          "transcript": "I have an appointment at three, but I'm running a bit late.",
+          "context": "A client calls the salon to warn about a delay.",
+          "options": [
+            "We're fully booked this afternoon.",
+            "The new stylist starts Monday.",
+            "Your color treatment takes two hours.",
+            "That's okay, we can still fit you in."
+          ],
+          "answer": 3,
+          "speaker": "female",
+          "_uid": "9-66"
+        }
+      ],
+      "conv": [
+        {
+          "id": 14,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/14.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "How was the academic conference? Did everything go smoothly?"
+            },
+            {
+              "speaker": "male",
+              "text": "Mostly, except my return flight got delayed for almost six hours because of a storm."
+            },
+            {
+              "speaker": "female",
+              "text": "Oh no, did that mess up your plans for classes this week?"
+            },
+            {
+              "speaker": "male",
+              "text": "It did. I ended up missing my Monday morning seminar, which I really didn't want to do."
+            },
+            {
+              "speaker": "female",
+              "text": "You should email your professor and explain what happened. Weather delays are usually excused pretty easily."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man's problem?",
+              "options": [
+                "He lost his luggage at the airport",
+                "His flight was delayed and he missed a seminar",
+                "He missed his own conference presentation",
+                "He forgot his conference materials at home"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest he do?",
+              "options": [
+                "Skip the seminar again next week",
+                "Email his professor to explain the situation",
+                "Drop the seminar course",
+                "Ask a classmate to take the exam for him"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/15.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "You seem worried about something. Everything all right?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not really. I just looked at my bank account, and I'm not sure I have enough to cover rent this month."
+            },
+            {
+              "speaker": "male",
+              "text": "That's stressful. Did something unexpected come up?"
+            },
+            {
+              "speaker": "female",
+              "text": "Yeah, my textbooks cost way more than I budgeted for, and I didn't account for that."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you checked if the campus has an emergency student fund? A lot of schools offer short-term help for situations like this."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman's problem?",
+              "options": [
+                "She lost her part-time job",
+                "She may not have enough money to pay rent this month",
+                "She overspent on a vacation",
+                "Her scholarship was revoked"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man suggest?",
+              "options": [
+                "Ask her parents for money",
+                "Check if the campus has an emergency student fund",
+                "Drop out of school temporarily",
+                "Take out a high-interest loan"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 14,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/14.mp3",
+          "speaker": "male",
+          "transcript": "Attention park visitors: due to the severe thunderstorm warning currently in effect, this afternoon's guided nature tour has been cancelled for everyone's safety. Visitors who already registered will automatically be rescheduled for the same tour next Saturday at no additional cost. The visitor center remains open and offers a covered area where guests may wait out the storm. Please avoid open fields and tall trees until the warning has been lifted, and check the park's website later today for further updates.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To promote a new guided tour package",
+                "To announce the cancellation of a tour due to weather",
+                "To close the park for the entire day",
+                "To warn visitors about wildlife in the area"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should visitors avoid during the storm warning?",
+              "options": [
+                "The visitor center",
+                "Open fields and tall trees",
+                "The parking lot",
+                "The registration desk"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 15,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/15.mp3",
+          "speaker": "female",
+          "transcript": "Attention passengers waiting for the 3:15 express train to Riverside: due to a signal issue on Track 4, this train will now depart from Track 9 instead. Please make your way to Track 9 promptly, as boarding will begin in approximately ten minutes. Passengers with heavy luggage may use the elevator near the ticket counter to reach the new platform more easily. We apologize for this last-minute change and thank you for your understanding as our staff work to keep the schedule on time.",
+          "questions": [
+            {
+              "question": "What is the main purpose of the announcement?",
+              "options": [
+                "To cancel the express train to Riverside",
+                "To inform passengers of a platform change",
+                "To announce a ticket price change",
+                "To report a train delay of several hours"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What can passengers with heavy luggage do?",
+              "options": [
+                "Ask staff to carry their bags",
+                "Use the elevator near the ticket counter",
+                "Store luggage at the ticket counter",
+                "Board through a different door"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "id": 21,
+        "promptGender": "female",
+        "prompt": "Is the campus gym open before 7 a.m.?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "whether",
+          "the gym",
+          "was open before 7 a.m."
+        ],
+        "distractorChunks": [
+          "is"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 22,
+        "promptGender": "male",
+        "prompt": "Why was the project deadline moved up?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "was",
+          "curious",
+          "about",
+          "why",
+          "the deadline",
+          "had been moved up"
+        ],
+        "distractorChunks": [
+          "have been moved up"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 23,
+        "promptGender": "female",
+        "prompt": "Where did you put the conference room key?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "me",
+          "where",
+          "I",
+          "had put the conference room key"
+        ],
+        "distractorChunks": [
+          "has put the conference room key"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 24,
+        "promptGender": "male",
+        "prompt": "Can I bring a guest to the orientation?",
+        "responseGender": "female",
+        "responsePrefix": "Could you tell me",
+        "correctChunks": [
+          "whether",
+          "he",
+          "was allowed to bring a guest",
+          "to the orientation"
+        ],
+        "distractorChunks": [
+          "is allowed to bring a guest"
+        ],
+        "responseSuffix": "?"
+      },
+      {
+        "id": 25,
+        "promptGender": "female",
+        "prompt": "Has the new intern finished the report yet?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "would",
+          "love",
+          "to",
+          "know",
+          "whether",
+          "the intern",
+          "had finished the report yet"
+        ],
+        "distractorChunks": [
+          "has finished the report yet"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 26,
+        "promptGender": "male",
+        "prompt": "Why is the printer on the third floor always out of paper?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "do",
+          "not",
+          "understand",
+          "why",
+          "the printer on the third floor",
+          "is always out of paper"
+        ],
+        "distractorChunks": [
+          "are always out of paper"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 27,
+        "promptGender": "female",
+        "prompt": "Where did she park the car this morning?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "have",
+          "no",
+          "idea",
+          "where",
+          "she",
+          "parked the car this morning"
+        ],
+        "distractorChunks": [
+          "park the car this morning"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 28,
+        "promptGender": "male",
+        "prompt": "Would the landlord fix the heater before winter?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "did",
+          "not",
+          "think",
+          "the landlord",
+          "would fix the heater before winter"
+        ],
+        "distractorChunks": [
+          "will fix the heater before winter"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 29,
+        "promptGender": "female",
+        "prompt": "How much does the new software license cost?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "found",
+          "out",
+          "how",
+          "much",
+          "the new software license",
+          "cost"
+        ],
+        "distractorChunks": [
+          "costs"
+        ],
+        "responseSuffix": "."
+      },
+      {
+        "id": 30,
+        "promptGender": "male",
+        "prompt": "Did the shuttle bus leave already?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "mentioned",
+          "that",
+          "the shuttle bus",
+          "had already left"
+        ],
+        "distractorChunks": [
+          "has already left"
+        ],
+        "responseSuffix": "."
+      }
+    ],
+    "email": {
+      "id": 3,
+      "scenario": "You checked a suitcase on a recent flight, but it never arrived at baggage claim. The airline's tracking system shows no updates for over two days, and you need some of the items for a work trip.",
+      "recipient": "Customer Relations",
+      "subject": "Lost checked baggage - flight 482",
+      "tasks": [
+        {
+          "description": "Explain that your checked suitcase never arrived at baggage claim.",
+          "keywords": [
+            "lost",
+            "never arrived",
+            "missing",
+            "didn't arrive",
+            "not arrived"
+          ]
+        },
+        {
+          "description": "Mention that the tracking system hasn't updated in over two days.",
+          "keywords": [
+            "tracking",
+            "no updates",
+            "two days",
+            "hasn't updated",
+            "not updated"
+          ]
+        },
+        {
+          "description": "Ask what compensation or next steps are available.",
+          "keywords": [
+            "compensation",
+            "next steps",
+            "reimbursement",
+            "what happens",
+            "options"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Customer Relations,\n\nI am writing about my checked suitcase from flight 482, which never arrived at baggage claim on Tuesday evening. I filed a report at the airport, but the tracking system still shows no updates more than two days later.\n\nThis is especially frustrating because several items I need for an upcoming work trip were packed inside that suitcase.\n\nCould you tell me what compensation is available for lost luggage, and what the next steps are for locating my bag? I would appreciate a quick response, since I need to plan around this. Thank you for your attention to this matter.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 3,
+      "subject": "education technology",
+      "professor": "Dr. Lindqvist",
+      "professorGender": "male",
+      "prompt": "We've been discussing how artificial intelligence tools are increasingly used by students to complete writing assignments, a trend that has accelerated as these tools have become more accessible. Some educators argue that AI writing tools should be banned from coursework entirely, since relying on them undermines students' own writing and critical thinking skills. Others argue that AI tools should be embraced, since students will need similar technology throughout their careers. Should schools ban AI writing tools, or integrate them into coursework? Why?",
+      "classmates": [
+        {
+          "name": "Jonas",
+          "gender": "male",
+          "opinion": "I think schools should ban AI tools for graded assignments, at least while students are still developing core writing ability. If a tool writes most of the essay for you, you never practice organizing your own thoughts or working through revising a weak paragraph, which is really the point of a writing assignment. Skipping that struggle might save time, but it leaves students without a skill they'll need later, like defending an argument under pressure."
+        },
+        {
+          "name": "Wei",
+          "gender": "female",
+          "opinion": "I'd integrate AI tools into coursework instead of banning them. Students are going to use these tools constantly in almost every future job, and pretending they don't exist doesn't prepare students for that reality — it just means they'll learn to use them poorly after graduation with no guidance. Schools should teach students to use AI responsibly, for example by requiring them to fact-check AI-generated claims before including them in their own work."
+        }
+      ],
+      "exampleResponse": "The rise of AI writing tools has forced educators to reconsider how writing assignments should be structured. The question of whether these tools should be banned or integrated into coursework is worth examining closely. While I see where Wei is coming from when she argues that students will need these skills in future careers, I would argue that foundational writing ability should be developed before students rely on any tool to do that thinking for them. In this respect, I am inclined to agree with Jonas, who emphasizes that assignments exist specifically to build a student's own reasoning and organizational skills. For example, a school could restrict AI tools during early writing courses, then gradually introduce responsible AI use once students have already developed strong independent writing skills."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 3,
+      "location": "Train Station Ticket Office",
+      "icon": "🚉",
+      "speaker": "male",
+      "introText": "You are learning how to buy a ticket at the train station. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to the ticket office.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "One-way tickets are sold at counter one.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Round-trip tickets include a return discount.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Please have your student ID ready.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "The express train departs every thirty minutes.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "If you miss your train, your ticket is valid for the next departure.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Remember to validate your ticket before boarding the train.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 3,
+      "topic": "Cooking and Nutrition",
+      "icon": "🍳",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about cooking and nutrition habits. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. Let's start with an easy one. How often do you cook meals for yourself, and what kind of dishes do you usually prepare?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer cooking at home or eating out at restaurants? Which one do you find more enjoyable, and why?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people believe that eating healthy food is more important than enjoying the taste of food. What is your opinion on this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think schools should teach students how to cook and eat healthily? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

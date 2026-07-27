@@ -1,0 +1,1750 @@
+{
+  "id": 19,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 55,
+          "topic": "The Construction of the Panama Canal",
+          "category": "History",
+          "paragraph": "Connecting the Atlantic and Pacific Oceans through a canal across Panama had been a long-standing ambition among engineers and political leaders. An earlier attempt by a different nation ultimately failed due to overwhelming engineering challenges and devastating outbreaks of tropical disease among the workforce. A subsequent construction effort succeeded partly because engineers developed effective methods for controlling mosquito populations, dramatically reducing disease transmission among workers. The completed canal fundamentally transformed global shipping by eliminating the need for ships to travel around the entire southern tip of South America. This engineering achievement remains widely regarded as one of the most impressive construction projects ever completed.",
+          "blanks": [
+            {
+              "word": "earlier",
+              "visible": "ear",
+              "hidden": "lier"
+            },
+            {
+              "word": "engineering",
+              "visible": "engin",
+              "hidden": "eering"
+            },
+            {
+              "word": "outbreaks",
+              "visible": "outb",
+              "hidden": "reaks"
+            },
+            {
+              "word": "subsequent",
+              "visible": "subse",
+              "hidden": "quent"
+            },
+            {
+              "word": "developed",
+              "visible": "deve",
+              "hidden": "loped"
+            },
+            {
+              "word": "controlling",
+              "visible": "contr",
+              "hidden": "olling"
+            },
+            {
+              "word": "transmission",
+              "visible": "trans",
+              "hidden": "mission"
+            },
+            {
+              "word": "shipping",
+              "visible": "ship",
+              "hidden": "ping"
+            },
+            {
+              "word": "America",
+              "visible": "Ame",
+              "hidden": "rica"
+            },
+            {
+              "word": "projects",
+              "visible": "proj",
+              "hidden": "ects"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Weekly Yoga Class Schedule",
+          "subtitle": "",
+          "text": "Monday — Gentle Flow, 8:00 a.m.\nTuesday — Power Yoga, 6:00 p.m.\nWednesday — Restorative Yoga, 8:00 a.m.\nThursday — Power Yoga, 6:00 p.m.\nSaturday — Beginner Yoga, 10:00 a.m.",
+          "questions": [
+            {
+              "question": "How many times per week is Power Yoga offered?",
+              "options": [
+                "Once",
+                "Twice",
+                "Three times",
+                "Four times"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What class is offered on Saturday?",
+              "options": [
+                "Gentle Flow",
+                "Power Yoga",
+                "Restorative Yoga",
+                "Beginner Yoga"
+              ],
+              "answer": 3
+            }
+          ],
+          "id": 91
+        },
+        {
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Farmers Market Vendor Schedule",
+          "subtitle": "",
+          "text": "7:00 a.m. — Market Opens, Vendor Setup Complete\n8:00 a.m. — Fresh Produce Stalls Open\n9:00 a.m. — Bakery and Coffee Stalls Open\n11:00 a.m. — Live Music Begins\n1:00 p.m. — Market Closes",
+          "questions": [
+            {
+              "question": "What happens at 9:00 a.m.?",
+              "options": [
+                "The market opens",
+                "Fresh produce stalls open",
+                "Bakery and coffee stalls open",
+                "Live music begins"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "How long after the market opens does live music begin?",
+              "options": [
+                "Two hours",
+                "Three hours",
+                "Four hours",
+                "One hour"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 92
+        },
+        {
+          "type": "schedule",
+          "instruction": "Read a schedule.",
+          "title": "Airport Shuttle Departure Times",
+          "subtitle": "",
+          "text": "Hotel Lobby — 5:00, 6:00, 7:00 a.m.\nAirport Terminal A — 5:35, 6:35, 7:35 a.m.\nAirport Terminal B — 5:45, 6:45, 7:45 a.m.",
+          "questions": [
+            {
+              "question": "How long does the shuttle take to reach Terminal A from the hotel?",
+              "options": [
+                "25 minutes",
+                "35 minutes",
+                "45 minutes",
+                "55 minutes"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How many shuttle departures are listed from the hotel lobby?",
+              "options": [
+                "Two",
+                "Three",
+                "Four",
+                "Five"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 93
+        }
+      ],
+      "ap": [
+        {
+          "title": "The Migration Patterns of Arctic Terns",
+          "passage": "The Arctic tern holds the distinction of completing the longest known migration of any animal on Earth, traveling from its breeding grounds in the Arctic to its wintering grounds in the Antarctic and back again each year, a round-trip journey that can exceed seventy thousand kilometers. This extraordinary journey allows the species to experience more daylight hours annually than any other creature, since it effectively follows summer conditions across both hemispheres.\n\nScientists have long been fascinated by how Arctic terns navigate such vast distances with remarkable precision, often returning to the very same nesting sites year after year. Research using tiny tracking devices attached to individual birds has revealed that terns do not always travel in a straight line, instead following indirect routes that take advantage of prevailing wind patterns to conserve energy.\n\nThese tracking studies have also shown considerable variation in migration routes between individual birds and even between different populations of the same species, suggesting that migratory behavior in Arctic terns is influenced by a combination of inherited instinct and learned experience rather than a single fixed genetic program.\n\nConservationists have expressed growing concern about how climate change might disrupt the delicate timing and environmental cues that Arctic terns depend on throughout their migration. Because the species relies on predictable seasonal patterns in both polar regions, any significant disruption to these patterns could have serious consequences for the long-term survival of the species.",
+          "passage_marked": "The Arctic tern holds the distinction of completing the longest known migration of any animal on Earth, traveling from its breeding grounds in the Arctic to its wintering grounds in the Antarctic and back again each year, a round-trip journey that can exceed seventy thousand kilometers. This extraordinary journey allows the species to experience more daylight hours annually than any other creature, since it effectively follows summer conditions across both hemispheres. [A]\n\nScientists have long been fascinated by how Arctic terns navigate such vast distances with remarkable precision, often returning to the very same nesting sites year after year. [B] Research using tiny tracking devices attached to individual birds has revealed that terns do not always travel in a straight line, instead following indirect routes that take advantage of prevailing wind patterns to conserve energy.\n\nThese tracking studies have also shown considerable variation in migration routes between individual birds and even between different populations of the same species, suggesting that migratory behavior in Arctic terns is influenced by a combination of inherited instinct and learned experience rather than a single fixed genetic program. [C]\n\nConservationists have expressed growing concern about how climate change might disrupt the delicate timing and environmental cues that Arctic terns depend on throughout their migration. [D] Because the species relies on predictable seasonal patterns in both polar regions, any significant disruption to these patterns could have serious consequences for the long-term survival of the species.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'prevailing' in the passage is closest in meaning to",
+              "options": [
+                "dominant",
+                "unpredictable",
+                "seasonal",
+                "artificial"
+              ],
+              "answer": 0
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What is notable about the Arctic tern's migration?",
+              "options": [
+                "It is the shortest migration of any bird",
+                "It is the longest known migration of any animal",
+                "It only occurs once every ten years",
+                "It takes place entirely within the Arctic"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "How do tracking devices show that terns travel?",
+              "options": [
+                "Always in a perfectly straight line",
+                "Along indirect routes that take advantage of wind patterns",
+                "Only during the daytime",
+                "In large flocks of thousands"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What does variation in migration routes among individual terns suggest?",
+              "options": [
+                "Migration is entirely random",
+                "Migratory behavior involves both instinct and learned experience",
+                "All terns follow an identical genetic program",
+                "Terns do not actually migrate every year"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This benefit is one of the key advantages of undertaking such an extraordinarily long journey each year.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 0
+            }
+          ],
+          "id": 37
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 56,
+          "topic": "The Chemistry of Sourdough Bread",
+          "category": "Chemistry",
+          "paragraph": "Sourdough bread relies on a fascinating natural fermentation process rather than commercial yeast to make the dough rise properly. A sourdough starter contains a stable community of wild yeast and beneficial bacteria that consume sugars present in the flour, producing carbon dioxide gas and organic acids as byproducts. This slower fermentation process gives sourdough its characteristically tangy flavor, which distinguishes it noticeably from bread made using standard commercial yeast. The acidic environment created during fermentation also appears to make certain nutrients within the bread more easily digestible for many people. Bakers must carefully maintain their starter through regular feeding to keep the microbial community healthy and consistently active over time.",
+          "blanks": [
+            {
+              "word": "sourdough",
+              "visible": "sour",
+              "hidden": "dough"
+            },
+            {
+              "word": "community",
+              "visible": "comm",
+              "hidden": "unity"
+            },
+            {
+              "word": "present",
+              "visible": "pre",
+              "hidden": "sent"
+            },
+            {
+              "word": "organic",
+              "visible": "org",
+              "hidden": "anic"
+            },
+            {
+              "word": "byproducts",
+              "visible": "bypro",
+              "hidden": "ducts"
+            },
+            {
+              "word": "standard",
+              "visible": "stan",
+              "hidden": "dard"
+            },
+            {
+              "word": "created",
+              "visible": "cre",
+              "hidden": "ated"
+            },
+            {
+              "word": "digestible",
+              "visible": "diges",
+              "hidden": "tible"
+            },
+            {
+              "word": "feeding",
+              "visible": "fee",
+              "hidden": "ding"
+            },
+            {
+              "word": "consistently",
+              "visible": "consi",
+              "hidden": "stently"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "The Economic Impact of the Interstate Highway System",
+          "passage": "The construction of the United States Interstate Highway System, authorized in 1956, stands as one of the largest public infrastructure projects in modern history, ultimately spanning tens of thousands of miles of controlled-access roadways connecting cities across the country. Beyond its obvious transportation benefits, the system produced sweeping economic changes that reshaped patterns of settlement, commerce, and industry throughout the nation.\n\nBy dramatically reducing travel times between distant cities, the highway system made it economically feasible for businesses to ship goods over much greater distances, encouraging the growth of national and regional supply chains that had previously been impractical. Manufacturing and distribution centers increasingly relocated to sites near highway interchanges, taking advantage of improved access to both suppliers and customers.\n\nThe system also profoundly influenced residential development, facilitating the rapid growth of suburban communities located increasingly far from urban centers, since commuters could now travel greater distances to work within a reasonable amount of time. This shift contributed to significant declines in population and economic activity within many traditional downtown areas during the following decades.\n\nCritics of the highway system have noted that its construction sometimes came at a considerable social cost, as new highways frequently cut through established urban neighborhoods, displacing residents and disrupting existing communities, often with a disproportionate impact on lower-income and minority populations. This complex legacy continues to shape debates about transportation policy and urban planning in the United States today.",
+          "passage_marked": "The construction of the United States Interstate Highway System, authorized in 1956, stands as one of the largest public infrastructure projects in modern history, ultimately spanning tens of thousands of miles of controlled-access roadways connecting cities across the country. Beyond its obvious transportation benefits, the system produced sweeping economic changes that reshaped patterns of settlement, commerce, and industry throughout the nation. [A]\n\nBy dramatically reducing travel times between distant cities, the highway system made it economically feasible for businesses to ship goods over much greater distances, encouraging the growth of national and regional supply chains that had previously been impractical. [B] Manufacturing and distribution centers increasingly relocated to sites near highway interchanges, taking advantage of improved access to both suppliers and customers.\n\nThe system also profoundly influenced residential development, facilitating the rapid growth of suburban communities located increasingly far from urban centers, since commuters could now travel greater distances to work within a reasonable amount of time. This shift contributed to significant declines in population and economic activity within many traditional downtown areas during the following decades. [C]\n\nCritics of the highway system have noted that its construction sometimes came at a considerable social cost, as new highways frequently cut through established urban neighborhoods, displacing residents and disrupting existing communities, often with a disproportionate impact on lower-income and minority populations. [D] This complex legacy continues to shape debates about transportation policy and urban planning in the United States today.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'feasible' in the passage is closest in meaning to",
+              "options": [
+                "impossible",
+                "practical",
+                "expensive",
+                "illegal"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What was one major economic effect of the Interstate Highway System?",
+              "options": [
+                "A decline in national trade",
+                "The growth of national and regional supply chains",
+                "The elimination of manufacturing jobs",
+                "A reduction in overall transportation options"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "How did the highway system affect suburban development?",
+              "options": [
+                "It discouraged people from living far from cities",
+                "It facilitated the rapid growth of suburban communities",
+                "It had no effect on where people chose to live",
+                "It forced people to move into cities"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What criticism of the highway system is mentioned in the passage?",
+              "options": [
+                "It was too expensive to build",
+                "It displaced residents and disrupted established neighborhoods",
+                "It was never actually completed",
+                "It only benefited rural areas"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Businesses recognized that locating near these interchanges offered a significant competitive advantage.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 38
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 57,
+          "topic": "The Evolution of Whale Ancestors",
+          "category": "Paleontology",
+          "paragraph": "Whales evolved from land-dwelling mammalian ancestors that gradually transitioned toward an entirely aquatic lifestyle over millions of years. Fossil evidence reveals a remarkable sequence of intermediate species, each showing progressively more adaptations suited toward life in water rather than on land. Early whale ancestors likely resembled hoofed mammals with four functional legs, while later transitional species show gradually shrinking hind limbs and increasingly streamlined bodies. This transformation eventually produced fully aquatic whales possessing flippers instead of legs, along with specialized adaptations for underwater hearing and breathing. Paleontologists consider whale evolution one of the most compelling examples of how dramatically natural selection can reshape an entire lineage over evolutionary time.",
+          "blanks": [
+            {
+              "word": "evidence",
+              "visible": "evid",
+              "hidden": "ence"
+            },
+            {
+              "word": "intermediate",
+              "visible": "inter",
+              "hidden": "mediate"
+            },
+            {
+              "word": "adaptations",
+              "visible": "adapt",
+              "hidden": "ations"
+            },
+            {
+              "word": "mammals",
+              "visible": "mam",
+              "hidden": "mals"
+            },
+            {
+              "word": "streamlined",
+              "visible": "strea",
+              "hidden": "mlined"
+            },
+            {
+              "word": "possessing",
+              "visible": "posse",
+              "hidden": "ssing"
+            },
+            {
+              "word": "hearing",
+              "visible": "hea",
+              "hidden": "ring"
+            },
+            {
+              "word": "consider",
+              "visible": "cons",
+              "hidden": "ider"
+            },
+            {
+              "word": "natural",
+              "visible": "nat",
+              "hidden": "ural"
+            },
+            {
+              "word": "evolutionary",
+              "visible": "evolu",
+              "hidden": "tionary"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Harbor View Diner",
+          "subtitle": "Date: March 3, 2025 | Time: 12:40 p.m. | Order #2210",
+          "text": "Grilled Chicken Sandwich (x1) ... $9.50 ... $9.50\nIced Tea (x2) ... $2.50 ... $5.00\nSide Salad (x1) ... $3.00 ... $3.00\n\nSubtotal: $17.50\nTax (6%): $1.05\nTotal: $18.55\n\nPayment: Credit Card\n\nGratuity not included. Thank you for dining with us!",
+          "questions": [
+            {
+              "question": "How was the order paid for?",
+              "options": [
+                "Cash",
+                "Credit card",
+                "Gift card",
+                "Mobile payment"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is noted about gratuity?",
+              "options": [
+                "It is included in the total",
+                "It is not included",
+                "It was waived entirely",
+                "It is optional and prepaid"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 94
+        },
+        {
+          "type": "receipt",
+          "instruction": "Read a receipt.",
+          "title": "Green Valley Hardware",
+          "subtitle": "Date: June 9, 2025 | Time: 3:15 p.m. | Order #7761",
+          "text": "Paint Roller Set (x1) ... $8.00 ... $8.00\nInterior Paint, 1 Gallon (x2) ... $28.00 ... $56.00\nPainter's Tape (x3) ... $4.50 ... $13.50\n\nSubtotal: $77.50\nTax (8%): $6.20\nTotal: $83.70\n\nPayment: Debit Card\n\nReturns accepted within 30 days with receipt.",
+          "questions": [
+            {
+              "question": "How many gallons of interior paint were purchased?",
+              "options": [
+                "One",
+                "Two",
+                "Three",
+                "Four"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the store's return policy?",
+              "options": [
+                "No returns accepted",
+                "Returns accepted within 30 days with receipt",
+                "Returns accepted within a week",
+                "Store credit only, no time limit"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 95
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 397,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/397.mp3",
+          "transcript": "Could you check if my prescription is ready for pickup?",
+          "context": "A customer asks a pharmacist.",
+          "options": [
+            "Let me check the system for you.",
+            "Prescriptions usually take an hour to fill.",
+            "We're open until nine tonight.",
+            "You can also refill online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "50-397"
+        },
+        {
+          "id": 398,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/398.mp3",
+          "transcript": "I noticed the elevator music has been really loud lately.",
+          "context": "A tenant speaks to a building manager.",
+          "options": [
+            "I'll have maintenance turn that down.",
+            "The elevator was serviced last month.",
+            "This building has two elevators.",
+            "Music is meant to be relaxing."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "50-398"
+        },
+        {
+          "id": 399,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/399.mp3",
+          "transcript": "Would you be able to swap my dinner reservation to a booth?",
+          "context": "A customer calls a restaurant.",
+          "options": [
+            "Sure, I'll update that in our system.",
+            "Booths are popular on weekends.",
+            "The restaurant has both booths and tables.",
+            "Reservations can also be made online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "50-399"
+        },
+        {
+          "id": 400,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/400.mp3",
+          "transcript": "Do you know if this trail has restrooms along the way?",
+          "context": "A hiker asks a park visitor center employee.",
+          "options": [
+            "Yes, there's one about halfway through.",
+            "The trail is roughly six miles long.",
+            "Restrooms are cleaned every morning.",
+            "There's a map at the trailhead."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "50-400"
+        },
+        {
+          "id": 401,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/401.mp3",
+          "transcript": "I think my coupon didn't apply at checkout.",
+          "context": "A customer speaks to an online store's support chat.",
+          "options": [
+            "Let me look into that and fix it for you.",
+            "Coupons usually expire after thirty days.",
+            "You can find new coupons on our website.",
+            "This coupon applies to select items only."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "51-401"
+        },
+        {
+          "id": 402,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/402.mp3",
+          "transcript": "Could you tell me if the shuttle bus is wheelchair accessible?",
+          "context": "A traveler asks an airport shuttle driver.",
+          "options": [
+            "Yes, this bus has a wheelchair lift.",
+            "The shuttle runs every fifteen minutes.",
+            "It stops at all major terminals.",
+            "There's no charge to ride the shuttle."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "51-402"
+        },
+        {
+          "id": 403,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/403.mp3",
+          "transcript": "Do you know if we can bring outside food into the stadium?",
+          "context": "A fan asks a stadium usher.",
+          "options": [
+            "Unfortunately, outside food isn't allowed inside.",
+            "The stadium has plenty of food vendors.",
+            "Gates open two hours before the game.",
+            "Seating charts are available online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "51-403"
+        },
+        {
+          "id": 404,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/404.mp3",
+          "transcript": "I'd like to change my flight to an earlier one today.",
+          "context": "A traveler speaks to an airline agent.",
+          "options": [
+            "Let me check what's available for you.",
+            "Same-day changes may include a fee.",
+            "Boarding passes can be printed at the kiosk.",
+            "The next flight departs in two hours."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "51-404"
+        },
+        {
+          "id": 405,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/405.mp3",
+          "transcript": "Could you look at this stain and tell me if it will come out?",
+          "context": "A customer asks a dry cleaner.",
+          "options": [
+            "Let me take a closer look at the fabric.",
+            "We offer same-day service for an extra fee.",
+            "This is a common type of stain.",
+            "The dry cleaner has been open for years."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "51-405"
+        },
+        {
+          "id": 406,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/406.mp3",
+          "transcript": "I noticed my neighbor's fence is leaning onto my property.",
+          "context": "A homeowner speaks to a property manager.",
+          "options": [
+            "I'll reach out to your neighbor about that.",
+            "Fences require a permit to install.",
+            "The property line was surveyed last year.",
+            "Most fences last about a decade."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "51-406"
+        }
+      ],
+      "conv": [
+        {
+          "id": 91,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/91.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm considering dropping one of my classes this semester."
+            },
+            {
+              "speaker": "male",
+              "text": "Which one, and why?"
+            },
+            {
+              "speaker": "female",
+              "text": "The elective art history course, it's more time-consuming than I expected."
+            },
+            {
+              "speaker": "male",
+              "text": "Have you talked to your advisor about how it might affect your schedule?"
+            },
+            {
+              "speaker": "female",
+              "text": "Not yet, but I probably should before making a final decision."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman considering?",
+              "options": [
+                "Adding a new class",
+                "Dropping an elective course",
+                "Changing her major",
+                "Transferring schools"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man recommend?",
+              "options": [
+                "Dropping the class immediately",
+                "Talking to her advisor first",
+                "Switching to a different elective",
+                "Asking the professor for extra help"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 92,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/92.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Are you going home for the upcoming break?"
+            },
+            {
+              "speaker": "female",
+              "text": "I am, actually, I already booked my flight."
+            },
+            {
+              "speaker": "male",
+              "text": "Nice, how long will you be gone?"
+            },
+            {
+              "speaker": "female",
+              "text": "About two weeks, then I'll come back early to prepare for the new semester."
+            },
+            {
+              "speaker": "male",
+              "text": "That sounds like a good balance between rest and preparation."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What has the woman already done?",
+              "options": [
+                "Packed her belongings",
+                "Booked her flight home",
+                "Finished all her exams",
+                "Registered for next semester"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How long will she be away?",
+              "options": [
+                "One week",
+                "About two weeks",
+                "A full month",
+                "The entire break period"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 93,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/93.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Did you finish revising your résumé for the career fair?"
+            },
+            {
+              "speaker": "male",
+              "text": "Mostly, though I want someone to review it before I print copies."
+            },
+            {
+              "speaker": "female",
+              "text": "The career center offers free résumé reviews, you know."
+            },
+            {
+              "speaker": "male",
+              "text": "Oh really? I didn't realize that was a service they offered."
+            },
+            {
+              "speaker": "female",
+              "text": "Yeah, you just need to book a short appointment online."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What does the man still need to do?",
+              "options": [
+                "Write his résumé from scratch",
+                "Have his résumé reviewed",
+                "Print his résumé",
+                "Submit his résumé online"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What service does the woman mention?",
+              "options": [
+                "Free interview coaching",
+                "Free résumé reviews at the career center",
+                "Free printing services",
+                "Free career counseling sessions"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 91,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/91.mp3",
+          "speaker": "female",
+          "transcript": "Good afternoon, passengers aboard the 4:15 service to Brookfield. Please note that due to an earlier delay, this train will be running approximately ten minutes behind schedule. We apologize for the inconvenience and will do our best to make up time during the journey.",
+          "questions": [
+            {
+              "question": "What is the situation with this train?",
+              "options": [
+                "It has been canceled",
+                "It is running about ten minutes late",
+                "It has changed its final destination",
+                "It has been rerouted"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the announcement say the crew will try to do?",
+              "options": [
+                "Skip several stops",
+                "Make up time during the journey",
+                "Add an extra stop",
+                "End the route early"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 92,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/92.mp3",
+          "speaker": "male",
+          "transcript": "Attention visitors: the aquarium's shark exhibit will be temporarily closed this afternoon while our staff conducts a routine health check on the animals. All other exhibits remain open as scheduled. We expect the shark exhibit to reopen within approximately two hours.",
+          "questions": [
+            {
+              "question": "Why is the shark exhibit closing?",
+              "options": [
+                "A safety incident",
+                "A routine health check on the animals",
+                "Low visitor interest",
+                "Renovation work"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How long is the closure expected to last?",
+              "options": [
+                "Thirty minutes",
+                "About two hours",
+                "The rest of the day",
+                "One week"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 93,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/93.mp3",
+          "speaker": "female",
+          "transcript": "Attention employees: the cafeteria will be serving a limited menu today due to a delayed food delivery. We apologize for any inconvenience and expect our normal full menu to return tomorrow. Vending machines on each floor remain fully stocked in the meantime.",
+          "questions": [
+            {
+              "question": "Why is the cafeteria menu limited today?",
+              "options": [
+                "A staffing shortage",
+                "A delayed food delivery",
+                "Kitchen equipment repairs",
+                "A special themed menu"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative is mentioned?",
+              "options": [
+                "A nearby restaurant",
+                "Vending machines on each floor",
+                "Free delivery service",
+                "An extended lunch break"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 73,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/73.mp3",
+          "speaker": "female",
+          "subject": "Sociology",
+          "transcript": "Today's topic is the concept of the looking-glass self, a foundational idea in sociology developed by Charles Horton Cooley in the early twentieth century, describing how a person's sense of self develops substantially through their perception of how other people view and judge them. According to Cooley's theory, this process unfolds through three interconnected steps. First, we imagine how we appear to other people in a given social situation, forming a mental impression of how we believe we're being perceived by those around us. Second, we imagine how those other people are likely judging that particular appearance, whether they view it favorably, unfavorably, or with genuine indifference. Third, based on these first two imagined judgments, we develop some kind of emotional self-feeling in response, such as pride, embarrassment, or general satisfaction, and this resulting feeling can meaningfully shape our subsequent self-concept and even influence our future behavior going forward. What makes this theory particularly compelling to many sociologists is Cooley's clear emphasis that this entire process relies specifically on our own imagined, subjective perception of others' judgments, rather than on some kind of objectively accurate assessment of what other people are actually thinking about us in any given moment. This means our resulting self-concept can be meaningfully shaped and influenced even by judgments that are significantly inaccurate or entirely imagined on our part, provided we ourselves genuinely believe those imagined judgments to be true and accurate reflections of others' actual opinions. This particular insight has considerable relevance for understanding modern social media use, where users often construct and curate an idealized self-presentation based substantially on anticipated reactions from an imagined audience, and the resulting feedback they receive, in the form of likes, comments, and shares, can then significantly reinforce or, alternatively, actively challenge their existing self-concept in ways that closely parallel Cooley's original theoretical framework, developed decades before social media existed in any form.",
+          "questions": [
+            {
+              "question": "What is the looking-glass self, according to the talk?",
+              "options": [
+                "A psychological disorder affecting self-image",
+                "A theory describing how self-concept develops from perceiving others' judgments",
+                "A method for measuring social status",
+                "A term describing narcissistic behavior"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are the three steps in Cooley's theory?",
+              "options": [
+                "Observation, analysis, and conclusion",
+                "Imagining our appearance, imagining others' judgment, and developing a self-feeling",
+                "Socializing, working, and resting",
+                "Perception, memory, and recall"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does the professor emphasize that this process relies on imagined perception?",
+              "options": [
+                "To show the theory has no scientific validity",
+                "To highlight that self-concept can be shaped by inaccurate assumptions about others' views",
+                "To argue that people never misjudge others' opinions",
+                "To prove that self-concept is entirely objective"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does the professor connect this theory to social media?",
+              "options": [
+                "Social media has made this theoretical framework obsolete",
+                "Social media feedback can reinforce or challenge self-concept in ways paralleling the theory",
+                "Social media eliminates the need to imagine others' judgments",
+                "The theory has no relevant application to social media"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 74,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/74.mp3",
+          "speaker": "male",
+          "subject": "Chemistry",
+          "transcript": "Today we're examining the greenhouse effect from a chemistry perspective, focusing specifically on why certain atmospheric gases trap heat while others largely do not. The key factor lies in each specific gas molecule's particular structure and how that structure interacts with infrared radiation. When sunlight, primarily composed of visible light, reaches Earth's surface, it's absorbed and subsequently re-emitted as infrared radiation, which we generally perceive simply as heat. Simple diatomic gases like nitrogen and oxygen, which together make up the overwhelming majority of Earth's atmosphere by volume, are essentially transparent to this outgoing infrared radiation, meaning they don't meaningfully absorb or trap it as it passes through the atmosphere and escapes back toward space. Greenhouse gases, in contrast, including carbon dioxide, methane, and water vapor, possess molecular structures capable of absorbing infrared radiation at very specific characteristic wavelengths. This absorption occurs because these particular molecules can vibrate in ways that create a temporarily changing dipole moment, an asymmetric and shifting distribution of electrical charge across the molecule, allowing the molecule to effectively interact with and absorb passing infrared radiation at those specific wavelengths. Once a greenhouse gas molecule absorbs this infrared energy, it doesn't simply keep or retain that energy indefinitely; instead, it very quickly re-emits the absorbed radiation in a completely random direction, meaning a significant portion of that re-emitted energy travels back downward toward Earth's surface rather than continuing on and escaping outward into space. This overall process is what effectively traps additional heat within the atmosphere and lower surface system, warming the planet's surface and lower atmosphere beyond what would occur naturally in the complete absence of these particular greenhouse gases. Carbon dioxide has received particular scientific and public attention specifically because human industrial activities, especially the large-scale combustion of fossil fuels for energy, have substantially increased its atmospheric concentration well beyond natural pre-industrial levels, and because carbon dioxide molecules can persist and remain chemically active in the atmosphere for a notably long time, in some cases for many centuries, before eventually being removed through various natural processes.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "The composition of Earth's early atmosphere",
+                "The chemistry behind why certain gases trap heat",
+                "The history of climate science research",
+                "How nitrogen is produced industrially"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why are nitrogen and oxygen not considered significant greenhouse gases?",
+              "options": [
+                "They are too rare in the atmosphere",
+                "They are essentially transparent to outgoing infrared radiation",
+                "They only exist near the ground",
+                "They absorb visible light instead of infrared"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What molecular property allows greenhouse gases to absorb infrared radiation?",
+              "options": [
+                "Their large physical size",
+                "Their ability to vibrate and create a changing dipole moment",
+                "Their bright color",
+                "Their ability to conduct electricity"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why has carbon dioxide received particular attention, according to the talk?",
+              "options": [
+                "It is the only greenhouse gas that exists",
+                "Human activity has substantially increased its concentration and it persists a long time",
+                "It absorbs visible light rather than infrared",
+                "It has no measurable warming effect"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 407,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/407.mp3",
+          "transcript": "Would you mind keeping the noise down after ten?",
+          "context": "A tenant speaks to a neighbor.",
+          "options": [
+            "Sorry about that, I'll be more mindful.",
+            "The building has quiet hours listed in the lease.",
+            "I usually go to bed pretty late.",
+            "My apartment is right above yours."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "51-407"
+        },
+        {
+          "id": 408,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/408.mp3",
+          "transcript": "Do you know if this parking garage validates for the movie theater?",
+          "context": "A customer asks a garage attendant.",
+          "options": [
+            "Yes, just bring your ticket stub to us.",
+            "The garage charges by the hour.",
+            "There's a discount for early arrivals.",
+            "The theater is on the second floor."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "51-408"
+        },
+        {
+          "id": 409,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/409.mp3",
+          "transcript": "I think I need a bigger storage unit than the one I have.",
+          "context": "A customer speaks to a storage facility employee.",
+          "options": [
+            "Sure, let's see what larger units are available.",
+            "Storage units come in several sizes.",
+            "Rent is due on the first of each month.",
+            "The facility has security cameras."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "52-409"
+        },
+        {
+          "id": 410,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/410.mp3",
+          "transcript": "Could you tell me if the museum café is open right now?",
+          "context": "A visitor asks a museum staff member.",
+          "options": [
+            "Yes, it's open until the museum closes.",
+            "The café serves coffee and light snacks.",
+            "It's located near the main entrance.",
+            "Seating is limited during busy hours."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "52-410"
+        },
+        {
+          "id": 411,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/411.mp3",
+          "transcript": "Do you know why my package tracking hasn't updated in days?",
+          "context": "A customer calls a shipping company.",
+          "options": [
+            "Let me look into that for you right now.",
+            "Tracking updates every few hours normally.",
+            "Packages ship from our main warehouse.",
+            "You'll get a notification once it's delivered."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "52-411"
+        },
+        {
+          "id": 412,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/412.mp3",
+          "transcript": "I'd like to switch my seat to be closer to the stage.",
+          "context": "A guest asks a theater usher.",
+          "options": [
+            "Let me see if a closer seat is open.",
+            "The show starts in about ten minutes.",
+            "Seats near the stage sell out quickly.",
+            "Programs are available at the entrance."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "52-412"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 75,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/75.mp3",
+          "speaker": "female",
+          "subject": "Anthropology",
+          "transcript": "Today we'll discuss the concept of the demographic transition, a model describing the historical pattern of change in birth rates and death rates that societies typically experience as they undergo industrialization and broader economic development. The model, first developed by demographers studying historical population data in Europe, generally describes four or sometimes five distinct sequential stages. In the first stage, characteristic of pre-industrial societies, both birth rates and death rates remain consistently high, and as a direct result, overall population growth tends to stay relatively slow and stable over time, since the high death rate largely offsets the equally high birth rate. In the second stage, death rates begin to decline notably, primarily driven by meaningful improvements in food supply reliability, sanitation infrastructure, and basic access to medical care, while birth rates, in contrast, generally remain high initially, since existing prevailing cultural norms around family size typically take considerably longer to shift and adjust than the underlying material conditions do. This particular combination of a declining death rate paired with a still relatively high birth rate produces rapid population growth, sometimes described as a genuine population explosion within the society experiencing it. In the third stage, birth rates then begin to decline substantially as well, often driven by factors such as increasing urbanization, rising costs specifically associated with raising children in an urban environment, greater educational and economic opportunities becoming available to women, and generally widespread improved access to reliable contraception. This subsequent decline in birth rates causes overall population growth to gradually slow down again. Finally, in the fourth stage, both birth rates and death rates settle back into a new stable, relatively low equilibrium, once again producing slow, stable overall population growth, though now occurring at a dramatically higher standard of living and generally with substantially longer average life expectancy than what characterized the original pre-industrial first stage. Some demographers have proposed an additional fifth stage for certain countries, in which birth rates actually decline below the replacement level required to maintain the existing population size, potentially leading to eventual population decline over time unless effectively offset by immigration or other compensating demographic factors.",
+          "questions": [
+            {
+              "question": "What is the demographic transition model primarily describing?",
+              "options": [
+                "Changes in a country's political system over time",
+                "The historical pattern of change in birth and death rates during development",
+                "The migration patterns of ancient civilizations",
+                "The economic effects of colonization"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What characterizes the second stage of the model?",
+              "options": [
+                "Both birth and death rates are low",
+                "Death rates decline while birth rates remain high, causing rapid population growth",
+                "Birth rates decline before death rates",
+                "Population growth stops entirely"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What factors contribute to declining birth rates in the third stage?",
+              "options": [
+                "Declining access to healthcare",
+                "Urbanization, rising child-rearing costs, and increased opportunities for women",
+                "A sudden decrease in life expectancy",
+                "Government-mandated family size limits"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor say about a proposed fifth stage?",
+              "options": [
+                "It involves birth rates rising sharply again",
+                "Birth rates may decline below replacement level, potentially causing population decline",
+                "It has been observed in every country studied",
+                "It represents a return to pre-industrial conditions"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 76,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/76.mp3",
+          "speaker": "male",
+          "subject": "Physics",
+          "transcript": "Today we're covering the photoelectric effect, a phenomenon that played a crucial historical role in establishing quantum mechanics as a legitimate and necessary scientific framework, largely through Albert Einstein's influential 1905 explanation, for which he was later awarded the Nobel Prize in Physics. The photoelectric effect refers to the observed emission of electrons from a metal surface when that surface is illuminated with sufficiently energetic light. Prior to Einstein's specific explanation, classical wave theory of light struggled significantly to account for several genuinely puzzling experimental observations related to this phenomenon. According to classical wave theory, increasing a light source's intensity, essentially its overall brightness, should have been sufficient to eventually provide enough cumulative energy to eject electrons from a metal surface, regardless of that light's specific color or frequency, provided experimenters simply waited long enough for sufficient energy to gradually accumulate. However, actual experiments consistently showed something quite different: below a certain specific threshold frequency, which varies depending on the particular metal being used, absolutely no electrons were emitted at all, regardless of how intensely bright the applied light source was made, even when using extraordinarily powerful light sources. Einstein resolved this genuine puzzle by proposing that light itself doesn't behave as a smooth, continuous wave in this particular interaction, but rather travels and interacts in discrete, individual energy packets called photons, with each individual photon's specific energy being directly proportional to the light's frequency rather than its overall intensity. Under this revised model, a single photon must possess sufficient individual energy to eject a single electron in one discrete interaction event; if a given photon's energy, determined by its frequency, falls below the required threshold for a particular metal, no emission occurs whatsoever, regardless of how many additional photons, meaning however much greater the light's overall intensity, are simultaneously striking that same metal surface. Increasing the light's intensity, in this revised quantum model, simply increases the total number of individual photons present, and correspondingly the number of resulting emitted electrons above the threshold frequency, but critically does not increase the individual energy possessed by each separate emitted electron, which instead depends specifically and exclusively on the light's frequency alone. This elegant explanation provided some of the very earliest strong experimental evidence supporting the fundamental idea that light exhibits genuine particle-like properties in certain specific interactions, a foundational concept now firmly central to all of modern quantum theory.",
+          "questions": [
+            {
+              "question": "What is the photoelectric effect?",
+              "options": [
+                "The bending of light through a prism",
+                "The emission of electrons from a metal surface illuminated by light",
+                "The reflection of light off a mirror",
+                "The absorption of heat by dark surfaces"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What problem did classical wave theory have explaining the photoelectric effect?",
+              "options": [
+                "It correctly predicted all experimental results",
+                "It predicted electrons should be emitted regardless of frequency given enough intensity, which contradicted experiments",
+                "It could not explain why light travels in straight lines",
+                "It predicted no electrons would ever be emitted"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How did Einstein explain the photoelectric effect?",
+              "options": [
+                "Light behaves purely as a continuous wave with no particle properties",
+                "Light travels in discrete photons, each with energy proportional to frequency",
+                "Electrons are unaffected by light entirely",
+                "Metal surfaces absorb light differently based on color alone"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to Einstein's model, what does increasing light intensity affect?",
+              "options": [
+                "The energy of each individual emitted electron",
+                "The total number of photons and correspondingly emitted electrons, not their individual energy",
+                "Nothing at all in the photoelectric effect",
+                "Only the frequency of the light"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 413,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/413.mp3",
+          "transcript": "Could you check if there's a warranty on this appliance?",
+          "context": "A customer asks a store employee.",
+          "options": [
+            "Yes, it comes with a one-year warranty.",
+            "This appliance uses very little electricity.",
+            "We also offer extended warranty plans.",
+            "The appliance just went on sale."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "52-413"
+        },
+        {
+          "id": 414,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/414.mp3",
+          "transcript": "I noticed the recycling bins outside are overflowing.",
+          "context": "A resident tells the building maintenance staff.",
+          "options": [
+            "I'll have someone empty them today.",
+            "Recycling is collected every Tuesday.",
+            "The building added new bins last year.",
+            "Residents are asked to break down boxes."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "52-414"
+        },
+        {
+          "id": 415,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/415.mp3",
+          "transcript": "Would you be able to hold my table a bit longer? My friend is running late.",
+          "context": "A customer asks a restaurant host.",
+          "options": [
+            "Of course, take your time.",
+            "We can seat you at the bar meanwhile.",
+            "The restaurant is quite busy tonight.",
+            "Your table is ready whenever you are."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "52-415"
+        },
+        {
+          "id": 416,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/416.mp3",
+          "transcript": "Do you know if the campus bookstore buys back used textbooks?",
+          "context": "A student asks another student.",
+          "options": [
+            "Yes, they do at the end of each semester.",
+            "Textbooks can be pretty expensive.",
+            "The bookstore is near the student center.",
+            "Some classes require digital textbooks now."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "52-416"
+        },
+        {
+          "id": 417,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/417.mp3",
+          "transcript": "I think I locked my keys inside my car.",
+          "context": "A driver speaks to a parking lot attendant.",
+          "options": [
+            "Let me call a locksmith for you.",
+            "The lot closes at midnight.",
+            "Parking here costs two dollars an hour.",
+            "There's a gas station nearby."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "53-417"
+        },
+        {
+          "id": 418,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/418.mp3",
+          "transcript": "Could you tell me if this yoga class is good for beginners?",
+          "context": "A new member asks a gym instructor.",
+          "options": [
+            "Yes, this class is designed for all levels.",
+            "The class meets three times a week.",
+            "You'll need a mat for this class.",
+            "Yoga classes are included in your membership."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "53-418"
+        }
+      ],
+      "conv": [
+        {
+          "id": 94,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/94.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Do you know if the new coffee shop on campus is open yet?"
+            },
+            {
+              "speaker": "female",
+              "text": "I think it opens next Monday, based on the sign outside."
+            },
+            {
+              "speaker": "male",
+              "text": "Good, the current café gets way too crowded in the mornings."
+            },
+            {
+              "speaker": "female",
+              "text": "Same here, I usually end up waiting in line for ten minutes."
+            },
+            {
+              "speaker": "male",
+              "text": "Hopefully having a second option helps with that."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What are they discussing?",
+              "options": [
+                "A new dining hall",
+                "A new coffee shop on campus",
+                "A change in library hours",
+                "A new campus bookstore"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What problem does the woman mention with the current café?",
+              "options": [
+                "Poor quality coffee",
+                "Long wait times in the morning",
+                "High prices",
+                "Limited seating"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 95,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/95.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I noticed you've been at the music practice rooms a lot lately."
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, I'm preparing for a recital next month."
+            },
+            {
+              "speaker": "female",
+              "text": "That's exciting, are you nervous?"
+            },
+            {
+              "speaker": "male",
+              "text": "A little, though practicing this much has helped build my confidence."
+            },
+            {
+              "speaker": "female",
+              "text": "I'm sure it'll go great, let me know when it is so I can come watch."
+            }
+          ],
+          "questions": [
+            {
+              "question": "Why has the man been using the practice rooms?",
+              "options": [
+                "He is learning a new instrument",
+                "He is preparing for a recital",
+                "He is recording an album",
+                "He is tutoring another student"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does the man feel about the upcoming event?",
+              "options": [
+                "Completely unbothered",
+                "A little nervous but more confident",
+                "Extremely anxious",
+                "Uninterested"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 94,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/94.mp3",
+          "speaker": "male",
+          "transcript": "Attention passengers: we are pleased to announce that complimentary Wi-Fi is now available throughout the terminal, including all gate areas and lounges. Simply select the airport network from your device settings to connect. We hope this makes your time at the airport more comfortable.",
+          "questions": [
+            {
+              "question": "What new service is being announced?",
+              "options": [
+                "Free snacks at the gate",
+                "Complimentary Wi-Fi throughout the terminal",
+                "Extended lounge access",
+                "Discounted parking"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How can passengers access this service?",
+              "options": [
+                "By purchasing a pass at a kiosk",
+                "By selecting the airport network from device settings",
+                "By registering with a staff member",
+                "By downloading a special app"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 95,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/95.mp3",
+          "speaker": "female",
+          "transcript": "Attention shoppers: our seasonal clearance sale begins today, with discounts of up to sixty percent on select summer merchandise throughout the store. Sale items are marked with a red tag and cannot be returned or exchanged. We hope you find some great deals during your visit.",
+          "questions": [
+            {
+              "question": "What is the store announcing?",
+              "options": [
+                "A grand opening event",
+                "A seasonal clearance sale",
+                "A membership drive",
+                "A new product launch"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is noted about sale items?",
+              "options": [
+                "They come with a warranty",
+                "They cannot be returned or exchanged",
+                "They are only available online",
+                "They require a coupon code"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "How long does the certification process usually take?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "how",
+          "long",
+          "the certification process",
+          "usually took"
+        ],
+        "distractorChunks": [
+          "usually takes"
+        ],
+        "responseSuffix": ".",
+        "id": 181
+      },
+      {
+        "promptGender": "male",
+        "prompt": "Who redesigned the company's website last year?",
+        "responseGender": "female",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "was",
+          "not",
+          "sure",
+          "who",
+          "had redesigned the company's website last year"
+        ],
+        "distractorChunks": [
+          "has redesigned the company's website last year"
+        ],
+        "responseSuffix": ".",
+        "id": 182
+      },
+      {
+        "promptGender": "female",
+        "prompt": "What time does the farmers market open on Sundays?",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "asked",
+          "what",
+          "time",
+          "the farmers market",
+          "opened on Sundays"
+        ],
+        "distractorChunks": [
+          "opens on Sundays"
+        ],
+        "responseSuffix": ".",
+        "id": 183
+      },
+      {
+        "promptGender": "male",
+        "prompt": "How many applicants applied for the scholarship?",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "wanted",
+          "to",
+          "know",
+          "how",
+          "many",
+          "applicants",
+          "had applied for the scholarship"
+        ],
+        "distractorChunks": [
+          "have applied for the scholarship"
+        ],
+        "responseSuffix": ".",
+        "id": 184
+      },
+      {
+        "promptGender": "female",
+        "prompt": "Where does the recycling truck usually stop first?",
+        "responseGender": "male",
+        "responsePrefix": "I",
+        "correctChunks": [
+          "asked",
+          "where",
+          "the recycling truck",
+          "usually stopped first"
+        ],
+        "distractorChunks": [
+          "usually stops first"
+        ],
+        "responseSuffix": ".",
+        "id": 185
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The airline upgraded several passengers to first class.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "mentioned",
+          "that",
+          "the airline",
+          "had upgraded several passengers to first class"
+        ],
+        "distractorChunks": [
+          "has upgraded several passengers to first class"
+        ],
+        "responseSuffix": ".",
+        "id": 186
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The landlord will inspect the unit next Tuesday.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "said",
+          "that",
+          "the landlord",
+          "would inspect the unit next Tuesday"
+        ],
+        "distractorChunks": [
+          "will inspect the unit next Tuesday"
+        ],
+        "responseSuffix": ".",
+        "id": 187
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The charity raised more money than expected this year.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "announced",
+          "that",
+          "the charity",
+          "had raised more money than expected this year"
+        ],
+        "distractorChunks": [
+          "has raised more money than expected this year"
+        ],
+        "responseSuffix": ".",
+        "id": 188
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The store needs to reorder several popular items.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "told",
+          "me",
+          "that",
+          "the store",
+          "needed to reorder several popular items"
+        ],
+        "distractorChunks": [
+          "needs to reorder several popular items"
+        ],
+        "responseSuffix": ".",
+        "id": 189
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The council will vote on the new zoning law tomorrow.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "said",
+          "that",
+          "the council",
+          "would vote on the new zoning law tomorrow"
+        ],
+        "distractorChunks": [
+          "will vote on the new zoning law tomorrow"
+        ],
+        "responseSuffix": ".",
+        "id": 190
+      }
+    ],
+    "email": {
+      "scenario": "You signed up for a campus fitness class, but you just realized it conflicts with one of your lab sessions. You want to explain the situation to the recreation center and ask about switching to a different class time.",
+      "recipient": "Recreation Center Staff",
+      "subject": "Schedule conflict with fitness class",
+      "tasks": [
+        {
+          "description": "Explain that the fitness class conflicts with your lab session.",
+          "keywords": [
+            "conflict",
+            "lab session",
+            "overlap",
+            "same time"
+          ]
+        },
+        {
+          "description": "Mention which class you originally signed up for.",
+          "keywords": [
+            "signed up",
+            "originally",
+            "registered for"
+          ]
+        },
+        {
+          "description": "Ask about switching to a different class time.",
+          "keywords": [
+            "switch",
+            "different time",
+            "another session",
+            "change"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Recreation Center Staff,\n\nI recently signed up for the Tuesday evening yoga class, but I just realized it overlaps with a required lab session for one of my courses.\n\nSince I cannot attend the Tuesday session, I was hoping to switch to a different class time instead.\n\nCould you let me know what other yoga sessions are currently available this semester? I would appreciate any help finding a time that works with my schedule. Thank you.\n\nSincerely,\n[Your Name]",
+      "id": 19
+    },
+    "disc": {
+      "subject": "public health",
+      "professor": "Dr. Osei",
+      "professorGender": "male",
+      "prompt": "We've been discussing whether employers should be allowed to require employees to get vaccinated against seasonal illnesses like the flu as a condition of employment. Some argue this policy protects public health in shared workplaces, while others argue it infringes on personal medical decisions. Should employers be allowed to require vaccination as a condition of employment? Why or why not?",
+      "classmates": [
+        {
+          "name": "Grace",
+          "gender": "female",
+          "opinion": "I think employers should be allowed to require this, especially in workplaces like hospitals or schools where employees interact closely with vulnerable populations. Protecting the health of coworkers and the public should take priority in these specific settings, and reasonable medical exemptions can still be provided for people who genuinely need them."
+        },
+        {
+          "name": "Victor",
+          "gender": "male",
+          "opinion": "I disagree with employers mandating this broadly. Medical decisions should remain between a person and their doctor, not their employer. There are less invasive alternatives, like promoting optional vaccination or offering sick leave that makes staying home when ill more feasible, that address the underlying health concern without controlling personal medical choices."
+        }
+      ],
+      "exampleResponse": "Both classmates raise important considerations, but I think the right answer depends heavily on the specific workplace involved rather than a single blanket policy. I agree with Grace that in high-risk settings like hospitals, where employees regularly interact with vulnerable patients, the public health benefit can reasonably outweigh personal preference, particularly when exemptions remain available. However, I also share some of Victor's concern about extending this requirement to workplaces where the public health stakes are considerably lower, such as a typical office job. In those cases, Victor's suggestion of encouraging vaccination through incentives and improving sick leave policies seems like a more proportionate response that respects personal medical autonomy while still supporting overall workplace health.",
+      "id": 19
+    }
+  },
+  "speaking": {
+    "lr": {
+      "location": "Car Rental Counter",
+      "icon": "🚗",
+      "photoSlug": "car-rental",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/8/86/Car_rental_office.jpg",
+      "speaker": "male",
+      "introText": "You are learning how to assist customers at a car rental counter. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "text": "Welcome, how can I help you today.",
+          "length": "short",
+          "recordSeconds": 8,
+          "id": 1
+        },
+        {
+          "text": "May I see your license and reservation confirmation.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 2
+        },
+        {
+          "text": "Your car comes with a full tank of gas.",
+          "length": "medium",
+          "recordSeconds": 8,
+          "id": 3
+        },
+        {
+          "text": "Please return the vehicle by six in the evening.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 4
+        },
+        {
+          "text": "Insurance coverage can be added for a small daily fee.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 5
+        },
+        {
+          "text": "The vehicle is parked in space twelve near the exit.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 6
+        },
+        {
+          "text": "If you need roadside assistance, call the number on your rental agreement.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 7
+        }
+      ],
+      "id": 19
+    },
+    "interview": {
+      "topic": "Technology and Friendship",
+      "icon": "📱",
+      "photoSlug": "technology-friends",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/8/85/Friends_using_phones.jpg",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about technology and friendships. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "connector": "",
+          "text": "Thank you for joining me today. First, how has technology changed the way you stay in touch with friends?",
+          "recordSeconds": 45,
+          "id": 1
+        },
+        {
+          "connector": "That's interesting.",
+          "text": "That's interesting. Do you think online friendships can be as meaningful as in-person ones? Why or why not?",
+          "recordSeconds": 45,
+          "id": 2
+        },
+        {
+          "connector": "I see what you mean.",
+          "text": "I see what you mean. What's one downside of relying heavily on technology to maintain friendships?",
+          "recordSeconds": 45,
+          "id": 3
+        },
+        {
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think people generally communicate better in person or through text? Why?",
+          "recordSeconds": 45,
+          "id": 4
+        }
+      ],
+      "id": 19
+    }
+  }
+}

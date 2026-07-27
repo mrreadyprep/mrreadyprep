@@ -1,0 +1,1797 @@
+{
+  "id": 14,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 40,
+          "topic": "The Origins of Democracy",
+          "category": "Political Science",
+          "paragraph": "Ancient Athens is frequently credited with developing one of the earliest known forms of democratic governance. Under this system, eligible citizens could participate directly in political decisions by attending assemblies and voting on important matters affecting their community. This arrangement differed dramatically from the monarchies and oligarchies that dominated most other ancient societies, where political power remained concentrated among a small ruling class. Although Athenian democracy excluded women, enslaved people, and foreigners from participation, it nevertheless established fundamental principles that continued influencing political philosophy for centuries afterward. Many modern democratic systems still incorporate concepts that trace their origins back to these early Athenian experiments in self-governance.",
+          "blanks": [
+            {
+              "word": "eligible",
+              "visible": "elig",
+              "hidden": "ible"
+            },
+            {
+              "word": "decisions",
+              "visible": "deci",
+              "hidden": "sions"
+            },
+            {
+              "word": "affecting",
+              "visible": "affe",
+              "hidden": "cting"
+            },
+            {
+              "word": "monarchies",
+              "visible": "monar",
+              "hidden": "chies"
+            },
+            {
+              "word": "remained",
+              "visible": "rema",
+              "hidden": "ined"
+            },
+            {
+              "word": "excluded",
+              "visible": "excl",
+              "hidden": "uded"
+            },
+            {
+              "word": "established",
+              "visible": "estab",
+              "hidden": "lished"
+            },
+            {
+              "word": "philosophy",
+              "visible": "philo",
+              "hidden": "sophy"
+            },
+            {
+              "word": "incorporate",
+              "visible": "incor",
+              "hidden": "porate"
+            },
+            {
+              "word": "experiments",
+              "visible": "exper",
+              "hidden": "iments"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Volunteer Shift Cancellation",
+          "subtitle": "Hi Marcus,",
+          "text": "I'm writing to let you know that the food bank volunteer shift you signed up for this Saturday has been canceled due to a scheduling conflict with a building inspection. We apologize for any inconvenience and would love to have you join us instead next Saturday at the same time, nine to noon. If that doesn't work for your schedule, please reply to this email and we'll find another shift that fits better. Thank you for your continued support of our organization.",
+          "questions": [
+            {
+              "question": "Why was the original shift canceled?",
+              "options": [
+                "Not enough volunteers signed up",
+                "A scheduling conflict with a building inspection",
+                "The food bank ran out of supplies",
+                "Bad weather was forecasted"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is Marcus invited to do instead?",
+              "options": [
+                "Volunteer at a different location",
+                "Join the same shift next Saturday",
+                "Donate money instead of time",
+                "Wait until next month"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should Marcus do if the new time does not work?",
+              "options": [
+                "Ignore the email",
+                "Reply so another shift can be found",
+                "Cancel his volunteer registration",
+                "Call the food bank manager"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 66
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Utility Bill Payment Plan Approval",
+          "subtitle": "Dear Mr. Jennings,",
+          "text": "Your request for a payment plan on your outstanding electric bill has been approved. Your remaining balance of two hundred forty dollars will be divided into four equal monthly installments of sixty dollars, added to your regular monthly bill starting next month. Please note that your service will not be interrupted as long as each installment is paid on time. If a payment is missed, the full remaining balance will become due immediately and service may be suspended.",
+          "questions": [
+            {
+              "question": "What was approved in this email?",
+              "options": [
+                "A refund request",
+                "A payment plan for an outstanding bill",
+                "A service upgrade",
+                "A rate reduction"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens if a payment is missed?",
+              "options": [
+                "A small late fee is added",
+                "The full remaining balance becomes due immediately",
+                "The plan is extended automatically",
+                "Nothing changes"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How much is each monthly installment?",
+              "options": [
+                "Forty dollars",
+                "Sixty dollars",
+                "Two hundred forty dollars",
+                "Twenty dollars"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 67
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Museum Membership Benefits Update",
+          "subtitle": "Dear Member,",
+          "text": "We're excited to announce new benefits for all Gold Level members, effective next month. Members will now receive two free guest passes per visit instead of one, along with a fifteen percent discount at the museum café. Additionally, Gold members will have early access to special exhibitions one full week before they open to the general public. These changes are our way of thanking you for your continued support. No action is needed on your part to receive these new benefits.",
+          "questions": [
+            {
+              "question": "What is the purpose of this email?",
+              "options": [
+                "To request a membership renewal",
+                "To announce new membership benefits",
+                "To close the museum temporarily",
+                "To advertise a new exhibition"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is one of the new benefits mentioned?",
+              "options": [
+                "Free parking",
+                "Two free guest passes per visit",
+                "Unlimited café visits",
+                "A private tour guide"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What must members do to receive these benefits?",
+              "options": [
+                "Upgrade their membership level",
+                "Nothing, no action is needed",
+                "Renew their membership early",
+                "Contact the membership office"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 68
+        }
+      ],
+      "ap": [
+        {
+          "title": "Echolocation in Bats",
+          "passage": "Many species of bats navigate and hunt in complete darkness using a biological sonar system known as echolocation. By emitting rapid pulses of high-frequency sound, often far beyond the range of human hearing, bats can construct a detailed acoustic picture of their surroundings based on the returning echoes.\n\nEach pulse travels outward until it strikes an object, such as an insect or a tree branch, and bounces back to the bat's sensitive ears. By analyzing subtle differences in timing, pitch, and intensity between the outgoing pulse and the returning echo, a bat can determine the distance, size, texture, and even the movement direction of the object with astonishing precision.\n\nDifferent bat species have evolved distinct echolocation strategies suited to their particular hunting styles and habitats. Some species emit long, low-frequency calls suited to open spaces, while others produce short, high-frequency bursts better suited to navigating cluttered forest environments filled with obstacles.\n\nResearchers studying echolocation have found practical applications for this biological system beyond zoology. Engineers have drawn inspiration from bat echolocation when designing improved sonar and radar technologies, as well as navigational aids for visually impaired individuals.",
+          "passage_marked": "Many species of bats navigate and hunt in complete darkness using a biological sonar system known as echolocation. By emitting rapid pulses of high-frequency sound, often far beyond the range of human hearing, bats can construct a detailed acoustic picture of their surroundings based on the returning echoes. [A]\n\nEach pulse travels outward until it strikes an object, such as an insect or a tree branch, and bounces back to the bat's sensitive ears. [B] By analyzing subtle differences in timing, pitch, and intensity between the outgoing pulse and the returning echo, a bat can determine the distance, size, texture, and even the movement direction of the object with astonishing precision.\n\nDifferent bat species have evolved distinct echolocation strategies suited to their particular hunting styles and habitats. Some species emit long, low-frequency calls suited to open spaces, while others produce short, high-frequency bursts better suited to navigating cluttered forest environments filled with obstacles. [C]\n\nResearchers studying echolocation have found practical applications for this biological system beyond zoology. [D] Engineers have drawn inspiration from bat echolocation when designing improved sonar and radar technologies, as well as navigational aids for visually impaired individuals.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'astonishing' in the passage is closest in meaning to",
+              "options": [
+                "ordinary",
+                "questionable",
+                "remarkable",
+                "limited"
+              ],
+              "answer": 2
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "How do bats primarily navigate in the dark?",
+              "options": [
+                "By using their sense of smell",
+                "By using echolocation",
+                "By following other bats",
+                "By memorizing fixed routes"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What can a bat determine by analyzing an echo?",
+              "options": [
+                "Only the distance of an object",
+                "Distance, size, texture, and movement direction",
+                "The color of an object",
+                "The temperature of an object"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "Why might a bat species evolve short, high-frequency calls?",
+              "options": [
+                "To conserve energy at night",
+                "To better navigate cluttered forest environments",
+                "To communicate with other bat species",
+                "To avoid detection by predators"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This variation reflects how natural selection has fine-tuned echolocation for specific ecological needs.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 27
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 41,
+          "topic": "The Physics of Rainbows",
+          "category": "Physics",
+          "paragraph": "Rainbows form through a fascinating combination of light refraction, reflection, and dispersion occurring within countless individual raindrops. As sunlight enters a raindrop, it bends slightly and separates into its different component wavelengths, each corresponding to a different color. This separation happens because different wavelengths of light travel through water at subtly different speeds, causing them to bend at slightly different angles. After reflecting off the inside surface of the raindrop, the separated light exits and travels toward an observer's eyes, creating the familiar arc of colors. Because every observer views a slightly different collection of raindrops, no two people ever technically see exactly the same rainbow.",
+          "blanks": [
+            {
+              "word": "sunlight",
+              "visible": "sunl",
+              "hidden": "ight"
+            },
+            {
+              "word": "slightly",
+              "visible": "slig",
+              "hidden": "htly"
+            },
+            {
+              "word": "wavelengths",
+              "visible": "wavel",
+              "hidden": "engths"
+            },
+            {
+              "word": "separation",
+              "visible": "separ",
+              "hidden": "ation"
+            },
+            {
+              "word": "causing",
+              "visible": "cau",
+              "hidden": "sing"
+            },
+            {
+              "word": "separated",
+              "visible": "sepa",
+              "hidden": "rated"
+            },
+            {
+              "word": "observer",
+              "visible": "obse",
+              "hidden": "rver"
+            },
+            {
+              "word": "familiar",
+              "visible": "fami",
+              "hidden": "liar"
+            },
+            {
+              "word": "technically",
+              "visible": "techn",
+              "hidden": "ically"
+            },
+            {
+              "word": "rainbow",
+              "visible": "rai",
+              "hidden": "nbow"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "The Economics of Opportunity Cost",
+          "passage": "Opportunity cost is a foundational concept in economics that refers to the value of the next best alternative that must be given up when a choice is made. Because resources such as time, money, and labor are inherently limited, every decision necessarily involves forgoing some other possible use of those same resources.\n\nConsider a simple example: a student who spends an evening studying for an exam gives up the opportunity to spend that same time working a part-time job or relaxing with friends. The opportunity cost of studying, in this case, is not the money spent on textbooks but rather the value of the best alternative activity that was sacrificed.\n\nThis concept applies equally to decisions made by businesses and governments. A company that invests capital into building a new factory forgoes the opportunity to invest that same capital in research and development or in expanding into a new market. Governments face similar tradeoffs when allocating limited public funds among competing priorities such as healthcare, education, and infrastructure.\n\nUnderstanding opportunity cost encourages more thoughtful decision-making by forcing individuals and organizations to explicitly consider what they are giving up, rather than focusing solely on the direct costs and benefits of a single option under consideration.",
+          "passage_marked": "Opportunity cost is a foundational concept in economics that refers to the value of the next best alternative that must be given up when a choice is made. Because resources such as time, money, and labor are inherently limited, every decision necessarily involves forgoing some other possible use of those same resources. [A]\n\nConsider a simple example: a student who spends an evening studying for an exam gives up the opportunity to spend that same time working a part-time job or relaxing with friends. [B] The opportunity cost of studying, in this case, is not the money spent on textbooks but rather the value of the best alternative activity that was sacrificed.\n\nThis concept applies equally to decisions made by businesses and governments. A company that invests capital into building a new factory forgoes the opportunity to invest that same capital in research and development or in expanding into a new market. Governments face similar tradeoffs when allocating limited public funds among competing priorities such as healthcare, education, and infrastructure. [C]\n\nUnderstanding opportunity cost encourages more thoughtful decision-making by forcing individuals and organizations to explicitly consider what they are giving up, rather than focusing solely on the direct costs and benefits of a single option under consideration. [D]",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'forgoing' in the passage is closest in meaning to",
+              "options": [
+                "choosing",
+                "giving up",
+                "increasing",
+                "ignoring"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What is opportunity cost primarily concerned with?",
+              "options": [
+                "The total money spent on a decision",
+                "The value of the next best alternative given up",
+                "The profit earned from an investment",
+                "The time required to complete a task"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "In the student example, what represents the opportunity cost of studying?",
+              "options": [
+                "The price of the textbooks",
+                "The value of the best alternative activity sacrificed",
+                "The grade received on the exam",
+                "The number of hours spent studying"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "How does opportunity cost apply to governments?",
+              "options": [
+                "It does not apply to public spending",
+                "Governments must weigh tradeoffs among competing priorities",
+                "Governments are exempt from resource limitations",
+                "It only applies to private businesses"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Rather than simply asking what something costs in money, this concept asks what else could have been gained instead.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 0
+            }
+          ],
+          "id": 28
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 42,
+          "topic": "The Great Irish Famine",
+          "category": "History",
+          "paragraph": "Ireland experienced a devastating famine during the mid-nineteenth century that fundamentally altered the country's population and social structure. A fungal disease destroyed the potato crop that a large portion of the rural population depended on almost entirely for sustenance. As the crop failures continued for several consecutive years, widespread starvation and disease spread rapidly throughout the countryside, killing an enormous number of people. The catastrophe also triggered a massive wave of emigration, as desperate families sought better opportunities in other countries. This period permanently reshaped Irish society and left lasting demographic consequences that persisted for generations afterward.",
+          "blanks": [
+            {
+              "word": "disease",
+              "visible": "dis",
+              "hidden": "ease"
+            },
+            {
+              "word": "sustenance",
+              "visible": "suste",
+              "hidden": "nance"
+            },
+            {
+              "word": "consecutive",
+              "visible": "conse",
+              "hidden": "cutive"
+            },
+            {
+              "word": "rapidly",
+              "visible": "rap",
+              "hidden": "idly"
+            },
+            {
+              "word": "enormous",
+              "visible": "enor",
+              "hidden": "mous"
+            },
+            {
+              "word": "massive",
+              "visible": "mas",
+              "hidden": "sive"
+            },
+            {
+              "word": "opportunities",
+              "visible": "oppor",
+              "hidden": "tunities"
+            },
+            {
+              "word": "reshaped",
+              "visible": "resh",
+              "hidden": "aped"
+            },
+            {
+              "word": "consequences",
+              "visible": "conse",
+              "hidden": "quences"
+            },
+            {
+              "word": "afterward",
+              "visible": "afte",
+              "hidden": "rward"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Job Interview Rescheduling Request",
+          "subtitle": "Dear Ms. Alvarado,",
+          "text": "Thank you again for your interest in the marketing coordinator position. Unfortunately, we need to reschedule your interview originally set for tomorrow at ten due to an unexpected conflict with the hiring manager's calendar. Would either Thursday at two or Friday at eleven work for you instead? Please reply with your preference at your earliest convenience, and we will send an updated calendar invitation. We apologize for any inconvenience this change may cause.",
+          "questions": [
+            {
+              "question": "Why is the interview being rescheduled?",
+              "options": [
+                "The candidate requested a new time",
+                "A conflict with the hiring manager's calendar",
+                "The position was filled by someone else",
+                "The company office is closed"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is Ms. Alvarado asked to do?",
+              "options": [
+                "Submit a new resume",
+                "Reply with her preferred time",
+                "Call the office immediately",
+                "Reapply for the position"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What will happen after she replies?",
+              "options": [
+                "An updated calendar invitation will be sent",
+                "The interview will be canceled",
+                "She will be automatically hired",
+                "No further communication will occur"
+              ],
+              "answer": 0
+            }
+          ],
+          "id": 69
+        },
+        {
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Streaming Service Password Reset",
+          "subtitle": "Hello,",
+          "text": "We received a request to reset the password for your streaming account. If you made this request, click the secure link below within the next twenty-four hours to create a new password. If you did not request this change, no action is necessary and your current password will remain unchanged. For your security, this link can only be used once and will expire automatically after the time limit passes. Contact customer support if you notice any suspicious activity on your account.",
+          "questions": [
+            {
+              "question": "What should the customer do if they did request the reset?",
+              "options": [
+                "Ignore the email",
+                "Click the link within twenty-four hours",
+                "Call customer support immediately",
+                "Create a new account"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens if the customer did not request the reset?",
+              "options": [
+                "The account is automatically locked",
+                "No action is necessary",
+                "The password changes anyway",
+                "A fee is charged"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How many times can the reset link be used?",
+              "options": [
+                "Unlimited times",
+                "Only once",
+                "Twice",
+                "Until it expires after a week"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 70
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 287,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/287.mp3",
+          "transcript": "Is this jacket machine washable?",
+          "context": "A customer asks a store employee.",
+          "options": [
+            "Actually, it's recommended to dry clean it.",
+            "The jacket comes in three colors.",
+            "This style is very popular this season.",
+            "It's made from a cotton blend."
+          ],
+          "answer": 1,
+          "speaker": "female",
+          "_uid": "36-287"
+        },
+        {
+          "id": 288,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/288.mp3",
+          "transcript": "Could you double-check the total on this receipt?",
+          "context": "A customer speaks to a cashier.",
+          "options": [
+            "Of course, let me recalculate that for you.",
+            "We accept both cash and card.",
+            "The store closes in an hour.",
+            "Receipts can be reprinted at customer service."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "36-288"
+        },
+        {
+          "id": 289,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/289.mp3",
+          "transcript": "I'd like to schedule a checkup for next week.",
+          "context": "A patient calls a doctor's clinic.",
+          "options": [
+            "Sure, what day works best for you?",
+            "The clinic is open Monday through Friday.",
+            "You'll need to fast before your appointment.",
+            "Our doctors specialize in family medicine."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "37-289"
+        },
+        {
+          "id": 290,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/290.mp3",
+          "transcript": "Excuse me, do you know if this elevator is working?",
+          "context": "A visitor asks a building employee.",
+          "options": [
+            "Yes, it should be running normally today.",
+            "The building has six floors.",
+            "There's also a stairwell nearby.",
+            "Maintenance checked it last week."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "37-290"
+        },
+        {
+          "id": 291,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/291.mp3",
+          "transcript": "Could I get a copy of my transcript sent to another school?",
+          "context": "A student asks a registrar's office employee.",
+          "options": [
+            "Sure, just fill out this request form.",
+            "Transcripts list all completed courses.",
+            "The registrar's office opens at eight.",
+            "Most transfers take a few weeks."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "37-291"
+        },
+        {
+          "id": 292,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/292.mp3",
+          "transcript": "I think I was overcharged for my last visit.",
+          "context": "A patient speaks to a billing office employee.",
+          "options": [
+            "Let me pull up your account and take a look.",
+            "Our clinic accepts most insurance plans.",
+            "Billing statements are sent out monthly.",
+            "You can pay online through our portal."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "37-292"
+        },
+        {
+          "id": 293,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/293.mp3",
+          "transcript": "Do you have any vegetarian options on the menu?",
+          "context": "A customer asks a restaurant server.",
+          "options": [
+            "Yes, we have quite a few to choose from.",
+            "The restaurant opened five years ago.",
+            "Our specials change every season.",
+            "We also offer outdoor seating."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "37-293"
+        },
+        {
+          "id": 294,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/294.mp3",
+          "transcript": "Could you water my plants while I'm away this weekend?",
+          "context": "A person asks a neighbor.",
+          "options": [
+            "Of course, just leave me a key.",
+            "Plants need sunlight to grow well.",
+            "I'm going out of town too.",
+            "Your garden looks lovely this year."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "37-294"
+        },
+        {
+          "id": 295,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/295.mp3",
+          "transcript": "I noticed this shirt is missing a button.",
+          "context": "A customer speaks to a store employee.",
+          "options": [
+            "I'm sorry about that, let's exchange it for a new one.",
+            "This shirt is one of our best sellers.",
+            "Buttons are sewn on individually.",
+            "The shirt is made of soft cotton."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "37-295"
+        },
+        {
+          "id": 296,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/296.mp3",
+          "transcript": "Is there a quieter place I could study around here?",
+          "context": "A student asks a library staff member.",
+          "options": [
+            "Yes, the study rooms upstairs are usually quiet.",
+            "The library has a large collection of journals.",
+            "Study rooms can be booked in advance.",
+            "This floor tends to be busy in the afternoon."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "37-296"
+        }
+      ],
+      "conv": [
+        {
+          "id": 66,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/66.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Do you know if the campus shuttle still runs this late?"
+            },
+            {
+              "speaker": "female",
+              "text": "I believe it runs until midnight on weekdays."
+            },
+            {
+              "speaker": "male",
+              "text": "Good, I have a late class tonight and don't want to walk back alone."
+            },
+            {
+              "speaker": "female",
+              "text": "Makes sense, just check the app for the exact schedule."
+            },
+            {
+              "speaker": "male",
+              "text": "Will do, thanks."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the man concerned about?",
+              "options": [
+                "Missing his class",
+                "Walking back alone late at night",
+                "Losing his student ID",
+                "Finding a parking spot"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman recommend?",
+              "options": [
+                "Taking a taxi instead",
+                "Checking the shuttle app for the schedule",
+                "Waiting until morning",
+                "Asking a friend for a ride"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 67,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/67.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I'm having trouble deciding between two elective courses."
+            },
+            {
+              "speaker": "male",
+              "text": "What are the options?"
+            },
+            {
+              "speaker": "female",
+              "text": "One is a photography class and the other is an intro to psychology course."
+            },
+            {
+              "speaker": "male",
+              "text": "Which one fits better with your schedule?"
+            },
+            {
+              "speaker": "female",
+              "text": "Actually the photography class does, since it meets in the evening."
+            },
+            {
+              "speaker": "male",
+              "text": "Then that might be the easier choice logistically."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman trying to decide?",
+              "options": [
+                "Which major to declare",
+                "Which elective course to take",
+                "Whether to drop a class",
+                "Which professor to choose"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What factor does the man ask about?",
+              "options": [
+                "Cost of the course",
+                "How the course fits her schedule",
+                "Which course is easier",
+                "Which course has better reviews"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 68,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/68.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Did the printer in the library finally get fixed?"
+            },
+            {
+              "speaker": "female",
+              "text": "Yes, I used it yesterday and it worked fine."
+            },
+            {
+              "speaker": "male",
+              "text": "That's a relief, I have a paper due tomorrow and needed to print it."
+            },
+            {
+              "speaker": "female",
+              "text": "You should be fine then, just don't wait until the last minute."
+            },
+            {
+              "speaker": "male",
+              "text": "Good advice, I'll head over there this afternoon."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What was the man worried about?",
+              "options": [
+                "Losing his paper file",
+                "Whether the library printer was working",
+                "Finding a library seat",
+                "Submitting his paper late"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman advise?",
+              "options": [
+                "Print early rather than waiting",
+                "Use a different printer entirely",
+                "Ask a classmate to print for him",
+                "Email the paper instead"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 66,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/66.mp3",
+          "speaker": "male",
+          "transcript": "Attention theater patrons: tonight's performance will begin ten minutes later than scheduled due to a brief technical delay backstage. We appreciate your patience and ask that you remain in the lobby until ushers direct you to your seats. Refreshments will remain available for purchase during this short delay.",
+          "questions": [
+            {
+              "question": "Why is the performance delayed?",
+              "options": [
+                "A technical delay backstage",
+                "A cast member is late",
+                "Ticketing issues at the door",
+                "Weather conditions"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What are patrons asked to do?",
+              "options": [
+                "Return to their cars",
+                "Remain in the lobby until directed",
+                "Find their own seats immediately",
+                "Wait outside the theater"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 67,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/67.mp3",
+          "speaker": "female",
+          "transcript": "Attention office staff: the parking garage elevator will be out of service this afternoon for scheduled repairs. Please use the stairwell near the north entrance in the meantime. We expect the elevator to be back in operation by tomorrow morning. Thank you for your patience during this repair work.",
+          "questions": [
+            {
+              "question": "What is out of service?",
+              "options": [
+                "The main building elevator",
+                "The parking garage elevator",
+                "The stairwell",
+                "The north entrance door"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When will the elevator be operational again?",
+              "options": [
+                "Later this afternoon",
+                "By tomorrow morning",
+                "Next week",
+                "It is unknown"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 68,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/68.mp3",
+          "speaker": "male",
+          "transcript": "Attention shoppers: we are pleased to announce that our garden center will now be open an additional two hours on weekends, from eight in the morning until seven in the evening. This change begins this Saturday and will continue throughout the spring season. We hope this extended schedule makes it easier to visit us.",
+          "questions": [
+            {
+              "question": "What change is being announced?",
+              "options": [
+                "A price reduction in the garden center",
+                "Extended weekend hours for the garden center",
+                "A new garden center location",
+                "A garden center closing"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When does this change take effect?",
+              "options": [
+                "Next month",
+                "This Saturday",
+                "At the end of spring",
+                "Immediately, starting today"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 53,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/53.mp3",
+          "speaker": "female",
+          "subject": "Music Theory",
+          "transcript": "Today we're exploring the concept of counterpoint, a foundational technique in Western classical music referring to the relationship between two or more independent melodic lines that sound simultaneously yet remain harmonically interdependent. Unlike homophonic music, where one clear melody is supported by accompanying chords, counterpoint treats each voice as melodically significant in its own right, weaving multiple simultaneous melodies together in a way that still produces a coherent, pleasing harmonic result. This technique reached one of its historical high points during the Baroque period, particularly in the works of Johann Sebastian Bach, whose fugues remain some of the most celebrated examples of contrapuntal writing in the entire classical repertoire. A fugue typically begins with a single melodic idea, called the subject, introduced alone in one voice. Additional voices then enter one at a time, each restating the same subject, often at a different pitch, while the earlier voices continue with new material that complements the newly entered voice. This creates a rich, interwoven musical texture where multiple melodic lines seem to be in constant conversation with one another. Composing effective counterpoint requires carefully balancing several competing considerations simultaneously: each individual voice must maintain a satisfying melodic shape on its own, while the combination of voices at any given moment must also produce acceptable harmonic intervals according to the stylistic conventions of the period. Historically, music theorists developed detailed sets of rules governing these relationships, particularly concerning the treatment of dissonance, which generally needed to be prepared and resolved in specific, predictable ways rather than appearing freely. While strict contrapuntal rules became somewhat less rigid in later musical periods, the underlying principle of interweaving independent yet complementary melodic lines continued to influence composers well beyond the Baroque era, appearing in various forms throughout the Classical, Romantic, and even into some strands of twentieth-century music.",
+          "questions": [
+            {
+              "question": "What is the main topic of the lecture?",
+              "options": [
+                "The biography of Johann Sebastian Bach",
+                "The technique of counterpoint in Western classical music",
+                "The invention of musical notation",
+                "The difference between major and minor keys"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does counterpoint differ from homophonic music?",
+              "options": [
+                "Counterpoint has no melody at all",
+                "Counterpoint treats multiple melodic lines as equally significant, rather than one melody with accompaniment",
+                "Homophonic music uses more instruments",
+                "There is no real difference between the two"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What happens at the beginning of a fugue?",
+              "options": [
+                "All voices enter simultaneously",
+                "A single subject is introduced alone, then restated by additional voices",
+                "The composer introduces several unrelated melodies at once",
+                "A fugue always begins with a chord"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did historical music theorists develop regarding dissonance in counterpoint?",
+              "options": [
+                "Rules requiring it be avoided completely",
+                "Rules for how it should be prepared and resolved",
+                "A method for eliminating harmony",
+                "A system based purely on random chance"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 54,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/54.mp3",
+          "speaker": "male",
+          "subject": "Biology",
+          "transcript": "Today we continue our unit on cellular respiration by focusing on the electron transport chain, the final stage of the process cells use to generate usable energy from glucose. By the time molecules reach this stage, earlier steps, including glycolysis and the citric acid cycle, have already broken down glucose and produced electron carrier molecules, primarily NADH and FADH2, which hold high-energy electrons harvested from the original glucose molecule. The electron transport chain, located in the inner membrane of the mitochondria, consists of a series of protein complexes that pass these high-energy electrons from one complex to the next, somewhat like a bucket brigade. As electrons move through this chain, energy is gradually released at each step, and that released energy is used to pump hydrogen ions across the inner mitochondrial membrane, creating a concentration gradient, with a much higher concentration of hydrogen ions outside the inner membrane than inside. This gradient represents stored potential energy, similar to water held behind a dam. The cell then takes advantage of this stored energy through an enzyme called ATP synthase, which allows hydrogen ions to flow back across the membrane, down their concentration gradient, spinning part of the enzyme like a turbine and using that mechanical energy to attach a phosphate group to ADP, producing ATP, the cell's primary energy currency. This overall process is called chemiosmosis, and it's responsible for generating the vast majority of ATP produced during cellular respiration, far more than glycolysis or the citric acid cycle produce directly. At the very end of the electron transport chain, oxygen serves as the final electron acceptor, combining with the spent electrons and hydrogen ions to form water. This is precisely why oxygen is so essential for most complex life; without it, the electron transport chain would quickly back up, since electrons would have nowhere left to go, halting this highly efficient energy production pathway almost entirely.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "The structure of DNA",
+                "The electron transport chain in cellular respiration",
+                "Photosynthesis in plant cells",
+                "The process of cell division"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What role do NADH and FADH2 play?",
+              "options": [
+                "They directly form ATP without any other steps",
+                "They carry high-energy electrons harvested from glucose to the electron transport chain",
+                "They break down oxygen molecules",
+                "They form the cell membrane"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How does ATP synthase produce ATP?",
+              "options": [
+                "By breaking down glucose directly",
+                "By using energy from hydrogen ions flowing back across the membrane",
+                "By absorbing electrons from oxygen",
+                "By splitting water molecules"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is oxygen essential to this process, according to the talk?",
+              "options": [
+                "It directly produces ATP",
+                "It serves as the final electron acceptor, allowing the chain to continue functioning",
+                "It powers glycolysis",
+                "It creates the mitochondrial membrane"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 297,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/297.mp3",
+          "transcript": "Could you recommend a good hiking trail nearby?",
+          "context": "A visitor asks a park ranger.",
+          "options": [
+            "Sure, the ridge trail has beautiful views.",
+            "The park opens at sunrise.",
+            "We ask visitors to stay on marked trails.",
+            "There's a visitor center near the entrance."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "38-297"
+        },
+        {
+          "id": 298,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/298.mp3",
+          "transcript": "I think my flight got delayed.",
+          "context": "A traveler speaks to an airline employee.",
+          "options": [
+            "Let me check the updated departure time for you.",
+            "The airport has several restaurants.",
+            "Most flights depart on schedule.",
+            "You can check in online ahead of time."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "38-298"
+        },
+        {
+          "id": 299,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/299.mp3",
+          "transcript": "Do you sell replacement parts for this blender?",
+          "context": "A customer asks an appliance store employee.",
+          "options": [
+            "Yes, we can order the part you need.",
+            "This blender has several speed settings.",
+            "We're having a sale on kitchen appliances.",
+            "The blender comes with a warranty."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "38-299"
+        },
+        {
+          "id": 300,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/300.mp3",
+          "transcript": "Could I switch to a different gym class this week?",
+          "context": "A member asks a gym receptionist.",
+          "options": [
+            "Sure, just let me know which class you'd prefer.",
+            "The gym offers over ten class types.",
+            "Classes are included with your membership.",
+            "New members get a free trial week."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "38-300"
+        },
+        {
+          "id": 301,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/301.mp3",
+          "transcript": "I noticed the Wi-Fi password changed.",
+          "context": "A guest speaks to a hotel employee.",
+          "options": [
+            "Sorry about that, here's the updated one.",
+            "The hotel offers free breakfast.",
+            "Wi-Fi is available in every room.",
+            "Our internet speed was recently upgraded."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "38-301"
+        },
+        {
+          "id": 302,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/302.mp3",
+          "transcript": "Would you be able to alter these pants for me?",
+          "context": "A customer asks a tailor.",
+          "options": [
+            "Of course, how much shorter would you like them?",
+            "We also repair jackets and coats.",
+            "The shop has been open for decades.",
+            "Alterations usually take about a week."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "38-302"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 55,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/55.mp3",
+          "speaker": "female",
+          "subject": "History",
+          "transcript": "Today we're examining the Columbian Exchange, the widespread transfer of plants, animals, diseases, and ideas between the Americas and the rest of the world following Christopher Columbus's voyages in the late fifteenth century. This exchange fundamentally reshaped agriculture, diets, and populations on a global scale, arguably more than almost any other single historical event. From the Americas, crops such as maize, potatoes, and tomatoes spread to Europe, Africa, and Asia, where they were eventually integrated into local diets and, in some cases, dramatically improved food security. Potatoes, for instance, became a dietary staple across much of Europe, partly because they could produce more calories per acre than traditional European grains, helping support significant population growth in some regions during the following centuries. Meanwhile, crops and livestock native to Europe and Asia, including wheat, sugarcane, horses, cattle, and pigs, were introduced to the Americas, transforming both the landscape and the economies of the newly connected continents. Horses in particular had a profound impact on many Indigenous societies in North America, fundamentally changing hunting practices, warfare, and mobility across the Great Plains within just a few generations. Unfortunately, the Columbian Exchange also included the transmission of diseases, and this aspect proved catastrophic for Indigenous populations in the Americas. Diseases such as smallpox, measles, and influenza, to which European populations had developed some degree of immunity over centuries of exposure, devastated Indigenous communities who had never previously encountered these pathogens and therefore had no biological immunity whatsoever. Historians estimate that disease, more than warfare or any other single factor, was responsible for the staggering population decline experienced by Indigenous peoples in the decades following European contact, in some regions wiping out the vast majority of the pre-contact population within just a century or two.",
+          "questions": [
+            {
+              "question": "What is the Columbian Exchange primarily referring to?",
+              "options": [
+                "The trade of gold and silver only",
+                "The transfer of plants, animals, diseases, and ideas between the Americas and the rest of the world",
+                "A series of wars fought over territory",
+                "The founding of European colonies in Asia"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why did potatoes become significant in Europe?",
+              "options": [
+                "They were easier to transport than other crops",
+                "They could produce more calories per acre than traditional grains",
+                "They were required by religious law",
+                "They replaced the need for livestock"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How did horses affect Indigenous societies in North America?",
+              "options": [
+                "They had almost no effect on daily life",
+                "They transformed hunting practices, warfare, and mobility",
+                "They were used only for agricultural labor",
+                "They caused a decline in population"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the professor identify as the primary cause of Indigenous population decline?",
+              "options": [
+                "Warfare with European colonizers",
+                "Disease transmitted from Europeans",
+                "Loss of agricultural land",
+                "Forced migration"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 56,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/56.mp3",
+          "speaker": "male",
+          "subject": "Linguistics",
+          "transcript": "Today's topic is language acquisition in early childhood, specifically the debate over how children manage to learn the complex grammatical rules of their native language with relatively little explicit instruction. One influential theory, proposed by linguist Noam Chomsky, suggests that humans possess an innate cognitive capacity specifically dedicated to language, often referred to as universal grammar. According to this view, children aren't simply learning language from scratch through pure imitation; rather, they're born with an inherent understanding of certain grammatical structures common to all human languages, which allows them to rapidly acquire the specific rules of whatever language they're exposed to during a critical developmental period. Chomsky pointed to what's sometimes called the poverty of the stimulus argument as supporting evidence, noting that children are regularly exposed to imperfect, incomplete, and sometimes grammatically inconsistent speech from adults around them, yet somehow still manage to develop a remarkably sophisticated and largely accurate internal grammar by a very young age, seemingly extracting far more structured knowledge than the input alone would appear to provide. Critics of this nativist view, however, argue that modern statistical learning theories can account for language acquisition without necessarily assuming an innate, language-specific module in the brain. These researchers point to evidence that children are highly sensitive to statistical patterns and regularities present in the speech they hear, and that sophisticated general-purpose learning mechanisms, not unlike those used for learning other complex skills, might be sufficient to explain grammar acquisition without requiring a dedicated language faculty. This ongoing debate connects to a broader question in cognitive science regarding the balance between innate biological predispositions and environmental learning in shaping human cognitive development generally, a debate that extends well beyond language into many other areas of developmental psychology.",
+          "questions": [
+            {
+              "question": "What is the main topic of the lecture?",
+              "options": [
+                "The history of written language",
+                "Theories explaining how children acquire grammar",
+                "How adults learn second languages",
+                "The origins of the alphabet"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Chomsky's theory of universal grammar propose?",
+              "options": [
+                "Children learn language purely through imitation",
+                "Humans have an innate capacity specifically for language",
+                "All languages have identical vocabulary",
+                "Grammar rules are entirely arbitrary and unlearnable"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the poverty of the stimulus argument?",
+              "options": [
+                "Children receive too much grammatical instruction",
+                "Children develop sophisticated grammar despite imperfect input from adults",
+                "Poor children learn language more slowly",
+                "Language input has no effect on acquisition"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What do critics of the nativist view argue?",
+              "options": [
+                "Children cannot learn grammar at all",
+                "Statistical learning mechanisms may explain acquisition without an innate language module",
+                "Universal grammar has been definitively proven",
+                "Language acquisition is entirely random"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 303,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/303.mp3",
+          "transcript": "Is it possible to get a same-day appointment?",
+          "context": "A patient calls a veterinary clinic.",
+          "options": [
+            "Let me check if we have any openings today.",
+            "Our clinic treats both cats and dogs.",
+            "Appointments are recommended in advance.",
+            "The clinic is closed on Sundays."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "38-303"
+        },
+        {
+          "id": 304,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/304.mp3",
+          "transcript": "Could you help me set up this new printer?",
+          "context": "An employee asks a coworker.",
+          "options": [
+            "Sure, let's connect it to the network together.",
+            "The printer was delivered this morning.",
+            "We have three printers in the office.",
+            "Printer ink can be expensive."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "38-304"
+        },
+        {
+          "id": 305,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/305.mp3",
+          "transcript": "Do you know if the farmers market is open today?",
+          "context": "A resident asks a neighbor.",
+          "options": [
+            "Yes, it runs every Saturday morning.",
+            "The market sells fresh produce.",
+            "It's located near the town square.",
+            "Vendors set up early in the morning."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "39-305"
+        },
+        {
+          "id": 306,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/306.mp3",
+          "transcript": "I'd like to return this blender, it stopped working.",
+          "context": "A customer speaks to a store employee.",
+          "options": [
+            "I'm sorry to hear that, do you have your receipt?",
+            "This blender model was just released.",
+            "We offer a variety of kitchen appliances.",
+            "Blenders are on sale this week."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "39-306"
+        },
+        {
+          "id": 307,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/307.mp3",
+          "transcript": "Could you tell me how long the wait is for a table?",
+          "context": "A customer asks a restaurant host.",
+          "options": [
+            "It should be about fifteen minutes.",
+            "The restaurant seats up to sixty guests.",
+            "Our chef specializes in seafood.",
+            "We take reservations online."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "39-307"
+        },
+        {
+          "id": 308,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/308.mp3",
+          "transcript": "I think I need to change my seat assignment.",
+          "context": "A passenger speaks to a gate agent.",
+          "options": [
+            "Sure, let me see what's available.",
+            "Boarding will begin shortly.",
+            "The flight is about two hours long.",
+            "Overhead bin space is limited."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "39-308"
+        }
+      ],
+      "conv": [
+        {
+          "id": 69,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/69.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "I just got back from my advising appointment."
+            },
+            {
+              "speaker": "male",
+              "text": "How did it go?"
+            },
+            {
+              "speaker": "female",
+              "text": "Pretty well, we figured out my course plan for the next two years."
+            },
+            {
+              "speaker": "male",
+              "text": "That's great, did you end up adding any new courses?"
+            },
+            {
+              "speaker": "female",
+              "text": "Yeah, I added a statistics course I hadn't considered before."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What was the purpose of the woman's appointment?",
+              "options": [
+                "Applying for financial aid",
+                "Planning her courses for the next two years",
+                "Switching her major",
+                "Requesting a letter of recommendation"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What new course did she add?",
+              "options": [
+                "A statistics course",
+                "A history course",
+                "A writing course",
+                "A biology course"
+              ],
+              "answer": 0
+            }
+          ]
+        },
+        {
+          "id": 70,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/70.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Are you still looking for a roommate for next year?"
+            },
+            {
+              "speaker": "female",
+              "text": "Yes, actually, do you know someone who's interested?"
+            },
+            {
+              "speaker": "male",
+              "text": "My friend from chemistry class mentioned she's looking too."
+            },
+            {
+              "speaker": "female",
+              "text": "That could work out well, could you connect us?"
+            },
+            {
+              "speaker": "male",
+              "text": "Sure, I'll introduce you two this week."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is the woman looking for?",
+              "options": [
+                "A new apartment",
+                "A roommate for next year",
+                "A study partner",
+                "A part-time job"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the man offer to do?",
+              "options": [
+                "Move in with her himself",
+                "Introduce her to his friend",
+                "Help her move",
+                "Lend her money for rent"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 69,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/69.mp3",
+          "speaker": "female",
+          "transcript": "Good evening, passengers. Due to an unexpected mechanical inspection, the departure of flight 219 to Chicago has been delayed by approximately forty-five minutes. Gate agents will provide meal vouchers to affected passengers at the service counter. We apologize for the inconvenience and thank you for your understanding.",
+          "questions": [
+            {
+              "question": "What caused the delay?",
+              "options": [
+                "Bad weather",
+                "An unexpected mechanical inspection",
+                "A gate change",
+                "A crew scheduling issue"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is being offered to passengers?",
+              "options": [
+                "Free upgrades",
+                "Meal vouchers",
+                "Discounted future tickets",
+                "Priority boarding"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 70,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/70.mp3",
+          "speaker": "male",
+          "transcript": "Attention museum visitors: the east wing will close thirty minutes earlier than usual today to accommodate a private event this evening. All other galleries will remain open until our regular closing time. We appreciate your understanding and hope you enjoy the rest of your visit.",
+          "questions": [
+            {
+              "question": "Why is the east wing closing early?",
+              "options": [
+                "A private event this evening",
+                "Routine cleaning",
+                "Low visitor turnout",
+                "A staffing shortage"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What is happening to the other galleries?",
+              "options": [
+                "They are also closing early",
+                "They remain open until the regular time",
+                "They are closed for the day",
+                "They are open only to members"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "The bakery is closing early today.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "mentioned",
+          "that",
+          "the bakery",
+          "was closing early today"
+        ],
+        "distractorChunks": [
+          "is closing early today"
+        ],
+        "responseSuffix": ".",
+        "id": 131
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The invoice was sent to the wrong department.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "explained",
+          "that",
+          "the invoice",
+          "had been sent to the wrong department"
+        ],
+        "distractorChunks": [
+          "has been sent to the wrong department"
+        ],
+        "responseSuffix": ".",
+        "id": 132
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The landlord will raise the rent next year.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "said",
+          "that",
+          "the landlord",
+          "would raise the rent next year"
+        ],
+        "distractorChunks": [
+          "will raise the rent next year"
+        ],
+        "responseSuffix": ".",
+        "id": 133
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The warehouse needs additional staff for the holidays.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "told",
+          "me",
+          "that",
+          "the warehouse",
+          "needed additional staff for the holidays"
+        ],
+        "distractorChunks": [
+          "needs additional staff for the holidays"
+        ],
+        "responseSuffix": ".",
+        "id": 134
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The city council approved the new bike lanes.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "said",
+          "that",
+          "the city council",
+          "had approved the new bike lanes"
+        ],
+        "distractorChunks": [
+          "has approved the new bike lanes"
+        ],
+        "responseSuffix": ".",
+        "id": 135
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The airline canceled several flights due to weather.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "said",
+          "that",
+          "the airline",
+          "had canceled several flights due to weather"
+        ],
+        "distractorChunks": [
+          "has canceled several flights due to weather"
+        ],
+        "responseSuffix": ".",
+        "id": 136
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The clinic can accommodate walk-in patients today.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "mentioned",
+          "that",
+          "the clinic",
+          "could accommodate walk-in patients today"
+        ],
+        "distractorChunks": [
+          "can accommodate walk-in patients today"
+        ],
+        "responseSuffix": ".",
+        "id": 137
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The professor extended the deadline for the essay.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "told",
+          "us",
+          "that",
+          "the professor",
+          "had extended the deadline for the essay"
+        ],
+        "distractorChunks": [
+          "has extended the deadline for the essay"
+        ],
+        "responseSuffix": ".",
+        "id": 138
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The company will relocate its headquarters next year.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "announced",
+          "that",
+          "the company",
+          "would relocate its headquarters next year"
+        ],
+        "distractorChunks": [
+          "will relocate its headquarters next year"
+        ],
+        "responseSuffix": ".",
+        "id": 139
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The vendor increased prices on all produce.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "noted",
+          "that",
+          "the vendor",
+          "had increased prices on all produce"
+        ],
+        "distractorChunks": [
+          "has increased prices on all produce"
+        ],
+        "responseSuffix": ".",
+        "id": 140
+      }
+    ],
+    "email": {
+      "id": 14,
+      "scenario": "You are organizing a charity fundraiser for a local shelter, and you want to invite a community organization's director to participate as a guest speaker.",
+      "recipient": "Ms. Bennett, Director of Hope Center",
+      "subject": "Invitation to speak at our charity fundraiser",
+      "tasks": [
+        {
+          "description": "Introduce the fundraising event and its purpose.",
+          "keywords": [
+            "fundraiser",
+            "charity event",
+            "purpose",
+            "raise money",
+            "shelter"
+          ]
+        },
+        {
+          "description": "Invite her to be a guest speaker.",
+          "keywords": [
+            "guest speaker",
+            "invite",
+            "speak",
+            "join us"
+          ]
+        },
+        {
+          "description": "Ask her to confirm her availability by a certain date.",
+          "keywords": [
+            "confirm",
+            "availability",
+            "let me know",
+            "specific date"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Ms. Bennett,\n\nI am organizing a charity fundraiser next month to raise money and support for our local homeless shelter, and I am reaching out because I would love for you to be involved. The event will include a dinner, a silent auction, and short presentations about the shelter's mission and impact on the community.\n\nGiven your extensive experience running the Hope Center, I believe your insights would be incredibly valuable to our guests, and I would like to formally invite you to join us as a guest speaker for the evening.\n\nWould you be available to speak for about fifteen minutes about your organization's work? If so, could you please confirm your availability by August 10th so we can finalize the event program? Thank you very much for considering this invitation, and I hope you can join us.\n\nSincerely,\n[Your Name]"
+    },
+    "disc": {
+      "id": 14,
+      "subject": "public administration",
+      "professor": "Dr. Mensah",
+      "professorGender": "male",
+      "prompt": "Your public administration professor is examining approaches to social welfare policy. Write a post responding to the professor's question.\n\nDr. Mensah: This week we have been comparing two approaches to social welfare: universal basic income, which provides every citizen with a regular, unconditional cash payment regardless of income or employment status, and targeted welfare programs, which direct assistance specifically to those who demonstrate financial need. Supporters of universal basic income argue that it simplifies bureaucracy, reduces stigma, and provides a safety net as automation displaces workers. Critics argue that targeted programs are more cost-effective because they concentrate limited resources on those who need help most. Before our next class, please respond to this question: Should governments implement universal basic income, or should they continue relying on targeted welfare programs?",
+      "classmates": [
+        {
+          "name": "Dmitri",
+          "gender": "male",
+          "opinion": "I support universal basic income because it eliminates many of the inefficiencies and indignities associated with traditional welfare systems. Means-tested programs require extensive bureaucracy to verify eligibility, which is expensive to administer and often excludes people who need help but fall just outside strict qualification criteria. Universal basic income removes this stigma entirely, since everyone receives the same payment regardless of circumstance. As automation continues to eliminate jobs across many industries, I believe a guaranteed income will become essential for maintaining economic stability and giving people the security to pursue education or entrepreneurship without fear of falling into poverty. Several pilot programs have already shown promising results in reducing poverty and improving well-being."
+        },
+        {
+          "name": "Petra",
+          "gender": "female",
+          "opinion": "I think targeted welfare programs remain the more responsible and cost-effective approach. Government budgets are limited, and providing the same payment to wealthy citizens who do not need assistance as to those in poverty seems like a significant waste of public resources. Targeted programs allow governments to concentrate greater support on the people who genuinely need it most, such as low-income families, the elderly, or people with disabilities. While bureaucracy can be improved, that is a solvable administrative problem rather than a reason to abandon targeting altogether. I believe reforming and streamlining existing welfare programs would achieve better outcomes than replacing them entirely with a costly universal payment given to everyone."
+        }
+      ],
+      "exampleResponse": "Welfare policy design involves balancing efficiency, fairness, and cost, making this a genuinely difficult tradeoff. Whether universal basic income or targeted welfare programs serve society better is worth considering from a practical standpoint. While I see where Petra is coming from when she argues that targeting resources toward those most in need is more cost-effective than paying everyone equally, I would argue that the bureaucratic costs and exclusion errors of targeted systems are often underestimated. In this respect, I am inclined to agree with Dmitri, who emphasizes that universal basic income removes stigma and could provide crucial stability as automation reshapes the job market. For example, several basic income pilot programs have shown recipients using the funds to pursue further education or start small businesses rather than simply surviving. A carefully designed universal payment, funded through progressive taxation, could ultimately reduce poverty more effectively than a bureaucratic patchwork of targeted programs."
+    }
+  },
+  "speaking": {
+    "lr": {
+      "id": 14,
+      "location": "Escape Room Front Desk",
+      "icon": "🔐",
+      "speaker": "female",
+      "introText": "You are learning how to welcome guests to an escape room. Listen to the speaker and repeat what she says. Repeat only once.",
+      "sentences": [
+        {
+          "id": 1,
+          "text": "Welcome to our escape room.",
+          "length": "short",
+          "recordSeconds": 8
+        },
+        {
+          "id": 2,
+          "text": "Your group has sixty minutes to escape.",
+          "length": "medium",
+          "recordSeconds": 8
+        },
+        {
+          "id": 3,
+          "text": "Please store your bags in these lockers.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 4,
+          "text": "Three hints are available during your game.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 5,
+          "text": "A staff member will explain the rules briefly.",
+          "length": "medium",
+          "recordSeconds": 10
+        },
+        {
+          "id": 6,
+          "text": "Cameras inside the room let us monitor your progress at all times.",
+          "length": "long",
+          "recordSeconds": 12
+        },
+        {
+          "id": 7,
+          "text": "Photos are allowed only after your session has completely finished.",
+          "length": "long",
+          "recordSeconds": 12
+        }
+      ]
+    },
+    "interview": {
+      "id": 14,
+      "topic": "Personal Finance",
+      "icon": "💰",
+      "speaker": "male",
+      "introText": "You have agreed to take part in a research study about personal finance and money management. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "id": 1,
+          "connector": "",
+          "text": "Thank you for joining me today. Let's start with a simple question. How do you usually manage your personal budget and expenses?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 2,
+          "connector": "Interesting.",
+          "text": "Interesting. Do you prefer saving your money for the future or spending it on things you enjoy right now?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 3,
+          "connector": "I see.",
+          "text": "I see. Some people think that schools should teach students about personal finance and money management. What is your opinion on this?",
+          "recordSeconds": 45
+        },
+        {
+          "id": 4,
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you believe that young people today are better at managing money than previous generations? Why or why not?",
+          "recordSeconds": 45
+        }
+      ]
+    }
+  }
+}

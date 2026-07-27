@@ -1,0 +1,1749 @@
+{
+  "id": 17,
+  "reading": {
+    "module1": {
+      "ctw": [
+        {
+          "id": 49,
+          "topic": "The Renaissance in Florence",
+          "category": "Art History",
+          "paragraph": "Florence emerged as one of the most influential centers of artistic and intellectual achievement during the Renaissance period. Wealthy merchant families in the city provided crucial financial support to talented painters, sculptors, and architects, enabling them to pursue ambitious creative projects. This generous patronage system allowed numerous artists to experiment with innovative techniques, including improved methods for creating realistic perspective and dramatic lighting effects. The concentration of artistic talent in Florence during this period produced an extraordinary collection of masterpieces that continue attracting visitors from around the world today. Historians frequently point to this remarkable flourishing of creativity as a defining example of how patronage can transform an entire cultural landscape.",
+          "blanks": [
+            {
+              "word": "Wealthy",
+              "visible": "Wea",
+              "hidden": "lthy"
+            },
+            {
+              "word": "financial",
+              "visible": "fina",
+              "hidden": "ncial"
+            },
+            {
+              "word": "enabling",
+              "visible": "enab",
+              "hidden": "ling"
+            },
+            {
+              "word": "patronage",
+              "visible": "patr",
+              "hidden": "onage"
+            },
+            {
+              "word": "including",
+              "visible": "incl",
+              "hidden": "uding"
+            },
+            {
+              "word": "perspective",
+              "visible": "persp",
+              "hidden": "ective"
+            },
+            {
+              "word": "extraordinary",
+              "visible": "extra",
+              "hidden": "ordinary"
+            },
+            {
+              "word": "attracting",
+              "visible": "attra",
+              "hidden": "cting"
+            },
+            {
+              "word": "creativity",
+              "visible": "creat",
+              "hidden": "ivity"
+            },
+            {
+              "word": "landscape",
+              "visible": "land",
+              "hidden": "scape"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Pool Closed for Cleaning",
+          "subtitle": "",
+          "text": "The community pool will be closed today from noon until four for routine chemical cleaning.\n\nThe pool deck and lounge chairs will remain accessible during this time, but swimming is not permitted.\n\nNormal pool hours will resume at four thirty.",
+          "questions": [
+            {
+              "question": "Why is the pool closed today?",
+              "options": [
+                "A power outage",
+                "Routine chemical cleaning",
+                "A private event",
+                "Storm damage"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is still accessible during the closure?",
+              "options": [
+                "The swimming area",
+                "The pool deck and lounge chairs",
+                "The changing rooms only",
+                "Nothing is accessible"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 81
+        },
+        {
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "Construction Notice: Sidewalk Closure",
+          "subtitle": "",
+          "text": "The sidewalk on the north side of Elm Street will be closed for repaving from Monday through Wednesday of this week.\n\nPedestrians should use the south side sidewalk instead.\n\nWork is scheduled to be completed by Thursday morning, weather permitting.",
+          "questions": [
+            {
+              "question": "Why is the sidewalk closed?",
+              "options": [
+                "A parade is taking place",
+                "It is being repaved",
+                "A tree fell on it",
+                "A water main broke"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What are pedestrians advised to do?",
+              "options": [
+                "Avoid Elm Street entirely",
+                "Use the south side sidewalk",
+                "Wait until Thursday to walk there",
+                "Take a detour through a nearby park"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 82
+        },
+        {
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Fire Alarm Testing Today",
+          "subtitle": "",
+          "text": "Routine fire alarm testing will take place throughout the building today between ten and eleven in the morning.\n\nThe alarm will sound briefly several times during this window, but evacuation is not required.\n\nWe apologize for any disruption this may cause to your workday.",
+          "questions": [
+            {
+              "question": "What is happening in the building today?",
+              "options": [
+                "A real fire emergency",
+                "Routine fire alarm testing",
+                "A power shutdown",
+                "A scheduled fire drill requiring evacuation"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What should occupants do when the alarm sounds?",
+              "options": [
+                "Evacuate immediately",
+                "No evacuation is required",
+                "Call building security",
+                "Leave through the nearest stairwell"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 83
+        }
+      ],
+      "ap": [
+        {
+          "title": "The Origins of the Modern Olympic Games",
+          "passage": "The modern Olympic Games trace their origins to the efforts of a French educator named Pierre de Coubertin, who in the late nineteenth century sought to revive the ancient Greek tradition of athletic competition as a means of promoting international peace and cultural exchange. The first modern Games were held in Athens in 1896, featuring athletes from just fourteen nations competing in a limited number of events.\n\nCoubertin believed that competitive sport could serve a purpose beyond simple entertainment, fostering mutual understanding and respect among nations whose relationships were often strained by political rivalry. This philosophy, sometimes referred to as Olympism, emphasized the value of participation and fair competition over the pursuit of victory alone.\n\nOver the following century, the Games expanded dramatically in scale, eventually growing to include thousands of athletes representing well over one hundred countries and encompassing dozens of distinct sports. The Winter Olympics were introduced in 1924, providing a dedicated venue for snow and ice sports that had not been well accommodated within the original summer format.\n\nDespite occasional disruptions caused by world wars, political boycotts, and, more recently, global health crises, the Olympic Games have remained a consistent symbol of international cooperation and athletic achievement. Modern host cities continue to invest enormous resources into hosting the event, viewing it as an opportunity to showcase their culture and infrastructure to a worldwide audience.",
+          "passage_marked": "The modern Olympic Games trace their origins to the efforts of a French educator named Pierre de Coubertin, who in the late nineteenth century sought to revive the ancient Greek tradition of athletic competition as a means of promoting international peace and cultural exchange. The first modern Games were held in Athens in 1896, featuring athletes from just fourteen nations competing in a limited number of events. [A]\n\nCoubertin believed that competitive sport could serve a purpose beyond simple entertainment, fostering mutual understanding and respect among nations whose relationships were often strained by political rivalry. [B] This philosophy, sometimes referred to as Olympism, emphasized the value of participation and fair competition over the pursuit of victory alone.\n\nOver the following century, the Games expanded dramatically in scale, eventually growing to include thousands of athletes representing well over one hundred countries and encompassing dozens of distinct sports. The Winter Olympics were introduced in 1924, providing a dedicated venue for snow and ice sports that had not been well accommodated within the original summer format. [C]\n\nDespite occasional disruptions caused by world wars, political boycotts, and, more recently, global health crises, the Olympic Games have remained a consistent symbol of international cooperation and athletic achievement. [D] Modern host cities continue to invest enormous resources into hosting the event, viewing it as an opportunity to showcase their culture and infrastructure to a worldwide audience.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'strained' in the passage is closest in meaning to",
+              "options": [
+                "strengthened",
+                "simplified",
+                "ignored",
+                "made tense"
+              ],
+              "answer": 3
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "Who is credited with reviving the modern Olympic Games?",
+              "options": [
+                "A Greek athlete",
+                "Pierre de Coubertin",
+                "A Roman emperor",
+                "An American businessman"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "What did Coubertin believe sport could accomplish?",
+              "options": [
+                "Generate significant profit for host nations",
+                "Foster mutual understanding and respect among nations",
+                "Replace traditional diplomacy entirely",
+                "Eliminate the need for international trade"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "When were the Winter Olympics introduced?",
+              "options": [
+                "1896",
+                "1924",
+                "1950",
+                "2000"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "This addition allowed athletes competing in cold-weather sports to finally have their own dedicated global competition.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 33
+        }
+      ]
+    },
+    "module2Easy": {
+      "ctw": [
+        {
+          "id": 50,
+          "topic": "Tectonic Plate Boundaries",
+          "category": "Geology",
+          "paragraph": "The Earth's outer shell is divided into several large sections known as tectonic plates that move slowly across the planet's surface. Where two plates collide directly against each other, tremendous pressure builds up gradually until it is eventually released, often generating powerful earthquakes. In other locations, plates slide past one another horizontally along transform boundaries, creating a different but equally significant type of geological stress. When plates instead move apart from each other, molten material rises upward from beneath the surface, gradually forming new crust along the resulting gap. Understanding these different boundary types has proven essential for predicting where earthquakes and volcanic activity are most likely to occur.",
+          "blanks": [
+            {
+              "word": "collide",
+              "visible": "col",
+              "hidden": "lide"
+            },
+            {
+              "word": "released",
+              "visible": "rele",
+              "hidden": "ased"
+            },
+            {
+              "word": "earthquakes",
+              "visible": "earth",
+              "hidden": "quakes"
+            },
+            {
+              "word": "horizontally",
+              "visible": "horiz",
+              "hidden": "ontally"
+            },
+            {
+              "word": "creating",
+              "visible": "crea",
+              "hidden": "ting"
+            },
+            {
+              "word": "geological",
+              "visible": "geolo",
+              "hidden": "gical"
+            },
+            {
+              "word": "material",
+              "visible": "mate",
+              "hidden": "rial"
+            },
+            {
+              "word": "resulting",
+              "visible": "resu",
+              "hidden": "lting"
+            },
+            {
+              "word": "essential",
+              "visible": "esse",
+              "hidden": "ntial"
+            },
+            {
+              "word": "activity",
+              "visible": "acti",
+              "hidden": "vity"
+            }
+          ]
+        }
+      ],
+      "ridl": [],
+      "ap": [
+        {
+          "title": "Plant Responses to Herbivory",
+          "passage": "Plants, despite lacking the ability to flee from predators, have evolved a remarkable array of defenses against herbivorous insects and animals seeking to consume their tissues. These defenses range from physical barriers, such as thorns and tough leaf surfaces, to sophisticated chemical strategies that actively deter or harm potential attackers.\n\nAmong the most fascinating plant defenses are induced responses, in which a plant only produces certain defensive chemicals after detecting actual damage from herbivore feeding. When an insect begins chewing on a leaf, the plant can detect specific chemical compounds present in the insect's saliva, triggering a rapid increase in the production of toxic or unpalatable compounds throughout the affected tissue.\n\nSome plant species have taken this defensive strategy even further, releasing volatile chemical signals into the air when attacked that can be detected by nearby plants of the same or even different species. These airborne signals appear to prompt neighboring plants to preemptively boost their own chemical defenses, even before they themselves have been attacked.\n\nCertain plants have also evolved indirect defenses that recruit natural enemies of the herbivores attacking them. Some species release specific volatile compounds when damaged that attract predatory insects or parasitic wasps, which then attack the herbivores responsible for the damage, effectively turning the plant's attacker's own predators into unwitting allies.",
+          "passage_marked": "Plants, despite lacking the ability to flee from predators, have evolved a remarkable array of defenses against herbivorous insects and animals seeking to consume their tissues. These defenses range from physical barriers, such as thorns and tough leaf surfaces, to sophisticated chemical strategies that actively deter or harm potential attackers. [A]\n\nAmong the most fascinating plant defenses are induced responses, in which a plant only produces certain defensive chemicals after detecting actual damage from herbivore feeding. [B] When an insect begins chewing on a leaf, the plant can detect specific chemical compounds present in the insect's saliva, triggering a rapid increase in the production of toxic or unpalatable compounds throughout the affected tissue.\n\nSome plant species have taken this defensive strategy even further, releasing volatile chemical signals into the air when attacked that can be detected by nearby plants of the same or even different species. These airborne signals appear to prompt neighboring plants to preemptively boost their own chemical defenses, even before they themselves have been attacked. [C]\n\nCertain plants have also evolved indirect defenses that recruit natural enemies of the herbivores attacking them. [D] Some species release specific volatile compounds when damaged that attract predatory insects or parasitic wasps, which then attack the herbivores responsible for the damage, effectively turning the plant's attacker's own predators into unwitting allies.",
+          "questions": [
+            {
+              "id": 1,
+              "type": "vocabulary",
+              "question": "The word 'unpalatable' in the passage is closest in meaning to",
+              "options": [
+                "delicious",
+                "colorful",
+                "unpleasant to eat",
+                "harmless"
+              ],
+              "answer": 2
+            },
+            {
+              "id": 2,
+              "type": "comprehension",
+              "question": "What is an induced plant defense?",
+              "options": [
+                "A permanent physical barrier present from birth",
+                "A defensive chemical produced only after detecting herbivore damage",
+                "A defense that only works underground",
+                "A response triggered by sunlight alone"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 3,
+              "type": "comprehension",
+              "question": "How can plants detect that they are being eaten?",
+              "options": [
+                "By sensing changes in soil temperature",
+                "By detecting compounds in an insect's saliva",
+                "By observing visual movement",
+                "By listening for chewing sounds"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 4,
+              "type": "comprehension",
+              "question": "What is one example of an indirect plant defense mentioned in the passage?",
+              "options": [
+                "Growing thorns immediately",
+                "Releasing compounds that attract predators of the herbivore",
+                "Changing leaf color to warn other plants",
+                "Producing more seeds rapidly"
+              ],
+              "answer": 1
+            },
+            {
+              "id": 5,
+              "type": "insert_sentence",
+              "question": "Look at the four locations marked [A], [B], [C], and [D] in the passage. Where would the following sentence best fit?",
+              "insert_text": "Remarkably, this form of chemical communication suggests that plants can effectively warn each other of impending danger.",
+              "options": [
+                "Position A",
+                "Position B",
+                "Position C",
+                "Position D"
+              ],
+              "answer": 2
+            }
+          ],
+          "id": 34
+        }
+      ]
+    },
+    "module2Hard": {
+      "ctw": [
+        {
+          "id": 51,
+          "topic": "The Psychology of Procrastination",
+          "category": "Psychology",
+          "paragraph": "Procrastination is a remarkably common behavior that affects people across nearly every culture and profession. Contrary to popular belief, psychologists have found that procrastination is rarely caused simply by poor time management or laziness. Instead, researchers frequently identify underlying emotional factors, such as anxiety about failure or a strong desire for perfectionism, as significant contributors to chronic procrastination. Breaking large, intimidating tasks into smaller, more manageable steps has proven remarkably effective at reducing the emotional discomfort that often triggers procrastination in the first place. Understanding these psychological mechanisms has allowed researchers to develop targeted interventions that help people overcome persistent procrastination habits.",
+          "blanks": [
+            {
+              "word": "popular",
+              "visible": "pop",
+              "hidden": "ular"
+            },
+            {
+              "word": "laziness",
+              "visible": "lazi",
+              "hidden": "ness"
+            },
+            {
+              "word": "identify",
+              "visible": "iden",
+              "hidden": "tify"
+            },
+            {
+              "word": "anxiety",
+              "visible": "anx",
+              "hidden": "iety"
+            },
+            {
+              "word": "contributors",
+              "visible": "contr",
+              "hidden": "ibutors"
+            },
+            {
+              "word": "intimidating",
+              "visible": "intim",
+              "hidden": "idating"
+            },
+            {
+              "word": "effective",
+              "visible": "effe",
+              "hidden": "ctive"
+            },
+            {
+              "word": "Understanding",
+              "visible": "Under",
+              "hidden": "standing"
+            },
+            {
+              "word": "develop",
+              "visible": "dev",
+              "hidden": "elop"
+            },
+            {
+              "word": "persistent",
+              "visible": "persi",
+              "hidden": "stent"
+            }
+          ]
+        }
+      ],
+      "ridl": [
+        {
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "Gallery Notice: New Exhibit Opening",
+          "subtitle": "",
+          "text": "A new photography exhibit, \"Coastal Light,\" opens in the west wing this Friday.\n\nAdmission is free for members and five dollars for non-members during the opening week.\n\nThe exhibit will run through the end of next month.",
+          "questions": [
+            {
+              "question": "What is the admission cost for non-members during opening week?",
+              "options": [
+                "Free",
+                "Five dollars",
+                "Ten dollars",
+                "Members only, no non-member access"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How long will the exhibit run?",
+              "options": [
+                "One week only",
+                "Through the end of next month",
+                "Permanently",
+                "Until this Friday"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 84
+        },
+        {
+          "type": "sign",
+          "instruction": "Read a sign.",
+          "title": "NOTICE: Recycling Collection Change",
+          "subtitle": "",
+          "text": "Due to the upcoming holiday, recycling collection will shift from Monday to Tuesday this week only.\n\nPlease place bins at the curb by seven in the morning on Tuesday.\n\nRegular Monday collection will resume the following week.",
+          "questions": [
+            {
+              "question": "Why is the recycling collection date changing?",
+              "options": [
+                "A truck malfunction",
+                "The upcoming holiday",
+                "New city regulations",
+                "A staffing shortage"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "When should bins be placed at the curb this week?",
+              "options": [
+                "Monday morning",
+                "Tuesday morning",
+                "Wednesday afternoon",
+                "Sunday night"
+              ],
+              "answer": 1
+            }
+          ],
+          "id": 85
+        }
+      ],
+      "ap": []
+    }
+  },
+  "listening": {
+    "module1": {
+      "car": [
+        {
+          "id": 353,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/353.mp3",
+          "transcript": "Could you tell me if this fabric shrinks in the wash?",
+          "context": "A customer asks a fabric store employee.",
+          "options": [
+            "It might shrink slightly, so I'd recommend cold water.",
+            "This fabric comes in many colors.",
+            "We sell fabric by the yard.",
+            "This pattern just arrived this week."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "45-353"
+        },
+        {
+          "id": 354,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/354.mp3",
+          "transcript": "I think we should push the deadline back by a few days.",
+          "context": "A team member speaks to a project manager.",
+          "options": [
+            "That could work, let me check with the client.",
+            "The deadline was set last month.",
+            "Our team has five members.",
+            "The project is almost finished."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "45-354"
+        },
+        {
+          "id": 355,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/355.mp3",
+          "transcript": "Do you have a map of the campus I could take?",
+          "context": "A prospective student asks an admissions office worker.",
+          "options": [
+            "Sure, here's one you can keep.",
+            "The campus covers about two hundred acres.",
+            "Tours run every hour during the week.",
+            "The admissions office is in the main building."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "45-355"
+        },
+        {
+          "id": 356,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/356.mp3",
+          "transcript": "Could I get a receipt emailed to me instead of printed?",
+          "context": "A customer asks a cashier.",
+          "options": [
+            "Sure, I just need your email address.",
+            "Printed receipts use less paper than before.",
+            "Receipts can be reprinted anytime.",
+            "We keep transaction records for a year."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "45-356"
+        },
+        {
+          "id": 357,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/357.mp3",
+          "transcript": "I noticed there's a leak under the kitchen sink.",
+          "context": "A tenant tells the building maintenance staff.",
+          "options": [
+            "I'll send someone up to take a look today.",
+            "The building was constructed decades ago.",
+            "Maintenance requests are handled weekly.",
+            "We recommend checking pipes regularly."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "45-357"
+        },
+        {
+          "id": 358,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/358.mp3",
+          "transcript": "Would you like me to hold this item at the register for you?",
+          "context": "A store employee asks a customer.",
+          "options": [
+            "Yes, please, I'll be back in a few minutes.",
+            "The item is currently on sale.",
+            "We have several colors in stock.",
+            "This is a limited edition design."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "45-358"
+        },
+        {
+          "id": 359,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/359.mp3",
+          "transcript": "Do you know if this park allows dogs off leash?",
+          "context": "A visitor asks a park employee.",
+          "options": [
+            "There's a designated off-leash area near the entrance.",
+            "The park has several walking trails.",
+            "Dogs must be vaccinated to enter.",
+            "This park opened five years ago."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "45-359"
+        },
+        {
+          "id": 360,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/360.mp3",
+          "transcript": "Could you help me find a parking spot close to the entrance?",
+          "context": "A visitor asks a parking attendant.",
+          "options": [
+            "Sure, follow me, there's one just ahead.",
+            "Parking here is free for the first hour.",
+            "The lot fills up quickly on weekends.",
+            "There's a second lot across the street."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "45-360"
+        },
+        {
+          "id": 361,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/361.mp3",
+          "transcript": "I think this recipe calls for more sugar than usual.",
+          "context": "A customer asks a baking supply store employee.",
+          "options": [
+            "Let me double-check the recipe card for you.",
+            "Sugar prices went up recently.",
+            "We sell several types of sugar.",
+            "This recipe serves about eight people."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "46-361"
+        },
+        {
+          "id": 362,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/362.mp3",
+          "transcript": "Could you tell me if the shuttle stops at the hotel?",
+          "context": "A traveler asks an airport information desk worker.",
+          "options": [
+            "Yes, it stops right outside the hotel entrance.",
+            "Shuttles run every thirty minutes.",
+            "The airport has several shuttle companies.",
+            "You can also take a taxi instead."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "46-362"
+        }
+      ],
+      "conv": [
+        {
+          "id": 81,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/81.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Did you hear the health center is offering free flu shots this week?"
+            },
+            {
+              "speaker": "male",
+              "text": "No, I didn't. Where do I need to go?"
+            },
+            {
+              "speaker": "female",
+              "text": "Just walk in to the main health center building, no appointment needed."
+            },
+            {
+              "speaker": "male",
+              "text": "That's convenient, I'll stop by after my last class."
+            },
+            {
+              "speaker": "female",
+              "text": "Good idea, I think the offer only lasts until Friday."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What is being offered this week?",
+              "options": [
+                "Free eye exams",
+                "Free flu shots",
+                "Free dental checkups",
+                "Free counseling sessions"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman say about appointments?",
+              "options": [
+                "They are required in advance",
+                "No appointment is needed",
+                "They fill up quickly",
+                "Only seniors qualify"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 82,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/82.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "I think I left my umbrella in the lecture hall this morning."
+            },
+            {
+              "speaker": "female",
+              "text": "Did you check the lost and found at the front desk?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not yet, I was actually heading there now."
+            },
+            {
+              "speaker": "female",
+              "text": "Good luck, hopefully someone turned it in."
+            },
+            {
+              "speaker": "male",
+              "text": "Thanks, I'll let you know if I find it."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What did the man lose?",
+              "options": [
+                "His notebook",
+                "His umbrella",
+                "His backpack",
+                "His phone"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman suggest?",
+              "options": [
+                "Buying a new one",
+                "Checking the lost and found",
+                "Asking his professor",
+                "Retracing his steps"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 83,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/83.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "How's your internship search going?"
+            },
+            {
+              "speaker": "male",
+              "text": "Slow, honestly. I've sent out a lot of applications with no response."
+            },
+            {
+              "speaker": "female",
+              "text": "Have you tried reaching out to alumni in your field?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not really, I hadn't thought of that."
+            },
+            {
+              "speaker": "female",
+              "text": "The alumni network can be really helpful for getting your foot in the door."
+            },
+            {
+              "speaker": "male",
+              "text": "I'll definitely give that a try, thanks for the suggestion."
+            }
+          ],
+          "questions": [
+            {
+              "question": "How does the man describe his internship search?",
+              "options": [
+                "Successful",
+                "Slow with little response",
+                "Already finished",
+                "Not started yet"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the woman recommend?",
+              "options": [
+                "Applying to more companies randomly",
+                "Reaching out to alumni in his field",
+                "Taking a break from searching",
+                "Changing his major"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 81,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/81.mp3",
+          "speaker": "female",
+          "transcript": "Attention students: today's guest lecture in the auditorium has been moved up by thirty minutes due to the speaker's travel schedule. The lecture will now begin at one thirty instead of two o'clock. Please plan to arrive a few minutes early to find seating, as we expect a large turnout.",
+          "questions": [
+            {
+              "question": "Why was the lecture time changed?",
+              "options": [
+                "A room conflict",
+                "The speaker's travel schedule",
+                "Low registration numbers",
+                "A technical issue"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What time will the lecture now begin?",
+              "options": [
+                "One o'clock",
+                "One thirty",
+                "Two o'clock",
+                "Two thirty"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 82,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/82.mp3",
+          "speaker": "male",
+          "transcript": "Attention park visitors: due to recent heavy rainfall, the lower riverside trail is currently closed for safety reasons. Visitors are encouraged to use the upper ridge trail instead, which remains open and offers similarly scenic views. Trail conditions will be reassessed once the ground has had time to dry.",
+          "questions": [
+            {
+              "question": "Why is the riverside trail closed?",
+              "options": [
+                "Wildlife activity",
+                "Recent heavy rainfall",
+                "Trail maintenance",
+                "A large event taking place"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative is suggested?",
+              "options": [
+                "Staying near the parking lot",
+                "The upper ridge trail",
+                "Returning another day",
+                "A shuttle tour instead"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 83,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/83.mp3",
+          "speaker": "female",
+          "transcript": "Attention customers: our customer service phone lines will be temporarily unavailable this afternoon due to a system upgrade. For urgent matters, please use the live chat feature on our website, which will remain fully operational. Normal phone service is expected to resume by early evening.",
+          "questions": [
+            {
+              "question": "Why are phone lines unavailable?",
+              "options": [
+                "A staffing shortage",
+                "A system upgrade",
+                "High call volume",
+                "A power outage"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative is available?",
+              "options": [
+                "Email support only",
+                "The website's live chat feature",
+                "In-person visits only",
+                "A voicemail system"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": [
+        {
+          "id": 65,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/65.mp3",
+          "speaker": "female",
+          "subject": "Botany",
+          "transcript": "Today's lecture covers seed dormancy, a fascinating survival strategy that allows seeds to delay germination until environmental conditions become favorable enough to support successful seedling growth. Without this mechanism, seeds might germinate immediately after forming, potentially during an unfavorable season, such as the onset of winter or the middle of an extended drought, resulting in near-certain failure for the resulting seedling before it could establish itself successfully. Plants have evolved several distinct mechanisms to enforce dormancy, and often use multiple mechanisms simultaneously for added reliability. Physical dormancy involves a seed coat that is impermeable to water, physically preventing the seed from absorbing the moisture it needs to begin germinating until that coat is sufficiently worn down or damaged, a process that can occur naturally through exposure to fluctuating soil temperatures, mechanical abrasion, or even passage through an animal's digestive system after the seed has been eaten and later excreted. Physiological dormancy, in contrast, involves internal chemical or hormonal factors within the seed itself, often requiring a specific extended period of cold temperatures, a process called stratification, before internal chemical changes occur that allow germination to proceed successfully. This particular adaptation ensures that seeds from many temperate plant species won't germinate immediately in autumn, right before winter arrives, but will instead wait until they've experienced a sufficient period of cold, ensuring germination occurs closer to the following spring instead, when growing conditions are considerably more favorable for a young seedling. Some seeds also exhibit a third type known as morphological dormancy, in which the embryo inside the seed simply hasn't finished developing at the time the seed disperses from the parent plant, requiring additional time for that embryo to mature further before it becomes physically capable of germinating at all. Understanding these varied dormancy mechanisms has significant practical importance for agriculture and horticulture, since farmers and gardeners often need to artificially break dormancy through specific techniques, such as deliberately scarifying tough seed coats or artificially cold-stratifying seeds, in order to reliably achieve successful and predictably timed germination for cultivated crops.",
+          "questions": [
+            {
+              "question": "What is the main topic of the lecture?",
+              "options": [
+                "How plants absorb nutrients from soil",
+                "Seed dormancy and its various mechanisms",
+                "The process of photosynthesis",
+                "How pollination occurs in flowering plants"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is physical dormancy, according to the talk?",
+              "options": [
+                "A seed coat impermeable to water that prevents germination",
+                "A hormone that speeds up germination",
+                "The lack of a fully developed embryo",
+                "A response only triggered by sunlight"
+              ],
+              "answer": 0
+            },
+            {
+              "question": "What does stratification refer to in the context of physiological dormancy?",
+              "options": [
+                "Exposure to sunlight for an extended time",
+                "A required period of cold temperature before germination can proceed",
+                "The layering of soil around a seed",
+                "A chemical treatment applied by farmers"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is understanding seed dormancy practically important, according to the professor?",
+              "options": [
+                "It has no real practical application",
+                "Farmers and gardeners may need to artificially break dormancy for reliable germination",
+                "It only matters for wild plants, not crops",
+                "It prevents all seeds from ever germinating"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 66,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/66.mp3",
+          "speaker": "male",
+          "subject": "Economics",
+          "transcript": "Today we'll discuss the concept of comparative advantage, one of the foundational ideas underlying the modern economic case for international trade, first articulated in detail by the economist David Ricardo in the early nineteenth century. The theory begins with a seemingly counterintuitive insight: even if one country can produce absolutely every good more efficiently than another country, meaning it has an absolute advantage across the board, both countries can still benefit from trading with each other, provided each country specializes in producing whatever it can produce with the lowest relative opportunity cost compared to its other production options. To illustrate, imagine a scenario involving two countries and two goods, say wine and cloth. Even if one country is more efficient at producing both wine and cloth in absolute terms, it likely still has a relatively greater efficiency advantage in producing one of the two goods compared to the other, meaning the opportunity cost, in terms of the other good given up, of producing that particular good is comparatively lower for that country than for its trading partner. If each country specializes in producing the good for which it has the comparatively lower opportunity cost, and then trades with the other country for the good it did not produce, total combined global output of both goods increases, and both countries can end up consuming more of both goods than either could have achieved by trying to remain fully self-sufficient and produce everything domestically. This principle helps explain why international trade can generate genuine mutual economic benefit, even between countries with widely differing overall levels of productivity or economic development. It's worth noting, however, that comparative advantage as a theoretical model doesn't account for every real-world complication that can affect actual trade outcomes, including transportation costs, trade barriers such as tariffs, fluctuating exchange rates, and importantly, the uneven distribution of the resulting economic gains within each individual country, since certain domestic industries and workers may still be genuinely harmed by increased trade competition even while the country's economy benefits substantially in aggregate overall terms.",
+          "questions": [
+            {
+              "question": "What is the main topic of the talk?",
+              "options": [
+                "The history of currency exchange rates",
+                "The theory of comparative advantage and international trade",
+                "How tariffs are calculated",
+                "The invention of modern banking"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is the key insight of comparative advantage, according to the professor?",
+              "options": [
+                "Countries should never trade with each other",
+                "Countries can benefit from trade even if one has an absolute advantage in everything",
+                "Only wealthy countries benefit from international trade",
+                "Trade always harms at least one country involved"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "According to the theory, how should countries decide what to specialize in?",
+              "options": [
+                "Whatever good is most popular globally",
+                "The good with the lowest relative opportunity cost",
+                "Whichever good requires the least labor",
+                "Randomly, since it doesn't matter"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What limitation of the theory does the professor mention?",
+              "options": [
+                "It doesn't account for real-world factors like tariffs and uneven distribution of gains",
+                "It has been completely disproven by modern economists",
+                "It only applies to agricultural goods",
+                "It requires countries to have identical economies"
+              ],
+              "answer": 0
+            }
+          ]
+        }
+      ]
+    },
+    "module2Easy": {
+      "car": [
+        {
+          "id": 363,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/363.mp3",
+          "transcript": "Do you know why my card was declined just now?",
+          "context": "A customer asks a bank teller.",
+          "options": [
+            "Let's check your account together to see why.",
+            "Cards are usually valid for five years.",
+            "You can request a new card online.",
+            "The bank is open until five today."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "46-363"
+        },
+        {
+          "id": 364,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/364.mp3",
+          "transcript": "I'd like to request a later checkout time tomorrow.",
+          "context": "A hotel guest speaks to the front desk.",
+          "options": [
+            "Sure, I can extend it to one o'clock.",
+            "Checkout is normally at eleven.",
+            "Breakfast ends at ten each morning.",
+            "We can hold your luggage after checkout."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "46-364"
+        },
+        {
+          "id": 365,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/365.mp3",
+          "transcript": "Could you look over my essay before I submit it?",
+          "context": "A student asks a writing center tutor.",
+          "options": [
+            "Of course, let's go through it together.",
+            "The writing center is open until eight.",
+            "Essays are usually due on Fridays.",
+            "This assignment counts for ten percent of the grade."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "46-365"
+        },
+        {
+          "id": 366,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/366.mp3",
+          "transcript": "I noticed the vending machine ate my money.",
+          "context": "A student tells a building supervisor.",
+          "options": [
+            "I'm sorry about that, let me refund you.",
+            "The vending machine was restocked yesterday.",
+            "It usually accepts cards as well as cash.",
+            "There's another machine on the next floor."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "46-366"
+        },
+        {
+          "id": 367,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/367.mp3",
+          "transcript": "Would you be able to lower the volume on the TV?",
+          "context": "A patient asks a hospital staff member.",
+          "options": [
+            "Of course, I'll turn it down right away.",
+            "Visiting hours end at eight tonight.",
+            "The remote is on the side table.",
+            "There are several channels available."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "46-367"
+        },
+        {
+          "id": 368,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/368.mp3",
+          "transcript": "Do you offer curbside pickup for online orders?",
+          "context": "A customer asks a store employee over the phone.",
+          "options": [
+            "Yes, just pull up and we'll bring it out.",
+            "Online orders ship within two days.",
+            "The store also offers home delivery.",
+            "You can track your order online."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "46-368"
+        }
+      ],
+      "conv": [],
+      "announce": [],
+      "at": [
+        {
+          "id": 67,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/67.mp3",
+          "speaker": "female",
+          "subject": "Neuroscience",
+          "transcript": "Today's lecture examines neuroplasticity, the brain's remarkable capacity to reorganize itself by forming new neural connections throughout an individual's life, a discovery that fundamentally overturned an older scientific assumption that the adult brain's structure was essentially fixed and largely unchangeable after childhood development concluded. Neuroplasticity operates at multiple different levels within the nervous system. At the most fundamental level, synaptic plasticity refers to the strengthening or weakening of individual connections between neurons based on patterns of activity and actual usage, generally following a well-established principle often summarized by the phrase neurons that fire together wire together, meaning connections that are frequently and repeatedly activated tend to become progressively stronger over time, while connections that go largely unused tend to gradually weaken. This basic mechanism is now understood to underlie learning and memory formation at a fundamental biological level. At a somewhat larger structural scale, the brain can also demonstrate more significant structural reorganization in response to injury or considerable environmental change, with functions sometimes shifting to entirely different brain regions when the areas originally responsible for those functions become damaged. This capacity for reorganization has proven especially significant for stroke rehabilitation, since patients who have experienced localized brain damage can sometimes recover meaningful lost function as neighboring or entirely different brain regions gradually take over responsibilities previously handled by the damaged tissue, particularly when patients engage consistently in intensive, targeted rehabilitative therapy following their injury. Interestingly, research has also demonstrated that neuroplasticity, while generally most pronounced and flexible during critical developmental periods in early childhood, nevertheless continues in a somewhat more limited capacity throughout adulthood as well. Studies of London taxi drivers, for example, famously found that these drivers, who must memorize the city's extraordinarily complex street layout in considerable detail, developed a measurably larger hippocampus, the brain region strongly associated with spatial memory and navigation, compared to individuals in various control groups, and this structural difference appeared to increase progressively the longer an individual had actively worked as a taxi driver.",
+          "questions": [
+            {
+              "question": "What is neuroplasticity, according to the talk?",
+              "options": [
+                "The brain's fixed structure that never changes",
+                "The brain's capacity to reorganize by forming new neural connections",
+                "A disease affecting the nervous system",
+                "The process of memory loss with age"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the phrase 'neurons that fire together wire together' describe?",
+              "options": [
+                "Random, unpredictable brain activity",
+                "Connections that are frequently activated tend to strengthen over time",
+                "The complete destruction of unused neurons",
+                "A method for measuring brain size"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is neuroplasticity significant for stroke rehabilitation?",
+              "options": [
+                "It has no relevance to stroke recovery",
+                "Other brain regions can sometimes take over functions from damaged areas",
+                "It only helps prevent strokes from occurring",
+                "It permanently prevents any brain damage"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What did the study of London taxi drivers find?",
+              "options": [
+                "Their brains were smaller than average",
+                "They developed a larger hippocampus associated with spatial memory",
+                "They had no measurable brain differences",
+                "Their memory abilities declined over time"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 68,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p4/68.mp3",
+          "speaker": "male",
+          "subject": "Archaeology",
+          "transcript": "Today we'll look at the archaeological discovery and significance of Göbekli Tepe, a remarkable site in southeastern Turkey that has substantially challenged long-held assumptions about the sequence of early human social and technological development. Excavations at the site, which began in earnest during the nineteen nineties, revealed a complex of massive carved stone pillars, some standing over five meters tall and arranged in large circular enclosures, dating back roughly eleven thousand years, making it considerably older than previously known comparable monumental structures such as Stonehenge or even the earliest Egyptian pyramids, predating them by several thousand years. What makes Göbekli Tepe particularly significant is the timing of its construction relative to other major developments in human history. Conventional archaeological understanding had long assumed that large-scale monumental construction projects required first having a settled agricultural society, since farming was thought necessary to reliably generate the surplus food required to support the specialized non-farming labor needed for such ambitious large-scale building projects. However, evidence strongly suggests that the people who constructed Göbekli Tepe were still primarily hunter-gatherers, since clear evidence of systematic agriculture in the surrounding region doesn't appear in the archaeological record until somewhat later. This finding has led some researchers to propose a genuinely provocative alternative hypothesis: rather than agriculture necessarily enabling monumental construction and organized religious activity, perhaps the organizational and social demands of building and maintaining a large, significant ceremonial site like Göbekli Tepe actually helped drive the eventual development and adoption of agriculture in the surrounding region, as large groups of people gathering periodically for construction and ceremonial purposes would have required increasingly reliable food sources to sustain themselves during their time at the site. This hypothesis remains genuinely debated among archaeologists, but the site has nonetheless prompted a broader ongoing reconsideration of the traditional assumed relationship between agriculture, religion, and complex social organization in the story of early human civilization.",
+          "questions": [
+            {
+              "question": "What is the main topic of this talk?",
+              "options": [
+                "The invention of agriculture in Egypt",
+                "The archaeological significance of Göbekli Tepe",
+                "The construction techniques of Stonehenge",
+                "The history of hunter-gatherer diets"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is the timing of Göbekli Tepe's construction significant?",
+              "options": [
+                "It was built after agriculture had already spread widely",
+                "It appears to have been built by hunter-gatherers before widespread agriculture in the region",
+                "It was built using modern construction techniques",
+                "It has no clear historical significance"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What was the conventional assumption that Göbekli Tepe challenges?",
+              "options": [
+                "That religion always followed agriculture historically",
+                "That monumental construction required a settled agricultural society first",
+                "That hunter-gatherers never built permanent structures",
+                "That stone tools were unavailable before farming"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative hypothesis does the professor mention?",
+              "options": [
+                "That the site was built entirely by accident",
+                "That building and maintaining the site may have helped drive the development of agriculture",
+                "That agriculture had no connection to the site at all",
+                "That the site was constructed much more recently than believed"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    "module2Hard": {
+      "car": [
+        {
+          "id": 369,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/369.mp3",
+          "transcript": "Could you tell me if this trail is suitable for beginners?",
+          "context": "A hiker asks a park ranger.",
+          "options": [
+            "Yes, it's actually one of our easier trails.",
+            "The park has five different trails.",
+            "This trail was recently repaved.",
+            "You should bring plenty of water."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "47-369"
+        },
+        {
+          "id": 370,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/370.mp3",
+          "transcript": "I think I need to update the address on my account.",
+          "context": "A customer speaks to a customer service representative.",
+          "options": [
+            "Sure, I can update that for you right now.",
+            "Your account was created last year.",
+            "We send updates by email.",
+            "You can also manage your account online."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "47-370"
+        },
+        {
+          "id": 371,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/371.mp3",
+          "transcript": "Do you know if the bakery has any gluten-free options?",
+          "context": "A customer asks a bakery employee.",
+          "options": [
+            "Yes, we have a small gluten-free selection.",
+            "The bakery opens at six every morning.",
+            "Our bread is baked fresh daily.",
+            "We also sell coffee and pastries."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "47-371"
+        },
+        {
+          "id": 372,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/372.mp3",
+          "transcript": "Could we move our lunch meeting to a different restaurant?",
+          "context": "A colleague asks another colleague.",
+          "options": [
+            "Sure, do you have a place in mind?",
+            "The current restaurant is close to the office.",
+            "Lunch meetings usually run an hour.",
+            "We've been to that restaurant before."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "47-372"
+        },
+        {
+          "id": 373,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/373.mp3",
+          "transcript": "I noticed the projector isn't connecting to my laptop.",
+          "context": "A presenter speaks to an event technician.",
+          "options": [
+            "Let me check the cable connections for you.",
+            "The projector was just serviced last week.",
+            "This room seats about fifty people.",
+            "The presentation starts in ten minutes."
+          ],
+          "answer": 0,
+          "speaker": "female",
+          "_uid": "47-373"
+        },
+        {
+          "id": 374,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p1/374.mp3",
+          "transcript": "Would you mind switching seats with me so I can sit with my friend?",
+          "context": "A passenger asks another passenger.",
+          "options": [
+            "Sure, that's not a problem at all.",
+            "The flight is fully booked today.",
+            "My seat is by the window.",
+            "We should be landing soon."
+          ],
+          "answer": 0,
+          "speaker": "male",
+          "_uid": "47-374"
+        }
+      ],
+      "conv": [
+        {
+          "id": 84,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/84.mp3",
+          "turns": [
+            {
+              "speaker": "male",
+              "text": "Are you coming to the study session in the library tonight?"
+            },
+            {
+              "speaker": "female",
+              "text": "I was planning to, but I have to finish a paper first."
+            },
+            {
+              "speaker": "male",
+              "text": "When is the paper due?"
+            },
+            {
+              "speaker": "female",
+              "text": "Tomorrow morning, so I really need to focus on it tonight."
+            },
+            {
+              "speaker": "male",
+              "text": "Makes sense, maybe we can review together this weekend instead."
+            }
+          ],
+          "questions": [
+            {
+              "question": "Why might the woman not attend the study session?",
+              "options": [
+                "She is feeling sick",
+                "She needs to finish a paper",
+                "She already studied enough",
+                "She has a work shift"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What alternative does the man suggest?",
+              "options": [
+                "Studying online instead",
+                "Reviewing together this weekend",
+                "Canceling the session entirely",
+                "Meeting earlier in the day"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 85,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p2/85.mp3",
+          "turns": [
+            {
+              "speaker": "female",
+              "text": "Did the housing office ever get back to you about your maintenance request?"
+            },
+            {
+              "speaker": "male",
+              "text": "Yeah, actually, they sent someone yesterday to fix the heater."
+            },
+            {
+              "speaker": "female",
+              "text": "That's good, how long did it take?"
+            },
+            {
+              "speaker": "male",
+              "text": "Not long at all, maybe twenty minutes."
+            },
+            {
+              "speaker": "female",
+              "text": "Glad it's finally working, it's been getting cold at night."
+            }
+          ],
+          "questions": [
+            {
+              "question": "What issue did the man report?",
+              "options": [
+                "A broken window",
+                "A malfunctioning heater",
+                "A leaking faucet",
+                "A locked door"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How long did the repair take?",
+              "options": [
+                "A few hours",
+                "About twenty minutes",
+                "All day",
+                "A full week"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "announce": [
+        {
+          "id": 84,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/84.mp3",
+          "speaker": "male",
+          "transcript": "Attention hotel guests: please be advised that the rooftop terrace will be closed this evening for a private reception. All other hotel amenities, including the fitness center and lounge, remain available for guest use. We appreciate your understanding and hope you enjoy the rest of your stay.",
+          "questions": [
+            {
+              "question": "Why is the rooftop terrace closed?",
+              "options": [
+                "Weather conditions",
+                "A private reception",
+                "Routine maintenance",
+                "Low guest interest"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What remains available to guests?",
+              "options": [
+                "Nothing else is available tonight",
+                "The fitness center and lounge",
+                "Only room service",
+                "Only the front desk"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": 85,
+          "audio_url": "http://localhost:8000/audio/mock_listening_p3/85.mp3",
+          "speaker": "female",
+          "transcript": "Good morning, passengers. This is a reminder that due to ongoing runway maintenance, some flights departing this morning may experience minor delays of up to twenty minutes. We recommend checking the departure boards regularly for the most current information regarding your specific flight.",
+          "questions": [
+            {
+              "question": "Why might flights be delayed this morning?",
+              "options": [
+                "A security threat",
+                "Ongoing runway maintenance",
+                "A shortage of pilots",
+                "Bad weather conditions"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What is recommended to passengers?",
+              "options": [
+                "Arriving even earlier than usual",
+                "Checking the departure boards regularly",
+                "Rebooking their flights immediately",
+                "Calling the airline directly"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ],
+      "at": []
+    }
+  },
+  "writing": {
+    "bas": [
+      {
+        "promptGender": "female",
+        "prompt": "The gallery is extending its hours this weekend.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "mentioned",
+          "that",
+          "the gallery",
+          "was extending its hours this weekend"
+        ],
+        "distractorChunks": [
+          "is extending its hours this weekend"
+        ],
+        "responseSuffix": ".",
+        "id": 161
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The contractor finished the renovation ahead of schedule.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "said",
+          "that",
+          "the contractor",
+          "had finished the renovation ahead of schedule"
+        ],
+        "distractorChunks": [
+          "has finished the renovation ahead of schedule"
+        ],
+        "responseSuffix": ".",
+        "id": 162
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The airline will offer refunds for canceled flights.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "announced",
+          "that",
+          "the airline",
+          "would offer refunds for canceled flights"
+        ],
+        "distractorChunks": [
+          "will offer refunds for canceled flights"
+        ],
+        "responseSuffix": ".",
+        "id": 163
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The nonprofit needs more volunteers for the event.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "told",
+          "me",
+          "that",
+          "the nonprofit",
+          "needed more volunteers for the event"
+        ],
+        "distractorChunks": [
+          "needs more volunteers for the event"
+        ],
+        "responseSuffix": ".",
+        "id": 164
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The board approved the merger last week.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "confirmed",
+          "that",
+          "the board",
+          "had approved the merger last week"
+        ],
+        "distractorChunks": [
+          "has approved the merger last week"
+        ],
+        "responseSuffix": ".",
+        "id": 165
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The city plans to repave several streets this summer.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "said",
+          "that",
+          "the city",
+          "planned to repave several streets this summer"
+        ],
+        "distractorChunks": [
+          "plans to repave several streets this summer"
+        ],
+        "responseSuffix": ".",
+        "id": 166
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The clinic can no longer accept new patients.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "mentioned",
+          "that",
+          "the clinic",
+          "could no longer accept new patients"
+        ],
+        "distractorChunks": [
+          "can no longer accept new patients"
+        ],
+        "responseSuffix": ".",
+        "id": 167
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The teacher postponed the quiz until next week.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "told",
+          "the class",
+          "that",
+          "the teacher",
+          "had postponed the quiz until next week"
+        ],
+        "distractorChunks": [
+          "has postponed the quiz until next week"
+        ],
+        "responseSuffix": ".",
+        "id": 168
+      },
+      {
+        "promptGender": "female",
+        "prompt": "The startup will launch its app next month.",
+        "responseGender": "male",
+        "responsePrefix": "He",
+        "correctChunks": [
+          "said",
+          "that",
+          "the startup",
+          "would launch its app next month"
+        ],
+        "distractorChunks": [
+          "will launch its app next month"
+        ],
+        "responseSuffix": ".",
+        "id": 169
+      },
+      {
+        "promptGender": "male",
+        "prompt": "The inspector found several safety violations.",
+        "responseGender": "female",
+        "responsePrefix": "She",
+        "correctChunks": [
+          "reported",
+          "that",
+          "the inspector",
+          "had found several safety violations"
+        ],
+        "distractorChunks": [
+          "has found several safety violations"
+        ],
+        "responseSuffix": ".",
+        "id": 170
+      }
+    ],
+    "email": {
+      "scenario": "You ordered a textbook online for your course, but the wrong edition arrived. You need the correct edition before your exam next week and want to request an exchange.",
+      "recipient": "Customer Support",
+      "subject": "Received wrong textbook edition",
+      "tasks": [
+        {
+          "description": "Explain that you received the wrong edition of the textbook.",
+          "keywords": [
+            "wrong edition",
+            "incorrect",
+            "mistake"
+          ]
+        },
+        {
+          "description": "Mention that you need the correct edition before your exam.",
+          "keywords": [
+            "exam",
+            "before",
+            "need it by",
+            "deadline"
+          ]
+        },
+        {
+          "description": "Request an exchange for the correct edition.",
+          "keywords": [
+            "exchange",
+            "replace",
+            "correct edition",
+            "send"
+          ]
+        }
+      ],
+      "exampleResponse": "Dear Customer Support,\n\nI recently ordered the textbook for my chemistry course, but the fourth edition arrived instead of the fifth edition I actually need.\n\nMy exam is next week, so I need the correct edition as soon as possible.\n\nCould you please arrange an exchange and send the fifth edition right away? I am happy to return the incorrect copy using a prepaid label if needed. Thank you for your quick attention to this.\n\nSincerely,\n[Your Name]",
+      "id": 17
+    },
+    "disc": {
+      "subject": "environmental science",
+      "professor": "Dr. Alvarez",
+      "professorGender": "female",
+      "prompt": "We've been discussing whether cities should ban single-use plastic bags entirely. Some argue a full ban is necessary to meaningfully reduce plastic pollution, while others argue that a small fee on plastic bags is more practical and achieves similar results without inconveniencing shoppers. Should cities implement a full ban on single-use plastic bags? Why or why not?",
+      "classmates": [
+        {
+          "name": "Naomi",
+          "gender": "female",
+          "opinion": "I support a full ban. A small fee still allows people who can afford it to keep using plastic bags without much thought, which limits how much actual behavior change occurs. A full ban forces everyone to adapt, which is uncomfortable at first but leads to much larger reductions in plastic waste over time."
+        },
+        {
+          "name": "Tomas",
+          "gender": "male",
+          "opinion": "I think a fee is the better approach. It still reduces usage significantly, since research shows even small fees discourage a lot of people, but it avoids penalizing situations where someone genuinely forgot a reusable bag. A full ban can feel overly restrictive and creates enforcement headaches for small businesses that a fee doesn't."
+        }
+      ],
+      "exampleResponse": "The debate between a full plastic bag ban and a small fee comes down to weighing effectiveness against practicality. Naomi makes a compelling point that a fee alone may not push everyone toward meaningful change, since people who can easily afford it might not adjust their behavior much. At the same time, Tomas raises a fair concern about flexibility for occasional situations, and about the burden a ban could place on smaller businesses trying to enforce it. Personally, I lean toward agreeing with Naomi that a full ban produces a larger overall impact, though I think cities could ease the transition by providing free reusable bags to lower-income households during the initial rollout, addressing some of Tomas's concerns about fairness without abandoning the stronger environmental benefits of a full ban.",
+      "id": 17
+    }
+  },
+  "speaking": {
+    "lr": {
+      "location": "Train Station",
+      "icon": "🚉",
+      "photoSlug": "train-station",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Train_station_platform.jpg",
+      "speaker": "male",
+      "introText": "You are learning how to give directions inside a train station. Listen to the speaker and repeat what he says. Repeat only once.",
+      "sentences": [
+        {
+          "text": "Welcome to Central Station.",
+          "length": "short",
+          "recordSeconds": 8,
+          "id": 1
+        },
+        {
+          "text": "Ticket machines are located near the main entrance.",
+          "length": "medium",
+          "recordSeconds": 8,
+          "id": 2
+        },
+        {
+          "text": "Platform three is down the escalator on your left.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 3
+        },
+        {
+          "text": "Trains to the airport depart every twenty minutes.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 4
+        },
+        {
+          "text": "Please keep your ticket until you exit the station.",
+          "length": "medium",
+          "recordSeconds": 10,
+          "id": 5
+        },
+        {
+          "text": "Restrooms and a small café are located near platform one.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 6
+        },
+        {
+          "text": "If you miss your train, the next one departs from the same platform.",
+          "length": "long",
+          "recordSeconds": 12,
+          "id": 7
+        }
+      ],
+      "id": 17
+    },
+    "interview": {
+      "topic": "City Living",
+      "icon": "🏙️",
+      "photoSlug": "city-living",
+      "photoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/6c/City_street_view.jpg",
+      "speaker": "female",
+      "introText": "You have agreed to take part in a research study about attitudes toward city living. You will have a short online interview with a researcher. The researcher will ask you some questions.",
+      "questions": [
+        {
+          "connector": "",
+          "text": "Thank you for joining me today. Let's begin with something simple. Do you prefer living in a big city or a smaller town, and why?",
+          "recordSeconds": 45,
+          "id": 1
+        },
+        {
+          "connector": "I see.",
+          "text": "I see. What do you think is the biggest advantage of living in a big city?",
+          "recordSeconds": 45,
+          "id": 2
+        },
+        {
+          "connector": "That's a good point.",
+          "text": "That's a good point. And what would you say is the biggest drawback of city living?",
+          "recordSeconds": 45,
+          "id": 3
+        },
+        {
+          "connector": "Great, one last question.",
+          "text": "Great, one last question. Do you think cities are doing enough to remain affordable for young people? Why or why not?",
+          "recordSeconds": 45,
+          "id": 4
+        }
+      ],
+      "id": 17
+    }
+  }
+}

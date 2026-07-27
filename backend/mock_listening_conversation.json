@@ -1,0 +1,4822 @@
+[
+  {
+    "id": 1,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/1.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Did you end up finding an internship for the summer?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not yet. I applied to a few places, but I haven't heard back from any of them."
+      },
+      {
+        "speaker": "female",
+        "text": "Have you tried the career center? They post internships that aren't listed anywhere else."
+      },
+      {
+        "speaker": "male",
+        "text": "I didn't know that. I'll stop by there this week."
+      },
+      {
+        "speaker": "female",
+        "text": "Good idea, and bring an updated resume with you."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He missed the internship application deadline.",
+          "He hasn't heard back from any internship applications.",
+          "He doesn't have a resume ready.",
+          "He was rejected from every internship."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest the man do?",
+        "options": [
+          "Apply to fewer places.",
+          "Ask his professor for a recommendation.",
+          "Visit the career center for internship listings.",
+          "Wait a few more weeks before applying again."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/2.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "My phone plan bill was almost double what I usually pay this month."
+      },
+      {
+        "speaker": "female",
+        "text": "That's strange. Did you go over your data limit?"
+      },
+      {
+        "speaker": "male",
+        "text": "I might have, actually. I was streaming a lot while traveling."
+      },
+      {
+        "speaker": "female",
+        "text": "You should call customer service. They can walk you through the charges."
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, I'll call them during my lunch break today."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "His phone stopped working.",
+          "His phone bill was much higher than usual.",
+          "He lost his phone while traveling.",
+          "He was charged for a plan he canceled."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest he do?",
+        "options": [
+          "Switch to a cheaper phone plan.",
+          "Stop using data while traveling.",
+          "Call customer service about the charges.",
+          "Return the phone to the store."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/3.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm supposed to give a presentation tomorrow, but my slides keep crashing the projector software."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you tried saving it as a PDF instead? That usually works better."
+      },
+      {
+        "speaker": "female",
+        "text": "I hadn't thought of that. Do you think the formatting will still look right?"
+      },
+      {
+        "speaker": "male",
+        "text": "Mostly, yes, though animations won't play in a PDF."
+      },
+      {
+        "speaker": "female",
+        "text": "That's fine, I don't have any animations. I'll convert it tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She lost her presentation file.",
+          "Her slides keep crashing the projector software.",
+          "She forgot to prepare her presentation.",
+          "Her presentation is too long."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest she do?",
+        "options": [
+          "Ask someone else to present for her.",
+          "Save the presentation as a PDF file.",
+          "Remove all the images from her slides.",
+          "Postpone the presentation to another day."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/4.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Did you end up finding an internship for the summer?"
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, actually, I just accepted an offer from a marketing firm downtown yesterday."
+      },
+      {
+        "speaker": "female",
+        "text": "That's great! How did you manage to land something so late in the semester?"
+      },
+      {
+        "speaker": "male",
+        "text": "Honestly, it was mostly luck. One of my professors knew the hiring manager and put in a good word for me."
+      },
+      {
+        "speaker": "female",
+        "text": "Well, congratulations. You must be relieved after all that searching."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man talking about?",
+        "options": [
+          "A problem with his class schedule",
+          "An internship offer he just accepted",
+          "A trip he is planning for the summer",
+          "A professor he is unhappy with"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How did the man get the internship?",
+        "options": [
+          "He applied through an online job board",
+          "A professor recommended him to the hiring manager",
+          "He walked in and asked for a job",
+          "His roommate referred him"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/5.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Hey, do you have a minute? I wanted to talk about the apartment."
+      },
+      {
+        "speaker": "female",
+        "text": "Sure, what's going on?"
+      },
+      {
+        "speaker": "male",
+        "text": "Well, the kitchen has been a mess lately, and I don't think it's fair for me to clean it every time."
+      },
+      {
+        "speaker": "female",
+        "text": "Oh, I'm sorry, I've been swamped with midterms. How about we make a cleaning schedule so it's more balanced?"
+      },
+      {
+        "speaker": "male",
+        "text": "That sounds like a good idea. Let's set it up this weekend."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He can't afford the rent",
+          "He feels he is doing more than his share of cleaning",
+          "He wants to move out",
+          "He is failing his midterms"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What do the speakers decide to do?",
+        "options": [
+          "Hire a cleaning service",
+          "Move to separate apartments",
+          "Create a cleaning schedule",
+          "Ask the landlord to intervene"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/6.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "My laptop crashed right before I could save my research paper, and now I don't know if I lost everything."
+      },
+      {
+        "speaker": "male",
+        "text": "Oh no, did you have it backed up anywhere, like on a cloud drive?"
+      },
+      {
+        "speaker": "female",
+        "text": "I think I turned on automatic backup a few weeks ago, but I'm not sure it actually saved the recent changes."
+      },
+      {
+        "speaker": "male",
+        "text": "You should check the campus IT help desk. They can sometimes recover files even if the backup didn't work."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a good idea. I'll head over there this afternoon before the library closes."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She lost her laptop charger",
+          "Her laptop crashed and she may have lost her paper",
+          "She missed the deadline for her paper",
+          "Her cloud storage account was hacked"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest she do?",
+        "options": [
+          "Rewrite the paper from memory",
+          "Ask her professor for an extension",
+          "Visit the campus IT help desk",
+          "Buy a new laptop"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/7.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "You weren't in Professor Lee's lecture yesterday. Everything okay?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not really, I've had a pretty bad flu since Monday. I could barely get out of bed."
+      },
+      {
+        "speaker": "male",
+        "text": "That's rough. Did you miss the review for the midterm?"
+      },
+      {
+        "speaker": "female",
+        "text": "Yeah, and I'm worried because I don't know anyone else well enough in that class to ask for notes."
+      },
+      {
+        "speaker": "male",
+        "text": "Don't worry, I took detailed notes. I can send you a copy tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She failed the midterm exam",
+          "She has been sick and missed an important review session",
+          "She lost her class notes",
+          "She overslept and missed the bus"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man offer to do?",
+        "options": [
+          "Talk to the professor for her",
+          "Give her his notes from the lecture",
+          "Tutor her for the midterm",
+          "Lend her his textbook"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/8.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Are you all set for your study abroad trip next week?"
+      },
+      {
+        "speaker": "male",
+        "text": "Almost, but I just found out my flight got rescheduled to a much earlier time, and now it overlaps with my last final."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a tricky situation. Have you talked to your professor about it?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not yet, but I'm planning to email her today to see if I can take the exam a day early."
+      },
+      {
+        "speaker": "female",
+        "text": "That sounds like your best option. Most professors are usually pretty understanding about travel conflicts."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He lost his passport",
+          "His rescheduled flight conflicts with a final exam",
+          "He can't afford the plane ticket",
+          "He forgot to pack his luggage"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man plan to do?",
+        "options": [
+          "Cancel his trip abroad",
+          "Ask to take the exam early",
+          "Skip the final exam entirely",
+          "Change his flight back"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/9.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "You look stressed. What's up?"
+      },
+      {
+        "speaker": "female",
+        "text": "I just got a notice that my scholarship might not renew next semester because my GPA dropped slightly last term."
+      },
+      {
+        "speaker": "male",
+        "text": "Oh no, is there anything you can do about it?"
+      },
+      {
+        "speaker": "female",
+        "text": "I found out there's an appeal process where I can explain the circumstances, like when I was sick during finals."
+      },
+      {
+        "speaker": "male",
+        "text": "You should definitely file that appeal. It sounds like you have a solid case."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She lost her student ID",
+          "Her scholarship may not be renewed due to her GPA",
+          "She cannot pay her tuition at all",
+          "She was denied financial aid completely"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Drop out for a semester",
+          "Take out a loan instead",
+          "File an appeal explaining the circumstances",
+          "Transfer to a cheaper school"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/10.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "How's the group project coming along?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not great, honestly. One of my group members hasn't submitted his section, and the deadline is tomorrow."
+      },
+      {
+        "speaker": "female",
+        "text": "Have you tried reaching out to him directly?"
+      },
+      {
+        "speaker": "male",
+        "text": "I've emailed him twice with no response. I'm thinking about asking the professor for a short extension instead."
+      },
+      {
+        "speaker": "female",
+        "text": "That seems reasonable, especially if you explain the situation honestly and show what you've already completed."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He forgot about the deadline entirely",
+          "A group member has not submitted his part of the project",
+          "He disagrees with his group's topic",
+          "He was assigned too much work by the professor"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man decide to do?",
+        "options": [
+          "Complete the missing part himself overnight",
+          "Report the group member to the dean",
+          "Ask the professor for a short extension",
+          "Drop the class"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/11.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Did you sleep okay last night? You look exhausted."
+      },
+      {
+        "speaker": "female",
+        "text": "Not really. The people in the room next to mine were playing loud music until almost 2 a.m."
+      },
+      {
+        "speaker": "male",
+        "text": "That's frustrating. Did you say anything to them or contact the RA?"
+      },
+      {
+        "speaker": "female",
+        "text": "I knocked once, but nothing changed, so I think I need to file a formal complaint with the resident advisor."
+      },
+      {
+        "speaker": "male",
+        "text": "That's probably the best move. They usually take noise complaints pretty seriously."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "Her roommate moved out unexpectedly",
+          "Loud neighbors kept her awake at night",
+          "She was locked out of her dorm room",
+          "Her room does not have working heat"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man think the woman should do?",
+        "options": [
+          "Move to a different dorm immediately",
+          "File a formal complaint with the RA",
+          "Ignore the issue since it's temporary",
+          "Confront the neighbors again herself"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/12.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I heard you got a part-time job at the library. How's that going?"
+      },
+      {
+        "speaker": "male",
+        "text": "It's good, but my manager just changed my shifts, and now they overlap with my chemistry lab."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a problem. Have you talked to your manager about switching shifts with someone?"
+      },
+      {
+        "speaker": "male",
+        "text": "I was thinking about that, but I'm not sure who else would want to trade with me."
+      },
+      {
+        "speaker": "female",
+        "text": "Try posting in the staff group chat. Someone might be happy to swap for a shift that works better for them."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He was fired from his job",
+          "His new work shifts conflict with his chemistry lab",
+          "He is not being paid on time",
+          "He cannot find a part-time job"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Quit the job immediately",
+          "Ask the professor to change the lab time",
+          "Post in the staff group chat to find a shift swap",
+          "Skip the lab session instead"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/13.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "What happened to your ankle? You're limping."
+      },
+      {
+        "speaker": "female",
+        "text": "I twisted it pretty badly during soccer practice last night. The doctor said I need to stay off it for a week."
+      },
+      {
+        "speaker": "male",
+        "text": "That sounds painful. Doesn't your team have a big game coming up?"
+      },
+      {
+        "speaker": "female",
+        "text": "Yeah, this Saturday, and I'm the starting goalkeeper, so I'm worried about letting everyone down."
+      },
+      {
+        "speaker": "male",
+        "text": "You should talk to your coach now instead of waiting. They'll need time to prepare a backup plan anyway."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She was cut from the soccer team",
+          "She injured her ankle before an important game",
+          "She failed her physical education class",
+          "She lost her scholarship for sports"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest she do?",
+        "options": [
+          "Play in the game despite the injury",
+          "Talk to her coach right away",
+          "Quit the soccer team",
+          "See a different doctor for a second opinion"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/14.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "How was the academic conference? Did everything go smoothly?"
+      },
+      {
+        "speaker": "male",
+        "text": "Mostly, except my return flight got delayed for almost six hours because of a storm."
+      },
+      {
+        "speaker": "female",
+        "text": "Oh no, did that mess up your plans for classes this week?"
+      },
+      {
+        "speaker": "male",
+        "text": "It did. I ended up missing my Monday morning seminar, which I really didn't want to do."
+      },
+      {
+        "speaker": "female",
+        "text": "You should email your professor and explain what happened. Weather delays are usually excused pretty easily."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He lost his luggage at the airport",
+          "His flight was delayed and he missed a seminar",
+          "He missed his own conference presentation",
+          "He forgot his conference materials at home"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest he do?",
+        "options": [
+          "Skip the seminar again next week",
+          "Email his professor to explain the situation",
+          "Drop the seminar course",
+          "Ask a classmate to take the exam for him"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/15.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "You seem worried about something. Everything all right?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not really. I just looked at my bank account, and I'm not sure I have enough to cover rent this month."
+      },
+      {
+        "speaker": "male",
+        "text": "That's stressful. Did something unexpected come up?"
+      },
+      {
+        "speaker": "female",
+        "text": "Yeah, my textbooks cost way more than I budgeted for, and I didn't account for that."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you checked if the campus has an emergency student fund? A lot of schools offer short-term help for situations like this."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She lost her part-time job",
+          "She may not have enough money to pay rent this month",
+          "She overspent on a vacation",
+          "Her scholarship was revoked"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Ask her parents for money",
+          "Check if the campus has an emergency student fund",
+          "Drop out of school temporarily",
+          "Take out a high-interest loan"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/16.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I still haven't picked a topic for the history research paper. It's due in three weeks."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you thought about narrowing it down by region or time period first?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not really. There are just too many interesting options and I keep changing my mind."
+      },
+      {
+        "speaker": "male",
+        "text": "Maybe talk to Professor Diaz during office hours. She's great at helping students narrow topics."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a good idea. I'll stop by tomorrow afternoon."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She cannot find enough sources for her paper.",
+          "She has not chosen a topic for her research paper.",
+          "She missed the deadline for the paper.",
+          "She disagrees with her professor's grading."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest the woman do?",
+        "options": [
+          "Choose a shorter topic.",
+          "Ask a classmate for help.",
+          "Speak with the professor during office hours.",
+          "Postpone the assignment."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/17.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "My roommate has been staying up until 3 a.m. playing music, and I can't sleep."
+      },
+      {
+        "speaker": "female",
+        "text": "Have you tried talking to him about it directly?"
+      },
+      {
+        "speaker": "male",
+        "text": "I mentioned it once, but nothing changed."
+      },
+      {
+        "speaker": "female",
+        "text": "You might want to bring it up with your resident advisor if it keeps happening."
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, I think that's what I'll have to do next."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "His roommate keeps him awake at night with music.",
+          "He cannot find his roommate.",
+          "He was asked to move out of his room.",
+          "His roommate borrowed his belongings."
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the woman suggest he do?",
+        "options": [
+          "Move to a different dorm.",
+          "Talk to the resident advisor.",
+          "Buy noise-canceling headphones.",
+          "Wait until the semester ends."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/18.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm torn between the study abroad program in Spain and the one in Japan."
+      },
+      {
+        "speaker": "male",
+        "text": "What's making it hard to decide?"
+      },
+      {
+        "speaker": "female",
+        "text": "The Spain program fits my major better, but I've always wanted to visit Japan."
+      },
+      {
+        "speaker": "male",
+        "text": "Maybe check whether either program offers credits toward your major before deciding."
+      },
+      {
+        "speaker": "female",
+        "text": "Good point. I'll email the study abroad office today."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman trying to decide?",
+        "options": [
+          "Whether to study abroad at all.",
+          "Which study abroad program to choose.",
+          "Which courses to take next semester.",
+          "Whether to change her major."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man recommend she check?",
+        "options": [
+          "The cost of each program.",
+          "Whether the programs offer credits toward her major.",
+          "The length of each program.",
+          "The application deadline."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/19.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I just got a notice saying I owe a fine for an overdue library book."
+      },
+      {
+        "speaker": "female",
+        "text": "Did you already return the book?"
+      },
+      {
+        "speaker": "male",
+        "text": "Yes, last week, but the fine is still showing on my account."
+      },
+      {
+        "speaker": "female",
+        "text": "That might just be a delay in the system. I'd go talk to the front desk to clear it up."
+      },
+      {
+        "speaker": "male",
+        "text": "I'll stop by after my next class."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He lost a library book.",
+          "He is being charged a fine for a book he already returned.",
+          "He cannot find a book he needs.",
+          "His library card has expired."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Pay the fine immediately.",
+          "Ignore the notice.",
+          "Talk to the front desk about the issue.",
+          "Check the library's website."
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/20.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I signed up for five classes this semester, and I'm already feeling overwhelmed."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you considered dropping one before the deadline?"
+      },
+      {
+        "speaker": "female",
+        "text": "I've thought about it, but I'm worried it will delay my graduation."
+      },
+      {
+        "speaker": "male",
+        "text": "You could talk to your academic advisor about how it would actually affect your timeline."
+      },
+      {
+        "speaker": "female",
+        "text": "That's probably smarter than guessing. I'll schedule an appointment."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She failed one of her classes.",
+          "She feels overwhelmed by her course load.",
+          "She cannot register for a required class.",
+          "She missed an important exam."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest she do?",
+        "options": [
+          "Drop out of school for a semester.",
+          "Talk to her academic advisor.",
+          "Take a lighter course load next year.",
+          "Ask a professor for extra credit."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/21.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Someone jammed the lock on my bike outside the science building."
+      },
+      {
+        "speaker": "female",
+        "text": "Oh no, can you still get it open?"
+      },
+      {
+        "speaker": "male",
+        "text": "No, it's completely stuck. I might need bolt cutters."
+      },
+      {
+        "speaker": "female",
+        "text": "Campus security has tools like that. You could ask them for help."
+      },
+      {
+        "speaker": "male",
+        "text": "I didn't think of that. I'll head over there now."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "His bike was stolen.",
+          "His bike's lock is jammed and won't open.",
+          "He forgot where he parked his bike.",
+          "His bike has a flat tire."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest he do?",
+        "options": [
+          "Buy a new lock.",
+          "Ask campus security for help.",
+          "Leave the bike there overnight.",
+          "Call a locksmith downtown."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/22.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I wanted to sign up for the yoga class at the gym, but it says it's full."
+      },
+      {
+        "speaker": "male",
+        "text": "That class fills up fast. Did you check if there's a waitlist?"
+      },
+      {
+        "speaker": "female",
+        "text": "I didn't see one on the website."
+      },
+      {
+        "speaker": "male",
+        "text": "You could call the front desk directly. Sometimes spots open up from cancellations."
+      },
+      {
+        "speaker": "female",
+        "text": "Good idea, I'll give them a call this afternoon."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She cannot afford a gym membership.",
+          "The yoga class she wants to join is full.",
+          "She missed the first day of yoga class.",
+          "The gym is closed for renovations."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest she do?",
+        "options": [
+          "Choose a different class entirely.",
+          "Call the front desk about openings.",
+          "Wait until next semester.",
+          "Ask a friend to save her a spot."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/23.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "My group project partner keeps missing our meetings, and the deadline is close."
+      },
+      {
+        "speaker": "female",
+        "text": "Have you tried reaching out to see what's going on?"
+      },
+      {
+        "speaker": "male",
+        "text": "I've texted a few times, but I haven't heard back."
+      },
+      {
+        "speaker": "female",
+        "text": "You might want to let the professor know soon, in case it affects your grade."
+      },
+      {
+        "speaker": "male",
+        "text": "I was hoping to avoid that, but you're right, I should send an email today."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "His group project partner keeps missing meetings.",
+          "He forgot about the project deadline.",
+          "His group chose the wrong topic.",
+          "He cannot find a group to join."
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the woman recommend?",
+        "options": [
+          "Finish the project alone.",
+          "Inform the professor about the situation.",
+          "Wait until after the deadline to act.",
+          "Switch to a different group."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/24.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I really need to talk to Professor Kim about my essay, but I keep missing office hours."
+      },
+      {
+        "speaker": "male",
+        "text": "Why do you keep missing them?"
+      },
+      {
+        "speaker": "female",
+        "text": "They overlap with my part-time job shift every week."
+      },
+      {
+        "speaker": "male",
+        "text": "You could email her and ask if she'd be willing to meet at a different time."
+      },
+      {
+        "speaker": "female",
+        "text": "That makes sense. I'll send her a message tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "Her essay was rejected by the professor.",
+          "Her work schedule conflicts with office hours.",
+          "She forgot to write her essay.",
+          "She lost the professor's contact information."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Quit her part-time job.",
+          "Email the professor to request a different meeting time.",
+          "Skip the assignment entirely.",
+          "Ask a classmate for notes."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/25.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I got two summer job offers, and I can't decide which one to take."
+      },
+      {
+        "speaker": "female",
+        "text": "What are the two options?"
+      },
+      {
+        "speaker": "male",
+        "text": "One pays more, but the other is directly related to my major."
+      },
+      {
+        "speaker": "female",
+        "text": "If you're thinking long term, the relevant experience might matter more than the pay."
+      },
+      {
+        "speaker": "male",
+        "text": "That's true. I'll probably go with the one related to my field."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man trying to decide?",
+        "options": [
+          "Whether to work this summer at all.",
+          "Which of two summer job offers to accept.",
+          "Whether to change his major.",
+          "Which internship application to submit."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman point out?",
+        "options": [
+          "The higher-paying job is always the better choice.",
+          "Relevant experience might matter more than pay long term.",
+          "He should ask for more time to decide.",
+          "Both jobs sound equally unappealing."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/26.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "There's an error on my financial aid paperwork, and I'm not sure how to fix it."
+      },
+      {
+        "speaker": "male",
+        "text": "What kind of error is it?"
+      },
+      {
+        "speaker": "female",
+        "text": "My parents' income information got entered incorrectly somehow."
+      },
+      {
+        "speaker": "male",
+        "text": "You should go to the financial aid office in person. They can usually correct that quickly."
+      },
+      {
+        "speaker": "female",
+        "text": "I'll head over there right after this class."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She missed the financial aid deadline.",
+          "There is an error on her financial aid paperwork.",
+          "She was denied financial aid.",
+          "She lost her financial aid documents."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest she do?",
+        "options": [
+          "Call her parents about it.",
+          "Visit the financial aid office in person.",
+          "Wait for the system to fix itself.",
+          "Fill out a new application from scratch."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/27.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "My roommate and I can't agree on how to split the cost of a parking permit."
+      },
+      {
+        "speaker": "female",
+        "text": "What's the disagreement about exactly?"
+      },
+      {
+        "speaker": "male",
+        "text": "I barely drive, but he wants to split it fifty-fifty."
+      },
+      {
+        "speaker": "female",
+        "text": "Maybe suggest splitting it based on how often each of you actually uses the car."
+      },
+      {
+        "speaker": "male",
+        "text": "That seems fair. I'll bring it up with him tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He cannot find a parking spot on campus.",
+          "He disagrees with his roommate about splitting a parking cost.",
+          "His car was towed from a permit lot.",
+          "He needs to renew his parking permit."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Split the cost based on usage.",
+          "Refuse to pay anything.",
+          "Buy a separate permit for himself.",
+          "Ask the building manager to decide."
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/28.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I can never find a quiet spot to study during the day. The library is always packed."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you tried the study rooms on the top floor of the student center?"
+      },
+      {
+        "speaker": "female",
+        "text": "I didn't even know those existed."
+      },
+      {
+        "speaker": "male",
+        "text": "They're pretty quiet, and you can usually reserve one online in advance."
+      },
+      {
+        "speaker": "female",
+        "text": "I'll check that out before my next exam."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She cannot find a quiet place to study.",
+          "She forgot the location of the library.",
+          "She is failing her classes.",
+          "She lost her study materials."
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the man recommend?",
+        "options": [
+          "Study at home instead.",
+          "Use the study rooms in the student center.",
+          "Study late at night in the library.",
+          "Form a study group."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/29.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I want to switch from the full meal plan to the smaller one, but I'm not sure how."
+      },
+      {
+        "speaker": "female",
+        "text": "You usually have to submit a request through the housing office."
+      },
+      {
+        "speaker": "male",
+        "text": "Is there a deadline for switching?"
+      },
+      {
+        "speaker": "female",
+        "text": "I think it's the end of the first month of the semester, so you should do it soon."
+      },
+      {
+        "speaker": "male",
+        "text": "Thanks, I'll go by the housing office tomorrow morning."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What does the man want to do?",
+        "options": [
+          "Cancel his meal plan entirely.",
+          "Switch to a smaller meal plan.",
+          "Upgrade to a larger meal plan.",
+          "Get a refund for unused meals."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman tell him about the process?",
+        "options": [
+          "It can only be done online.",
+          "He needs to submit a request through the housing office.",
+          "It cannot be changed once selected.",
+          "He needs approval from his roommate."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/30.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I still haven't decided whether to live in the dorms again next year or move off campus."
+      },
+      {
+        "speaker": "male",
+        "text": "What's making you lean toward moving off campus?"
+      },
+      {
+        "speaker": "female",
+        "text": "Mostly the cost. Rent nearby seems a lot cheaper than the dorm fees."
+      },
+      {
+        "speaker": "male",
+        "text": "That's true, but don't forget to factor in things like utilities and a longer commute."
+      },
+      {
+        "speaker": "female",
+        "text": "Good point. I'll add those costs up before I make a final decision."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman trying to decide?",
+        "options": [
+          "Whether to transfer to a different school.",
+          "Whether to live in the dorms or move off campus next year.",
+          "Which roommate to choose.",
+          "Whether to take a semester off."
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man remind her to consider?",
+        "options": [
+          "The dorm's meal plan options.",
+          "Additional costs like utilities and commuting.",
+          "The distance to the library.",
+          "Whether her friends are moving too."
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/31.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I can't decide between the two electives for next semester."
+      },
+      {
+        "speaker": "male",
+        "text": "What are you weighing them against?"
+      },
+      {
+        "speaker": "female",
+        "text": "One fits my schedule better, but the other sounds more interesting."
+      },
+      {
+        "speaker": "male",
+        "text": "Maybe sit in on the first lecture of each before deciding."
+      },
+      {
+        "speaker": "female",
+        "text": "That's smart, I didn't realize we could do that."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman trying to decide?",
+        "options": [
+          "Which elective course to take",
+          "Whether to drop a class",
+          "Which major to declare",
+          "Whether to study abroad"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Choosing based on schedule only",
+          "Sitting in on the first lecture of each",
+          "Asking a friend to decide for her",
+          "Taking both classes"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/32.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "My laptop crashed and I have a paper due tomorrow."
+      },
+      {
+        "speaker": "female",
+        "text": "Did you save it anywhere else, like the cloud?"
+      },
+      {
+        "speaker": "male",
+        "text": "I think I turned on auto-save last month, so maybe."
+      },
+      {
+        "speaker": "female",
+        "text": "Check your account from the library computers just in case."
+      },
+      {
+        "speaker": "male",
+        "text": "Good idea, I'll head there right now."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He lost his laptop",
+          "His laptop crashed before a deadline",
+          "He forgot to write his paper",
+          "His paper was rejected"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Ask the professor for an extension",
+          "Check his account from library computers",
+          "Buy a new laptop today",
+          "Rewrite the paper from memory"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/33.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "My visa paperwork for the study abroad program got delayed."
+      },
+      {
+        "speaker": "male",
+        "text": "That sounds stressful. How delayed is it?"
+      },
+      {
+        "speaker": "female",
+        "text": "They said it could take another three weeks."
+      },
+      {
+        "speaker": "male",
+        "text": "You should let the study abroad office know right away, just in case."
+      },
+      {
+        "speaker": "female",
+        "text": "You're right, I'll email them today."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "Her study abroad application was rejected",
+          "Her visa paperwork is delayed",
+          "She lost her passport",
+          "She missed her flight"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest she do?",
+        "options": [
+          "Cancel the trip",
+          "Notify the study abroad office",
+          "Apply for a different program",
+          "Wait without telling anyone"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/34.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "My roommate wants to split the electric bill differently since I work from home more."
+      },
+      {
+        "speaker": "female",
+        "text": "Does that seem fair to you?"
+      },
+      {
+        "speaker": "male",
+        "text": "Honestly, I hadn't thought about it that way before."
+      },
+      {
+        "speaker": "female",
+        "text": "Maybe look at how much extra your usage actually adds before agreeing."
+      },
+      {
+        "speaker": "male",
+        "text": "That's a good idea, I'll check last month's bill."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is being discussed?",
+        "options": [
+          "Splitting rent evenly",
+          "Splitting the electric bill differently",
+          "Moving to a new apartment",
+          "Canceling a utility service"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Refuse the new arrangement",
+          "Check actual usage before agreeing",
+          "Ask the landlord to decide",
+          "Split everything equally regardless"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/35.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm applying to be a resident advisor next year."
+      },
+      {
+        "speaker": "male",
+        "text": "That's great! What's the application like?"
+      },
+      {
+        "speaker": "female",
+        "text": "There's a written application and then a group interview."
+      },
+      {
+        "speaker": "male",
+        "text": "You should ask current RAs what kinds of questions come up."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a good idea, I know a couple I can ask."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman planning to do?",
+        "options": [
+          "Move off campus",
+          "Apply to be a resident advisor",
+          "Transfer to another school",
+          "Change her major"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Skip the group interview",
+          "Ask current RAs about the process",
+          "Apply next year instead",
+          "Write a shorter application"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/36.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I completely forgot about my dentist appointment this morning."
+      },
+      {
+        "speaker": "female",
+        "text": "Did you call to explain?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not yet, I'm worried they'll charge a fee."
+      },
+      {
+        "speaker": "female",
+        "text": "You should call now, most offices waive it if you explain quickly."
+      },
+      {
+        "speaker": "male",
+        "text": "Okay, I'll call them on my lunch break."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He canceled his appointment on purpose",
+          "He forgot his dentist appointment",
+          "He lost his insurance card",
+          "His appointment was rescheduled without notice"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Ignore the missed appointment",
+          "Call the office to explain quickly",
+          "Find a new dentist",
+          "Wait until next week to call"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/37.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "The construction noise outside the lecture hall made it impossible to hear the professor."
+      },
+      {
+        "speaker": "male",
+        "text": "Did anyone say anything to the department about it?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not that I know of, but it's happened twice now."
+      },
+      {
+        "speaker": "male",
+        "text": "Maybe email the department to see if the class can move rooms temporarily."
+      },
+      {
+        "speaker": "female",
+        "text": "That makes sense, I'll send a message tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She missed a lecture",
+          "Construction noise disrupted her class",
+          "Her class was canceled",
+          "She lost her lecture notes"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Ignore the noise",
+          "Email the department about moving rooms",
+          "Drop the class",
+          "Record the lecture instead"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/38.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I got into three graduate programs and I'm not sure which to choose."
+      },
+      {
+        "speaker": "female",
+        "text": "What's making it a hard decision?"
+      },
+      {
+        "speaker": "male",
+        "text": "They're all strong programs, but the funding packages are pretty different."
+      },
+      {
+        "speaker": "female",
+        "text": "You might want to talk to current students in each program about their experience."
+      },
+      {
+        "speaker": "male",
+        "text": "That's a great idea, I'll reach out this week."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man trying to decide?",
+        "options": [
+          "Whether to attend graduate school at all",
+          "Which graduate program to attend",
+          "Whether to change his major",
+          "Whether to defer admission"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Choose based on funding alone",
+          "Talk to current students in each program",
+          "Wait another year to decide",
+          "Ask his parents to decide for him"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/39.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm not sure I filled out the scholarship application correctly."
+      },
+      {
+        "speaker": "male",
+        "text": "What part are you unsure about?"
+      },
+      {
+        "speaker": "female",
+        "text": "The section asking for a recommendation letter timeline."
+      },
+      {
+        "speaker": "male",
+        "text": "You could email the scholarship office directly to double-check."
+      },
+      {
+        "speaker": "female",
+        "text": "Good idea, I'll send them a message today."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She missed the application deadline",
+          "She's unsure about part of the application",
+          "She was denied the scholarship",
+          "She lost her recommendation letter"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Guess and submit anyway",
+          "Email the scholarship office to confirm",
+          "Ask a classmate for help",
+          "Withdraw the application"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/40.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "My brother and I share a car, and it's getting complicated to schedule."
+      },
+      {
+        "speaker": "female",
+        "text": "How are you currently working it out?"
+      },
+      {
+        "speaker": "male",
+        "text": "We just text each other, but it keeps causing mix-ups."
+      },
+      {
+        "speaker": "female",
+        "text": "Maybe set up a shared calendar so you can both see it clearly."
+      },
+      {
+        "speaker": "male",
+        "text": "That would definitely help, I'll set one up tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "His car broke down",
+          "Scheduling shared car use is complicated",
+          "He lost his driver's license",
+          "His brother refuses to share the car"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Buy a second car",
+          "Use a shared calendar",
+          "Stop sharing the car",
+          "Ask their parents to decide"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 41,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/41.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "The group chat for the photography club is impossible to keep up with."
+      },
+      {
+        "speaker": "male",
+        "text": "What's the main issue?"
+      },
+      {
+        "speaker": "female",
+        "text": "Important announcements get buried under casual messages."
+      },
+      {
+        "speaker": "male",
+        "text": "Maybe suggest creating a separate channel just for announcements."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a good idea, I'll bring it up at the next meeting."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She was removed from the club",
+          "Important messages get buried in the group chat",
+          "She missed a club meeting",
+          "The club canceled its activities"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Leave the group chat",
+          "Create a separate announcements channel",
+          "Stop using the group chat entirely",
+          "Ask everyone to text less"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 42,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/42.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I submitted my assignment a day late because of an emergency."
+      },
+      {
+        "speaker": "female",
+        "text": "Did you explain the situation to the professor?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not yet, I was worried it wouldn't matter."
+      },
+      {
+        "speaker": "female",
+        "text": "Most professors are understanding if you explain and provide documentation."
+      },
+      {
+        "speaker": "male",
+        "text": "I'll email mine tonight with the details."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He forgot about the assignment entirely",
+          "He submitted an assignment late due to an emergency",
+          "He lost his assignment file",
+          "He was accused of cheating"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Say nothing and hope for the best",
+          "Explain the situation with documentation",
+          "Redo the assignment",
+          "Ask a classmate to submit for him"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 43,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/43.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "My academic advisor is retiring, and I'm not sure who to go to now."
+      },
+      {
+        "speaker": "male",
+        "text": "Has the department announced a replacement yet?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not that I've seen, but I have questions about next semester."
+      },
+      {
+        "speaker": "male",
+        "text": "You could stop by the department office and ask who's covering advising for now."
+      },
+      {
+        "speaker": "female",
+        "text": "That makes sense, I'll go by tomorrow."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She was assigned too many advisors",
+          "Her advisor is retiring and she needs guidance",
+          "She failed her advising meeting",
+          "She wants to change her major"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Wait until next semester to ask",
+          "Visit the department office for guidance",
+          "Choose her own courses without advice",
+          "Email the retiring advisor only"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 44,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/44.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I'm considering adding a minor, but I'm not sure it's worth the extra credits."
+      },
+      {
+        "speaker": "female",
+        "text": "What minor are you thinking about?"
+      },
+      {
+        "speaker": "male",
+        "text": "Statistics, since it might help with my career plans."
+      },
+      {
+        "speaker": "female",
+        "text": "Talking to someone in your target field could help you decide if it's worth it."
+      },
+      {
+        "speaker": "male",
+        "text": "That's a good idea, I know an alum I could ask."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man trying to decide?",
+        "options": [
+          "Whether to change his major",
+          "Whether to add a minor",
+          "Whether to graduate early",
+          "Whether to take a gap year"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Add the minor without more thought",
+          "Talk to someone in his target field",
+          "Drop the idea completely",
+          "Ask his professor to decide"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 45,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/45.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "My meal delivery order arrived missing half the items."
+      },
+      {
+        "speaker": "male",
+        "text": "Did you contact the delivery app about it?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not yet, I wasn't sure if it was worth the hassle."
+      },
+      {
+        "speaker": "male",
+        "text": "Most apps offer a partial refund if you report it within an hour."
+      },
+      {
+        "speaker": "female",
+        "text": "Good to know, I'll report it right now."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "Her order never arrived",
+          "Her order was missing items",
+          "She was charged twice",
+          "Her order arrived cold"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Ignore it since it's minor",
+          "Report it to the app for a possible refund",
+          "Cancel her account",
+          "Order from a different restaurant"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 46,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/46.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I missed the train to my job interview downtown."
+      },
+      {
+        "speaker": "female",
+        "text": "Did you call to let them know?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not yet, I'm trying to figure out the next train first."
+      },
+      {
+        "speaker": "female",
+        "text": "Call them now anyway, they'll appreciate knowing right away."
+      },
+      {
+        "speaker": "male",
+        "text": "You're right, I'll call while I wait for the next train."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He missed the train to a job interview",
+          "He lost his interview outfit",
+          "He forgot the interview address",
+          "His interview was canceled"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Skip the interview entirely",
+          "Call the company right away",
+          "Wait until he arrives to explain",
+          "Reschedule for another week"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 47,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/47.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I got an internship, but I still need to find housing near the office."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you looked into short-term sublets?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not yet, I wasn't sure where to search."
+      },
+      {
+        "speaker": "male",
+        "text": "There's a housing board specifically for interns that the company might share."
+      },
+      {
+        "speaker": "female",
+        "text": "I'll ask my recruiter about that tomorrow."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She didn't get the internship",
+          "She needs housing near her internship",
+          "She missed the internship start date",
+          "She can't afford the internship"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Live at home and commute far",
+          "Look into the company's intern housing board",
+          "Cancel the internship",
+          "Ask a stranger online for housing"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 48,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/48.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "My roommate and I keep disagreeing about the thermostat setting."
+      },
+      {
+        "speaker": "female",
+        "text": "What temperature does each of you prefer?"
+      },
+      {
+        "speaker": "male",
+        "text": "I like it cooler, but he's always cold."
+      },
+      {
+        "speaker": "female",
+        "text": "Maybe compromise on a middle temperature and use extra blankets if needed."
+      },
+      {
+        "speaker": "male",
+        "text": "That's fair, I'll suggest that to him tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "His heater is broken",
+          "He and his roommate disagree about the thermostat",
+          "His electric bill is too high",
+          "His roommate controls the thermostat remotely"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "One person should always decide",
+          "Compromise on a middle temperature",
+          "Buy a second thermostat",
+          "Turn off the heat completely"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 49,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/49.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "The laundry machine on my floor has been broken for a week."
+      },
+      {
+        "speaker": "male",
+        "text": "Did you report it to maintenance?"
+      },
+      {
+        "speaker": "female",
+        "text": "I did, but nothing has happened yet."
+      },
+      {
+        "speaker": "male",
+        "text": "You could try the machines on a different floor in the meantime."
+      },
+      {
+        "speaker": "female",
+        "text": "I didn't think of that, thanks, I'll head up there tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She lost her laundry card",
+          "The laundry machine on her floor is broken",
+          "She has too much laundry to do",
+          "Her clothes were stolen from the machine"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Wait longer for maintenance",
+          "Use machines on a different floor",
+          "Do laundry by hand",
+          "Buy a personal washing machine"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 50,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/50.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I want to bring my cat when I move into the dorm, but I'm not sure it's allowed."
+      },
+      {
+        "speaker": "female",
+        "text": "Have you checked the housing policy?"
+      },
+      {
+        "speaker": "male",
+        "text": "I looked briefly, but it wasn't totally clear."
+      },
+      {
+        "speaker": "female",
+        "text": "You should contact the housing office directly to confirm before moving in."
+      },
+      {
+        "speaker": "male",
+        "text": "Good call, I'll email them this week."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man unsure about?",
+        "options": [
+          "Whether he can bring his cat to the dorm",
+          "Whether he can move in early",
+          "Whether he needs a roommate",
+          "Whether pets require a deposit"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Bring the cat without checking",
+          "Contact the housing office directly",
+          "Leave the cat at home permanently",
+          "Ask another student for advice"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 51,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/51.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "The bookstore is out of the textbook I need for tomorrow's class."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you checked if it's available as an e-book?"
+      },
+      {
+        "speaker": "female",
+        "text": "I hadn't thought to look for a digital version."
+      },
+      {
+        "speaker": "male",
+        "text": "That might be your fastest option before class starts."
+      },
+      {
+        "speaker": "female",
+        "text": "I'll check right now, thanks for the idea."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She forgot to buy her textbook",
+          "The bookstore is out of the textbook she needs",
+          "She lost her textbook",
+          "Her textbook was too expensive"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Borrow a copy from a friend",
+          "Check for a digital version",
+          "Skip class tomorrow",
+          "Wait for the bookstore to restock"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 52,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/52.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Two of my clubs scheduled their meetings at the exact same time this week."
+      },
+      {
+        "speaker": "female",
+        "text": "That's frustrating. Which one is more important to you?"
+      },
+      {
+        "speaker": "male",
+        "text": "Honestly, I care about both, so it's a tough call."
+      },
+      {
+        "speaker": "female",
+        "text": "Maybe ask one club if you could join partway through or get notes afterward."
+      },
+      {
+        "speaker": "male",
+        "text": "That could work, I'll message the officer now."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "He was removed from a club",
+          "Two club meetings overlap this week",
+          "He forgot about a club meeting",
+          "His club was canceled"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Quit one club entirely",
+          "Ask to join partway through or get notes",
+          "Skip both meetings",
+          "Ask a professor to intervene"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 53,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/53.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "My research lab schedule keeps conflicting with my afternoon classes."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you talked to your lab supervisor about it?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not directly, I was worried it might seem like I'm not committed."
+      },
+      {
+        "speaker": "male",
+        "text": "Most supervisors would rather know early than have you miss shifts unexpectedly."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a good point, I'll bring it up at our next meeting."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's problem?",
+        "options": [
+          "She was removed from the research lab",
+          "Her lab schedule conflicts with her classes",
+          "She failed a lab assignment",
+          "She lost access to the lab"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Quit the lab immediately",
+          "Talk to her lab supervisor about the conflict",
+          "Skip her classes instead",
+          "Ignore the conflict for now"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 54,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/54.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "A few of us went out to dinner, and now we can't agree on how to split the bill."
+      },
+      {
+        "speaker": "female",
+        "text": "What's the disagreement about?"
+      },
+      {
+        "speaker": "male",
+        "text": "Some people ordered a lot more than others."
+      },
+      {
+        "speaker": "female",
+        "text": "You could use an app that splits the bill based on what each person actually ordered."
+      },
+      {
+        "speaker": "male",
+        "text": "That would definitely make it fairer, I'll suggest it next time."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man's problem?",
+        "options": [
+          "The restaurant overcharged the group",
+          "The group disagrees on how to split the bill",
+          "He forgot his wallet",
+          "The restaurant lost their order"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Split the bill evenly regardless",
+          "Use an app that splits based on individual orders",
+          "Ask the restaurant to decide",
+          "Have one person pay for everyone"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 55,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/55.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm thinking about switching from my current gym to the one on campus."
+      },
+      {
+        "speaker": "male",
+        "text": "What's making you consider switching?"
+      },
+      {
+        "speaker": "female",
+        "text": "The campus gym is closer and included in my tuition already."
+      },
+      {
+        "speaker": "male",
+        "text": "Just make sure you check if your current gym has a cancellation fee first."
+      },
+      {
+        "speaker": "female",
+        "text": "Good point, I'll check my membership contract tonight."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman considering?",
+        "options": [
+          "Canceling her gym membership entirely",
+          "Switching to the campus gym",
+          "Joining a second gym",
+          "Hiring a personal trainer"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man remind her to check?",
+        "options": [
+          "The campus gym's opening hours",
+          "Whether her current gym charges a cancellation fee",
+          "Whether the campus gym has a pool",
+          "The distance between the two gyms"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 56,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/56.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Hey, do you have a minute to look over my lab report before I submit it?"
+      },
+      {
+        "speaker": "female",
+        "text": "Sure, what part are you unsure about?"
+      },
+      {
+        "speaker": "male",
+        "text": "Mostly the discussion section. I'm not sure my conclusions actually match the data."
+      },
+      {
+        "speaker": "female",
+        "text": "Let me take a look... okay, I think you need to explain the outlier in trial three a bit more."
+      },
+      {
+        "speaker": "male",
+        "text": "Right, I noticed that too but wasn't sure how to address it."
+      },
+      {
+        "speaker": "female",
+        "text": "Just add a sentence saying it was likely due to equipment error, that should be enough."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What does the man want help with?",
+        "options": [
+          "Finding a lab partner",
+          "Reviewing his lab report",
+          "Scheduling a lab session",
+          "Ordering lab supplies"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest about the outlier?",
+        "options": [
+          "Ignore it completely",
+          "Redo the entire experiment",
+          "Explain it as likely equipment error",
+          "Remove trial three from the report"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 57,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/57.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I heard the campus gym is getting new equipment next month."
+      },
+      {
+        "speaker": "male",
+        "text": "Really? I hope they finally replace those old treadmills."
+      },
+      {
+        "speaker": "female",
+        "text": "I think that's part of the plan, along with some new weight machines."
+      },
+      {
+        "speaker": "male",
+        "text": "That's great news. Do you know if membership prices will change?"
+      },
+      {
+        "speaker": "female",
+        "text": "I don't think so, but I'll check the announcement board to be sure."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the main topic of the conversation?",
+        "options": [
+          "A new campus restaurant",
+          "Upgrades to the campus gym",
+          "A change in gym membership fees",
+          "A new fitness class schedule"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man hope will happen?",
+        "options": [
+          "Prices will decrease",
+          "The old treadmills will be replaced",
+          "The gym will extend its hours",
+          "A new location will open"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 58,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/58.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Do you know if the professor posted our exam grades yet?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not that I've seen. She said it might take until Friday."
+      },
+      {
+        "speaker": "male",
+        "text": "I'm a little nervous, that essay question was tough."
+      },
+      {
+        "speaker": "female",
+        "text": "I felt the same way, but I think I covered the main points at least."
+      },
+      {
+        "speaker": "male",
+        "text": "Same here. Let's just wait and see."
+      }
+    ],
+    "questions": [
+      {
+        "question": "Why is the man nervous?",
+        "options": [
+          "He missed the exam",
+          "He found the essay question difficult",
+          "He forgot to submit his exam",
+          "He arrived late to the exam"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "When does the professor expect to post the grades?",
+        "options": [
+          "By Monday",
+          "By Wednesday",
+          "By Friday",
+          "Next month"
+        ],
+        "answer": 2
+      }
+    ]
+  },
+  {
+    "id": 59,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/59.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Excuse me, I'm trying to find the financial aid office."
+      },
+      {
+        "speaker": "male",
+        "text": "It's actually on the second floor, right past the elevators."
+      },
+      {
+        "speaker": "female",
+        "text": "Thank you. Do you know if I need an appointment?"
+      },
+      {
+        "speaker": "male",
+        "text": "I don't think so for general questions, but for specific issues you might want to call ahead."
+      },
+      {
+        "speaker": "female",
+        "text": "Okay, I'll head up there now and see."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman looking for?",
+        "options": [
+          "The registrar's office",
+          "The financial aid office",
+          "The library",
+          "The bookstore"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man recommend for specific issues?",
+        "options": [
+          "Emailing the office",
+          "Calling ahead for an appointment",
+          "Visiting during lunch",
+          "Filling out an online form"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 60,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/60.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Are you going to the guest lecture on marine ecosystems tomorrow?"
+      },
+      {
+        "speaker": "female",
+        "text": "I was planning to, but I have a study group at the same time."
+      },
+      {
+        "speaker": "male",
+        "text": "That's too bad, I heard the speaker is really well known in the field."
+      },
+      {
+        "speaker": "female",
+        "text": "Maybe I can reschedule the study group to the next day instead."
+      },
+      {
+        "speaker": "male",
+        "text": "That sounds like a good plan, I think you'd really enjoy the talk."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman's conflict?",
+        "options": [
+          "She has another class",
+          "She has a study group at the same time",
+          "She is out of town",
+          "She already attended a similar lecture"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman decide to do?",
+        "options": [
+          "Skip the lecture entirely",
+          "Try to reschedule her study group",
+          "Ask a friend to record the lecture",
+          "Attend both events partially"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 61,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/61.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I can't figure out why my code keeps crashing during the loop."
+      },
+      {
+        "speaker": "male",
+        "text": "Can I see it? Sometimes it's just a small indexing error."
+      },
+      {
+        "speaker": "female",
+        "text": "Sure, here, it happens right after the fifth iteration."
+      },
+      {
+        "speaker": "male",
+        "text": "Ah, I see it. You're going one index past the end of the array."
+      },
+      {
+        "speaker": "female",
+        "text": "Oh, that makes sense now. Thanks for catching that."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What problem is the woman having?",
+        "options": [
+          "Her program keeps crashing",
+          "Her code won't compile",
+          "She lost her project file",
+          "Her computer is too slow"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the man identify as the issue?",
+        "options": [
+          "A missing semicolon",
+          "An indexing error past the array's end",
+          "A typo in a variable name",
+          "An incorrect loop condition"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 62,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/62.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Did you sign up for the study abroad info session yet?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not yet, I've been debating whether to go this semester or next."
+      },
+      {
+        "speaker": "male",
+        "text": "I'd recommend going to the session either way, they cover a lot of useful details."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a good point. When is it again?"
+      },
+      {
+        "speaker": "male",
+        "text": "This Thursday at noon in the international center."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman unsure about?",
+        "options": [
+          "Whether to study abroad at all",
+          "Which semester to study abroad",
+          "Which country to visit",
+          "How to apply for a visa"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where will the info session take place?",
+        "options": [
+          "The library",
+          "The international center",
+          "The student union",
+          "The main auditorium"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 63,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/63.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I noticed you switched your major last semester."
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, I moved from biology to environmental science."
+      },
+      {
+        "speaker": "female",
+        "text": "What made you decide to switch?"
+      },
+      {
+        "speaker": "male",
+        "text": "I realized I was more interested in policy and sustainability than lab work."
+      },
+      {
+        "speaker": "female",
+        "text": "That makes sense, I think that suits you well actually."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What did the man change?",
+        "options": [
+          "His minor",
+          "His major",
+          "His advisor",
+          "His class schedule"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why did he switch?",
+        "options": [
+          "He disliked his professors",
+          "He was more interested in policy and sustainability",
+          "His grades were too low",
+          "He wanted an easier program"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 64,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/64.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Have you started working on the group presentation yet?"
+      },
+      {
+        "speaker": "female",
+        "text": "A little, I put together an outline but haven't made any slides."
+      },
+      {
+        "speaker": "male",
+        "text": "Good, I can start on the slides tonight if you send me the outline."
+      },
+      {
+        "speaker": "female",
+        "text": "Sounds good, I'll email it to you in a few minutes."
+      },
+      {
+        "speaker": "male",
+        "text": "Great, let's meet tomorrow to go over everything together."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What has the woman already done?",
+        "options": [
+          "Finished the entire presentation",
+          "Created an outline",
+          "Recorded the presentation",
+          "Booked a meeting room"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What do they plan to do tomorrow?",
+        "options": [
+          "Submit the presentation",
+          "Meet to review everything together",
+          "Present to the class",
+          "Cancel the project"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 65,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/65.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm thinking about applying for that research assistant position."
+      },
+      {
+        "speaker": "male",
+        "text": "You should, I heard the professor is looking for someone with programming skills."
+      },
+      {
+        "speaker": "female",
+        "text": "That's good to hear, I have some experience with data analysis."
+      },
+      {
+        "speaker": "male",
+        "text": "Definitely mention that in your application then."
+      },
+      {
+        "speaker": "female",
+        "text": "I will, thanks for the tip."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What position is the woman considering?",
+        "options": [
+          "A teaching assistant role",
+          "A research assistant position",
+          "An internship at a company",
+          "A tutoring job"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What skill does the man mention the professor wants?",
+        "options": [
+          "Public speaking",
+          "Programming skills",
+          "Writing skills",
+          "Foreign language ability"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 66,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/66.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Do you know if the campus shuttle still runs this late?"
+      },
+      {
+        "speaker": "female",
+        "text": "I believe it runs until midnight on weekdays."
+      },
+      {
+        "speaker": "male",
+        "text": "Good, I have a late class tonight and don't want to walk back alone."
+      },
+      {
+        "speaker": "female",
+        "text": "Makes sense, just check the app for the exact schedule."
+      },
+      {
+        "speaker": "male",
+        "text": "Will do, thanks."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man concerned about?",
+        "options": [
+          "Missing his class",
+          "Walking back alone late at night",
+          "Losing his student ID",
+          "Finding a parking spot"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman recommend?",
+        "options": [
+          "Taking a taxi instead",
+          "Checking the shuttle app for the schedule",
+          "Waiting until morning",
+          "Asking a friend for a ride"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/67.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm having trouble deciding between two elective courses."
+      },
+      {
+        "speaker": "male",
+        "text": "What are the options?"
+      },
+      {
+        "speaker": "female",
+        "text": "One is a photography class and the other is an intro to psychology course."
+      },
+      {
+        "speaker": "male",
+        "text": "Which one fits better with your schedule?"
+      },
+      {
+        "speaker": "female",
+        "text": "Actually the photography class does, since it meets in the evening."
+      },
+      {
+        "speaker": "male",
+        "text": "Then that might be the easier choice logistically."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman trying to decide?",
+        "options": [
+          "Which major to declare",
+          "Which elective course to take",
+          "Whether to drop a class",
+          "Which professor to choose"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What factor does the man ask about?",
+        "options": [
+          "Cost of the course",
+          "How the course fits her schedule",
+          "Which course is easier",
+          "Which course has better reviews"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/68.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Did the printer in the library finally get fixed?"
+      },
+      {
+        "speaker": "female",
+        "text": "Yes, I used it yesterday and it worked fine."
+      },
+      {
+        "speaker": "male",
+        "text": "That's a relief, I have a paper due tomorrow and needed to print it."
+      },
+      {
+        "speaker": "female",
+        "text": "You should be fine then, just don't wait until the last minute."
+      },
+      {
+        "speaker": "male",
+        "text": "Good advice, I'll head over there this afternoon."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What was the man worried about?",
+        "options": [
+          "Losing his paper file",
+          "Whether the library printer was working",
+          "Finding a library seat",
+          "Submitting his paper late"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman advise?",
+        "options": [
+          "Print early rather than waiting",
+          "Use a different printer entirely",
+          "Ask a classmate to print for him",
+          "Email the paper instead"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/69.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I just got back from my advising appointment."
+      },
+      {
+        "speaker": "male",
+        "text": "How did it go?"
+      },
+      {
+        "speaker": "female",
+        "text": "Pretty well, we figured out my course plan for the next two years."
+      },
+      {
+        "speaker": "male",
+        "text": "That's great, did you end up adding any new courses?"
+      },
+      {
+        "speaker": "female",
+        "text": "Yeah, I added a statistics course I hadn't considered before."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What was the purpose of the woman's appointment?",
+        "options": [
+          "Applying for financial aid",
+          "Planning her courses for the next two years",
+          "Switching her major",
+          "Requesting a letter of recommendation"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What new course did she add?",
+        "options": [
+          "A statistics course",
+          "A history course",
+          "A writing course",
+          "A biology course"
+        ],
+        "answer": 0
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/70.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Are you still looking for a roommate for next year?"
+      },
+      {
+        "speaker": "female",
+        "text": "Yes, actually, do you know someone who's interested?"
+      },
+      {
+        "speaker": "male",
+        "text": "My friend from chemistry class mentioned she's looking too."
+      },
+      {
+        "speaker": "female",
+        "text": "That could work out well, could you connect us?"
+      },
+      {
+        "speaker": "male",
+        "text": "Sure, I'll introduce you two this week."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman looking for?",
+        "options": [
+          "A new apartment",
+          "A roommate for next year",
+          "A study partner",
+          "A part-time job"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man offer to do?",
+        "options": [
+          "Move in with her himself",
+          "Introduce her to his friend",
+          "Help her move",
+          "Lend her money for rent"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/71.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I noticed the dining hall changed its menu this week."
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, they added more vegetarian options I think."
+      },
+      {
+        "speaker": "female",
+        "text": "That's good, I've been wanting more variety there."
+      },
+      {
+        "speaker": "male",
+        "text": "Same, though I heard some of the old favorites are gone now."
+      },
+      {
+        "speaker": "female",
+        "text": "I'll have to check it out for myself at lunch."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What change is being discussed?",
+        "options": [
+          "The dining hall's operating hours",
+          "A change to the dining hall menu",
+          "A new dining hall location",
+          "A price increase at the dining hall"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man mention was removed?",
+        "options": [
+          "The salad bar",
+          "Some old favorite dishes",
+          "The coffee station",
+          "The dessert options"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/72.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Do you know a good place to get my bike repaired near campus?"
+      },
+      {
+        "speaker": "female",
+        "text": "There's a shop a few blocks from the dorms that a lot of students use."
+      },
+      {
+        "speaker": "male",
+        "text": "Is it expensive?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not too bad, and they usually finish repairs within a day."
+      },
+      {
+        "speaker": "male",
+        "text": "That's perfect, my tire has been flat for a week."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What does the man need?",
+        "options": [
+          "A new bike",
+          "His bike repaired",
+          "A bike lock",
+          "Directions to a bike shop"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman say about the shop?",
+        "options": [
+          "It is very expensive",
+          "It usually finishes repairs within a day",
+          "It only repairs certain bike brands",
+          "It is closed on weekends"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/73.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "How did your job interview go this morning?"
+      },
+      {
+        "speaker": "male",
+        "text": "I think it went well, though they asked some tough technical questions."
+      },
+      {
+        "speaker": "female",
+        "text": "Did you feel prepared for those?"
+      },
+      {
+        "speaker": "male",
+        "text": "Mostly, though there was one about a topic I hadn't reviewed in a while."
+      },
+      {
+        "speaker": "female",
+        "text": "Well, hopefully your overall performance made up for that."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man discussing?",
+        "options": [
+          "A class presentation",
+          "A job interview",
+          "A group project meeting",
+          "A scholarship application"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What difficulty did he mention?",
+        "options": [
+          "He arrived late",
+          "A question on a topic he hadn't reviewed",
+          "He forgot his resume",
+          "The interview was rescheduled"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/74.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I'm thinking of joining the debate club this semester."
+      },
+      {
+        "speaker": "female",
+        "text": "That sounds like a great fit for you, you're always good at arguing your point."
+      },
+      {
+        "speaker": "male",
+        "text": "Ha, thanks. Do you know when tryouts are?"
+      },
+      {
+        "speaker": "female",
+        "text": "I think they're posted on the club's page, sometime next week."
+      },
+      {
+        "speaker": "male",
+        "text": "I'll check it out tonight then."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man considering joining?",
+        "options": [
+          "The chess club",
+          "The debate club",
+          "The drama club",
+          "The student newspaper"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Where does the woman suggest he find tryout information?",
+        "options": [
+          "The main bulletin board",
+          "The club's page",
+          "The student center",
+          "His academic advisor"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 75,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/75.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Did you manage to fix the issue with your dorm's Wi-Fi?"
+      },
+      {
+        "speaker": "male",
+        "text": "Sort of, it works now but it's still pretty slow."
+      },
+      {
+        "speaker": "female",
+        "text": "Have you contacted IT services about it?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not yet, I was hoping it would improve on its own."
+      },
+      {
+        "speaker": "female",
+        "text": "You should probably submit a ticket, they usually respond quickly."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What problem does the man have?",
+        "options": [
+          "His laptop broke",
+          "His dorm Wi-Fi is slow",
+          "He lost his student login",
+          "His printer isn't working"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman recommend?",
+        "options": [
+          "Buying a new router",
+          "Submitting a ticket to IT services",
+          "Moving to a different dorm",
+          "Waiting for the problem to resolve itself"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/76.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I heard the bookstore is having a sale on used textbooks."
+      },
+      {
+        "speaker": "female",
+        "text": "Really? I need a few for next semester."
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, it starts this weekend and lasts through Monday."
+      },
+      {
+        "speaker": "female",
+        "text": "Perfect timing, I'll head over there Saturday morning."
+      },
+      {
+        "speaker": "male",
+        "text": "Good idea, the popular titles tend to sell out fast."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is happening at the bookstore?",
+        "options": [
+          "A book donation drive",
+          "A sale on used textbooks",
+          "A new book release event",
+          "A store closing sale"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man warn about?",
+        "options": [
+          "The store closing early",
+          "Popular titles selling out fast",
+          "Prices increasing later",
+          "Limited store hours"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/77.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm nervous about presenting my thesis proposal next week."
+      },
+      {
+        "speaker": "male",
+        "text": "I'm sure you'll do great, you've been preparing for months."
+      },
+      {
+        "speaker": "female",
+        "text": "I know, but public speaking still makes me anxious."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you thought about practicing in front of a small group first?"
+      },
+      {
+        "speaker": "female",
+        "text": "That's actually a good idea, maybe I'll ask a few classmates."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman nervous about?",
+        "options": [
+          "Finishing her research",
+          "Presenting her thesis proposal",
+          "Finding a thesis advisor",
+          "Submitting her application"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Postponing the presentation",
+          "Practicing in front of a small group first",
+          "Writing a script to read from",
+          "Skipping the presentation entirely"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/78.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Did you end up going to the career fair yesterday?"
+      },
+      {
+        "speaker": "female",
+        "text": "I did, it was pretty crowded but worth it."
+      },
+      {
+        "speaker": "male",
+        "text": "Did you talk to any companies that interested you?"
+      },
+      {
+        "speaker": "female",
+        "text": "Yeah, a couple of tech companies were recruiting for summer internships."
+      },
+      {
+        "speaker": "male",
+        "text": "That's great, did you hand out your resume?"
+      },
+      {
+        "speaker": "female",
+        "text": "I did, to about five different recruiters."
+      }
+    ],
+    "questions": [
+      {
+        "question": "Where did the woman go yesterday?",
+        "options": [
+          "A job interview",
+          "A career fair",
+          "A networking dinner",
+          "A guest lecture"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What did the woman do at the event?",
+        "options": [
+          "Attended a workshop only",
+          "Handed out her resume to recruiters",
+          "Signed up for a class",
+          "Volunteered at a booth"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/79.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm trying to decide which lab section to register for."
+      },
+      {
+        "speaker": "male",
+        "text": "What are your options?"
+      },
+      {
+        "speaker": "female",
+        "text": "There's one on Monday afternoon and one on Wednesday morning."
+      },
+      {
+        "speaker": "male",
+        "text": "Do you have any conflicts with either?"
+      },
+      {
+        "speaker": "female",
+        "text": "The Monday one overlaps with my work shift, so Wednesday seems better."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman deciding between?",
+        "options": [
+          "Two different professors",
+          "Two lab section times",
+          "Two different courses",
+          "Two lab locations"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why does she prefer Wednesday?",
+        "options": [
+          "It's closer to her dorm",
+          "It doesn't conflict with her work shift",
+          "It has a better instructor",
+          "It's shorter than the other section"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/80.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I can't decide what to get my roommate for his birthday."
+      },
+      {
+        "speaker": "female",
+        "text": "What does he usually like?"
+      },
+      {
+        "speaker": "male",
+        "text": "He's really into hiking and outdoor gear."
+      },
+      {
+        "speaker": "female",
+        "text": "Maybe a gift card to an outdoor store would be a safe choice."
+      },
+      {
+        "speaker": "male",
+        "text": "That's actually a great idea, thanks."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man trying to figure out?",
+        "options": [
+          "A gift for his roommate",
+          "A place to go hiking",
+          "A birthday party location",
+          "A new hobby to try"
+        ],
+        "answer": 0
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "A new hiking backpack",
+          "A gift card to an outdoor store",
+          "Tickets to a concert",
+          "A cooking class"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/81.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Did you hear the health center is offering free flu shots this week?"
+      },
+      {
+        "speaker": "male",
+        "text": "No, I didn't. Where do I need to go?"
+      },
+      {
+        "speaker": "female",
+        "text": "Just walk in to the main health center building, no appointment needed."
+      },
+      {
+        "speaker": "male",
+        "text": "That's convenient, I'll stop by after my last class."
+      },
+      {
+        "speaker": "female",
+        "text": "Good idea, I think the offer only lasts until Friday."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is being offered this week?",
+        "options": [
+          "Free eye exams",
+          "Free flu shots",
+          "Free dental checkups",
+          "Free counseling sessions"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman say about appointments?",
+        "options": [
+          "They are required in advance",
+          "No appointment is needed",
+          "They fill up quickly",
+          "Only seniors qualify"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/82.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I think I left my umbrella in the lecture hall this morning."
+      },
+      {
+        "speaker": "female",
+        "text": "Did you check the lost and found at the front desk?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not yet, I was actually heading there now."
+      },
+      {
+        "speaker": "female",
+        "text": "Good luck, hopefully someone turned it in."
+      },
+      {
+        "speaker": "male",
+        "text": "Thanks, I'll let you know if I find it."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What did the man lose?",
+        "options": [
+          "His notebook",
+          "His umbrella",
+          "His backpack",
+          "His phone"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman suggest?",
+        "options": [
+          "Buying a new one",
+          "Checking the lost and found",
+          "Asking his professor",
+          "Retracing his steps"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/83.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "How's your internship search going?"
+      },
+      {
+        "speaker": "male",
+        "text": "Slow, honestly. I've sent out a lot of applications with no response."
+      },
+      {
+        "speaker": "female",
+        "text": "Have you tried reaching out to alumni in your field?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not really, I hadn't thought of that."
+      },
+      {
+        "speaker": "female",
+        "text": "The alumni network can be really helpful for getting your foot in the door."
+      },
+      {
+        "speaker": "male",
+        "text": "I'll definitely give that a try, thanks for the suggestion."
+      }
+    ],
+    "questions": [
+      {
+        "question": "How does the man describe his internship search?",
+        "options": [
+          "Successful",
+          "Slow with little response",
+          "Already finished",
+          "Not started yet"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman recommend?",
+        "options": [
+          "Applying to more companies randomly",
+          "Reaching out to alumni in his field",
+          "Taking a break from searching",
+          "Changing his major"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/84.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Are you coming to the study session in the library tonight?"
+      },
+      {
+        "speaker": "female",
+        "text": "I was planning to, but I have to finish a paper first."
+      },
+      {
+        "speaker": "male",
+        "text": "When is the paper due?"
+      },
+      {
+        "speaker": "female",
+        "text": "Tomorrow morning, so I really need to focus on it tonight."
+      },
+      {
+        "speaker": "male",
+        "text": "Makes sense, maybe we can review together this weekend instead."
+      }
+    ],
+    "questions": [
+      {
+        "question": "Why might the woman not attend the study session?",
+        "options": [
+          "She is feeling sick",
+          "She needs to finish a paper",
+          "She already studied enough",
+          "She has a work shift"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What alternative does the man suggest?",
+        "options": [
+          "Studying online instead",
+          "Reviewing together this weekend",
+          "Canceling the session entirely",
+          "Meeting earlier in the day"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 85,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/85.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Did the housing office ever get back to you about your maintenance request?"
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, actually, they sent someone yesterday to fix the heater."
+      },
+      {
+        "speaker": "female",
+        "text": "That's good, how long did it take?"
+      },
+      {
+        "speaker": "male",
+        "text": "Not long at all, maybe twenty minutes."
+      },
+      {
+        "speaker": "female",
+        "text": "Glad it's finally working, it's been getting cold at night."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What issue did the man report?",
+        "options": [
+          "A broken window",
+          "A malfunctioning heater",
+          "A leaking faucet",
+          "A locked door"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long did the repair take?",
+        "options": [
+          "A few hours",
+          "About twenty minutes",
+          "All day",
+          "A full week"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 86,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/86.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Have you decided which club to volunteer for this semester?"
+      },
+      {
+        "speaker": "female",
+        "text": "I'm torn between the environmental club and the tutoring program."
+      },
+      {
+        "speaker": "male",
+        "text": "What draws you to each one?"
+      },
+      {
+        "speaker": "female",
+        "text": "The environmental club matches my major, but tutoring feels more rewarding personally."
+      },
+      {
+        "speaker": "male",
+        "text": "Maybe you could try tutoring first and switch later if it doesn't work out."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman deciding between?",
+        "options": [
+          "Two different majors",
+          "The environmental club and the tutoring program",
+          "Two different internships",
+          "Two study abroad programs"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man suggest?",
+        "options": [
+          "Choosing based on convenience",
+          "Trying tutoring first and switching later",
+          "Doing both at the same time",
+          "Asking a professor to decide"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 87,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/87.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I finally submitted my scholarship application this morning."
+      },
+      {
+        "speaker": "male",
+        "text": "That's great, how long did the whole process take?"
+      },
+      {
+        "speaker": "female",
+        "text": "Longer than I expected, mostly because of the essay questions."
+      },
+      {
+        "speaker": "male",
+        "text": "When will you hear back?"
+      },
+      {
+        "speaker": "female",
+        "text": "They said results should come out sometime next month."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What did the woman submit?",
+        "options": [
+          "A job application",
+          "A scholarship application",
+          "A housing application",
+          "A club membership form"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What part took the most time?",
+        "options": [
+          "Gathering recommendation letters",
+          "The essay questions",
+          "Filling out personal information",
+          "Uploading transcripts"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 88,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/88.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Do you know if the campus health center offers counseling services?"
+      },
+      {
+        "speaker": "female",
+        "text": "Yes, they do, and I think the first few sessions are free for students."
+      },
+      {
+        "speaker": "male",
+        "text": "That's good to know, I've been thinking about scheduling one."
+      },
+      {
+        "speaker": "female",
+        "text": "You can usually book online through the student portal."
+      },
+      {
+        "speaker": "male",
+        "text": "Thanks, I'll look into that this afternoon."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man interested in?",
+        "options": [
+          "Physical therapy",
+          "Counseling services",
+          "Nutrition advice",
+          "Tutoring services"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How can appointments be booked?",
+        "options": [
+          "By walking in only",
+          "Through the student portal online",
+          "By calling a hotline",
+          "Through a professor's referral"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 89,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/89.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Did you switch to the new meal plan this semester?"
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, I upgraded to the unlimited plan."
+      },
+      {
+        "speaker": "female",
+        "text": "Has it been worth it so far?"
+      },
+      {
+        "speaker": "male",
+        "text": "Definitely, I eat at the dining hall almost every day now."
+      },
+      {
+        "speaker": "female",
+        "text": "I might switch too then, mine runs out too quickly."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What did the man do this semester?",
+        "options": [
+          "Canceled his meal plan",
+          "Upgraded to the unlimited meal plan",
+          "Started cooking his own meals",
+          "Moved off campus"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "Why is the woman considering switching?",
+        "options": [
+          "Her current plan is too expensive",
+          "Her current plan runs out too quickly",
+          "She dislikes the dining hall food",
+          "She wants more variety"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 90,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/90.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Do you have any tips for managing time during finals week?"
+      },
+      {
+        "speaker": "female",
+        "text": "I usually make a detailed study schedule a week in advance."
+      },
+      {
+        "speaker": "male",
+        "text": "That sounds helpful, do you stick to it strictly?"
+      },
+      {
+        "speaker": "female",
+        "text": "Mostly, though I always build in some flexibility for unexpected things."
+      },
+      {
+        "speaker": "male",
+        "text": "I think I'll try something similar this year."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What does the woman do to prepare for finals?",
+        "options": [
+          "She studies only the night before",
+          "She makes a detailed study schedule in advance",
+          "She forms a large study group",
+          "She skips classes to study"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does she include in her schedule?",
+        "options": [
+          "No breaks at all",
+          "Some flexibility for unexpected events",
+          "Extra classes",
+          "Only group study sessions"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 91,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/91.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I'm considering dropping one of my classes this semester."
+      },
+      {
+        "speaker": "male",
+        "text": "Which one, and why?"
+      },
+      {
+        "speaker": "female",
+        "text": "The elective art history course, it's more time-consuming than I expected."
+      },
+      {
+        "speaker": "male",
+        "text": "Have you talked to your advisor about how it might affect your schedule?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not yet, but I probably should before making a final decision."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman considering?",
+        "options": [
+          "Adding a new class",
+          "Dropping an elective course",
+          "Changing her major",
+          "Transferring schools"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man recommend?",
+        "options": [
+          "Dropping the class immediately",
+          "Talking to her advisor first",
+          "Switching to a different elective",
+          "Asking the professor for extra help"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 92,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/92.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Are you going home for the upcoming break?"
+      },
+      {
+        "speaker": "female",
+        "text": "I am, actually, I already booked my flight."
+      },
+      {
+        "speaker": "male",
+        "text": "Nice, how long will you be gone?"
+      },
+      {
+        "speaker": "female",
+        "text": "About two weeks, then I'll come back early to prepare for the new semester."
+      },
+      {
+        "speaker": "male",
+        "text": "That sounds like a good balance between rest and preparation."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What has the woman already done?",
+        "options": [
+          "Packed her belongings",
+          "Booked her flight home",
+          "Finished all her exams",
+          "Registered for next semester"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long will she be away?",
+        "options": [
+          "One week",
+          "About two weeks",
+          "A full month",
+          "The entire break period"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 93,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/93.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Did you finish revising your résumé for the career fair?"
+      },
+      {
+        "speaker": "male",
+        "text": "Mostly, though I want someone to review it before I print copies."
+      },
+      {
+        "speaker": "female",
+        "text": "The career center offers free résumé reviews, you know."
+      },
+      {
+        "speaker": "male",
+        "text": "Oh really? I didn't realize that was a service they offered."
+      },
+      {
+        "speaker": "female",
+        "text": "Yeah, you just need to book a short appointment online."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What does the man still need to do?",
+        "options": [
+          "Write his résumé from scratch",
+          "Have his résumé reviewed",
+          "Print his résumé",
+          "Submit his résumé online"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What service does the woman mention?",
+        "options": [
+          "Free interview coaching",
+          "Free résumé reviews at the career center",
+          "Free printing services",
+          "Free career counseling sessions"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 94,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/94.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Do you know if the new coffee shop on campus is open yet?"
+      },
+      {
+        "speaker": "female",
+        "text": "I think it opens next Monday, based on the sign outside."
+      },
+      {
+        "speaker": "male",
+        "text": "Good, the current café gets way too crowded in the mornings."
+      },
+      {
+        "speaker": "female",
+        "text": "Same here, I usually end up waiting in line for ten minutes."
+      },
+      {
+        "speaker": "male",
+        "text": "Hopefully having a second option helps with that."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What are they discussing?",
+        "options": [
+          "A new dining hall",
+          "A new coffee shop on campus",
+          "A change in library hours",
+          "A new campus bookstore"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What problem does the woman mention with the current café?",
+        "options": [
+          "Poor quality coffee",
+          "Long wait times in the morning",
+          "High prices",
+          "Limited seating"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 95,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/95.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I noticed you've been at the music practice rooms a lot lately."
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, I'm preparing for a recital next month."
+      },
+      {
+        "speaker": "female",
+        "text": "That's exciting, are you nervous?"
+      },
+      {
+        "speaker": "male",
+        "text": "A little, though practicing this much has helped build my confidence."
+      },
+      {
+        "speaker": "female",
+        "text": "I'm sure it'll go great, let me know when it is so I can come watch."
+      }
+    ],
+    "questions": [
+      {
+        "question": "Why has the man been using the practice rooms?",
+        "options": [
+          "He is learning a new instrument",
+          "He is preparing for a recital",
+          "He is recording an album",
+          "He is tutoring another student"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How does the man feel about the upcoming event?",
+        "options": [
+          "Completely unbothered",
+          "A little nervous but more confident",
+          "Extremely anxious",
+          "Uninterested"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 96,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/96.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Have you picked your courses for next semester yet?"
+      },
+      {
+        "speaker": "female",
+        "text": "Almost, I'm just waiting to see if I get into the seminar I want."
+      },
+      {
+        "speaker": "male",
+        "text": "What happens if you don't get in?"
+      },
+      {
+        "speaker": "female",
+        "text": "Then I'll take a different elective that's still open."
+      },
+      {
+        "speaker": "male",
+        "text": "Good backup plan, when does registration open?"
+      },
+      {
+        "speaker": "female",
+        "text": "Next Tuesday at eight in the morning."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the woman waiting on?",
+        "options": [
+          "Her financial aid decision",
+          "Whether she gets into a seminar",
+          "Her advisor's approval",
+          "Her housing assignment"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What is her backup plan?",
+        "options": [
+          "Taking a semester off",
+          "Taking a different elective",
+          "Waiting until next year",
+          "Appealing the decision"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 97,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/97.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "Did you manage to fix the formatting issue in your report?"
+      },
+      {
+        "speaker": "male",
+        "text": "Yeah, it turned out to be a simple margin setting."
+      },
+      {
+        "speaker": "female",
+        "text": "That's a relief, those formatting issues can be so frustrating."
+      },
+      {
+        "speaker": "male",
+        "text": "Definitely, I spent almost an hour trying to figure it out."
+      },
+      {
+        "speaker": "female",
+        "text": "Well, at least it's done now before the deadline."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What problem did the man have?",
+        "options": [
+          "A missing citation",
+          "A formatting issue with margins",
+          "A corrupted file",
+          "A grammar error"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How long did it take him to fix it?",
+        "options": [
+          "A few minutes",
+          "Almost an hour",
+          "An entire day",
+          "He never fixed it"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 98,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/98.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "I'm thinking about getting a part-time job on campus."
+      },
+      {
+        "speaker": "female",
+        "text": "That could be a good idea, what kind of work are you looking for?"
+      },
+      {
+        "speaker": "male",
+        "text": "Maybe something in the library or a campus office."
+      },
+      {
+        "speaker": "female",
+        "text": "The library actually has a few openings posted right now."
+      },
+      {
+        "speaker": "male",
+        "text": "I'll check the student job board tonight then."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What is the man considering?",
+        "options": [
+          "Studying abroad",
+          "Getting a part-time job on campus",
+          "Switching dorms",
+          "Joining a new club"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the woman mention?",
+        "options": [
+          "A scholarship opportunity",
+          "Library job openings",
+          "A new internship program",
+          "A tutoring position"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 99,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/99.mp3",
+    "turns": [
+      {
+        "speaker": "female",
+        "text": "I heard the theater department is putting on a new play this spring."
+      },
+      {
+        "speaker": "male",
+        "text": "Really? Do you know what it's about?"
+      },
+      {
+        "speaker": "female",
+        "text": "Not exactly, but I heard auditions are open to all students."
+      },
+      {
+        "speaker": "male",
+        "text": "That's interesting, I might actually try out."
+      },
+      {
+        "speaker": "female",
+        "text": "You should, I didn't know you were into acting."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What are they discussing?",
+        "options": [
+          "A movie screening",
+          "A new theater department play",
+          "A dance performance",
+          "A music concert"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "What does the man decide?",
+        "options": [
+          "To skip the auditions",
+          "To possibly try out for the play",
+          "To help with the set design",
+          "To buy tickets in advance"
+        ],
+        "answer": 1
+      }
+    ]
+  },
+  {
+    "id": 100,
+    "audio_url": "http://localhost:8000/audio/mock_listening_p2/100.mp3",
+    "turns": [
+      {
+        "speaker": "male",
+        "text": "Did you switch dorms this semester?"
+      },
+      {
+        "speaker": "female",
+        "text": "I did, I moved to a quieter building on the other side of campus."
+      },
+      {
+        "speaker": "male",
+        "text": "How's the change been so far?"
+      },
+      {
+        "speaker": "female",
+        "text": "Really good actually, it's much easier to focus on studying now."
+      },
+      {
+        "speaker": "male",
+        "text": "That's great, I've been thinking about doing the same thing."
+      }
+    ],
+    "questions": [
+      {
+        "question": "What did the woman do this semester?",
+        "options": [
+          "She moved off campus",
+          "She switched to a quieter dorm",
+          "She got a new roommate",
+          "She started living alone"
+        ],
+        "answer": 1
+      },
+      {
+        "question": "How does she feel about the change?",
+        "options": [
+          "She regrets it",
+          "It has made studying easier",
+          "It hasn't made much difference",
+          "She wants to switch back"
+        ],
+        "answer": 1
+      }
+    ]
+  }
+]
