@@ -72,6 +72,14 @@ RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "mrreadyprep <onboarding
 os.makedirs("audio", exist_ok=True)
 app.mount("/audio", StaticFiles(directory="audio"), name="audio")
 
+# Base URL prefix for audio files (used to build every audio_url/audio_url_intro field sent to the
+# frontend). Defaults to this backend's own /audio static mount (fine for local dev, and for
+# production IF a persistent disk has actually been populated with the audio/ folder). Once audio
+# is uploaded to an object storage bucket (Cloudflare R2, S3, etc. -- see AUDIO_DEPLOYMENT.md), set
+# this env var to that bucket's public base URL instead, e.g.:
+#   AUDIO_BASE_URL=https://pub-xxxxxxxx.r2.dev
+AUDIO_BASE_URL = os.environ.get("AUDIO_BASE_URL", f"{BACKEND_PUBLIC_URL}/audio")
+
 # ============================================================
 # VERİ MODELLERİ
 # ============================================================
@@ -1089,9 +1097,9 @@ def get_mock_speaking_lr():
     with open(MOCK_SPEAKING_LR_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)  # fresh read every request, so JSON edits show up without a restart
     for s in data:
-        s["audio_url_intro"] = f"{BACKEND_PUBLIC_URL}/audio/mock_speaking_lr/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_lr/{s['id']}/intro.mp3"
         for sent in s["sentences"]:
-            sent["audio_url"] = f"{BACKEND_PUBLIC_URL}/audio/mock_speaking_lr/{s['id']}/{sent['id']}.mp3"
+            sent["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_lr/{s['id']}/{sent['id']}.mp3"
     return data
 
 @app.get("/api/mock/interview")
@@ -1099,9 +1107,9 @@ def get_mock_speaking_interview():
     with open(MOCK_SPEAKING_INTERVIEW_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)  # fresh read every request, so JSON edits show up without a restart
     for s in data:
-        s["audio_url_intro"] = f"{BACKEND_PUBLIC_URL}/audio/mock_speaking_interview/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{s['id']}/intro.mp3"
         for q in s["questions"]:
-            q["audio_url"] = f"{BACKEND_PUBLIC_URL}/audio/mock_speaking_interview/{s['id']}/{q['id']}.mp3"
+            q["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{s['id']}/{q['id']}.mp3"
     return data
 
 # --- Full Mock Test: fixed (pre-built) tests, served whole as one bundle per test id ---
@@ -1116,13 +1124,13 @@ def get_fixed_test(test_id: int):
     # above) since their mp3s live under the ORIGINAL shared pool's id-keyed folders — inject
     # the URLs here exactly like the dynamic-pool endpoints do.
     lr = data["speaking"]["lr"]
-    lr["audio_url_intro"] = f"{BACKEND_PUBLIC_URL}/audio/mock_speaking_lr/{lr['id']}/intro.mp3"
+    lr["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_lr/{lr['id']}/intro.mp3"
     for sent in lr["sentences"]:
-        sent["audio_url"] = f"{BACKEND_PUBLIC_URL}/audio/mock_speaking_lr/{lr['id']}/{sent['id']}.mp3"
+        sent["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_lr/{lr['id']}/{sent['id']}.mp3"
     interview = data["speaking"]["interview"]
-    interview["audio_url_intro"] = f"{BACKEND_PUBLIC_URL}/audio/mock_speaking_interview/{interview['id']}/intro.mp3"
+    interview["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{interview['id']}/intro.mp3"
     for q in interview["questions"]:
-        q["audio_url"] = f"{BACKEND_PUBLIC_URL}/audio/mock_speaking_interview/{interview['id']}/{q['id']}.mp3"
+        q["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{interview['id']}/{q['id']}.mp3"
     return data
 
 # --- Listening ---
@@ -1170,9 +1178,9 @@ def get_speaking_listen_repeat():
     with open(SPEAKING_LR_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
     for s in data:
-        s["audio_url_intro"] = f"{BACKEND_PUBLIC_URL}/audio/speaking_lr/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = f"{AUDIO_BASE_URL}/speaking_lr/{s['id']}/intro.mp3"
         for sent in s["sentences"]:
-            sent["audio_url"] = f"{BACKEND_PUBLIC_URL}/audio/speaking_lr/{s['id']}/{sent['id']}.mp3"
+            sent["audio_url"] = f"{AUDIO_BASE_URL}/speaking_lr/{s['id']}/{sent['id']}.mp3"
     return data
 
 # --- Speaking: Take an Interview ---
@@ -1181,9 +1189,9 @@ def get_speaking_interview():
     with open(SPEAKING_INTERVIEW_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
     for s in data:
-        s["audio_url_intro"] = f"{BACKEND_PUBLIC_URL}/audio/speaking_interview/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = f"{AUDIO_BASE_URL}/speaking_interview/{s['id']}/intro.mp3"
         for q in s["questions"]:
-            q["audio_url"] = f"{BACKEND_PUBLIC_URL}/audio/speaking_interview/{s['id']}/{q['id']}.mp3"
+            q["audio_url"] = f"{AUDIO_BASE_URL}/speaking_interview/{s['id']}/{q['id']}.mp3"
     return data
 
 # --- Writing: Email (eski DB tabanlı tekil soru, kullanılmıyor ama korunuyor) ---
