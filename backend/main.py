@@ -771,15 +771,13 @@ def get_me(user=Depends(get_current_user)):
 # --- Dashboard ---
 @app.get("/api/dashboard")
 def get_dashboard(user=Depends(get_current_user)):
-    # Section scores reflect actual practice/mock-test performance whenever there's any recorded
-    # activity for that section -- otherwise they keep whatever placeholder value is already on
-    # the user's row, so a brand-new student doesn't see a jarring 1.0.
+    # Section scores are always the live average of that section's attempted parts (see
+    # compute_section_band) -- a section with zero attempts shows band 1.0, the scale's floor,
+    # rather than a placeholder that makes an untouched section look already-practiced.
     conn = get_db()
     updates = {}
     for section in ("reading", "listening", "writing", "speaking"):
-        band = compute_section_band(conn, user["id"], section)
-        if band is not None:
-            updates[f"{section}_score"] = band
+        updates[f"{section}_score"] = compute_section_band(conn, user["id"], section)
     streak, week_activity = compute_streak_and_week_activity(conn, user["id"])
     updates["current_streak"] = streak
     set_clause = ", ".join(f"{k} = ?" for k in updates)
@@ -935,8 +933,9 @@ def compute_section_band(conn, user_id, section):
     entirely rather than dragging the average down to 0%, so getting a perfect score on the one
     part you've tried shows as a high score right away, even before you've touched the section's
     other parts.
-    Returns None if the student hasn't attempted anything in this section yet, so the caller can
-    fall back to the existing placeholder score instead of showing an artificial 1.0."""
+    Returns 1.0 (the lowest possible band on any TOEFL section scale) if the student hasn't
+    attempted a single part of this section yet, so an untouched section reads as "not started"
+    rather than showing an artificially inflated placeholder score."""
     cats = SECTION_PRACTICE_CATEGORIES[section] + [SECTION_MOCK_CATEGORY[section]]
     part_pcts = []
     for cat in cats:
@@ -949,7 +948,7 @@ def compute_section_band(conn, user_id, section):
             part_pcts.append((row["total_score"] / row["total_possible"]) * 100)
 
     if not part_pcts:
-        return None
+        return 1.0
     avg_pct = sum(part_pcts) / len(part_pcts)
     max_band = SECTION_BAND_MAX[section]
     # Simple linear map from question-solving accuracy % to this section's 1.0-max_band scale
