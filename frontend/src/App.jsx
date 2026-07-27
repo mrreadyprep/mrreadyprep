@@ -5774,20 +5774,74 @@ function ProgressScreen({ onBack }) {
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
 
 function AuthScreen({ onAuthSuccess }) {
-  const [mode, setMode] = useState('login') // 'login' | 'signup'
+  // 'login' | 'signup' | 'forgot' (request a reset link) | 'reset' (set a new password, reached
+  // via the emailed link's ?reset_token=... query param)
+  const [mode, setMode] = useState('login')
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const [notice, setNotice] = useState('') // success/info messages (green), separate from errors
   const [loading, setLoading] = useState(false)
+  const [resetToken, setResetToken] = useState('')
+
+  // If the page was opened from the "reset your password" email link, jump straight into the
+  // reset-password form instead of the normal login screen, and strip the token out of the
+  // visible URL so it isn't sitting in the address bar / browser history afterwards.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const token = params.get('reset_token')
+    if (token) {
+      setResetToken(token)
+      setMode('reset')
+      params.delete('reset_token')
+      const cleanUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '')
+      window.history.replaceState({}, '', cleanUrl)
+    }
+  }, [])
 
   const inputStyle = { padding: '11px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }
   const labelStyle = { fontWeight: '600', color: '#616473', fontSize: '12px' }
 
+  const switchMode = (m) => { setMode(m); setError(''); setNotice('') }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     setError('')
+    setNotice('')
+
+    if (mode === 'forgot') {
+      setLoading(true)
+      fetch(`${BACKEND_URL}/api/auth/forgot-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      }).then(async res => {
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok) throw new Error(data.detail || 'Something went wrong. Please try again.')
+        setNotice("If an account exists for that email, we've sent a password reset link. Check your inbox.")
+      }).catch(err => setError(err.message)).finally(() => setLoading(false))
+      return
+    }
+
+    if (mode === 'reset') {
+      if (password.length < 8) { setError('Password must be at least 8 characters.'); return }
+      if (password !== confirmPassword) { setError('Passwords do not match.'); return }
+      setLoading(true)
+      fetch(`${BACKEND_URL}/api/auth/reset-password`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: resetToken, new_password: password }),
+      }).then(async res => {
+        const data = await res.json().catch(() => ({}))
+        if (!res.ok) throw new Error(data.detail || 'Something went wrong. Please try again.')
+        setNotice('Your password has been updated. You can now log in below.')
+        setPassword(''); setConfirmPassword(''); setMode('login')
+      }).catch(err => setError(err.message)).finally(() => setLoading(false))
+      return
+    }
+
     if (mode === 'signup') {
       if (!username.trim()) { setError('Please enter a username.'); return }
       if (password.length < 8) { setError('Password must be at least 8 characters.'); return }
@@ -5819,14 +5873,29 @@ function AuthScreen({ onAuthSuccess }) {
         </div>
 
         <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '26px', boxSizing: 'border-box' }}>
-          <div style={{ display: 'flex', borderRadius: '9px', backgroundColor: '#f4f6fa', padding: '3px', marginBottom: '20px' }}>
-            {['login', 'signup'].map(m => (
-              <button key={m} type="button" onClick={() => { setMode(m); setError('') }}
-                style={{ flex: 1, padding: '9px', borderRadius: '7px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '700', backgroundColor: mode === m ? '#701fa1' : 'transparent', color: mode === m ? '#fff' : '#616473' }}>
-                {m === 'login' ? 'Log In' : 'Sign Up'}
-              </button>
-            ))}
-          </div>
+          {(mode === 'login' || mode === 'signup') && (
+            <div style={{ display: 'flex', borderRadius: '9px', backgroundColor: '#f4f6fa', padding: '3px', marginBottom: '20px' }}>
+              {['login', 'signup'].map(m => (
+                <button key={m} type="button" onClick={() => switchMode(m)}
+                  style={{ flex: 1, padding: '9px', borderRadius: '7px', border: 'none', cursor: 'pointer', fontSize: '13px', fontWeight: '700', backgroundColor: mode === m ? '#701fa1' : 'transparent', color: mode === m ? '#fff' : '#616473' }}>
+                  {m === 'login' ? 'Log In' : 'Sign Up'}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {mode === 'forgot' && (
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Reset your password</div>
+              <div style={{ fontSize: '12px', color: '#9ca3af', lineHeight: '1.5' }}>Enter your account email and we'll send you a link to choose a new password.</div>
+            </div>
+          )}
+          {mode === 'reset' && (
+            <div style={{ marginBottom: '16px' }}>
+              <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Choose a new password</div>
+              <div style={{ fontSize: '12px', color: '#9ca3af', lineHeight: '1.5' }}>Enter and confirm a new password for your account.</div>
+            </div>
+          )}
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
             {mode === 'signup' && (
@@ -5835,29 +5904,47 @@ function AuthScreen({ onAuthSuccess }) {
                 <input type="text" value={username} onChange={e => setUsername(e.target.value)} style={inputStyle} required />
               </div>
             )}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-              <label style={labelStyle}>Email</label>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} required />
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-              <label style={labelStyle}>Password</label>
-              <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} required minLength={mode === 'signup' ? 8 : undefined} />
-            </div>
-            {mode === 'signup' && (
+            {(mode === 'login' || mode === 'signup' || mode === 'forgot') && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <label style={labelStyle}>Email</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} required />
+              </div>
+            )}
+            {(mode === 'login' || mode === 'signup' || mode === 'reset') && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                <label style={labelStyle}>{mode === 'reset' ? 'New Password' : 'Password'}</label>
+                <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} required minLength={mode === 'signup' || mode === 'reset' ? 8 : undefined} />
+              </div>
+            )}
+            {mode === 'login' && (
+              <button type="button" onClick={() => switchMode('forgot')}
+                style={{ alignSelf: 'flex-end', background: 'none', border: 'none', padding: 0, marginTop: '-6px', fontSize: '12px', fontWeight: '600', color: '#701fa1', cursor: 'pointer' }}>
+                Forgot password?
+              </button>
+            )}
+            {(mode === 'signup' || mode === 'reset') && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                 <label style={labelStyle}>Confirm Password</label>
                 <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} style={inputStyle} required />
               </div>
             )}
 
+            {notice && <div style={{ background: '#edfbf3', color: '#1a7a44', fontSize: '12px', fontWeight: '600', padding: '9px 11px', borderRadius: '7px' }}>{notice}</div>}
             {error && <div style={{ background: '#fef2f2', color: '#dc2626', fontSize: '12px', fontWeight: '600', padding: '9px 11px', borderRadius: '7px' }}>{error}</div>}
 
             <button type="submit" disabled={loading} style={{ backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '12px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.7 : 1, marginTop: '4px' }}>
-              {loading ? 'Please wait…' : mode === 'login' ? 'Log In' : 'Create Account'}
+              {loading ? 'Please wait…' : mode === 'login' ? 'Log In' : mode === 'signup' ? 'Create Account' : mode === 'forgot' ? 'Send reset link' : 'Set new password'}
             </button>
+
+            {(mode === 'forgot' || mode === 'reset') && (
+              <button type="button" onClick={() => switchMode('login')}
+                style={{ background: 'none', border: 'none', padding: 0, fontSize: '12px', fontWeight: '600', color: '#616473', cursor: 'pointer', textAlign: 'center' }}>
+                ← Back to Log In
+              </button>
+            )}
           </form>
 
-          {GOOGLE_CLIENT_ID && (
+          {GOOGLE_CLIENT_ID && (mode === 'login' || mode === 'signup') && (
             <>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', margin: '18px 0' }}>
                 <div style={{ flex: 1, height: '1px', background: '#e1e4ed' }} />

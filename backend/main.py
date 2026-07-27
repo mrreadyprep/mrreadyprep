@@ -12,6 +12,8 @@ import sqlite3
 import pathlib
 import bcrypt
 import jwt
+import urllib.request
+import urllib.error
 
 app = FastAPI(title="mrreadyprep API", version="2026")
 
@@ -43,6 +45,17 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
 # backend service's real public URL, e.g. https://mrreadyprep-api.onrender.com
 BACKEND_PUBLIC_URL = os.environ.get("BACKEND_PUBLIC_URL", "http://localhost:8000")
 
+# Where the frontend is reachable -- used to build the "reset your password" link sent by email.
+# Defaults to the local Vite dev server; in production set this to the deployed frontend's real
+# domain, e.g. https://mrreadyprep.com
+FRONTEND_PUBLIC_URL = os.environ.get("FRONTEND_PUBLIC_URL", "http://localhost:5173")
+
+# From resend.com (free tier). Leave blank to run without real email delivery -- the reset link
+# is then only written to the server logs, which is fine for local dev/testing but means real
+# students won't receive an actual email until this is set.
+RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
+RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "mrreadyprep <onboarding@resend.dev>")
+
 # The audio/ folder is deployed separately from git (see AUDIO_DEPLOYMENT.md -- it's ~364MB of
 # generated mp3s, too large for a normal git push). Create it if missing so a fresh deploy that
 # hasn't had its persistent disk populated yet still boots instead of crashing at startup; audio
@@ -73,6 +86,13 @@ class LoginRequest(BaseModel):
 
 class GoogleLoginRequest(BaseModel):
     id_token: str
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str
 
 class ExamDateUpdate(BaseModel):
     exam_date: str  # ISO yyyy-mm-dd, or "" to clear the saved date
@@ -131,6 +151,8 @@ def init_db():
             email_verified INTEGER NOT NULL DEFAULT 0,
             verification_token TEXT,
             verification_token_expires TIMESTAMP,
+            password_reset_token TEXT,
+            password_reset_token_expires TIMESTAMP,
             target_score REAL NOT NULL DEFAULT 5.5,
             exam_date TEXT NOT NULL DEFAULT '',
             current_streak INTEGER NOT NULL DEFAULT 0,
@@ -142,6 +164,13 @@ def init_db():
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
+    # Guards for columns added after the users table already existed in production (e.g. the
+    # password reset flow) -- CREATE TABLE IF NOT EXISTS above is a no-op once the table exists,
+    # so older deployed databases need these added explicitly instead of silently missing them.
+    if not _has_column(conn, "users", "password_reset_token"):
+        conn.execute("ALTER TABLE users ADD COLUMN password_reset_token TEXT")
+    if not _has_column(conn, "users", "password_reset_token_expires"):
+        conn.execute("ALTER TABLE users ADD COLUMN password_reset_token_expires TIMESTAMP")
 
     # Which vocab words each student has personally marked as learned.
     conn.execute("""
@@ -291,6 +320,39 @@ def get_current_user(authorization: Optional[str] = Header(None)):
     if not user:
         raise HTTPException(status_code=401, detail="Account no longer exists")
     return user
+
+def send_password_reset_email(to_email: str, reset_link: str):
+    """Sends the 'reset your password' email via Resend (resend.com), if RESEND_API_KEY is
+    configured. If it isn't set yet, or the send fails for any reason, this just logs the link to
+    the server console instead of raising -- forgot-password should never itself error out just
+    because email delivery isn't wired up or hiccups, since the reset token has already been saved
+    either way and the generic response to the student must stay the same regardless."""
+    if not RESEND_API_KEY:
+        print(f"[password reset] RESEND_API_KEY not set -- reset link for {to_email}: {reset_link}")
+        return
+    payload = json.dumps({
+        "from": RESEND_FROM_EMAIL,
+        "to": [to_email],
+        "subject": "Reset your mrreadyprep password",
+        "html": (
+            f"<p>We received a request to reset your mrreadyprep password.</p>"
+            f"<p><a href=\"{reset_link}\">Click here to choose a new password</a></p>"
+            f"<p>This link expires in 1 hour. If you didn't request this, you can safely ignore this email.</p>"
+        ),
+    }).encode("utf-8")
+    req = urllib.request.Request(
+        "https://api.resend.com/emails",
+        data=payload,
+        method="POST",
+        headers={
+            "Authorization": f"Bearer {RESEND_API_KEY}",
+            "Content-Type": "application/json",
+        },
+    )
+    try:
+        urllib.request.urlopen(req, timeout=10)
+    except urllib.error.URLError as e:
+        print(f"[password reset] Failed to send email to {to_email}: {e}")
 
 def compute_streak_and_week_activity(conn, user_id: int):
     """Looks at every attempt_results/ridl_results row's saved_at date for this user to compute
@@ -526,6 +588,49 @@ def login(data: LoginRequest):
         raise HTTPException(status_code=401, detail="Incorrect email or password")
     token = create_access_token(user["id"])
     return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
+
+@app.post("/api/auth/forgot-password")
+def forgot_password(data: ForgotPasswordRequest):
+    """Always returns the same generic success message whether or not the email is registered --
+    this stops someone from using this endpoint to check which emails have an account here."""
+    email = data.email.strip().lower()
+    conn = get_db()
+    user = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
+    if user:
+        reset_token = secrets.token_urlsafe(32)
+        reset_expires = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+        conn.execute(
+            "UPDATE users SET password_reset_token = ?, password_reset_token_expires = ? WHERE id = ?",
+            (reset_token, reset_expires, user["id"]),
+        )
+        conn.commit()
+        reset_link = f"{FRONTEND_PUBLIC_URL}/?reset_token={reset_token}"
+        send_password_reset_email(email, reset_link)
+    conn.close()
+    return {"status": "success", "message": "If an account exists for that email, a reset link has been sent."}
+
+@app.post("/api/auth/reset-password")
+def reset_password(data: ResetPasswordRequest):
+    if len(data.new_password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
+    conn = get_db()
+    user = conn.execute(
+        "SELECT * FROM users WHERE password_reset_token = ?", (data.token,)
+    ).fetchone()
+    if not user:
+        conn.close()
+        raise HTTPException(status_code=400, detail="This reset link is invalid or has already been used")
+    expires = user["password_reset_token_expires"]
+    if not expires or datetime.fromisoformat(expires) < datetime.now(timezone.utc):
+        conn.close()
+        raise HTTPException(status_code=400, detail="This reset link has expired. Please request a new one")
+    conn.execute(
+        "UPDATE users SET password_hash = ?, password_reset_token = NULL, password_reset_token_expires = NULL WHERE id = ?",
+        (hash_password(data.new_password), user["id"]),
+    )
+    conn.commit()
+    conn.close()
+    return {"status": "success", "message": "Password updated. You can now log in with your new password."}
 
 @app.get("/api/auth/me")
 def get_me(user=Depends(get_current_user)):
