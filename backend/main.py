@@ -599,8 +599,10 @@ def forgot_password(data: ForgotPasswordRequest):
     """Always returns the same generic success message whether or not the email is registered --
     this stops someone from using this endpoint to check which emails have an account here."""
     email = data.email.strip().lower()
+    print(f"[password reset] forgot-password called for email={email!r}", flush=True)
     conn = get_db()
     user = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
+    print(f"[password reset] user lookup result: {'FOUND id=' + str(user['id']) if user else 'NOT FOUND'}", flush=True)
     if user:
         reset_token = secrets.token_urlsafe(32)
         reset_expires = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
