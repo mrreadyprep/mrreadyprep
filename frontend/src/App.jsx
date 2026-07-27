@@ -4322,8 +4322,17 @@ function SceneIconShape({ type }) {
 // Lays out scene elements inside a "room": a back wall zone (top ~62% of the canvas) for
 // small/mounted items (tag, calendar, clock, key, wifi...) and a floor zone (bottom ~38%) for
 // larger furniture/people items, with the door always anchored near the back-right corner.
+// Deterministic pseudo-random offset in [-range/2, range/2], seeded from a string key -- used to
+// nudge item positions/scale off a perfect grid so the scene reads as a real, slightly irregular
+// place rather than icons snapped to a ruler.
+function seededJitter(key, range) {
+  let h = 0
+  for (let i = 0; i < key.length; i++) h = (h * 31 + key.charCodeAt(i)) >>> 0
+  return ((h % 1000) / 1000 - 0.5) * range
+}
+
 function roomLayout(elements, width, height) {
-  const wallH = height * 0.62
+  const wallH = height * 0.6
   const floorH = height - wallH
   const doorEl = elements.find((e) => e.key === 'door')
   const others = elements.filter((e) => e.key !== 'door')
@@ -4333,16 +4342,42 @@ function roomLayout(elements, width, height) {
   const positions = {}
   wallItems.forEach((el, i) => {
     const slotW = (width * 0.7) / (wallItems.length + 1)
-    positions[el.key] = { x: slotW * (i + 1) + width * 0.06, y: wallH * 0.48, row: 'wall' }
+    const jx = seededJitter(el.key, 10)
+    positions[el.key] = { x: slotW * (i + 1) + width * 0.06 + jx, y: wallH * 0.46, row: 'wall', scale: 1.08 }
   })
-  floorItems.forEach((el, i) => {
-    const slotW = (width * 0.62) / (floorItems.length + 1)
-    positions[el.key] = { x: slotW * (i + 1) + width * 0.04, y: wallH + floorH * 0.58, row: 'floor' }
+  // Split floor items into a "near" row (bigger, lower, closer to viewer) and a "far" row
+  // (smaller, higher, nearer the wall) so the floor reads with real depth instead of one flat line.
+  const nearItems = floorItems.filter((_, i) => i % 2 === 0)
+  const farItems = floorItems.filter((_, i) => i % 2 === 1)
+  nearItems.forEach((el, i) => {
+    const slotW = (width * 0.68) / (nearItems.length + 1)
+    const jx = seededJitter(el.key, 16)
+    const jy = seededJitter(el.key + 'y', 10)
+    positions[el.key] = { x: slotW * (i + 1) + width * 0.05 + jx, y: wallH + floorH * 0.74 + jy, row: 'floor', scale: 1.4 }
+  })
+  farItems.forEach((el, i) => {
+    const slotW = (width * 0.56) / (farItems.length + 1)
+    const jx = seededJitter(el.key, 16)
+    const jy = seededJitter(el.key + 'y', 8)
+    positions[el.key] = { x: slotW * (i + 1) + width * 0.12 + jx, y: wallH + floorH * 0.38 + jy, row: 'floor', scale: 1.05 }
   })
   if (doorEl) {
-    positions[doorEl.key] = { x: width * 0.87, y: wallH + floorH * 0.42, row: 'floor' }
+    positions[doorEl.key] = { x: width * 0.88, y: wallH + floorH * 0.36, row: 'floor', scale: 1.15 }
   }
-  return { positions, wallH, floorH, wallItems, floorItems, doorEl }
+  return { positions, wallH, floorH, wallItems, floorItems: [...nearItems, ...farItems], doorEl }
+}
+
+// Small, always-muted, non-interactive furnishing placed in scene corners so rooms feel lived-in
+// rather than empty -- never appears in activeKeys, never brightens, just quiet set dressing.
+const AMBIENT_PROPS = {
+  outdoor: [{ icon: 'flowerPlant', x: 0.08, yFrac: 0.8, scale: 0.85 }],
+  transit: [{ icon: 'luggage', x: 0.06, yFrac: 0.86, scale: 0.75 }],
+  water: [],
+  retail: [{ icon: 'flowerPlant', x: 0.06, yFrac: 0.82, scale: 0.8 }],
+  medical: [{ icon: 'flowerPlant', x: 0.07, yFrac: 0.82, scale: 0.8 }],
+  food: [{ icon: 'flowerPlant', x: 0.06, yFrac: 0.82, scale: 0.75 }],
+  studio: [{ icon: 'sofa', x: 0.1, yFrac: 0.84, scale: 0.65 }],
+  office: [{ icon: 'flowerPlant', x: 0.07, yFrac: 0.82, scale: 0.8 }],
 }
 
 // Classifies a location name into a broad "setting" so the background can look like the right
@@ -4491,6 +4526,10 @@ function EnvironmentBackdrop({ env, width, wallH, floorH, uid }) {
             [0.2, 0.4, 0.6, 0.8].map((tx) => (
               <line key={tx} x1={width * tx} y1={wallH} x2={width * (0.5 + (tx - 0.5) * 0.3)} y2={height} stroke={t.line} strokeWidth="1" opacity="0.2" />
             ))}
+          {/* baseboard trim where wall meets floor, plus a soft rug under the main action so the
+              room reads as furnished rather than an empty box */}
+          <rect x="0" y={wallH - 3} width={width} height="5" fill={t.line} opacity="0.25" />
+          <ellipse cx={width * 0.5} cy={wallH + floorH * 0.72} rx={width * 0.34} ry={floorH * 0.22} fill="#fff" opacity="0.12" />
         </>
       )}
     </g>
@@ -4507,38 +4546,70 @@ function EnvironmentBackdrop({ env, width, wallH, floorH, uid }) {
 function SceneIllustration({ scene, location = '', activeKeys = [], width = 520, height = 420 }) {
   const elements = scene?.elements || []
   const { positions, wallH, floorH, wallItems, floorItems, doorEl } = roomLayout(elements, width, height)
-  const ordered = [...wallItems, ...floorItems, ...(doorEl ? [doorEl] : [])]
+  // Draw back-to-front: far floor items first, then wall items, then near floor items, then the
+  // door -- so nothing near the "camera" gets visually cut off by something meant to sit behind it.
+  const farFloor = floorItems.filter((e) => positions[e.key] && positions[e.key].y < wallH + floorH * 0.55)
+  const nearFloor = floorItems.filter((e) => positions[e.key] && positions[e.key].y >= wallH + floorH * 0.55)
+  const ordered = [...farFloor, ...wallItems, ...nearFloor, ...(doorEl ? [doorEl] : [])]
   const env = classifyEnvironment(location)
   const uid = `scene-${env}`
+  const props = AMBIENT_PROPS[env] || []
 
   return (
     <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', borderRadius: '16px', overflow: 'hidden', margin: '0 auto', flexShrink: 0, border: '0.5px solid #d7dbe6', boxShadow: '0 1px 4px rgba(20,25,40,0.08)' }}>
       <svg viewBox={`0 0 ${width} ${height}`} width="100%" height="100%" role="img" aria-label="scene illustration">
+        <defs>
+          <filter id={`${uid}-glow`} x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="9" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
         <EnvironmentBackdrop env={env} width={width} wallH={wallH} floorH={floorH} uid={uid} />
+
+        {/* Quiet, always-muted furnishing so the room feels lived-in even before anything lights up */}
+        {props.map((p, i) => (
+          <g key={`prop-${i}`} transform={`translate(${width * p.x}, ${wallH + floorH * p.yFrac}) scale(${p.scale})`} opacity="0.5" style={{ filter: 'grayscale(55%)' }}>
+            <SceneIconShape type={p.icon} />
+          </g>
+        ))}
 
         {ordered.map((el) => {
           const pos = positions[el.key]
           if (!pos) return null
           const active = activeKeys.includes(el.key)
           const isFloor = pos.row === 'floor'
+          const scale = (pos.scale || 1) * (active ? 1.16 : 1)
           return (
             <g key={el.key}>
               {isFloor && (
                 <ellipse
                   cx={pos.x}
-                  cy={pos.y + 24}
-                  rx={active ? 26 : 20}
-                  ry="7"
-                  fill={active ? 'rgba(42,197,108,0.32)' : 'rgba(0,0,0,0.15)'}
+                  cy={pos.y + 22 * (pos.scale || 1)}
+                  rx={(active ? 30 : 22) * (pos.scale || 1)}
+                  ry={7 * (pos.scale || 1)}
+                  fill={active ? 'rgba(42,197,108,0.35)' : 'rgba(0,0,0,0.16)'}
+                  style={{ transition: 'all 0.4s ease' }}
+                />
+              )}
+              {active && (
+                <circle
+                  cx={pos.x}
+                  cy={pos.y}
+                  r={30 * (pos.scale || 1)}
+                  fill="rgba(42,197,108,0.28)"
+                  filter={`url(#${uid}-glow)`}
                   style={{ transition: 'all 0.4s ease' }}
                 />
               )}
               <g
-                transform={`translate(${pos.x}, ${pos.y}) scale(${active ? 1.18 : 1})`}
+                transform={`translate(${pos.x}, ${pos.y}) scale(${scale})`}
                 style={{
                   transition: 'opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease',
-                  opacity: active ? 1 : 0.38,
-                  filter: active ? 'drop-shadow(0 0 10px rgba(42,197,108,0.9)) saturate(1.35)' : 'grayscale(75%)',
+                  opacity: active ? 1 : 0.4,
+                  filter: active ? 'drop-shadow(0 0 8px rgba(42,197,108,0.95)) saturate(1.4)' : 'grayscale(70%)',
                 }}
               >
                 <SceneIconShape type={el.icon} />
