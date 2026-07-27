@@ -43,6 +43,11 @@ GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
 # backend service's real public URL, e.g. https://mrreadyprep-api.onrender.com
 BACKEND_PUBLIC_URL = os.environ.get("BACKEND_PUBLIC_URL", "http://localhost:8000")
 
+# The audio/ folder is deployed separately from git (see AUDIO_DEPLOYMENT.md -- it's ~364MB of
+# generated mp3s, too large for a normal git push). Create it if missing so a fresh deploy that
+# hasn't had its persistent disk populated yet still boots instead of crashing at startup; audio
+# playback simply 404s until the files are uploaded.
+os.makedirs("audio", exist_ok=True)
 app.mount("/audio", StaticFiles(directory="audio"), name="audio")
 
 # ============================================================
