@@ -4345,45 +4345,176 @@ function roomLayout(elements, width, height) {
   return { positions, wallH, floorH, wallItems, floorItems, doorEl }
 }
 
-// Renders a realistic little "room" scene made of simple flat icon shapes grounded on a floor,
-// with a back wall behind them -- whichever keys are in activeKeys are shown at full
-// color/saturation with a glowing highlight (and a colored "grounding" shadow if on the floor),
-// everything else is dimmed and desaturated. This mirrors BestMyTest's Listen & Repeat effect of
-// colorizing the object currently being talked about, but fully in color rather than grayscale.
-function SceneIllustration({ scene, activeKeys = [], width = 520, height = 420 }) {
+// Classifies a location name into a broad "setting" so the background can look like the right
+// kind of place (an outdoor garden vs. a clinic vs. a shop vs. a train platform) instead of the
+// same generic room every time. Order matters -- more specific categories are checked first.
+function classifyEnvironment(location = '') {
+  const s = location.toLowerCase()
+  const has = (...words) => words.some((w) => s.includes(w))
+  if (has('aquarium', 'swimming pool', 'pool front')) return 'water'
+  if (has('garden', 'zoo', 'farmers market', 'local farmers', 'amusement park', 'golf course', 'botanical')) return 'outdoor'
+  if (has('station', 'terminal', 'airport', 'taxi', 'shuttle stop', 'parking services', 'gas station', 'car rental', 'car dealership', 'auto repair', 'motor vehicles', 'bike rental', 'ski rental', 'alpine ski')) return 'transit'
+  if (has('cafeteria', 'dining hall', 'coffee shop', 'bakery', 'ice cream')) return 'food'
+  if (has('health', 'clinic', 'pharmacy', 'dentist', 'therapy', 'counseling', 'chiropractor', 'acupuncture', 'optometrist', 'nutritionist', 'blood donation', 'urgent care', 'veterinary', 'massage', 'spa')) return 'medical'
+  if (has('studio', 'gym', 'yoga', 'dance', 'dojo', 'martial arts', 'bowling', 'arcade', 'theater', 'cinema', 'movie', 'concert', 'salon', 'tanning', 'nail', 'planetarium', 'escape room', 'art gallery', 'art museum')) return 'studio'
+  if (has('store', 'shop', 'market stall', 'bookstore', 'jewelry', 'flower', 'hardware', 'furniture', 'electronics', 'pet store', 'thrift', 'tailor', 'dry cleaner', 'phone repair', 'shoe repair', 'print shop')) return 'retail'
+  return 'office'
+}
+
+const ENV_THEMES = {
+  outdoor: { top: '#cdeeff', bottom: '#eaf8ff', floorTop: '#8bc76b', floorBottom: '#6ea852', line: '#4b7a3a', mood: 'sky' },
+  transit: { top: '#d7e3f0', bottom: '#eef3f8', floorTop: '#c9ccd1', floorBottom: '#aeb2b8', line: '#ffffff', mood: 'sky' },
+  water: { top: '#cdeeff', bottom: '#eaf8ff', floorTop: '#79d3f2', floorBottom: '#2f9bd6', line: '#ffffff', mood: 'sky' },
+  retail: { top: '#fdf3e3', bottom: '#f3e4c8', floorTop: '#d9cba8', floorBottom: '#c3ac80', line: '#b39b68', mood: 'wall' },
+  medical: { top: '#f2fbf7', bottom: '#e3f5ec', floorTop: '#e7edea', floorBottom: '#d3dcd7', line: '#9db3a8', mood: 'wall' },
+  food: { top: '#fff2e0', bottom: '#ffe4c2', floorTop: '#e8cba0', floorBottom: '#d1a96f', line: '#b8874a', mood: 'wall' },
+  studio: { top: '#efe3fb', bottom: '#ded0f5', floorTop: '#8a7c98', floorBottom: '#6c5f7d', line: '#c9b8e0', mood: 'wall' },
+  office: { top: '#eef2ff', bottom: '#dde5fb', floorTop: '#d9cba8', floorBottom: '#c3ac80', line: '#b39b68', mood: 'wall' },
+}
+
+// Draws the full backdrop (sky/wall + floor + ambient, non-interactive decoration) for a given
+// environment type, so each scene reads as one cohesive illustrated place rather than icons
+// floating over an empty box. All shapes here are pure atmosphere -- never highlighted.
+function EnvironmentBackdrop({ env, width, wallH, floorH, uid }) {
+  const t = ENV_THEMES[env] || ENV_THEMES.office
+  const height = wallH + floorH
+  const cloud = (cx, cy, s) => (
+    <g key={`${cx}-${cy}`} opacity="0.75">
+      <ellipse cx={cx} cy={cy} rx={22 * s} ry={10 * s} fill="#fff" />
+      <ellipse cx={cx - 16 * s} cy={cy + 3 * s} rx={14 * s} ry={8 * s} fill="#fff" />
+      <ellipse cx={cx + 17 * s} cy={cy + 3 * s} rx={15 * s} ry={8 * s} fill="#fff" />
+    </g>
+  )
+
+  return (
+    <g>
+      <defs>
+        <linearGradient id={`${uid}-sky`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={t.top} /><stop offset="100%" stopColor={t.bottom} />
+        </linearGradient>
+        <linearGradient id={`${uid}-floor`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={t.floorTop} /><stop offset="100%" stopColor={t.floorBottom} />
+        </linearGradient>
+      </defs>
+
+      <rect x="0" y="0" width={width} height={wallH} fill={`url(#${uid}-sky)`} />
+      <rect x="0" y={wallH} width={width} height={floorH} fill={`url(#${uid}-floor)`} />
+
+      {t.mood === 'sky' ? (
+        <>
+          {cloud(width * 0.18, wallH * 0.28, 1)}
+          {cloud(width * 0.78, wallH * 0.4, 0.8)}
+          {env === 'outdoor' && (
+            <>
+              <path d={`M 0 ${wallH} Q ${width * 0.12} ${wallH - 16} ${width * 0.26} ${wallH} Q ${width * 0.4} ${wallH - 20} ${width * 0.55} ${wallH} Q ${width * 0.7} ${wallH - 14} ${width * 0.84} ${wallH} Q ${width * 0.94} ${wallH - 18} ${width} ${wallH} Z`} fill="#3f7a35" opacity="0.55" />
+              <circle cx={width * 0.9} cy={wallH * 0.22} r="16" fill="#ffd43b" opacity="0.9" />
+              <path d={`M ${width * 0.1} ${wallH + floorH * 0.5} Q ${width * 0.45} ${wallH + floorH * 0.3} ${width * 0.5} ${wallH + floorH}`} fill="none" stroke="#d9b979" strokeWidth={floorH * 0.16} opacity="0.35" />
+              {[0.15, 0.3, 0.62, 0.8, 0.92].map((tx, i) => (
+                <path key={i} d={`M ${width * tx} ${wallH + floorH * (0.55 + (i % 2) * 0.25)} q 3 -8 7 0`} stroke="#3f7a35" strokeWidth="2" fill="none" opacity="0.5" />
+              ))}
+            </>
+          )}
+          {env === 'transit' && (
+            <>
+              {[0.06, 0.16, 0.24, 0.34].map((tx, i) => (
+                <rect key={i} x={width * tx} y={wallH - 14 - (i % 3) * 10} width={width * 0.06} height={14 + (i % 3) * 10} fill="#7d838c" opacity="0.5" />
+              ))}
+              {[0.62, 0.72, 0.82, 0.9].map((tx, i) => (
+                <rect key={i} x={width * tx} y={wallH - 10 - (i % 2) * 14} width={width * 0.055} height={10 + (i % 2) * 14} fill="#7d838c" opacity="0.5" />
+              ))}
+              <line x1={width * 0.5} y1={wallH} x2={width * 0.5} y2={height} stroke="#fff" strokeWidth="4" strokeDasharray="10 10" opacity="0.55" />
+            </>
+          )}
+          {env === 'water' && (
+            <>
+              {[0.15, 0.35, 0.55, 0.75].map((tx, i) => (
+                <path key={i} d={`M ${width * tx - 20} ${wallH + floorH * 0.3} q 10 -6 20 0 q 10 6 20 0`} stroke="#fff" strokeWidth="2" fill="none" opacity="0.35" />
+              ))}
+              {[0.2, 0.5, 0.8].map((tx, i) => (
+                <path key={i} d={`M ${width * tx - 20} ${wallH + floorH * 0.65} q 10 -6 20 0 q 10 6 20 0`} stroke="#fff" strokeWidth="2" fill="none" opacity="0.3" />
+              ))}
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          <line x1="0" y1={wallH} x2={width} y2={wallH} stroke={t.line} strokeWidth="2" />
+          {[0.12, 0.5, 0.88].map((tx) => (
+            <line key={tx} x1={width * tx} y1={height} x2={width * 0.5} y2={wallH} stroke={t.line} strokeWidth="1" opacity="0.3" />
+          ))}
+          {env === 'retail' && (
+            <>
+              <g opacity="0.28">
+                <rect x={width * 0.04} y={wallH * 0.18} width={width * 0.22} height="3" fill="#8a5a34" />
+                <rect x={width * 0.04} y={wallH * 0.4} width={width * 0.22} height="3" fill="#8a5a34" />
+                <rect x={width * 0.06} y={wallH * 0.24} width="10" height="14" fill="#e64980" />
+                <rect x={width * 0.12} y={wallH * 0.24} width="10" height="14" fill="#4c6ef5" />
+                <rect x={width * 0.06} y={wallH * 0.46} width="10" height="14" fill="#f59f00" />
+              </g>
+              <g opacity="0.28">
+                <rect x={width * 0.74} y={wallH * 0.18} width={width * 0.22} height="3" fill="#8a5a34" />
+                <rect x={width * 0.74} y={wallH * 0.4} width={width * 0.22} height="3" fill="#8a5a34" />
+                <rect x={width * 0.78} y={wallH * 0.24} width="10" height="14" fill="#2ac56c" />
+                <rect x={width * 0.84} y={wallH * 0.24} width="10" height="14" fill="#f59f00" />
+              </g>
+            </>
+          )}
+          {env === 'medical' && (
+            <g opacity="0.3" transform={`translate(${width * 0.86}, ${wallH * 0.32})`}>
+              <rect x="-16" y="-16" width="32" height="32" rx="6" fill="#2ac56c" />
+              <rect x="-4" y="-10" width="8" height="20" fill="#fff" />
+              <rect x="-10" y="-4" width="20" height="8" fill="#fff" />
+            </g>
+          )}
+          {env === 'food' && (
+            <g opacity="0.35" transform={`translate(${width * 0.5}, ${wallH * 0.22})`}>
+              <rect x="-30" y="-18" width="60" height="36" rx="3" fill="#fff" stroke="#e8a33d" strokeWidth="2" />
+              {[-24, -12, 0, 12, 24].map((x) => (
+                <line key={x} x1={x} y1="-16" x2={x} y2="16" stroke="#e8a33d" strokeWidth="1.5" />
+              ))}
+            </g>
+          )}
+          {env === 'studio' && (
+            <g opacity="0.35">
+              <ellipse cx={width * 0.5} cy={wallH * 0.1} rx={width * 0.4} ry={wallH * 0.5} fill="#fff" opacity="0.25" />
+              <ellipse cx={width * 0.3} cy={wallH * 0.15} rx={width * 0.16} ry={wallH * 0.3} fill="#fff" opacity="0.2" />
+            </g>
+          )}
+          {env === 'office' && (
+            <g opacity="0.3" transform={`translate(${width * 0.86}, ${wallH * 0.3})`}>
+              <rect x="-20" y="-20" width="40" height="34" rx="2" fill="#a5d8ff" stroke="#748ffc" strokeWidth="2" />
+              <line x1="0" y1="-20" x2="0" y2="14" stroke="#748ffc" strokeWidth="1.5" />
+              <line x1="-20" y1="-3" x2="20" y2="-3" stroke="#748ffc" strokeWidth="1.5" />
+            </g>
+          )}
+          {(env === 'retail' || env === 'office' || env === 'food') &&
+            [0.2, 0.4, 0.6, 0.8].map((tx) => (
+              <line key={tx} x1={width * tx} y1={wallH} x2={width * (0.5 + (tx - 0.5) * 0.3)} y2={height} stroke={t.line} strokeWidth="1" opacity="0.2" />
+            ))}
+        </>
+      )}
+    </g>
+  )
+}
+
+// Renders a realistic little scene made of simple flat icon shapes grounded on a floor, with an
+// environment-appropriate backdrop behind them (sky/grass for outdoor spots, clinic-white walls
+// for medical offices, a shop-shelf silhouette for retail, etc. -- see classifyEnvironment) --
+// whichever keys are in activeKeys are shown at full color/saturation with a glowing highlight
+// (and a colored "grounding" shadow if on the floor), everything else is dimmed and desaturated.
+// This mirrors BestMyTest's Listen & Repeat effect of colorizing the object currently being
+// talked about, but fully in color rather than grayscale.
+function SceneIllustration({ scene, location = '', activeKeys = [], width = 520, height = 420 }) {
   const elements = scene?.elements || []
   const { positions, wallH, floorH, wallItems, floorItems, doorEl } = roomLayout(elements, width, height)
   const ordered = [...wallItems, ...floorItems, ...(doorEl ? [doorEl] : [])]
+  const env = classifyEnvironment(location)
+  const uid = `scene-${env}`
 
   return (
     <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', borderRadius: '16px', overflow: 'hidden', margin: '0 auto', flexShrink: 0, border: '0.5px solid #d7dbe6', boxShadow: '0 1px 4px rgba(20,25,40,0.08)' }}>
       <svg viewBox={`0 0 ${width} ${height}`} width="100%" height="100%" role="img" aria-label="scene illustration">
-        <defs>
-          <linearGradient id="sceneWallGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#eef2ff" />
-            <stop offset="100%" stopColor="#dde5fb" />
-          </linearGradient>
-          <linearGradient id="sceneFloorGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#d9cba8" />
-            <stop offset="100%" stopColor="#c3ac80" />
-          </linearGradient>
-        </defs>
-
-        <rect x="0" y="0" width={width} height={wallH} fill="url(#sceneWallGrad)" />
-        <rect x="0" y={wallH} width={width} height={floorH} fill="url(#sceneFloorGrad)" />
-        <line x1="0" y1={wallH} x2={width} y2={wallH} stroke="#b39b68" strokeWidth="2" />
-        {[0.12, 0.5, 0.88].map((t) => (
-          <line
-            key={t}
-            x1={width * t}
-            y1={height}
-            x2={width * 0.5}
-            y2={wallH}
-            stroke="#b39b68"
-            strokeWidth="1"
-            opacity="0.3"
-          />
-        ))}
+        <EnvironmentBackdrop env={env} width={width} wallH={wallH} floorH={floorH} uid={uid} />
 
         {ordered.map((el) => {
           const pos = positions[el.key]
@@ -4558,7 +4689,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
               <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.location}</div>
               <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
               {item.scene ? (
-                <SceneIllustration scene={item.scene} activeKeys={[]} width={520} height={420} />
+                <SceneIllustration scene={item.scene} location={item.location} activeKeys={[]} width={520} height={420} />
               ) : (
                 <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
               )}
@@ -4568,7 +4699,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
 
           {(phase === 'playing' || phase === 'recording') && (
             item.scene ? (
-              <SceneIllustration scene={item.scene} activeKeys={sentence.highlight || []} width={520} height={420} />
+              <SceneIllustration scene={item.scene} location={item.location} activeKeys={sentence.highlight || []} width={520} height={420} />
             ) : (
               <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
             )
