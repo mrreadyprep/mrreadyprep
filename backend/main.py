@@ -450,6 +450,11 @@ def send_password_reset_email(to_email: str, reset_link: str):
         headers={
             "Authorization": f"Bearer {RESEND_API_KEY}",
             "Content-Type": "application/json",
+            # Cloudflare (which fronts api.resend.com) blocks requests with no/suspicious
+            # User-Agent as bot traffic (HTTP 403, Cloudflare error code 1010) -- Python's
+            # urllib default "Python-urllib/3.x" User-Agent triggers exactly that. A normal
+            # browser-style User-Agent gets past it.
+            "User-Agent": "Mozilla/5.0 (compatible; mrreadyprep-backend/1.0)",
         },
     )
     try:
