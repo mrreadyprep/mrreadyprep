@@ -4372,7 +4372,7 @@ function roomLayout(elements, width, height) {
 const AMBIENT_PROPS = {
   outdoor: [{ icon: 'flowerPlant', x: 0.08, yFrac: 0.8, scale: 0.85 }],
   transit: [{ icon: 'luggage', x: 0.06, yFrac: 0.86, scale: 0.75 }],
-  water: [],
+  water: [{ icon: 'flowerPlant', x: 0.07, yFrac: 0.82, scale: 0.75 }],
   retail: [{ icon: 'flowerPlant', x: 0.06, yFrac: 0.82, scale: 0.8 }],
   medical: [{ icon: 'flowerPlant', x: 0.07, yFrac: 0.82, scale: 0.8 }],
   food: [{ icon: 'flowerPlant', x: 0.06, yFrac: 0.82, scale: 0.75 }],
@@ -4399,7 +4399,7 @@ function classifyEnvironment(location = '') {
 const ENV_THEMES = {
   outdoor: { top: '#cdeeff', bottom: '#eaf8ff', floorTop: '#8bc76b', floorBottom: '#6ea852', line: '#4b7a3a', mood: 'sky' },
   transit: { top: '#d7e3f0', bottom: '#eef3f8', floorTop: '#c9ccd1', floorBottom: '#aeb2b8', line: '#ffffff', mood: 'sky' },
-  water: { top: '#cdeeff', bottom: '#eaf8ff', floorTop: '#79d3f2', floorBottom: '#2f9bd6', line: '#ffffff', mood: 'sky' },
+  water: { top: '#eaf6ff', bottom: '#dbeeff', floorTop: '#cfe9f5', floorBottom: '#a9d7ea', line: '#4dabf7', mood: 'wall' },
   retail: { top: '#fdf3e3', bottom: '#f3e4c8', floorTop: '#d9cba8', floorBottom: '#c3ac80', line: '#b39b68', mood: 'wall' },
   medical: { top: '#f2fbf7', bottom: '#e3f5ec', floorTop: '#e7edea', floorBottom: '#d3dcd7', line: '#9db3a8', mood: 'wall' },
   food: { top: '#fff2e0', bottom: '#ffe4c2', floorTop: '#e8cba0', floorBottom: '#d1a96f', line: '#b8874a', mood: 'wall' },
@@ -4460,16 +4460,6 @@ function EnvironmentBackdrop({ env, width, wallH, floorH, uid }) {
               <line x1={width * 0.5} y1={wallH} x2={width * 0.5} y2={height} stroke="#fff" strokeWidth="4" strokeDasharray="10 10" opacity="0.55" />
             </>
           )}
-          {env === 'water' && (
-            <>
-              {[0.15, 0.35, 0.55, 0.75].map((tx, i) => (
-                <path key={i} d={`M ${width * tx - 20} ${wallH + floorH * 0.3} q 10 -6 20 0 q 10 6 20 0`} stroke="#fff" strokeWidth="2" fill="none" opacity="0.35" />
-              ))}
-              {[0.2, 0.5, 0.8].map((tx, i) => (
-                <path key={i} d={`M ${width * tx - 20} ${wallH + floorH * 0.65} q 10 -6 20 0 q 10 6 20 0`} stroke="#fff" strokeWidth="2" fill="none" opacity="0.3" />
-              ))}
-            </>
-          )}
         </>
       ) : (
         <>
@@ -4493,6 +4483,18 @@ function EnvironmentBackdrop({ env, width, wallH, floorH, uid }) {
                 <rect x={width * 0.84} y={wallH * 0.24} width="10" height="14" fill="#f59f00" />
               </g>
             </>
+          )}
+          {env === 'water' && (
+            <g transform={`translate(${width * 0.5}, ${wallH * 0.42})`}>
+              <rect x={-width * 0.32} y={-wallH * 0.34} width={width * 0.64} height={wallH * 0.6} rx="8" fill="#4dabf7" stroke="#1971c2" strokeWidth="3" opacity="0.85" />
+              {[-0.2, 0.05, 0.24].map((fx, i) => (
+                <path key={i} d={`M ${width * fx - 14} ${-wallH * 0.06 + i * 12} q 7 -5 14 0 q 7 5 14 0`} stroke="#eaf6ff" strokeWidth="2" fill="none" opacity="0.5" />
+              ))}
+              <ellipse cx={-width * 0.1} cy={wallH * 0.06} rx="9" ry="5" fill="#fa5252" opacity="0.9" />
+              <ellipse cx={width * 0.14} cy={-wallH * 0.02} rx="7" ry="4" fill="#ffd43b" opacity="0.9" />
+              <circle cx={-width * 0.2} cy={-wallH * 0.18} r="2" fill="#eaf6ff" opacity="0.6" />
+              <circle cx={width * 0.18} cy={-wallH * 0.12} r="1.5" fill="#eaf6ff" opacity="0.6" />
+            </g>
           )}
           {env === 'medical' && (
             <g opacity="0.3" transform={`translate(${width * 0.86}, ${wallH * 0.32})`}>
