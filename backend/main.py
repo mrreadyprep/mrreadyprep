@@ -15,6 +15,15 @@ import jwt
 import urllib.request
 import urllib.error
 
+# psycopg2 is only actually required in production once DATABASE_URL points at a real Postgres
+# instance (see get_db() below). Importing it defensively means local sqlite-only dev still works
+# even before `pip install -r requirements.txt` has picked up the new dependency.
+try:
+    import psycopg2
+    import psycopg2.extras
+except ImportError:
+    psycopg2 = None
+
 app = FastAPI(title="mrreadyprep API", version="2026")
 
 # CORS ayarları -- CORS_ALLOWED_ORIGINS can be a comma-separated list of extra origins (e.g. the
@@ -126,24 +135,98 @@ class AttemptResult(BaseModel):
 
 DB_FILE = pathlib.Path(__file__).parent / "results.db"
 
+# If DATABASE_URL is set (a real Postgres instance, e.g. Render's managed Postgres), use that so
+# student accounts/progress survive redeploys -- Render's free web services have an EPHEMERAL
+# filesystem, meaning a sqlite file living next to the code gets wiped every time we ship a new
+# commit. Falls back to local sqlite (results.db) when DATABASE_URL is unset, which is fine for
+# local development where losing the file on a restart doesn't matter.
+DATABASE_URL = os.environ.get("DATABASE_URL", "")
+
+
+def _pg_translate(query: str) -> str:
+    """Our SQL strings are written with sqlite-style '?' placeholders throughout the codebase --
+    none of them contain literal '?' characters inside string content, so a plain replace is safe
+    and lets every existing call site work unchanged against psycopg2, which expects '%s'."""
+    return query.replace("?", "%s")
+
+
+class _PGCursor:
+    """Wraps a raw psycopg2 cursor so cursor.execute(query, params) also gets the '?' -> '%s'
+    placeholder translation -- used by the handful of call sites that do conn.cursor() then
+    cursor.execute(...)/cursor.fetchone() across multiple lines instead of chaining off
+    conn.execute() directly."""
+    def __init__(self, cur):
+        self._cur = cur
+
+    def execute(self, query, params=()):
+        self._cur.execute(_pg_translate(query), tuple(params))
+        return self
+
+    def fetchone(self):
+        return self._cur.fetchone()
+
+    def fetchall(self):
+        return self._cur.fetchall()
+
+
+class _PGConnection:
+    """Thin wrapper so the rest of this file can keep calling conn.execute(...).fetchone()/
+    fetchall() and conn.cursor() exactly like it does for sqlite3.Connection, without every one
+    of the ~40 call sites needing to know which database engine is actually in use."""
+    def __init__(self, conn):
+        self._conn = conn
+
+    def execute(self, query, params=()):
+        cur = self._conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cur.execute(_pg_translate(query), tuple(params))
+        return cur
+
+    def cursor(self):
+        return _PGCursor(self._conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor))
+
+    def commit(self):
+        self._conn.commit()
+
+    def close(self):
+        self._conn.close()
+
+
 def get_db():
+    if DATABASE_URL:
+        if psycopg2 is None:
+            raise RuntimeError(
+                "DATABASE_URL is set but psycopg2 isn't installed -- run "
+                "'pip install -r requirements.txt' to pick up the new dependency."
+            )
+        return _PGConnection(psycopg2.connect(DATABASE_URL))
     conn = sqlite3.connect(str(DB_FILE))
     conn.row_factory = sqlite3.Row
     return conn
 
 def _has_column(conn, table, column):
+    if DATABASE_URL:
+        row = conn.execute(
+            "SELECT 1 FROM information_schema.columns WHERE table_name = ? AND column_name = ?",
+            (table, column),
+        ).fetchone()
+        return row is not None
     cols = [row["name"] for row in conn.execute(f"PRAGMA table_info({table})").fetchall()]
     return column in cols
 
 def init_db():
     conn = get_db()
 
+    # Postgres has no AUTOINCREMENT keyword (SERIAL does the equivalent job) -- everything else in
+    # these schemas (TEXT/REAL/INTEGER/TIMESTAMP, composite PRIMARY KEY, DEFAULT CURRENT_TIMESTAMP)
+    # is valid in both engines, so only the primary-key id columns need a different definition.
+    pk = "SERIAL PRIMARY KEY" if DATABASE_URL else "INTEGER PRIMARY KEY AUTOINCREMENT"
+
     # Öğrenci hesapları -- her öğrencinin kendi email/kullanıcı adı ile açtığı hesap. Profil
     # alanları (exam_date, target_score, section skorları, vocab_level) artık ayrı bir kv-store
     # yerine doğrudan bu tabloda tutuluyor, her satır bir öğrencinin tüm profilini kapsıyor.
-    conn.execute("""
+    conn.execute(f"""
         CREATE TABLE IF NOT EXISTS users (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id {pk},
             email TEXT NOT NULL UNIQUE,
             username TEXT NOT NULL,
             password_hash TEXT,
@@ -212,9 +295,9 @@ def init_db():
     """)
 
     # Email sonuçları tablosu
-    conn.execute("""
+    conn.execute(f"""
         CREATE TABLE IF NOT EXISTS email_results (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id {pk},
             question_id TEXT NOT NULL,
             response TEXT NOT NULL,
             word_count INTEGER NOT NULL,
@@ -227,9 +310,9 @@ def init_db():
 
     # Unified progress-tracking table -- every exercise type (practice pools + mock tests)
     # writes here so a student's full history/progress can be queried from one place.
-    conn.execute("""
+    conn.execute(f"""
         CREATE TABLE IF NOT EXISTS attempt_results (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            id {pk},
             user_id INTEGER NOT NULL DEFAULT 0,
             category TEXT NOT NULL,
             item_id TEXT NOT NULL,
@@ -297,6 +380,16 @@ def create_access_token(user_id: int) -> str:
         "iat": datetime.now(timezone.utc),
     }
     return jwt.encode(payload, JWT_SECRET_KEY, algorithm=JWT_ALGORITHM)
+
+def _parse_db_datetime(value):
+    """Reads a timestamp back out of either sqlite (always returned as the ISO string we wrote)
+    or Postgres (returned as a native, timezone-naive datetime.datetime, since our schema uses
+    plain TIMESTAMP columns rather than TIMESTAMPTZ) into a timezone-aware UTC datetime so it can
+    be compared against datetime.now(timezone.utc). Every timestamp this app writes is UTC to
+    begin with, so a naive value read back can safely be assumed to already be UTC."""
+    if isinstance(value, datetime):
+        return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+    return datetime.fromisoformat(value)
 
 def get_user_by_id(conn, user_id: int):
     return conn.execute("SELECT * FROM users WHERE id = ?", (user_id,)).fetchone()
@@ -370,7 +463,10 @@ def compute_streak_and_week_activity(conn, user_id: int):
         "UNION SELECT DISTINCT date(saved_at) AS d FROM ridl_results WHERE user_id = ?",
         (user_id, user_id)
     ).fetchall()
-    active_dates = {row["d"] for row in rows if row["d"]}
+    # sqlite's date() returns a plain 'YYYY-MM-DD' string; Postgres's date() returns a native
+    # datetime.date object instead, which psycopg2 hands back as-is -- normalize both to strings
+    # so the isoformat() comparisons below work the same regardless of which engine answered.
+    active_dates = {str(row["d"]) for row in rows if row["d"]}
 
     today = datetime.now().date()
     monday = today - timedelta(days=today.weekday())
@@ -501,9 +597,9 @@ SPEAKING_INTERVIEW_FILE = pathlib.Path(__file__).parent / "speaking_interview_1.
 def seed_email_questions():
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT COUNT(*) FROM email_questions")
-    count = cursor.fetchone()[0]
-    
+    cursor.execute("SELECT COUNT(*) AS cnt FROM email_questions")
+    count = cursor.fetchone()["cnt"]
+
     if count == 0:
         cursor.execute("""
             INSERT INTO email_questions (id, scenario, recipient, subject, task_intro, tasks, example_response, time_limit, min_words)
@@ -561,13 +657,20 @@ def register(data: RegisterRequest):
     exam_date = legacy.get("exam_date", "")
     target_score = float(legacy.get("target_score", 5.5))
 
-    cursor = conn.execute("""
+    insert_sql = """
         INSERT INTO users (email, username, password_hash, email_verified, verification_token,
                             verification_token_expires, exam_date, target_score)
         VALUES (?, ?, ?, 0, ?, ?, ?, ?)
-    """, (email, username, hash_password(data.password), verification_token,
-          verification_expires, exam_date, target_score))
-    user_id = cursor.lastrowid
+    """
+    params = (email, username, hash_password(data.password), verification_token,
+              verification_expires, exam_date, target_score)
+    if DATABASE_URL:
+        # Postgres has no cursor.lastrowid -- RETURNING id gets the new row's id instead.
+        cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
+        user_id = cursor.fetchone()["id"]
+    else:
+        cursor = conn.execute(insert_sql, params)
+        user_id = cursor.lastrowid
     conn.commit()
     conn.close()
 
@@ -628,7 +731,7 @@ def reset_password(data: ResetPasswordRequest):
         conn.close()
         raise HTTPException(status_code=400, detail="This reset link is invalid or has already been used")
     expires = user["password_reset_token_expires"]
-    if not expires or datetime.fromisoformat(expires) < datetime.now(timezone.utc):
+    if not expires or _parse_db_datetime(expires) < datetime.now(timezone.utc):
         conn.close()
         raise HTTPException(status_code=400, detail="This reset link has expired. Please request a new one")
     conn.execute(
@@ -1073,7 +1176,6 @@ def get_speaking_interview():
 @app.get("/api/writing/email/{question_id}")
 async def get_email_question(question_id: str):
     conn = get_db()
-    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM email_questions WHERE id = ?", (question_id,))
     row = cursor.fetchone()
@@ -1095,7 +1197,6 @@ async def get_email_question(question_id: str):
 @app.post("/api/writing/email/submit")
 async def submit_email(submission: EmailSubmission):
     conn = get_db()
-    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute("SELECT * FROM email_questions WHERE id = ?", (submission.question_id,))
     question = cursor.fetchone()
