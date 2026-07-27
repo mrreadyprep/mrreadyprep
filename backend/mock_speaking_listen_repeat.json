@@ -12,45 +12,111 @@
         "id": 1,
         "text": "Welcome to the cafeteria.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "clock",
+          "cardReader",
+          "veggiePlate",
+          "person",
+          "suppliesRack",
+          "trayReturn",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "Meals are served from seven to nine in the evening.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "clock"
+        ]
       },
       {
         "id": 3,
         "text": "You can pay with cash, card, or your meal plan.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "cardReader"
+        ]
       },
       {
         "id": 4,
         "text": "Vegetarian options are available every day.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "veggiePlate"
+        ]
       },
       {
         "id": 5,
         "text": "If a table is reserved, please look for another one nearby.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 6,
         "text": "The cafeteria also offers grab-and-go snacks near the main entrance.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "suppliesRack"
+        ]
       },
       {
         "id": 7,
         "text": "Please return your tray to the counter when you are finished eating.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "trayReturn"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "cardReader",
+          "icon": "cardReader",
+          "row": "floor"
+        },
+        {
+          "key": "veggiePlate",
+          "icon": "veggiePlate",
+          "row": "wall"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "suppliesRack",
+          "icon": "suppliesRack",
+          "row": "floor"
+        },
+        {
+          "key": "trayReturn",
+          "icon": "trayReturn",
+          "row": "floor"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 2,
@@ -65,45 +131,105 @@
         "id": 1,
         "text": "Welcome to the IT help desk.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "wifi",
+          "idCard",
+          "passwordLock",
+          "laptop",
+          "person",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "You can request support online or in person.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "wifi"
+        ]
       },
       {
         "id": 3,
         "text": "Bring your student ID to verify your account.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "idCard"
+        ]
       },
       {
         "id": 4,
         "text": "Password resets usually take only a few minutes.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "passwordLock"
+        ]
       },
       {
         "id": 5,
         "text": "Laptop repairs may take a few business days to complete.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "laptop"
+        ]
       },
       {
         "id": 6,
         "text": "Software installation help is available every weekday afternoon in the computer lab.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "laptop"
+        ]
       },
       {
         "id": 7,
         "text": "If your issue isn't resolved, please ask to speak with a supervisor.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "person"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "wifi",
+          "icon": "wifi",
+          "row": "wall"
+        },
+        {
+          "key": "idCard",
+          "icon": "idCard",
+          "row": "wall"
+        },
+        {
+          "key": "passwordLock",
+          "icon": "passwordLock",
+          "row": "wall"
+        },
+        {
+          "key": "laptop",
+          "icon": "laptop",
+          "row": "floor"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 3,
@@ -116,45 +242,105 @@
         "id": 1,
         "text": "Welcome to the ticket office.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "ticket",
+          "tag",
+          "idCard",
+          "clock",
+          "transitVehicle",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "One-way tickets are sold at counter one.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "ticket"
+        ]
       },
       {
         "id": 3,
         "text": "Round-trip tickets include a return discount.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "tag"
+        ]
       },
       {
         "id": 4,
         "text": "Please have your student ID ready.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "idCard"
+        ]
       },
       {
         "id": 5,
         "text": "The express train departs every thirty minutes.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "clock"
+        ]
       },
       {
         "id": 6,
         "text": "If you miss your train, your ticket is valid for the next departure.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "ticket"
+        ]
       },
       {
         "id": 7,
         "text": "Remember to validate your ticket before boarding the train.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "transitVehicle"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "ticket",
+          "icon": "ticket",
+          "row": "wall"
+        },
+        {
+          "key": "tag",
+          "icon": "tag",
+          "row": "wall"
+        },
+        {
+          "key": "idCard",
+          "icon": "idCard",
+          "row": "wall"
+        },
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "transitVehicle",
+          "icon": "transitVehicle",
+          "row": "floor"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 4,
@@ -167,45 +353,93 @@
         "id": 1,
         "text": "Welcome to the botanical garden.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "flowerPlant",
+          "map",
+          "sun",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "The rose section is just ahead of us.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "flowerPlant"
+        ]
       },
       {
         "id": 3,
         "text": "Please stay on the marked pathways.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "map"
+        ]
       },
       {
         "id": 4,
         "text": "Some plants here are extremely rare.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "flowerPlant"
+        ]
       },
       {
         "id": 5,
         "text": "The greenhouse maintains a tropical climate year-round.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "sun"
+        ]
       },
       {
         "id": 6,
         "text": "Feel free to take photographs, but please do not touch the flowers.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "flowerPlant"
+        ]
       },
       {
         "id": 7,
         "text": "The garden tour ends near the fountain at the main entrance.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "map"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "flowerPlant",
+          "icon": "flowerPlant",
+          "row": "floor"
+        },
+        {
+          "key": "map",
+          "icon": "map",
+          "row": "wall"
+        },
+        {
+          "key": "sun",
+          "icon": "sun",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 5,
@@ -218,45 +452,99 @@
         "id": 1,
         "text": "Welcome to the city aquarium.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "fishTank",
+          "clock",
+          "pool",
+          "gift",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "The shark tank is on your left.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "fishTank"
+        ]
       },
       {
         "id": 3,
         "text": "Feeding time begins at two o'clock.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "clock"
+        ]
       },
       {
         "id": 4,
         "text": "Please keep your voice down near the tanks.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "fishTank"
+        ]
       },
       {
         "id": 5,
         "text": "The touch pool lets you feel starfish and rays.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "pool"
+        ]
       },
       {
         "id": 6,
         "text": "Flash photography is not allowed because it disturbs the fish.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "fishTank"
+        ]
       },
       {
         "id": 7,
         "text": "Our gift shop sells souvenirs shaped like your favorite sea creatures.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "gift"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "fishTank",
+          "icon": "fishTank",
+          "row": "floor"
+        },
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "pool",
+          "icon": "pool",
+          "row": "floor"
+        },
+        {
+          "key": "gift",
+          "icon": "gift",
+          "row": "floor"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 6,
@@ -269,45 +557,93 @@
         "id": 1,
         "text": "Welcome to our career fair booth.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "formDocument",
+          "person",
+          "calendar",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "We are currently hiring for summer internships.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "formDocument"
+        ]
       },
       {
         "id": 3,
         "text": "Please leave your resume in this folder.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "formDocument"
+        ]
       },
       {
         "id": 4,
         "text": "Our company values creativity and teamwork.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 5,
         "text": "Interviews will be scheduled sometime next week.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "calendar"
+        ]
       },
       {
         "id": 6,
         "text": "Feel free to ask questions about our training program for new hires.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 7,
         "text": "We look forward to reviewing your application within the coming days.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "formDocument"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "formDocument",
+          "icon": "formDocument",
+          "row": "wall"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "calendar",
+          "icon": "calendar",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 7,
@@ -320,45 +656,99 @@
         "id": 1,
         "text": "Welcome to the bike rental shop.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "bike",
+          "clock",
+          "register",
+          "wrench",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "We offer hourly and daily rental rates.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "bike"
+        ]
       },
       {
         "id": 3,
         "text": "Helmets are included with every rental.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "bike"
+        ]
       },
       {
         "id": 4,
         "text": "Please return the bike before closing time.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "clock"
+        ]
       },
       {
         "id": 5,
         "text": "Mountain bikes are available for the trail route.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "bike"
+        ]
       },
       {
         "id": 6,
         "text": "A deposit is required and refunded when the bike is returned undamaged.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "register"
+        ]
       },
       {
         "id": 7,
         "text": "Let us know if you need a repair kit for a longer ride.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "wrench"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "bike",
+          "icon": "bike",
+          "row": "floor"
+        },
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "register",
+          "icon": "register",
+          "row": "floor"
+        },
+        {
+          "key": "wrench",
+          "icon": "wrench",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 8,
@@ -371,45 +761,99 @@
         "id": 1,
         "text": "Welcome to the recycling center.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "package",
+          "laptop",
+          "person",
+          "calendar",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "Please sort your materials before dropping them off.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "package"
+        ]
       },
       {
         "id": 3,
         "text": "Glass and plastic go into separate bins.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "package"
+        ]
       },
       {
         "id": 4,
         "text": "Electronics are collected on the far side.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "laptop"
+        ]
       },
       {
         "id": 5,
         "text": "Cardboard boxes should be flattened before recycling.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "package"
+        ]
       },
       {
         "id": 6,
         "text": "Our staff can help you if you are unsure where an item belongs.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 7,
         "text": "The center also hosts workshops on reducing household waste each month.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "calendar"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "package",
+          "icon": "package",
+          "row": "floor"
+        },
+        {
+          "key": "laptop",
+          "icon": "laptop",
+          "row": "floor"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "calendar",
+          "icon": "calendar",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 9,
@@ -422,45 +866,99 @@
         "id": 1,
         "text": "Welcome to the farmers market.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "basket",
+          "register",
+          "bread",
+          "tag",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "These tomatoes were picked this morning.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "basket"
+        ]
       },
       {
         "id": 3,
         "text": "We accept both cash and card payments.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "register"
+        ]
       },
       {
         "id": 4,
         "text": "Our honey comes from local beehives.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "basket"
+        ]
       },
       {
         "id": 5,
         "text": "Fresh bread arrives every Saturday around nine.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "bread"
+        ]
       },
       {
         "id": 6,
         "text": "Ask about our weekly specials if you are buying in bulk.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "tag"
+        ]
       },
       {
         "id": 7,
         "text": "Reusable bags are available near the entrance for a small fee.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "basket"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "basket",
+          "icon": "basket",
+          "row": "floor"
+        },
+        {
+          "key": "register",
+          "icon": "register",
+          "row": "floor"
+        },
+        {
+          "key": "bread",
+          "icon": "bread",
+          "row": "wall"
+        },
+        {
+          "key": "tag",
+          "icon": "tag",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 10,
@@ -473,45 +971,93 @@
         "id": 1,
         "text": "Welcome to the ski rental shop.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "shoe",
+          "skis",
+          "clock",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "What is your boot size, please?",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "shoe"
+        ]
       },
       {
         "id": 3,
         "text": "These skis are suited for beginners.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "skis"
+        ]
       },
       {
         "id": 4,
         "text": "Poles and helmets are rented separately.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "skis"
+        ]
       },
       {
         "id": 5,
         "text": "Please try the boots before leaving the counter.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "shoe"
+        ]
       },
       {
         "id": 6,
         "text": "Equipment can be exchanged if the fit is not comfortable.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "shoe"
+        ]
       },
       {
         "id": 7,
         "text": "Return everything by five o'clock to avoid an extra rental fee.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "clock"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "shoe",
+          "icon": "shoe",
+          "row": "wall"
+        },
+        {
+          "key": "skis",
+          "icon": "skis",
+          "row": "floor"
+        },
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 11,
@@ -524,45 +1070,111 @@
         "id": 1,
         "text": "Welcome to the therapy clinic.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "formDocument",
+          "person",
+          "shirtHanger",
+          "yogaMat",
+          "bandage",
+          "calendar",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "Please fill out this intake form first.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "formDocument"
+        ]
       },
       {
         "id": 3,
         "text": "Your therapist will see you shortly.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 4,
         "text": "Wear comfortable clothing for your session.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "shirtHanger"
+        ]
       },
       {
         "id": 5,
         "text": "Stretching exercises will begin your appointment today.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "yogaMat"
+        ]
       },
       {
         "id": 6,
         "text": "Ice packs are available if you experience any soreness afterward.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "bandage"
+        ]
       },
       {
         "id": 7,
         "text": "Your next appointment should be scheduled before you leave the clinic.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "calendar"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "formDocument",
+          "icon": "formDocument",
+          "row": "wall"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "shirtHanger",
+          "icon": "shirtHanger",
+          "row": "wall"
+        },
+        {
+          "key": "yogaMat",
+          "icon": "yogaMat",
+          "row": "floor"
+        },
+        {
+          "key": "bandage",
+          "icon": "bandage",
+          "row": "wall"
+        },
+        {
+          "key": "calendar",
+          "icon": "calendar",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 12,
@@ -575,45 +1187,93 @@
         "id": 1,
         "text": "Welcome to the university planetarium.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "telescope",
+          "person",
+          "map",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "Tonight's show is about the solar system.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "telescope"
+        ]
       },
       {
         "id": 3,
         "text": "Please silence your phones before we begin.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 4,
         "text": "The dome above you simulates the night sky.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "telescope"
+        ]
       },
       {
         "id": 5,
         "text": "Our telescope session follows immediately after the show.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "telescope"
+        ]
       },
       {
         "id": 6,
         "text": "Feel free to ask the astronomer questions during the discussion period.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 7,
         "text": "Souvenir star maps are available at the counter near the exit.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "map"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "telescope",
+          "icon": "telescope",
+          "row": "floor"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "map",
+          "icon": "map",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 13,
@@ -626,45 +1286,93 @@
         "id": 1,
         "text": "Welcome to baggage claim area three.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "luggage",
+          "ticket",
+          "plane",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "Your luggage will arrive on carousel five.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "luggage"
+        ]
       },
       {
         "id": 3,
         "text": "Please have your claim ticket ready.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "ticket"
+        ]
       },
       {
         "id": 4,
         "text": "Oversized bags are collected at the side counter.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "luggage"
+        ]
       },
       {
         "id": 5,
         "text": "If your bag is missing, please visit our help desk.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "luggage"
+        ]
       },
       {
         "id": 6,
         "text": "Damaged luggage should be reported before you leave the airport terminal.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "luggage"
+        ]
       },
       {
         "id": 7,
         "text": "Our staff can track a delayed bag using your flight number.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "plane"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "luggage",
+          "icon": "luggage",
+          "row": "floor"
+        },
+        {
+          "key": "ticket",
+          "icon": "ticket",
+          "row": "wall"
+        },
+        {
+          "key": "plane",
+          "icon": "plane",
+          "row": "floor"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 14,
@@ -677,45 +1385,105 @@
         "id": 1,
         "text": "Welcome to our escape room.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "clock",
+          "package",
+          "joystick",
+          "person",
+          "key",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "Your group has sixty minutes to escape.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "clock"
+        ]
       },
       {
         "id": 3,
         "text": "Please store your bags in these lockers.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "package"
+        ]
       },
       {
         "id": 4,
         "text": "Three hints are available during your game.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "joystick"
+        ]
       },
       {
         "id": 5,
         "text": "A staff member will explain the rules briefly.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 6,
         "text": "Cameras inside the room let us monitor your progress at all times.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "key"
+        ]
       },
       {
         "id": 7,
         "text": "Photos are allowed only after your session has completely finished.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "joystick"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "package",
+          "icon": "package",
+          "row": "floor"
+        },
+        {
+          "key": "joystick",
+          "icon": "joystick",
+          "row": "floor"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "key",
+          "icon": "key",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "id": 15,
@@ -728,45 +1496,105 @@
         "id": 1,
         "text": "Welcome to the reference desk.",
         "length": "short",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "bookshelf",
+          "laptop",
+          "person",
+          "calendar",
+          "clock",
+          "door"
+        ]
       },
       {
         "id": 2,
         "text": "I can help you find any book.",
         "length": "medium",
-        "recordSeconds": 8
+        "recordSeconds": 8,
+        "highlight": [
+          "bookshelf"
+        ]
       },
       {
         "id": 3,
         "text": "Our database includes academic journals and articles.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "laptop"
+        ]
       },
       {
         "id": 4,
         "text": "Please keep your voice low in this area.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "id": 5,
         "text": "Study rooms can be reserved for group projects.",
         "length": "medium",
-        "recordSeconds": 10
+        "recordSeconds": 10,
+        "highlight": [
+          "calendar"
+        ]
       },
       {
         "id": 6,
         "text": "Let me know if you need help citing a source correctly.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "bookshelf"
+        ]
       },
       {
         "id": 7,
         "text": "The library stays open late during final exam week each semester.",
         "length": "long",
-        "recordSeconds": 12
+        "recordSeconds": 12,
+        "highlight": [
+          "clock"
+        ]
       }
-    ]
+    ],
+    "scene": {
+      "elements": [
+        {
+          "key": "bookshelf",
+          "icon": "bookshelf",
+          "row": "floor"
+        },
+        {
+          "key": "laptop",
+          "icon": "laptop",
+          "row": "floor"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "calendar",
+          "icon": "calendar",
+          "row": "wall"
+        },
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "location": "Campus Health Center",
@@ -780,46 +1608,112 @@
         "text": "Welcome to the health center.",
         "length": "short",
         "recordSeconds": 8,
-        "id": 1
+        "id": 1,
+        "highlight": [
+          "calendar",
+          "clock",
+          "idCard",
+          "pharmacyCross",
+          "person",
+          "heart",
+          "door"
+        ]
       },
       {
         "text": "The front desk can help you check in for your appointment.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 2
+        "id": 2,
+        "highlight": [
+          "calendar"
+        ]
       },
       {
         "text": "Walk-in visits are accepted every weekday morning.",
         "length": "medium",
         "recordSeconds": 8,
-        "id": 3
+        "id": 3,
+        "highlight": [
+          "clock"
+        ]
       },
       {
         "text": "Please bring your student ID and insurance card.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 4
+        "id": 4,
+        "highlight": [
+          "idCard"
+        ]
       },
       {
         "text": "The pharmacy is located just down the hallway.",
         "length": "medium",
         "recordSeconds": 8,
-        "id": 5
+        "id": 5,
+        "highlight": [
+          "pharmacyCross"
+        ]
       },
       {
         "text": "If you need urgent care after hours, call the number posted at the entrance.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 6
+        "id": 6,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "text": "Counseling services are also available by appointment on the second floor.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 7
+        "id": 7,
+        "highlight": [
+          "heart"
+        ]
       }
     ],
-    "id": 16
+    "id": 16,
+    "scene": {
+      "elements": [
+        {
+          "key": "calendar",
+          "icon": "calendar",
+          "row": "wall"
+        },
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "idCard",
+          "icon": "idCard",
+          "row": "wall"
+        },
+        {
+          "key": "pharmacyCross",
+          "icon": "pharmacyCross",
+          "row": "floor"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "heart",
+          "icon": "heart",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "location": "Train Station",
@@ -833,46 +1727,100 @@
         "text": "Welcome to Central Station.",
         "length": "short",
         "recordSeconds": 8,
-        "id": 1
+        "id": 1,
+        "highlight": [
+          "ticket",
+          "map",
+          "transitVehicle",
+          "coffeeCup",
+          "door"
+        ]
       },
       {
         "text": "Ticket machines are located near the main entrance.",
         "length": "medium",
         "recordSeconds": 8,
-        "id": 2
+        "id": 2,
+        "highlight": [
+          "ticket"
+        ]
       },
       {
         "text": "Platform three is down the escalator on your left.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 3
+        "id": 3,
+        "highlight": [
+          "map"
+        ]
       },
       {
         "text": "Trains to the airport depart every twenty minutes.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 4
+        "id": 4,
+        "highlight": [
+          "transitVehicle"
+        ]
       },
       {
         "text": "Please keep your ticket until you exit the station.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 5
+        "id": 5,
+        "highlight": [
+          "ticket"
+        ]
       },
       {
         "text": "Restrooms and a small café are located near platform one.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 6
+        "id": 6,
+        "highlight": [
+          "coffeeCup"
+        ]
       },
       {
         "text": "If you miss your train, the next one departs from the same platform.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 7
+        "id": 7,
+        "highlight": [
+          "transitVehicle"
+        ]
       }
     ],
-    "id": 17
+    "id": 17,
+    "scene": {
+      "elements": [
+        {
+          "key": "ticket",
+          "icon": "ticket",
+          "row": "wall"
+        },
+        {
+          "key": "map",
+          "icon": "map",
+          "row": "wall"
+        },
+        {
+          "key": "transitVehicle",
+          "icon": "transitVehicle",
+          "row": "floor"
+        },
+        {
+          "key": "coffeeCup",
+          "icon": "coffeeCup",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "location": "Community Garden",
@@ -886,46 +1834,106 @@
         "text": "Welcome to the community garden.",
         "length": "short",
         "recordSeconds": 8,
-        "id": 1
+        "id": 1,
+        "highlight": [
+          "flowerPlant",
+          "wrench",
+          "tag",
+          "basket",
+          "calendar",
+          "door"
+        ]
       },
       {
         "text": "Each member is assigned their own small plot.",
         "length": "medium",
         "recordSeconds": 8,
-        "id": 2
+        "id": 2,
+        "highlight": [
+          "flowerPlant"
+        ]
       },
       {
         "text": "Tools are stored in the shed near the entrance.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 3
+        "id": 3,
+        "highlight": [
+          "wrench"
+        ]
       },
       {
         "text": "Watering is allowed every morning and evening.",
         "length": "medium",
         "recordSeconds": 8,
-        "id": 4
+        "id": 4,
+        "highlight": [
+          "flowerPlant"
+        ]
       },
       {
         "text": "Please label your plants so others know what you're growing.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 5
+        "id": 5,
+        "highlight": [
+          "tag"
+        ]
       },
       {
         "text": "A composting area is available at the back of the garden.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 6
+        "id": 6,
+        "highlight": [
+          "basket"
+        ]
       },
       {
         "text": "We hold a volunteer cleanup day on the first Saturday of every month.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 7
+        "id": 7,
+        "highlight": [
+          "calendar"
+        ]
       }
     ],
-    "id": 18
+    "id": 18,
+    "scene": {
+      "elements": [
+        {
+          "key": "flowerPlant",
+          "icon": "flowerPlant",
+          "row": "floor"
+        },
+        {
+          "key": "wrench",
+          "icon": "wrench",
+          "row": "wall"
+        },
+        {
+          "key": "tag",
+          "icon": "tag",
+          "row": "wall"
+        },
+        {
+          "key": "basket",
+          "icon": "basket",
+          "row": "floor"
+        },
+        {
+          "key": "calendar",
+          "icon": "calendar",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "location": "Car Rental Counter",
@@ -939,46 +1947,106 @@
         "text": "Welcome, how can I help you today.",
         "length": "short",
         "recordSeconds": 8,
-        "id": 1
+        "id": 1,
+        "highlight": [
+          "idCard",
+          "car",
+          "clock",
+          "formDocument",
+          "wrench",
+          "door"
+        ]
       },
       {
         "text": "May I see your license and reservation confirmation.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 2
+        "id": 2,
+        "highlight": [
+          "idCard"
+        ]
       },
       {
         "text": "Your car comes with a full tank of gas.",
         "length": "medium",
         "recordSeconds": 8,
-        "id": 3
+        "id": 3,
+        "highlight": [
+          "car"
+        ]
       },
       {
         "text": "Please return the vehicle by six in the evening.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 4
+        "id": 4,
+        "highlight": [
+          "clock"
+        ]
       },
       {
         "text": "Insurance coverage can be added for a small daily fee.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 5
+        "id": 5,
+        "highlight": [
+          "formDocument"
+        ]
       },
       {
         "text": "The vehicle is parked in space twelve near the exit.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 6
+        "id": 6,
+        "highlight": [
+          "car"
+        ]
       },
       {
         "text": "If you need roadside assistance, call the number on your rental agreement.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 7
+        "id": 7,
+        "highlight": [
+          "wrench"
+        ]
       }
     ],
-    "id": 19
+    "id": 19,
+    "scene": {
+      "elements": [
+        {
+          "key": "idCard",
+          "icon": "idCard",
+          "row": "wall"
+        },
+        {
+          "key": "car",
+          "icon": "car",
+          "row": "floor"
+        },
+        {
+          "key": "clock",
+          "icon": "clock",
+          "row": "wall"
+        },
+        {
+          "key": "formDocument",
+          "icon": "formDocument",
+          "row": "wall"
+        },
+        {
+          "key": "wrench",
+          "icon": "wrench",
+          "row": "wall"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   },
   {
     "location": "Art Studio",
@@ -992,45 +2060,99 @@
         "text": "Welcome to the studio.",
         "length": "short",
         "recordSeconds": 8,
-        "id": 1
+        "id": 1,
+        "highlight": [
+          "shirtHanger",
+          "paintingFrame",
+          "person",
+          "towel",
+          "door"
+        ]
       },
       {
         "text": "Aprons are hanging by the door if you'd like one.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 2
+        "id": 2,
+        "highlight": [
+          "shirtHanger"
+        ]
       },
       {
         "text": "Each easel already has paper and basic supplies.",
         "length": "medium",
         "recordSeconds": 8,
-        "id": 3
+        "id": 3,
+        "highlight": [
+          "paintingFrame"
+        ]
       },
       {
         "text": "Feel free to choose any seat that's open.",
         "length": "medium",
         "recordSeconds": 8,
-        "id": 4
+        "id": 4,
+        "highlight": [
+          "person"
+        ]
       },
       {
         "text": "We'll start with a short warm-up sketch.",
         "length": "medium",
         "recordSeconds": 10,
-        "id": 5
+        "id": 5,
+        "highlight": [
+          "paintingFrame"
+        ]
       },
       {
         "text": "Please clean your brushes in the sink before you leave.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 6
+        "id": 6,
+        "highlight": [
+          "towel"
+        ]
       },
       {
         "text": "Finished pieces can be left on the drying rack near the window.",
         "length": "long",
         "recordSeconds": 12,
-        "id": 7
+        "id": 7,
+        "highlight": [
+          "paintingFrame"
+        ]
       }
     ],
-    "id": 20
+    "id": 20,
+    "scene": {
+      "elements": [
+        {
+          "key": "shirtHanger",
+          "icon": "shirtHanger",
+          "row": "wall"
+        },
+        {
+          "key": "paintingFrame",
+          "icon": "paintingFrame",
+          "row": "wall"
+        },
+        {
+          "key": "person",
+          "icon": "person",
+          "row": "floor"
+        },
+        {
+          "key": "towel",
+          "icon": "towel",
+          "row": "floor"
+        },
+        {
+          "key": "door",
+          "icon": "door",
+          "row": "floor"
+        }
+      ]
+    }
   }
 ]

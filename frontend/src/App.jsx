@@ -4133,6 +4133,17 @@ function SceneIconShape({ type }) {
           <path d="M 4 -12 Q 14 -22 4 -22 Q 0 -18 4 -12 Z" fill="#f06595" />
         </g>
       )
+    case 'skis':
+      return (
+        <g transform="rotate(-10)">
+          <rect x="-14" y="-28" width="7" height="52" rx="3" fill="#4c6ef5" />
+          <path d="M -14 24 Q -14 30 -7 30 L -7 24 Z" fill="#4c6ef5" />
+          <rect x="4" y="-28" width="7" height="52" rx="3" fill="#e64980" />
+          <path d="M 4 24 Q 4 30 11 30 L 11 24 Z" fill="#e64980" />
+          <line x1="20" y1="-22" x2="20" y2="18" stroke="#868e96" strokeWidth="3" />
+          <circle cx="20" cy="-22" r="3" fill="#868e96" />
+        </g>
+      )
     default:
       return <circle r="20" fill="#adb5bd" />
   }
