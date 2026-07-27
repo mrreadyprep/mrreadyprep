@@ -142,6 +142,15 @@ DB_FILE = pathlib.Path(__file__).parent / "results.db"
 # local development where losing the file on a restart doesn't matter.
 DATABASE_URL = os.environ.get("DATABASE_URL", "")
 
+# Prints once per process start (every deploy/restart) so Render's logs make it obvious which
+# storage backend is actually active -- if this ever says "sqlite" in production, something is
+# wrong with the DATABASE_URL env var (unset, cleared, or not picked up by this deploy).
+if DATABASE_URL:
+    _host_part = DATABASE_URL.split("@")[-1].split("/")[0] if "@" in DATABASE_URL else "?"
+    print(f"[db] Startup: using Postgres (DATABASE_URL set, host={_host_part!r})", flush=True)
+else:
+    print("[db] Startup: using local sqlite (DATABASE_URL not set) -- data will NOT survive a redeploy", flush=True)
+
 
 def _pg_translate(query: str) -> str:
     """Our SQL strings are written with sqlite-style '?' placeholders throughout the codebase --
