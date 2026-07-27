@@ -328,8 +328,9 @@ def send_password_reset_email(to_email: str, reset_link: str):
     because email delivery isn't wired up or hiccups, since the reset token has already been saved
     either way and the generic response to the student must stay the same regardless."""
     if not RESEND_API_KEY:
-        print(f"[password reset] RESEND_API_KEY not set -- reset link for {to_email}: {reset_link}")
+        print(f"[password reset] RESEND_API_KEY not set -- reset link for {to_email}: {reset_link}", flush=True)
         return
+    print(f"[password reset] RESEND_API_KEY is set ({len(RESEND_API_KEY)} chars) -- attempting to send to {to_email}", flush=True)
     payload = json.dumps({
         "from": RESEND_FROM_EMAIL,
         "to": [to_email],
@@ -350,9 +351,13 @@ def send_password_reset_email(to_email: str, reset_link: str):
         },
     )
     try:
-        urllib.request.urlopen(req, timeout=10)
+        resp = urllib.request.urlopen(req, timeout=10)
+        print(f"[password reset] Resend accepted the email for {to_email} (status {resp.status})", flush=True)
+    except urllib.error.HTTPError as e:
+        body = e.read().decode("utf-8", errors="replace")
+        print(f"[password reset] Resend rejected the email for {to_email}: HTTP {e.code} -- {body}", flush=True)
     except urllib.error.URLError as e:
-        print(f"[password reset] Failed to send email to {to_email}: {e}")
+        print(f"[password reset] Failed to send email to {to_email}: {e}", flush=True)
 
 def compute_streak_and_week_activity(conn, user_id: int):
     """Looks at every attempt_results/ridl_results row's saved_at date for this user to compute
