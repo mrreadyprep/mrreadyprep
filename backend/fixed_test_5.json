@@ -1694,45 +1694,99 @@
           "id": 1,
           "text": "Welcome to the city aquarium.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "fishTank",
+            "clock",
+            "pool",
+            "gift",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "The shark tank is on your left.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "fishTank"
+          ]
         },
         {
           "id": 3,
           "text": "Feeding time begins at two o'clock.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "clock"
+          ]
         },
         {
           "id": 4,
           "text": "Please keep your voice down near the tanks.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "fishTank"
+          ]
         },
         {
           "id": 5,
           "text": "The touch pool lets you feel starfish and rays.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "pool"
+          ]
         },
         {
           "id": 6,
           "text": "Flash photography is not allowed because it disturbs the fish.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "fishTank"
+          ]
         },
         {
           "id": 7,
           "text": "Our gift shop sells souvenirs shaped like your favorite sea creatures.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "gift"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "fishTank",
+            "icon": "fishTank",
+            "row": "floor"
+          },
+          {
+            "key": "clock",
+            "icon": "clock",
+            "row": "wall"
+          },
+          {
+            "key": "pool",
+            "icon": "pool",
+            "row": "floor"
+          },
+          {
+            "key": "gift",
+            "icon": "gift",
+            "row": "floor"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 5,

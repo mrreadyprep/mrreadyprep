@@ -1672,46 +1672,100 @@
           "text": "Welcome to the studio.",
           "length": "short",
           "recordSeconds": 8,
-          "id": 1
+          "id": 1,
+          "highlight": [
+            "shirtHanger",
+            "paintingFrame",
+            "person",
+            "towel",
+            "door"
+          ]
         },
         {
           "text": "Aprons are hanging by the door if you'd like one.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 2
+          "id": 2,
+          "highlight": [
+            "shirtHanger"
+          ]
         },
         {
           "text": "Each easel already has paper and basic supplies.",
           "length": "medium",
           "recordSeconds": 8,
-          "id": 3
+          "id": 3,
+          "highlight": [
+            "paintingFrame"
+          ]
         },
         {
           "text": "Feel free to choose any seat that's open.",
           "length": "medium",
           "recordSeconds": 8,
-          "id": 4
+          "id": 4,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "text": "We'll start with a short warm-up sketch.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 5
+          "id": 5,
+          "highlight": [
+            "paintingFrame"
+          ]
         },
         {
           "text": "Please clean your brushes in the sink before you leave.",
           "length": "long",
           "recordSeconds": 12,
-          "id": 6
+          "id": 6,
+          "highlight": [
+            "towel"
+          ]
         },
         {
           "text": "Finished pieces can be left on the drying rack near the window.",
           "length": "long",
           "recordSeconds": 12,
-          "id": 7
+          "id": 7,
+          "highlight": [
+            "paintingFrame"
+          ]
         }
       ],
-      "id": 20
+      "id": 20,
+      "scene": {
+        "elements": [
+          {
+            "key": "shirtHanger",
+            "icon": "shirtHanger",
+            "row": "wall"
+          },
+          {
+            "key": "paintingFrame",
+            "icon": "paintingFrame",
+            "row": "wall"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "towel",
+            "icon": "towel",
+            "row": "floor"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "topic": "Career Planning",

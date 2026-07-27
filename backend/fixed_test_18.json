@@ -1666,46 +1666,106 @@
           "text": "Welcome to the community garden.",
           "length": "short",
           "recordSeconds": 8,
-          "id": 1
+          "id": 1,
+          "highlight": [
+            "flowerPlant",
+            "wrench",
+            "tag",
+            "basket",
+            "calendar",
+            "door"
+          ]
         },
         {
           "text": "Each member is assigned their own small plot.",
           "length": "medium",
           "recordSeconds": 8,
-          "id": 2
+          "id": 2,
+          "highlight": [
+            "flowerPlant"
+          ]
         },
         {
           "text": "Tools are stored in the shed near the entrance.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 3
+          "id": 3,
+          "highlight": [
+            "wrench"
+          ]
         },
         {
           "text": "Watering is allowed every morning and evening.",
           "length": "medium",
           "recordSeconds": 8,
-          "id": 4
+          "id": 4,
+          "highlight": [
+            "flowerPlant"
+          ]
         },
         {
           "text": "Please label your plants so others know what you're growing.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 5
+          "id": 5,
+          "highlight": [
+            "tag"
+          ]
         },
         {
           "text": "A composting area is available at the back of the garden.",
           "length": "long",
           "recordSeconds": 12,
-          "id": 6
+          "id": 6,
+          "highlight": [
+            "basket"
+          ]
         },
         {
           "text": "We hold a volunteer cleanup day on the first Saturday of every month.",
           "length": "long",
           "recordSeconds": 12,
-          "id": 7
+          "id": 7,
+          "highlight": [
+            "calendar"
+          ]
         }
       ],
-      "id": 18
+      "id": 18,
+      "scene": {
+        "elements": [
+          {
+            "key": "flowerPlant",
+            "icon": "flowerPlant",
+            "row": "floor"
+          },
+          {
+            "key": "wrench",
+            "icon": "wrench",
+            "row": "wall"
+          },
+          {
+            "key": "tag",
+            "icon": "tag",
+            "row": "wall"
+          },
+          {
+            "key": "basket",
+            "icon": "basket",
+            "row": "floor"
+          },
+          {
+            "key": "calendar",
+            "icon": "calendar",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "topic": "Healthy Habits",

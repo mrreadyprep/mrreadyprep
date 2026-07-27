@@ -1671,45 +1671,99 @@
           "id": 1,
           "text": "Welcome to the bike rental shop.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "bike",
+            "clock",
+            "register",
+            "wrench",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "We offer hourly and daily rental rates.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "bike"
+          ]
         },
         {
           "id": 3,
           "text": "Helmets are included with every rental.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "bike"
+          ]
         },
         {
           "id": 4,
           "text": "Please return the bike before closing time.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "clock"
+          ]
         },
         {
           "id": 5,
           "text": "Mountain bikes are available for the trail route.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "bike"
+          ]
         },
         {
           "id": 6,
           "text": "A deposit is required and refunded when the bike is returned undamaged.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "register"
+          ]
         },
         {
           "id": 7,
           "text": "Let us know if you need a repair kit for a longer ride.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "wrench"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "bike",
+            "icon": "bike",
+            "row": "floor"
+          },
+          {
+            "key": "clock",
+            "icon": "clock",
+            "row": "wall"
+          },
+          {
+            "key": "register",
+            "icon": "register",
+            "row": "floor"
+          },
+          {
+            "key": "wrench",
+            "icon": "wrench",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 7,

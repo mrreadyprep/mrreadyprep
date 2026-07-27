@@ -1704,45 +1704,111 @@
           "id": 1,
           "text": "Welcome to the cafeteria.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "clock",
+            "cardReader",
+            "veggiePlate",
+            "person",
+            "suppliesRack",
+            "trayReturn",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "Meals are served from seven to nine in the evening.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "clock"
+          ]
         },
         {
           "id": 3,
           "text": "You can pay with cash, card, or your meal plan.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "cardReader"
+          ]
         },
         {
           "id": 4,
           "text": "Vegetarian options are available every day.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "veggiePlate"
+          ]
         },
         {
           "id": 5,
           "text": "If a table is reserved, please look for another one nearby.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 6,
           "text": "The cafeteria also offers grab-and-go snacks near the main entrance.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "suppliesRack"
+          ]
         },
         {
           "id": 7,
           "text": "Please return your tray to the counter when you are finished eating.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "trayReturn"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "clock",
+            "icon": "clock",
+            "row": "wall"
+          },
+          {
+            "key": "cardReader",
+            "icon": "cardReader",
+            "row": "floor"
+          },
+          {
+            "key": "veggiePlate",
+            "icon": "veggiePlate",
+            "row": "wall"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "suppliesRack",
+            "icon": "suppliesRack",
+            "row": "floor"
+          },
+          {
+            "key": "trayReturn",
+            "icon": "trayReturn",
+            "row": "floor"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 1,

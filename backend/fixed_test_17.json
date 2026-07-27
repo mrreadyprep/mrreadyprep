@@ -1669,46 +1669,100 @@
           "text": "Welcome to Central Station.",
           "length": "short",
           "recordSeconds": 8,
-          "id": 1
+          "id": 1,
+          "highlight": [
+            "ticket",
+            "map",
+            "transitVehicle",
+            "coffeeCup",
+            "door"
+          ]
         },
         {
           "text": "Ticket machines are located near the main entrance.",
           "length": "medium",
           "recordSeconds": 8,
-          "id": 2
+          "id": 2,
+          "highlight": [
+            "ticket"
+          ]
         },
         {
           "text": "Platform three is down the escalator on your left.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 3
+          "id": 3,
+          "highlight": [
+            "map"
+          ]
         },
         {
           "text": "Trains to the airport depart every twenty minutes.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 4
+          "id": 4,
+          "highlight": [
+            "transitVehicle"
+          ]
         },
         {
           "text": "Please keep your ticket until you exit the station.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 5
+          "id": 5,
+          "highlight": [
+            "ticket"
+          ]
         },
         {
           "text": "Restrooms and a small café are located near platform one.",
           "length": "long",
           "recordSeconds": 12,
-          "id": 6
+          "id": 6,
+          "highlight": [
+            "coffeeCup"
+          ]
         },
         {
           "text": "If you miss your train, the next one departs from the same platform.",
           "length": "long",
           "recordSeconds": 12,
-          "id": 7
+          "id": 7,
+          "highlight": [
+            "transitVehicle"
+          ]
         }
       ],
-      "id": 17
+      "id": 17,
+      "scene": {
+        "elements": [
+          {
+            "key": "ticket",
+            "icon": "ticket",
+            "row": "wall"
+          },
+          {
+            "key": "map",
+            "icon": "map",
+            "row": "wall"
+          },
+          {
+            "key": "transitVehicle",
+            "icon": "transitVehicle",
+            "row": "floor"
+          },
+          {
+            "key": "coffeeCup",
+            "icon": "coffeeCup",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "topic": "City Living",

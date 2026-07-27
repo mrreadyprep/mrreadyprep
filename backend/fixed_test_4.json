@@ -1732,45 +1732,93 @@
           "id": 1,
           "text": "Welcome to the botanical garden.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "flowerPlant",
+            "map",
+            "sun",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "The rose section is just ahead of us.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "flowerPlant"
+          ]
         },
         {
           "id": 3,
           "text": "Please stay on the marked pathways.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "map"
+          ]
         },
         {
           "id": 4,
           "text": "Some plants here are extremely rare.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "flowerPlant"
+          ]
         },
         {
           "id": 5,
           "text": "The greenhouse maintains a tropical climate year-round.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "sun"
+          ]
         },
         {
           "id": 6,
           "text": "Feel free to take photographs, but please do not touch the flowers.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "flowerPlant"
+          ]
         },
         {
           "id": 7,
           "text": "The garden tour ends near the fountain at the main entrance.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "map"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "flowerPlant",
+            "icon": "flowerPlant",
+            "row": "floor"
+          },
+          {
+            "key": "map",
+            "icon": "map",
+            "row": "wall"
+          },
+          {
+            "key": "sun",
+            "icon": "sun",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 4,

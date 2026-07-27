@@ -1664,45 +1664,99 @@
           "id": 1,
           "text": "Welcome to the farmers market.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "basket",
+            "register",
+            "bread",
+            "tag",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "These tomatoes were picked this morning.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "basket"
+          ]
         },
         {
           "id": 3,
           "text": "We accept both cash and card payments.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "register"
+          ]
         },
         {
           "id": 4,
           "text": "Our honey comes from local beehives.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "basket"
+          ]
         },
         {
           "id": 5,
           "text": "Fresh bread arrives every Saturday around nine.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "bread"
+          ]
         },
         {
           "id": 6,
           "text": "Ask about our weekly specials if you are buying in bulk.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "tag"
+          ]
         },
         {
           "id": 7,
           "text": "Reusable bags are available near the entrance for a small fee.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "basket"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "basket",
+            "icon": "basket",
+            "row": "floor"
+          },
+          {
+            "key": "register",
+            "icon": "register",
+            "row": "floor"
+          },
+          {
+            "key": "bread",
+            "icon": "bread",
+            "row": "wall"
+          },
+          {
+            "key": "tag",
+            "icon": "tag",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 9,

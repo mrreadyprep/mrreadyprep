@@ -1725,45 +1725,93 @@
           "id": 1,
           "text": "Welcome to the university planetarium.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "telescope",
+            "person",
+            "map",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "Tonight's show is about the solar system.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "telescope"
+          ]
         },
         {
           "id": 3,
           "text": "Please silence your phones before we begin.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 4,
           "text": "The dome above you simulates the night sky.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "telescope"
+          ]
         },
         {
           "id": 5,
           "text": "Our telescope session follows immediately after the show.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "telescope"
+          ]
         },
         {
           "id": 6,
           "text": "Feel free to ask the astronomer questions during the discussion period.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 7,
           "text": "Souvenir star maps are available at the counter near the exit.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "map"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "telescope",
+            "icon": "telescope",
+            "row": "floor"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "map",
+            "icon": "map",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 12,

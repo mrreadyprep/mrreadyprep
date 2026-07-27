@@ -1670,46 +1670,106 @@
           "text": "Welcome, how can I help you today.",
           "length": "short",
           "recordSeconds": 8,
-          "id": 1
+          "id": 1,
+          "highlight": [
+            "idCard",
+            "car",
+            "clock",
+            "formDocument",
+            "wrench",
+            "door"
+          ]
         },
         {
           "text": "May I see your license and reservation confirmation.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 2
+          "id": 2,
+          "highlight": [
+            "idCard"
+          ]
         },
         {
           "text": "Your car comes with a full tank of gas.",
           "length": "medium",
           "recordSeconds": 8,
-          "id": 3
+          "id": 3,
+          "highlight": [
+            "car"
+          ]
         },
         {
           "text": "Please return the vehicle by six in the evening.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 4
+          "id": 4,
+          "highlight": [
+            "clock"
+          ]
         },
         {
           "text": "Insurance coverage can be added for a small daily fee.",
           "length": "medium",
           "recordSeconds": 10,
-          "id": 5
+          "id": 5,
+          "highlight": [
+            "formDocument"
+          ]
         },
         {
           "text": "The vehicle is parked in space twelve near the exit.",
           "length": "long",
           "recordSeconds": 12,
-          "id": 6
+          "id": 6,
+          "highlight": [
+            "car"
+          ]
         },
         {
           "text": "If you need roadside assistance, call the number on your rental agreement.",
           "length": "long",
           "recordSeconds": 12,
-          "id": 7
+          "id": 7,
+          "highlight": [
+            "wrench"
+          ]
         }
       ],
-      "id": 19
+      "id": 19,
+      "scene": {
+        "elements": [
+          {
+            "key": "idCard",
+            "icon": "idCard",
+            "row": "wall"
+          },
+          {
+            "key": "car",
+            "icon": "car",
+            "row": "floor"
+          },
+          {
+            "key": "clock",
+            "icon": "clock",
+            "row": "wall"
+          },
+          {
+            "key": "formDocument",
+            "icon": "formDocument",
+            "row": "wall"
+          },
+          {
+            "key": "wrench",
+            "icon": "wrench",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "topic": "Technology and Friendship",

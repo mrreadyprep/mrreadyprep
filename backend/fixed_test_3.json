@@ -1731,45 +1731,105 @@
           "id": 1,
           "text": "Welcome to the ticket office.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "ticket",
+            "tag",
+            "idCard",
+            "clock",
+            "transitVehicle",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "One-way tickets are sold at counter one.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "ticket"
+          ]
         },
         {
           "id": 3,
           "text": "Round-trip tickets include a return discount.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "tag"
+          ]
         },
         {
           "id": 4,
           "text": "Please have your student ID ready.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "idCard"
+          ]
         },
         {
           "id": 5,
           "text": "The express train departs every thirty minutes.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "clock"
+          ]
         },
         {
           "id": 6,
           "text": "If you miss your train, your ticket is valid for the next departure.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "ticket"
+          ]
         },
         {
           "id": 7,
           "text": "Remember to validate your ticket before boarding the train.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "transitVehicle"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "ticket",
+            "icon": "ticket",
+            "row": "wall"
+          },
+          {
+            "key": "tag",
+            "icon": "tag",
+            "row": "wall"
+          },
+          {
+            "key": "idCard",
+            "icon": "idCard",
+            "row": "wall"
+          },
+          {
+            "key": "clock",
+            "icon": "clock",
+            "row": "wall"
+          },
+          {
+            "key": "transitVehicle",
+            "icon": "transitVehicle",
+            "row": "floor"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 3,

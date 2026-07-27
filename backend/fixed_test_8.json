@@ -1670,45 +1670,99 @@
           "id": 1,
           "text": "Welcome to the recycling center.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "package",
+            "laptop",
+            "person",
+            "calendar",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "Please sort your materials before dropping them off.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "package"
+          ]
         },
         {
           "id": 3,
           "text": "Glass and plastic go into separate bins.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "package"
+          ]
         },
         {
           "id": 4,
           "text": "Electronics are collected on the far side.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "laptop"
+          ]
         },
         {
           "id": 5,
           "text": "Cardboard boxes should be flattened before recycling.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "package"
+          ]
         },
         {
           "id": 6,
           "text": "Our staff can help you if you are unsure where an item belongs.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 7,
           "text": "The center also hosts workshops on reducing household waste each month.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "calendar"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "package",
+            "icon": "package",
+            "row": "floor"
+          },
+          {
+            "key": "laptop",
+            "icon": "laptop",
+            "row": "floor"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "calendar",
+            "icon": "calendar",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 8,

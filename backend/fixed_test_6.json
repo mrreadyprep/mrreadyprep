@@ -1680,45 +1680,93 @@
           "id": 1,
           "text": "Welcome to our career fair booth.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "formDocument",
+            "person",
+            "calendar",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "We are currently hiring for summer internships.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "formDocument"
+          ]
         },
         {
           "id": 3,
           "text": "Please leave your resume in this folder.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "formDocument"
+          ]
         },
         {
           "id": 4,
           "text": "Our company values creativity and teamwork.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 5,
           "text": "Interviews will be scheduled sometime next week.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "calendar"
+          ]
         },
         {
           "id": 6,
           "text": "Feel free to ask questions about our training program for new hires.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 7,
           "text": "We look forward to reviewing your application within the coming days.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "formDocument"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "formDocument",
+            "icon": "formDocument",
+            "row": "wall"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "calendar",
+            "icon": "calendar",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 6,

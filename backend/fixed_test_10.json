@@ -1695,45 +1695,93 @@
           "id": 1,
           "text": "Welcome to the ski rental shop.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "shoe",
+            "skis",
+            "clock",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "What is your boot size, please?",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "shoe"
+          ]
         },
         {
           "id": 3,
           "text": "These skis are suited for beginners.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "skis"
+          ]
         },
         {
           "id": 4,
           "text": "Poles and helmets are rented separately.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "skis"
+          ]
         },
         {
           "id": 5,
           "text": "Please try the boots before leaving the counter.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "shoe"
+          ]
         },
         {
           "id": 6,
           "text": "Equipment can be exchanged if the fit is not comfortable.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "shoe"
+          ]
         },
         {
           "id": 7,
           "text": "Return everything by five o'clock to avoid an extra rental fee.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "clock"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "shoe",
+            "icon": "shoe",
+            "row": "wall"
+          },
+          {
+            "key": "skis",
+            "icon": "skis",
+            "row": "floor"
+          },
+          {
+            "key": "clock",
+            "icon": "clock",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 10,

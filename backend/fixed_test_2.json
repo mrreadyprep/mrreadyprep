@@ -1739,45 +1739,105 @@
           "id": 1,
           "text": "Welcome to the IT help desk.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "wifi",
+            "idCard",
+            "passwordLock",
+            "laptop",
+            "person",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "You can request support online or in person.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "wifi"
+          ]
         },
         {
           "id": 3,
           "text": "Bring your student ID to verify your account.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "idCard"
+          ]
         },
         {
           "id": 4,
           "text": "Password resets usually take only a few minutes.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "passwordLock"
+          ]
         },
         {
           "id": 5,
           "text": "Laptop repairs may take a few business days to complete.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "laptop"
+          ]
         },
         {
           "id": 6,
           "text": "Software installation help is available every weekday afternoon in the computer lab.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "laptop"
+          ]
         },
         {
           "id": 7,
           "text": "If your issue isn't resolved, please ask to speak with a supervisor.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "person"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "wifi",
+            "icon": "wifi",
+            "row": "wall"
+          },
+          {
+            "key": "idCard",
+            "icon": "idCard",
+            "row": "wall"
+          },
+          {
+            "key": "passwordLock",
+            "icon": "passwordLock",
+            "row": "wall"
+          },
+          {
+            "key": "laptop",
+            "icon": "laptop",
+            "row": "floor"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 2,

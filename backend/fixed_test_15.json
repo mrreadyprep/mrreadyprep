@@ -1717,45 +1717,105 @@
           "id": 1,
           "text": "Welcome to the reference desk.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "bookshelf",
+            "laptop",
+            "person",
+            "calendar",
+            "clock",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "I can help you find any book.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "bookshelf"
+          ]
         },
         {
           "id": 3,
           "text": "Our database includes academic journals and articles.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "laptop"
+          ]
         },
         {
           "id": 4,
           "text": "Please keep your voice low in this area.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 5,
           "text": "Study rooms can be reserved for group projects.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "calendar"
+          ]
         },
         {
           "id": 6,
           "text": "Let me know if you need help citing a source correctly.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "bookshelf"
+          ]
         },
         {
           "id": 7,
           "text": "The library stays open late during final exam week each semester.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "clock"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "bookshelf",
+            "icon": "bookshelf",
+            "row": "floor"
+          },
+          {
+            "key": "laptop",
+            "icon": "laptop",
+            "row": "floor"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "calendar",
+            "icon": "calendar",
+            "row": "wall"
+          },
+          {
+            "key": "clock",
+            "icon": "clock",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 15,

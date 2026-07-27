@@ -1720,45 +1720,105 @@
           "id": 1,
           "text": "Welcome to our escape room.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "clock",
+            "package",
+            "joystick",
+            "person",
+            "key",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "Your group has sixty minutes to escape.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "clock"
+          ]
         },
         {
           "id": 3,
           "text": "Please store your bags in these lockers.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "package"
+          ]
         },
         {
           "id": 4,
           "text": "Three hints are available during your game.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "joystick"
+          ]
         },
         {
           "id": 5,
           "text": "A staff member will explain the rules briefly.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 6,
           "text": "Cameras inside the room let us monitor your progress at all times.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "key"
+          ]
         },
         {
           "id": 7,
           "text": "Photos are allowed only after your session has completely finished.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "joystick"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "clock",
+            "icon": "clock",
+            "row": "wall"
+          },
+          {
+            "key": "package",
+            "icon": "package",
+            "row": "floor"
+          },
+          {
+            "key": "joystick",
+            "icon": "joystick",
+            "row": "floor"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "key",
+            "icon": "key",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 14,

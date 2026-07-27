@@ -1724,45 +1724,93 @@
           "id": 1,
           "text": "Welcome to baggage claim area three.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "luggage",
+            "ticket",
+            "plane",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "Your luggage will arrive on carousel five.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "luggage"
+          ]
         },
         {
           "id": 3,
           "text": "Please have your claim ticket ready.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "ticket"
+          ]
         },
         {
           "id": 4,
           "text": "Oversized bags are collected at the side counter.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "luggage"
+          ]
         },
         {
           "id": 5,
           "text": "If your bag is missing, please visit our help desk.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "luggage"
+          ]
         },
         {
           "id": 6,
           "text": "Damaged luggage should be reported before you leave the airport terminal.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "luggage"
+          ]
         },
         {
           "id": 7,
           "text": "Our staff can track a delayed bag using your flight number.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "plane"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "luggage",
+            "icon": "luggage",
+            "row": "floor"
+          },
+          {
+            "key": "ticket",
+            "icon": "ticket",
+            "row": "wall"
+          },
+          {
+            "key": "plane",
+            "icon": "plane",
+            "row": "floor"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 13,

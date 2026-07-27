@@ -1717,45 +1717,111 @@
           "id": 1,
           "text": "Welcome to the therapy clinic.",
           "length": "short",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "formDocument",
+            "person",
+            "shirtHanger",
+            "yogaMat",
+            "bandage",
+            "calendar",
+            "door"
+          ]
         },
         {
           "id": 2,
           "text": "Please fill out this intake form first.",
           "length": "medium",
-          "recordSeconds": 8
+          "recordSeconds": 8,
+          "highlight": [
+            "formDocument"
+          ]
         },
         {
           "id": 3,
           "text": "Your therapist will see you shortly.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "person"
+          ]
         },
         {
           "id": 4,
           "text": "Wear comfortable clothing for your session.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "shirtHanger"
+          ]
         },
         {
           "id": 5,
           "text": "Stretching exercises will begin your appointment today.",
           "length": "medium",
-          "recordSeconds": 10
+          "recordSeconds": 10,
+          "highlight": [
+            "yogaMat"
+          ]
         },
         {
           "id": 6,
           "text": "Ice packs are available if you experience any soreness afterward.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "bandage"
+          ]
         },
         {
           "id": 7,
           "text": "Your next appointment should be scheduled before you leave the clinic.",
           "length": "long",
-          "recordSeconds": 12
+          "recordSeconds": 12,
+          "highlight": [
+            "calendar"
+          ]
         }
-      ]
+      ],
+      "scene": {
+        "elements": [
+          {
+            "key": "formDocument",
+            "icon": "formDocument",
+            "row": "wall"
+          },
+          {
+            "key": "person",
+            "icon": "person",
+            "row": "floor"
+          },
+          {
+            "key": "shirtHanger",
+            "icon": "shirtHanger",
+            "row": "wall"
+          },
+          {
+            "key": "yogaMat",
+            "icon": "yogaMat",
+            "row": "floor"
+          },
+          {
+            "key": "bandage",
+            "icon": "bandage",
+            "row": "wall"
+          },
+          {
+            "key": "calendar",
+            "icon": "calendar",
+            "row": "wall"
+          },
+          {
+            "key": "door",
+            "icon": "door",
+            "row": "floor"
+          }
+        ]
+      }
     },
     "interview": {
       "id": 11,
