@@ -7024,6 +7024,7 @@ function App() {
   const [vocabFilter, setVocabFilter] = useState('all')
   const [flippedCards, setFlippedCards] = useState({})
   const [expandedFormat, setExpandedFormat] = useState(false)
+  const [editingTargets, setEditingTargets] = useState(false)
   const [readingSubTab, setReadingSubTab] = useState(null)
   const [listeningSubTab, setListeningSubTab] = useState(null)
   const [writingSubTab, setWritingSubTab] = useState(null)
@@ -7093,6 +7094,20 @@ function App() {
         writing_target: Number(writingTarget), speaking_target: Number(speakingTarget),
       }),
     }).then(res => res.json()).then(data => { if (data.status === 'success') { alert('Saved!'); fetchDashboardData() } })
+  }
+
+  // Same save as the Settings form, but usable from the Dashboard's inline "Edit targets" panel
+  // without a <form> submit event -- lets a student adjust their section goals right where they
+  // see them instead of having to go find the Settings tab.
+  const saveTargets = () => {
+    apiFetch(`${BACKEND_URL}/api/profile/update`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: profileName, target_score: Number(targetScore),
+        reading_target: Number(readingTarget), listening_target: Number(listeningTarget),
+        writing_target: Number(writingTarget), speaking_target: Number(speakingTarget),
+      }),
+    }).then(res => res.json()).then(data => { if (data.status === 'success') { setEditingTargets(false); fetchDashboardData() } })
   }
 
   // Saved immediately on change (no separate "save" button) so the exam date sticks across
@@ -7220,7 +7235,31 @@ function App() {
 
             <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: 'hidden' }}>
               <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
-                <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '14px' }}>Section scores vs targets</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '600' }}>Section scores vs targets</div>
+                  <button onClick={() => setEditingTargets(v => !v)} style={{ background: editingTargets ? '#701fa1' : '#f4f0fb', color: editingTargets ? '#fff' : '#701fa1', border: 'none', padding: '5px 10px', borderRadius: '7px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>✏️ {editingTargets ? 'Close' : 'Edit targets'}</button>
+                </div>
+                {editingTargets && (
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', background: '#f8f7fb', borderRadius: '10px', padding: '12px', marginBottom: '14px' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Reading (1.0–6.0)</label>
+                      <input type="number" min="1" max="6" step="0.5" value={readingTarget} onChange={e => setReadingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Listening (1.0–6.0)</label>
+                      <input type="number" min="1" max="6" step="0.5" value={listeningTarget} onChange={e => setListeningTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Writing (1.0–5.0)</label>
+                      <input type="number" min="1" max="5" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Speaking (1.0–5.0)</label>
+                      <input type="number" min="1" max="5" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
+                    </div>
+                    <button onClick={saveTargets} style={{ gridColumn: '1 / -1', background: '#2ac56c', color: '#fff', border: 'none', padding: '8px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', marginTop: '2px' }}>Save targets</button>
+                  </div>
+                )}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
                   {[
                     { name: 'Reading practice', key: 'reading', current: userData.reading_score, target: userData.reading_target ?? 5.5 },
