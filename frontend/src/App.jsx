@@ -7068,6 +7068,10 @@ function App() {
   }
 
   useEffect(() => { fetchDashboardData(); fetchVocabData() }, [])
+  // Section scores/exam date only change as a side effect of finishing practice elsewhere in the
+  // app -- re-fetch every time the student lands back on the Dashboard tab (not just on first
+  // mount) so those numbers don't go stale for the rest of the session after the first load.
+  useEffect(() => { if (currentTab === 'dashboard') fetchDashboardData() }, [currentTab])
 
   const handleProfileSave = (e) => {
     e.preventDefault()
