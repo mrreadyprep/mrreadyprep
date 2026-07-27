@@ -1063,12 +1063,16 @@ function SpeakerAvatar({ gender, seed = 0, width = 340, height = 640 }) {
 // recording (as if listening). Used only if the real talking-head video below fails to load.
 function DrawnCharacterAvatar({ gender, seed = 0, width = 220, height = 220, mode = 'idle' }) {
   const isFemale = gender !== 'male'
-  const skin = isFemale ? '#f0c39e' : '#e8b48c'
-  const hair = isFemale ? '#4a3728' : '#241c14'
-  const clothing = isFemale ? '#d16b86' : '#3b6ea5'
+  const uid = `char-${isFemale ? 'f' : 'm'}-${seed}`
+  const skinTop = isFemale ? '#ffd9b3' : '#f0bd8f'
+  const skinBot = isFemale ? '#e8b98a' : '#d99e6e'
+  const hairTop = isFemale ? '#5c4330' : '#332415'
+  const hairBot = isFemale ? '#3a291c' : '#1a1109'
+  const clothTop = isFemale ? '#e2809a' : '#4a7fbf'
+  const clothBot = isFemale ? '#c85c78' : '#2f5c92'
 
   return (
-    <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', borderRadius: '16px', background: 'linear-gradient(135deg, #edfbf3, #eaf1ff)', border: '0.5px solid #e1e4ed', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', flexShrink: 0, overflow: 'hidden' }}>
+    <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', borderRadius: '16px', background: 'radial-gradient(circle at 50% 30%, #f4fbf7 0%, #e7f0f7 62%, #dde6f2 100%)', border: '0.5px solid #e1e4ed', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', flexShrink: 0, overflow: 'hidden', position: 'relative' }}>
       <style>{`
         @keyframes toeflCharNod {
           0%, 100% { transform: translateY(0) rotate(0deg); }
@@ -1080,46 +1084,102 @@ function DrawnCharacterAvatar({ gender, seed = 0, width = 220, height = 220, mod
         }
       `}</style>
       <svg viewBox="0 0 200 220" width="88%" height="88%" style={{ display: 'block', overflow: 'visible' }}>
+        <defs>
+          <linearGradient id={`${uid}-skin`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={skinTop} /><stop offset="100%" stopColor={skinBot} />
+          </linearGradient>
+          <linearGradient id={`${uid}-hair`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={hairTop} /><stop offset="100%" stopColor={hairBot} />
+          </linearGradient>
+          <linearGradient id={`${uid}-cloth`} x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor={clothTop} /><stop offset="100%" stopColor={clothBot} />
+          </linearGradient>
+        </defs>
+        <ellipse cx="100" cy="208" rx="70" ry="10" fill="#0b1220" opacity="0.08" />
         <g style={{ animation: mode === 'recording' ? 'toeflCharNod 1.6s ease-in-out infinite' : 'none', transformOrigin: '100px 120px' }}>
           {/* shoulders / clothing */}
-          <path d="M18 220 Q100 128 182 220 Z" fill={clothing} />
+          <path d="M14 222 Q100 122 186 222 Z" fill={`url(#${uid}-cloth)`} />
+          {isFemale ? (
+            <path d="M76 150 Q100 168 124 150 L124 172 Q100 184 76 172 Z" fill={clothBot} opacity="0.55" />
+          ) : (
+            <>
+              <path d="M84 148 L100 200 L116 148 Z" fill="#f4f6fa" opacity="0.9" />
+              <path d="M96 150 L100 200 L104 150 Z" fill="#8a5a34" opacity="0.85" />
+            </>
+          )}
+          <path d="M14 222 Q40 175 76 156 L84 168 Q52 186 30 222 Z" fill={clothTop} opacity="0.9" />
+          <path d="M186 222 Q160 175 124 156 L116 168 Q148 186 170 222 Z" fill={clothTop} opacity="0.9" />
+
           {/* neck */}
-          <rect x="86" y="126" width="28" height="28" fill={skin} />
+          <rect x="86" y="126" width="28" height="28" fill={`url(#${uid}-skin)`} />
+          <path d="M86 140 Q100 148 114 140" stroke="#00000022" strokeWidth="2" fill="none" />
+
+          {/* ears */}
+          <ellipse cx="50" cy="96" rx="7" ry="10" fill={`url(#${uid}-skin)`} />
+          <ellipse cx="150" cy="96" rx="7" ry="10" fill={`url(#${uid}-skin)`} />
+
           {/* hair back layer (behind head, for volume) */}
           {isFemale ? (
-            <ellipse cx="100" cy="80" rx="58" ry="54" fill={hair} />
+            <ellipse cx="100" cy="82" rx="60" ry="56" fill={`url(#${uid}-hair)`} />
           ) : (
-            <ellipse cx="100" cy="75" rx="52" ry="46" fill={hair} />
+            <ellipse cx="100" cy="76" rx="53" ry="47" fill={`url(#${uid}-hair)`} />
           )}
+
           {/* head */}
-          <ellipse cx="100" cy="94" rx="46" ry="50" fill={skin} />
+          <ellipse cx="100" cy="94" rx="46" ry="50" fill={`url(#${uid}-skin)`} />
+          {/* soft cheek blush + jaw shading */}
+          <ellipse cx="72" cy="106" rx="9" ry="6" fill="#e8828a" opacity="0.25" />
+          <ellipse cx="128" cy="106" rx="9" ry="6" fill="#e8828a" opacity="0.25" />
+          <path d="M58 110 Q60 128 78 138" stroke="#00000014" strokeWidth="3" fill="none" strokeLinecap="round" />
+          <path d="M142 110 Q140 128 122 138" stroke="#00000014" strokeWidth="3" fill="none" strokeLinecap="round" />
+
           {/* hair front / fringe */}
           {isFemale ? (
             <>
-              <path d="M52 95 Q46 140 58 168 Q64 130 62 96 Z" fill={hair} />
-              <path d="M148 95 Q154 140 142 168 Q136 130 138 96 Z" fill={hair} />
-              <path d="M54 72 Q58 46 100 44 Q142 46 146 72 Q140 54 100 54 Q60 54 54 72 Z" fill={hair} />
+              <path d="M50 92 Q44 142 58 172 Q66 132 63 96 Z" fill={`url(#${uid}-hair)`} />
+              <path d="M150 92 Q156 142 142 172 Q134 132 137 96 Z" fill={`url(#${uid}-hair)`} />
+              <path d="M53 70 Q58 44 100 42 Q142 44 147 70 Q140 52 100 52 Q60 52 53 70 Z" fill={`url(#${uid}-hair)`} />
+              <path d="M70 48 Q100 38 130 48" stroke="#fff" strokeOpacity="0.25" strokeWidth="3" fill="none" />
             </>
           ) : (
-            <path d="M54 70 Q58 42 100 40 Q142 42 146 70 Q140 50 100 48 Q60 50 54 70 Z" fill={hair} />
+            <>
+              <path d="M53 68 Q58 40 100 38 Q142 40 147 68 Q140 48 100 46 Q60 48 53 68 Z" fill={`url(#${uid}-hair)`} />
+              <path d="M58 62 Q100 50 142 62" stroke="#fff" strokeOpacity="0.2" strokeWidth="2.5" fill="none" />
+            </>
           )}
-          {/* eyes */}
-          <ellipse cx="82" cy="90" rx="5" ry="6" fill="#2b2b2b" />
-          <ellipse cx="118" cy="90" rx="5" ry="6" fill="#2b2b2b" />
+
           {/* eyebrows */}
-          <rect x="72" y="76" width="18" height="3" rx="1.5" fill={hair} />
-          <rect x="110" y="76" width="18" height="3" rx="1.5" fill={hair} />
+          <path d="M72 78 Q81 73 90 77" stroke={hairBot} strokeWidth="3.2" fill="none" strokeLinecap="round" />
+          <path d="M110 77 Q119 73 128 78" stroke={hairBot} strokeWidth="3.2" fill="none" strokeLinecap="round" />
+
+          {/* eyes (white + iris + highlight) */}
+          <ellipse cx="82" cy="91" rx="7" ry="6" fill="#fff" />
+          <ellipse cx="118" cy="91" rx="7" ry="6" fill="#fff" />
+          <circle cx="82.5" cy="91.5" r="4.2" fill="#3a2a1e" />
+          <circle cx="118.5" cy="91.5" r="4.2" fill="#3a2a1e" />
+          <circle cx="84" cy="90" r="1.3" fill="#fff" />
+          <circle cx="120" cy="90" r="1.3" fill="#fff" />
+          {isFemale && (
+            <>
+              <path d="M75 86 Q82 82 90 86" stroke="#2b2018" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+              <path d="M111 86 Q118 82 125 86" stroke="#2b2018" strokeWidth="1.6" fill="none" strokeLinecap="round" />
+            </>
+          )}
+
           {/* nose */}
-          <path d="M100 96 Q104 108 100 112 Q96 110 98 104" fill="none" stroke="#c98f66" strokeWidth="2" strokeLinecap="round" />
-          {/* mouth: animates open/closed while playing, thin closed line otherwise */}
+          <path d="M100 96 Q105 108 100 113 Q96 111 98 105" fill="none" stroke="#c98f66" strokeWidth="2" strokeLinecap="round" />
+
+          {/* lips: subtle upper line always, animated lower opening while playing */}
+          <path d="M87 118 Q100 114 113 118" stroke="#a15c56" strokeWidth="2" fill="none" strokeLinecap="round" />
           <ellipse
-            cx="100" cy="122" rx="13" ry={mode === 'playing' ? 6 : 2}
-            fill="#7a3b3b"
+            cx="100" cy="123" rx="13" ry={mode === 'playing' ? 6 : 2.2}
+            fill="#9a4f4f"
             style={{
               transformBox: 'fill-box', transformOrigin: 'center',
               animation: mode === 'playing' ? 'toeflCharMouth 0.42s ease-in-out infinite' : 'none',
             }}
           />
+          <path d="M89 126 Q100 132 111 126" stroke="#7a3b3b" strokeWidth="1.5" fill="none" opacity="0.6" />
         </g>
       </svg>
     </div>
