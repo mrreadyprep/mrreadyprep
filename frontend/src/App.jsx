@@ -7269,7 +7269,6 @@ function App() {
                       ))}
                     </div>
                   )}
-                  <div style={{ marginTop: '10px', paddingTop: '10px', borderTop: '0.5px solid #e1e4ed', fontSize: '11px', fontWeight: '600', color: '#616473', textAlign: 'center' }}>Reading/Listening: 1–6 · Writing/Speaking: 1–5 (bands of 0.5)</div>
                 </div>
 
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '12px' }}>
