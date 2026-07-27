@@ -3607,6 +3607,638 @@ function MicPermissionGate({ micState, onRetry, onBack }) {
 
 // ─── Speaking Part 1: Listen and Repeat ────────────────────────────────────
 
+// Flat, colorful icon shapes used by SceneIllustration below. Each renders inside a local
+// coordinate box roughly spanning -28..28 on both axes, so it can be placed anywhere via a
+// parent <g transform="translate(x,y)">.
+function SceneIconShape({ type }) {
+  switch (type) {
+    case 'bookshelf':
+      return (
+        <g>
+          <rect x="-28" y="-26" width="56" height="52" rx="4" fill="#8a5a34" />
+          <rect x="-24" y="-20" width="10" height="40" fill="#e64980" />
+          <rect x="-12" y="-20" width="10" height="40" fill="#4c6ef5" />
+          <rect x="0" y="-20" width="10" height="40" fill="#f59f00" />
+          <rect x="12" y="-20" width="10" height="40" fill="#2ac56c" />
+        </g>
+      )
+    case 'register':
+      return (
+        <g>
+          <rect x="-26" y="-4" width="52" height="30" rx="4" fill="#5b5f6b" />
+          <rect x="-18" y="-24" width="36" height="22" rx="3" fill="#2b3140" />
+          <rect x="-12" y="-18" width="24" height="10" fill="#74c0fc" />
+          <rect x="-8" y="8" width="16" height="8" rx="2" fill="#d0d5dd" />
+        </g>
+      )
+    case 'tag':
+      return (
+        <g transform="rotate(-20)">
+          <path d="M -24 -10 L 10 -10 L 26 6 L 10 22 L -24 22 Z" fill="#fa5252" />
+          <circle cx="-12" cy="6" r="4" fill="#fff" />
+          <text x="-4" y="10" fontSize="13" fontWeight="700" fill="#fff">%</text>
+        </g>
+      )
+    case 'person':
+      return (
+        <g>
+          <circle cx="0" cy="-16" r="12" fill="#ffd8a8" />
+          <path d="M -18 26 Q -18 0 0 0 Q 18 0 18 26 Z" fill="#4c6ef5" />
+        </g>
+      )
+    case 'suppliesRack':
+      return (
+        <g>
+          <g transform="rotate(20)">
+            <rect x="-3" y="-26" width="6" height="40" fill="#fcc419" />
+            <path d="M -3 14 L 3 14 L 0 24 Z" fill="#495057" />
+          </g>
+          <rect x="-24" y="0" width="20" height="26" rx="2" fill="#fff" stroke="#adb5bd" />
+          <line x1="-20" y1="8" x2="-8" y2="8" stroke="#adb5bd" strokeWidth="1.5" />
+          <line x1="-20" y1="14" x2="-8" y2="14" stroke="#adb5bd" strokeWidth="1.5" />
+          <line x1="-20" y1="20" x2="-8" y2="20" stroke="#adb5bd" strokeWidth="1.5" />
+        </g>
+      )
+    case 'receipt':
+      return (
+        <g>
+          <path d="M -18 -26 L 18 -26 L 18 22 L 12 26 L 6 22 L 0 26 L -6 22 L -12 26 L -18 22 Z" fill="#fff" stroke="#d0d5dd" />
+          <line x1="-12" y1="-16" x2="12" y2="-16" stroke="#adb5bd" strokeWidth="2" />
+          <line x1="-12" y1="-8" x2="12" y2="-8" stroke="#adb5bd" strokeWidth="2" />
+          <line x1="-12" y1="0" x2="12" y2="0" stroke="#adb5bd" strokeWidth="2" />
+          <line x1="-12" y1="8" x2="4" y2="8" stroke="#adb5bd" strokeWidth="2" />
+        </g>
+      )
+    case 'calendar':
+      return (
+        <g>
+          <rect x="-24" y="-20" width="48" height="42" rx="4" fill="#fff" stroke="#d0d5dd" />
+          <rect x="-24" y="-20" width="48" height="12" rx="4" fill="#fa5252" />
+          <line x1="-14" y1="-2" x2="-14" y2="16" stroke="#d0d5dd" />
+          <line x1="0" y1="-2" x2="0" y2="16" stroke="#d0d5dd" />
+          <line x1="14" y1="-2" x2="14" y2="16" stroke="#d0d5dd" />
+          <line x1="-24" y1="6" x2="24" y2="6" stroke="#d0d5dd" />
+        </g>
+      )
+    case 'idCard':
+      return (
+        <g>
+          <rect x="-26" y="-18" width="52" height="36" rx="5" fill="#4c6ef5" />
+          <circle cx="-12" cy="-2" r="8" fill="#fff" />
+          <line x1="2" y1="-8" x2="18" y2="-8" stroke="#fff" strokeWidth="2" />
+          <line x1="2" y1="0" x2="18" y2="0" stroke="#fff" strokeWidth="2" />
+          <line x1="2" y1="8" x2="14" y2="8" stroke="#fff" strokeWidth="2" />
+        </g>
+      )
+    case 'door':
+      return (
+        <g>
+          <rect x="-16" y="-28" width="32" height="52" rx="2" fill="#8a5a34" />
+          <circle cx="8" cy="0" r="2.5" fill="#fcc419" />
+        </g>
+      )
+    case 'pharmacyCross':
+      return (
+        <g>
+          <rect x="-22" y="-22" width="44" height="44" rx="8" fill="#2ac56c" />
+          <rect x="-6" y="-14" width="12" height="28" fill="#fff" />
+          <rect x="-14" y="-6" width="28" height="12" fill="#fff" />
+        </g>
+      )
+    case 'syringe':
+      return (
+        <g transform="rotate(-30)">
+          <rect x="-20" y="-6" width="34" height="12" rx="2" fill="#a5d8ff" stroke="#4c6ef5" />
+          <rect x="-28" y="-4" width="10" height="8" fill="#4c6ef5" />
+          <line x1="14" y1="0" x2="28" y2="0" stroke="#495057" strokeWidth="2" />
+        </g>
+      )
+    case 'cardReader':
+      return (
+        <g>
+          <rect x="-20" y="-24" width="40" height="48" rx="6" fill="#343a40" />
+          <rect x="-14" y="-16" width="28" height="8" rx="2" fill="#74c0fc" />
+          <rect x="-14" y="0" width="28" height="16" rx="2" fill="#495057" />
+        </g>
+      )
+    case 'veggiePlate':
+      return (
+        <g>
+          <circle cx="0" cy="0" r="24" fill="#f1f3f5" stroke="#dee2e6" />
+          <ellipse cx="-8" cy="-4" rx="9" ry="6" fill="#40c057" />
+          <ellipse cx="8" cy="-2" rx="8" ry="6" fill="#fa5252" />
+          <ellipse cx="0" cy="10" rx="9" ry="6" fill="#fcc419" />
+        </g>
+      )
+    case 'bowl':
+      return (
+        <g>
+          <path d="M -24 -2 Q -24 20 0 20 Q 24 20 24 -2 Z" fill="#12b886" />
+          <circle cx="-8" cy="-6" r="5" fill="#fa5252" />
+          <circle cx="6" cy="-8" r="5" fill="#fcc419" />
+          <circle cx="0" cy="0" r="5" fill="#40c057" />
+        </g>
+      )
+    case 'trayReturn':
+      return (
+        <g>
+          <rect x="-26" y="-14" width="52" height="26" rx="4" fill="#adb5bd" />
+          <line x1="-10" y1="-14" x2="-10" y2="12" stroke="#868e96" />
+          <line x1="10" y1="-14" x2="10" y2="12" stroke="#868e96" />
+          <path d="M 0 16 L -6 24 L 6 24 Z" fill="#495057" />
+        </g>
+      )
+    case 'clock':
+      return (
+        <g>
+          <circle cx="0" cy="0" r="24" fill="#fff" stroke="#4c6ef5" strokeWidth="3" />
+          <line x1="0" y1="0" x2="0" y2="-14" stroke="#343a40" strokeWidth="2.5" />
+          <line x1="0" y1="0" x2="10" y2="4" stroke="#343a40" strokeWidth="2.5" />
+        </g>
+      )
+    case 'key':
+      return (
+        <g transform="rotate(-30)">
+          <circle cx="-16" cy="0" r="9" fill="none" stroke="#f59f00" strokeWidth="5" />
+          <rect x="-8" y="-3" width="26" height="6" fill="#f59f00" />
+          <rect x="10" y="3" width="5" height="7" fill="#f59f00" />
+          <rect x="16" y="3" width="5" height="10" fill="#f59f00" />
+        </g>
+      )
+    case 'package':
+      return (
+        <g>
+          <rect x="-22" y="-20" width="44" height="40" rx="3" fill="#d9b38c" stroke="#a97c50" />
+          <line x1="-22" y1="0" x2="22" y2="0" stroke="#a97c50" strokeWidth="3" />
+          <line x1="0" y1="-20" x2="0" y2="20" stroke="#a97c50" strokeWidth="3" />
+        </g>
+      )
+    case 'wifi':
+      return (
+        <g>
+          <path d="M -20 -4 A 28 28 0 0 1 20 -4" fill="none" stroke="#4c6ef5" strokeWidth="4" strokeLinecap="round" />
+          <path d="M -12 6 A 16 16 0 0 1 12 6" fill="none" stroke="#4c6ef5" strokeWidth="4" strokeLinecap="round" />
+          <circle cx="0" cy="16" r="4" fill="#4c6ef5" />
+        </g>
+      )
+    case 'passwordLock':
+      return (
+        <g>
+          <rect x="-18" y="-4" width="36" height="28" rx="4" fill="#5b5f6b" />
+          <path d="M -12 -4 L -12 -14 Q -12 -26 0 -26 Q 12 -26 12 -14 L 12 -4" fill="none" stroke="#5b5f6b" strokeWidth="5" />
+          <circle cx="0" cy="10" r="4" fill="#fcc419" />
+        </g>
+      )
+    case 'laptop':
+      return (
+        <g>
+          <rect x="-20" y="-22" width="40" height="26" rx="2" fill="#343a40" />
+          <rect x="-16" y="-18" width="32" height="18" fill="#74c0fc" />
+          <path d="M -26 4 L 26 4 L 20 14 L -20 14 Z" fill="#adb5bd" />
+        </g>
+      )
+    case 'ticket':
+      return (
+        <g>
+          <rect x="-24" y="-14" width="48" height="28" rx="4" fill="#9775fa" />
+          <circle cx="0" cy="0" r="4" fill="#fff" />
+        </g>
+      )
+    case 'emailIcon':
+      return (
+        <g>
+          <rect x="-24" y="-16" width="48" height="32" rx="4" fill="#fff" stroke="#4c6ef5" strokeWidth="2" />
+          <path d="M -24 -16 L 0 4 L 24 -16" fill="none" stroke="#4c6ef5" strokeWidth="2" />
+        </g>
+      )
+    case 'wrench':
+      return (
+        <g transform="rotate(-40)">
+          <rect x="-26" y="-6" width="52" height="12" rx="6" fill="#868e96" />
+          <circle cx="-20" cy="0" r="10" fill="none" stroke="#868e96" strokeWidth="6" />
+          <circle cx="20" cy="0" r="8" fill="none" stroke="#868e96" strokeWidth="5" />
+        </g>
+      )
+    case 'car':
+      return (
+        <g>
+          <rect x="-26" y="-4" width="52" height="16" rx="6" fill="#fa5252" />
+          <path d="M -16 -4 L -10 -16 L 10 -16 L 16 -4 Z" fill="#fa5252" />
+          <rect x="-8" y="-14" width="16" height="10" fill="#a5d8ff" />
+          <circle cx="-14" cy="14" r="7" fill="#343a40" />
+          <circle cx="14" cy="14" r="7" fill="#343a40" />
+        </g>
+      )
+    case 'transitVehicle':
+      return (
+        <g>
+          <rect x="-26" y="-20" width="52" height="34" rx="6" fill="#4c6ef5" />
+          <rect x="-20" y="-14" width="14" height="12" fill="#a5d8ff" />
+          <rect x="-2" y="-14" width="14" height="12" fill="#a5d8ff" />
+          <rect x="16" y="-14" width="8" height="12" fill="#a5d8ff" />
+          <circle cx="-14" cy="16" r="6" fill="#343a40" />
+          <circle cx="14" cy="16" r="6" fill="#343a40" />
+        </g>
+      )
+    case 'luggage':
+      return (
+        <g>
+          <rect x="-20" y="-16" width="40" height="34" rx="5" fill="#f59f00" stroke="#e8590c" />
+          <rect x="-8" y="-24" width="16" height="10" rx="3" fill="none" stroke="#e8590c" strokeWidth="3" />
+          <line x1="-20" y1="0" x2="20" y2="0" stroke="#e8590c" strokeWidth="2" />
+        </g>
+      )
+    case 'gem':
+      return (
+        <g>
+          <path d="M -18 -8 L 0 -20 L 18 -8 L 10 18 L -10 18 Z" fill="#22b8cf" stroke="#1098ad" />
+          <path d="M -18 -8 L 18 -8 L 0 -20 Z" fill="#66d9e8" />
+        </g>
+      )
+    case 'flowerPlant':
+      return (
+        <g>
+          <rect x="-10" y="8" width="20" height="18" rx="2" fill="#e8590c" />
+          <line x1="0" y1="8" x2="0" y2="-8" stroke="#2f9e44" strokeWidth="3" />
+          <circle cx="0" cy="-16" r="7" fill="#fa5252" />
+          <circle cx="-9" cy="-10" r="6" fill="#ff8787" />
+          <circle cx="9" cy="-10" r="6" fill="#ff8787" />
+          <circle cx="0" cy="-9" r="4" fill="#fcc419" />
+        </g>
+      )
+    case 'bread':
+      return (
+        <g>
+          <path d="M -22 6 Q -22 -14 0 -14 Q 22 -14 22 6 Z" fill="#e8a33d" />
+          <path d="M -22 6 L 22 6 L 22 14 Q 0 20 -22 14 Z" fill="#c8792a" />
+          <line x1="-10" y1="-10" x2="-6" y2="4" stroke="#a9662a" strokeWidth="2" />
+          <line x1="2" y1="-12" x2="6" y2="4" stroke="#a9662a" strokeWidth="2" />
+        </g>
+      )
+    case 'coffeeCup':
+      return (
+        <g>
+          <path d="M -14 -10 L 14 -10 L 12 18 Q 12 22 0 22 Q -12 22 -14 18 Z" fill="#fff" stroke="#adb5bd" />
+          <path d="M 14 -6 Q 26 -6 24 6 Q 22 14 12 12" fill="none" stroke="#adb5bd" strokeWidth="3" />
+          <line x1="-6" y1="-16" x2="-6" y2="-11" stroke="#adb5bd" strokeWidth="2" />
+          <line x1="2" y1="-18" x2="2" y2="-11" stroke="#adb5bd" strokeWidth="2" />
+        </g>
+      )
+    case 'iceCream':
+      return (
+        <g>
+          <path d="M -12 0 L 12 0 L 0 26 Z" fill="#e8a33d" />
+          <circle cx="0" cy="-10" r="14" fill="#ffd8a8" />
+          <circle cx="-9" cy="-16" r="4" fill="#fa5252" />
+          <circle cx="8" cy="-14" r="3" fill="#4c6ef5" />
+        </g>
+      )
+    case 'sofa':
+      return (
+        <g>
+          <rect x="-26" y="-4" width="52" height="20" rx="4" fill="#748ffc" />
+          <rect x="-26" y="-18" width="10" height="24" rx="4" fill="#5c7cfa" />
+          <rect x="16" y="-18" width="10" height="24" rx="4" fill="#5c7cfa" />
+          <rect x="-16" y="-14" width="32" height="14" rx="4" fill="#5c7cfa" />
+        </g>
+      )
+    case 'shirtHanger':
+      return (
+        <g>
+          <path d="M 0 -20 L 0 -14" stroke="#868e96" strokeWidth="2" />
+          <path d="M -18 -14 Q 0 -26 18 -14" fill="none" stroke="#868e96" strokeWidth="2.5" />
+          <path d="M -20 -12 L 0 4 L 20 -12 L 22 -8 L 0 10 L -22 -8 Z" fill="#e64980" />
+        </g>
+      )
+    case 'shoe':
+      return (
+        <g>
+          <path d="M -22 10 Q -22 -6 -6 -6 Q 4 -12 16 -8 Q 26 -4 26 6 Q 26 12 20 12 L -20 12 Q -22 12 -22 10 Z" fill="#495057" />
+          <rect x="-22" y="6" width="48" height="6" fill="#212529" />
+        </g>
+      )
+    case 'basket':
+      return (
+        <g>
+          <path d="M -22 -2 L 22 -2 L 18 18 Q 18 22 0 22 Q -18 22 -18 18 Z" fill="#e8a33d" />
+          <path d="M -18 -2 Q 0 -22 18 -2" fill="none" stroke="#c8792a" strokeWidth="3" />
+          <circle cx="-6" cy="4" r="6" fill="#40c057" />
+          <circle cx="8" cy="6" r="6" fill="#fa5252" />
+        </g>
+      )
+    case 'formDocument':
+      return (
+        <g>
+          <rect x="-18" y="-24" width="36" height="48" rx="3" fill="#fff" stroke="#adb5bd" />
+          <line x1="-12" y1="-14" x2="12" y2="-14" stroke="#adb5bd" strokeWidth="2" />
+          <line x1="-12" y1="-6" x2="12" y2="-6" stroke="#adb5bd" strokeWidth="2" />
+          <line x1="-12" y1="2" x2="12" y2="2" stroke="#adb5bd" strokeWidth="2" />
+          <path d="M -10 12 L -4 18 L 12 4" fill="none" stroke="#2ac56c" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        </g>
+      )
+    case 'dumbbell':
+      return (
+        <g>
+          <rect x="-20" y="-4" width="40" height="8" rx="3" fill="#495057" />
+          <rect x="-28" y="-12" width="10" height="24" rx="3" fill="#343a40" />
+          <rect x="18" y="-12" width="10" height="24" rx="3" fill="#343a40" />
+        </g>
+      )
+    case 'yogaMat':
+      return (
+        <g>
+          <rect x="-26" y="-10" width="52" height="20" rx="8" fill="#63e6be" />
+          <circle cx="-20" cy="0" r="9" fill="#38d9a9" />
+        </g>
+      )
+    case 'racket':
+      return (
+        <g>
+          <ellipse cx="0" cy="-10" rx="16" ry="20" fill="none" stroke="#e8590c" strokeWidth="4" />
+          <line x1="-10" y1="-20" x2="10" y2="0" stroke="#ffd8a8" strokeWidth="1" />
+          <line x1="10" y1="-20" x2="-10" y2="0" stroke="#ffd8a8" strokeWidth="1" />
+          <line x1="0" y1="10" x2="0" y2="26" stroke="#e8590c" strokeWidth="5" />
+        </g>
+      )
+    case 'pool':
+      return (
+        <g>
+          <rect x="-26" y="-14" width="52" height="28" rx="4" fill="#3bc9db" />
+          <path d="M -22 0 Q -14 -6 -6 0 Q 2 6 10 0 Q 18 -6 24 0" fill="none" stroke="#fff" strokeWidth="2" />
+        </g>
+      )
+    case 'scissors':
+      return (
+        <g transform="rotate(20)">
+          <circle cx="-14" cy="14" r="7" fill="none" stroke="#868e96" strokeWidth="4" />
+          <circle cx="14" cy="14" r="7" fill="none" stroke="#868e96" strokeWidth="4" />
+          <path d="M -10 8 L 20 -20" stroke="#adb5bd" strokeWidth="3" />
+          <path d="M 10 8 L -20 -20" stroke="#adb5bd" strokeWidth="3" />
+        </g>
+      )
+    case 'towel':
+      return (
+        <g>
+          <rect x="-24" y="-16" width="48" height="10" rx="2" fill="#74c0fc" />
+          <rect x="-24" y="-4" width="48" height="10" rx="2" fill="#a5d8ff" />
+          <rect x="-24" y="8" width="48" height="10" rx="2" fill="#74c0fc" />
+        </g>
+      )
+    case 'sun':
+      return (
+        <g>
+          <circle cx="0" cy="0" r="14" fill="#fcc419" />
+          <line x1="0" y1="-24" x2="0" y2="-18" stroke="#fcc419" strokeWidth="3" />
+          <line x1="0" y1="18" x2="0" y2="24" stroke="#fcc419" strokeWidth="3" />
+          <line x1="-24" y1="0" x2="-18" y2="0" stroke="#fcc419" strokeWidth="3" />
+          <line x1="18" y1="0" x2="24" y2="0" stroke="#fcc419" strokeWidth="3" />
+          <line x1="-17" y1="-17" x2="-13" y2="-13" stroke="#fcc419" strokeWidth="3" />
+          <line x1="13" y1="13" x2="17" y2="17" stroke="#fcc419" strokeWidth="3" />
+          <line x1="-17" y1="17" x2="-13" y2="13" stroke="#fcc419" strokeWidth="3" />
+          <line x1="13" y1="-13" x2="17" y2="-17" stroke="#fcc419" strokeWidth="3" />
+        </g>
+      )
+    case 'heart':
+      return (
+        <g>
+          <path d="M 0 18 C -20 2 -20 -14 -6 -14 C -2 -14 0 -10 0 -8 C 0 -10 2 -14 6 -14 C 20 -14 20 2 0 18 Z" fill="#fa5252" />
+        </g>
+      )
+    case 'tooth':
+      return (
+        <g>
+          <path d="M -14 -14 Q -18 -20 -10 -22 Q -4 -24 0 -20 Q 4 -24 10 -22 Q 18 -20 14 -14 Q 16 0 10 14 Q 6 22 2 8 Q 0 4 -2 8 Q -6 22 -10 14 Q -16 0 -14 -14 Z" fill="#fff" stroke="#dee2e6" />
+        </g>
+      )
+    case 'glasses':
+      return (
+        <g>
+          <circle cx="-14" cy="0" r="12" fill="none" stroke="#343a40" strokeWidth="3" />
+          <circle cx="14" cy="0" r="12" fill="none" stroke="#343a40" strokeWidth="3" />
+          <line x1="-2" y1="0" x2="2" y2="0" stroke="#343a40" strokeWidth="3" />
+          <line x1="-26" y1="-2" x2="-32" y2="-8" stroke="#343a40" strokeWidth="3" />
+          <line x1="26" y1="-2" x2="32" y2="-8" stroke="#343a40" strokeWidth="3" />
+        </g>
+      )
+    case 'bandage':
+      return (
+        <g transform="rotate(30)">
+          <rect x="-22" y="-8" width="44" height="16" rx="8" fill="#ffe8cc" stroke="#f8c98c" />
+          <circle cx="-10" cy="0" r="2" fill="#e8a33d" />
+          <circle cx="10" cy="0" r="2" fill="#e8a33d" />
+          <rect x="-6" y="-8" width="12" height="16" fill="#fff" opacity="0.8" />
+        </g>
+      )
+    case 'bloodDrop':
+      return (
+        <g>
+          <path d="M 0 -20 C 10 -6 16 4 16 12 C 16 22 8 26 0 26 C -8 26 -16 22 -16 12 C -16 4 -10 -6 0 -20 Z" fill="#fa5252" />
+        </g>
+      )
+    case 'globe':
+      return (
+        <g>
+          <circle cx="0" cy="0" r="20" fill="#4dabf7" />
+          <ellipse cx="0" cy="0" rx="20" ry="8" fill="none" stroke="#fff" strokeWidth="1.5" />
+          <ellipse cx="0" cy="0" rx="8" ry="20" fill="none" stroke="#fff" strokeWidth="1.5" />
+          <line x1="-20" y1="0" x2="20" y2="0" stroke="#fff" strokeWidth="1.5" />
+        </g>
+      )
+    case 'paintingFrame':
+      return (
+        <g>
+          <rect x="-22" y="-18" width="44" height="36" rx="2" fill="#f8c98c" stroke="#8a5a34" strokeWidth="4" />
+          <circle cx="-8" cy="-6" r="5" fill="#fcc419" />
+          <path d="M -18 12 L -4 -2 L 6 8 L 18 -6 L 18 12 Z" fill="#495057" />
+        </g>
+      )
+    case 'telescope':
+      return (
+        <g transform="rotate(-30)">
+          <rect x="-24" y="-6" width="40" height="12" rx="4" fill="#495057" />
+          <rect x="14" y="-9" width="10" height="18" rx="2" fill="#343a40" />
+          <line x1="-24" y1="10" x2="-14" y2="24" stroke="#868e96" strokeWidth="4" />
+        </g>
+      )
+    case 'fishTank':
+      return (
+        <g>
+          <rect x="-26" y="-16" width="52" height="32" rx="3" fill="#a5d8ff" stroke="#4dabf7" strokeWidth="2" />
+          <path d="M -8 0 Q -2 -6 4 0 Q -2 6 -8 0 Z" fill="#fa5252" />
+          <path d="M 4 0 L 10 -4 L 10 4 Z" fill="#fa5252" />
+        </g>
+      )
+    case 'pawPrint':
+      return (
+        <g>
+          <ellipse cx="0" cy="8" rx="14" ry="11" fill="#8a5a34" />
+          <circle cx="-14" cy="-8" r="6" fill="#8a5a34" />
+          <circle cx="-4" cy="-16" r="6" fill="#8a5a34" />
+          <circle cx="8" cy="-16" r="6" fill="#8a5a34" />
+          <circle cx="16" cy="-6" r="6" fill="#8a5a34" />
+        </g>
+      )
+    case 'bike':
+      return (
+        <g>
+          <circle cx="-14" cy="10" r="12" fill="none" stroke="#343a40" strokeWidth="3" />
+          <circle cx="14" cy="10" r="12" fill="none" stroke="#343a40" strokeWidth="3" />
+          <path d="M -14 10 L 0 -10 L 14 10 M 0 -10 L -6 -18 M -14 10 L 6 10" stroke="#4c6ef5" strokeWidth="3" fill="none" />
+        </g>
+      )
+    case 'plane':
+      return (
+        <g transform="rotate(-20)">
+          <path d="M -26 0 L 10 0 L 26 -6 L 26 -2 L 12 4 L 26 10 L 26 14 L 10 8 L -26 8 L -18 4 Z" fill="#4dabf7" />
+        </g>
+      )
+    case 'bowlingPin':
+      return (
+        <g>
+          <path d="M 0 -24 Q 8 -18 6 -8 Q 10 0 8 12 Q 8 22 0 22 Q -8 22 -8 12 Q -10 0 -6 -8 Q -8 -18 0 -24 Z" fill="#fff" stroke="#dee2e6" />
+          <rect x="-6" y="-14" width="12" height="4" fill="#fa5252" />
+        </g>
+      )
+    case 'joystick':
+      return (
+        <g>
+          <rect x="-22" y="8" width="44" height="14" rx="4" fill="#343a40" />
+          <rect x="-4" y="-14" width="8" height="24" rx="3" fill="#495057" />
+          <circle cx="0" cy="-18" r="8" fill="#fa5252" />
+        </g>
+      )
+    case 'boat':
+      return (
+        <g>
+          <path d="M -24 4 L 24 4 L 16 16 L -16 16 Z" fill="#4dabf7" />
+          <line x1="0" y1="4" x2="0" y2="-22" stroke="#868e96" strokeWidth="2" />
+          <path d="M 0 -22 L 16 4 L 0 4 Z" fill="#fff" />
+        </g>
+      )
+    case 'map':
+      return (
+        <g>
+          <path d="M -22 -16 L -6 -22 L 8 -16 L 22 -22 L 22 18 L 8 24 L -6 18 L -22 24 Z" fill="#ffe8cc" stroke="#e8a33d" />
+          <line x1="-6" y1="-22" x2="-6" y2="18" stroke="#e8a33d" strokeWidth="1" />
+          <line x1="8" y1="-16" x2="8" y2="24" stroke="#e8a33d" strokeWidth="1" />
+        </g>
+      )
+    case 'gift':
+      return (
+        <g>
+          <rect x="-20" y="-4" width="40" height="28" rx="2" fill="#e64980" />
+          <rect x="-20" y="-12" width="40" height="10" rx="2" fill="#f06595" />
+          <rect x="-4" y="-12" width="8" height="44" fill="#fff" />
+          <path d="M -4 -12 Q -14 -22 -4 -22 Q 0 -18 -4 -12 Z" fill="#f06595" />
+          <path d="M 4 -12 Q 14 -22 4 -22 Q 0 -18 4 -12 Z" fill="#f06595" />
+        </g>
+      )
+    default:
+      return <circle r="20" fill="#adb5bd" />
+  }
+}
+
+// Lays out scene elements inside a "room": a back wall zone (top ~62% of the canvas) for
+// small/mounted items (tag, calendar, clock, key, wifi...) and a floor zone (bottom ~38%) for
+// larger furniture/people items, with the door always anchored near the back-right corner.
+function roomLayout(elements, width, height) {
+  const wallH = height * 0.62
+  const floorH = height - wallH
+  const doorEl = elements.find((e) => e.key === 'door')
+  const others = elements.filter((e) => e.key !== 'door')
+  const wallItems = others.filter((e) => e.row === 'wall')
+  const floorItems = others.filter((e) => e.row !== 'wall')
+
+  const positions = {}
+  wallItems.forEach((el, i) => {
+    const slotW = (width * 0.7) / (wallItems.length + 1)
+    positions[el.key] = { x: slotW * (i + 1) + width * 0.06, y: wallH * 0.48, row: 'wall' }
+  })
+  floorItems.forEach((el, i) => {
+    const slotW = (width * 0.62) / (floorItems.length + 1)
+    positions[el.key] = { x: slotW * (i + 1) + width * 0.04, y: wallH + floorH * 0.58, row: 'floor' }
+  })
+  if (doorEl) {
+    positions[doorEl.key] = { x: width * 0.87, y: wallH + floorH * 0.42, row: 'floor' }
+  }
+  return { positions, wallH, floorH, wallItems, floorItems, doorEl }
+}
+
+// Renders a realistic little "room" scene made of simple flat icon shapes grounded on a floor,
+// with a back wall behind them -- whichever keys are in activeKeys are shown at full
+// color/saturation with a glowing highlight (and a colored "grounding" shadow if on the floor),
+// everything else is dimmed and desaturated. This mirrors BestMyTest's Listen & Repeat effect of
+// colorizing the object currently being talked about, but fully in color rather than grayscale.
+function SceneIllustration({ scene, activeKeys = [], width = 520, height = 420 }) {
+  const elements = scene?.elements || []
+  const { positions, wallH, floorH, wallItems, floorItems, doorEl } = roomLayout(elements, width, height)
+  const ordered = [...wallItems, ...floorItems, ...(doorEl ? [doorEl] : [])]
+
+  return (
+    <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', borderRadius: '16px', overflow: 'hidden', margin: '0 auto', flexShrink: 0, border: '0.5px solid #d7dbe6', boxShadow: '0 1px 4px rgba(20,25,40,0.08)' }}>
+      <svg viewBox={`0 0 ${width} ${height}`} width="100%" height="100%" role="img" aria-label="scene illustration">
+        <defs>
+          <linearGradient id="sceneWallGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#eef2ff" />
+            <stop offset="100%" stopColor="#dde5fb" />
+          </linearGradient>
+          <linearGradient id="sceneFloorGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#d9cba8" />
+            <stop offset="100%" stopColor="#c3ac80" />
+          </linearGradient>
+        </defs>
+
+        <rect x="0" y="0" width={width} height={wallH} fill="url(#sceneWallGrad)" />
+        <rect x="0" y={wallH} width={width} height={floorH} fill="url(#sceneFloorGrad)" />
+        <line x1="0" y1={wallH} x2={width} y2={wallH} stroke="#b39b68" strokeWidth="2" />
+        {[0.12, 0.5, 0.88].map((t) => (
+          <line
+            key={t}
+            x1={width * t}
+            y1={height}
+            x2={width * 0.5}
+            y2={wallH}
+            stroke="#b39b68"
+            strokeWidth="1"
+            opacity="0.3"
+          />
+        ))}
+
+        {ordered.map((el) => {
+          const pos = positions[el.key]
+          if (!pos) return null
+          const active = activeKeys.includes(el.key)
+          const isFloor = pos.row === 'floor'
+          return (
+            <g key={el.key}>
+              {isFloor && (
+                <ellipse
+                  cx={pos.x}
+                  cy={pos.y + 24}
+                  rx={active ? 26 : 20}
+                  ry="7"
+                  fill={active ? 'rgba(42,197,108,0.32)' : 'rgba(0,0,0,0.15)'}
+                  style={{ transition: 'all 0.4s ease' }}
+                />
+              )}
+              <g
+                transform={`translate(${pos.x}, ${pos.y}) scale(${active ? 1.18 : 1})`}
+                style={{
+                  transition: 'opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease',
+                  opacity: active ? 1 : 0.38,
+                  filter: active ? 'drop-shadow(0 0 10px rgba(42,197,108,0.9)) saturate(1.35)' : 'grayscale(75%)',
+                }}
+              >
+                <SceneIconShape type={el.icon} />
+              </g>
+            </g>
+          )
+        })}
+      </svg>
+    </div>
+  )
+}
+
 function TopicPhoto({ icon, label, photoSlug, photoUrl, width = 140, height = 140 }) {
   // Try the local photo first (frontend/public/topic-photos/{slug}.jpg), then the remote
   // Wikimedia URL as a fallback, and finally the emoji if both fail to load.
@@ -3744,13 +4376,21 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
             <>
               <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.location}</div>
               <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
-              <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
+              {item.scene ? (
+                <SceneIllustration scene={item.scene} activeKeys={[]} width={520} height={420} />
+              ) : (
+                <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
+              )}
               <audio src={item.audio_url_intro} autoPlay onEnded={beginPractice} onError={beginPractice} />
             </>
           )}
 
           {(phase === 'playing' || phase === 'recording') && (
-            <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
+            item.scene ? (
+              <SceneIllustration scene={item.scene} activeKeys={sentence.highlight || []} width={520} height={420} />
+            ) : (
+              <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
+            )
           )}
 
           {phase === 'playing' && (
