@@ -7015,6 +7015,10 @@ function App() {
   const [currentTab, setCurrentTab] = useState('dashboard')
   const [profileName, setProfileName] = useState('')
   const [targetScore, setTargetScore] = useState(5.5)
+  const [readingTarget, setReadingTarget] = useState(5.5)
+  const [listeningTarget, setListeningTarget] = useState(5.0)
+  const [writingTarget, setWritingTarget] = useState(4.5)
+  const [speakingTarget, setSpeakingTarget] = useState(4.5)
   const [examDate, setExamDate] = useState('')
   const [vocabWords, setVocabWords] = useState([])
   const [vocabFilter, setVocabFilter] = useState('all')
@@ -7035,10 +7039,10 @@ function App() {
 
   const generateGoals = (daysLeft, data) => {
     const sections = [
-      { name: 'Reading practice', gap: 5.5 - data.reading_score },
-      { name: 'Listening practice', gap: 5.0 - data.listening_score },
-      { name: 'Writing practice', gap: 4.5 - data.writing_score },
-      { name: 'Speaking practice', gap: 4.5 - data.speaking_score },
+      { name: 'Reading practice', gap: (data.reading_target ?? 5.5) - data.reading_score },
+      { name: 'Listening practice', gap: (data.listening_target ?? 5.0) - data.listening_score },
+      { name: 'Writing practice', gap: (data.writing_target ?? 4.5) - data.writing_score },
+      { name: 'Speaking practice', gap: (data.speaking_target ?? 4.5) - data.speaking_score },
     ].filter(s => s.gap > 0).sort((a, b) => b.gap - a.gap)
     const goals = []; const today = new Date().getDate()
     sections.forEach((s, i) => {
@@ -7064,7 +7068,13 @@ function App() {
 
   const fetchDashboardData = () => {
     apiFetch(`${BACKEND_URL}/api/dashboard`).then(res => res.json())
-      .then(data => { setUserData(data); setProfileName(data.username); setTargetScore(data.target_score); setExamDate(data.exam_date || '') }).catch(err => console.error(err))
+      .then(data => {
+        setUserData(data); setProfileName(data.username); setTargetScore(data.target_score); setExamDate(data.exam_date || '')
+        setReadingTarget(data.reading_target ?? 5.5)
+        setListeningTarget(data.listening_target ?? 5.0)
+        setWritingTarget(data.writing_target ?? 4.5)
+        setSpeakingTarget(data.speaking_target ?? 4.5)
+      }).catch(err => console.error(err))
   }
 
   useEffect(() => { fetchDashboardData(); fetchVocabData() }, [])
@@ -7077,7 +7087,11 @@ function App() {
     e.preventDefault()
     apiFetch(`${BACKEND_URL}/api/profile/update`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username: profileName, target_score: Number(targetScore) }),
+      body: JSON.stringify({
+        username: profileName, target_score: Number(targetScore),
+        reading_target: Number(readingTarget), listening_target: Number(listeningTarget),
+        writing_target: Number(writingTarget), speaking_target: Number(speakingTarget),
+      }),
     }).then(res => res.json()).then(data => { if (data.status === 'success') { alert('Saved!'); fetchDashboardData() } })
   }
 
@@ -7209,10 +7223,10 @@ function App() {
                 <div style={{ fontSize: '13px', fontWeight: '600', marginBottom: '14px' }}>Section scores vs targets</div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
                   {[
-                    { name: 'Reading practice', key: 'reading', current: userData.reading_score, target: 5.5 },
-                    { name: 'Listening practice', key: 'listening', current: userData.listening_score, target: 5.0 },
-                    { name: 'Writing practice', key: 'writing', current: userData.writing_score, target: 4.5 },
-                    { name: 'Speaking practice', key: 'speaking', current: userData.speaking_score, target: 4.5 },
+                    { name: 'Reading practice', key: 'reading', current: userData.reading_score, target: userData.reading_target ?? 5.5 },
+                    { name: 'Listening practice', key: 'listening', current: userData.listening_score, target: userData.listening_target ?? 5.0 },
+                    { name: 'Writing practice', key: 'writing', current: userData.writing_score, target: userData.writing_target ?? 4.5 },
+                    { name: 'Speaking practice', key: 'speaking', current: userData.speaking_score, target: userData.speaking_target ?? 4.5 },
                   ].map(s => {
                     const max = SECTION_BAND_MAX[s.key]
                     const curPct = Math.round((s.current / max) * 100); const tgtPct = Math.round((s.target / max) * 100); const gap = s.target - s.current
@@ -7315,10 +7329,10 @@ function App() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   {[
-                    { name: 'Reading', score: userData.reading_score, target: 5.5 },
-                    { name: 'Listening', score: userData.listening_score, target: 5.0 },
-                    { name: 'Writing', score: userData.writing_score, target: 4.5 },
-                    { name: 'Speaking', score: userData.speaking_score, target: 4.5 },
+                    { name: 'Reading', score: userData.reading_score, target: userData.reading_target ?? 5.5 },
+                    { name: 'Listening', score: userData.listening_score, target: userData.listening_target ?? 5.0 },
+                    { name: 'Writing', score: userData.writing_score, target: userData.writing_target ?? 4.5 },
+                    { name: 'Speaking', score: userData.speaking_score, target: userData.speaking_target ?? 4.5 },
                   ].map(raw => {
                     const gap = raw.target - raw.score
                     const note = gap <= 0 ? 'On target' : `${gap.toFixed(1)} to target`
@@ -7500,6 +7514,25 @@ function App() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Target Score (0.0 - 6.0)</label>
                   <input type="number" min="0" max="6" step="0.5" value={targetScore} onChange={e => setTargetScore(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                </div>
+                <div style={{ fontWeight: '700', color: '#374151', fontSize: '12px', marginTop: '4px' }}>Section targets</div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Reading (1.0 - 6.0)</label>
+                    <input type="number" min="1" max="6" step="0.5" value={readingTarget} onChange={e => setReadingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Listening (1.0 - 6.0)</label>
+                    <input type="number" min="1" max="6" step="0.5" value={listeningTarget} onChange={e => setListeningTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Writing (1.0 - 5.0)</label>
+                    <input type="number" min="1" max="5" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Speaking (1.0 - 5.0)</label>
+                    <input type="number" min="1" max="5" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  </div>
                 </div>
                 <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
               </form>

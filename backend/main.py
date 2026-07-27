@@ -87,6 +87,13 @@ AUDIO_BASE_URL = os.environ.get("AUDIO_BASE_URL", f"{BACKEND_PUBLIC_URL}/audio")
 class DashboardData(BaseModel):
     username: str
     target_score: float
+    # Per-section goals the student sets for themselves on the Dashboard (Reading/Listening use
+    # the 1.0-6.0 scale, Writing/Speaking use 1.0-5.0 -- see SECTION_BAND_MAX). Optional so older
+    # frontend builds that don't send them yet don't break profile saves.
+    reading_target: Optional[float] = None
+    listening_target: Optional[float] = None
+    writing_target: Optional[float] = None
+    speaking_target: Optional[float] = None
 
 # ============================================================
 # AUTH VERİ MODELLERİ
@@ -254,6 +261,10 @@ def init_db():
             password_reset_token TEXT,
             password_reset_token_expires TIMESTAMP,
             target_score REAL NOT NULL DEFAULT 5.5,
+            reading_target REAL NOT NULL DEFAULT 5.5,
+            listening_target REAL NOT NULL DEFAULT 5.0,
+            writing_target REAL NOT NULL DEFAULT 4.5,
+            speaking_target REAL NOT NULL DEFAULT 4.5,
             exam_date TEXT NOT NULL DEFAULT '',
             current_streak INTEGER NOT NULL DEFAULT 0,
             reading_score REAL NOT NULL DEFAULT 5.0,
@@ -271,6 +282,14 @@ def init_db():
         conn.execute("ALTER TABLE users ADD COLUMN password_reset_token TEXT")
     if not _has_column(conn, "users", "password_reset_token_expires"):
         conn.execute("ALTER TABLE users ADD COLUMN password_reset_token_expires TIMESTAMP")
+    if not _has_column(conn, "users", "reading_target"):
+        conn.execute("ALTER TABLE users ADD COLUMN reading_target REAL NOT NULL DEFAULT 5.5")
+    if not _has_column(conn, "users", "listening_target"):
+        conn.execute("ALTER TABLE users ADD COLUMN listening_target REAL NOT NULL DEFAULT 5.0")
+    if not _has_column(conn, "users", "writing_target"):
+        conn.execute("ALTER TABLE users ADD COLUMN writing_target REAL NOT NULL DEFAULT 4.5")
+    if not _has_column(conn, "users", "speaking_target"):
+        conn.execute("ALTER TABLE users ADD COLUMN speaking_target REAL NOT NULL DEFAULT 4.5")
 
     # Which vocab words each student has personally marked as learned.
     conn.execute("""
@@ -515,6 +534,10 @@ def user_profile_dict(user) -> dict:
         "username": user["username"],
         "email": user["email"],
         "target_score": user["target_score"],
+        "reading_target": user["reading_target"],
+        "listening_target": user["listening_target"],
+        "writing_target": user["writing_target"],
+        "speaking_target": user["speaking_target"],
         "current_streak": user["current_streak"],
         "vocab_level": user["vocab_level"],
         "reading_score": user["reading_score"],
@@ -792,8 +815,17 @@ def get_dashboard(user=Depends(get_current_user)):
 @app.post("/api/profile/update")
 def update_profile(data: DashboardData, user=Depends(get_current_user)):
     conn = get_db()
-    conn.execute("UPDATE users SET username = ?, target_score = ? WHERE id = ?",
-                 (data.username, data.target_score, user["id"]))
+    fields = {"username": data.username, "target_score": data.target_score}
+    if data.reading_target is not None:
+        fields["reading_target"] = data.reading_target
+    if data.listening_target is not None:
+        fields["listening_target"] = data.listening_target
+    if data.writing_target is not None:
+        fields["writing_target"] = data.writing_target
+    if data.speaking_target is not None:
+        fields["speaking_target"] = data.speaking_target
+    set_clause = ", ".join(f"{k} = ?" for k in fields)
+    conn.execute(f"UPDATE users SET {set_clause} WHERE id = ?", (*fields.values(), user["id"]))
     conn.commit()
     conn.close()
     return {"status": "success", "message": "Profile updated successfully"}
