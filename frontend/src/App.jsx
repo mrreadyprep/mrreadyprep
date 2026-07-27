@@ -607,6 +607,13 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
 // VITE_BACKEND_URL can be set at build time (e.g. in Render's environment variables) to point
 // the deployed frontend at its deployed backend. Falls back to localhost for local dev.
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
+// The hardware-check screens (Adjusting the Volume / Adjusting the Microphone) reference two
+// static audio files directly by URL rather than through a backend API response, so they need
+// their own base URL mirroring the backend's AUDIO_BASE_URL env var (see main.py) -- once audio
+// moved off the backend's own /audio mount and onto object storage (R2), this must point there
+// too, e.g. VITE_AUDIO_BASE_URL=https://pub-xxxxxxxx.r2.dev (same bucket URL used server-side).
+// Falls back to the backend's own /audio mount, which is correct for local dev.
+const AUDIO_BASE_URL = import.meta.env.VITE_AUDIO_BASE_URL || `${BACKEND_URL}/audio`
 
 // ─── Auth: token storage + an authenticated fetch wrapper ────────────────────────────────────
 const AUTH_TOKEN_KEY = 'mrreadyprep_token'
@@ -1567,7 +1574,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   const [reviewQ, setReviewQ] = useState(null)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  const announced = useIntroNarration(`${BACKEND_URL}/audio/intro/listen_to_a_conversation.mp3`)
+  const announced = useIntroNarration(`${AUDIO_BASE_URL}/intro/listen_to_a_conversation.mp3`)
 
   const questions = conversation.questions
   const q = questions[qIdx]
@@ -1849,7 +1856,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   const [reviewQ, setReviewQ] = useState(null)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  const announced = useIntroNarration(`${BACKEND_URL}/audio/intro/listen_to_an_announcement.mp3`)
+  const announced = useIntroNarration(`${AUDIO_BASE_URL}/intro/listen_to_an_announcement.mp3`)
 
   const questions = announcement.questions
   const q = questions[qIdx]
@@ -2136,7 +2143,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   const q = questions[qIdx]
   const totalQ = questions.length
   const talkIntroText = talk.subject ? `Listen to a talk in ${/^[aeiou]/i.test(talk.subject) ? 'an' : 'a'} ${talk.subject.toLowerCase()} class.` : 'Listen to a talk in an academic class.'
-  const announced = useIntroNarration(`${BACKEND_URL}/audio/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
+  const announced = useIntroNarration(`${AUDIO_BASE_URL}/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -5768,7 +5775,7 @@ function hwScreenVolume(dependsOnText) {
       "You can adjust your device's system volume at any time during the test using your computer's own volume controls.",
       `Make sure you can comfortably hear audio before continuing — ${dependsOnText}.`,
     ],
-    visual: <VolumeTestPlayer src={`${BACKEND_URL}/audio/hwcheck/adjusting_volume.mp3`} />,
+    visual: <VolumeTestPlayer src={`${AUDIO_BASE_URL}/hwcheck/adjusting_volume.mp3`} />,
   }
 }
 const HW_SCREEN_MICROPHONE = {
@@ -5777,7 +5784,7 @@ const HW_SCREEN_MICROPHONE = {
     'When you record your Speaking answers, speak at your normal volume and keep a steady distance from the microphone.',
     'Try to stay in the "Good" range shown below — not too quiet, and not too loud.',
   ],
-  visual: <MicAdjustVisual src={`${BACKEND_URL}/audio/hwcheck/adjusting_microphone.mp3`} />,
+  visual: <MicAdjustVisual src={`${AUDIO_BASE_URL}/hwcheck/adjusting_microphone.mp3`} />,
 }
 
 // Only the sections that actually use a mic/speaker need their hardware checked before starting.
