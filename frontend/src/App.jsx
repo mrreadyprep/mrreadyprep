@@ -4895,7 +4895,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
 
           {(phase === 'playing' || phase === 'recording') && (
             <>
-              <div style={{ fontSize: '16px', color: '#616473', marginBottom: '20px' }}>
+              <div style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', marginBottom: '24px' }}>
                 {phase === 'playing' ? '🔊 Listen carefully, then repeat.' : '🎤 Listen and repeat the sentence.'}
               </div>
               {item.scene ? (
@@ -5146,7 +5146,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
 
           {(phase === 'playing' || phase === 'recording') && (
             <>
-              <div style={{ fontSize: '16px', color: '#616473', marginBottom: '20px' }}>
+              <div style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', marginBottom: '24px' }}>
                 {phase === 'playing' ? '🔊 Listen to the question, then answer.' : '🎤 Listen and answer the question.'}
               </div>
               <RealPersonAvatar gender={item.speaker} seed={item.id * 10 + qIdx} width={280} height={280} mode={phase} />
