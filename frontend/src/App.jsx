@@ -4894,17 +4894,21 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
           )}
 
           {(phase === 'playing' || phase === 'recording') && (
-            item.scene ? (
-              <SceneIllustration scene={item.scene} location={item.location} activeKeys={sentence.highlight || []} width={520} height={420} />
-            ) : (
-              <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
-            )
+            <>
+              <div style={{ fontSize: '16px', color: '#616473', marginBottom: '20px' }}>
+                {phase === 'playing' ? '🔊 Listen carefully, then repeat.' : '🎤 Listen and repeat the sentence.'}
+              </div>
+              {item.scene ? (
+                <SceneIllustration scene={item.scene} location={item.location} activeKeys={sentence.highlight || []} width={520} height={420} />
+              ) : (
+                <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
+              )}
+            </>
           )}
 
           {phase === 'playing' && (
             <>
               <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '22px 0 8px' }}>{sentence.length} sentence</div>
-              <div style={{ fontSize: '16px', color: '#616473', marginBottom: '20px' }}>🔊 Listen carefully, then repeat exactly what you hear.</div>
               <audio src={sentence.audio_url} autoPlay onEnded={startRecording} onError={startRecording} />
             </>
           )}
