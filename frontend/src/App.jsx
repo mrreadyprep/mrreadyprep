@@ -1193,6 +1193,62 @@ function DrawnCharacterAvatar({ gender, seed = 0, width = 220, height = 220, mod
   )
 }
 
+// A real, licensed photo of a person (one per gender) instead of a drawn cartoon. There's no lip
+// sync on a still photo, so "speaking" is conveyed with an animated sound-wave ring around the
+// portrait: a calm pulsing ring while the question audio plays, a red recording ring while the
+// student answers, and a still frame at rest. Falls back to the drawn SVG character if the photo
+// file hasn't been placed in public/interview-photos/ yet.
+function RealPersonAvatar({ gender, seed = 0, width = 220, height = 220, mode = 'idle' }) {
+  const isFemale = gender !== 'male'
+  const [imgFailed, setImgFailed] = useState(false)
+  const src = isFemale ? '/interview-photos/female.jpg' : '/interview-photos/male.jpg'
+  const ringColor = mode === 'recording' ? '#d84f4f' : '#3f8cd8'
+
+  if (imgFailed) return <DrawnCharacterAvatar gender={gender} seed={seed} width={width} height={height} mode={mode} />
+
+  return (
+    <div style={{ width: `${width}px`, height: `${height}px`, maxWidth: '100%', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+      <style>{`
+        @keyframes toeflRingPulse {
+          0% { box-shadow: 0 0 0 0 ${ringColor}55; }
+          70% { box-shadow: 0 0 0 14px ${ringColor}00; }
+          100% { box-shadow: 0 0 0 0 ${ringColor}00; }
+        }
+        @keyframes toeflBarBounce {
+          0%, 100% { transform: scaleY(0.35); }
+          50% { transform: scaleY(1); }
+        }
+      `}</style>
+      <div
+        style={{
+          width: '84%', height: '84%', borderRadius: '50%', overflow: 'hidden',
+          border: `3px solid ${mode === 'idle' ? '#e1e4ed' : ringColor}`,
+          animation: mode !== 'idle' ? 'toeflRingPulse 1.6s ease-out infinite' : 'none',
+          position: 'relative', flexShrink: 0,
+        }}
+      >
+        <img
+          src={src}
+          alt=""
+          onError={() => setImgFailed(true)}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+      </div>
+      {mode !== 'idle' && (
+        <div style={{ position: 'absolute', bottom: '2%', left: '50%', transform: 'translateX(-50%)', display: 'flex', alignItems: 'flex-end', gap: '3px', background: '#fff', borderRadius: '999px', padding: '6px 10px', border: `0.5px solid ${ringColor}55`, boxShadow: '0 1px 4px rgba(0,0,0,0.12)' }}>
+          {[0, 1, 2, 3].map(i => (
+            <div key={i} style={{
+              width: '3px', height: '12px', borderRadius: '2px', background: ringColor,
+              animation: `toeflBarBounce ${0.5 + i * 0.12}s ease-in-out infinite`,
+              animationDelay: `${i * 0.08}s`,
+            }} />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 // A real talking-head video (free-licensed stock footage, one per gender) so the mouth movement
 // is genuine, not simulated. Loops while a question plays; pauses (and gently nods, via CSS
 // transform on the video element) while the student is recording their answer. Falls back to the
@@ -5079,13 +5135,13 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
             <>
               <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.topic}</div>
               <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
-              <DrawnCharacterAvatar gender={item.speaker} seed={item.id * 10} width={400} height={400} mode="playing" />
+              <RealPersonAvatar gender={item.speaker} seed={item.id * 10} width={280} height={280} mode="playing" />
               <audio src={item.audio_url_intro} autoPlay onEnded={beginPractice} onError={beginPractice} />
             </>
           )}
 
           {(phase === 'playing' || phase === 'recording') && (
-            <DrawnCharacterAvatar gender={item.speaker} seed={item.id * 10 + qIdx} width={400} height={400} mode={phase} />
+            <RealPersonAvatar gender={item.speaker} seed={item.id * 10 + qIdx} width={280} height={280} mode={phase} />
           )}
 
           {phase === 'playing' && (
