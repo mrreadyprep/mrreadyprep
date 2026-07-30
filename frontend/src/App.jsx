@@ -5141,7 +5141,12 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
           )}
 
           {(phase === 'playing' || phase === 'recording') && (
-            <RealPersonAvatar gender={item.speaker} seed={item.id * 10 + qIdx} width={280} height={280} mode={phase} />
+            <>
+              <div style={{ fontSize: '16px', color: '#616473', marginBottom: '20px' }}>
+                {phase === 'playing' ? '🔊 Listen to the question, then answer.' : '🎤 Listen and answer the question.'}
+              </div>
+              <RealPersonAvatar gender={item.speaker} seed={item.id * 10 + qIdx} width={280} height={280} mode={phase} />
+            </>
           )}
 
           {phase === 'playing' && (
