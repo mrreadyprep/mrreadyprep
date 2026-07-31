@@ -80,6 +80,28 @@ app.mount("/audio", StaticFiles(directory="audio"), name="audio")
 #   AUDIO_BASE_URL=https://pub-xxxxxxxx.r2.dev
 AUDIO_BASE_URL = os.environ.get("AUDIO_BASE_URL", f"{BACKEND_PUBLIC_URL}/audio")
 
+# Several Listening JSON pools (listening_part1-4.json, mock_listening_*.json, and the "listening"
+# section embedded in every fixed_test_N.json) were authored with audio_url values hardcoded to
+# "http://localhost:8000/audio/..." instead of being built dynamically like the Speaking pools are.
+# That means in production these URLs point at the developer's own machine and never resolve --
+# the audio silently fails to play. Rather than rewrite every JSON file by hand, this walks any
+# JSON-shaped value (dict/list/str) returned by an endpoint and rewrites the old localhost prefix
+# to today's real AUDIO_BASE_URL (R2 in production, the local /audio mount in dev), recursively, so
+# it's safe to apply to an entire response object regardless of nesting depth.
+_LEGACY_AUDIO_PREFIXES = ("http://localhost:8000/audio/", "http://127.0.0.1:8000/audio/")
+
+def _fix_audio_urls(obj):
+    if isinstance(obj, str):
+        for prefix in _LEGACY_AUDIO_PREFIXES:
+            if obj.startswith(prefix):
+                return f"{AUDIO_BASE_URL}/{obj[len(prefix):]}"
+        return obj
+    if isinstance(obj, list):
+        return [_fix_audio_urls(v) for v in obj]
+    if isinstance(obj, dict):
+        return {k: _fix_audio_urls(v) for k, v in obj.items()}
+    return obj
+
 # ============================================================
 # VERİ MODELLERİ
 # ============================================================
@@ -1089,22 +1111,22 @@ def get_mock_academic_passage():
 @app.get("/api/mock/choose-response")
 def get_mock_listening_car():
     with open(MOCK_LISTENING_CAR_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return _fix_audio_urls(json.load(f))
 
 @app.get("/api/mock/conversation")
 def get_mock_listening_conv():
     with open(MOCK_LISTENING_CONV_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return _fix_audio_urls(json.load(f))
 
 @app.get("/api/mock/announcement")
 def get_mock_listening_announce():
     with open(MOCK_LISTENING_ANNOUNCE_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return _fix_audio_urls(json.load(f))
 
 @app.get("/api/mock/academic-talk")
 def get_mock_listening_at():
     with open(MOCK_LISTENING_AT_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return _fix_audio_urls(json.load(f))
 
 # --- Full Mock Test: Writing content, kept entirely separate from the practice pools below ---
 @app.get("/api/mock/build-a-sentence")
@@ -1162,28 +1184,29 @@ def get_fixed_test(test_id: int):
     interview["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{interview['id']}/intro.mp3"
     for q in interview["questions"]:
         q["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{interview['id']}/{q['id']}.mp3"
+    data["listening"] = _fix_audio_urls(data["listening"])
     return data
 
 # --- Listening ---
 @app.get("/api/listening/choose-response")
 def get_listening_p1():
     with open(LISTENING_P1_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return _fix_audio_urls(json.load(f))
 
 @app.get("/api/listening/conversation")
 def get_listening_p2():
     with open(LISTENING_P2_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return _fix_audio_urls(json.load(f))
 
 @app.get("/api/listening/announcement")
 def get_listening_p3():
     with open(LISTENING_P3_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return _fix_audio_urls(json.load(f))
 
 @app.get("/api/listening/academic-talk")
 def get_listening_p4():
     with open(LISTENING_P4_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return _fix_audio_urls(json.load(f))
 
 # --- Writing: Build a Sentence ---
 @app.get("/api/writing/build-a-sentence")
