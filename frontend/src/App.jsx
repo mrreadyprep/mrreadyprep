@@ -5675,6 +5675,74 @@ function pickNPreferUnused(arr, n, usedSet) {
 }
 function isGoodPerf(correct, total) { return total > 0 && (correct / total) >= 0.6 }
 
+// ─── Cross-attempt "don't repeat questions" for the dynamic (non-fixed) mock pools ───────────
+// See /api/mock/seen-ids and /api/mock/mark-seen in main.py. This only applies to a randomly-
+// sampled Full Mock Test or a "practice one section" drill — the 20 fixed tests always show
+// identical content on purpose and never touch any of this.
+
+// Drops any item this student has already been shown, unless that would leave the pool too thin
+// to draw from (i.e. it's effectively exhausted) — in which case falls back to the full pool
+// rather than erroring or degenerating into constant repeats within one draw. The backend clears
+// a pool's "seen" rows once every item has been shown at least once, so in the steady state this
+// naturally cycles: fresh items first, then a full wrap-around once the pool is exhausted.
+function excludeSeen(arr, seenIds, idFn = x => x.id) {
+  if (!seenIds || !seenIds.size || !arr || !arr.length) return arr
+  const remaining = arr.filter(x => !seenIds.has(String(idFn(x))))
+  return remaining.length ? remaining : arr
+}
+
+// Applied once, right when the dynamic pools are fetched, so every existing build*Queue/Module
+// function downstream keeps working unmodified — they just receive an already-trimmed pool. The
+// grouped 'car' (Choose a Response) pool is the one exception: it's flattened into individual
+// questions only inside buildListeningModule1/2 (see flattenCarPool), so its exclusion happens
+// there instead, using the raw seen-id set carried on the returned object's `_carSeenUids`.
+function filterPoolsBySeen(pools, seenIds) {
+  const s = seenIds || {}
+  return {
+    ...pools,
+    ctw: excludeSeen(pools.ctw, new Set(s.ctw)),
+    ridl: excludeSeen(pools.ridl, new Set(s.ridl)),
+    ap: excludeSeen(pools.ap, new Set(s.ap)),
+    conv: excludeSeen(pools.conv, new Set(s.conv)),
+    announce: excludeSeen(pools.announce, new Set(s.announce)),
+    at: excludeSeen(pools.at, new Set(s.at)),
+    bas: excludeSeen(pools.bas, new Set(s.bas)),
+    email: excludeSeen(pools.email, new Set(s.email)),
+    disc: excludeSeen(pools.disc, new Set(s.disc)),
+    lr: excludeSeen(pools.lr, new Set(s.lr)),
+    interview: excludeSeen(pools.interview, new Set(s.interview)),
+    car: pools.car, // filtered post-flatten inside buildListeningModule1/2 instead
+    _carSeenUids: new Set(s.car),
+  }
+}
+
+// Reads back out of a just-built slot queue which pool item ids actually got shown to the
+// student (as opposed to which ones were merely available in the pool), and fire-and-forgets a
+// /api/mock/mark-seen call per pool so next time's draw excludes them. Called right when each
+// module/section's slots are created, not when the student finishes answering — being shown a
+// question is what should stop it from repeating, even if the student saves & exits early.
+function markPoolItemsSeen(slots) {
+  const byPool = {}
+  const add = (pool, id) => { if (id === undefined || id === null) return; (byPool[pool] || (byPool[pool] = [])).push(String(id)) }
+  ;(slots || []).forEach(slot => {
+    if (!slot) return
+    if (slot.kind === 'car') {
+      (slot.data.questions || []).forEach(q => add('car', q._uid))
+    } else if (slot.kind === 'bas') {
+      (Array.isArray(slot.data) ? slot.data : []).forEach(item => add('bas', item.id))
+    } else if (['ctw', 'ridl', 'ap', 'conv', 'announce', 'at', 'email', 'disc', 'lr', 'interview'].includes(slot.kind)) {
+      add(slot.kind, slot.data && slot.data.id)
+    }
+  })
+  Object.entries(byPool).forEach(([pool, item_ids]) => {
+    if (!item_ids.length) return
+    apiFetch(`${BACKEND_URL}/api/mock/mark-seen`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ pool, item_ids }),
+    }).catch(() => {})
+  })
+}
+
 // Section-specific mapping from "percent of points earned" to the TOEFL 2026 format's band
 // scale — Reading and Listening are reported on a 1.0-6.0 scale, Writing and Speaking on a
 // 1.0-5.0 scale. Each table is [minRawOutOf30, band]. Reading/Listening are taken directly from
@@ -5792,7 +5860,7 @@ function buildReadingModule2(pools, used, good) {
 }
 
 function buildListeningModule1(pools) {
-  const flatCar = flattenCarPool(pools.car)
+  const flatCar = excludeSeen(flattenCarPool(pools.car), pools._carSeenUids, q => q._uid)
   const carN = 8 + Math.floor(Math.random() * 5) // 8-12
   const carSlot = buildCarSlot(flatCar, carN, new Set())
   const convs = pickN(pools.conv, 3)
@@ -5805,7 +5873,7 @@ function buildListeningModule1(pools) {
   }
 }
 function buildListeningModule2(pools, used, good) {
-  const flatCar = flattenCarPool(pools.car)
+  const flatCar = excludeSeen(flattenCarPool(pools.car), pools._carSeenUids, q => q._uid)
   const carSlot = buildCarSlot(flatCar, 6, used.car)
   if (good) {
     const ats = pickNPreferUnused(pools.at, 2, used.at)
@@ -6590,8 +6658,12 @@ function FullMockTest({ onBack, hasPremium = false }) {
       apiFetch(`${BACKEND_URL}/api/mock/academic-discussion`).then(r => r.json()).catch(() => []),
       apiFetch(`${BACKEND_URL}/api/mock/listen-and-repeat`).then(r => r.json()).catch(() => []),
       apiFetch(`${BACKEND_URL}/api/mock/interview`).then(r => r.json()).catch(() => []),
-    ]).then(([ctw, ridl, ap, car, conv, announce, at, bas, email, disc, lr, interview]) => {
-      setPools({ ctw, ridl, ap, car, conv, announce, at, bas, email, disc, lr, interview })
+      // Which items this student has already been shown by a past random draw, per pool — see
+      // filterPoolsBySeen above. Falls back to "nothing seen" (pools used unfiltered) if this
+      // fetch fails, so a network hiccup here never blocks starting the test.
+      apiFetch(`${BACKEND_URL}/api/mock/seen-ids`).then(r => r.json()).catch(() => ({})),
+    ]).then(([ctw, ridl, ap, car, conv, announce, at, bas, email, disc, lr, interview, seenIds]) => {
+      setPools(filterPoolsBySeen({ ctw, ridl, ap, car, conv, announce, at, bas, email, disc, lr, interview }, seenIds))
       setPhase('intro')
     })
   }, [fixedTestId])
@@ -6698,14 +6770,17 @@ function FullMockTest({ onBack, hasPremium = false }) {
       sessionRef.current.used.conv = m1.used.conv
       sessionRef.current.used.announce = m1.used.announce
       sessionRef.current.used.at = m1.used.at
+      markPoolItemsSeen(m1.slots)
       setQueue(m1.slots); setIdx(0); setStage('listening-m1')
       runWithNotices([sectionIntroNotice('listening'), module1Notice('listening')], () => setPhase('running'))
     } else if (m === 'writing') {
       const slots = buildWritingQueue(pools)
+      markPoolItemsSeen(slots)
       setQueue(slots); setIdx(0); setStage('writing')
       runWithNotices([sectionIntroNotice('writing'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
     } else if (m === 'speaking') {
       const slots = buildSpeakingQueue(pools)
+      markPoolItemsSeen(slots)
       setQueue(slots); setIdx(0); setStage('speaking')
       runWithNotices([sectionIntroNotice('speaking'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
     } else {
@@ -6714,6 +6789,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
       sessionRef.current.used.ctw = m1.used.ctw
       sessionRef.current.used.ridl = m1.used.ridl
       sessionRef.current.used.ap = m1.used.ap
+      markPoolItemsSeen(m1.slots)
       setQueue(m1.slots); setIdx(0); setStage('reading-m1')
       setReadingPoolLeft(computeReadingPoolSeconds(m1.slots))
       runWithNotices([sectionIntroNotice('reading'), module1Notice('reading')], () => setPhase('running'))
@@ -6797,6 +6873,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
       const r = s.stageRaw['reading-m1'] || { correct: 0, total: 0 }
       const good = isGoodPerf(r.correct, r.total)
       const slots = fixedTestId ? buildFixedReadingModule2(fixedBundle, good) : buildReadingModule2(pools, s.used, good)
+      if (!fixedTestId) markPoolItemsSeen(slots)
       setQueue(slots); setIdx(0); setStage('reading-m2')
       setReadingPoolLeft(computeReadingPoolSeconds(slots))
       runWithNotices(moduleTransitionNotices('reading'), () => setPhase('running'))
@@ -6810,22 +6887,26 @@ function FullMockTest({ onBack, hasPremium = false }) {
       }
       const m1 = buildListeningModule1(pools)
       s.used.car = m1.used.car; s.used.conv = m1.used.conv; s.used.announce = m1.used.announce; s.used.at = m1.used.at
+      markPoolItemsSeen(m1.slots)
       setQueue(m1.slots); setIdx(0); setStage('listening-m1')
       runWithNotices([endOfSectionNotice('reading'), sectionIntroNotice('listening'), module1Notice('listening')], () => setPhase('running'))
     } else if (stage === 'listening-m1') {
       const r = s.stageRaw['listening-m1'] || { correct: 0, total: 0 }
       const good = isGoodPerf(r.correct, r.total)
       const slots = fixedTestId ? buildFixedListeningModule2(fixedBundle, good) : buildListeningModule2(pools, s.used, good)
+      if (!fixedTestId) markPoolItemsSeen(slots)
       setQueue(slots); setIdx(0); setStage('listening-m2')
       runWithNotices(moduleTransitionNotices('listening'), () => setPhase('running'))
     } else if (stage === 'listening-m2') {
       if (mode === 'listening') { runWithNotices([endOfSectionNotice('listening')], () => setPhase('results')); return }
       const slots = fixedTestId ? buildFixedWritingQueue(fixedBundle) : buildWritingQueue(pools)
+      if (!fixedTestId) markPoolItemsSeen(slots)
       setQueue(slots); setIdx(0); setStage('writing')
       runWithNotices([endOfSectionNotice('listening'), sectionIntroNotice('writing'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
     } else if (stage === 'writing') {
       if (mode === 'writing') { runWithNotices([endOfSectionNotice('writing')], () => setPhase('results')); return }
       const slots = fixedTestId ? buildFixedSpeakingQueue(fixedBundle) : buildSpeakingQueue(pools)
+      if (!fixedTestId) markPoolItemsSeen(slots)
       setQueue(slots); setIdx(0); setStage('speaking')
       runWithNotices([endOfSectionNotice('writing'), sectionIntroNotice('speaking'), TASK_INTRO[slots[0].kind]], () => setPhase('running'))
     } else if (stage === 'speaking') {

@@ -734,5 +734,3156 @@
     ],
     "exampleResponse": "Dear Ms. Bennett,\n\nI hope this message finds you well. We spoke briefly at the campus job fair last week about the marketing internship opportunities at your company.\n\nThank you for taking the time to answer my questions and for sharing more about the internship program.\n\nCould you let me know what the next steps in the application process would be? I would love to learn more and am very interested in applying. Thank you again for your time.\n\nSincerely,\n[Your Name]",
     "id": 20
+  },
+  {
+    "id": 21,
+    "scenario": "Your academic advisor, Dr. Reyes, allowed you to submit your research proposal two days after the deadline because of a family emergency. You want to thank her and reassure her that your work is on track.",
+    "recipient": "Dr. Reyes",
+    "subject": "Thank you for the extension",
+    "tasks": [
+      {
+        "description": "Thank her for granting the extension.",
+        "keywords": [
+          "thank",
+          "appreciate",
+          "grateful"
+        ]
+      },
+      {
+        "description": "Explain briefly how the extra time helped you.",
+        "keywords": [
+          "extra time",
+          "additional time",
+          "helped",
+          "finish",
+          "revise",
+          "gather"
+        ]
+      },
+      {
+        "description": "Reassure her that the proposal is now complete and ready to submit.",
+        "keywords": [
+          "complete",
+          "ready",
+          "submit",
+          "finished",
+          "done"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dr. Reyes,\n\nThank you so much for allowing me extra time to submit my research proposal last week. I really appreciate your understanding during a difficult time for my family.\n\nThe additional two days made a big difference. I was able to finish gathering my sources and revise my methodology section more carefully, so the final proposal is much stronger than my first draft would have been.\n\nI wanted to let you know that the proposal is now complete, and I will submit it through the online portal by tomorrow morning. Thank you again for your patience and support.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 22,
+    "scenario": "Your university's environmental club is organizing a weekend beach cleanup and is looking for new volunteers. You are interested in joining but want more details before committing.",
+    "recipient": "Mr. Alvarez",
+    "subject": "Question about the beach cleanup event",
+    "tasks": [
+      {
+        "description": "Express your interest in volunteering for the cleanup.",
+        "keywords": [
+          "interested",
+          "volunteer",
+          "join",
+          "like to",
+          "sign up"
+        ]
+      },
+      {
+        "description": "Ask what time the event starts and how long it will last.",
+        "keywords": [
+          "what time",
+          "how long",
+          "start",
+          "begin",
+          "last",
+          "end"
+        ]
+      },
+      {
+        "description": "Ask whether the club provides any equipment, such as gloves or bags.",
+        "keywords": [
+          "gloves",
+          "bags",
+          "equipment",
+          "supplies",
+          "provide"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Mr. Alvarez,\n\nI saw the flyer about the beach cleanup this weekend, and I would like to take part. Outdoor volunteer work is something I really enjoy, and I think this would be a great way to get involved with the club.\n\nCould you tell me what time the event begins and roughly how long it will run? I want to make sure I can plan my schedule around it.\n\nI was also wondering whether the club will provide gloves and trash bags, or if volunteers need to bring their own supplies. Thank you for organizing this event, and I look forward to hearing from you.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 23,
+    "scenario": "You ordered a textbook online for one of your classes, but it never arrived even though the tracking information says it was delivered three days ago. Classes start tomorrow and you need the book.",
+    "recipient": "Customer Service",
+    "subject": "Missing order - textbook not received",
+    "tasks": [
+      {
+        "description": "Explain that your order has not arrived despite the delivery confirmation.",
+        "keywords": [
+          "not arrived",
+          "haven't received",
+          "missing",
+          "hasn't come",
+          "never arrived"
+        ]
+      },
+      {
+        "description": "Mention that you need the book urgently because classes start tomorrow.",
+        "keywords": [
+          "urgent",
+          "tomorrow",
+          "classes start",
+          "need it",
+          "as soon as possible"
+        ]
+      },
+      {
+        "description": "Ask what options are available, such as a replacement or refund.",
+        "keywords": [
+          "replacement",
+          "refund",
+          "options",
+          "resend",
+          "reship"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Customer Service,\n\nI am writing about an order that has not arrived. The tracking page shows that my textbook was delivered three days ago, but I have not received any package at my address.\n\nThis is urgent because my classes start tomorrow, and I need this textbook for the first assignment. I have already checked with my neighbors and the front desk, but no one has seen the package.\n\nCould you let me know what options are available? I would be grateful for either a replacement shipped with express delivery or a refund so that I can purchase the book elsewhere. Thank you for your quick attention to this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 24,
+    "scenario": "Your economics professor mentioned in class that the department is looking for a student note-taker to support a classmate who has a documented learning disability. You are interested in the paid position.",
+    "recipient": "Professor Whitfield",
+    "subject": "Interest in the note-taker position",
+    "tasks": [
+      {
+        "description": "Explain that you are interested in the note-taker position.",
+        "keywords": [
+          "interested",
+          "position",
+          "note-taker",
+          "apply",
+          "note taker"
+        ]
+      },
+      {
+        "description": "Mention why you would be a good fit for the role.",
+        "keywords": [
+          "good fit",
+          "reliable",
+          "organized",
+          "detailed notes",
+          "experience",
+          "responsible"
+        ]
+      },
+      {
+        "description": "Ask what the next steps are to apply.",
+        "keywords": [
+          "next steps",
+          "apply",
+          "how do i",
+          "what should i",
+          "process"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Whitfield,\n\nI am writing about the note-taker position you mentioned in class today. I would like to be considered for the role.\n\nI think I would be a good fit because I take detailed, organized notes and have not missed a single class this semester. I am also very reliable and would take the responsibility seriously, since a classmate is depending on the notes.\n\nCould you tell me what the next steps are to apply? I am happy to provide a writing sample or meet with the department if that would help. Thank you for considering me.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 25,
+    "scenario": "You have been sick with the flu for the past four days and were unable to complete a major essay for your literature course. The paper is due tomorrow, and you want to ask Professor Andersen for a short extension so you can turn in your best work.",
+    "recipient": "Professor Andersen",
+    "subject": "Extension request for literature essay",
+    "tasks": [
+      {
+        "description": "Explain that you have been ill and could not finish the essay.",
+        "keywords": [
+          "sick",
+          "ill",
+          "flu",
+          "unwell",
+          "unable to finish"
+        ]
+      },
+      {
+        "description": "Ask for a short extension, e.g. a few days.",
+        "keywords": [
+          "extension",
+          "extra days",
+          "few more days",
+          "additional time",
+          "postpone"
+        ]
+      },
+      {
+        "description": "Reassure that you will submit as soon as possible and that it will be your best work.",
+        "keywords": [
+          "as soon as possible",
+          "submit soon",
+          "complete",
+          "best work",
+          "finish"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Andersen,\n\nI am writing because I have been sick with the flu for the past four days and was unable to finish the essay that is due tomorrow. I saw a doctor yesterday and I am only now starting to feel better.\n\nI was wondering if it would be possible to have a short extension, perhaps two or three extra days, so that I can properly finish my analysis instead of submitting rushed work. I have already completed most of my research, but I need more time to revise my argument carefully.\n\nI will submit the essay as soon as possible once I recover, and I promise it will reflect my best effort. Thank you for understanding, and please let me know if you need any documentation.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 26,
+    "scenario": "You are enrolled in a chemistry lab that conflicts with your part-time work schedule every Tuesday afternoon. Another lab section meets on Thursday mornings and still has open seats. You want to ask Professor Osei for permission to switch sections.",
+    "recipient": "Professor Osei",
+    "subject": "Request to switch lab sections",
+    "tasks": [
+      {
+        "description": "Explain the scheduling conflict with your Tuesday lab.",
+        "keywords": [
+          "conflict",
+          "schedule conflict",
+          "work schedule",
+          "overlaps",
+          "clashes"
+        ]
+      },
+      {
+        "description": "Ask permission to move to the Thursday morning section.",
+        "keywords": [
+          "switch",
+          "move to",
+          "transfer",
+          "change section",
+          "Thursday morning"
+        ]
+      },
+      {
+        "description": "Mention that the new section has open seats you confirmed.",
+        "keywords": [
+          "open seats",
+          "available",
+          "space",
+          "confirmed",
+          "room"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Osei,\n\nI am writing about a scheduling conflict with my chemistry lab. My part-time job now requires me to work every Tuesday afternoon, which overlaps directly with the lab session I am currently enrolled in.\n\nI would like to ask for your permission to switch to the Thursday morning lab section instead. This time works well with my job schedule and would allow me to continue attending every session without missing any experiments.\n\nI checked with the department office, and the Thursday section still has open seats available, so space should not be an issue. Please let me know if you approve this change or if there is a form I need to complete. Thank you for considering my request.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 27,
+    "scenario": "Your economics professor, Dr. Lindqvist, posted a group project assignment, but the instructions do not specify whether each member needs to submit an individual reflection or just one report per group. The deadline is next week and your group wants to start.",
+    "recipient": "Dr. Lindqvist",
+    "subject": "Question about group project requirements",
+    "tasks": [
+      {
+        "description": "Explain that the instructions are unclear about individual vs group submission.",
+        "keywords": [
+          "unclear",
+          "not clear",
+          "confused",
+          "not sure",
+          "ambiguous"
+        ]
+      },
+      {
+        "description": "Ask specifically whether each member submits separately or one report per group.",
+        "keywords": [
+          "individually",
+          "each member",
+          "one report",
+          "per group",
+          "separately"
+        ]
+      },
+      {
+        "description": "Mention you want to clarify before the deadline so the group can start.",
+        "keywords": [
+          "before the deadline",
+          "start",
+          "begin working",
+          "next week",
+          "in advance"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dr. Lindqvist,\n\nI am writing about the group project you assigned last week. My group and I have read through the instructions carefully, but we are unclear about one part of the submission requirements.\n\nCould you please clarify whether each member of the group needs to submit an individual reflection, or whether we should submit just one report per group? We want to make sure we follow the correct format before we begin working together.\n\nSince the deadline is next week, we would like to start as soon as possible, so any clarification you can provide in advance would be very helpful. Thank you for taking the time to answer our question.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 28,
+    "scenario": "You received a lower grade than expected on your midterm exam in a statistics course. You do not understand which parts of your answers lost points and want to meet with Professor Novak during his office hours to go over the exam together.",
+    "recipient": "Professor Novak",
+    "subject": "Meeting to discuss midterm exam",
+    "tasks": [
+      {
+        "description": "Explain you were surprised by your midterm grade and want to understand it better.",
+        "keywords": [
+          "surprised",
+          "lower than expected",
+          "understand",
+          "grade",
+          "unclear why"
+        ]
+      },
+      {
+        "description": "Ask to meet during his office hours.",
+        "keywords": [
+          "office hours",
+          "meet with you",
+          "schedule a meeting",
+          "come by",
+          "appointment"
+        ]
+      },
+      {
+        "description": "Mention you would like to review your exam together to see where you lost points.",
+        "keywords": [
+          "review",
+          "go over",
+          "lost points",
+          "together",
+          "exam"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Novak,\n\nI hope this email finds you well. I recently received my midterm exam back, and I was surprised that my grade was lower than I expected based on how confident I felt during the test.\n\nI would like to schedule a time to meet with you during your office hours this week to better understand where I went wrong. Reviewing my mistakes would really help me prepare for the final exam.\n\nWould it be possible to go over the exam together and discuss which sections cost me the most points? I want to make sure I understand the material correctly rather than just memorizing formulas. Please let me know which day works best for you.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 29,
+    "scenario": "The add deadline for a popular seminar has already passed, but you found out about an open seat after a student dropped. You want to ask Professor Choudhury for permission to join the class even though the deadline has passed.",
+    "recipient": "Professor Choudhury",
+    "subject": "Request to join seminar after add deadline",
+    "tasks": [
+      {
+        "description": "Explain that you missed the add deadline but a seat recently opened up.",
+        "keywords": [
+          "missed the deadline",
+          "add deadline has passed",
+          "opened up",
+          "dropped",
+          "available seat"
+        ]
+      },
+      {
+        "description": "Ask for permission to join the class late.",
+        "keywords": [
+          "permission",
+          "join late",
+          "let me in",
+          "add me",
+          "enroll"
+        ]
+      },
+      {
+        "description": "Reassure that you will catch up quickly on missed material.",
+        "keywords": [
+          "catch up",
+          "review notes",
+          "make up",
+          "quickly",
+          "get up to speed"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Choudhury,\n\nI am writing because I recently learned that a seat opened up in your seminar after a student dropped the course. I know the add deadline has already passed, but I was hoping you might still allow me to join.\n\nI have been very interested in this seminar since the semester began, and I would be grateful for the chance to take it even though I missed the official enrollment window. I understand that only two weeks of material have been covered so far.\n\nIf you are willing to let me add the course, I promise to catch up quickly by reviewing the syllabus, borrowing notes from classmates, and attending your office hours if needed. Thank you for considering my request.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 30,
+    "scenario": "You have finished all the required courses in your minor and want to explore a specialized topic in urban planning that is not offered as a regular class. You want to ask Dr. Fitzgerald to supervise an independent study next semester.",
+    "recipient": "Dr. Fitzgerald",
+    "subject": "Proposal for an independent study",
+    "tasks": [
+      {
+        "description": "Explain your interest in the specialized topic not covered in regular courses.",
+        "keywords": [
+          "specialized topic",
+          "not offered",
+          "interested in",
+          "urban planning",
+          "specific area"
+        ]
+      },
+      {
+        "description": "Ask if she would be willing to supervise an independent study.",
+        "keywords": [
+          "supervise",
+          "independent study",
+          "willing to",
+          "guide",
+          "oversee"
+        ]
+      },
+      {
+        "description": "Mention you are open to designing the reading list and schedule together.",
+        "keywords": [
+          "reading list",
+          "schedule",
+          "design together",
+          "plan",
+          "discuss details"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dr. Fitzgerald,\n\nI hope you are having a good week. I have completed all the required courses for my minor, but I remain very interested in a specialized area of urban planning that is not offered as a regular class: sustainable transit design in mid-sized cities.\n\nI am writing to ask whether you would be willing to supervise an independent study on this topic next semester. Your expertise in transportation policy makes you the person I would most value learning from.\n\nI am happy to help design the reading list and meeting schedule together, based on whatever structure works best for your time. Would you be available to meet sometime this month to discuss the details further? Thank you for considering this opportunity.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 31,
+    "scenario": "You have been working in a research lab for one semester, but the project no longer matches your career interests in renewable energy. You want to ask your advisor, Dr. Petrov, about transferring to a different research group in the department.",
+    "recipient": "Dr. Petrov",
+    "subject": "Interest in switching research groups",
+    "tasks": [
+      {
+        "description": "Explain that your current project no longer matches your interests.",
+        "keywords": [
+          "no longer matches",
+          "interests have changed",
+          "different direction",
+          "not aligned",
+          "shifted"
+        ]
+      },
+      {
+        "description": "Ask about transferring to a different research group focused on renewable energy.",
+        "keywords": [
+          "transfer",
+          "switch groups",
+          "different lab",
+          "renewable energy",
+          "move to"
+        ]
+      },
+      {
+        "description": "Ask for his advice or guidance on how to make this transition smoothly.",
+        "keywords": [
+          "advice",
+          "guidance",
+          "how to proceed",
+          "recommend",
+          "suggestions"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dr. Petrov,\n\nI wanted to reach out about my current research position. Over the past semester, I have realized that my interests have shifted more toward renewable energy, and the project I am currently working on no longer matches the direction I want to pursue.\n\nI am interested in transferring to a research group in the department that focuses specifically on renewable energy systems. I have genuinely enjoyed developing my research skills this semester, but I feel I would grow more by working on a project aligned with my long-term goals.\n\nCould you offer any advice on how to approach this transition smoothly, or recommend a faculty member who might be looking for students? I would appreciate your guidance before making any final decisions.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 32,
+    "scenario": "A sudden family emergency required you to travel home unexpectedly, causing you to miss a scheduled final exam in your biology course. You want to explain the situation to Professor Mensah and ask about taking a makeup exam.",
+    "recipient": "Professor Mensah",
+    "subject": "Missed final exam due to family emergency",
+    "tasks": [
+      {
+        "description": "Explain that a family emergency caused you to miss the final exam.",
+        "keywords": [
+          "family emergency",
+          "missed the exam",
+          "unexpected",
+          "had to travel",
+          "unable to attend"
+        ]
+      },
+      {
+        "description": "Apologize for not notifying him beforehand.",
+        "keywords": [
+          "apologize",
+          "sorry",
+          "could not notify",
+          "short notice",
+          "in advance"
+        ]
+      },
+      {
+        "description": "Ask about the possibility of taking a makeup exam.",
+        "keywords": [
+          "makeup exam",
+          "reschedule",
+          "alternative date",
+          "retake",
+          "another time"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Mensah,\n\nI am writing to explain why I was not able to attend the final exam yesterday. A sudden family emergency required me to travel home unexpectedly, and I was unable to reach the exam room or notify anyone in time.\n\nI sincerely apologize for not contacting you in advance about my absence. The situation developed very quickly, and my focus was entirely on getting home to support my family during a difficult moment.\n\nNow that things have settled, I wanted to ask whether it would be possible to take a makeup exam at another time that works with your schedule. I am ready to take it as soon as you are available, and I can provide documentation if needed. Thank you for your understanding.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 33,
+    "scenario": "Your grade in a philosophy course is slightly below the threshold you need for your scholarship requirements. You noticed the syllabus does not mention extra credit, but you want to ask Ms. Kowalski, your professor, if any opportunity might be available before finals.",
+    "recipient": "Ms. Kowalski",
+    "subject": "Asking about extra credit opportunities",
+    "tasks": [
+      {
+        "description": "Explain your current grade is close to but below the threshold you need.",
+        "keywords": [
+          "slightly below",
+          "threshold",
+          "need to maintain",
+          "scholarship requirement",
+          "close to"
+        ]
+      },
+      {
+        "description": "Ask if there is any extra credit opportunity available.",
+        "keywords": [
+          "extra credit",
+          "additional assignment",
+          "opportunity",
+          "bonus",
+          "improve my grade"
+        ]
+      },
+      {
+        "description": "Mention you are willing to put in the extra work before finals.",
+        "keywords": [
+          "willing to",
+          "extra work",
+          "before finals",
+          "put in the effort",
+          "however I can"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Kowalski,\n\nI hope you are doing well. I wanted to reach out because my current grade in your philosophy course is slightly below the threshold I need to maintain for my scholarship requirements.\n\nI noticed the syllabus does not mention any extra credit options, but I wanted to ask whether an opportunity might still be available before finals. I have really enjoyed the course material and would welcome the chance to demonstrate my understanding further.\n\nI am willing to complete an additional essay, a reading response, or however else you feel would be fair to other students. Please let me know if this is possible, and thank you for taking the time to consider my request.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 34,
+    "scenario": "You submitted the first full draft of your senior thesis to your advisor, Dr. Larsen, two weeks ago and have not yet heard back. The final submission deadline is approaching, and you want to politely ask for feedback so you can revise in time.",
+    "recipient": "Dr. Larsen",
+    "subject": "Following up on thesis draft feedback",
+    "tasks": [
+      {
+        "description": "Politely mention that you submitted the draft two weeks ago.",
+        "keywords": [
+          "submitted",
+          "two weeks ago",
+          "sent you",
+          "draft",
+          "earlier this month"
+        ]
+      },
+      {
+        "description": "Ask if she has had a chance to review it and could share feedback.",
+        "keywords": [
+          "feedback",
+          "review",
+          "chance to look",
+          "comments",
+          "thoughts"
+        ]
+      },
+      {
+        "description": "Mention the deadline is approaching and you need time to revise.",
+        "keywords": [
+          "deadline",
+          "approaching",
+          "time to revise",
+          "final submission",
+          "running out of time"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dr. Larsen,\n\nI hope you are doing well. I wanted to follow up regarding the first full draft of my senior thesis, which I submitted to you two weeks ago.\n\nI understand you have a busy schedule, but I was wondering if you have had a chance to review it yet. Any feedback or comments you could share, even brief ones, would help me a great deal at this stage.\n\nSince the final submission deadline is approaching, I would like to leave myself enough time to revise the chapters based on your suggestions. If it would be easier to discuss the draft in person, I would be happy to stop by during your office hours. Thank you for your guidance throughout this process.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 35,
+    "scenario": "You want to replace one of your required elective courses with a more relevant class you already completed at a summer program. The registrar's office told you that your department chair, Professor Kimura, needs to sign a course substitution form.",
+    "recipient": "Professor Kimura",
+    "subject": "Signature needed for course substitution form",
+    "tasks": [
+      {
+        "description": "Explain that you want to substitute a required elective with a course from a summer program.",
+        "keywords": [
+          "substitute",
+          "replace",
+          "summer program",
+          "already completed",
+          "elective"
+        ]
+      },
+      {
+        "description": "Explain that the registrar's office requires his signature on the form.",
+        "keywords": [
+          "registrar's office",
+          "requires your signature",
+          "sign",
+          "form",
+          "approval"
+        ]
+      },
+      {
+        "description": "Ask when you could stop by or how to get the form signed.",
+        "keywords": [
+          "stop by",
+          "office hours",
+          "sign it",
+          "when would be convenient",
+          "drop off"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Professor Kimura,\n\nI am writing about a course substitution I would like to make. Last summer, I completed a course on data visualization through a summer program, and I believe it would be a more relevant substitute for one of my required electives.\n\nThe registrar's office informed me that this kind of substitution requires the signature of the department chair before it can be processed. Since you hold that role, I wanted to ask if you would be willing to review and sign the form.\n\nCould you let me know when it would be convenient for me to stop by your office with the paperwork and the course syllabus from the summer program? I appreciate your time and help with this request.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 36,
+    "scenario": "Your current academic advisor is retiring at the end of the semester and will no longer be available to guide your remaining coursework. You want to email the department administrator, Ms. Alvarez, to ask about the process for being assigned a new advisor.",
+    "recipient": "Ms. Alvarez",
+    "subject": "Requesting a new academic advisor",
+    "tasks": [
+      {
+        "description": "Explain that your current advisor is retiring and will no longer be available.",
+        "keywords": [
+          "retiring",
+          "no longer available",
+          "stepping down",
+          "end of the semester",
+          "leaving"
+        ]
+      },
+      {
+        "description": "Ask about the process for being assigned a new advisor.",
+        "keywords": [
+          "process",
+          "assigned",
+          "new advisor",
+          "how do I",
+          "procedure"
+        ]
+      },
+      {
+        "description": "Mention you would like this resolved before registration for next semester.",
+        "keywords": [
+          "before registration",
+          "next semester",
+          "as soon as possible",
+          "in time",
+          "resolved soon"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Alvarez,\n\nI am writing because my current academic advisor has informed me that she is retiring at the end of this semester and will no longer be available to guide my coursework going forward.\n\nCould you please let me know what the process is for being assigned a new academic advisor? I am not sure whether I need to select someone myself or whether the department will assign one automatically.\n\nI would really appreciate it if this could be resolved before registration for next semester begins, since I will need guidance on which courses to choose. Please let me know what steps I should take or what forms I might need to complete.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 37,
+    "scenario": "You requested an official transcript from the registrar's office two weeks ago to send to a scholarship committee, but the tracking number provided still shows no updates. The scholarship deadline is in five days, and you need to follow up urgently.",
+    "recipient": "Office of the Registrar",
+    "subject": "Delay in transcript request",
+    "tasks": [
+      {
+        "description": "Explain that you requested a transcript two weeks ago and it still has not been processed.",
+        "keywords": [
+          "requested",
+          "two weeks ago",
+          "not been processed",
+          "still waiting",
+          "no updates"
+        ]
+      },
+      {
+        "description": "Mention the scholarship deadline in five days.",
+        "keywords": [
+          "deadline",
+          "five days",
+          "scholarship committee",
+          "due soon",
+          "time-sensitive"
+        ]
+      },
+      {
+        "description": "Ask for an update or expedited processing.",
+        "keywords": [
+          "update",
+          "expedite",
+          "status",
+          "rush",
+          "urgent"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of the Registrar,\n\nI am writing to follow up on an official transcript request I submitted two weeks ago. According to the tracking number I received, the request still shows no updates, and the transcript has not yet been sent.\n\nThis is becoming urgent because the transcript needs to reach a scholarship committee within the next five days. Missing this deadline could affect my eligibility for the award, so I wanted to bring this to your attention as soon as possible.\n\nCould you please provide an update on the status of my request, or let me know if it is possible to expedite the processing? I would be happy to provide my request number or any other information you need. Thank you for your help with this urgent matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 38,
+    "scenario": "When you checked your class schedule, you noticed you were accidentally enrolled in an advanced statistics section instead of the introductory section you selected during registration. The semester starts next week, and you need this corrected before classes begin.",
+    "recipient": "Office of the Registrar",
+    "subject": "Incorrect course section enrollment",
+    "tasks": [
+      {
+        "description": "Explain that you were mistakenly enrolled in the wrong section.",
+        "keywords": [
+          "mistakenly enrolled",
+          "wrong section",
+          "error",
+          "incorrect",
+          "accidentally"
+        ]
+      },
+      {
+        "description": "Clarify which section you actually selected during registration.",
+        "keywords": [
+          "intended to register",
+          "introductory section",
+          "selected",
+          "originally chose",
+          "correct section"
+        ]
+      },
+      {
+        "description": "Ask for this to be corrected before the semester starts next week.",
+        "keywords": [
+          "corrected",
+          "before the semester starts",
+          "next week",
+          "fix this",
+          "resolve quickly"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of the Registrar,\n\nI am writing because I noticed an error in my class schedule. When I checked my enrollment today, I found that I was placed in the advanced statistics section instead of the introductory section I selected during registration.\n\nI clearly remember choosing the introductory course, since I have not yet taken the prerequisite required for the advanced level. I am concerned that being enrolled in the wrong section will put me at a serious disadvantage from the first day of class.\n\nSince the semester starts next week, I would appreciate it if this could be corrected as soon as possible. Please let me know if you need any additional information from me to fix this, or if I should visit the office in person.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 39,
+    "scenario": "You received a merit scholarship last year, but the renewal criteria on the financial aid website seem to have changed and are unclear to you. You want to email the Office of Financial Aid to confirm what GPA and credit requirements you must meet this year.",
+    "recipient": "Office of Financial Aid",
+    "subject": "Question about scholarship renewal requirements",
+    "tasks": [
+      {
+        "description": "Mention that you received the scholarship last year and want to confirm renewal eligibility.",
+        "keywords": [
+          "received the scholarship",
+          "last year",
+          "renew",
+          "eligibility",
+          "continue receiving"
+        ]
+      },
+      {
+        "description": "Explain the requirements on the website are unclear and ask for clarification.",
+        "keywords": [
+          "unclear",
+          "not clear",
+          "confusing",
+          "clarify",
+          "confirm requirements"
+        ]
+      },
+      {
+        "description": "Ask specifically about the GPA and credit hour requirements.",
+        "keywords": [
+          "GPA requirement",
+          "credit hours",
+          "minimum",
+          "how many credits",
+          "required GPA"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of Financial Aid,\n\nI am writing to ask about the renewal requirements for the merit scholarship I received last year. I want to make sure I meet all the conditions necessary to continue receiving this support.\n\nWhen I checked the financial aid website, the renewal criteria seemed to have changed recently, and the wording was a little unclear to me. I was hoping you could clarify the exact requirements so that I do not risk losing the scholarship by mistake.\n\nSpecifically, could you confirm the minimum GPA I need to maintain and the number of credit hours I must complete each semester? Any additional details about the renewal process would also be very helpful. Thank you for your time.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 40,
+    "scenario": "As an international student, you need an updated I-20 form to apply for a summer internship that requires proof of your program end date. You want to ask the International Student Office to issue an updated document as soon as possible.",
+    "recipient": "International Student Office",
+    "subject": "Request for updated I-20 form",
+    "tasks": [
+      {
+        "description": "Explain that you need an updated I-20 for a summer internship application.",
+        "keywords": [
+          "updated I-20",
+          "internship application",
+          "need for",
+          "required documentation",
+          "proof of status"
+        ]
+      },
+      {
+        "description": "Specify that the internship requires proof of your program end date.",
+        "keywords": [
+          "program end date",
+          "proof of",
+          "confirm",
+          "end date",
+          "documentation shows"
+        ]
+      },
+      {
+        "description": "Ask how to request the updated form and how long processing takes.",
+        "keywords": [
+          "how to request",
+          "processing time",
+          "how long",
+          "steps",
+          "submit a request"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear International Student Office,\n\nI am writing to request an updated I-20 form. I have been offered a summer internship, and the company has asked me to provide documentation confirming my current visa status and program end date before they finalize my offer.\n\nMy current I-20 does not reflect this information clearly, so I need an updated version that shows my correct program end date as proof of status for the internship application.\n\nCould you please let me know the steps I need to follow to request this update, and how long the processing usually takes? The internship coordinator has asked for the document within the next two weeks, so I want to make sure I submit my request in time. Thank you for your assistance.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 41,
+    "scenario": "Paying your full tuition balance in one lump sum this semester would create serious financial strain for your family. You heard that the university offers monthly payment plans and want to ask the Student Accounts Office how to enroll before the payment deadline.",
+    "recipient": "Student Accounts Office",
+    "subject": "Inquiry about tuition payment plans",
+    "tasks": [
+      {
+        "description": "Explain that paying the full tuition balance at once is difficult for your family.",
+        "keywords": [
+          "difficult",
+          "financial strain",
+          "full balance",
+          "lump sum",
+          "struggle to pay"
+        ]
+      },
+      {
+        "description": "Ask about enrolling in a monthly payment plan.",
+        "keywords": [
+          "payment plan",
+          "monthly installments",
+          "enroll",
+          "spread out payments",
+          "split the balance"
+        ]
+      },
+      {
+        "description": "Ask what the deadline is to sign up before late fees apply.",
+        "keywords": [
+          "deadline",
+          "sign up",
+          "before late fees",
+          "enrollment deadline",
+          "in time"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Student Accounts Office,\n\nI am writing because paying my full tuition balance in one lump sum this semester would create serious financial strain for my family. I understand the university offers alternative payment options, and I would like to explore them.\n\nCould you please tell me how I can enroll in a monthly payment plan instead of paying the entire balance at once? Spreading the payments out over the semester would make a significant difference for us.\n\nI would also like to know the deadline to sign up for this plan so that I can enroll before any late fees are applied to my account. Please let me know what documents or steps are needed to get started. Thank you for your help.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 42,
+    "scenario": "You were assigned to a triple room, but when you arrived on campus, you discovered the room only has two beds and a shared closet, making it impossible for three students to live there comfortably. You want to report this to the Housing Office right away.",
+    "recipient": "Office of Housing and Residence Life",
+    "subject": "Problem with triple room assignment",
+    "tasks": [
+      {
+        "description": "Explain that your assigned triple room only has space for two students.",
+        "keywords": [
+          "only two beds",
+          "not enough space",
+          "triple room",
+          "cannot fit",
+          "insufficient"
+        ]
+      },
+      {
+        "description": "Describe the specific issue such as the shared closet and limited space.",
+        "keywords": [
+          "shared closet",
+          "limited space",
+          "uncomfortable",
+          "overcrowded",
+          "cramped"
+        ]
+      },
+      {
+        "description": "Ask for a reassignment or resolution as soon as possible.",
+        "keywords": [
+          "reassign",
+          "move",
+          "resolve",
+          "as soon as possible",
+          "alternative room"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of Housing and Residence Life,\n\nI am writing to report a problem with my room assignment. I was placed in a triple room with two other students, but when we arrived, we found that the room only has two beds and a single shared closet.\n\nWith three of us trying to live in this space, it has become extremely cramped and uncomfortable. There is simply not enough furniture or storage for all of us, and we are worried this will affect our ability to study and rest properly.\n\nCould someone from your office visit the room to confirm the issue, and let us know what options are available? We would appreciate a reassignment to a proper triple room, or any other solution you can offer as soon as possible. Thank you for looking into this.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 43,
+    "scenario": "Your financial aid was supposed to be disbursed to your student account at the start of the semester, but it still has not appeared, and you are now unable to pay for your textbooks and housing deposit. You want to contact the Office of Financial Aid urgently.",
+    "recipient": "Office of Financial Aid",
+    "subject": "Financial aid disbursement has not arrived",
+    "tasks": [
+      {
+        "description": "Explain that your financial aid has not been disbursed as expected.",
+        "keywords": [
+          "not been disbursed",
+          "hasn't arrived",
+          "missing",
+          "delayed",
+          "not appeared"
+        ]
+      },
+      {
+        "description": "Mention the practical problems this is causing, such as paying for textbooks and housing deposit.",
+        "keywords": [
+          "textbooks",
+          "housing deposit",
+          "unable to pay",
+          "cannot afford",
+          "struggling"
+        ]
+      },
+      {
+        "description": "Ask for an explanation and a timeline for when the funds will arrive.",
+        "keywords": [
+          "timeline",
+          "when will",
+          "explanation",
+          "status",
+          "expected date"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of Financial Aid,\n\nI am writing because my financial aid was supposed to be disbursed to my student account at the start of the semester, but it still has not appeared more than two weeks later.\n\nThis delay is causing real problems for me. I am currently unable to purchase my required textbooks, and I am also behind on paying my housing deposit, which is putting my room assignment at risk.\n\nCould you please look into why my disbursement has not gone through and provide an explanation along with a timeline for when I can expect the funds to arrive? I would appreciate any update you can share as soon as possible, since these expenses cannot wait much longer. Thank you for your attention to this urgent matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 44,
+    "scenario": "Your parents' health insurance provider requires proof that you are a full-time student in order to keep you covered under their family plan. You need an official enrollment verification letter from the registrar before the insurance deadline next week.",
+    "recipient": "Office of the Registrar",
+    "subject": "Enrollment verification letter needed",
+    "tasks": [
+      {
+        "description": "Explain that your insurance provider requires proof of full-time enrollment.",
+        "keywords": [
+          "insurance provider",
+          "proof of enrollment",
+          "full-time student",
+          "requires",
+          "coverage"
+        ]
+      },
+      {
+        "description": "Ask for an official enrollment verification letter.",
+        "keywords": [
+          "verification letter",
+          "official letter",
+          "enrollment letter",
+          "confirm my status",
+          "documentation"
+        ]
+      },
+      {
+        "description": "Mention the insurance deadline next week and ask how quickly it can be issued.",
+        "keywords": [
+          "deadline next week",
+          "as soon as possible",
+          "how quickly",
+          "issued",
+          "in time"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of the Registrar,\n\nI am writing because my parents' health insurance provider requires proof that I am currently a full-time student in order to keep me covered under their family plan.\n\nCould you please issue an official enrollment verification letter confirming my full-time status this semester? I believe this is a standard document, but I want to make sure it includes all the details the insurance company typically asks for, such as my expected graduation date.\n\nSince the insurance deadline is next week, I would be grateful if this could be processed quickly. Please let me know if I need to submit a formal request through the student portal or if you can send it directly. Thank you for your help with this time-sensitive matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 45,
+    "scenario": "You realized too late that you are struggling significantly in an advanced chemistry course due to a scheduling overload, but the deadline to drop classes without penalty has already passed. You want to ask the registrar about submitting a late drop petition.",
+    "recipient": "Office of the Registrar",
+    "subject": "Petition to drop a course after the deadline",
+    "tasks": [
+      {
+        "description": "Explain that you realized too late that you needed to drop the course.",
+        "keywords": [
+          "realized too late",
+          "deadline passed",
+          "struggling",
+          "already past",
+          "missed the deadline"
+        ]
+      },
+      {
+        "description": "Ask about the process for submitting a late drop petition.",
+        "keywords": [
+          "late drop petition",
+          "process",
+          "submit a petition",
+          "exception",
+          "how do I request"
+        ]
+      },
+      {
+        "description": "Briefly explain your reason, such as scheduling overload, to support the request.",
+        "keywords": [
+          "overload",
+          "too many credits",
+          "workload",
+          "reason",
+          "circumstances"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of the Registrar,\n\nI am writing to ask about the process for submitting a late drop petition. I realized too late that I am struggling significantly in my advanced chemistry course, but by the time I understood the extent of the problem, the regular drop deadline had already passed.\n\nThis semester, I ended up with a heavier course load than I planned, and balancing five demanding classes at once has made it very difficult to keep up with the chemistry material specifically.\n\nCould you please explain what steps I need to take to submit a late drop petition, and whether there are any forms or supporting documents I should prepare? I want to address this responsibly and appreciate any guidance you can offer.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 46,
+    "scenario": "You are transferring to a different university next semester and need your current school to send an official transcript directly to the new institution's admissions office. You want to confirm the process with the registrar before the transfer deadline.",
+    "recipient": "Office of the Registrar",
+    "subject": "Sending official transcript to another university",
+    "tasks": [
+      {
+        "description": "Explain that you are transferring and need an official transcript sent to your new university.",
+        "keywords": [
+          "transferring",
+          "new university",
+          "send an official transcript",
+          "admissions office",
+          "directly to"
+        ]
+      },
+      {
+        "description": "Ask about the process and any forms needed to request this.",
+        "keywords": [
+          "process",
+          "form",
+          "request form",
+          "how do I request",
+          "steps"
+        ]
+      },
+      {
+        "description": "Ask about the timeline to ensure it arrives before the transfer deadline.",
+        "keywords": [
+          "timeline",
+          "before the deadline",
+          "how long",
+          "arrive in time",
+          "processing time"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of the Registrar,\n\nI am writing because I am transferring to a different university next semester and need to have my official transcript sent directly to their admissions office.\n\nCould you please explain the process for requesting this? I want to make sure I complete the correct form and provide all the necessary information, including the exact mailing or electronic address the new university requires.\n\nI would also like to know the expected processing timeline, since the admissions office has set a firm deadline for receiving transfer documents. If there is any way to expedite the request, I would appreciate knowing about that option as well. Thank you for your help with this transition.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 47,
+    "scenario": "You are graduating in December and want to apply for Optional Practical Training so you can work in the country after finishing your degree. You are unsure about the application timeline and want to ask International Student and Scholar Services for guidance.",
+    "recipient": "International Student and Scholar Services",
+    "subject": "Question about OPT application timeline",
+    "tasks": [
+      {
+        "description": "Explain that you are graduating in December and want to apply for OPT.",
+        "keywords": [
+          "graduating in December",
+          "apply for OPT",
+          "Optional Practical Training",
+          "after graduation",
+          "work authorization"
+        ]
+      },
+      {
+        "description": "Ask about the application timeline and when you should start the process.",
+        "keywords": [
+          "timeline",
+          "when should I",
+          "start the process",
+          "how early",
+          "application window"
+        ]
+      },
+      {
+        "description": "Ask what documents you will need to prepare.",
+        "keywords": [
+          "documents",
+          "prepare",
+          "need to submit",
+          "required forms",
+          "paperwork"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear International Student and Scholar Services,\n\nI am writing because I am graduating this December and would like to apply for Optional Practical Training so that I can gain work experience after finishing my degree.\n\nSince this is my first time going through the process, I am not entirely sure about the correct timeline. Could you let me know when I should start preparing my application, and how early before graduation I am allowed to submit it?\n\nI would also appreciate knowing which documents I will need to prepare, such as recommendation forms, my updated I-20, or any specific paperwork your office requires. I want to make sure everything is submitted correctly and on time. Thank you very much for your guidance.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 48,
+    "scenario": "After taking an introductory course, you have decided you want to change your major from biology to computer science. You want to ask your academic advising office what paperwork you need to complete and whether any of your current credits will transfer.",
+    "recipient": "Office of Academic Advising",
+    "subject": "Question about changing my major",
+    "tasks": [
+      {
+        "description": "Explain that you have decided to change your major from biology to computer science.",
+        "keywords": [
+          "change my major",
+          "decided",
+          "switch from",
+          "new major",
+          "computer science"
+        ]
+      },
+      {
+        "description": "Ask what paperwork or forms you need to complete.",
+        "keywords": [
+          "paperwork",
+          "forms",
+          "process",
+          "steps",
+          "complete"
+        ]
+      },
+      {
+        "description": "Ask whether your current credits will transfer toward the new major.",
+        "keywords": [
+          "credits transfer",
+          "count toward",
+          "apply to",
+          "carry over",
+          "current credits"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of Academic Advising,\n\nI am writing because, after taking an introductory computer science course this semester, I have decided that I want to change my major from biology to computer science.\n\nCould you please let me know what paperwork or forms I need to complete in order to officially make this change? I want to start the process soon so it does not delay my registration for next semester.\n\nI am also wondering whether any of the credits I have already earned in biology will count toward my new major, or whether I will need to start mostly from scratch. Any guidance you can provide about the transition would be greatly appreciated. Thank you for your help.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 49,
+    "scenario": "A technical error on the university portal prevented you from registering for classes during your assigned time slot, forcing you to register late and receive a late registration fee. You want to ask the registrar to waive this fee since the delay was not your fault.",
+    "recipient": "Office of the Registrar",
+    "subject": "Request to waive late registration fee",
+    "tasks": [
+      {
+        "description": "Explain that a technical error on the portal prevented you from registering on time.",
+        "keywords": [
+          "technical error",
+          "portal",
+          "prevented me",
+          "system issue",
+          "glitch"
+        ]
+      },
+      {
+        "description": "Mention that you were charged a late registration fee as a result.",
+        "keywords": [
+          "late registration fee",
+          "charged",
+          "fee applied",
+          "as a result",
+          "penalty"
+        ]
+      },
+      {
+        "description": "Ask for the fee to be waived since the situation was not your fault.",
+        "keywords": [
+          "waive",
+          "not my fault",
+          "reconsider",
+          "remove the fee",
+          "exception"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of the Registrar,\n\nI am writing about a late registration fee that appeared on my student account this semester. During my assigned registration time slot, the university portal repeatedly displayed a technical error and would not let me complete my course selections.\n\nI tried multiple times over several hours and even contacted the help desk, but the issue was not resolved until the next day, by which point I was marked as a late registrant and charged the associated fee.\n\nSince this delay was caused by a system error rather than anything on my part, I would like to ask whether the fee could be waived. I am happy to provide the help desk ticket number as evidence if that would be useful. Thank you for reviewing my request.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 50,
+    "scenario": "You moved out of the dorms halfway through the semester after finding off-campus housing, but you are still being charged for the full meal plan you no longer use. You want to ask the Housing Office about getting a partial refund for the unused portion.",
+    "recipient": "Housing Office",
+    "subject": "Refund request for unused meal plan",
+    "tasks": [
+      {
+        "description": "Explain that you moved off campus and no longer use the meal plan.",
+        "keywords": [
+          "moved off campus",
+          "no longer use",
+          "moved out",
+          "stopped using",
+          "off-campus housing"
+        ]
+      },
+      {
+        "description": "Mention that you are still being charged for the full meal plan.",
+        "keywords": [
+          "still being charged",
+          "full meal plan",
+          "charged in full",
+          "billed for",
+          "continues to appear"
+        ]
+      },
+      {
+        "description": "Ask about getting a partial refund for the unused portion.",
+        "keywords": [
+          "partial refund",
+          "unused portion",
+          "prorated",
+          "reimbursement",
+          "refund"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Housing Office,\n\nI am writing about my meal plan charges for this semester. I moved out of the dorms halfway through the term after finding off-campus housing, and I no longer have access to or use the dining halls.\n\nDespite this change, I noticed that my student account is still being charged for the full meal plan as if I were still living on campus. I was hoping to resolve this discrepancy before the charges accumulate further.\n\nCould you let me know whether it is possible to receive a partial refund for the unused portion of my meal plan? I am happy to provide documentation of my move-out date if that would help process the request. Thank you for looking into this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 51,
+    "scenario": "Your student ID card was accidentally damaged in the washing machine and no longer scans at the dining hall or library entrance. You need a replacement quickly since you rely on the card daily for meals and building access.",
+    "recipient": "Campus Card Office",
+    "subject": "Requesting a replacement student ID card",
+    "tasks": [
+      {
+        "description": "Explain that your ID card was damaged and no longer works.",
+        "keywords": [
+          "damaged",
+          "no longer works",
+          "doesn't scan",
+          "stopped working",
+          "broken"
+        ]
+      },
+      {
+        "description": "Mention that you rely on it daily for meals and building access.",
+        "keywords": [
+          "rely on it",
+          "daily",
+          "meals",
+          "building access",
+          "every day"
+        ]
+      },
+      {
+        "description": "Ask how to get a replacement quickly and whether there is a fee.",
+        "keywords": [
+          "replacement",
+          "quickly",
+          "fee",
+          "how do I get",
+          "reissue"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Campus Card Office,\n\nI am writing because my student ID card was accidentally damaged when it went through the washing machine in my jacket pocket. The card no longer scans at either the dining hall or the library entrance.\n\nThis is becoming a real problem for me since I rely on my ID card every day for meals and to access my residence hall. Without it, I have had to ask friends to let me into buildings, which is not a sustainable solution.\n\nCould you please let me know how I can get a replacement card as quickly as possible, and whether there is a fee involved? I would like to resolve this today if at all possible. Thank you for your help.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 52,
+    "scenario": "Your program length has been extended by one semester because you changed your minor, which means your current I-20 will expire before you finish your degree. You want to ask the International Student Office to issue an extended I-20 before your visa status is affected.",
+    "recipient": "International Student Office",
+    "subject": "I-20 extension needed due to program change",
+    "tasks": [
+      {
+        "description": "Explain that your program was extended by a semester due to a minor change.",
+        "keywords": [
+          "extended",
+          "one semester",
+          "changed my minor",
+          "program length",
+          "additional semester"
+        ]
+      },
+      {
+        "description": "Mention your current I-20 will expire before you finish.",
+        "keywords": [
+          "I-20 will expire",
+          "before I finish",
+          "expiration date",
+          "current document",
+          "runs out"
+        ]
+      },
+      {
+        "description": "Ask for an extended I-20 to protect your visa status.",
+        "keywords": [
+          "extended I-20",
+          "visa status",
+          "protect my status",
+          "issue a new",
+          "update my documents"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear International Student Office,\n\nI am writing because my program length has been extended by one additional semester after I decided to change my minor. I wanted to bring this to your attention as soon as possible.\n\nMy current I-20 lists an expiration date that falls before I will actually finish my degree, which I understand could put my visa status at risk if it is not corrected in time.\n\nCould you please issue an extended I-20 that reflects my new expected graduation date? I would be happy to provide my updated academic plan or any other documentation your office needs to process this request. Thank you for helping me keep my status in good standing.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 53,
+    "scenario": "A serious illness prevented you from finishing your final project last semester, and your professor agreed to give you an incomplete grade instead of a failing one. You want to ask the registrar what steps you need to take to formally complete the incomplete grade paperwork.",
+    "recipient": "Office of the Registrar",
+    "subject": "Steps to complete incomplete grade paperwork",
+    "tasks": [
+      {
+        "description": "Explain the background of the illness that led to an agreed incomplete grade.",
+        "keywords": [
+          "incomplete grade",
+          "illness",
+          "agreed",
+          "last semester",
+          "instead of"
+        ]
+      },
+      {
+        "description": "Ask what paperwork or steps are needed to formalize this.",
+        "keywords": [
+          "paperwork",
+          "formalize",
+          "steps",
+          "forms",
+          "official process"
+        ]
+      },
+      {
+        "description": "Ask about the deadline to finish the remaining work before the grade converts to a failing grade.",
+        "keywords": [
+          "deadline",
+          "converts to",
+          "before it becomes",
+          "time limit",
+          "finish the remaining work"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of the Registrar,\n\nI am writing about an incomplete grade I received last semester. Due to a serious illness, I was unable to finish my final project, and my professor kindly agreed to record an incomplete grade instead of a failing one.\n\nI want to make sure this is handled correctly on my academic record, so I am reaching out to ask what paperwork or forms I need to complete to formalize this arrangement with your office.\n\nI would also like to confirm the deadline for finishing the remaining work before the incomplete automatically converts to a failing grade. I want to plan my schedule carefully to make sure I meet this requirement. Thank you for your guidance on this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 54,
+    "scenario": "You already have private health insurance through your family, but the university automatically enrolled you in its own student health plan and charged you for it. You want to ask the Student Health Insurance Office about submitting a waiver to remove this charge.",
+    "recipient": "Student Health Insurance Office",
+    "subject": "Requesting a health insurance waiver",
+    "tasks": [
+      {
+        "description": "Explain that you already have private health insurance through your family.",
+        "keywords": [
+          "private health insurance",
+          "already have",
+          "through my family",
+          "existing coverage",
+          "already covered"
+        ]
+      },
+      {
+        "description": "Mention that you were automatically enrolled and charged for the student plan.",
+        "keywords": [
+          "automatically enrolled",
+          "charged",
+          "student health plan",
+          "without my request",
+          "added to my account"
+        ]
+      },
+      {
+        "description": "Ask about submitting a waiver to remove the charge.",
+        "keywords": [
+          "waiver",
+          "submit",
+          "remove the charge",
+          "opt out",
+          "how do I waive"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Student Health Insurance Office,\n\nI am writing because I noticed a charge on my student account for the university's student health insurance plan. I already have private health insurance coverage through my family, so this additional plan is not necessary for me.\n\nIt appears that I was automatically enrolled in the student health plan without realizing that action was required on my part to opt out. I would like to have this charge removed from my account.\n\nCould you please let me know how I can submit a waiver showing proof of my existing coverage? I am happy to provide a copy of my insurance card or any other documents needed to process this request quickly. Thank you for your assistance.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 55,
+    "scenario": "You completed a semester studying abroad last year, but your registrar's office still shows the courses as pending review, and they have not yet been applied toward your degree requirements. Graduation planning is coming up, and you want an update.",
+    "recipient": "Office of the Registrar",
+    "subject": "Update needed on study abroad transfer credits",
+    "tasks": [
+      {
+        "description": "Explain that your study abroad courses are still listed as pending review.",
+        "keywords": [
+          "pending review",
+          "still listed",
+          "not yet applied",
+          "study abroad",
+          "haven't been processed"
+        ]
+      },
+      {
+        "description": "Mention that graduation planning is approaching and you need this resolved.",
+        "keywords": [
+          "graduation planning",
+          "approaching",
+          "need this resolved",
+          "before I graduate",
+          "upcoming"
+        ]
+      },
+      {
+        "description": "Ask for an update on the status and when it will be finalized.",
+        "keywords": [
+          "update",
+          "status",
+          "when will",
+          "finalized",
+          "timeline"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Office of the Registrar,\n\nI am writing to ask about the status of my transfer credits from studying abroad last year. When I check my degree audit, the courses I completed overseas are still listed as pending review and have not yet been applied toward my degree requirements.\n\nSince I am beginning to plan for graduation and need an accurate picture of which requirements I still have left, this pending status has become a concern for me.\n\nCould you please provide an update on where things stand with my transfer credit evaluation, and let me know when I might expect it to be finalized? I would be glad to provide any additional documents from my study abroad program if that would help move the process along. Thank you for your time.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 56,
+    "scenario": "You live in a triple dorm room, but tension with your roommates has made it hard to study or sleep. You want to ask the Housing Office about switching to a different room for the rest of the semester.",
+    "recipient": "Housing Office",
+    "subject": "Request to change dormitory room",
+    "tasks": [
+      {
+        "description": "Explain that you would like to request a room change.",
+        "keywords": [
+          "room change",
+          "switch rooms",
+          "move to a different room",
+          "transfer",
+          "change my room",
+          "request a change"
+        ]
+      },
+      {
+        "description": "Describe the problem you are having with your current room.",
+        "keywords": [
+          "roommates",
+          "difficult",
+          "noise",
+          "conflict",
+          "hard to study",
+          "hard to sleep"
+        ]
+      },
+      {
+        "description": "Ask what steps you need to take and how long the process usually takes.",
+        "keywords": [
+          "what steps",
+          "how long",
+          "process",
+          "how do i",
+          "next steps",
+          "take to complete"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Housing Office,\n\nI am writing to request a room change for the rest of this semester. I currently live in a triple room in Baldwin Hall, and I would like to move to a different room if possible.\n\nSince the semester began, my roommates and I have had ongoing conflicts about noise and cleanliness, and it has become very difficult for me to study or sleep properly. I have tried talking with them directly, but the situation has not improved much.\n\nCould you let me know what steps I need to take to request a transfer, and roughly how long the process usually takes? I would appreciate any guidance you can offer. Thank you for your time.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 57,
+    "scenario": "You reserved a group study room in the university library for two hours, but your project team needs more time to finish preparing for a presentation. You want to ask the library staff if you can extend the reservation.",
+    "recipient": "Ms. Delgado",
+    "subject": "Extending our study room reservation",
+    "tasks": [
+      {
+        "description": "Explain that your group needs more time in the study room.",
+        "keywords": [
+          "extend",
+          "more time",
+          "extra hour",
+          "longer",
+          "need additional time",
+          "keep the room"
+        ]
+      },
+      {
+        "description": "Mention what you are working on to justify the request.",
+        "keywords": [
+          "presentation",
+          "group project",
+          "preparing",
+          "finishing",
+          "working on",
+          "assignment"
+        ]
+      },
+      {
+        "description": "Ask whether an extension is possible and how to request it.",
+        "keywords": [
+          "is it possible",
+          "how do i request",
+          "available",
+          "extend the booking",
+          "let me know",
+          "can we"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Delgado,\n\nMy group reserved study room 204 from 3 to 5 p.m. today, but we still need more time to finish preparing our presentation. I am writing to ask whether we could extend our reservation.\n\nWe are working on a group presentation for our marketing class that is due tomorrow morning, and we are close to finishing but need at least one more hour to rehearse and fix a few slides. Since the presentation counts for a large part of our grade, we want to make sure it is polished.\n\nWould it be possible to extend our booking, or should we reserve a different room if one is available? Please let me know what options we have. Thank you for your help.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 58,
+    "scenario": "You noticed a poster for the campus Photography Club and are interested in joining, but you have never been part of a club before and do not own professional equipment. You want to learn more before signing up.",
+    "recipient": "Mr. Okonkwo",
+    "subject": "Interest in joining the Photography Club",
+    "tasks": [
+      {
+        "description": "Say that you are interested in joining the club.",
+        "keywords": [
+          "interested",
+          "join",
+          "sign up",
+          "become a member",
+          "would like to join"
+        ]
+      },
+      {
+        "description": "Mention that you are new to clubs and ask what to expect at meetings.",
+        "keywords": [
+          "new to",
+          "what to expect",
+          "first time",
+          "meetings like",
+          "what happens"
+        ]
+      },
+      {
+        "description": "Ask whether you need your own camera or equipment to participate.",
+        "keywords": [
+          "own camera",
+          "equipment",
+          "need to bring",
+          "provide",
+          "gear",
+          "need my own"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Mr. Okonkwo,\n\nI saw the poster for the Photography Club near the student union and would like to join. Photography is something I have always wanted to explore more seriously.\n\nThis would be my first time joining a club, so I was hoping you could tell me a little about what to expect at meetings. Do members usually work on individual projects, or are there group activities and outings as well?\n\nI also do not currently own a professional camera, only my phone. Would I need to bring my own equipment to participate, or does the club provide cameras for members to borrow? Thank you for taking the time to answer my questions, and I look forward to hearing back.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 59,
+    "scenario": "You recently found out you have a gluten allergy, and you are worried about finding safe food options at the campus dining hall. You want to ask the dining services staff about gluten-free choices before the new semester begins.",
+    "recipient": "Dining Services",
+    "subject": "Question about gluten-free meal options",
+    "tasks": [
+      {
+        "description": "Explain your dietary restriction and why you are writing.",
+        "keywords": [
+          "gluten allergy",
+          "gluten-free",
+          "dietary restriction",
+          "allergy",
+          "cannot eat"
+        ]
+      },
+      {
+        "description": "Ask what gluten-free options are available in the dining hall.",
+        "keywords": [
+          "what options",
+          "available",
+          "menu",
+          "choices",
+          "offer",
+          "gluten-free"
+        ]
+      },
+      {
+        "description": "Ask whether you can meet with someone to discuss your needs further.",
+        "keywords": [
+          "meet with",
+          "discuss",
+          "talk to someone",
+          "schedule a meeting",
+          "speak with"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dining Services,\n\nI recently found out that I have a gluten allergy, and I am a bit worried about finding safe food options at the dining hall next semester. I wanted to reach out before classes start.\n\nCould you tell me what gluten-free options are typically available at the main dining hall? I am especially interested in whether there are separate preparation areas to avoid cross-contamination, since even small amounts of gluten can make me sick.\n\nIt would also help me a great deal if I could meet briefly with someone from your staff to discuss my needs in more detail. Please let me know if that would be possible and what times might work. Thank you very much for your help.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 60,
+    "scenario": "The Wi-Fi in your dormitory has been disconnecting constantly for the past three days, making it impossible to attend online classes or submit assignments. You want to contact the campus IT Help Desk to report the problem and get it fixed quickly.",
+    "recipient": "IT Help Desk",
+    "subject": "Wi-Fi problems in Harmon Hall",
+    "tasks": [
+      {
+        "description": "Describe the Wi-Fi problem you have been experiencing.",
+        "keywords": [
+          "wifi",
+          "disconnecting",
+          "keeps dropping",
+          "not working",
+          "connection problem",
+          "internet"
+        ]
+      },
+      {
+        "description": "Explain how the problem is affecting your schoolwork.",
+        "keywords": [
+          "online classes",
+          "submit assignments",
+          "affecting",
+          "miss",
+          "unable to",
+          "attend"
+        ]
+      },
+      {
+        "description": "Ask when someone can come look at it or how to fix it.",
+        "keywords": [
+          "when can",
+          "fix it",
+          "technician",
+          "come look",
+          "resolve",
+          "how soon"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear IT Help Desk,\n\nI am writing to report a Wi-Fi problem in my room in Harmon Hall, room 214. For the past three days, the connection has been dropping every few minutes, making it almost unusable.\n\nThis has been seriously affecting my schoolwork. I have missed parts of two online classes because the connection cut out, and I nearly could not submit an assignment on time last night because the portal kept timing out.\n\nCould you let me know when a technician might be able to look at the issue, or whether there is a quick fix I could try myself in the meantime? I would really appreciate a fast response, since I have several deadlines this week. Thank you for your help.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 61,
+    "scenario": "You want to start attending yoga classes at the campus recreation center to manage stress, but your class schedule this semester is unpredictable. You want to ask the gym staff about class times and drop-in policies.",
+    "recipient": "Ms. Fenwick",
+    "subject": "Question about yoga class schedule",
+    "tasks": [
+      {
+        "description": "Say that you are interested in attending yoga classes at the gym.",
+        "keywords": [
+          "interested",
+          "yoga classes",
+          "attend",
+          "join",
+          "sign up"
+        ]
+      },
+      {
+        "description": "Ask what days and times the classes are offered.",
+        "keywords": [
+          "what times",
+          "what days",
+          "schedule",
+          "offered",
+          "when are"
+        ]
+      },
+      {
+        "description": "Ask whether you can drop in without registering in advance.",
+        "keywords": [
+          "drop in",
+          "register in advance",
+          "sign up ahead",
+          "without registering",
+          "walk in"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Fenwick,\n\nI am interested in attending the yoga classes offered at the recreation center this semester. A friend of mine recommended them, and I think they would help me manage stress from my coursework.\n\nCould you tell me what days and times the classes are held? My class schedule changes somewhat from week to week, so I want to see which sessions might realistically fit.\n\nI was also wondering whether I need to register in advance for each class, or whether I can simply drop in when I am able to attend. Thank you for taking the time to answer these questions, and I look forward to your response.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 62,
+    "scenario": "The heating in your dorm room has not been working properly for several days, and the temperature has dropped noticeably at night. You want to submit a maintenance request to the Housing Office and ask how quickly it can be repaired.",
+    "recipient": "Housing Office",
+    "subject": "Heating not working in my room",
+    "tasks": [
+      {
+        "description": "Report that the heating in your room is not working.",
+        "keywords": [
+          "heating",
+          "not working",
+          "broken",
+          "heater",
+          "no heat",
+          "malfunctioning"
+        ]
+      },
+      {
+        "description": "Explain how it has been affecting you.",
+        "keywords": [
+          "cold",
+          "uncomfortable",
+          "hard to sleep",
+          "affecting",
+          "temperature",
+          "night"
+        ]
+      },
+      {
+        "description": "Ask how soon a maintenance worker can come fix it.",
+        "keywords": [
+          "how soon",
+          "maintenance",
+          "fix it",
+          "repair",
+          "come by",
+          "when can"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Housing Office,\n\nI am writing to report a problem with the heating in my room, 118 in Carter Hall. For the past four nights, the heater has not been producing any warm air at all.\n\nThe room has become quite cold, especially at night, and it has been difficult to sleep comfortably or study at my desk without a jacket on. I have checked the thermostat settings, but nothing seems to change.\n\nCould you let me know how soon a maintenance worker might be able to come and take a look at the heater? I would really appreciate a quick repair, especially with colder weather on the way. Thank you for your attention to this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 63,
+    "scenario": "You are working on a research paper for your sociology class and need access to a specialized academic database that seems to require special permission. You want to ask a librarian how to get access before your paper is due.",
+    "recipient": "Ms. Bennett",
+    "subject": "Access to a research database",
+    "tasks": [
+      {
+        "description": "Explain that you need access to a specific database for your research.",
+        "keywords": [
+          "access",
+          "database",
+          "need to use",
+          "research paper",
+          "get access"
+        ]
+      },
+      {
+        "description": "Mention what your project is about and why you need it.",
+        "keywords": [
+          "research paper",
+          "sociology",
+          "project",
+          "working on",
+          "topic"
+        ]
+      },
+      {
+        "description": "Ask what you need to do to get permission and how long it takes.",
+        "keywords": [
+          "what do i need",
+          "permission",
+          "how long",
+          "process",
+          "steps",
+          "get approved"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Bennett,\n\nI am currently writing a research paper for my sociology class, and I need access to the JSTOR sociology archive, which seems to require special permission through the library.\n\nMy project examines how social media use affects community involvement among college students, and several of the key studies I need are only available through that database. Without it, I will not be able to gather enough sources for my analysis.\n\nCould you tell me what I need to do to request access, and roughly how long the approval process usually takes? My paper is due in two weeks, so I want to make sure I have enough time. Thank you very much for your help.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 64,
+    "scenario": "Your university's Chess Club is hosting an inter-collegiate tournament next month, and you want to sign up to compete. You have played casually for years but have never entered an official tournament before.",
+    "recipient": "Mr. Petrov",
+    "subject": "Signing up for the chess tournament",
+    "tasks": [
+      {
+        "description": "Say that you would like to register for the tournament.",
+        "keywords": [
+          "register",
+          "sign up",
+          "participate",
+          "compete",
+          "enter the tournament"
+        ]
+      },
+      {
+        "description": "Mention your experience level with chess.",
+        "keywords": [
+          "played",
+          "experience",
+          "casually",
+          "never competed",
+          "beginner",
+          "years"
+        ]
+      },
+      {
+        "description": "Ask what the registration process and rules are.",
+        "keywords": [
+          "registration process",
+          "rules",
+          "how do i sign up",
+          "requirements",
+          "format",
+          "deadline"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Mr. Petrov,\n\nI heard about the inter-collegiate chess tournament the Chess Club is hosting next month, and I would like to register to compete.\n\nI should mention that I have only played chess casually with friends and family for several years and have never entered an official tournament before. I am a little nervous, but I am eager to try a more competitive format and improve my game.\n\nCould you tell me how the registration process works, and whether there are specific rules or a rating requirement I should know about? I would also appreciate knowing the registration deadline. Thank you for organizing this event, and I look forward to your reply.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 65,
+    "scenario": "You are moving off campus next semester and no longer need your current meal plan. You want to contact dining services to ask about canceling your plan and whether you can get a partial refund for the unused portion.",
+    "recipient": "Dining Services",
+    "subject": "Canceling my meal plan",
+    "tasks": [
+      {
+        "description": "Explain that you would like to cancel your meal plan.",
+        "keywords": [
+          "cancel",
+          "meal plan",
+          "discontinue",
+          "end my plan",
+          "no longer need"
+        ]
+      },
+      {
+        "description": "Explain why you no longer need it.",
+        "keywords": [
+          "moving off campus",
+          "off-campus",
+          "next semester",
+          "no longer living",
+          "moving out"
+        ]
+      },
+      {
+        "description": "Ask whether you are eligible for a partial refund.",
+        "keywords": [
+          "refund",
+          "partial refund",
+          "reimbursed",
+          "money back",
+          "eligible"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dining Services,\n\nI am writing to ask about canceling my current meal plan. I have the 15-meal weekly plan, and I would like to discontinue it as soon as possible.\n\nThe reason is that I will be moving off campus starting next semester and will be cooking most of my own meals, so I no longer need the plan. I wanted to reach out early so the cancellation can be processed smoothly.\n\nSince the semester is only about halfway finished, I was also wondering whether I would be eligible for a partial refund for the unused portion of my plan. Could you let me know what the policy is and what steps I need to take? Thank you for your assistance.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 66,
+    "scenario": "Your university email account was suddenly locked after you tried logging in from a new laptop, and you cannot access important course announcements. You want to contact the IT Help Desk to get your account unlocked quickly.",
+    "recipient": "IT Help Desk",
+    "subject": "Locked out of my university email",
+    "tasks": [
+      {
+        "description": "Explain that your account has been locked.",
+        "keywords": [
+          "locked out",
+          "account locked",
+          "cannot log in",
+          "blocked",
+          "access denied"
+        ]
+      },
+      {
+        "description": "Describe when and how the problem happened.",
+        "keywords": [
+          "new laptop",
+          "tried logging in",
+          "happened when",
+          "this morning",
+          "after i"
+        ]
+      },
+      {
+        "description": "Ask how quickly the account can be restored.",
+        "keywords": [
+          "how quickly",
+          "restore",
+          "unlock",
+          "when will",
+          "fix this",
+          "resolve"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear IT Help Desk,\n\nI am writing because my university email account has been locked, and I am unable to log in. This is preventing me from checking important announcements from my professors.\n\nThe problem started this morning when I tried logging in from a new laptop for the first time. After entering my password twice, the system locked me out and displayed a message saying to contact IT support.\n\nCould you let me know how quickly my account can be restored, and whether there is anything I need to do on my end, such as verifying my identity? I have an assignment due tomorrow that depends on information sent through email, so a fast response would be greatly appreciated. Thank you.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 67,
+    "scenario": "You want to rent a locker at the campus recreation center so you do not have to carry your gym clothes and toiletries back and forth every day. You want to ask about availability, cost, and how to sign up.",
+    "recipient": "Recreation Center Front Desk",
+    "subject": "Renting a locker at the gym",
+    "tasks": [
+      {
+        "description": "Say that you are interested in renting a locker.",
+        "keywords": [
+          "rent a locker",
+          "interested",
+          "locker rental",
+          "get a locker",
+          "sign up for a locker"
+        ]
+      },
+      {
+        "description": "Ask about the cost and rental period.",
+        "keywords": [
+          "cost",
+          "how much",
+          "price",
+          "rental period",
+          "per semester",
+          "fee"
+        ]
+      },
+      {
+        "description": "Ask how you can reserve one and what you need to bring.",
+        "keywords": [
+          "how do i reserve",
+          "sign up",
+          "what do i need to bring",
+          "id",
+          "process"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Recreation Center Front Desk,\n\nI am writing because I am interested in renting a locker at the gym. I go to the recreation center almost every day, and it would be much more convenient than carrying my workout clothes and toiletries back and forth.\n\nCould you tell me how much a locker rental costs and how long the rental period typically lasts, such as a semester or a full year? I want to make sure it fits within my budget before signing up.\n\nCould you also let me know how I can reserve a locker and whether I need to bring anything, such as my student ID or a lock of my own? Thank you for your help, and I look forward to your response.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 68,
+    "scenario": "You are working on a group project for your business class with three other classmates, but everyone's schedules are different, making it hard to find a time to meet. You want to email the group to propose a specific meeting time.",
+    "recipient": "Classmates",
+    "subject": "Finding a time to meet for our project",
+    "tasks": [
+      {
+        "description": "Remind the group about the upcoming project and the need to meet.",
+        "keywords": [
+          "project",
+          "meet",
+          "get together",
+          "need to discuss",
+          "work on"
+        ]
+      },
+      {
+        "description": "Propose a specific day and time to meet.",
+        "keywords": [
+          "propose",
+          "how about",
+          "suggest",
+          "would work",
+          "available",
+          "free on"
+        ]
+      },
+      {
+        "description": "Ask everyone to confirm or suggest an alternative if it does not work.",
+        "keywords": [
+          "let me know",
+          "confirm",
+          "alternative",
+          "does not work",
+          "another time",
+          "works for you"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear classmates,\n\nI hope everyone is doing well. Since our business project presentation is coming up soon, I think we should meet in person to divide the remaining work and go over our outline together.\n\nWould Thursday at 4 p.m. in the library work for everyone? I know our schedules are all pretty different this semester, so I wanted to propose a specific time early enough that we can adjust if needed.\n\nPlease let me know by tomorrow whether that time works for you, or suggest another day and time if you have a conflict. I would like us to lock in a plan soon so we have enough time to finish everything before the deadline. Thanks, everyone.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 69,
+    "scenario": "You missed your psychology lecture because you were sick, and you know the professor covered important material for the upcoming exam. You want to ask a classmate who takes detailed notes if you could borrow or copy them.",
+    "recipient": "Priya",
+    "subject": "Could I borrow your notes from Monday's lecture?",
+    "tasks": [
+      {
+        "description": "Explain that you missed class and why.",
+        "keywords": [
+          "missed class",
+          "was sick",
+          "could not attend",
+          "absent",
+          "missed the lecture"
+        ]
+      },
+      {
+        "description": "Ask if you could borrow or copy their notes.",
+        "keywords": [
+          "borrow your notes",
+          "copy your notes",
+          "share your notes",
+          "send me",
+          "take a picture"
+        ]
+      },
+      {
+        "description": "Offer to do something in return, such as helping them later.",
+        "keywords": [
+          "in return",
+          "happy to help",
+          "return the favor",
+          "let me know if",
+          "owe you"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Priya,\n\nI hope you are doing well. I wanted to reach out because I missed Monday's psychology lecture since I was sick, and I know the professor covered material that will likely be on the exam.\n\nWould it be possible to borrow your notes from that class, or could I take a picture of them sometime this week? I know you always take really thorough notes, and I want to make sure I do not fall behind before the test.\n\nOf course, I would be happy to return the favor, whether that means sharing my notes with you sometime or helping you study before the next exam. Just let me know what works best for you. Thanks so much.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 70,
+    "scenario": "Your chemistry midterm is in two weeks, and you think forming a small study group with classmates would help everyone prepare. You want to email a classmate to propose organizing a group and ask if he would like to join and help plan sessions.",
+    "recipient": "Marcus",
+    "subject": "Starting a study group for the chemistry midterm",
+    "tasks": [
+      {
+        "description": "Propose forming a study group for the exam.",
+        "keywords": [
+          "study group",
+          "form a group",
+          "get together",
+          "study together",
+          "organize"
+        ]
+      },
+      {
+        "description": "Ask if he would like to join.",
+        "keywords": [
+          "would you like to join",
+          "interested",
+          "want to join",
+          "be part of"
+        ]
+      },
+      {
+        "description": "Ask for suggestions on when and where to meet.",
+        "keywords": [
+          "when and where",
+          "suggestions",
+          "meet",
+          "location",
+          "schedule",
+          "what time"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Marcus,\n\nWith the chemistry midterm coming up in two weeks, I have been thinking that it might help to form a small study group with a few classmates to review the material together.\n\nWould you be interested in joining? I know you understand the material on reaction kinetics really well, and I think a group of four or five people would be manageable and productive.\n\nIf you are interested, do you have any suggestions for when and where we should meet? I was thinking maybe twice a week in the library, but I am open to other ideas that might work better with everyone's schedules. Let me know what you think.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 71,
+    "scenario": "You and your biology lab partner are supposed to meet outside of class to finish a joint lab report, but you just found out you have a conflict at the time you originally agreed on. You want to email your partner to explain and propose a new time.",
+    "recipient": "Elena",
+    "subject": "Need to reschedule our lab report meeting",
+    "tasks": [
+      {
+        "description": "Explain that you have a conflict with the time you agreed on.",
+        "keywords": [
+          "conflict",
+          "cannot make it",
+          "schedule conflict",
+          "something came up",
+          "unavailable"
+        ]
+      },
+      {
+        "description": "Apologize briefly for the inconvenience.",
+        "keywords": [
+          "sorry",
+          "apologize",
+          "I know this is",
+          "inconvenience",
+          "last minute"
+        ]
+      },
+      {
+        "description": "Propose an alternative time to meet.",
+        "keywords": [
+          "alternative time",
+          "instead",
+          "how about",
+          "would it work",
+          "reschedule",
+          "another time"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Elena,\n\nI am writing because something has come up that conflicts with the time we agreed on to meet and finish our lab report this Thursday at 3 p.m.\n\nI am sorry for the late notice, since I know we do not have much time before the report is due. I would not ask to change plans if it were not unavoidable.\n\nWould it be possible to meet instead on Friday morning, or sometime over the weekend if that works better for you? I am flexible and can work around your schedule as much as possible. Please let me know what would be most convenient, and thank you for understanding.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 72,
+    "scenario": "Your group project on urban planning is due in three weeks, and your team has not yet decided who will handle which part. You want to email your teammates with a proposed division of tasks and ask for their feedback.",
+    "recipient": "Classmates",
+    "subject": "Proposed task division for our project",
+    "tasks": [
+      {
+        "description": "Mention that the group needs to divide the project tasks.",
+        "keywords": [
+          "divide",
+          "assign tasks",
+          "split up the work",
+          "who will do",
+          "task division"
+        ]
+      },
+      {
+        "description": "Suggest a specific way to split the work.",
+        "keywords": [
+          "I suggest",
+          "propose",
+          "how about",
+          "each of us",
+          "responsible for"
+        ]
+      },
+      {
+        "description": "Ask the group to share their thoughts or preferences.",
+        "keywords": [
+          "let me know",
+          "thoughts",
+          "preferences",
+          "feedback",
+          "what you think",
+          "agree"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear classmates,\n\nSince our urban planning project is due in three weeks, I think it would help to divide the tasks soon so everyone knows what to focus on going forward.\n\nHere is what I would suggest: I could research zoning policies, Sam could handle the case study section, and Priya could work on the visuals and maps, leaving the introduction and conclusion for Dana. This would let each of us work somewhat independently before we combine everything.\n\nPlease let me know your thoughts on this division, or if you would prefer a different section based on your interests or strengths. I want to make sure everyone feels comfortable with their part before we move forward. Thanks, everyone.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 73,
+    "scenario": "A classmate from your statistics class mentioned that she has been struggling with the material and studying alone. Your study group has been meeting weekly, and you want to invite her to join.",
+    "recipient": "Hana",
+    "subject": "Invitation to join our statistics study group",
+    "tasks": [
+      {
+        "description": "Mention that you heard she has been struggling with the material.",
+        "keywords": [
+          "heard",
+          "struggling",
+          "having trouble",
+          "mentioned",
+          "finding it difficult"
+        ]
+      },
+      {
+        "description": "Invite her to join your existing study group.",
+        "keywords": [
+          "join our study group",
+          "invite you",
+          "would you like to join",
+          "come study with us"
+        ]
+      },
+      {
+        "description": "Give details about when and where the group meets.",
+        "keywords": [
+          "we meet",
+          "every week",
+          "time and place",
+          "details",
+          "location",
+          "schedule"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Hana,\n\nI heard from a classmate that you have been finding some of the material in statistics class a bit difficult lately, and I wanted to reach out.\n\nA few of us have been meeting weekly to study together, and we would love to have you join us if you are interested. Studying as a group has really helped all of us catch up on topics we found confusing, especially hypothesis testing.\n\nWe usually meet every Tuesday evening at 6 p.m. in the study lounge on the second floor of the library. If that works for you, feel free to come by this week, or let me know if you have any questions before then. I hope to see you there.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 74,
+    "scenario": "You had to miss your physics lab session this week because of a medical appointment, and your lab partner completed the experiment without you. You want to email your partner to apologize, ask what happened, and offer to help with the write-up.",
+    "recipient": "Tobias",
+    "subject": "Sorry I missed lab this week",
+    "tasks": [
+      {
+        "description": "Apologize for missing the lab session.",
+        "keywords": [
+          "sorry",
+          "apologize",
+          "missed lab",
+          "could not attend",
+          "missed the session"
+        ]
+      },
+      {
+        "description": "Ask what happened during the experiment.",
+        "keywords": [
+          "what happened",
+          "what did we",
+          "results",
+          "fill me in",
+          "what was covered"
+        ]
+      },
+      {
+        "description": "Offer to help with the write-up to make up for missing it.",
+        "keywords": [
+          "help with the write-up",
+          "make up for",
+          "do more of",
+          "happy to help",
+          "take on"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Tobias,\n\nI am sorry I was not able to make it to our physics lab session this week. I had a medical appointment that I could not reschedule, and I know that left you to run the experiment on your own.\n\nCould you fill me in on what happened during the experiment, including any unexpected results or issues with the equipment? I want to make sure I understand everything before we start the report.\n\nTo make up for missing the session, I would be glad to take on a larger share of the write-up, including the data analysis and conclusion sections. Please let me know what would help you most. Thank you for your understanding.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 75,
+    "scenario": "Your group's final presentation for a history class is scheduled for next week, and you think the team should rehearse together at least once beforehand. You want to email your teammates to suggest a rehearsal and ask when they are available.",
+    "recipient": "Classmates",
+    "subject": "Rehearsing before our presentation",
+    "tasks": [
+      {
+        "description": "Suggest that the group rehearse before the presentation.",
+        "keywords": [
+          "rehearse",
+          "practice",
+          "run through",
+          "before the presentation",
+          "do a run-through"
+        ]
+      },
+      {
+        "description": "Explain why rehearsing would be helpful.",
+        "keywords": [
+          "helpful",
+          "make sure",
+          "smooth",
+          "timing",
+          "confident",
+          "prepared"
+        ]
+      },
+      {
+        "description": "Ask about everyone's availability for a rehearsal time.",
+        "keywords": [
+          "available",
+          "when are you free",
+          "what time works",
+          "let me know",
+          "schedule"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear classmates,\n\nWith our history presentation coming up next week, I think it would be a good idea for all of us to rehearse together at least once beforehand.\n\nPracticing as a full group would help us check our timing, make sure our slides transition smoothly, and catch any parts that need more explanation. It would also help us feel more confident speaking in front of the class.\n\nCould everyone let me know what times work for you sometime this week? I was thinking either Wednesday afternoon or Thursday evening might work, but I am open to other suggestions if those do not fit your schedules. Looking forward to hearing back from everyone soon.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 76,
+    "scenario": "You and a classmate in your history course both take notes differently, and you think comparing or exchanging typed notes each week could help you both perform better. You want to propose this arrangement to her.",
+    "recipient": "Camille",
+    "subject": "Idea about exchanging notes each week",
+    "tasks": [
+      {
+        "description": "Propose exchanging typed notes on a regular basis.",
+        "keywords": [
+          "exchange notes",
+          "share notes",
+          "swap notes",
+          "trade notes",
+          "compare notes"
+        ]
+      },
+      {
+        "description": "Explain why this could benefit both of you.",
+        "keywords": [
+          "benefit",
+          "helpful",
+          "catch things",
+          "different perspective",
+          "fill in gaps",
+          "understand better"
+        ]
+      },
+      {
+        "description": "Ask how she would like to organize the exchange.",
+        "keywords": [
+          "how should we",
+          "organize",
+          "set this up",
+          "what works for you",
+          "arrangement"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Camille,\n\nI have really enjoyed working with you in history class, and I had an idea I wanted to run by you. Would you be interested in exchanging our typed notes with each other each week?\n\nI noticed that we tend to focus on different details during lectures, so comparing notes could help us both catch things the other might have missed and understand the material more completely before exams.\n\nHow would you like to organize this? We could email each other after each class, or share a folder online that we both update regularly. Let me know what you think, and whether you would like to try it for a few weeks to see how it works.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 77,
+    "scenario": "Your study group has been meeting in a small classroom, but it has become too noisy and crowded lately. You want to email the group to suggest moving to a quieter location, such as the library.",
+    "recipient": "Classmates",
+    "subject": "Suggestion to change our study location",
+    "tasks": [
+      {
+        "description": "Explain the problem with the current meeting location.",
+        "keywords": [
+          "too noisy",
+          "crowded",
+          "distracting",
+          "hard to focus",
+          "not working"
+        ]
+      },
+      {
+        "description": "Suggest a new location.",
+        "keywords": [
+          "library",
+          "suggest",
+          "propose",
+          "move to",
+          "different room",
+          "quieter place"
+        ]
+      },
+      {
+        "description": "Ask if everyone agrees or has another suggestion.",
+        "keywords": [
+          "agree",
+          "sound good",
+          "another suggestion",
+          "let me know",
+          "works for everyone"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear classmates,\n\nI wanted to bring up something about our study sessions. The classroom we have been using has gotten pretty noisy and crowded the past couple of weeks, and I have found it hard to concentrate while we review material.\n\nI would like to suggest that we move our sessions to one of the group study rooms in the library instead. Those rooms are quieter, and we could reserve one in advance so we always have a consistent, private space to work.\n\nDoes this sound good to everyone, or does anyone have another location in mind that might work better? Let me know your thoughts, and we can decide together before our next session. Thanks for considering it.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 78,
+    "scenario": "While writing up your shared chemistry lab report, you noticed that some of the measurements your lab partner recorded do not match what you remember from the experiment. You want to email your partner to ask about the discrepancy before submitting the report.",
+    "recipient": "Nadia",
+    "subject": "Question about our lab measurements",
+    "tasks": [
+      {
+        "description": "Mention that you noticed a discrepancy in the recorded data.",
+        "keywords": [
+          "noticed",
+          "discrepancy",
+          "does not match",
+          "different from",
+          "inconsistent"
+        ]
+      },
+      {
+        "description": "Ask her to clarify or double-check the specific numbers.",
+        "keywords": [
+          "double-check",
+          "clarify",
+          "confirm",
+          "make sure",
+          "verify",
+          "look again"
+        ]
+      },
+      {
+        "description": "Suggest resolving it together before submitting the report.",
+        "keywords": [
+          "before we submit",
+          "resolve",
+          "figure out",
+          "sort this out",
+          "together"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Nadia,\n\nWhile putting together our chemistry lab report, I noticed that the temperature readings you recorded for the second trial do not quite match what I remember measuring during the experiment.\n\nCould you double-check your notes and let me know which numbers you have for that trial? I want to make sure we are both working from accurate data before we finalize anything.\n\nI think it would be best if we sorted this out together before submitting the report, maybe by meeting briefly tomorrow or comparing notes over a quick call. Let me know what time works for you, and thank you for looking into this.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 79,
+    "scenario": "One of your group members has not submitted her part of the project, and the deadline is tomorrow. You want to email her directly to check on her progress and ask if she needs help finishing her section.",
+    "recipient": "Wren",
+    "subject": "Checking in on your part of the project",
+    "tasks": [
+      {
+        "description": "Ask how her section of the project is coming along.",
+        "keywords": [
+          "how is it going",
+          "checking in",
+          "progress",
+          "how far along",
+          "status"
+        ]
+      },
+      {
+        "description": "Mention that the deadline is approaching.",
+        "keywords": [
+          "deadline",
+          "due tomorrow",
+          "coming up",
+          "due soon",
+          "time is running out"
+        ]
+      },
+      {
+        "description": "Offer to help if she is having trouble finishing.",
+        "keywords": [
+          "offer to help",
+          "need help",
+          "happy to assist",
+          "let me know if",
+          "anything i can do"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Wren,\n\nI wanted to check in and see how your part of the group project is coming along. I know we have all been busy, so I just wanted to touch base before we put everything together.\n\nAs you know, the project is due tomorrow, and I want to make sure we have enough time to combine all of our sections and review the final document before submitting it.\n\nIf you are running into any trouble finishing your part, please let me know, and I would be glad to help however I can, whether that means looking over what you have so far or taking on part of the workload. Just let me know where things stand.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 80,
+    "scenario": "Final exams are approaching, and you want to form a study group specifically for your economics class since the material has been especially difficult this semester. You want to email a few classmates to see if they are interested in joining.",
+    "recipient": "Classmates",
+    "subject": "Forming a study group for the economics final",
+    "tasks": [
+      {
+        "description": "Propose forming a study group for the final exam.",
+        "keywords": [
+          "study group",
+          "final exam",
+          "form a group",
+          "get together",
+          "study together"
+        ]
+      },
+      {
+        "description": "Explain why you think it would help.",
+        "keywords": [
+          "material has been difficult",
+          "helpful",
+          "review together",
+          "cover more",
+          "understand better"
+        ]
+      },
+      {
+        "description": "Ask if they are interested and when they might be free.",
+        "keywords": [
+          "interested",
+          "when are you free",
+          "let me know",
+          "available",
+          "join us"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear classmates,\n\nWith the economics final coming up soon, I wanted to see if any of you would be interested in forming a study group to prepare together.\n\nThe material this semester has been especially challenging, particularly the sections on monetary policy, and I think reviewing it as a group would help us cover more ground and clear up things we might be confused about individually.\n\nIf you are interested, could you let me know when you might be free over the next two weeks? I am hoping we could meet two or three times before the exam. Please reply whenever you get a chance, and thank you for considering it.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 81,
+    "scenario": "You are interested in joining the campus Debate Society, but you heard there are tryouts before new members are accepted. You have some experience debating in high school and want to learn more about how the tryouts work.",
+    "recipient": "Ms. Whitcombe",
+    "subject": "Question about Debate Society tryouts",
+    "tasks": [
+      {
+        "description": "Say that you are interested in joining the Debate Society.",
+        "keywords": [
+          "interested",
+          "join",
+          "would like to join",
+          "become a member",
+          "sign up"
+        ]
+      },
+      {
+        "description": "Mention your relevant experience.",
+        "keywords": [
+          "experience",
+          "debated in high school",
+          "background",
+          "practiced",
+          "familiar with"
+        ]
+      },
+      {
+        "description": "Ask how the tryouts work and when they take place.",
+        "keywords": [
+          "tryouts",
+          "how do they work",
+          "when",
+          "what format",
+          "what should i prepare"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Ms. Whitcombe,\n\nI am writing because I am very interested in joining the Debate Society this semester. A friend mentioned that new members typically need to go through tryouts before being accepted.\n\nI debated for two years in high school, mostly in policy debate, and I have been looking for an opportunity to continue practicing here on campus. I think the Debate Society would be a great way to keep building those skills.\n\nCould you tell me how the tryouts are structured and when they will be held this semester? I would also appreciate knowing what I should prepare beforehand, such as a sample topic or speech. Thank you for your time, and I look forward to hearing from you.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 82,
+    "scenario": "Your student organization is hosting an evening event next month and wants to arrange catering through the campus dining hall instead of ordering from outside. You want to ask dining services what catering options are available and how to place an order.",
+    "recipient": "Dining Services",
+    "subject": "Catering request for a campus club event",
+    "tasks": [
+      {
+        "description": "Explain that your club would like to arrange catering for an event.",
+        "keywords": [
+          "catering",
+          "cater our event",
+          "arrange food",
+          "club event",
+          "provide food"
+        ]
+      },
+      {
+        "description": "Give basic details about the event, such as date and number of guests.",
+        "keywords": [
+          "date",
+          "number of guests",
+          "expect",
+          "attendees",
+          "event will take place"
+        ]
+      },
+      {
+        "description": "Ask what catering options are available and how to place an order.",
+        "keywords": [
+          "what options",
+          "how do i order",
+          "place an order",
+          "menu",
+          "available"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Dining Services,\n\nI am writing on behalf of the International Students Association to ask about arranging catering for an event we are hosting next month.\n\nThe event will take place on the evening of August 20th, and we expect around fifty guests to attend. We would like the food to be ready by 6 p.m. so we can begin serving as soon as the program starts.\n\nCould you let me know what catering options are available for student organizations, and how far in advance we would need to place an order? We would also appreciate any information about pricing, since we are working with a limited club budget. Thank you for your help.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 83,
+    "scenario": "You signed up and paid for a six-week spin class at the campus recreation center, but the class was cancelled after only two sessions due to an instructor leaving. You want to ask the recreation center about getting a refund or credit.",
+    "recipient": "Mr. Kowalski",
+    "subject": "Refund request for cancelled spin class",
+    "tasks": [
+      {
+        "description": "Explain that the class you paid for was cancelled.",
+        "keywords": [
+          "cancelled",
+          "class was cancelled",
+          "no longer running",
+          "discontinued",
+          "stopped"
+        ]
+      },
+      {
+        "description": "Mention how many sessions you attended before it was cancelled.",
+        "keywords": [
+          "attended",
+          "sessions",
+          "only made it to",
+          "before it was cancelled",
+          "completed"
+        ]
+      },
+      {
+        "description": "Ask whether you can get a refund or credit for the remaining sessions.",
+        "keywords": [
+          "refund",
+          "credit",
+          "reimbursed",
+          "money back",
+          "remaining sessions"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Mr. Kowalski,\n\nI am writing about the six-week spin class I signed up and paid for at the recreation center. I recently found out that the class has been cancelled after the instructor left the university.\n\nI was only able to attend two of the six sessions before the cancellation was announced, so I still have four sessions remaining that I was not able to use.\n\nCould you let me know whether it would be possible to receive a refund for the unused sessions, or a credit toward a different fitness class instead? I would appreciate knowing what options are available. Thank you for your help with this.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 84,
+    "scenario": "You went to print an assignment at the library's public printer, but it kept jamming and eventually stopped working entirely, right before your class started. You want to report the problem and ask if there is another way to print your document quickly.",
+    "recipient": "Mr. Yamada",
+    "subject": "Printer malfunction in the main library",
+    "tasks": [
+      {
+        "description": "Report that the printer is malfunctioning.",
+        "keywords": [
+          "printer",
+          "jamming",
+          "not working",
+          "broken",
+          "malfunctioning",
+          "stopped working"
+        ]
+      },
+      {
+        "description": "Explain the urgency of your situation.",
+        "keywords": [
+          "urgent",
+          "class starts soon",
+          "need to print",
+          "right away",
+          "due in",
+          "time-sensitive"
+        ]
+      },
+      {
+        "description": "Ask if there is another way to print your document quickly.",
+        "keywords": [
+          "another way",
+          "alternative",
+          "different printer",
+          "help me print",
+          "quickly"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Mr. Yamada,\n\nI wanted to report a problem with the printer on the second floor of the library. It has been jamming repeatedly for the past ten minutes and now appears to have stopped working entirely.\n\nThis is a bit urgent for me, since I need to print an assignment before my class starts in twenty minutes, and I do not have a printer of my own to use instead.\n\nIs there another printer nearby that I could use, or is there a way library staff could help me print the document quickly from my laptop? I would really appreciate any assistance you can offer right now. Thank you.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 85,
+    "scenario": "At the start of the semester, you were assigned a new lab partner for your chemistry course, but you have not yet met in person. You want to send an introductory email to exchange contact information and agree on how to communicate about lab work.",
+    "recipient": "Soren",
+    "subject": "Introducing myself as your new lab partner",
+    "tasks": [
+      {
+        "description": "Introduce yourself as their assigned lab partner.",
+        "keywords": [
+          "lab partner",
+          "assigned",
+          "paired with you",
+          "introduce myself",
+          "we are partners"
+        ]
+      },
+      {
+        "description": "Suggest exchanging contact information.",
+        "keywords": [
+          "exchange contact information",
+          "phone number",
+          "best way to reach",
+          "contact each other",
+          "stay in touch"
+        ]
+      },
+      {
+        "description": "Ask about their availability for the first lab session.",
+        "keywords": [
+          "available",
+          "first lab",
+          "schedule",
+          "meet before",
+          "prepare together"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Soren,\n\nI noticed that we have been assigned as lab partners for chemistry this semester, so I wanted to introduce myself before our first session next week.\n\nSince we will be working closely together on experiments and reports throughout the semester, it might help to exchange contact information now. Would you prefer to communicate by email, text message, or through a messaging app for quick questions during lab work?\n\nI was also wondering if you would be available to meet briefly before our first lab session, just to go over the safety guidelines and materials together. Let me know what works for you, and I look forward to working with you this semester.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 86,
+    "scenario": "Your study group usually meets in person, but one member has come down with the flu and cannot attend in person this week. You want to email the group to suggest holding this week's session over video call instead so no one misses out.",
+    "recipient": "Classmates",
+    "subject": "Moving this week's study session online",
+    "tasks": [
+      {
+        "description": "Explain why the group needs to change the meeting format this week.",
+        "keywords": [
+          "has the flu",
+          "cannot attend in person",
+          "sick",
+          "unable to come",
+          "reason"
+        ]
+      },
+      {
+        "description": "Suggest holding the session over video call instead.",
+        "keywords": [
+          "video call",
+          "online",
+          "virtual",
+          "video chat",
+          "meet online"
+        ]
+      },
+      {
+        "description": "Ask everyone to confirm they are available for the online session.",
+        "keywords": [
+          "confirm",
+          "available",
+          "let me know",
+          "works for you",
+          "join the call"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear classmates,\n\nI wanted to let everyone know that Jamal has come down with the flu and will not be able to attend our study session in person this week.\n\nSince we do not want anyone to miss out on reviewing the material before the quiz, I suggest we hold this week's session over a video call instead. That way, Jamal can still join from home while resting, and the rest of us can keep to our usual schedule.\n\nCould everyone confirm that a video call works for them at our normal meeting time on Wednesday? I will send the link once everyone has replied. Thanks for being flexible, and I hope Jamal feels better soon.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 87,
+    "scenario": "While reviewing your group's shared research paper before submission, you noticed that different sections use inconsistent citation formats, which could cost the group points. You want to email a teammate who is good with formatting to ask for help fixing it before the deadline.",
+    "recipient": "Renata",
+    "subject": "Fixing citation formatting before we submit",
+    "tasks": [
+      {
+        "description": "Point out that the citations in the paper are inconsistent.",
+        "keywords": [
+          "inconsistent",
+          "citation format",
+          "does not match",
+          "different styles",
+          "formatting issue"
+        ]
+      },
+      {
+        "description": "Explain why this could be a problem.",
+        "keywords": [
+          "could lose points",
+          "professor",
+          "requirements",
+          "grading",
+          "problem"
+        ]
+      },
+      {
+        "description": "Ask if she can help fix the formatting before the deadline.",
+        "keywords": [
+          "help fix",
+          "could you",
+          "before the deadline",
+          "assist",
+          "look over"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Renata,\n\nWhile reviewing our group paper before submission, I noticed that the citations in different sections do not follow the same format. Some use APA style consistently, while others seem to be missing page numbers or use a different style altogether.\n\nI am a little worried this could cost us points, since the assignment instructions clearly state that citations must follow APA format throughout the entire paper.\n\nSince you have always been great with formatting details, would you be able to help fix the citations before we submit tomorrow? I can send you the document tonight so you have enough time to go through it. Thank you so much for your help with this.\n\nBest regards,\n[Your Name]"
+  },
+  {
+    "id": 88,
+    "scenario": "You checked your bank account online and noticed a charge of $85 from a store you have never visited. You are worried this could be fraud and want the bank to investigate and reverse the charge as soon as possible.",
+    "recipient": "Bank Customer Support",
+    "subject": "Unauthorized charge on my account",
+    "tasks": [
+      {
+        "description": "Explain that you found a charge on your account that you do not recognize.",
+        "keywords": [
+          "unauthorized charge",
+          "don't recognize",
+          "never visited",
+          "unfamiliar transaction",
+          "not mine",
+          "suspicious charge"
+        ]
+      },
+      {
+        "description": "Mention that you are concerned this could be fraud and ask them to investigate.",
+        "keywords": [
+          "investigate",
+          "fraud",
+          "possible fraud",
+          "look into this",
+          "fraudulent"
+        ]
+      },
+      {
+        "description": "Ask them to reverse the charge and explain how to protect your account.",
+        "keywords": [
+          "reverse the charge",
+          "refund",
+          "freeze my card",
+          "protect my account",
+          "block my card"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Bank Customer Support,\n\nI am writing to report a charge on my account that I do not recognize. While reviewing my transactions online, I noticed a charge of $85 from a store I have never visited or made any purchase from.\n\nI am concerned that this could be a case of fraud, since I did not authorize this transaction and have no explanation for how it appeared on my statement. I would appreciate it if your team could look into this matter and investigate the source of the charge as soon as possible.\n\nIn the meantime, could you please reverse the charge and let me know what steps I should take to protect my account, such as freezing my card or changing my login information? I want to make sure no further unauthorized transactions occur. Thank you for your prompt attention to this issue.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 89,
+    "scenario": "The heating system in your apartment has not been working for the past four days, and the temperature outside is freezing. You have already tried resetting the thermostat yourself, but nothing has changed, and you need this fixed quickly.",
+    "recipient": "Apartment Manager",
+    "subject": "Heating not working in my apartment",
+    "tasks": [
+      {
+        "description": "Explain that the heating has been broken for several days.",
+        "keywords": [
+          "not working",
+          "broken heating",
+          "no heat",
+          "stopped working",
+          "four days"
+        ]
+      },
+      {
+        "description": "Mention the urgency due to freezing weather.",
+        "keywords": [
+          "freezing",
+          "urgent",
+          "as soon as possible",
+          "cold",
+          "right away"
+        ]
+      },
+      {
+        "description": "Ask for a technician to be scheduled and a timeline for repair.",
+        "keywords": [
+          "technician",
+          "repair",
+          "schedule",
+          "fix it",
+          "when can"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Apartment Manager,\n\nI am writing to let you know that the heating system in my apartment has not been working for the past four days. I have already tried resetting the thermostat myself several times, but the temperature in my unit has not changed at all.\n\nThis is becoming urgent because the weather outside has turned freezing, and my apartment is extremely cold, especially at night. I am worried about my health and comfort if this continues much longer without a solution.\n\nCould you please arrange for a technician to come and repair the heating system as soon as possible? I would also appreciate knowing when I can expect someone to visit, since the cold has already made it difficult to sleep and go about my daily routine. Thank you for your quick attention to this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 90,
+    "scenario": "You submitted a claim for a car accident three weeks ago, but you have not received any update from your insurance company. You need to know the status of your claim because the repair shop is waiting for approval to begin work.",
+    "recipient": "Insurance Claims Department",
+    "subject": "Status update needed on my claim",
+    "tasks": [
+      {
+        "description": "Explain that you submitted a claim weeks ago and have not received a response.",
+        "keywords": [
+          "submitted my claim",
+          "three weeks ago",
+          "no update",
+          "haven't heard",
+          "no response"
+        ]
+      },
+      {
+        "description": "Explain that the repair shop is waiting, making this urgent.",
+        "keywords": [
+          "repair shop",
+          "waiting",
+          "urgent",
+          "delay",
+          "approval"
+        ]
+      },
+      {
+        "description": "Ask for the current status and an expected timeline.",
+        "keywords": [
+          "status",
+          "timeline",
+          "when will",
+          "update me",
+          "expected date"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Insurance Claims Department,\n\nI am writing regarding a claim I submitted for a car accident three weeks ago. Since then, I have not received any update from your office about the progress of my case, and I am unsure of what is happening with my claim.\n\nThis delay has become urgent because the repair shop working on my vehicle is currently waiting for your approval before they can begin any work. Every day without a response means my car remains undrivable, which is causing significant inconvenience.\n\nCould you please provide me with the current status of my claim and give me an estimated timeline for when I can expect a decision? I would greatly appreciate an update as soon as possible so that repairs can move forward. Thank you for your attention to this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 91,
+    "scenario": "Your home internet connection has been completely down for five days, and you rely on it for remote work. You have already restarted your router several times, but the service is still not working, and your provider has not responded to your earlier report.",
+    "recipient": "Telecom Customer Service",
+    "subject": "Internet service down for five days",
+    "tasks": [
+      {
+        "description": "Explain the outage duration and the steps you already tried.",
+        "keywords": [
+          "down for five days",
+          "no connection",
+          "restarted the router",
+          "not working",
+          "outage"
+        ]
+      },
+      {
+        "description": "Mention that you depend on the internet for remote work, making this urgent.",
+        "keywords": [
+          "remote work",
+          "urgent",
+          "need it for work",
+          "as soon as possible",
+          "depend on"
+        ]
+      },
+      {
+        "description": "Ask for a repair timeline or compensation for the outage.",
+        "keywords": [
+          "technician",
+          "fix this",
+          "compensation",
+          "refund",
+          "timeline"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Telecom Customer Service,\n\nI am writing to report that my home internet connection has been completely down for the past five days. I have restarted my router several times and checked all the cables, but the service still is not working.\n\nThis situation is urgent because I depend on a stable internet connection for my remote work, and I have already missed important meetings because of this outage. I also reported this issue earlier through your online form, but I have not received any response from your team.\n\nCould you please send a technician to fix this problem as soon as possible? Given how long the outage has lasted, I would also appreciate some compensation or a credit on my next bill. Thank you for resolving this matter quickly.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 92,
+    "scenario": "You realized this morning that your debit card is missing, and you are not sure whether you lost it or it was stolen. You want to prevent anyone from using it and need a replacement card sent to you quickly.",
+    "recipient": "Bank Customer Service",
+    "subject": "Lost debit card - need to block it",
+    "tasks": [
+      {
+        "description": "Report that your card is missing and how you noticed it.",
+        "keywords": [
+          "lost my card",
+          "missing",
+          "can't find",
+          "stolen",
+          "misplaced"
+        ]
+      },
+      {
+        "description": "Request that the card be blocked immediately to prevent misuse.",
+        "keywords": [
+          "block my card",
+          "freeze",
+          "prevent unauthorized use",
+          "cancel the card",
+          "right away"
+        ]
+      },
+      {
+        "description": "Ask about the process and timeline for getting a replacement card.",
+        "keywords": [
+          "replacement card",
+          "new card",
+          "how long",
+          "send me",
+          "reissue"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Bank Customer Service,\n\nI am writing because I realized this morning that my debit card is missing. I am not sure whether I lost it somewhere or whether it was stolen, but I have searched everywhere without success.\n\nSince I am worried that someone else might try to use my card, I would like to request that you block it immediately to prevent any unauthorized transactions. I have not noticed any suspicious activity yet, but I want to act quickly to protect my account.\n\nCould you also let me know the process for getting a replacement card and how long it will take to arrive? I rely on this card for daily expenses, so I would appreciate receiving a new one as soon as possible. Thank you for your help with this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 93,
+    "scenario": "For the past two weeks, your upstairs neighbors have been playing loud music late at night, making it difficult for you to sleep before work. You have tried speaking with them directly, but the noise has continued, and you want your landlord to intervene.",
+    "recipient": "Landlord",
+    "subject": "Ongoing noise complaint about upstairs neighbors",
+    "tasks": [
+      {
+        "description": "Describe the noise problem and how long it has been happening.",
+        "keywords": [
+          "loud music",
+          "late at night",
+          "noisy neighbors",
+          "can't sleep",
+          "two weeks"
+        ]
+      },
+      {
+        "description": "Mention that you already spoke with the neighbors without success.",
+        "keywords": [
+          "already spoke",
+          "talked to them",
+          "no change",
+          "still continues",
+          "didn't help"
+        ]
+      },
+      {
+        "description": "Ask the landlord to intervene and resolve the issue.",
+        "keywords": [
+          "intervene",
+          "address this",
+          "talk to them",
+          "resolve",
+          "take action"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Landlord,\n\nI am writing to raise an ongoing issue with my upstairs neighbors, who have been playing loud music late at night for the past two weeks. The noise has made it very difficult for me to fall asleep before work each morning.\n\nI already spoke with them directly about the problem, but unfortunately, the noise has continued without any real change. Since talking to them myself has not solved the issue, I am hoping you might be able to help.\n\nCould you please contact my neighbors and ask them to lower the noise level during nighttime hours? I would really appreciate it if this situation could be resolved soon, as the lack of sleep is starting to affect my daily life and work performance. Thank you for looking into this.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 94,
+    "scenario": "You just received your monthly insurance bill, and the amount charged is much higher than what you agreed to when you signed up for the policy. You want to understand why the price increased and have it corrected if it is a mistake.",
+    "recipient": "Insurance Billing Department",
+    "subject": "Incorrect amount on my monthly bill",
+    "tasks": [
+      {
+        "description": "Explain that the bill is higher than the amount you originally agreed to.",
+        "keywords": [
+          "higher than",
+          "incorrect amount",
+          "overcharged",
+          "wrong amount",
+          "not what I agreed"
+        ]
+      },
+      {
+        "description": "Ask for an explanation of why the amount increased.",
+        "keywords": [
+          "why",
+          "explain",
+          "reason for",
+          "increase",
+          "clarify"
+        ]
+      },
+      {
+        "description": "Request a correction or refund if the charge was a mistake.",
+        "keywords": [
+          "correct this",
+          "refund",
+          "adjust my bill",
+          "fix the error",
+          "reimburse"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Insurance Billing Department,\n\nI recently received my monthly insurance bill, and I noticed that the amount charged is significantly higher than what I originally agreed to when I signed up for my policy. This unexpected increase has caught me by surprise.\n\nCould you please explain why my premium has gone up so much since my last payment? I do not recall receiving any notice about a change in my plan or coverage, so I am unsure what caused this difference in price.\n\nIf this turns out to be a billing error, I would appreciate having my account corrected and the extra amount refunded or credited toward my next payment. Please let me know what you find as soon as possible, since I want to resolve this before my next due date. Thank you.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 95,
+    "scenario": "Your latest phone bill includes charges for international calls that you never made. You checked your call history and confirmed the charges are incorrect, and you would like the company to review the bill and remove these charges before the payment deadline.",
+    "recipient": "Telecom Billing Support",
+    "subject": "Incorrect charges on my phone bill",
+    "tasks": [
+      {
+        "description": "Explain that the bill includes charges for calls you never made.",
+        "keywords": [
+          "never made",
+          "incorrect charges",
+          "don't recognize",
+          "not mine",
+          "international calls I didn't make"
+        ]
+      },
+      {
+        "description": "Ask the company to review and verify your bill.",
+        "keywords": [
+          "review my bill",
+          "look into",
+          "check my account",
+          "investigate",
+          "verify"
+        ]
+      },
+      {
+        "description": "Request that the charges be removed before the payment deadline.",
+        "keywords": [
+          "remove these charges",
+          "before the deadline",
+          "correct my bill",
+          "credit my account",
+          "due date"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Telecom Billing Support,\n\nI am writing about my most recent phone bill, which includes charges for several international calls that I never made. After checking my call history carefully, I confirmed that these calls do not match any activity on my phone.\n\nI would like to ask your team to review my bill and verify my account records, since these incorrect charges have significantly increased the total amount I owe this month. I have never made international calls from this line before.\n\nCould you please remove these charges from my bill before the payment deadline? I would also appreciate confirmation once the correction has been made, so I can be sure my account reflects the accurate amount. Thank you for looking into this promptly.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 96,
+    "scenario": "You bought a laptop two weeks ago, and it now shuts down randomly even when fully charged. The store's return window is closing soon, so you want to know whether you can get a repair, replacement, or refund quickly.",
+    "recipient": "Customer Service",
+    "subject": "Defective laptop needs repair or replacement",
+    "tasks": [
+      {
+        "description": "Describe the defect you are experiencing with the laptop.",
+        "keywords": [
+          "shuts down randomly",
+          "defective",
+          "stopped working properly",
+          "malfunctioning",
+          "not working correctly"
+        ]
+      },
+      {
+        "description": "Mention that the return window is closing soon, making this urgent.",
+        "keywords": [
+          "return window",
+          "closing soon",
+          "urgent",
+          "before it expires",
+          "time-sensitive"
+        ]
+      },
+      {
+        "description": "Ask about options such as repair, replacement, or refund.",
+        "keywords": [
+          "repair",
+          "replacement",
+          "refund",
+          "options",
+          "exchange"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Customer Service,\n\nI am writing about a laptop I purchased two weeks ago, which has started shutting down randomly even when it is fully charged. This problem has occurred several times now, making the laptop very difficult to use for my daily tasks.\n\nI noticed that the store's return window is closing soon, so I wanted to reach out before that deadline passes. I would like to resolve this issue as quickly as possible to avoid losing the option for a return or exchange.\n\nCould you let me know what options are available to me, such as a repair, a replacement laptop, or a full refund? I would appreciate your guidance on the best solution, since I need a reliable computer for my studies. Thank you for your quick response.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 97,
+    "scenario": "A strong storm last week cracked one of the windows in your living room, and cold air has been coming through the gap ever since. You want your landlord to arrange a repair before the weather gets worse.",
+    "recipient": "Property Manager",
+    "subject": "Cracked window needs repair",
+    "tasks": [
+      {
+        "description": "Explain that the window was cracked during a storm.",
+        "keywords": [
+          "cracked window",
+          "broken window",
+          "storm",
+          "damaged",
+          "last week"
+        ]
+      },
+      {
+        "description": "Mention that cold air is coming through the gap.",
+        "keywords": [
+          "cold air",
+          "draft",
+          "coming through",
+          "uncomfortable",
+          "getting worse"
+        ]
+      },
+      {
+        "description": "Request that the repair be arranged soon.",
+        "keywords": [
+          "arrange a repair",
+          "fix it",
+          "send someone",
+          "as soon as possible",
+          "before it gets worse"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Property Manager,\n\nI am writing to inform you that a strong storm last week caused a crack in one of the windows in my living room. Since then, cold air has been coming through the gap, making the room increasingly uncomfortable.\n\nThe crack seems to be getting slightly worse each day, and I am concerned that it may cause further damage to the window or increase my heating costs if it is not addressed soon. I have tried covering it temporarily, but this is not a long-term solution.\n\nCould you please arrange for someone to repair or replace the window as soon as possible? I would appreciate it if this could be done before the weather gets any colder. Thank you for your attention to this matter.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 98,
+    "scenario": "You noticed a $35 overdraft fee on your account statement, but you are certain you had enough funds available at the time. You would like the bank to review the transaction history and remove the fee if it was charged in error.",
+    "recipient": "Bank Customer Service",
+    "subject": "Dispute regarding an overdraft fee",
+    "tasks": [
+      {
+        "description": "Explain that the fee was charged despite having sufficient funds.",
+        "keywords": [
+          "overdraft fee",
+          "enough funds",
+          "sufficient balance",
+          "charged incorrectly",
+          "shouldn't have"
+        ]
+      },
+      {
+        "description": "Ask them to review your transaction history around that time.",
+        "keywords": [
+          "review my account",
+          "check the transaction",
+          "look into",
+          "investigate",
+          "transaction history"
+        ]
+      },
+      {
+        "description": "Request that the fee be removed if it was a mistake.",
+        "keywords": [
+          "remove the fee",
+          "refund",
+          "waive the fee",
+          "credit back",
+          "reverse"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Bank Customer Service,\n\nI am writing to dispute a $35 overdraft fee that appeared on my most recent account statement. Based on my own records, I am confident that I had sufficient funds available in my account at the time this fee was charged.\n\nI would appreciate it if your team could review my transaction history around that date to confirm my account balance and determine whether this fee was applied correctly. I want to understand exactly what happened before assuming it was a mistake.\n\nIf it turns out that this fee was charged in error, I would like to request that it be removed and credited back to my account. Please let me know the outcome of your review as soon as possible. Thank you for your help.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 99,
+    "scenario": "Your flight home was cancelled two hours before departure due to a mechanical issue, and the airline has not yet offered you an alternative flight. You need to get home for an important family event and want to be rebooked as soon as possible.",
+    "recipient": "Airline Customer Service",
+    "subject": "Need rebooking after flight cancellation",
+    "tasks": [
+      {
+        "description": "Explain that your flight was cancelled and why.",
+        "keywords": [
+          "flight was cancelled",
+          "cancellation",
+          "mechanical issue",
+          "cancelled two hours before",
+          "no longer flying"
+        ]
+      },
+      {
+        "description": "Mention the urgency of attending an important family event.",
+        "keywords": [
+          "family event",
+          "urgent",
+          "need to get home",
+          "as soon as possible",
+          "important occasion"
+        ]
+      },
+      {
+        "description": "Request rebooking on the next available flight.",
+        "keywords": [
+          "rebook",
+          "next available flight",
+          "alternative flight",
+          "reschedule",
+          "new flight"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Airline Customer Service,\n\nI am writing about my flight home, which was cancelled just two hours before departure due to a mechanical issue. I was informed of the cancellation at the airport, but I have not yet been given any information about an alternative flight.\n\nThis situation is especially urgent for me because I need to get home in time for an important family event, and every additional delay makes this more difficult. I was hoping your team could help me find a solution quickly.\n\nCould you please rebook me on the next available flight to my destination? I would be grateful if this could be arranged as soon as possible, given the importance of the occasion I need to attend. Thank you for your understanding and assistance.\n\nSincerely,\n[Your Name]"
+  },
+  {
+    "id": 100,
+    "scenario": "You booked a hotel room with a king bed and a city view, but upon check-in you were given a small room with two twin beds and no view at all. You want the hotel to correct this or offer compensation.",
+    "recipient": "Hotel Front Desk Manager",
+    "subject": "Room does not match my reservation",
+    "tasks": [
+      {
+        "description": "Explain the discrepancy between what you booked and the room you received.",
+        "keywords": [
+          "does not match",
+          "different room",
+          "not what I booked",
+          "king bed",
+          "city view"
+        ]
+      },
+      {
+        "description": "Ask to be moved to the correct type of room.",
+        "keywords": [
+          "correct room",
+          "switch rooms",
+          "upgrade",
+          "move me",
+          "proper room"
+        ]
+      },
+      {
+        "description": "Request compensation if a correct room is not available.",
+        "keywords": [
+          "compensation",
+          "discount",
+          "refund",
+          "partial refund",
+          "credit"
+        ]
+      }
+    ],
+    "exampleResponse": "Dear Hotel Front Desk Manager,\n\nI am writing about the room I was given during check-in today. When I made my reservation, I specifically booked a room with a king bed and a city view, but I was instead placed in a small room with two twin beds and no view at all.\n\nThis does not match what I paid for, and I would like to have the situation corrected. Since I have already unpacked, moving to a different room now would be inconvenient, but I believe I am entitled to what I originally reserved.\n\nCould you please arrange for me to be switched to the correct room, or upgrade me if one is not currently available? If neither option is possible, I would appreciate some compensation for the difference. Thank you for addressing this promptly.\n\nSincerely,\n[Your Name]"
   }
 ]

@@ -568,6 +568,24 @@ def init_db():
     conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_category ON attempt_results(category)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_user ON attempt_results(user_id)")
 
+    # Tracks which items from each random-draw mock pool (ctw/ridl/ap/car/conv/announce/at/bas/
+    # email/disc/lr/interview) a given student has already been shown by a dynamic (non-fixed)
+    # Full Mock Test or a "practice one section" random drill -- see /api/mock/seen-ids and
+    # /api/mock/mark-seen below. Once every item in a pool has been seen, the pool "wraps around"
+    # (old seen rows for it are cleared) instead of the student getting stuck with an
+    # ever-shrinking draw. Not used by the 20 fixed mock tests, which always show identical
+    # content on purpose.
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS seen_pool_items (
+            user_id INTEGER NOT NULL,
+            pool TEXT NOT NULL,
+            item_id TEXT NOT NULL,
+            seen_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            PRIMARY KEY (user_id, pool, item_id)
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_seen_pool_items_user_pool ON seen_pool_items(user_id, pool)")
+
     # Legacy key/value store, kept only so old data (from before per-user accounts existed) can
     # still be read once during the very first registration to carry it over to that new account.
     conn.execute("""
@@ -1671,6 +1689,84 @@ def get_mock_speaking_interview(user=Depends(get_current_user_optional)):
         for q in s["questions"]:
             q["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{s['id']}/{q['id']}.mp3"
     return data
+
+# --- Full Mock Test: per-student "seen before" tracking for the random-draw pools above -------
+# Only the dynamic (non-fixed) Full Mock Test and "practice one section" random drills sample
+# randomly from these pools every attempt -- the 20 fixed tests always show identical content on
+# purpose and never touch this. Maps each pool key (matching the frontend's `pools.X` object) to
+# the JSON file that holds it, so this file's own item ids stay the single source of truth for
+# what "every item in the pool" means.
+MOCK_POOL_FILES = {
+    "ctw": MOCK_CTW_FILE, "ridl": MOCK_RIDL_FILE, "ap": MOCK_AP_FILE,
+    "car": MOCK_LISTENING_CAR_FILE, "conv": MOCK_LISTENING_CONV_FILE,
+    "announce": MOCK_LISTENING_ANNOUNCE_FILE, "at": MOCK_LISTENING_AT_FILE,
+    "bas": MOCK_BAS_FILE, "email": MOCK_EMAIL_FILE, "disc": MOCK_DISC_FILE,
+    "lr": MOCK_SPEAKING_LR_FILE, "interview": MOCK_SPEAKING_INTERVIEW_FILE,
+}
+
+def _pool_all_ids(pool: str) -> set:
+    """Every currently-valid item id for one pool. The 'car' (Choose a Response) pool is grouped
+    into exercises of several questions each -- the frontend flattens it with a composite
+    `${exerciseId}-${questionId}` id (see flattenCarPool in App.jsx), so this mirrors that exact
+    scheme rather than tracking at the coarser exercise level."""
+    path = MOCK_POOL_FILES.get(pool)
+    if not path or not os.path.exists(path):
+        return set()
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+    if pool == "car":
+        ids = set()
+        for ex in data:
+            for q in ex.get("questions", []):
+                ids.add(f"{ex.get('id')}-{q.get('id')}")
+        return ids
+    return {str(item.get("id")) for item in data}
+
+@app.get("/api/mock/seen-ids")
+def get_mock_seen_ids(user=Depends(get_current_user)):
+    """Returns, per pool, the item ids this student has already been served by a random draw
+    (dynamic Full Mock Test or a single-section practice drill) -- the frontend filters each pool
+    down to just the unseen items before sampling, so the same question never comes up twice in a
+    row. Once a pool is fully exhausted (every currently-valid id has been seen), this clears that
+    pool's seen rows and reports it as fresh again, so the pool wraps around and starts repeating
+    from the top instead of leaving the student with an ever-shrinking draw."""
+    conn = get_db()
+    result = {}
+    for pool, all_ids in ((p, _pool_all_ids(p)) for p in MOCK_POOL_FILES):
+        rows = conn.execute(
+            "SELECT item_id FROM seen_pool_items WHERE user_id = ? AND pool = ?",
+            (user["id"], pool),
+        ).fetchall()
+        seen_ids = {row["item_id"] for row in rows}
+        if all_ids and all_ids.issubset(seen_ids):
+            conn.execute("DELETE FROM seen_pool_items WHERE user_id = ? AND pool = ?", (user["id"], pool))
+            seen_ids = set()
+        result[pool] = sorted(seen_ids)
+    conn.commit()
+    conn.close()
+    return result
+
+class MarkSeenRequest(BaseModel):
+    pool: str
+    item_ids: List[str]
+
+@app.post("/api/mock/mark-seen")
+def mark_mock_seen(data: MarkSeenRequest, user=Depends(get_current_user)):
+    """Called right after a dynamic Full Mock Test or single-section practice drill draws its
+    questions (not after the student finishes them) -- being shown a question is what should stop
+    it from repeating, whether or not the student actually answers it before saving & exiting."""
+    if data.pool not in MOCK_POOL_FILES or not data.item_ids:
+        return {"status": "success"}
+    conn = get_db()
+    for item_id in data.item_ids:
+        conn.execute(
+            "INSERT INTO seen_pool_items (user_id, pool, item_id) VALUES (?, ?, ?) "
+            "ON CONFLICT(user_id, pool, item_id) DO NOTHING",
+            (user["id"], data.pool, str(item_id)),
+        )
+    conn.commit()
+    conn.close()
+    return {"status": "success"}
 
 # --- Full Mock Test: fixed (pre-built) tests, served whole as one bundle per test id ---
 @app.get("/api/mock/fixed-test/{test_id}")
