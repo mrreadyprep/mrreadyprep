@@ -328,6 +328,9 @@ class ResetPasswordRequest(BaseModel):
     token: str
     new_password: str
 
+class VerifyEmailRequest(BaseModel):
+    token: str
+
 class ExamDateUpdate(BaseModel):
     exam_date: str  # ISO yyyy-mm-dd, or "" to clear the saved date
 
@@ -701,25 +704,19 @@ def get_current_user_optional(authorization: Optional[str] = Header(None)):
     except HTTPException:
         return None
 
-def send_password_reset_email(to_email: str, reset_link: str):
-    """Sends the 'reset your password' email via Resend (resend.com), if RESEND_API_KEY is
-    configured. If it isn't set yet, or the send fails for any reason, this just logs the link to
-    the server console instead of raising -- forgot-password should never itself error out just
-    because email delivery isn't wired up or hiccups, since the reset token has already been saved
-    either way and the generic response to the student must stay the same regardless."""
+def _send_transactional_email(to_email: str, subject: str, html: str, log_prefix: str):
+    """Shared Resend (resend.com) send path for every transactional email this backend sends
+    (password reset, email verification, ...). If RESEND_API_KEY isn't configured, or the send
+    fails for any reason, this just logs to the server console instead of raising -- the calling
+    endpoint should never itself error out just because email delivery isn't wired up or hiccups."""
     if not RESEND_API_KEY:
-        print(f"[password reset] RESEND_API_KEY not set -- reset link for {to_email}: {reset_link}", flush=True)
+        print(f"[{log_prefix}] RESEND_API_KEY not set -- email to {to_email} not sent (subject: {subject!r})", flush=True)
         return
-    print(f"[password reset] RESEND_API_KEY is set ({len(RESEND_API_KEY)} chars) -- attempting to send to {to_email}", flush=True)
     payload = json.dumps({
         "from": RESEND_FROM_EMAIL,
         "to": [to_email],
-        "subject": "Reset your mrreadyprep password",
-        "html": (
-            f"<p>We received a request to reset your mrreadyprep password.</p>"
-            f"<p><a href=\"{reset_link}\">Click here to choose a new password</a></p>"
-            f"<p>This link expires in 1 hour. If you didn't request this, you can safely ignore this email.</p>"
-        ),
+        "subject": subject,
+        "html": html,
     }).encode("utf-8")
     req = urllib.request.Request(
         "https://api.resend.com/emails",
@@ -737,12 +734,38 @@ def send_password_reset_email(to_email: str, reset_link: str):
     )
     try:
         resp = urllib.request.urlopen(req, timeout=10)
-        print(f"[password reset] Resend accepted the email for {to_email} (status {resp.status})", flush=True)
+        print(f"[{log_prefix}] Resend accepted the email for {to_email} (status {resp.status})", flush=True)
     except urllib.error.HTTPError as e:
         body = e.read().decode("utf-8", errors="replace")
-        print(f"[password reset] Resend rejected the email for {to_email}: HTTP {e.code} -- {body}", flush=True)
+        print(f"[{log_prefix}] Resend rejected the email for {to_email}: HTTP {e.code} -- {body}", flush=True)
     except urllib.error.URLError as e:
-        print(f"[password reset] Failed to send email to {to_email}: {e}", flush=True)
+        print(f"[{log_prefix}] Failed to send email to {to_email}: {e}", flush=True)
+
+def send_password_reset_email(to_email: str, reset_link: str):
+    if not RESEND_API_KEY:
+        print(f"[password reset] RESEND_API_KEY not set -- reset link for {to_email}: {reset_link}", flush=True)
+        return
+    _send_transactional_email(
+        to_email,
+        "Reset your mrreadyprep password",
+        f"<p>We received a request to reset your mrreadyprep password.</p>"
+        f"<p><a href=\"{reset_link}\">Click here to choose a new password</a></p>"
+        f"<p>This link expires in 1 hour. If you didn't request this, you can safely ignore this email.</p>",
+        "password reset",
+    )
+
+def send_verification_email(to_email: str, verify_link: str):
+    if not RESEND_API_KEY:
+        print(f"[email verification] RESEND_API_KEY not set -- verify link for {to_email}: {verify_link}", flush=True)
+        return
+    _send_transactional_email(
+        to_email,
+        "Verify your mrreadyprep email address",
+        f"<p>Welcome to mrreadyprep! Please confirm this is your email address to finish setting up your account.</p>"
+        f"<p><a href=\"{verify_link}\">Click here to verify your email</a></p>"
+        f"<p>This link expires in 24 hours. If you didn't create a mrreadyprep account, you can safely ignore this email.</p>",
+        "email verification",
+    )
 
 def compute_streak_and_week_activity(conn, user_id: int):
     """Looks at every attempt_results/ridl_results row's saved_at date for this user to compute
@@ -981,8 +1004,8 @@ def register(data: RegisterRequest, request: Request):
     if is_first_user:
         migrate_legacy_data_to_user(user_id)
 
-    # TODO(email verification): once an email-sending service is configured, send
-    # verification_token to the user's email here instead of just issuing it silently.
+    verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
+    send_verification_email(email, verify_link)
 
     token = create_access_token(user_id)
     conn = get_db()
@@ -1034,6 +1057,10 @@ _register_attempts: dict = collections.defaultdict(list)
 FORGOT_PASSWORD_ATTEMPT_WINDOW_SECONDS = 15 * 60
 FORGOT_PASSWORD_ATTEMPT_MAX = 5
 _forgot_password_attempts: dict = collections.defaultdict(list)
+
+RESEND_VERIFICATION_WINDOW_SECONDS = 60 * 60
+RESEND_VERIFICATION_MAX = 5
+_resend_verification_attempts: dict = collections.defaultdict(list)
 
 def _check_and_consume_rate_limit(store: dict, key: str, window_seconds: int, max_attempts: int, what: str):
     now = time.time()
@@ -1168,6 +1195,49 @@ def reset_password(data: ResetPasswordRequest):
     conn.commit()
     conn.close()
     return {"status": "success", "message": "Password updated. You can now log in with your new password."}
+
+@app.post("/api/auth/verify-email")
+def verify_email(data: VerifyEmailRequest):
+    """Confirms the student's real email address -- purely informational for now (nothing in the
+    app is gated on email_verified, see gate_pool/require_premium_pool for the actual subscription
+    gating), but it's what powers the 'Verified' badge and lets support trust a reported email."""
+    conn = get_db()
+    user = conn.execute("SELECT * FROM users WHERE verification_token = ?", (data.token,)).fetchone()
+    if not user:
+        conn.close()
+        raise HTTPException(status_code=400, detail="This verification link is invalid or has already been used")
+    if user["email_verified"]:
+        conn.close()
+        return {"status": "success", "message": "Your email is already verified."}
+    expires = user["verification_token_expires"]
+    if not expires or _parse_db_datetime(expires) < datetime.now(timezone.utc):
+        conn.close()
+        raise HTTPException(status_code=400, detail="This verification link has expired. Please request a new one from your profile.")
+    conn.execute(
+        "UPDATE users SET email_verified = 1, verification_token = NULL, verification_token_expires = NULL WHERE id = ?",
+        (user["id"],),
+    )
+    conn.commit()
+    conn.close()
+    return {"status": "success", "message": "Your email has been verified."}
+
+@app.post("/api/auth/resend-verification-email")
+def resend_verification_email(user=Depends(get_current_user)):
+    if user["email_verified"]:
+        return {"status": "success", "message": "Your email is already verified."}
+    _check_and_consume_rate_limit(_resend_verification_attempts, str(user["id"]), RESEND_VERIFICATION_WINDOW_SECONDS, RESEND_VERIFICATION_MAX, "verification-email resend")
+    verification_token = secrets.token_urlsafe(32)
+    verification_expires = (datetime.now(timezone.utc) + timedelta(hours=24)).isoformat()
+    conn = get_db()
+    conn.execute(
+        "UPDATE users SET verification_token = ?, verification_token_expires = ? WHERE id = ?",
+        (verification_token, verification_expires, user["id"]),
+    )
+    conn.commit()
+    conn.close()
+    verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
+    send_verification_email(user["email"], verify_link)
+    return {"status": "success", "message": "Verification email sent. Please check your inbox."}
 
 @app.get("/api/auth/me")
 def get_me(user=Depends(get_current_user)):

@@ -7624,6 +7624,7 @@ function App() {
   }, [])
 
   const [userData, setUserData] = useState(null)
+  const [resendingVerification, setResendingVerification] = useState(false)
   const [currentTab, setCurrentTab] = useState('dashboard')
   const [profileName, setProfileName] = useState('')
   const [targetScore, setTargetScore] = useState(5.5)
@@ -7694,7 +7695,9 @@ function App() {
   // Section scores/exam date only change as a side effect of finishing practice elsewhere in the
   // app -- re-fetch every time the student lands back on the Dashboard tab (not just on first
   // mount) so those numbers don't go stale for the rest of the session after the first load.
-  useEffect(() => { if (currentTab === 'dashboard') fetchDashboardData() }, [currentTab])
+  // Settings is included too so the "email verified" badge picks up a verification done in
+  // another tab (e.g. clicking the emailed link) without needing a full page reload.
+  useEffect(() => { if (currentTab === 'dashboard' || currentTab === 'settings') fetchDashboardData() }, [currentTab])
 
   // Any locked list item/mock test anywhere in the app calls requestUpgrade() instead of trying
   // to open itself -- that dispatches this event, which is the one place that actually switches
@@ -7744,6 +7747,15 @@ function App() {
     }).then(res => res.json()).then(data => { if (data.status === 'success') { showToast('Saved!'); fetchDashboardData() } })
   }
 
+  const handleResendVerification = () => {
+    setResendingVerification(true)
+    apiFetch(`${BACKEND_URL}/api/auth/resend-verification-email`, { method: 'POST' })
+      .then(res => res.json().then(data => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => showToast(ok ? (data.message || 'Verification email sent.') : (data.detail || 'Could not send verification email.'), ok ? 'success' : 'error'))
+      .catch(() => showToast('Could not send verification email.', 'error'))
+      .finally(() => setResendingVerification(false))
+  }
+
   // Same save as the Settings form, but usable from the Dashboard's inline "Edit targets" panel
   // without a <form> submit event -- lets a student adjust their section goals right where they
   // see them instead of having to go find the Settings tab.
@@ -7782,8 +7794,6 @@ function App() {
 
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#f4f6fa', overflow: 'hidden', boxSizing: 'border-box' }}>
-      <ToastHost />
-
       {/* Backdrop behind the off-canvas sidebar on mobile -- tapping it closes the drawer, same
           as tapping outside any slide-in menu. Only exists in the DOM while open. */}
       {isMobile && mobileNavOpen && (
@@ -8261,6 +8271,16 @@ function App() {
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Email</label>
                   <input type="text" value={userData.email || ''} readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
+                  {userData.email_verified ? (
+                    <span style={{ fontSize: '11px', fontWeight: '700', color: '#2ac56c', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>✓ Verified</span>
+                  ) : (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '2px', flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: '11px', fontWeight: '700', color: '#e07b00' }}>⚠ Not verified</span>
+                      <button type="button" onClick={handleResendVerification} disabled={resendingVerification} style={{ background: 'none', border: 'none', color: '#2563eb', fontSize: '11px', fontWeight: '700', cursor: resendingVerification ? 'default' : 'pointer', padding: 0, opacity: resendingVerification ? 0.6 : 1 }}>
+                        {resendingVerification ? 'Sending…' : 'Resend verification email'}
+                      </button>
+                    </div>
+                  )}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Current Password</label>
@@ -8333,13 +8353,37 @@ function AuthGate() {
       .catch(() => { clearAuthToken(); setAuthState('out') })
   }, [])
 
-  if (authState === 'checking') {
-    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />
-  }
-  if (authState === 'out') {
-    return <AuthScreen onAuthSuccess={() => setAuthState('in')} />
-  }
-  return <App />
+  // Consumes the "verify your email" link's ?verify_token=... query param regardless of whether
+  // the student is currently logged in or out (register already logs them straight in, so this
+  // link is most often clicked while already authenticated elsewhere) -- the endpoint itself
+  // doesn't require auth, it just needs the token. Strips the token from the visible URL either
+  // way so it isn't sitting in the address bar / browser history afterwards.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const token = params.get('verify_token')
+    if (!token) return
+    params.delete('verify_token')
+    const cleanUrl = window.location.pathname + (params.toString() ? `?${params.toString()}` : '')
+    window.history.replaceState({}, '', cleanUrl)
+    apiFetch(`${BACKEND_URL}/api/auth/verify-email`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token }),
+    }).then(res => res.json().then(data => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => showToast(ok ? (data.message || 'Your email has been verified.') : (data.detail || 'This verification link is invalid or has expired.'), ok ? 'success' : 'error'))
+      .catch(() => showToast('Could not verify your email right now.', 'error'))
+  }, [])
+
+  // Mounted here (above the checking/out/in branches) rather than just inside App() so a toast
+  // fired by the verify-email effect above -- which can run before login finishes checking, or
+  // while logged out entirely -- always has a listener to actually render it.
+  return (
+    <>
+      <ToastHost />
+      {authState === 'checking' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />}
+      {authState === 'out' && <AuthScreen onAuthSuccess={() => setAuthState('in')} />}
+      {authState === 'in' && <App />}
+    </>
+  )
 }
 
 function AppWithErrorBoundary() {
