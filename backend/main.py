@@ -21,6 +21,16 @@ import jwt
 import urllib.request
 import urllib.error
 
+# google-auth is only actually exercised once GOOGLE_CLIENT_ID is configured (see
+# /api/auth/google below) -- imported defensively so local/dev environments that haven't run
+# `pip install -r requirements.txt` yet don't crash on import.
+try:
+    from google.oauth2 import id_token as google_id_token
+    from google.auth.transport import requests as google_auth_requests
+except ImportError:
+    google_id_token = None
+    google_auth_requests = None
+
 # psycopg2 is only actually required in production once DATABASE_URL points at a real Postgres
 # instance (see get_db() below). Importing it defensively means local sqlite-only dev still works
 # even before `pip install -r requirements.txt` has picked up the new dependency.
@@ -986,6 +996,66 @@ def login(data: LoginRequest, request: Request):
         _record_failed_login(rate_limit_key)
         raise HTTPException(status_code=401, detail="Incorrect email or password")
     _login_attempts.pop(rate_limit_key, None)
+    token = create_access_token(user["id"])
+    return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
+
+@app.post("/api/auth/google")
+def google_login(data: GoogleLoginRequest):
+    """Verifies the ID token Google Identity Services hands back to the frontend after the
+    student picks their Google account, then either logs them into their existing account
+    (matched by google_id first, then by email so someone who registered with a password can
+    still link their Google account by signing in with the same address) or creates a brand new
+    one. Google has already verified the student's email for us, so accounts created this way
+    start out email_verified = 1 -- no separate verification email is needed."""
+    if not GOOGLE_CLIENT_ID or not google_id_token:
+        raise HTTPException(status_code=503, detail="Google Sign-In is not configured on this server yet")
+
+    try:
+        payload = google_id_token.verify_oauth2_token(
+            data.id_token, google_auth_requests.Request(), GOOGLE_CLIENT_ID
+        )
+    except ValueError:
+        raise HTTPException(status_code=401, detail="Invalid Google credential")
+
+    google_id = payload.get("sub")
+    email = (payload.get("email") or "").strip().lower()
+    email_verified_by_google = bool(payload.get("email_verified"))
+    name = payload.get("name") or (email.split("@")[0] if email else "Student")
+    if not google_id or not email or not email_verified_by_google:
+        raise HTTPException(status_code=401, detail="Google account is missing a verified email")
+
+    conn = get_db()
+    user = conn.execute("SELECT * FROM users WHERE google_id = ?", (google_id,)).fetchone()
+    if not user:
+        user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
+        if user:
+            # Existing password-based account with the same email -- link this Google identity to
+            # it instead of creating a duplicate account.
+            conn.execute("UPDATE users SET google_id = ?, email_verified = 1 WHERE id = ?", (google_id, user["id"]))
+            conn.commit()
+            user = get_user_by_id(conn, user["id"])
+        else:
+            is_first_user = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"] == 0
+            legacy = load_legacy_profile_settings() if is_first_user else {}
+            exam_date = legacy.get("exam_date", "")
+            target_score = float(legacy.get("target_score", 5.5))
+            insert_sql = """
+                INSERT INTO users (email, username, google_id, email_verified, exam_date, target_score)
+                VALUES (?, ?, ?, 1, ?, ?)
+            """
+            params = (email, name, google_id, exam_date, target_score)
+            if DATABASE_URL:
+                cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
+                user_id = cursor.fetchone()["id"]
+            else:
+                cursor = conn.execute(insert_sql, params)
+                user_id = cursor.lastrowid
+            conn.commit()
+            if is_first_user:
+                migrate_legacy_data_to_user(user_id)
+            user = get_user_by_id(conn, user_id)
+    conn.close()
+
     token = create_access_token(user["id"])
     return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
 

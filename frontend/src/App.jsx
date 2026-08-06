@@ -7251,7 +7251,29 @@ function ProgressScreen({ onBack }) {
 // then the "Sign in with Google" button simply doesn't render, rather than showing a broken one.
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || ''
 
+// Lazily loads Google Identity Services' script (https://accounts.google.com/gsi/client) at most
+// once no matter how many times it's called -- returns a promise that resolves once window.google
+// is ready to use. AuthScreen calls this on mount rather than adding the <script> tag directly to
+// index.html, so the whole Google Sign-In feature stays a no-op (no network request, no console
+// warnings) for any deployment that hasn't set VITE_GOOGLE_CLIENT_ID yet.
+let _gisLoadPromise = null
+function loadGoogleIdentityServices() {
+  if (_gisLoadPromise) return _gisLoadPromise
+  _gisLoadPromise = new Promise((resolve, reject) => {
+    if (window.google && window.google.accounts && window.google.accounts.id) { resolve(); return }
+    const script = document.createElement('script')
+    script.src = 'https://accounts.google.com/gsi/client'
+    script.async = true
+    script.defer = true
+    script.onload = () => resolve()
+    script.onerror = () => reject(new Error('Failed to load Google Identity Services'))
+    document.head.appendChild(script)
+  })
+  return _gisLoadPromise
+}
+
 function AuthScreen({ onAuthSuccess }) {
+  const isMobile = useIsMobile()
   // 'login' | 'signup' | 'forgot' (request a reset link) | 'reset' (set a new password, reached
   // via the emailed link's ?reset_token=... query param)
   const [mode, setMode] = useState('login')
@@ -7283,6 +7305,45 @@ function AuthScreen({ onAuthSuccess }) {
   const labelStyle = { fontWeight: '600', color: '#616473', fontSize: '12px' }
 
   const switchMode = (m) => { setMode(m); setError(''); setNotice('') }
+
+  // Sends the ID token Google handed us to the backend, which verifies it and returns a normal
+  // mrreadyprep session token -- from this point on a Google sign-in behaves exactly like an
+  // email/password login (same token storage, same onAuthSuccess callback).
+  const handleGoogleCredential = (response) => {
+    setError(''); setNotice(''); setLoading(true)
+    fetch(`${BACKEND_URL}/api/auth/google`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id_token: response.credential }),
+    }).then(async res => {
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) throw new Error(data.detail || 'Google sign-in failed. Please try again.')
+      return data
+    }).then(data => {
+      setAuthToken(data.access_token)
+      onAuthSuccess(data.user)
+    }).catch(err => setError(err.message)).finally(() => setLoading(false))
+  }
+
+  // Loads the Google Identity Services script once VITE_GOOGLE_CLIENT_ID is actually set, then
+  // initializes it and renders the real Google-branded button into the #google-signin-button div
+  // below. Re-runs whenever the login/signup tab toggles (that div gets remounted each time) so
+  // the button always ends up in the currently-visible container.
+  useEffect(() => {
+    if (!GOOGLE_CLIENT_ID || (mode !== 'login' && mode !== 'signup')) return
+    let cancelled = false
+    loadGoogleIdentityServices().then(() => {
+      if (cancelled || !window.google) return
+      window.google.accounts.id.initialize({ client_id: GOOGLE_CLIENT_ID, callback: handleGoogleCredential })
+      const target = document.getElementById('google-signin-button')
+      if (target) {
+        target.innerHTML = ''
+        window.google.accounts.id.renderButton(target, { theme: 'outline', size: 'large', width: isMobile ? 240 : 320, text: mode === 'signup' ? 'signup_with' : 'signin_with' })
+      }
+    }).catch(() => {})
+    return () => { cancelled = true }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, isMobile])
 
   const handleSubmit = (e) => {
     e.preventDefault()
