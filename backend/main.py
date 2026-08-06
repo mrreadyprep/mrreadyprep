@@ -1,14 +1,20 @@
 from datetime import datetime, timedelta, timezone
-from fastapi import FastAPI, HTTPException, Depends, Header
+from fastapi import FastAPI, HTTPException, Depends, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
+import base64
+import hashlib
+import hmac
 import json
 import os
 import re
 import secrets
 import sqlite3
+import time
+import collections
 import pathlib
 import bcrypt
 import jwt
@@ -64,6 +70,161 @@ FRONTEND_PUBLIC_URL = os.environ.get("FRONTEND_PUBLIC_URL", "http://localhost:51
 # students won't receive an actual email until this is set.
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "mrreadyprep <onboarding@resend.dev>")
+
+# ============================================================
+# İYZİCO (abonelik / ödeme) CONFIG
+# ============================================================
+# From the iyzico Merchant Panel (Ayarlar > API Anahtarları -- sandbox keys are issued immediately
+# on signup, before the real vergi levhası/merchant approval finishes, so integration can be built
+# and tested with IYZICO_BASE_URL pointed at the sandbox host before going live). IYZICO_MERCHANT_ID
+# is shown in the same Settings page and is only needed to verify webhook signatures.
+# IYZICO_PRICING_PLAN_REFERENCE_CODE is created once (via the merchant panel's Subscription >
+# Products screen, or the Create Product/Create Pricing Plan API) and then reused for every
+# checkout -- see IYZICO_SUBSCRIPTION_SETUP.md for the one-time setup steps.
+# All blank-safe: if unset, the subscription endpoints raise a clear 500 instead of silently
+# misbehaving, so local dev without iyzico configured doesn't crash the whole app at import time.
+IYZICO_API_KEY = os.environ.get("IYZICO_API_KEY", "")
+IYZICO_SECRET_KEY = os.environ.get("IYZICO_SECRET_KEY", "")
+IYZICO_MERCHANT_ID = os.environ.get("IYZICO_MERCHANT_ID", "")
+IYZICO_PRICING_PLAN_REFERENCE_CODE = os.environ.get("IYZICO_PRICING_PLAN_REFERENCE_CODE", "")
+# https://api.iyzipay.com in production, https://sandbox-api.iyzipay.com while testing with
+# sandbox keys (set IYZICO_BASE_URL=https://sandbox-api.iyzipay.com in Render for the test phase).
+IYZICO_BASE_URL = os.environ.get("IYZICO_BASE_URL", "https://api.iyzipay.com")
+
+IYZICO_RANDOM_HEADER = "x-iyzi-rnd"
+IYZICO_AUTH_SCHEME = "IYZWSv2"
+
+
+def _iyzico_random_string() -> str:
+    return f"{int(datetime.now(timezone.utc).timestamp())}{secrets.randbelow(10**8):08d}"
+
+
+def _iyzico_auth_header(uri_path: str, body_str: str, random_string: str) -> str:
+    """Reproduces iyzico's IYZWSv2 signing scheme exactly as implemented in their official SDKs:
+    signature = HMAC-SHA256(secretKey, randomString + uriPath + rawJsonBody) as lowercase hex,
+    then Authorization = 'IYZWSv2 ' + base64('apiKey:<key>&randomKey:<rnd>&signature:<sig>').
+    `body_str` MUST be byte-for-byte the exact string sent as the request body (an empty body is
+    the literal string '{}'), since the signature covers those exact bytes."""
+    to_sign = f"{random_string}{uri_path}{body_str}"
+    signature = hmac.new(IYZICO_SECRET_KEY.encode("utf-8"), to_sign.encode("utf-8"), hashlib.sha256).hexdigest()
+    auth_params = f"apiKey:{IYZICO_API_KEY}&randomKey:{random_string}&signature:{signature}"
+    return IYZICO_AUTH_SCHEME + " " + base64.b64encode(auth_params.encode("utf-8")).decode("utf-8")
+
+
+def _iyzico_request(method: str, path: str, body: dict = None):
+    """Low-level signed call to the iyzico REST API (used instead of a heavier SDK dependency --
+    mirrors the urllib.request style already used elsewhere in this file for Resend). `path` is
+    the URL path only (e.g. '/v2/subscription/checkoutform/initialize'), no query string -- query
+    strings are never part of the IYZWSv2 signature. Raises HTTPException(502) on any transport
+    failure, and returns the parsed JSON body (which may itself have status: 'failure' -- callers
+    check that) on any HTTP response, so iyzico's own error payloads reach the caller intact."""
+    body_str = json.dumps(body if body is not None else {}, separators=(",", ":"), ensure_ascii=False)
+    random_string = _iyzico_random_string()
+    auth_header = _iyzico_auth_header(path, body_str, random_string)
+    req = urllib.request.Request(
+        IYZICO_BASE_URL + path,
+        data=body_str.encode("utf-8"),
+        method=method,
+        headers={
+            "Authorization": auth_header,
+            "Content-Type": "application/json",
+            IYZICO_RANDOM_HEADER: random_string,
+            "x-iyzi-client-version": "mrreadyprep-backend-1.0",
+        },
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            return json.loads(resp.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        try:
+            return json.loads(e.read().decode("utf-8"))
+        except Exception:
+            raise HTTPException(status_code=502, detail=f"iyzico request failed: HTTP {e.code}")
+    except urllib.error.URLError as e:
+        raise HTTPException(status_code=502, detail=f"Could not reach iyzico: {e}")
+
+
+def _require_iyzico():
+    if not IYZICO_API_KEY or not IYZICO_SECRET_KEY:
+        raise HTTPException(status_code=500, detail="iyzico is not configured yet (IYZICO_API_KEY/IYZICO_SECRET_KEY missing)")
+    if not IYZICO_PRICING_PLAN_REFERENCE_CODE:
+        raise HTTPException(status_code=500, detail="iyzico is not configured yet (IYZICO_PRICING_PLAN_REFERENCE_CODE missing)")
+
+
+# Which subscription_status values count as "has active premium access". iyzico subscription
+# statuses (GetSubscriptionDetail / our own DB mirror of them): ACTIVE, PENDING, UNPAID, UPGRADED,
+# CANCELED, EXPIRED -- only ACTIVE counts as paid access; PENDING means the card hasn't been
+# charged/verified yet (e.g. a trial not yet started or a checkout not yet completed).
+ACTIVE_SUBSCRIPTION_STATUSES = {"ACTIVE"}
+
+def has_active_subscription(user) -> bool:
+    return (user["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES
+
+# Item id (as it appears in each pool's "id" field) that stays free for every student regardless
+# of subscription status -- lets a non-subscriber try exactly one full exercise per category (plus
+# Fixed Test 1, see FREE_FIXED_TEST_ID below) before hitting the paywall.
+FREE_ITEM_ID = 1
+FREE_FIXED_TEST_ID = 1
+
+# Fields worth keeping on a locked list item so the browsing/list screen can still show a
+# meaningful title/topic under the lock icon, without leaking the actual exercise content
+# (blanks, questions, sentences, answer keys, audio, etc.). Only fields that actually exist on
+# a given item are kept -- this list is a superset covering every pool's differently-named
+# "title-ish" field.
+_LOCK_PREVIEW_FIELDS = (
+    "id", "topic", "title", "location", "speaker", "scenario", "level", "difficulty", "category", "type",
+)
+
+def _lock_item(item: dict) -> dict:
+    preview = {k: item[k] for k in _LOCK_PREVIEW_FIELDS if k in item}
+    preview["locked"] = True
+    return preview
+
+def gate_pool(data, user, free_ids=frozenset({FREE_ITEM_ID})):
+    """Applied to the standalone PRACTICE pool endpoints (/api/reading/*, /api/listening/*,
+    /api/writing/*, /api/speaking/*), where each raw pool item is a fully standalone, independently
+    startable exercise. Subscribers (has_active_subscription) get the full list unchanged.
+    Non-subscribers get every item whose id is in free_ids in full, and every other item replaced
+    with a lightweight {id, title-ish fields, locked: True} stub -- enough for the list screen to
+    render a locked row, but with zero actual exercise content leaked to the network tab.
+
+    free_ids defaults to just FREE_ITEM_ID (the first item), but callers whose frontend groups N
+    raw items into a single practice session (e.g. Build a Sentence, which batches
+    BUILD_SENTENCE_SET_SIZE items into one "set") must pass the full id range of that first set --
+    otherwise the free sample would be a broken mix of 1 real item + N-1 locked stubs.
+
+    Do NOT use this on the /api/mock/* pools -- those feed the dynamic "Full Mock Test" /
+    "practice one section" flow, which draws a variable, unpredictable number of items from each
+    pool per attempt. Partially stubbing those pools would silently corrupt an in-progress mock
+    attempt instead of cleanly blocking it; see require_premium_pool below for how those are
+    gated instead."""
+    if user is not None and has_active_subscription(user):
+        return data
+    if not isinstance(data, list):
+        return data
+    out = []
+    for item in data:
+        if isinstance(item, dict) and item.get("id") in free_ids:
+            out.append(item)
+        elif isinstance(item, dict):
+            out.append(_lock_item(item))
+        else:
+            out.append(item)
+    return out
+
+def require_premium_pool(user):
+    """Applied to the /api/mock/* pool endpoints (NOT the 20 pre-built Fixed Tests, which are
+    separate self-contained JSON files gated by FREE_FIXED_TEST_ID instead). These pools feed the
+    dynamic "Full Mock Test" / "practice one section only" flow, which draws a variable number of
+    items from each pool to assemble one attempt -- there's no single "free item" that can be
+    carved out without silently corrupting that assembly (e.g. Writing needs a full 10-item Build
+    a Sentence set every time). So for a non-subscriber this pool is entirely premium: Fixed Test 1
+    remains the one complete free mock-test experience instead."""
+    if user is None or not has_active_subscription(user):
+        raise HTTPException(
+            status_code=402,
+            detail="The Full Mock Test (random practice) requires an active mrreadyprep subscription. Try Fixed Mock Test 1 for free, or subscribe for unlimited access.",
+        )
 
 # The audio/ folder is deployed separately from git (see AUDIO_DEPLOYMENT.md -- it's ~364MB of
 # generated mp3s, too large for a normal git push). Create it if missing so a fresh deploy that
@@ -312,6 +473,17 @@ def init_db():
         conn.execute("ALTER TABLE users ADD COLUMN writing_target REAL NOT NULL DEFAULT 4.5")
     if not _has_column(conn, "users", "speaking_target"):
         conn.execute("ALTER TABLE users ADD COLUMN speaking_target REAL NOT NULL DEFAULT 4.5")
+    # iyzico abonelik alanları -- subscription_status 'ACTIVE' olan kullanıcılar premium içeriğe
+    # tam erişime sahip olur (bkz. has_active_subscription()). Diğer her şey (None, 'CANCELED',
+    # 'EXPIRED', 'UNPAID', 'PENDING' vb.) erişimsiz sayılır.
+    if not _has_column(conn, "users", "iyzico_customer_reference_code"):
+        conn.execute("ALTER TABLE users ADD COLUMN iyzico_customer_reference_code TEXT")
+    if not _has_column(conn, "users", "iyzico_subscription_reference_code"):
+        conn.execute("ALTER TABLE users ADD COLUMN iyzico_subscription_reference_code TEXT")
+    if not _has_column(conn, "users", "subscription_status"):
+        conn.execute("ALTER TABLE users ADD COLUMN subscription_status TEXT")
+    if not _has_column(conn, "users", "subscription_current_period_end"):
+        conn.execute("ALTER TABLE users ADD COLUMN subscription_current_period_end TIMESTAMP")
 
     # Which vocab words each student has personally marked as learned.
     conn.execute("""
@@ -472,6 +644,18 @@ def get_current_user(authorization: Optional[str] = Header(None)):
         raise HTTPException(status_code=401, detail="Account no longer exists")
     return user
 
+def get_current_user_optional(authorization: Optional[str] = Header(None)):
+    """Like get_current_user, but returns None instead of raising when there's no/invalid token --
+    used on content endpoints that must stay reachable by logged-out visitors (so the free sample
+    item is still visible pre-signup) while still being able to check has_active_subscription()
+    for whoever IS logged in."""
+    if not authorization or not authorization.startswith("Bearer "):
+        return None
+    try:
+        return get_current_user(authorization)
+    except HTTPException:
+        return None
+
 def send_password_reset_email(to_email: str, reset_link: str):
     """Sends the 'reset your password' email via Resend (resend.com), if RESEND_API_KEY is
     configured. If it isn't set yet, or the send fails for any reason, this just logs the link to
@@ -568,6 +752,13 @@ def user_profile_dict(user) -> dict:
         "speaking_score": user["speaking_score"],
         "exam_date": user["exam_date"],
         "email_verified": bool(user["email_verified"]),
+        "subscription_status": user["subscription_status"],
+        "has_premium": has_active_subscription(user),
+        "subscription_current_period_end": (
+            user["subscription_current_period_end"].isoformat()
+            if isinstance(user["subscription_current_period_end"], datetime)
+            else user["subscription_current_period_end"]
+        ),
     }
 
 # ============================================================
@@ -753,14 +944,48 @@ def register(data: RegisterRequest):
     conn.close()
     return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
 
+## --- Login brute-force protection ---
+# In-memory only (fine for a single Render instance; would need a shared store like Redis if this
+# ever runs multiple worker processes/instances) -- tracks failed-attempt timestamps per key
+# (IP + email combined, so one bad actor can't lock out a real student by spamming their email
+# from elsewhere, and a shared IP like a school computer lab can't lock everyone out from one
+# person's typos). Old timestamps are pruned lazily on each check so this never grows unbounded.
+LOGIN_ATTEMPT_WINDOW_SECONDS = 15 * 60
+LOGIN_ATTEMPT_MAX = 5
+_login_attempts: dict = collections.defaultdict(list)
+
+def _client_ip(request: Request) -> str:
+    forwarded = request.headers.get("x-forwarded-for", "")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+def _check_login_rate_limit(key: str):
+    now = time.time()
+    attempts = [t for t in _login_attempts[key] if now - t < LOGIN_ATTEMPT_WINDOW_SECONDS]
+    _login_attempts[key] = attempts
+    if len(attempts) >= LOGIN_ATTEMPT_MAX:
+        retry_after_sec = int(LOGIN_ATTEMPT_WINDOW_SECONDS - (now - attempts[0]))
+        raise HTTPException(
+            status_code=429,
+            detail=f"Too many failed login attempts. Please try again in {max(1, retry_after_sec // 60)} minute(s).",
+        )
+
+def _record_failed_login(key: str):
+    _login_attempts[key].append(time.time())
+
 @app.post("/api/auth/login")
-def login(data: LoginRequest):
+def login(data: LoginRequest, request: Request):
     email = data.email.strip().lower()
+    rate_limit_key = f"{_client_ip(request)}:{email}"
+    _check_login_rate_limit(rate_limit_key)
     conn = get_db()
     user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
     conn.close()
     if not user or not verify_password(data.password, user["password_hash"]):
+        _record_failed_login(rate_limit_key)
         raise HTTPException(status_code=401, detail="Incorrect email or password")
+    _login_attempts.pop(rate_limit_key, None)
     token = create_access_token(user["id"])
     return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
 
@@ -813,6 +1038,194 @@ def reset_password(data: ResetPasswordRequest):
 def get_me(user=Depends(get_current_user)):
     return user_profile_dict(user)
 
+# ============================================================
+# SUBSCRIPTION (iyzico) -- see İYZİCO CONFIG block near the top of this file for env vars,
+# _iyzico_request()/_iyzico_auth_header() for the signed HTTP call helper, and
+# has_active_subscription()/gate_pool() for how this gates the actual content endpoints below.
+# ============================================================
+
+class IyzicoCheckoutRequest(BaseModel):
+    # iyzico's subscription API requires this buyer info up front (unlike Stripe, which only
+    # needs an email) -- collected via a short form on the Subscribe screen before the embedded
+    # payment widget renders. identity_number is the Turkish TC Kimlik No field; for a foreign
+    # student without one, a placeholder (e.g. 11111111111) is the common workaround other iyzico
+    # merchants use for non-Turkish cardholders -- confirm this is accepted once real/sandbox
+    # keys are in and this flow can actually be tested end to end.
+    name: str
+    surname: str
+    gsm_number: str
+    identity_number: str
+    address: str
+    city: str
+    country: str = "Turkey"
+
+@app.get("/api/subscription/status")
+def get_subscription_status(user=Depends(get_current_user)):
+    return {
+        "has_premium": has_active_subscription(user),
+        "status": user["subscription_status"],
+        "current_period_end": (
+            user["subscription_current_period_end"].isoformat()
+            if isinstance(user["subscription_current_period_end"], datetime)
+            else user["subscription_current_period_end"]
+        ),
+    }
+
+@app.post("/api/subscription/create-checkout-session")
+def create_checkout_session(data: IyzicoCheckoutRequest, user=Depends(get_current_user)):
+    """Starts an iyzico Subscription Checkout Form flow. Unlike Stripe (which returns a URL to
+    redirect to), iyzico returns an HTML/JS snippet (checkoutFormContent) meant to be embedded
+    directly on THIS site -- the frontend injects it into the Subscribe screen and iyzico's own
+    script renders the card-entry widget in place. The student never leaves mrreadyprep.com."""
+    _require_iyzico()
+    body = {
+        "locale": "tr",
+        # iyzico's embedded widget POSTs the result to this URL when the student finishes paying
+        # -- it must be a URL that accepts POST (our own backend), not the static frontend site,
+        # which can only serve GET requests. The handler below re-redirects the browser (a GET)
+        # to the frontend with the token attached as a query param so the SPA can pick it up.
+        "callbackUrl": f"{BACKEND_PUBLIC_URL}/api/subscription/checkout-callback",
+        "pricingPlanReferenceCode": IYZICO_PRICING_PLAN_REFERENCE_CODE,
+        "subscriptionInitialStatus": "ACTIVE",
+        "conversationId": str(user["id"]),
+        "customer": {
+            "name": data.name,
+            "surname": data.surname,
+            "email": user["email"],
+            "gsmNumber": data.gsm_number,
+            "identityNumber": data.identity_number,
+            "billingAddress": {
+                "address": data.address,
+                "contactName": f"{data.name} {data.surname}",
+                "city": data.city,
+                "country": data.country,
+            },
+        },
+    }
+    result = _iyzico_request("POST", "/v2/subscription/checkoutform/initialize", body)
+    if result.get("status") != "success":
+        raise HTTPException(status_code=400, detail=result.get("errorMessage", "iyzico checkout could not be started"))
+    return {
+        "token": result.get("token"),
+        "checkoutFormContent": result.get("checkoutFormContent"),
+        "tokenExpireTime": result.get("tokenExpireTime"),
+    }
+
+@app.post("/api/subscription/checkout-callback")
+async def checkout_callback(request: Request):
+    """iyzico's embedded widget POSTs here (form-encoded, with a `token` field) once the student
+    finishes the payment step in the iframe. This endpoint has no auth of its own -- it just
+    bounces the browser on to the frontend with the token in the URL, and the frontend calls the
+    authenticated /api/subscription/checkout-result/{token} endpoint (above) to actually confirm
+    and persist the result. Also accept a query-string token as a fallback in case the widget
+    ever redirects via GET instead of POST."""
+    token = request.query_params.get("token")
+    if not token:
+        try:
+            form = await request.form()
+            token = form.get("token")
+        except Exception:
+            token = None
+    dest = f"{FRONTEND_PUBLIC_URL}/?subscription_token={token}" if token else f"{FRONTEND_PUBLIC_URL}/?subscription=cancel"
+    return RedirectResponse(url=dest, status_code=303)
+
+@app.get("/api/subscription/checkout-result/{token}")
+def get_checkout_result(token: str, user=Depends(get_current_user)):
+    """Polled by the frontend once iyzico's embedded widget reports the payment step finished --
+    confirms server-side what actually happened and persists the subscription onto this user's
+    account. This (plus the webhook below, for later renewals) is what actually flips
+    subscription_status to ACTIVE; the embedded widget finishing is not itself trusted."""
+    _require_iyzico()
+    result = _iyzico_request("GET", f"/v2/subscription/checkoutform/{token}")
+    if result.get("status") != "success":
+        raise HTTPException(status_code=400, detail=result.get("errorMessage", "Could not retrieve checkout result"))
+    data = result.get("data") or {}
+    status = data.get("subscriptionStatus")
+    period_end_ms = data.get("endDate")
+    period_end = (
+        datetime.fromtimestamp(period_end_ms / 1000, tz=timezone.utc).isoformat() if period_end_ms else None
+    )
+    conn = get_db()
+    try:
+        conn.execute(
+            "UPDATE users SET iyzico_customer_reference_code = ?, iyzico_subscription_reference_code = ?, "
+            "subscription_status = ?, subscription_current_period_end = ? WHERE id = ?",
+            (data.get("customerReferenceCode"), data.get("referenceCode"), status, period_end, user["id"]),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    return {"subscription_status": status, "has_premium": status in ACTIVE_SUBSCRIPTION_STATUSES}
+
+@app.post("/api/subscription/cancel")
+def cancel_subscription(user=Depends(get_current_user)):
+    """iyzico has no hosted billing-management page like Stripe's Customer Portal -- cancellation
+    is a direct API call we make on the student's behalf from a confirm button in Settings."""
+    _require_iyzico()
+    if not user["iyzico_subscription_reference_code"]:
+        raise HTTPException(status_code=400, detail="No active subscription on file")
+    result = _iyzico_request(
+        "POST",
+        f"/v2/subscription/subscriptions/{user['iyzico_subscription_reference_code']}/cancel",
+        {},
+    )
+    if result.get("status") != "success":
+        raise HTTPException(status_code=400, detail=result.get("errorMessage", "Could not cancel subscription"))
+    conn = get_db()
+    try:
+        conn.execute("UPDATE users SET subscription_status = 'CANCELED' WHERE id = ?", (user["id"],))
+        conn.commit()
+    finally:
+        conn.close()
+    return {"status": "success"}
+
+@app.post("/api/subscription/webhook")
+async def iyzico_webhook(request: Request):
+    """iyzico POSTs here (no Authorization header -- verified via X-IYZ-SIGNATURE-V3 instead)
+    after every subscription payment attempt, including renewals, not just the first one -- this
+    is what keeps subscription_status in sync automatically on renewal/failure without anyone
+    needing to poll iyzico. Must be registered as the Merchant Subscription Notifications URL in
+    the iyzico panel (Settings > Merchant Settings > Merchant Subscription Notifications)."""
+    if not IYZICO_MERCHANT_ID or not IYZICO_SECRET_KEY:
+        raise HTTPException(status_code=500, detail="iyzico webhook not configured (IYZICO_MERCHANT_ID missing)")
+    payload = await request.body()
+    try:
+        event = json.loads(payload.decode("utf-8"))
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid webhook payload")
+
+    event_type = event.get("iyziEventType", "")
+    subscription_ref = event.get("subscriptionReferenceCode", "")
+    order_ref = event.get("orderReferenceCode", "")
+    customer_ref = event.get("customerReferenceCode", "")
+
+    sig_header = request.headers.get("x-iyz-signature-v3", "") or request.headers.get("X-IYZ-SIGNATURE-V3", "")
+    message = IYZICO_MERCHANT_ID + IYZICO_SECRET_KEY + event_type + subscription_ref + order_ref + customer_ref
+    expected_sig = hmac.new(IYZICO_SECRET_KEY.encode("utf-8"), message.encode("utf-8"), hashlib.sha256).hexdigest()
+    if not sig_header or not hmac.compare_digest(sig_header, expected_sig):
+        raise HTTPException(status_code=400, detail="Invalid webhook signature")
+
+    conn = get_db()
+    try:
+        if event_type == "subscription.order.success":
+            conn.execute(
+                "UPDATE users SET subscription_status = 'ACTIVE' WHERE iyzico_subscription_reference_code = ?",
+                (subscription_ref,),
+            )
+            conn.commit()
+        elif event_type == "subscription.order.failure":
+            # A failed renewal charge -- iyzico retries automatically; mark UNPAID so access is
+            # revoked immediately rather than waiting for the retry outcome. If a later retry
+            # succeeds, the next "subscription.order.success" event flips it back to ACTIVE.
+            conn.execute(
+                "UPDATE users SET subscription_status = 'UNPAID' WHERE iyzico_subscription_reference_code = ?",
+                (subscription_ref,),
+            )
+            conn.commit()
+    finally:
+        conn.close()
+    return {"status": "ok"}
+
 # --- Dashboard ---
 @app.get("/api/dashboard")
 def get_dashboard(user=Depends(get_current_user)):
@@ -829,9 +1242,21 @@ def get_dashboard(user=Depends(get_current_user)):
     conn.execute(f"UPDATE users SET {set_clause} WHERE id = ?", (*updates.values(), user["id"]))
     conn.commit()
     fresh_user = get_user_by_id(conn, user["id"])
+    # "mock_overall" is only ever saved once per completed Full Mock Test (all 4 sections) -- see
+    # saveResult('mock_overall', ...) on the frontend -- so its most recent saved_at is exactly
+    # "when did this student last finish a full test", which the Dashboard's mock-test card shows.
+    last_mock_row = conn.execute(
+        "SELECT saved_at FROM attempt_results WHERE user_id = ? AND category = 'mock_overall' "
+        "ORDER BY saved_at DESC LIMIT 1",
+        (user["id"],),
+    ).fetchone()
     conn.close()
     result = user_profile_dict(fresh_user)
     result["week_activity"] = week_activity
+    result["last_mock_test_at"] = (
+        last_mock_row["saved_at"].isoformat() if isinstance(last_mock_row["saved_at"], datetime)
+        else last_mock_row["saved_at"]
+    ) if last_mock_row else None
     return result
 
 @app.post("/api/profile/update")
@@ -894,15 +1319,15 @@ def toggle_vocab(word_id: int, user=Depends(get_current_user)):
 
 # --- Reading: Complete the Words ---
 @app.get("/api/reading/complete-the-words")
-def get_ctw_exercises():
+def get_ctw_exercises(user=Depends(get_current_user_optional)):
     with open(CTW_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return gate_pool(json.load(f), user)
 
 # --- Reading: Read in Daily Life ---
 @app.get("/api/reading/read-in-daily-life")
-def get_ridl_passages():
+def get_ridl_passages(user=Depends(get_current_user_optional)):
     with open(RIDL_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return gate_pool(json.load(f), user)
 
 @app.post("/api/reading/save-result")
 def save_ridl_result(data: RIDLResult, user=Depends(get_current_user)):
@@ -1083,70 +1508,81 @@ def get_results_summary(user=Depends(get_current_user)):
 
 # --- Reading: Academic Passage ---
 @app.get("/api/reading/academic-passage")
-async def get_academic_passage():
+async def get_academic_passage(user=Depends(get_current_user_optional)):
     json_path = os.path.join(os.path.dirname(__file__), "academic_passage_1.json")
     with open(json_path, "r", encoding="utf-8") as f:
         data = json.load(f)
-    return data
+    return gate_pool(data, user)
 
 # --- Full Mock Test: Reading content, kept entirely separate from the practice pools above
 # so a student never sees the same question in both practice mode and the mock test. ---
 @app.get("/api/mock/complete-the-words")
-def get_mock_ctw_exercises():
+def get_mock_ctw_exercises(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_CTW_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 @app.get("/api/mock/read-in-daily-life")
-def get_mock_ridl_passages():
+def get_mock_ridl_passages(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_RIDL_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 @app.get("/api/mock/academic-passage")
-def get_mock_academic_passage():
+def get_mock_academic_passage(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_AP_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 # --- Full Mock Test: Listening content, kept entirely separate from the practice pools below
 # so a student never sees the same question in both practice mode and the mock test. ---
 @app.get("/api/mock/choose-response")
-def get_mock_listening_car():
+def get_mock_listening_car(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_LISTENING_CAR_FILE, "r", encoding="utf-8") as f:
         return _fix_audio_urls(json.load(f))
 
 @app.get("/api/mock/conversation")
-def get_mock_listening_conv():
+def get_mock_listening_conv(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_LISTENING_CONV_FILE, "r", encoding="utf-8") as f:
         return _fix_audio_urls(json.load(f))
 
 @app.get("/api/mock/announcement")
-def get_mock_listening_announce():
+def get_mock_listening_announce(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_LISTENING_ANNOUNCE_FILE, "r", encoding="utf-8") as f:
         return _fix_audio_urls(json.load(f))
 
 @app.get("/api/mock/academic-talk")
-def get_mock_listening_at():
+def get_mock_listening_at(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_LISTENING_AT_FILE, "r", encoding="utf-8") as f:
         return _fix_audio_urls(json.load(f))
 
 # --- Full Mock Test: Writing content, kept entirely separate from the practice pools below ---
 @app.get("/api/mock/build-a-sentence")
-def get_mock_bas():
+def get_mock_bas(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_BAS_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 @app.get("/api/mock/email")
-def get_mock_email():
+def get_mock_email(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_EMAIL_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 @app.get("/api/mock/academic-discussion")
-def get_mock_disc():
+def get_mock_disc(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_DISC_FILE, "r", encoding="utf-8") as f:
         return json.load(f)
 
 # --- Full Mock Test: Speaking content, kept entirely separate from the practice pools below ---
 @app.get("/api/mock/listen-and-repeat")
-def get_mock_speaking_lr():
+def get_mock_speaking_lr(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_SPEAKING_LR_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)  # fresh read every request, so JSON edits show up without a restart
     for s in data:
@@ -1156,7 +1592,8 @@ def get_mock_speaking_lr():
     return data
 
 @app.get("/api/mock/interview")
-def get_mock_speaking_interview():
+def get_mock_speaking_interview(user=Depends(get_current_user_optional)):
+    require_premium_pool(user)
     with open(MOCK_SPEAKING_INTERVIEW_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)  # fresh read every request, so JSON edits show up without a restart
     for s in data:
@@ -1167,10 +1604,15 @@ def get_mock_speaking_interview():
 
 # --- Full Mock Test: fixed (pre-built) tests, served whole as one bundle per test id ---
 @app.get("/api/mock/fixed-test/{test_id}")
-def get_fixed_test(test_id: int):
+def get_fixed_test(test_id: int, user=Depends(get_current_user_optional)):
     path = FIXED_TEST_FILES.get(test_id)
     if not path:
         raise HTTPException(status_code=404, detail=f"No fixed test with id {test_id}")
+    if test_id != FREE_FIXED_TEST_ID and not (user is not None and has_active_subscription(user)):
+        raise HTTPException(
+            status_code=402,
+            detail=f"Mock Test {test_id} requires an active mrreadyprep subscription. Mock Test {FREE_FIXED_TEST_ID} is free to try.",
+        )
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)  # fresh read every request, so JSON edits show up without a restart
     # The two Speaking items were saved without audio_url (same as mock_speaking_lr/interview
@@ -1189,64 +1631,68 @@ def get_fixed_test(test_id: int):
 
 # --- Listening ---
 @app.get("/api/listening/choose-response")
-def get_listening_p1():
+def get_listening_p1(user=Depends(get_current_user_optional)):
     with open(LISTENING_P1_FILE, "r", encoding="utf-8") as f:
-        return _fix_audio_urls(json.load(f))
+        return gate_pool(_fix_audio_urls(json.load(f)), user)
 
 @app.get("/api/listening/conversation")
-def get_listening_p2():
+def get_listening_p2(user=Depends(get_current_user_optional)):
     with open(LISTENING_P2_FILE, "r", encoding="utf-8") as f:
-        return _fix_audio_urls(json.load(f))
+        return gate_pool(_fix_audio_urls(json.load(f)), user)
 
 @app.get("/api/listening/announcement")
-def get_listening_p3():
+def get_listening_p3(user=Depends(get_current_user_optional)):
     with open(LISTENING_P3_FILE, "r", encoding="utf-8") as f:
-        return _fix_audio_urls(json.load(f))
+        return gate_pool(_fix_audio_urls(json.load(f)), user)
 
 @app.get("/api/listening/academic-talk")
-def get_listening_p4():
+def get_listening_p4(user=Depends(get_current_user_optional)):
     with open(LISTENING_P4_FILE, "r", encoding="utf-8") as f:
-        return _fix_audio_urls(json.load(f))
+        return gate_pool(_fix_audio_urls(json.load(f)), user)
 
 # --- Writing: Build a Sentence ---
 @app.get("/api/writing/build-a-sentence")
-def get_build_a_sentence():
+def get_build_a_sentence(user=Depends(get_current_user_optional)):
+    # The frontend groups raw items into practice "sets" of BUILD_SENTENCE_SET_SIZE (10, kept in
+    # sync with the constant of the same name in App.jsx) -- a non-subscriber needs the WHOLE
+    # first set free, not just item id 1, or Set 1 would be a broken mix of 1 real item + 9 locked
+    # stubs.
     with open(BUILD_A_SENTENCE_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return gate_pool(json.load(f), user, free_ids=frozenset(range(1, 11)))
 
 # --- Writing: Email (JSON tabanlı liste, tüm pratikler) ---
 @app.get("/api/writing/email")
-def get_write_email_list():
+def get_write_email_list(user=Depends(get_current_user_optional)):
     with open(WRITE_EMAIL_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return gate_pool(json.load(f), user)
 
 # --- Writing: Academic Discussion ---
 @app.get("/api/writing/academic-discussion")
-def get_academic_discussion_list():
+def get_academic_discussion_list(user=Depends(get_current_user_optional)):
     with open(WRITE_DISCUSSION_FILE, "r", encoding="utf-8") as f:
-        return json.load(f)
+        return gate_pool(json.load(f), user)
 
 # --- Speaking: Listen and Repeat ---
 @app.get("/api/speaking/listen-and-repeat")
-def get_speaking_listen_repeat():
+def get_speaking_listen_repeat(user=Depends(get_current_user_optional)):
     with open(SPEAKING_LR_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
     for s in data:
         s["audio_url_intro"] = f"{AUDIO_BASE_URL}/speaking_lr/{s['id']}/intro.mp3"
         for sent in s["sentences"]:
             sent["audio_url"] = f"{AUDIO_BASE_URL}/speaking_lr/{s['id']}/{sent['id']}.mp3"
-    return data
+    return gate_pool(data, user)
 
 # --- Speaking: Take an Interview ---
 @app.get("/api/speaking/interview")
-def get_speaking_interview():
+def get_speaking_interview(user=Depends(get_current_user_optional)):
     with open(SPEAKING_INTERVIEW_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
     for s in data:
         s["audio_url_intro"] = f"{AUDIO_BASE_URL}/speaking_interview/{s['id']}/intro.mp3"
         for q in s["questions"]:
             q["audio_url"] = f"{AUDIO_BASE_URL}/speaking_interview/{s['id']}/{q['id']}.mp3"
-    return data
+    return gate_pool(data, user)
 
 # --- Writing: Email (eski DB tabanlı tekil soru, kullanılmıyor ama korunuyor) ---
 @app.get("/api/writing/email/{question_id}")

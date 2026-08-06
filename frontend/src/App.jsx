@@ -17,22 +17,24 @@ function TestPillButton({ children, onClick, variant = 'light', disabled = false
 }
 
 function TestTopBar({ left, right }) {
+  const isMobile = useIsMobile()
   return (
-    <div style={{ background: EXAM_NAVY, padding: '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
+    <div style={{ background: EXAM_NAVY, padding: isMobile ? '10px 14px' : '16px 32px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0, flexWrap: isMobile ? 'wrap' : 'nowrap', gap: isMobile ? '8px' : '0' }}>
       <div>{left}</div>
-      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>{right}</div>
+      <div style={{ display: 'flex', gap: isMobile ? '6px' : '10px', alignItems: 'center', flexWrap: 'wrap' }}>{right}</div>
     </div>
   )
 }
 
 function TestSubHeader({ section, questionLabel, timeText, lowTime }) {
+  const isMobile = useIsMobile()
   return (
-    <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, fontFamily: 'sans-serif' }}>
-      <div style={{ fontSize: '13px', color: '#1a1a1a' }}>
+    <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: isMobile ? '10px 14px' : '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, fontFamily: 'sans-serif', flexWrap: 'wrap', gap: '4px' }}>
+      <div style={{ fontSize: isMobile ? '11px' : '13px', color: '#1a1a1a' }}>
         <span style={{ fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{section}</span>
         {questionLabel && <><span style={{ color: '#9ca3af', margin: '0 8px' }}>|</span><span>{questionLabel}</span></>}
       </div>
-      {timeText && <span style={{ fontSize: '14px', fontWeight: '700', color: lowTime ? '#d94040' : '#1a1a1a' }}>{timeText}</span>}
+      {timeText && <span style={{ fontSize: isMobile ? '12px' : '14px', fontWeight: '700', color: lowTime ? '#d94040' : '#1a1a1a' }}>{timeText}</span>}
     </div>
   )
 }
@@ -40,20 +42,22 @@ function TestSubHeader({ section, questionLabel, timeText, lowTime }) {
 // Full-page wrapper every exercise screen sits in — full-bleed white background,
 // navy top bar + white sub-header, content fills the rest of the viewport.
 function ExamScreen({ topLeft, topRight, section, questionLabel, timeText, lowTime, children, contentStyle }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
       <TestTopBar left={topLeft} right={topRight} />
       {section && <TestSubHeader section={section} questionLabel={questionLabel} timeText={timeText} lowTime={lowTime} />}
-      <div style={{ flex: 1, padding: '48px 64px 100px', boxSizing: 'border-box', ...contentStyle }}>{children}</div>
+      <div style={{ flex: 1, padding: isMobile ? '20px 16px 80px' : '48px 64px 100px', boxSizing: 'border-box', ...contentStyle }}>{children}</div>
     </div>
   )
 }
 
 // ─── Complete the Words — Liste Ekranı ───────────────────────────────────────
 function CTWList({ exercises, scores, onSelect, onBack }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Complete the Words</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -61,24 +65,27 @@ function CTWList({ exercises, scores, onSelect, onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {exercises.map((ex, idx) => {
+            const locked = isLocked(ex)
             const result = scores[idx]
             const pct = result ? Math.round((result.correct / result.total) * 100) : null
             return (
-              <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={idx} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Exercise {idx + 1}</div>
-                    {result && (
+                    {result && !locked && (
                       <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>
                         ✓ {result.correct}/{result.total} · {pct}%
                       </span>
                     )}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{ex.blanks.length} blank{ex.blanks.length !== 1 ? 's' : ''}</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.blanks.length} blank${ex.blanks.length !== 1 ? 's' : ''}`}</div>
                 </div>
-                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {result ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {result ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -326,13 +333,14 @@ function computeRIDLDisplayNums(passages) {
 }
 
 function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
+  const isMobile = useIsMobile()
   const typeOrder = RIDL_TYPE_ORDER
   const grouped = {}
   passages.forEach((p, i) => { if (!grouped[p.type]) grouped[p.type] = []; grouped[p.type].push({ ...p, globalIdx: i }) })
   const displayNumByGlobalIdx = displayNums || computeRIDLDisplayNums(passages)
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Read in Daily Life</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -343,17 +351,20 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
             <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '10px' }}>{RIDL_TYPE_LABELS[type]}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {grouped[type].map((p) => {
+                const locked = isLocked(p)
                 const result = scores[p.globalIdx]; const pct = result ? Math.round((result.score / result.total) * 100) : null
                 return (
-                  <div key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+                  <div key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                     <div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                         <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {displayNumByGlobalIdx.get(p.globalIdx)}</div>
-                        {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.score}/{result.total} · {pct}%</span>}
+                        {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.score}/{result.total} · {pct}%</span>}
                       </div>
-                      <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{p.title} · {p.questions.length} questions</div>
+                      <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${p.title} · ${p.questions.length} questions`}</div>
                     </div>
-                    <button onClick={() => onSelect(p.globalIdx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
+                    {locked ? <LockedBadge /> : (
+                      <button onClick={() => onSelect(p.globalIdx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
+                    )}
                   </div>
                 )
               })}
@@ -366,6 +377,7 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
 }
 
 function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, onComplete, mockMode = false, poolTime, moduleOffset, moduleTotal, onPrevSlot, enterAtEnd, isLastSlot = true, initialAnswers, onAnswersChange }) {
+  const isMobile = useIsMobile()
   const [questionIdx, setQuestionIdx] = useState(() => enterAtEnd ? passage.questions.length - 1 : 0)
   // Left as null on mount — the questionIdx effect just below runs immediately after mount too
   // and restores the right value from `answers` (itself seeded from initialAnswers), so this
@@ -484,16 +496,16 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
             </div>
           </div>
           <div style={{ height: '2.5px', background: '#2a9d5c', flexShrink: 0 }} />
-          <div style={{ flex: 1, display: 'flex', padding: '24px 32px', gap: '40px', overflow: 'hidden', minHeight: 0 }}>
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', minWidth: 0, maxWidth: '520px' }}>
+          <div style={{ flex: 1, display: 'flex', padding: isMobile ? '16px' : '24px 32px', gap: isMobile ? '20px' : '40px', overflow: isMobile ? 'auto' : 'hidden', minHeight: 0, ...(isMobile ? { flexDirection: 'column' } : {}) }}>
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', minWidth: 0, maxWidth: isMobile ? '100%' : '520px' }}>
               <div style={{ fontSize: '12px', color: '#616473' }}>{passage.instruction}</div>
-              <div style={{ border: '2px solid #2a9d5c', borderRadius: '8px', padding: '16px 18px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: 'calc(100vh - 180px)' }}>
+              <div style={{ border: '2px solid #2a9d5c', borderRadius: '8px', padding: '16px 18px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 180px)' }}>
                 {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px' }}>{passage.title}</div>}
                 {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
                 <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
               </div>
             </div>
-            <div style={{ width: '400px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ width: isMobile ? '100%' : '400px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
               <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a', lineHeight: '1.55' }}>{q.question}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {q.options.map((opt, oi) => {
@@ -575,16 +587,16 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
       timeText={formatTime(displayTime)}
       lowTime={isLowTime}
     >
-      <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 32px' }}>{passage.instruction}</h1>
-      <div style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto' }}>
-        <div style={{ flex: 1, minWidth: 0, maxWidth: '520px' }}>
-          <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '18px 20px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: 'calc(100vh - 260px)' }}>
+      <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: isMobile ? '0 0 20px' : '0 0 32px' }}>{passage.instruction}</h1>
+      <div style={{ display: 'flex', gap: isMobile ? '24px' : '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
+        <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '520px', width: '100%' }}>
+          <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '18px 20px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
             {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px', color: '#1a1a1a' }}>{passage.title}</div>}
             {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
             <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
           </div>
         </div>
-        <div style={{ width: '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
+        <div style={{ width: isMobile ? '100%' : '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
           <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>{question.question}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
             {question.options.map((opt, i) => {
@@ -649,6 +661,250 @@ function apiFetch(url, options = {}) {
   })
 }
 
+// ─── Subscription / paywall (iyzico) ─────────────────────────────────────────────────────────
+// A list item whose full content was stripped server-side (see gate_pool in main.py) comes back
+// as just { id, ...a couple of title-ish fields, locked: true } instead of the real exercise.
+function isLocked(item) {
+  return !!(item && item.locked)
+}
+
+// Any list screen or mock-test picker calls this instead of opening a locked item/test -- it
+// doesn't matter which component triggers it (there are a dozen of them across every practice
+// section), so this fires a plain DOM event that the single top-level App() component listens
+// for and reacts to by switching to the Subscribe screen. Avoids threading an onUpgrade prop
+// through every list component individually.
+function requestUpgrade() {
+  window.dispatchEvent(new CustomEvent('mrreadyprep:paywall'))
+}
+
+// Fires a small, self-dismissing toast in the bottom-right corner instead of a native alert() --
+// the browser's built-in alert() blocks the whole page and looks jarring against the rest of the
+// app's design, so anything that used to call alert() dispatches this event instead. Same
+// no-prop-drilling pattern as requestUpgrade() above: a single <ToastHost /> mounted once inside
+// App() listens for it and renders/queues/dismisses the actual toast.
+function showToast(message, type = 'success') {
+  window.dispatchEvent(new CustomEvent('mrreadyprep:toast', { detail: { message, type } }))
+}
+
+function ToastHost() {
+  const [toasts, setToasts] = useState([])
+  useEffect(() => {
+    const onToast = (e) => {
+      const id = Date.now() + Math.random()
+      setToasts(t => [...t, { id, ...e.detail }])
+      setTimeout(() => setToasts(t => t.filter(x => x.id !== id)), 4000)
+    }
+    window.addEventListener('mrreadyprep:toast', onToast)
+    return () => window.removeEventListener('mrreadyprep:toast', onToast)
+  }, [])
+  if (toasts.length === 0) return null
+  return (
+    <div style={{ position: 'fixed', bottom: '20px', right: '20px', zIndex: 9999, display: 'flex', flexDirection: 'column', gap: '8px', maxWidth: '340px' }}>
+      {toasts.map(t => (
+        <div key={t.id} style={{
+          background: t.type === 'error' ? '#d92d20' : t.type === 'info' ? '#11162d' : '#2ac56c',
+          color: '#fff', padding: '12px 16px', borderRadius: '10px', fontSize: '13px', fontWeight: '600',
+          boxShadow: '0 8px 24px rgba(0,0,0,0.18)', display: 'flex', alignItems: 'center', gap: '8px',
+        }}>
+          <span>{t.type === 'error' ? '⚠️' : t.type === 'info' ? 'ℹ️' : '✅'}</span>
+          <span>{t.message}</span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+// Small reusable "locked" badge shown next to/instead of the Start/Retry button on a locked row.
+function LockedBadge() {
+  return (
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: '#f3f4f6', color: '#9ca3af', border: 'none', borderRadius: '6px', padding: '9px 16px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }} onClick={requestUpgrade}>
+      🔒 Premium
+    </span>
+  )
+}
+
+// Starts an iyzico Subscription Checkout Form -- returns { token, checkoutFormContent,
+// tokenExpireTime }. checkoutFormContent is raw HTML/JS meant to be injected directly into the
+// page (see injectCheckoutForm below), not a URL to redirect to.
+function startCheckout(customer) {
+  return apiFetch(`${BACKEND_URL}/api/subscription/create-checkout-session`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(customer),
+  }).then(res => res.json())
+}
+
+// Asks our backend to confirm (server-side, against iyzico) what happened with a given checkout
+// token, and to persist the resulting subscription onto the logged-in user if it succeeded.
+function confirmCheckoutResult(token) {
+  return apiFetch(`${BACKEND_URL}/api/subscription/checkout-result/${token}`).then(res => res.json())
+}
+
+function cancelSubscription() {
+  return apiFetch(`${BACKEND_URL}/api/subscription/cancel`, { method: 'POST' }).then(res => res.json())
+}
+
+// iyzico's checkoutFormContent is a blob of HTML containing a <script> tag that renders the
+// actual card-entry widget into the target element -- setting it via innerHTML does NOT execute
+// embedded <script> tags (a browser security rule), so each script has to be re-created and
+// re-appended manually to actually run.
+function injectCheckoutForm(container, html) {
+  container.innerHTML = html
+  const scripts = container.querySelectorAll('script')
+  scripts.forEach(oldScript => {
+    const newScript = document.createElement('script')
+    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.textContent = oldScript.textContent
+    oldScript.parentNode.replaceChild(newScript, oldScript)
+  })
+}
+
+function SubscribeScreen({ onBack, hasPremium, subscriptionStatus }) {
+  const [step, setStep] = useState('form') // 'form' | 'embed'
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const [form, setForm] = useState({ name: '', surname: '', gsm_number: '', identity_number: '', address: '', city: '' })
+  const embedRef = useRef(null)
+
+  const update = (field) => (e) => setForm(f => ({ ...f, [field]: e.target.value }))
+
+  const handleSubscribe = (e) => {
+    e.preventDefault()
+    setError('')
+    setBusy(true)
+    startCheckout(form)
+      .then(data => {
+        if (!data.checkoutFormContent) {
+          setError(data.detail || 'Could not start checkout. Please try again.')
+          setBusy(false)
+          return
+        }
+        setStep('embed')
+        setBusy(false)
+        // The container only exists once step flips to 'embed' and React re-renders, so inject
+        // on the next tick.
+        setTimeout(() => { if (embedRef.current) injectCheckoutForm(embedRef.current, data.checkoutFormContent) }, 0)
+      })
+      .catch(() => { setError('Could not reach the server. Please try again.'); setBusy(false) })
+  }
+
+  const handleCancelSubscription = () => {
+    if (!window.confirm('Cancel your mrreadyprep Premium subscription? You will lose access to locked content immediately.')) return
+    setBusy(true)
+    cancelSubscription()
+      .then(data => {
+        setBusy(false)
+        if (data.status === 'success') { showToast('Subscription canceled.'); setTimeout(() => window.location.reload(), 1200) }
+        else setError(data.detail || 'Could not cancel subscription.')
+      })
+      .catch(() => { setBusy(false); setError('Could not reach the server. Please try again.') })
+  }
+
+  if (hasPremium) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px' }}>
+        <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '36px', textAlign: 'center' }}>
+          <div style={{ fontSize: '38px', marginBottom: '10px' }}>🎉</div>
+          <h2 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>You're on mrreadyprep Premium</h2>
+          <p style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '24px' }}>
+            Full access to every practice exercise and all 20 Full Mock Tests.
+            {subscriptionStatus === 'PENDING' ? ' Your subscription is being activated.' : ''}
+          </p>
+          {error && <p style={{ color: '#d92d20', fontSize: '12px', marginBottom: '12px' }}>{error}</p>}
+          <button onClick={handleCancelSubscription} disabled={busy} style={{ background: '#11162d', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
+            {busy ? 'Canceling…' : 'Cancel subscription'}
+          </button>
+          {onBack && (
+            <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer' }}>← Back</button>
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  if (step === 'embed') {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px' }}>
+        <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '24px' }}>
+          <h2 style={{ margin: '0 0 14px', fontSize: '18px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>Enter payment details</h2>
+          <div ref={embedRef} />
+          <button onClick={() => setStep('form')} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer', width: '100%', textAlign: 'center' }}>← Back</button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px' }}>
+      <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '36px' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ fontSize: '38px', marginBottom: '10px' }}>⭐</div>
+          <h2 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>Upgrade to mrreadyprep Premium</h2>
+          <p style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '20px' }}>
+            You've hit the free-plan limit. Subscribe for unlimited access to every Reading, Listening,
+            Writing and Speaking practice exercise, plus all 20 Full Mock Tests.
+          </p>
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', textAlign: 'left', background: '#f9fafb', borderRadius: '10px', padding: '18px', marginBottom: '24px' }}>
+          {[
+            'Unlimited Reading, Listening, Writing & Speaking practice',
+            'All 20 Full Mock Tests (not just Test 1)',
+            'Unlimited "practice one section" random mock drills',
+            'Cancel anytime from this same screen',
+          ].map((line, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#374151' }}>
+              <span style={{ color: '#2ac56c', fontWeight: '700' }}>✓</span> {line}
+            </div>
+          ))}
+        </div>
+        <form onSubmit={handleSubscribe} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <input required placeholder="First name" value={form.name} onChange={update('name')} style={inputStyle} />
+            <input required placeholder="Last name" value={form.surname} onChange={update('surname')} style={inputStyle} />
+          </div>
+          <input required placeholder="Phone number (e.g. +1 555 123 4567)" value={form.gsm_number} onChange={update('gsm_number')} style={inputStyle} />
+          <input required placeholder="ID / passport number" value={form.identity_number} onChange={update('identity_number')} style={inputStyle} />
+          <input required placeholder="Billing address" value={form.address} onChange={update('address')} style={inputStyle} />
+          <input required placeholder="City" value={form.city} onChange={update('city')} style={inputStyle} />
+          {error && <p style={{ color: '#d92d20', fontSize: '12px', margin: '2px 0 0' }}>{error}</p>}
+          <button type="submit" disabled={busy} style={{ marginTop: '6px', background: '#701fa1', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
+            {busy ? 'Please wait…' : 'Continue to payment'}
+          </button>
+        </form>
+        {onBack && (
+          <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer', width: '100%', textAlign: 'center' }}>← Back</button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+const inputStyle = { border: '1px solid #e1e4ed', borderRadius: '8px', padding: '11px 12px', fontSize: '13px', flex: 1, fontFamily: 'inherit', color: '#1a1a1a' }
+
+// Turns the "last_mock_test_at" ISO timestamp from /api/dashboard into the short human string
+// shown on the Full Mock Test dashboard card ("today", "3 days ago", etc.) -- null means the
+// student has never finished a full (all 4 section) mock test yet.
+function timeAgo(isoString) {
+  if (!isoString) return 'Not taken yet'
+  // saved_at comes back from sqlite as "YYYY-MM-DD HH:MM:SS" (space, no timezone) rather than
+  // true ISO 8601 -- Safari's Date parser rejects that form outright, so normalize the same way
+  // fmtDate() below does before handing it to `new Date`.
+  const normalized = isoString.includes('T') ? isoString : isoString.replace(' ', 'T')
+  const then = new Date(normalized.endsWith('Z') || normalized.includes('+') ? normalized : normalized + 'Z')
+  const diffMs = Date.now() - then.getTime()
+  const diffMin = Math.floor(diffMs / 60000)
+  if (diffMin < 1) return 'just now'
+  if (diffMin < 60) return `${diffMin} min ago`
+  const diffHr = Math.floor(diffMin / 60)
+  if (diffHr < 24) return `${diffHr} hr${diffHr === 1 ? '' : 's'} ago`
+  const diffDay = Math.floor(diffHr / 24)
+  if (diffDay === 1) return 'yesterday'
+  if (diffDay < 30) return `${diffDay} days ago`
+  const diffMonth = Math.floor(diffDay / 30)
+  if (diffMonth < 12) return `${diffMonth} month${diffMonth === 1 ? '' : 's'} ago`
+  return `${Math.floor(diffMonth / 12)} yr ago`
+}
+
 // Fire-and-forget: records one finished exercise/attempt into the unified progress table so
 // the student can see their history/improvement later on the Progress screen. Never blocks or
 // throws on failure -- a save hiccup shouldn't interrupt the student's flow.
@@ -678,9 +934,10 @@ function fetchLatestResults(category) {
 }
 
 function APList({ passages, scores, onSelect, onBack }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Read an Academic Passage</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -688,17 +945,20 @@ function APList({ passages, scores, onSelect, onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {passages.map((p, idx) => {
+            const locked = isLocked(p)
             const result = scores[p.id]; const pct = result ? Math.round((result.score / result.total) * 100) : null
             return (
-              <div key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Passage {idx + 1}</div>
-                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.score}/{result.total} · {pct}%</span>}
+                    {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.score}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{p.title} · {p.questions.length} questions</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${p.title} · ${p.questions.length} questions`}</div>
                 </div>
-                <button onClick={() => onSelect(p)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => onSelect(p)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
+                )}
               </div>
             )
           })}
@@ -709,6 +969,7 @@ function APList({ passages, scores, onSelect, onBack }) {
 }
 
 function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, moduleOffset, moduleTotal, onPrevSlot, enterAtEnd, isLastSlot = true, initialAnswers, onAnswersChange }) {
+  const isMobile = useIsMobile()
   const TOTAL_TIME = 600
   const [currentQ, setCurrentQ] = useState(() => enterAtEnd ? passage.questions.length - 1 : 0)
   const [answers, setAnswers] = useState(() => initialAnswers || {})
@@ -783,12 +1044,12 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
           <button onClick={() => setShowReview(false)} style={{ background: '#fff', border: '1.5px solid #2a9d5c', borderRadius: '6px', padding: '6px 14px', fontSize: '13px', color: '#2a9d5c', cursor: 'pointer', fontWeight: '700' }}>← BACK</button>
         </div>
         <div style={{ height: '2.5px', background: '#2a9d5c', flexShrink: 0 }} />
-        <div style={{ flex: 1, display: 'flex', padding: '24px 32px', gap: '40px', overflow: 'hidden', minHeight: 0 }}>
+        <div style={{ flex: 1, display: 'flex', padding: isMobile ? '16px' : '24px 32px', gap: isMobile ? '20px' : '40px', overflow: isMobile ? 'auto' : 'hidden', minHeight: 0, ...(isMobile ? { flexDirection: 'column' } : {}) }}>
           <div style={{ flex: 1, border: '2px solid #2a9d5c', borderRadius: '8px', padding: '16px 18px', overflowY: 'auto', boxSizing: 'border-box' }}>
             <div style={{ fontWeight: '700', fontSize: '14px', marginBottom: '12px', color: '#1a1a1a' }}>{passage.title}</div>
             {isIns ? <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a' }}>{renderMarkedPassage(rPassage)}</div> : <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a', whiteSpace: 'pre-line' }}>{rPassage}</div>}
           </div>
-          <div style={{ width: '420px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <div style={{ width: isMobile ? '100%' : '420px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ fontSize: '12px', color: '#999' }}>Question {reviewIdx + 1} of {questions.length}</div>
             {isIns && <div style={{ background: '#f0faf4', border: '1px solid #2a9d5c', borderRadius: '8px', padding: '12px 14px', fontStyle: 'italic', fontSize: '13px', color: '#1a1a1a', lineHeight: '1.6' }}>"{rq.insert_text}"</div>}
             <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a', lineHeight: '1.55' }}>{rq.question}</div>
@@ -880,14 +1141,14 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
       timeText={formatTime(displayTime)}
       lowTime={isLowTime}
     >
-      <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 32px' }}>{passage.title}</h1>
-      <div style={{ display: 'flex', gap: '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto' }}>
-        <div style={{ flex: 1, minWidth: 0, maxWidth: '540px' }}>
-          <div style={{ padding: '4px 0', overflowY: 'auto', boxSizing: 'border-box', maxHeight: 'calc(100vh - 260px)' }}>
+      <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: isMobile ? '0 0 20px' : '0 0 32px' }}>{passage.title}</h1>
+      <div style={{ display: 'flex', gap: isMobile ? '24px' : '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
+        <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '540px', width: '100%' }}>
+          <div style={{ padding: '4px 0', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
             {isInsert ? <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a' }}>{renderMarkedPassage(activePassage)}</div> : <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a', whiteSpace: 'pre-line' }}>{activePassage}</div>}
           </div>
         </div>
-        <div style={{ width: '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
+        <div style={{ width: isMobile ? '100%' : '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
           {isInsert && <div style={{ background: '#f0faf4', border: '1px solid #2a9d5c', borderRadius: '8px', padding: '12px 14px', fontStyle: 'italic', fontSize: '13px', color: '#1a1a1a', lineHeight: '1.6' }}>"{q.insert_text}"</div>}
           <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>{q.question}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
@@ -1312,9 +1573,10 @@ function ConversationPhoto({ seed = 0, width = 640, height = 380 }) {
 }
 
 function ListeningP1List({ exercises, scores, onSelect, onBack }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen and Choose a Response</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -1322,20 +1584,23 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {exercises.map((ex, idx) => {
+            const locked = isLocked(ex)
             const result = scores[idx]
             const pct = result ? Math.round((result.correct / result.total) * 100) : null
             return (
-              <div key={ex.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={ex.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Exercise {idx + 1}</div>
-                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
+                    {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{ex.questions.length} question{ex.questions.length === 1 ? '' : 's'}</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.questions.length} question${ex.questions.length === 1 ? '' : 's'}`}</div>
                 </div>
-                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {result ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {result ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -1348,6 +1613,7 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
 const LISTENING_P1_TIME = 20
 
 function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+  const isMobile = useIsMobile()
   const [currentQ, setCurrentQ] = useState(0)
   const [selected, setSelected] = useState(null)
   const [done, setDone] = useState(false)
@@ -1437,7 +1703,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
           </div>
           <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
           <div style={{ flex: 1, overflowY: 'auto', padding: '32px', display: 'flex', justifyContent: 'center' }}>
-            <div style={{ maxWidth: '820px', width: '100%', display: 'flex', gap: '36px', alignItems: 'flex-start' }}>
+            <div style={{ maxWidth: '820px', width: '100%', display: 'flex', gap: isMobile ? '20px' : '36px', alignItems: isMobile ? 'stretch' : 'flex-start', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
                 <SpeakerAvatar gender={rq.speaker} seed={rq.id} />
                 <div style={{ width: '220px' }}><AudioPlayer url={rq.audio_url} /></div>
@@ -1519,19 +1785,19 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
       lowTime={isLowTime}
       contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
-      <h1 style={{ margin: '0 0 40px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>Choose the best response.</h1>
-      <div style={{ maxWidth: '980px', width: '100%', display: 'flex', gap: '96px', alignItems: 'flex-start', justifyContent: 'center' }}>
+      <h1 style={{ margin: isMobile ? '0 0 24px' : '0 0 40px', fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>Choose the best response.</h1>
+      <div style={{ maxWidth: '980px', width: '100%', display: 'flex', gap: isMobile ? '24px' : '96px', alignItems: isMobile ? 'stretch' : 'flex-start', justifyContent: 'center', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
         {/* Left: speaker avatar + audio */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
           <SpeakerAvatar gender={q.speaker} seed={q.id} />
-          <div style={{ width: '300px' }}><AudioPlayer url={q.audio_url} autoPlayKey={currentQ} /></div>
+          <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px' }}><AudioPlayer url={q.audio_url} autoPlayKey={currentQ} /></div>
           {!q.audio_url && (
-            <div style={{ width: '300px', fontSize: '14px', color: '#1a1a1a', fontStyle: 'italic', textAlign: 'center', lineHeight: '1.5' }}>"{q.transcript}"</div>
+            <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px', fontSize: '14px', color: '#1a1a1a', fontStyle: 'italic', textAlign: 'center', lineHeight: '1.5' }}>"{q.transcript}"</div>
           )}
         </div>
 
         {/* Right: options */}
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '28px', paddingTop: '48px', maxWidth: '520px' }}>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '28px', paddingTop: isMobile ? '0' : '48px', maxWidth: isMobile ? '100%' : '520px', width: '100%' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
@@ -1585,9 +1851,10 @@ function ListeningP1({ onBack }) {
 
 // ─── Listening Part 2 — Listen to a Conversation ──────────────────────────────
 function ListeningP2List({ conversations, scores, onSelect, onBack }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to a Conversation</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -1595,20 +1862,23 @@ function ListeningP2List({ conversations, scores, onSelect, onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {conversations.map((c, idx) => {
+            const locked = isLocked(c)
             const result = scores[idx]
             const pct = result ? Math.round((result.correct / result.total) * 100) : null
             return (
-              <div key={c.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={c.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Conversation {idx + 1}</div>
-                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
+                    {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{c.questions.length} questions</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${c.questions.length} questions`}</div>
                 </div>
-                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {result ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {result ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -1621,6 +1891,7 @@ function ListeningP2List({ conversations, scores, onSelect, onBack }) {
 const LISTENING_P2_TIME = 30
 
 function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+  const isMobile = useIsMobile()
   const [phase, setPhase] = useState('listening') // 'listening' | 'question'
   const [qIdx, setQIdx] = useState(0)
   const [selected, setSelected] = useState(null)
@@ -1808,12 +2079,12 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
       timeText={formatTime(timeLeft)}
       lowTime={isLowTime}
     >
-      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: '64px', alignItems: 'flex-start' }}>
+      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: isMobile ? '20px' : '64px', alignItems: isMobile ? 'center' : 'flex-start', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
         <div style={{ flexShrink: 0 }}>
-          <ConversationPhoto seed={conversation.id} width={340} height={340} />
+          <ConversationPhoto seed={conversation.id} width={isMobile ? 220 : 340} height={isMobile ? 220 : 340} />
         </div>
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '8px' }}>
-          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: '32px' }}>{q.question}</h1>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
+          <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
@@ -1867,9 +2138,10 @@ function ListeningP2({ onBack }) {
 
 // ─── Listening Part 3 — Listen to an Announcement ─────────────────────────────
 function ListeningP3List({ announcements, scores, onSelect, onBack }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to an Announcement</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -1877,20 +2149,23 @@ function ListeningP3List({ announcements, scores, onSelect, onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {announcements.map((a, idx) => {
+            const locked = isLocked(a)
             const result = scores[idx]
             const pct = result ? Math.round((result.correct / result.total) * 100) : null
             return (
-              <div key={a.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={a.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Announcement {idx + 1}</div>
-                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
+                    {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{a.questions.length} questions</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${a.questions.length} questions`}</div>
                 </div>
-                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {result ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {result ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -1903,6 +2178,7 @@ function ListeningP3List({ announcements, scores, onSelect, onBack }) {
 const LISTENING_P3_TIME = 30
 
 function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+  const isMobile = useIsMobile()
   const [phase, setPhase] = useState('listening') // 'listening' | 'question'
   const [qIdx, setQIdx] = useState(0)
   const [selected, setSelected] = useState(null)
@@ -2090,12 +2366,12 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
       timeText={formatTime(timeLeft)}
       lowTime={isLowTime}
     >
-      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: '64px', alignItems: 'flex-start' }}>
+      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: isMobile ? '20px' : '64px', alignItems: isMobile ? 'center' : 'flex-start', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
         <div style={{ flexShrink: 0 }}>
-          <SpeakerAvatar gender={announcement.speaker} seed={announcement.id} width={260} height={260} />
+          <SpeakerAvatar gender={announcement.speaker} seed={announcement.id} width={isMobile ? 180 : 260} height={isMobile ? 180 : 260} />
         </div>
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '8px' }}>
-          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: '32px' }}>{q.question}</h1>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
+          <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
@@ -2149,9 +2425,10 @@ function ListeningP3({ onBack }) {
 
 // ─── Listening Part 4 — Listen to an Academic Talk ────────────────────────────
 function ListeningP4List({ talks, scores, onSelect, onBack }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to an Academic Talk</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -2159,20 +2436,23 @@ function ListeningP4List({ talks, scores, onSelect, onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {talks.map((t, idx) => {
+            const locked = isLocked(t)
             const result = scores[idx]
             const pct = result ? Math.round((result.correct / result.total) * 100) : null
             return (
-              <div key={t.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={t.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Talk {idx + 1}</div>
-                    {result && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
+                    {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{t.questions.length} questions</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${t.questions.length} questions`}</div>
                 </div>
-                <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {result ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {result ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -2185,6 +2465,7 @@ function ListeningP4List({ talks, scores, onSelect, onBack }) {
 const LISTENING_P4_TIME = 30
 
 function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+  const isMobile = useIsMobile()
   const [phase, setPhase] = useState('listening') // 'listening' | 'question'
   const [qIdx, setQIdx] = useState(0)
   const [selected, setSelected] = useState(null)
@@ -2375,12 +2656,12 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
       timeText={formatTime(timeLeft)}
       lowTime={isLowTime}
     >
-      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: '64px', alignItems: 'flex-start' }}>
+      <div style={{ maxWidth: '980px', width: '100%', margin: '0 auto', display: 'flex', gap: isMobile ? '20px' : '64px', alignItems: isMobile ? 'center' : 'flex-start', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
         <div style={{ flexShrink: 0 }}>
-          <SpeakerAvatar gender={talk.speaker} seed={talk.id} width={260} height={260} />
+          <SpeakerAvatar gender={talk.speaker} seed={talk.id} width={isMobile ? 180 : 260} height={isMobile ? 180 : 260} />
         </div>
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: '8px' }}>
-          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: '32px' }}>{q.question}</h1>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
+          <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
@@ -2774,6 +3055,7 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
 }
 
 function BuildASentence({ onBack }) {
+  const isMobile = useIsMobile()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeSet, setActiveSet] = useState(null)
@@ -2815,7 +3097,7 @@ function BuildASentence({ onBack }) {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Build a Sentence</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -2823,20 +3105,23 @@ function BuildASentence({ onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {sets.map((setItems, i) => {
+            const locked = setItems.some(isLocked)
             const score = scores[i]
             const pct = score ? Math.round((score.correct / score.total) * 100) : null
             return (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice Set {i + 1}</div>
-                    {score && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score.correct}/{score.total} · {pct}%</span>}
+                    {score && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score.correct}/{score.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{setItems.length} items · {totalLabel} total</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${setItems.length} items · ${totalLabel} total`}</div>
                 </div>
-                <button onClick={() => setActiveSet(i)} style={{ background: score ? '#e5e7eb' : '#2ac56c', color: score ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {score ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => setActiveSet(i)} style={{ background: score ? '#e5e7eb' : '#2ac56c', color: score ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {score ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -2949,6 +3234,7 @@ function toolbarBtnStyle(disabled) {
 }
 
 function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
+  const isMobile = useIsMobile()
   const [timeLeft, setTimeLeft] = useState(EMAIL_TIME_LIMIT)
   const [historyState, setHistoryState] = useState({ list: [''], idx: 0 })
   const [phase, setPhase] = useState('writing') // 'writing' | 'analyzing' | 'done'
@@ -3048,8 +3334,8 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
       lowTime={phase === 'writing' && isLowTime}
       contentStyle={{ display: 'flex', flexDirection: 'column' }}
     >
-        <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
-          <div style={{ flex: '0.8 1 320px', minWidth: '280px', paddingRight: '36px' }}>
+        <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: isMobile ? '18px' : '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
+          <div style={{ flex: isMobile ? '1 1 100%' : '0.8 1 320px', minWidth: isMobile ? '100%' : '280px', paddingRight: isMobile ? '0' : '36px' }}>
             <div style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '18px' }}>{item.scenario}</div>
             <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Write an email to {item.recipient}. In your email, do the following:</div>
             <ul style={{ margin: '0 0 18px 0', paddingLeft: '22px' }}>
@@ -3060,9 +3346,9 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
             <div style={{ fontSize: '15px', color: '#1a1a1a' }}>Write as much as you can and in complete sentences.</div>
           </div>
 
-          <div style={{ width: '1px', alignSelf: 'stretch', background: '#e5e7eb', margin: '0 4px' }} />
+          {!isMobile && <div style={{ width: '1px', alignSelf: 'stretch', background: '#e5e7eb', margin: '0 4px' }} />}
 
-          <div style={{ flex: '1.4 1 480px', minWidth: '360px', paddingLeft: '36px' }}>
+          <div style={{ flex: isMobile ? '1 1 100%' : '1.4 1 480px', minWidth: isMobile ? '100%' : '360px', paddingLeft: isMobile ? '0' : '36px', marginTop: isMobile ? '20px' : '0' }}>
             <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '14px' }}>Your Response:</div>
             <div style={{ fontSize: '14px', color: '#1a1a1a', marginBottom: '4px' }}><u>To:</u> {item.recipient}</div>
             <div style={{ fontSize: '14px', color: '#1a1a1a', marginBottom: '14px' }}><u>Subject:</u> {item.subject}</div>
@@ -3123,6 +3409,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
 }
 
 function WriteEmail({ onBack }) {
+  const isMobile = useIsMobile()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeIdx, setActiveIdx] = useState(null)
@@ -3157,7 +3444,7 @@ function WriteEmail({ onBack }) {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Write an Email</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -3165,19 +3452,22 @@ function WriteEmail({ onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {items.map((it, i) => {
+            const locked = isLocked(it)
             const score = scores[i]
             return (
-              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {i + 1}</div>
-                    {score != null && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5</span>}
+                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>To: {it.recipient} · {timeLabel} time limit</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `To: ${it.recipient} · ${timeLabel} time limit`}</div>
                 </div>
-                <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {score != null ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {score != null ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -3288,6 +3578,7 @@ function evaluateDiscussionResponse(text, classmates) {
 }
 
 function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode = false }) {
+  const isMobile = useIsMobile()
   const [timeLeft, setTimeLeft] = useState(DISCUSSION_TIME_LIMIT)
   const [historyState, setHistoryState] = useState({ list: [''], idx: 0 })
   const [phase, setPhase] = useState('writing') // 'writing' | 'analyzing' | 'done'
@@ -3387,8 +3678,8 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
       lowTime={phase === 'writing' && isLowTime}
       contentStyle={{ display: 'flex', flexDirection: 'column' }}
     >
-        <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
-          <div style={{ flex: '0.8 1 320px', minWidth: '280px', paddingRight: '36px' }}>
+        <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: isMobile ? '18px' : '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
+          <div style={{ flex: isMobile ? '1 1 100%' : '0.8 1 320px', minWidth: isMobile ? '100%' : '280px', paddingRight: isMobile ? '0' : '36px' }}>
             <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Your professor is teaching a class on {item.subject}. Write a post responding to the professor's question.</div>
             <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>In your response, you should do the following:</div>
             <ul style={{ margin: '0 0 14px 0', paddingLeft: '22px' }}>
@@ -3404,9 +3695,9 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
             <div style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7' }}>{item.prompt}</div>
           </div>
 
-          <div style={{ width: '1px', alignSelf: 'stretch', background: '#e5e7eb', margin: '0 4px' }} />
+          {!isMobile && <div style={{ width: '1px', alignSelf: 'stretch', background: '#e5e7eb', margin: '0 4px' }} />}
 
-          <div style={{ flex: '1.4 1 480px', minWidth: '360px', paddingLeft: '36px' }}>
+          <div style={{ flex: isMobile ? '1 1 100%' : '1.4 1 480px', minWidth: isMobile ? '100%' : '360px', paddingLeft: isMobile ? '0' : '36px', marginTop: isMobile ? '20px' : '0' }}>
             {item.classmates.map((c, i) => (
               <div key={i} style={{ display: 'flex', gap: '14px', paddingBottom: '16px', marginBottom: '16px', borderBottom: '1px solid #e5e7eb' }}>
                 <div style={{ flexShrink: 0, textAlign: 'center' }}>
@@ -3474,6 +3765,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
 }
 
 function AcademicDiscussion({ onBack }) {
+  const isMobile = useIsMobile()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeIdx, setActiveIdx] = useState(null)
@@ -3508,7 +3800,7 @@ function AcademicDiscussion({ onBack }) {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Write for an Academic Discussion</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -3516,19 +3808,22 @@ function AcademicDiscussion({ onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {items.map((it, i) => {
+            const locked = isLocked(it)
             const score = scores[i]
             return (
-              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {i + 1}</div>
-                    {score != null && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5</span>}
+                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Topic: {it.subject} · {timeLabel} time limit</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `Topic: ${it.subject} · ${timeLabel} time limit`}</div>
                 </div>
-                <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {score != null ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {score != null ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -4958,6 +5253,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
 }
 
 function ListenRepeat({ onBack }) {
+  const isMobile = useIsMobile()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeIdx, setActiveIdx] = useState(null)
@@ -4993,7 +5289,7 @@ function ListenRepeat({ onBack }) {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen and Repeat</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -5001,19 +5297,22 @@ function ListenRepeat({ onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {items.map((it, i) => {
+            const locked = isLocked(it)
             const score = scores[i]
             return (
-              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>{it.location}</div>
-                    {score != null && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5 avg</span>}
+                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5 avg</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{it.sentences.length} sentences</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${it.sentences.length} sentences`}</div>
                 </div>
-                <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {score != null ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {score != null ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -5211,6 +5510,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
 }
 
 function TakeInterview({ onBack }) {
+  const isMobile = useIsMobile()
   const [items, setItems] = useState([])
   const [loading, setLoading] = useState(true)
   const [activeIdx, setActiveIdx] = useState(null)
@@ -5246,7 +5546,7 @@ function TakeInterview({ onBack }) {
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: '32px 48px' }}>
+      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Take an Interview</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
@@ -5254,19 +5554,22 @@ function TakeInterview({ onBack }) {
         <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {items.map((it, i) => {
+            const locked = isLocked(it)
             const score = scores[i]
             return (
-              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%' }}>
+              <div key={it.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: isMobile ? '14px 16px' : '18px 28px', background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '8px', width: '100%', opacity: locked ? 0.6 : 1 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>{it.topic}</div>
-                    {score != null && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5 avg</span>}
+                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5 avg</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{it.questions.length} questions · 45s each</div>
+                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${it.questions.length} questions · 45s each`}</div>
                 </div>
-                <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
-                  {score != null ? 'Retry' : 'Start'}
-                </button>
+                {locked ? <LockedBadge /> : (
+                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                    {score != null ? 'Retry' : 'Start'}
+                  </button>
+                )}
               </div>
             )
           })}
@@ -5277,6 +5580,7 @@ function TakeInterview({ onBack }) {
 }
 
 function ListeningHome({ onSelect, onBack }) {
+  const isMobile = useIsMobile()
   const parts = [
     { key: 'p1', title: 'Part 1: Choose a Response', desc: 'Listen to a short statement or question and choose the most appropriate response.', count: '150 exercises · 1,200 questions', ready: true },
     { key: 'p2', title: 'Part 2: Listen to a Conversation', desc: 'Listen to a dialogue between two people and answer comprehension questions.', count: '150 conversations · 300 questions', ready: true },
@@ -5286,7 +5590,7 @@ function ListeningHome({ onSelect, onBack }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
       {parts.map((p, i) => (
-        <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div key={i} style={{ backgroundColor: '#fff', padding: isMobile ? '16px' : '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...(isMobile ? { flexDirection: 'column', alignItems: 'stretch', gap: '14px' } : {}) }}>
           <div style={{ maxWidth: '70%' }}>
             <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
             <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
@@ -5591,14 +5895,15 @@ function buildFixedSpeakingQueue(bundle) {
 // official-style TOEFL iBT UI: navy top bar with only a Continue button, plain title +
 // underline + paragraph(s), and an optional "Type of Task" table for section overviews.
 function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
       <TestTopBar left={null} right={<TestPillButton variant="light" onClick={onContinue}>Continue</TestPillButton>} />
-      <div style={{ padding: '48px 64px 100px', boxSizing: 'border-box' }}>
-        <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 14px' }}>{title}</h1>
+      <div style={{ padding: isMobile ? '20px 16px 80px' : '48px 64px 100px', boxSizing: 'border-box' }}>
+        <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 14px' }}>{title}</h1>
         <div style={{ height: '1px', background: '#1a1a1a', marginBottom: '28px' }} />
         {icons && (
-          <div style={{ display: 'flex', gap: '40px', margin: '4px 0 28px' }}>
+          <div style={{ display: 'flex', gap: isMobile ? '20px' : '40px', margin: '4px 0 28px', flexWrap: 'wrap' }}>
             {icons.map((ic, i) => (
               <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#edfbf3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px' }}>{ic.emoji}</div>
@@ -5613,14 +5918,16 @@ function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue }
         {visual && <div style={{ margin: '8px 0 24px' }}>{visual}</div>}
         {rows && (
           <div style={{ marginTop: '8px', border: '1px solid #e5e7eb', borderRadius: '4px', overflow: 'hidden', maxWidth: '1400px' }}>
-            <div style={{ display: 'flex', background: '#eef0f4', borderBottom: '1px solid #e5e7eb', padding: '12px 20px' }}>
-              <div style={{ flex: '0 0 320px', fontSize: '13px', fontWeight: '700', color: '#616473' }}>Type of Task</div>
-              <div style={{ flex: 1, fontSize: '13px', fontWeight: '700', color: '#616473' }}>Description</div>
-            </div>
+            {!isMobile && (
+              <div style={{ display: 'flex', background: '#eef0f4', borderBottom: '1px solid #e5e7eb', padding: '12px 20px' }}>
+                <div style={{ flex: '0 0 320px', fontSize: '13px', fontWeight: '700', color: '#616473' }}>Type of Task</div>
+                <div style={{ flex: 1, fontSize: '13px', fontWeight: '700', color: '#616473' }}>Description</div>
+              </div>
+            )}
             {rows.map((r, i) => (
-              <div key={i} style={{ display: 'flex', padding: '16px 20px', borderBottom: i < rows.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
-                <div style={{ flex: '0 0 320px', fontSize: '15px', color: '#1a1a1a' }}>{r[0]}</div>
-                <div style={{ flex: 1, fontSize: '15px', color: '#1a1a1a' }}>{r[1]}</div>
+              <div key={i} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '4px' : '0', padding: isMobile ? '14px 16px' : '16px 20px', borderBottom: i < rows.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
+                <div style={{ flex: isMobile ? 'none' : '0 0 320px', fontSize: isMobile ? '13px' : '15px', fontWeight: isMobile ? '700' : '400', color: isMobile ? '#616473' : '#1a1a1a' }}>{r[0]}</div>
+                <div style={{ flex: 1, fontSize: isMobile ? '14px' : '15px', color: '#1a1a1a' }}>{r[1]}</div>
               </div>
             ))}
           </div>
@@ -5814,10 +6121,11 @@ function VolumeTestPlayer({ src }) {
 // Wraps the Good/Too Loud example rows and automatically plays a short demonstration chime the
 // moment this screen appears (no click needed) — the student hears it as soon as they land here.
 function MicAdjustVisual({ src }) {
+  const isMobile = useIsMobile()
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
       <HwCheckAudioPlayer src={src} />
-      <div style={{ display: 'flex', gap: '56px' }}>
+      <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '20px' : '56px' }}>
         <MicLevelExampleRow label="Good" good />
         <MicLevelExampleRow label="Too Loud" good={false} />
       </div>
@@ -5965,7 +6273,7 @@ const AVAILABLE_FIXED_TEST_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
 
 // Flat list of just the test names — clicking a name navigates to that test's own full-page
 // detail screen (MockTestDetailScreen) rather than expanding inline.
-function MockTestList({ onSelect }) {
+function MockTestList({ onSelect, hasPremium = false }) {
   return (
     <div style={{ width: '100%', maxWidth: '560px', marginBottom: '36px' }}>
       <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px', textAlign: 'left' }}>
@@ -5974,17 +6282,21 @@ function MockTestList({ onSelect }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
         {Array.from({ length: TOTAL_FIXED_TESTS }, (_, i) => i + 1).map(id => {
           const available = AVAILABLE_FIXED_TEST_IDS.includes(id)
+          // Only Mock Test 1 (FREE_FIXED_TEST_ID on the backend) is free -- every other available
+          // test requires an active subscription, enforced again server-side (402) in get_fixed_test.
+          const locked = available && id !== 1 && !hasPremium
           return (
-            <button key={id} onClick={() => onSelect(id)}
+            <button key={id} onClick={() => { if (locked) { requestUpgrade(); return }; onSelect(id) }}
               style={{
                 background: available ? '#fff' : '#f7f7fa',
                 border: '1px solid #e5e7eb', borderRadius: '12px', padding: '13px 18px', cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px', textAlign: 'left', width: '100%', boxSizing: 'border-box',
+                opacity: locked ? 0.7 : 1,
               }}>
               <span style={{ fontSize: '14px', fontWeight: '700', color: available ? '#1a1a1a' : '#b0b3bd' }}>Mock Test {id}</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-                <span style={{ fontSize: '10px', fontWeight: '700', color: available ? '#2a9d5c' : '#c1c4cd', textTransform: 'uppercase', letterSpacing: '0.3px' }}>
-                  {available ? 'Ready' : 'Coming soon'}
+                <span style={{ fontSize: '10px', fontWeight: '700', color: locked ? '#9ca3af' : (available ? '#2a9d5c' : '#c1c4cd'), textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+                  {locked ? '🔒 Premium' : (available ? 'Ready' : 'Coming soon')}
                 </span>
                 <span style={{ fontSize: '12px', color: '#9ca3af' }}>›</span>
               </span>
@@ -6006,6 +6318,7 @@ const MOCK_SECTION_CATEGORY = { reading: 'mock_reading', listening: 'mock_listen
 // MockTestList — mirrors the layout/style of MockIntroScreen itself (title, section parts,
 // start button) instead of expanding the row in place.
 function MockTestDetailScreen({ id, onBack, onStartSection }) {
+  const isMobile = useIsMobile()
   const available = AVAILABLE_FIXED_TEST_IDS.includes(id)
   // Per-section score for THIS specific test id, once the student has completed it — keyed by
   // section key ('reading'/'listening'/'writing'/'speaking'), sourced from the same
@@ -6029,7 +6342,7 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
   }, [id, available])
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', fontFamily: 'sans-serif', zIndex: 10, padding: '110px 40px 40px', textAlign: 'center', overflowY: 'auto' }}>
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', fontFamily: 'sans-serif', zIndex: 10, padding: isMobile ? '90px 16px 30px' : '110px 40px 40px', textAlign: 'center', overflowY: 'auto' }}>
       <button onClick={onBack} style={{ position: 'fixed', top: '24px', left: '24px', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer', zIndex: 11 }}>← Back</button>
       <div style={{ fontSize: '13px', fontWeight: '700', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>Fixed Mock Test</div>
       <h1 style={{ margin: '0 0 14px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Mock Test {id}</h1>
@@ -6048,7 +6361,7 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
           </p>
         </>
       )}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '28px', marginTop: available ? 0 : '18px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '28px', marginTop: available ? 0 : '18px' }}>
         {MOCK_SECTION_INFO.map(sec => {
           const result = sectionScores[sec.key]
           return (
@@ -6075,7 +6388,8 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
   )
 }
 
-function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed }) {
+function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPremium = false }) {
+  const isMobile = useIsMobile()
   // Which fixed test's own detail page is currently showing (null = the main intro screen with
   // the test list is showing instead).
   const [selectedTestId, setSelectedTestId] = useState(null)
@@ -6086,7 +6400,7 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed }) {
   }
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: '40px', textAlign: 'center', overflowY: 'auto' }}>
+    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: isMobile ? '70px 16px 30px' : '40px', textAlign: 'center', overflowY: 'auto' }}>
       <button onClick={onBack} style={{ position: 'fixed', top: '24px', left: '24px', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer', zIndex: 11 }}>← Back</button>
       <div style={{ fontSize: '13px', fontWeight: '700', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>Full Mock Test</div>
       <h1 style={{ margin: '0 0 14px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Reading → Listening → Writing → Speaking</h1>
@@ -6099,13 +6413,13 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed }) {
         At the end you'll get an estimated 1–6 band score for each section plus an overall average —
         estimated because ETS doesn't publish its exact scoring formula.
       </p>
-      {onStartFixed && <MockTestList onSelect={setSelectedTestId} />}
+      {onStartFixed && <MockTestList onSelect={setSelectedTestId} hasPremium={hasPremium} />}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '18px' }}>
         <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
         <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or practice one section only</span>
         <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '12px', width: '100%', maxWidth: '560px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '12px', width: '100%', maxWidth: '560px' }}>
         {MOCK_SECTION_INFO.map(sec => (
           <button key={sec.key} onClick={() => onStartSection(sec.key)}
             style={{ background: '#fff', border: '1px solid #e1e4ed', borderRadius: '12px', padding: '16px 18px', cursor: 'pointer', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -6187,7 +6501,8 @@ function WritingScoreBreakdown({ basResult, emailResult, discResult, reviewEntri
   )
 }
 
-function FullMockTest({ onBack }) {
+function FullMockTest({ onBack, hasPremium = false }) {
+  const isMobile = useIsMobile()
   const [phase, setPhase] = useState('loading') // loading | intro | notice | running | results
   const [pools, setPools] = useState(null)
   // Set (non-null) once the student picks a fixed test from the intro screen — from then on,
@@ -6621,7 +6936,12 @@ function FullMockTest({ onBack }) {
   }
 
   if (phase === 'loading') return <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10, color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>Loading mock test content…</div>
-  if (phase === 'intro') return <MockIntroScreen onStart={startTest} onStartSection={(sec) => startTest(sec)} onBack={onBack} onStartFixed={startFixedTest} />
+  // The dynamic "Start Full Mock Test" / "practice one section" flow draws from the /api/mock/*
+  // pools, which the backend now fully premium-gates (see require_premium_pool in main.py) --
+  // Fixed Test 1 (startFixedTest) is the one complete free mock-test experience instead, so it's
+  // deliberately NOT gated here.
+  const startTestGated = (...args) => { if (!hasPremium) { requestUpgrade(); return }; startTest(...args) }
+  if (phase === 'intro') return <MockIntroScreen onStart={startTestGated} onStartSection={(sec) => startTestGated(sec)} onBack={onBack} onStartFixed={startFixedTest} hasPremium={hasPremium} />
   if (phase === 'hwcheck') {
     const plan = hwCheckPlanRef.current
     if (plan.needsMicModal && hwCheckStep === 0) return <MicVolumeCheckModal onStart={() => setHwCheckStep(1)} />
@@ -6701,11 +7021,11 @@ function FullMockTest({ onBack }) {
     }
 
     return (
-      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: '48px 24px', overflowY: 'auto' }}>
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: isMobile ? '28px 16px' : '48px 24px', overflowY: 'auto' }}>
         <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Full Mock Test Complete</div>
         <div style={{ fontSize: '42px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>{overall.toFixed(1)} / 6</div>
         <div style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '28px' }}>Estimated overall band (average of 4 sections)</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '14px', width: '100%', maxWidth: '560px', marginBottom: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '14px', width: '100%', maxWidth: '560px', marginBottom: '20px' }}>
           {rows.map(r => (
             <div key={r.label} style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
               <div style={{ fontSize: '12px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', marginBottom: '6px' }}>{r.label}</div>
@@ -6804,6 +7124,7 @@ const PROGRESS_SECTION_ORDER = ['Reading', 'Listening', 'Writing', 'Speaking', '
 const PROGRESS_SECTION_COLORS = { Reading: '#701fa1', Listening: '#2ac56c', Writing: '#e07b00', Speaking: '#2f6fed', 'Mock Tests': '#d94040' }
 
 function ProgressScreen({ onBack }) {
+  const isMobile = useIsMobile()
   const [summary, setSummary] = useState(null)
   const [history, setHistory] = useState([])
   const [loading, setLoading] = useState(true)
@@ -6860,7 +7181,7 @@ function ProgressScreen({ onBack }) {
         <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Every exercise and mock test you've completed, all in one place.</div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px', marginBottom: '28px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '14px', marginBottom: '28px' }}>
         <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
           <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Total Attempts</div>
           <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginTop: '4px' }}>{overall.attempts}</div>
@@ -7117,8 +7438,25 @@ function AuthScreen({ onAuthSuccess }) {
   )
 }
 
+// The app shell (sidebar + main content) is a fixed desktop layout with no CSS media queries
+// anywhere in the codebase -- this hook is the seam that lets a handful of the highest-traffic
+// spots (the app shell/nav, the Dashboard) adapt at narrow widths without a full rewrite of every
+// one of the 100+ inline-styled screens. Tracks window width live so rotating a phone/resizing a
+// window updates the layout immediately, not just on load.
+function useIsMobile(breakpoint = 860) {
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth <= breakpoint)
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth <= breakpoint)
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [breakpoint])
+  return isMobile
+}
+
 // ─── App ──────────────────────────────────────────────────────────────────────
 function App() {
+  const isMobile = useIsMobile()
+  const [mobileNavOpen, setMobileNavOpen] = useState(false)
   // Browsers (Safari in particular) block audio.play() unless it happens inside a genuine
   // user gesture. Listening/Speaking audio auto-plays a moment after the screen renders
   // (AUDIO_START_DELAY_MS), which is not itself a gesture, so the very first attempt can be
@@ -7216,6 +7554,42 @@ function App() {
   // mount) so those numbers don't go stale for the rest of the session after the first load.
   useEffect(() => { if (currentTab === 'dashboard') fetchDashboardData() }, [currentTab])
 
+  // Any locked list item/mock test anywhere in the app calls requestUpgrade() instead of trying
+  // to open itself -- that dispatches this event, which is the one place that actually switches
+  // the screen to the paywall, so no prop-drilling is needed through a dozen list components.
+  useEffect(() => {
+    const openPaywall = () => setCurrentTab('subscribe')
+    window.addEventListener('mrreadyprep:paywall', openPaywall)
+    return () => window.removeEventListener('mrreadyprep:paywall', openPaywall)
+  }, [])
+
+  // iyzico's embedded checkout widget finishes by POSTing to our backend, which then redirects
+  // the browser back here as "/?subscription_token=<token>" (see /api/subscription/checkout-callback
+  // on the backend -- the static frontend can't receive a POST directly). Confirm the result with
+  // our own server (never trust the redirect alone) and refresh has_premium once confirmed.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const token = params.get('subscription_token')
+    const cancelled = params.get('subscription') === 'cancel'
+    if (!token && !cancelled) return
+    window.history.replaceState({}, '', window.location.pathname)
+    setCurrentTab('subscribe')
+    if (cancelled) {
+      showToast('Checkout was not completed.', 'info')
+      return
+    }
+    confirmCheckoutResult(token)
+      .then(data => {
+        fetchDashboardData()
+        if (data.has_premium) {
+          showToast('Subscription successful! You now have full Premium access.')
+        } else {
+          showToast('Payment could not be confirmed yet. If you completed payment, this should update shortly.', 'info')
+        }
+      })
+      .catch(() => {})
+  }, [])
+
   const handleProfileSave = (e) => {
     e.preventDefault()
     apiFetch(`${BACKEND_URL}/api/profile/update`, {
@@ -7225,7 +7599,7 @@ function App() {
         reading_target: Number(readingTarget), listening_target: Number(listeningTarget),
         writing_target: Number(writingTarget), speaking_target: Number(speakingTarget),
       }),
-    }).then(res => res.json()).then(data => { if (data.status === 'success') { alert('Saved!'); fetchDashboardData() } })
+    }).then(res => res.json()).then(data => { if (data.status === 'success') { showToast('Saved!'); fetchDashboardData() } })
   }
 
   // Same save as the Settings form, but usable from the Dashboard's inline "Edit targets" panel
@@ -7259,16 +7633,32 @@ function App() {
   const dayLabels = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
   const sb = (tab, icon, label) => (
-    <button onClick={() => { setCurrentTab(tab); setReadingSubTab(null); setListeningSubTab(null) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <button onClick={() => { setCurrentTab(tab); setReadingSubTab(null); setListeningSubTab(null); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
       {icon} {label}
     </button>
   )
 
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#f4f6fa', overflow: 'hidden', boxSizing: 'border-box' }}>
+      <ToastHost />
 
-      {/* SIDEBAR */}
-      <div style={{ width: '200px', flexShrink: 0, backgroundColor: '#11162d', padding: '20px 14px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box' }}>
+      {/* Backdrop behind the off-canvas sidebar on mobile -- tapping it closes the drawer, same
+          as tapping outside any slide-in menu. Only exists in the DOM while open. */}
+      {isMobile && mobileNavOpen && (
+        <div onClick={() => setMobileNavOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 998 }} />
+      )}
+
+      {/* SIDEBAR -- on desktop this sits in normal flex flow at a fixed 200px. On mobile it's
+          pulled out of flow (position: fixed) and slides in/out as an off-canvas drawer, so it
+          never eats into the ~375px of width a phone actually has. */}
+      <div style={{
+        width: '200px', flexShrink: 0, backgroundColor: '#11162d', padding: '20px 14px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxSizing: 'border-box',
+        ...(isMobile ? {
+          position: 'fixed', top: 0, left: 0, height: '100vh', zIndex: 999, width: '240px',
+          transform: mobileNavOpen ? 'translateX(0)' : 'translateX(-100%)',
+          transition: 'transform 0.25s ease',
+        } : {}),
+      }}>
         <div>
           <div style={{ marginBottom: '24px', textAlign: 'center' }}>
             <div style={{ color: '#b67bfb', fontSize: '17px', fontWeight: '600' }}>mrreadyprep</div>
@@ -7283,10 +7673,11 @@ function App() {
             {sb('mocktest', '🧪', 'Full Mock Test')}
             {sb('progress', '📈', 'My Progress')}
             {sb('vocab', '📚', 'Vocabulary')}
+            {sb('subscribe', userData.has_premium ? '⭐' : '💎', userData.has_premium ? 'Premium Active' : 'Upgrade to Premium')}
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', borderTop: '1px solid #252a44', paddingTop: '4px' }}>
-          <div onClick={() => setCurrentTab('settings')} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
+          <div onClick={() => { setCurrentTab('settings'); if (isMobile) setMobileNavOpen(false) }} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
             <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px', flexShrink: 0 }}>{(userData.username || '?').charAt(0).toUpperCase()}</div>
             <div style={{ minWidth: 0, overflow: 'hidden' }}>
               <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userData.username}</div>
@@ -7298,7 +7689,16 @@ function App() {
       </div>
 
       {/* MAIN */}
-      <div style={{ flex: 1, minWidth: 0, padding: '16px', overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column', gap: '12px', boxSizing: 'border-box' }}>
+      <div style={{ flex: 1, minWidth: 0, padding: isMobile ? '12px' : '16px', overflowY: 'auto', overflowX: 'hidden', display: 'flex', flexDirection: 'column', gap: '12px', boxSizing: 'border-box' }}>
+
+        {/* Mobile-only top bar: hamburger opens the off-canvas sidebar above. Desktop keeps the
+            always-visible sidebar instead, so this never renders there. */}
+        {isMobile && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
+            <button onClick={() => setMobileNavOpen(true)} style={{ background: '#11162d', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '9px', fontSize: '17px', cursor: 'pointer', flexShrink: 0 }}>☰</button>
+            <div style={{ color: '#701fa1', fontSize: '15px', fontWeight: '700' }}>mrreadyprep</div>
+          </div>
+        )}
 
         {currentTab !== 'dashboard' && (
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
@@ -7330,6 +7730,7 @@ function App() {
               {currentTab === 'progress' && '📈 My Progress'}
               {currentTab === 'vocab' && '📚 Vocabulary'}
               {currentTab === 'settings' && '⚙️ Settings'}
+              {currentTab === 'subscribe' && '💎 Premium'}
             </h2>
           </div>
         )}
@@ -7337,7 +7738,7 @@ function App() {
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
           <>
-            <div style={{ display: 'flex', gap: '12px', flexShrink: 0 }}>
+            <div style={{ display: 'flex', gap: '12px', flexShrink: 0, ...(isMobile ? { flexDirection: 'column' } : {}) }}>
               <div style={{ background: '#11162d', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '16px', flex: 1 }}>
                 <div style={{ fontSize: '26px' }}>🔥</div>
                 <div>
@@ -7355,17 +7756,17 @@ function App() {
                   ))}
                 </div>
               </div>
-              <div style={{ background: '#701fa1', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', minWidth: '240px', flexShrink: 0 }}>
+              <div style={{ background: '#701fa1', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', minWidth: isMobile ? '0' : '240px', flexShrink: 0 }}>
                 <div>
                   <div style={{ fontSize: '10px', color: '#d4a0f5', marginBottom: '2px' }}>Full mock test</div>
                   <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff' }}>All 4 sections · ~90 min</div>
-                  <div style={{ fontSize: '10px', color: '#c084fc', marginTop: '3px' }}>Last taken: 3 days ago</div>
+                  <div style={{ fontSize: '10px', color: '#c084fc', marginTop: '3px' }}>{userData.last_mock_test_at ? `Last taken: ${timeAgo(userData.last_mock_test_at)}` : 'Not taken yet'}</div>
                 </div>
                 <button onClick={() => setCurrentTab('mocktest')} style={{ marginLeft: 'auto', background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Start test</button>
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: 'hidden' }}>
+            <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: isMobile ? 'visible' : 'hidden', ...(isMobile ? { flexDirection: 'column', overflowY: 'auto' } : {}) }}>
               <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                   <div style={{ fontSize: '13px', fontWeight: '600' }}>Section scores vs targets</div>
@@ -7483,7 +7884,7 @@ function App() {
                 </div>
               </div>
 
-              <div style={{ width: '260px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '10px', boxSizing: 'border-box' }}>
+              <div style={{ width: isMobile ? '100%' : '260px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '10px', boxSizing: 'border-box' }}>
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flexShrink: 0 }}>
                   <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Exam date</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -7541,8 +7942,8 @@ function App() {
               { key: 'ridl', title: 'Part 2: Read in Daily Life', desc: 'Read emails, messages, signs, schedules, and articles. Answer comprehension questions.', count: '150 passages · 387 questions' },
               { key: 'academic', title: 'Part 3: Academic Passage', desc: 'Read scientific or historical essays and answer comprehension questions.', count: '150 passages · 750 questions' },
             ].map((p, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ maxWidth: '70%' }}>
+              <div key={i} style={{ backgroundColor: '#fff', padding: isMobile ? '16px' : '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...(isMobile ? { flexDirection: 'column', alignItems: 'stretch', gap: '14px' } : {}) }}>
+                <div style={{ maxWidth: isMobile ? '100%' : '70%' }}>
                   <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
                   <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
                   <span style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600' }}>{p.count}</span>
@@ -7571,8 +7972,8 @@ function App() {
               { key: 'p2', title: 'Part 2: Write an Email', desc: 'Draft formal requests or academic inquiries with contextual formatting.', count: '100 practice emails · 7:00 each', ready: true },
               { key: 'p3', title: 'Part 3: Academic Discussion', desc: 'Contribute opinions and critical analysis to an interactive lecture forum.', count: '100 practice posts · 10:00 each', ready: true },
             ].map((p, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ maxWidth: '70%' }}>
+              <div key={i} style={{ backgroundColor: '#fff', padding: isMobile ? '16px' : '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...(isMobile ? { flexDirection: 'column', alignItems: 'stretch', gap: '14px' } : {}) }}>
+                <div style={{ maxWidth: isMobile ? '100%' : '70%' }}>
                   <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
                   <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
                   <span style={{ fontSize: '11px', color: p.ready ? '#2ac56c' : '#9ca3af', fontWeight: '600' }}>{p.count}</span>
@@ -7595,8 +7996,8 @@ function App() {
               { key: 'p1', title: 'Part 1: Listen and Repeat', desc: 'Sharpen intonation and vocal stress through audio response capture.', count: '100 practice sets · 7 sentences each', ready: true },
               { key: 'p2', title: 'Part 2: Take an Interview', desc: 'Deliver clear multi-turn answers facing real-time audio inquiry scenarios.', count: '100 practice sets · 4 questions each', ready: true },
             ].map((p, i) => (
-              <div key={i} style={{ backgroundColor: '#fff', padding: '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div style={{ maxWidth: '70%' }}>
+              <div key={i} style={{ backgroundColor: '#fff', padding: isMobile ? '16px' : '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...(isMobile ? { flexDirection: 'column', alignItems: 'stretch', gap: '14px' } : {}) }}>
+                <div style={{ maxWidth: isMobile ? '100%' : '70%' }}>
                   <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
                   <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
                   <span style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600' }}>{p.count}</span>
@@ -7610,9 +8011,13 @@ function App() {
         {currentTab === 'speaking' && speakingSubTab === 'p2' && <TakeInterview onBack={() => setSpeakingSubTab(null)} />}
 
         {/* FULL MOCK TEST */}
-        {currentTab === 'mocktest' && <FullMockTest onBack={() => setCurrentTab('dashboard')} />}
+        {currentTab === 'mocktest' && <FullMockTest onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} />}
 
         {currentTab === 'progress' && <ProgressScreen onBack={() => setCurrentTab('dashboard')} />}
+
+        {currentTab === 'subscribe' && (
+          <SubscribeScreen onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} subscriptionStatus={userData.subscription_status} />
+        )}
 
         {/* VOCABULARY */}
         {currentTab === 'vocab' && vocabWords.length === 0 && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }}><p style={{ color: '#616473', fontSize: '13px' }}>Loading vocabulary...</p></div>}
@@ -7674,8 +8079,8 @@ function App() {
 
         {/* SETTINGS */}
         {currentTab === 'settings' && (
-          <div style={{ display: 'flex', gap: '20px' }}>
-            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
+          <div style={{ display: 'flex', gap: '20px', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
+            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: isMobile ? '18px' : '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🎯 Target & Profile</h3>
               <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
@@ -7708,7 +8113,7 @@ function App() {
                 <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
               </form>
             </div>
-            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
+            <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: isMobile ? '18px' : '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🔒 Account Security</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
