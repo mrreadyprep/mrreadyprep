@@ -5438,7 +5438,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
             <>
               <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.topic}</div>
               <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
-              <TalkingAvatar gender={item.speaker} seed={item.id * 10} width={280} height={280} mode="playing" />
+              <RealPersonAvatar gender={item.speaker} seed={item.id * 10} width={280} height={280} mode="playing" />
               <audio src={item.audio_url_intro} autoPlay onEnded={beginPractice} onError={beginPractice} />
             </>
           )}
@@ -5448,7 +5448,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
               <div style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', marginBottom: '24px' }}>
                 {phase === 'playing' ? '🔊 Listen to the question, then answer.' : '🎤 Listen and answer the question.'}
               </div>
-              <TalkingAvatar gender={item.speaker} seed={item.id * 10 + qIdx} width={280} height={280} mode={phase} />
+              <RealPersonAvatar gender={item.speaker} seed={item.id * 10 + qIdx} width={280} height={280} mode={phase} />
             </>
           )}
 
