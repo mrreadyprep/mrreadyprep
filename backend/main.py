@@ -935,7 +935,8 @@ seed_email_questions()
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 @app.post("/api/auth/register")
-def register(data: RegisterRequest):
+def register(data: RegisterRequest, request: Request):
+    _check_and_consume_rate_limit(_register_attempts, _client_ip(request), REGISTER_ATTEMPT_WINDOW_SECONDS, REGISTER_ATTEMPT_MAX, "registration")
     email = data.email.strip().lower()
     username = data.username.strip()
     if not username:
@@ -1019,6 +1020,34 @@ def _check_login_rate_limit(key: str):
 def _record_failed_login(key: str):
     _login_attempts[key].append(time.time())
 
+# --- Register / forgot-password brute-force protection ---
+# Unlike login (which only counts *failed* attempts, so a legitimate student who mistypes their
+# password a couple times is never blocked), these two endpoints have no "success" outcome worth
+# distinguishing -- every call is either a new account being created or a password-reset email
+# being sent, so every call consumes a slot regardless of outcome. Register is keyed by IP alone
+# (stops one source from mass-creating accounts); forgot-password is keyed by IP+email (stops both
+# spamming one student's inbox and one IP hammering many different emails).
+REGISTER_ATTEMPT_WINDOW_SECONDS = 60 * 60
+REGISTER_ATTEMPT_MAX = 8
+_register_attempts: dict = collections.defaultdict(list)
+
+FORGOT_PASSWORD_ATTEMPT_WINDOW_SECONDS = 15 * 60
+FORGOT_PASSWORD_ATTEMPT_MAX = 5
+_forgot_password_attempts: dict = collections.defaultdict(list)
+
+def _check_and_consume_rate_limit(store: dict, key: str, window_seconds: int, max_attempts: int, what: str):
+    now = time.time()
+    attempts = [t for t in store[key] if now - t < window_seconds]
+    if len(attempts) >= max_attempts:
+        store[key] = attempts
+        retry_after_sec = int(window_seconds - (now - attempts[0]))
+        raise HTTPException(
+            status_code=429,
+            detail=f"Too many {what} attempts from this connection. Please try again in {max(1, retry_after_sec // 60)} minute(s).",
+        )
+    attempts.append(now)
+    store[key] = attempts
+
 @app.post("/api/auth/login")
 def login(data: LoginRequest, request: Request):
     email = data.email.strip().lower()
@@ -1095,10 +1124,11 @@ def google_login(data: GoogleLoginRequest):
     return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
 
 @app.post("/api/auth/forgot-password")
-def forgot_password(data: ForgotPasswordRequest):
+def forgot_password(data: ForgotPasswordRequest, request: Request):
     """Always returns the same generic success message whether or not the email is registered --
     this stops someone from using this endpoint to check which emails have an account here."""
     email = data.email.strip().lower()
+    _check_and_consume_rate_limit(_forgot_password_attempts, f"{_client_ip(request)}:{email}", FORGOT_PASSWORD_ATTEMPT_WINDOW_SECONDS, FORGOT_PASSWORD_ATTEMPT_MAX, "password-reset")
     print(f"[password reset] forgot-password called for email={email!r}", flush=True)
     conn = get_db()
     user = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
