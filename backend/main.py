@@ -176,6 +176,23 @@ def has_active_subscription(user) -> bool:
 FREE_ITEM_ID = 1
 FREE_FIXED_TEST_ID = 1
 
+# Read in Daily Life groups its list screen by passage type (see RIDL_TYPE_ORDER in App.jsx),
+# short 2-question types first -- so the item actually shown to the student as "Practice 1" is
+# the first "sign"-type item in the pool, NOT the item whose id is FREE_ITEM_ID (1). Mirrors the
+# frontend's computeRIDLDisplayNums grouping so the unlocked free item always matches what's
+# visibly labeled "Practice 1" on screen, regardless of which id happens to be first in the pool.
+RIDL_TYPE_ORDER = ["sign", "schedule", "receipt", "email", "message", "article", "poster", "advertisement"]
+
+def _ridl_free_id(data) -> int:
+    by_type = {}
+    for item in data:
+        if isinstance(item, dict):
+            by_type.setdefault(item.get("type"), item)
+    for t in RIDL_TYPE_ORDER:
+        if t in by_type:
+            return by_type[t].get("id", FREE_ITEM_ID)
+    return FREE_ITEM_ID
+
 # Fields worth keeping on a locked list item so the browsing/list screen can still show a
 # meaningful title/topic under the lock icon, without leaking the actual exercise content
 # (blanks, questions, sentences, answer keys, audio, etc.). Only fields that actually exist on
@@ -1415,7 +1432,8 @@ def get_ctw_exercises(user=Depends(get_current_user_optional)):
 @app.get("/api/reading/read-in-daily-life")
 def get_ridl_passages(user=Depends(get_current_user_optional)):
     with open(RIDL_FILE, "r", encoding="utf-8") as f:
-        return gate_pool(json.load(f), user)
+        data = json.load(f)
+    return gate_pool(data, user, free_ids=frozenset({_ridl_free_id(data)}))
 
 @app.post("/api/reading/save-result")
 def save_ridl_result(data: RIDLResult, user=Depends(get_current_user)):
