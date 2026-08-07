@@ -759,7 +759,7 @@ function injectCheckoutForm(container, html) {
   })
 }
 
-function SubscribeScreen({ onBack, hasPremium, subscriptionStatus }) {
+function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubscription, isAdmin }) {
   const [step, setStep] = useState('form') // 'form' | 'embed'
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -811,9 +811,15 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus }) {
             {subscriptionStatus === 'PENDING' ? ' Your subscription is being activated.' : ''}
           </p>
           {error && <p style={{ color: '#d92d20', fontSize: '12px', marginBottom: '12px' }}>{error}</p>}
-          <button onClick={handleCancelSubscription} disabled={busy} style={{ background: '#11162d', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
-            {busy ? 'Canceling…' : 'Cancel subscription'}
-          </button>
+          {hasBilledSubscription ? (
+            <button onClick={handleCancelSubscription} disabled={busy} style={{ background: '#11162d', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
+              {busy ? 'Canceling…' : 'Cancel subscription'}
+            </button>
+          ) : (
+            <p style={{ color: '#9ca3af', fontSize: '12px', margin: 0 }}>
+              {isAdmin ? 'Admin accounts have permanent full access.' : 'This access was granted directly by an admin, not through a paid subscription -- there is nothing to cancel here.'}
+            </p>
+          )}
           {onBack && (
             <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer' }}>← Back</button>
           )}
@@ -7669,11 +7675,15 @@ function AdminPanel() {
                   <td style={{ padding: '10px 14px' }}>{u.email}{u.is_admin && <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: '700', color: '#701fa1' }}>ADMIN</span>}</td>
                   <td style={{ padding: '10px 14px' }}>{u.username}</td>
                   <td style={{ padding: '10px 14px' }}>{u.email_verified ? '✓' : '—'}</td>
-                  <td style={{ padding: '10px 14px' }}>{u.has_premium ? <span style={{ color: '#2ac56c', fontWeight: '700' }}>✓ Premium</span> : <span style={{ color: '#9ca3af' }}>Free</span>}</td>
+                  <td style={{ padding: '10px 14px' }}>
+                    {u.has_premium ? <span style={{ color: '#2ac56c', fontWeight: '700' }}>✓ Premium{u.has_billed_subscription ? ' (paid)' : ''}</span> : <span style={{ color: '#9ca3af' }}>Free</span>}
+                  </td>
                   <td style={{ padding: '10px 14px', color: '#9ca3af' }}>{(u.created_at || '').slice(0, 10)}</td>
                   <td style={{ padding: '10px 14px' }}>
                     {u.is_admin ? (
                       <span style={{ color: '#9ca3af', fontSize: '11px' }}>—</span>
+                    ) : u.has_billed_subscription ? (
+                      <span style={{ color: '#9ca3af', fontSize: '11px' }} title="Real iyzico subscription -- cancel via the customer's own Settings, not here">Paid, not revocable here</span>
                     ) : u.has_premium ? (
                       <button onClick={() => setSubscription(u.id, 'revoke')} disabled={busyId === u.id} style={{ background: '#fff', color: '#dc2626', border: '1px solid #fecaca', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Revoke</button>
                     ) : (
@@ -8264,7 +8274,7 @@ function App() {
         {currentTab === 'progress' && <ProgressScreen onBack={() => setCurrentTab('dashboard')} />}
 
         {currentTab === 'subscribe' && (
-          <SubscribeScreen onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} subscriptionStatus={userData.subscription_status} />
+          <SubscribeScreen onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} subscriptionStatus={userData.subscription_status} hasBilledSubscription={!!userData.has_billed_subscription} isAdmin={!!userData.is_admin} />
         )}
 
         {/* VOCABULARY */}

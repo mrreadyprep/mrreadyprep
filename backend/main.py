@@ -839,6 +839,13 @@ def user_profile_dict(user) -> dict:
         "subscription_status": user["subscription_status"],
         "has_premium": has_active_subscription(user),
         "is_admin": is_admin_user(user),
+        # Whether there's an actual iyzico subscription behind this account's premium access, as
+        # opposed to access granted for free (an admin's own account via is_admin, or another
+        # account manually comped through the admin panel's Grant button). The Subscribe screen
+        # uses this to decide whether "Cancel subscription" makes sense to show at all -- calling
+        # /api/subscription/cancel with no iyzico_subscription_reference_code on file just 400s,
+        # since there's nothing on iyzico's end to actually cancel.
+        "has_billed_subscription": bool(user["iyzico_subscription_reference_code"]),
         "subscription_current_period_end": (
             user["subscription_current_period_end"].isoformat()
             if isinstance(user["subscription_current_period_end"], datetime)
@@ -1275,8 +1282,8 @@ class AdminSetSubscriptionRequest(BaseModel):
 def admin_list_users(admin=Depends(require_admin)):
     conn = get_db()
     rows = conn.execute(
-        "SELECT id, email, username, email_verified, subscription_status, created_at, current_streak "
-        "FROM users ORDER BY created_at DESC"
+        "SELECT id, email, username, email_verified, subscription_status, "
+        "iyzico_subscription_reference_code, created_at, current_streak FROM users ORDER BY created_at DESC"
     ).fetchall()
     conn.close()
     def row_is_admin(row):
@@ -1289,6 +1296,11 @@ def admin_list_users(admin=Depends(require_admin)):
             "email_verified": bool(row["email_verified"]),
             "subscription_status": row["subscription_status"],
             "has_premium": row_is_admin(row) or (row["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES,
+            # A real, iyzico-billed subscription -- the admin panel's Revoke button is disabled
+            # for these (see admin_set_subscription below) since silently flipping subscription_status
+            # here would desync from what iyzico is actually still charging the card for. A paying
+            # customer's access should only ever be ended through the real cancel flow.
+            "has_billed_subscription": bool(row["iyzico_subscription_reference_code"]),
             "is_admin": row_is_admin(row),
             "created_at": row["created_at"].isoformat() if isinstance(row["created_at"], datetime) else row["created_at"],
             "current_streak": row["current_streak"],
@@ -1325,6 +1337,14 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
     if not target:
         conn.close()
         raise HTTPException(status_code=404, detail="User not found")
+    if data.action == "revoke" and target["iyzico_subscription_reference_code"]:
+        conn.close()
+        raise HTTPException(
+            status_code=400,
+            detail="This account has a real iyzico subscription -- revoking here would only hide "
+                   "their access while iyzico keeps charging their card. Cancel the subscription "
+                   "itself (from their account's Settings, or via /api/subscription/cancel) instead.",
+        )
     new_status = "ACTIVE" if data.action == "grant" else None
     conn.execute("UPDATE users SET subscription_status = ? WHERE id = ?", (new_status, user_id))
     conn.commit()
