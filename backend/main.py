@@ -350,12 +350,6 @@ class RIDLResult(BaseModel):
     score: int
     total: int
 
-class EmailSubmission(BaseModel):
-    question_id: str
-    response: str
-    word_count: int
-    time_spent: int
-
 # Generic "a student finished some exercise, here's the score" record. Used across every
 # exercise type (practice pools AND mock tests) so the student's overall progress can be
 # reconstructed from a single table instead of needing per-category storage everywhere.
@@ -549,35 +543,6 @@ def init_db():
     """)
     if not _has_column(conn, "ridl_results", "user_id"):
         conn.execute("ALTER TABLE ridl_results ADD COLUMN user_id INTEGER NOT NULL DEFAULT 0")
-
-    # Email soruları tablosu
-    conn.execute("""
-        CREATE TABLE IF NOT EXISTS email_questions (
-            id TEXT PRIMARY KEY,
-            scenario TEXT NOT NULL,
-            recipient TEXT,
-            subject TEXT,
-            task_intro TEXT,
-            tasks TEXT,
-            example_response TEXT,
-            time_limit INTEGER,
-            min_words INTEGER
-        )
-    """)
-
-    # Email sonuçları tablosu
-    conn.execute(f"""
-        CREATE TABLE IF NOT EXISTS email_results (
-            id {pk},
-            question_id TEXT NOT NULL,
-            response TEXT NOT NULL,
-            word_count INTEGER NOT NULL,
-            time_spent INTEGER NOT NULL,
-            score REAL NOT NULL,
-            feedback TEXT NOT NULL,
-            submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        )
-    """)
 
     # Unified progress-tracking table -- every exercise type (practice pools + mock tests)
     # writes here so a student's full history/progress can be queried from one place.
@@ -942,37 +907,6 @@ SPEAKING_LR_FILE = pathlib.Path(__file__).parent / "speaking_listen_repeat_1.jso
 
 # Speaking Part 2: Take an Interview verisi
 SPEAKING_INTERVIEW_FILE = pathlib.Path(__file__).parent / "speaking_interview_1.json"
-
-# Email örnek sorusu ekle (eğer yoksa)
-def seed_email_questions():
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT COUNT(*) AS cnt FROM email_questions")
-    count = cursor.fetchone()["cnt"]
-
-    if count == 0:
-        cursor.execute("""
-            INSERT INTO email_questions (id, scenario, recipient, subject, task_intro, tasks, example_response, time_limit, min_words)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (
-            "email_001",
-            "You are a student at a university. You received an email from the university library about overdue books.",
-            "University Librarian",
-            "Overdue Books - Action Required",
-            "Write an email to the university librarian explaining your situation.",
-            json.dumps([
-                {"description": "Apologize for the late return", "keywords": ["sorry", "apologize", "late"]},
-                {"description": "Explain why the books are late", "keywords": ["exam", "sick", "busy", "forgot"]},
-                {"description": "Promise to return them soon", "keywords": ["return", "tomorrow", "soon", "next week"]}
-            ]),
-            "Dear Librarian,\n\nI am writing to apologize for the overdue books. I have been very busy with my final exams and completely forgot to return them. I am sorry for any inconvenience this may have caused.\n\nI will return the books tomorrow morning. Thank you for your understanding.\n\nSincerely,\n[Your Name]",
-            10,
-            80
-        ))
-        conn.commit()
-    conn.close()
-
-seed_email_questions()
 
 # ============================================================
 # API ENDPOINT'LERİ
@@ -2086,94 +2020,3 @@ def get_speaking_interview(user=Depends(get_current_user_optional)):
             q["audio_url"] = f"{AUDIO_BASE_URL}/speaking_interview/{s['id']}/{q['id']}.mp3"
     return gate_pool(data, user)
 
-# --- Writing: Email (eski DB tabanlı tekil soru, kullanılmıyor ama korunuyor) ---
-@app.get("/api/writing/email/{question_id}")
-async def get_email_question(question_id: str):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM email_questions WHERE id = ?", (question_id,))
-    row = cursor.fetchone()
-    conn.close()
-    if not row:
-        raise HTTPException(status_code=404, detail="Question not found")
-    return {
-        "id": row["id"],
-        "scenario": row["scenario"],
-        "recipient": row["recipient"],
-        "subject": row["subject"],
-        "task_intro": row["task_intro"],
-        "tasks": json.loads(row["tasks"]),
-        "example_response": row["example_response"],
-        "time_limit": row["time_limit"],
-        "min_words": row["min_words"]
-    }
-
-@app.post("/api/writing/email/submit")
-async def submit_email(submission: EmailSubmission):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM email_questions WHERE id = ?", (submission.question_id,))
-    question = cursor.fetchone()
-    if not question:
-        conn.close()
-        raise HTTPException(status_code=404, detail="Question not found")
-    tasks = json.loads(question["tasks"])
-    
-    # Puanlama
-    feedback = []
-    score = 0.0
-    lower = submission.response.lower()
-    
-    # Kelime sayısı
-    if submission.word_count >= 100:
-        score += 1.5
-        feedback.append("Kelime sayisi mukemmel (100+)")
-    elif submission.word_count >= 80:
-        score += 1.0
-        feedback.append(f"Kelime sayisi yeterli ({submission.word_count})")
-    elif submission.word_count >= 60:
-        score += 0.5
-        feedback.append(f"Kelime sayisi biraz az ({submission.word_count})")
-    else:
-        feedback.append(f"Kelime sayisi yetersiz ({submission.word_count})")
-    
-    # Email yapısı
-    has_greeting = any(kw in lower for kw in ["dear", "hello", "hi", "to whom"])
-    has_closing = any(kw in lower for kw in ["sincerely", "regards", "thanks", "yours", "best"])
-    has_body = submission.word_count > 40
-    if has_greeting and has_closing and has_body:
-        score += 1.5
-        feedback.append("Email yapisi tam ve dogru")
-    elif (has_greeting or has_closing) and has_body:
-        score += 1.0
-        feedback.append("Email yapisi eksik")
-    elif has_body:
-        score += 0.5
-        feedback.append("Email yapisi eksik")
-    
-    # Görev tamamlama
-    task_score = 0
-    for task in tasks:
-        keywords = task.get("keywords", [])
-        matched = any(kw.lower() in lower for kw in keywords)
-        if matched:
-            task_score += 2 / len(tasks)
-            feedback.append(f"'{task['description'][:40]}...' tamamlandi")
-        else:
-            feedback.append(f"'{task['description'][:40]}...' eksik")
-    score += min(2, task_score)
-    score = round(min(5, score), 1)
-    
-    cursor.execute("""
-        INSERT INTO email_results (question_id, response, word_count, time_spent, score, feedback, submitted_at)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    """, (submission.question_id, submission.response, submission.word_count,
-          submission.time_spent, score, json.dumps(feedback), datetime.now().isoformat()))
-    conn.commit()
-    conn.close()
-    
-    return {
-        "score": score, "max_score": 5.0, "feedback": feedback,
-        "word_count": submission.word_count, "time_spent": submission.time_spent,
-        "submitted_at": datetime.now().isoformat()
-    }
