@@ -988,9 +988,16 @@ def _client_ip(request: Request) -> str:
     return request.client.host if request.client else "unknown"
 
 def _check_login_rate_limit(key: str):
+    _sweep_stale_rate_limit_entries()
     now = time.time()
     attempts = [t for t in _login_attempts[key] if now - t < LOGIN_ATTEMPT_WINDOW_SECONDS]
-    _login_attempts[key] = attempts
+    # Drop the key entirely once its window has fully expired rather than leaving an empty list
+    # behind -- otherwise the dict accumulates one permanent entry per distinct IP/email this
+    # process has ever seen, for as long as the server stays up.
+    if attempts:
+        _login_attempts[key] = attempts
+    else:
+        _login_attempts.pop(key, None)
     if len(attempts) >= LOGIN_ATTEMPT_MAX:
         retry_after_sec = int(LOGIN_ATTEMPT_WINDOW_SECONDS - (now - attempts[0]))
         raise HTTPException(
@@ -1020,7 +1027,29 @@ RESEND_VERIFICATION_WINDOW_SECONDS = 60 * 60
 RESEND_VERIFICATION_MAX = 5
 _resend_verification_attempts: dict = collections.defaultdict(list)
 
+# A key (IP, or IP+email) only ever gets its list re-trimmed when that *exact* key is checked
+# again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
+# so every rate-limited store is swept here too, not just the one being touched right now. Swept
+# at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _register_attempts, _forgot_password_attempts, _resend_verification_attempts]
+_last_rate_limit_sweep = 0.0
+
+def _sweep_stale_rate_limit_entries():
+    global _last_rate_limit_sweep
+    now = time.time()
+    if now - _last_rate_limit_sweep < 60:
+        return
+    _last_rate_limit_sweep = now
+    # Generous upper bound covers every window currently in use (longest is 1 hour) -- a key with
+    # nothing in the last hour can't still be actively rate-limiting anyone.
+    cutoff = 60 * 60
+    for store in _ALL_RATE_LIMIT_STORES:
+        stale_keys = [k for k, v in store.items() if not v or now - max(v) >= cutoff]
+        for k in stale_keys:
+            store.pop(k, None)
+
 def _check_and_consume_rate_limit(store: dict, key: str, window_seconds: int, max_attempts: int, what: str):
+    _sweep_stale_rate_limit_entries()
     now = time.time()
     attempts = [t for t in store[key] if now - t < window_seconds]
     if len(attempts) >= max_attempts:
