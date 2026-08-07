@@ -168,7 +168,18 @@ def _require_iyzico():
 ACTIVE_SUBSCRIPTION_STATUSES = {"ACTIVE"}
 
 def has_active_subscription(user) -> bool:
-    return (user["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES
+    return is_admin_user(user) or (user["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES
+
+# Comma-separated list of email addresses that get admin rights (full premium content access +
+# the /api/admin/* management endpoints), e.g. ADMIN_EMAILS=owner@mrreadyprep.com,helper@x.com.
+# No separate database column/migration needed -- admin status is just "does this account's email
+# match one on the list right now", checked fresh on every request, so granting/revoking an admin
+# is just an env var edit + redeploy rather than needing direct DB access. Whitespace around each
+# entry is stripped so a stray space after a comma doesn't silently exclude someone.
+ADMIN_EMAILS = {e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "").split(",") if e.strip()}
+
+def is_admin_user(user) -> bool:
+    return bool(user) and (user["email"] or "").strip().lower() in ADMIN_EMAILS
 
 # Item id (as it appears in each pool's "id" field) that stays free for every student regardless
 # of subscription status -- lets a non-subscriber try exactly one full exercise per category (plus
@@ -692,6 +703,11 @@ def get_current_user(authorization: Optional[str] = Header(None)):
         raise HTTPException(status_code=401, detail="Account no longer exists")
     return user
 
+def require_admin(user=Depends(get_current_user)):
+    if not is_admin_user(user):
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return user
+
 def get_current_user_optional(authorization: Optional[str] = Header(None)):
     """Like get_current_user, but returns None instead of raising when there's no/invalid token --
     used on content endpoints that must stay reachable by logged-out visitors (so the free sample
@@ -822,6 +838,7 @@ def user_profile_dict(user) -> dict:
         "email_verified": bool(user["email_verified"]),
         "subscription_status": user["subscription_status"],
         "has_premium": has_active_subscription(user),
+        "is_admin": is_admin_user(user),
         "subscription_current_period_end": (
             user["subscription_current_period_end"].isoformat()
             if isinstance(user["subscription_current_period_end"], datetime)
@@ -1242,6 +1259,77 @@ def resend_verification_email(user=Depends(get_current_user)):
 @app.get("/api/auth/me")
 def get_me(user=Depends(get_current_user)):
     return user_profile_dict(user)
+
+# ============================================================
+# ADMIN -- gated by require_admin (see ADMIN_EMAILS/is_admin_user near the top of this file).
+# Deliberately narrow in scope: view every registered account and manually grant/revoke premium
+# access (for support requests, comping an account, or testing) -- editing the actual practice/mock
+# content isn't included here, since that content lives in the JSON pool files shipped with the
+# backend rather than in the database, so it's edited by changing those files and redeploying.
+# ============================================================
+
+class AdminSetSubscriptionRequest(BaseModel):
+    action: str  # "grant" | "revoke"
+
+@app.get("/api/admin/users")
+def admin_list_users(admin=Depends(require_admin)):
+    conn = get_db()
+    rows = conn.execute(
+        "SELECT id, email, username, email_verified, subscription_status, created_at, current_streak "
+        "FROM users ORDER BY created_at DESC"
+    ).fetchall()
+    conn.close()
+    def row_is_admin(row):
+        return (row["email"] or "").strip().lower() in ADMIN_EMAILS
+    return [
+        {
+            "id": row["id"],
+            "email": row["email"],
+            "username": row["username"],
+            "email_verified": bool(row["email_verified"]),
+            "subscription_status": row["subscription_status"],
+            "has_premium": row_is_admin(row) or (row["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES,
+            "is_admin": row_is_admin(row),
+            "created_at": row["created_at"].isoformat() if isinstance(row["created_at"], datetime) else row["created_at"],
+            "current_streak": row["current_streak"],
+        }
+        for row in rows
+    ]
+
+@app.get("/api/admin/stats")
+def admin_stats(admin=Depends(require_admin)):
+    conn = get_db()
+    total_users = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"]
+    active_subs = conn.execute(
+        "SELECT COUNT(*) AS n FROM users WHERE subscription_status = 'ACTIVE'"
+    ).fetchone()["n"]
+    verified = conn.execute("SELECT COUNT(*) AS n FROM users WHERE email_verified = 1").fetchone()["n"]
+    week_ago = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
+    signups_7d = conn.execute(
+        "SELECT COUNT(*) AS n FROM users WHERE created_at >= ?", (week_ago,)
+    ).fetchone()["n"]
+    conn.close()
+    return {
+        "total_users": total_users,
+        "active_subscriptions": active_subs,
+        "verified_emails": verified,
+        "signups_last_7_days": signups_7d,
+    }
+
+@app.post("/api/admin/users/{user_id}/subscription")
+def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admin=Depends(require_admin)):
+    if data.action not in ("grant", "revoke"):
+        raise HTTPException(status_code=400, detail="action must be 'grant' or 'revoke'")
+    conn = get_db()
+    target = get_user_by_id(conn, user_id)
+    if not target:
+        conn.close()
+        raise HTTPException(status_code=404, detail="User not found")
+    new_status = "ACTIVE" if data.action == "grant" else None
+    conn.execute("UPDATE users SET subscription_status = ? WHERE id = ?", (new_status, user_id))
+    conn.commit()
+    conn.close()
+    return {"status": "success"}
 
 # ============================================================
 # SUBSCRIPTION (iyzico) -- see İYZİCO CONFIG block near the top of this file for env vars,

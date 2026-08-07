@@ -7596,6 +7596,100 @@ function useIsMobile(breakpoint = 860) {
 }
 
 // ─── App ──────────────────────────────────────────────────────────────────────
+// Admin-only screen (see require_admin/ADMIN_EMAILS in main.py -- gated purely by whether the
+// logged-in account's email is on that list, no separate role stored in the database). Scope is
+// deliberately narrow: see every registered account and manually grant/revoke premium access for
+// support or testing. Practice/mock content itself lives in JSON pool files shipped with the
+// backend, not the database, so there's nothing here to "edit" -- that's done by changing those
+// files and redeploying, same as every content update this app has ever had.
+function AdminPanel() {
+  const isMobile = useIsMobile()
+  const [stats, setStats] = useState(null)
+  const [users, setUsers] = useState(null)
+  const [busyId, setBusyId] = useState(null)
+  const [error, setError] = useState('')
+
+  const load = () => {
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/admin/stats`).then(r => r.json()),
+      apiFetch(`${BACKEND_URL}/api/admin/users`).then(r => r.json()),
+    ]).then(([s, u]) => { setStats(s); setUsers(Array.isArray(u) ? u : []) })
+      .catch(() => setError('Could not load admin data.'))
+  }
+  useEffect(load, [])
+
+  const setSubscription = (userId, action) => {
+    setBusyId(userId)
+    apiFetch(`${BACKEND_URL}/api/admin/users/${userId}/subscription`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action }),
+    }).then(r => r.json().then(data => ({ ok: r.ok, data })))
+      .then(({ ok, data }) => {
+        if (ok) { showToast(action === 'grant' ? 'Premium granted.' : 'Premium revoked.'); load() }
+        else showToast(data.detail || 'Action failed.', 'error')
+      })
+      .catch(() => showToast('Action failed.', 'error'))
+      .finally(() => setBusyId(null))
+  }
+
+  const statCard = (label, value) => (
+    <div style={{ background: '#fff', borderRadius: '12px', padding: '16px 18px', border: '0.5px solid #e1e4ed', flex: 1, minWidth: '140px' }}>
+      <div style={{ fontSize: '11px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', marginBottom: '4px' }}>{label}</div>
+      <div style={{ fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>{value}</div>
+    </div>
+  )
+
+  if (error) return <div style={{ padding: '20px', color: '#dc2626', fontSize: '13px' }}>{error}</div>
+  if (!stats || !users) return <div style={{ padding: '20px', color: '#616473', fontSize: '13px' }}>Loading admin data...</div>
+
+  return (
+    <div>
+      <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '18px' }}>
+        {statCard('Total users', stats.total_users)}
+        {statCard('Active subscriptions', stats.active_subscriptions)}
+        {statCard('Verified emails', stats.verified_emails)}
+        {statCard('Signups (7 days)', stats.signups_last_7_days)}
+      </div>
+      <div style={{ background: '#fff', borderRadius: '14px', border: '0.5px solid #e1e4ed', overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', minWidth: isMobile ? '640px' : 'auto' }}>
+            <thead>
+              <tr style={{ background: '#f9fafb', textAlign: 'left' }}>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Email</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Username</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Verified</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Premium</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Joined</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {users.map(u => (
+                <tr key={u.id} style={{ borderTop: '0.5px solid #f0f1f5' }}>
+                  <td style={{ padding: '10px 14px' }}>{u.email}{u.is_admin && <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: '700', color: '#701fa1' }}>ADMIN</span>}</td>
+                  <td style={{ padding: '10px 14px' }}>{u.username}</td>
+                  <td style={{ padding: '10px 14px' }}>{u.email_verified ? '✓' : '—'}</td>
+                  <td style={{ padding: '10px 14px' }}>{u.has_premium ? <span style={{ color: '#2ac56c', fontWeight: '700' }}>✓ Premium</span> : <span style={{ color: '#9ca3af' }}>Free</span>}</td>
+                  <td style={{ padding: '10px 14px', color: '#9ca3af' }}>{(u.created_at || '').slice(0, 10)}</td>
+                  <td style={{ padding: '10px 14px' }}>
+                    {u.is_admin ? (
+                      <span style={{ color: '#9ca3af', fontSize: '11px' }}>—</span>
+                    ) : u.has_premium ? (
+                      <button onClick={() => setSubscription(u.id, 'revoke')} disabled={busyId === u.id} style={{ background: '#fff', color: '#dc2626', border: '1px solid #fecaca', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Revoke</button>
+                    ) : (
+                      <button onClick={() => setSubscription(u.id, 'grant')} disabled={busyId === u.id} style={{ background: '#11162d', color: '#fff', border: 'none', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Grant</button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function App() {
   const isMobile = useIsMobile()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -7826,6 +7920,7 @@ function App() {
             {sb('progress', '📈', 'My Progress')}
             {sb('vocab', '📚', 'Vocabulary')}
             {sb('subscribe', userData.has_premium ? '⭐' : '💎', userData.has_premium ? 'Premium Active' : 'Upgrade to Premium')}
+            {userData.is_admin && sb('admin', '🛠️', 'Admin')}
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', borderTop: '1px solid #252a44', paddingTop: '4px' }}>
@@ -7883,6 +7978,7 @@ function App() {
               {currentTab === 'vocab' && '📚 Vocabulary'}
               {currentTab === 'settings' && '⚙️ Settings'}
               {currentTab === 'subscribe' && '💎 Premium'}
+              {currentTab === 'admin' && '🛠️ Admin'}
             </h2>
           </div>
         )}
@@ -8300,6 +8396,11 @@ function App() {
             </div>
           </div>
         )}
+
+        {/* ADMIN -- only reachable if the sidebar button rendered it in, which itself only
+            happens for userData.is_admin; the backend independently re-checks admin status on
+            every /api/admin/* call regardless, so this is a UI convenience, not the real gate. */}
+        {currentTab === 'admin' && userData.is_admin && <AdminPanel />}
 
       </div>
     </div>
