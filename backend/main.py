@@ -16,6 +16,7 @@ import sqlite3
 import time
 import collections
 import pathlib
+import threading
 import bcrypt
 import jwt
 import urllib.request
@@ -320,6 +321,11 @@ def _fix_audio_urls(obj):
 # added later must follow the same rule (build a new dict/list instead of assigning into the
 # cached one).
 _pool_cache: dict = {}
+# Guards the check-then-set below: without it, concurrent first-requests for the same not-yet-
+# cached pool could all see cache_key missing and each run the (redundant, if harmless) builder.
+# All the builders are pure/idempotent so this was never a correctness bug, just wasted CPU on a
+# cold-cache burst -- the lock just makes that burst deterministic (one builder call, not N).
+_pool_cache_lock = threading.Lock()
 
 def _load_json_pool(path):
     with open(path, "r", encoding="utf-8") as f:
@@ -327,7 +333,9 @@ def _load_json_pool(path):
 
 def _cached_pool(cache_key, builder):
     if cache_key not in _pool_cache:
-        _pool_cache[cache_key] = builder()
+        with _pool_cache_lock:
+            if cache_key not in _pool_cache:  # re-check: another thread may have won the race
+                _pool_cache[cache_key] = builder()
     return _pool_cache[cache_key]
 
 # ============================================================
@@ -745,11 +753,13 @@ def get_current_user(authorization: Optional[str] = Header(None)):
         raise HTTPException(status_code=401, detail="Invalid authentication token")
     user_id = int(payload["sub"])
     conn = get_db()
-    user = get_user_by_id(conn, user_id)
-    conn.close()
-    if not user:
-        raise HTTPException(status_code=401, detail="Account no longer exists")
-    return user
+    try:
+        user = get_user_by_id(conn, user_id)
+        if not user:
+            raise HTTPException(status_code=401, detail="Account no longer exists")
+        return user
+    finally:
+        conn.close()
 
 def require_admin(user=Depends(get_current_user)):
     if not is_admin_user(user):
@@ -1019,50 +1029,49 @@ def register(data: RegisterRequest, request: Request):
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
 
     conn = get_db()
-    existing = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
-    if existing:
+    try:
+        existing = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
+        if existing:
+            raise HTTPException(status_code=409, detail="An account with this email already exists")
+
+        is_first_user = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"] == 0
+
+        verification_token = secrets.token_urlsafe(32)
+        verification_expires = (datetime.now(timezone.utc) + timedelta(hours=24)).isoformat()
+
+        # Legacy pre-account testing data (if this is literally the first account ever created on
+        # this server) gets carried over as this user's starting profile values instead of defaults.
+        legacy = load_legacy_profile_settings() if is_first_user else {}
+        exam_date = legacy.get("exam_date", "")
+        target_score = float(legacy.get("target_score", 5.5))
+
+        insert_sql = """
+            INSERT INTO users (email, username, password_hash, email_verified, verification_token,
+                                verification_token_expires, exam_date, target_score)
+            VALUES (?, ?, ?, 0, ?, ?, ?, ?)
+        """
+        params = (email, username, hash_password(data.password), verification_token,
+                  verification_expires, exam_date, target_score)
+        if DATABASE_URL:
+            # Postgres has no cursor.lastrowid -- RETURNING id gets the new row's id instead.
+            cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
+            user_id = cursor.fetchone()["id"]
+        else:
+            cursor = conn.execute(insert_sql, params)
+            user_id = cursor.lastrowid
+        conn.commit()
+
+        if is_first_user:
+            migrate_legacy_data_to_user(user_id)
+
+        verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
+        send_verification_email(email, verify_link)
+
+        token = create_access_token(user_id)
+        user = get_user_by_id(conn, user_id)
+        return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
+    finally:
         conn.close()
-        raise HTTPException(status_code=409, detail="An account with this email already exists")
-
-    is_first_user = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"] == 0
-
-    verification_token = secrets.token_urlsafe(32)
-    verification_expires = (datetime.now(timezone.utc) + timedelta(hours=24)).isoformat()
-
-    # Legacy pre-account testing data (if this is literally the first account ever created on
-    # this server) gets carried over as this user's starting profile values instead of defaults.
-    legacy = load_legacy_profile_settings() if is_first_user else {}
-    exam_date = legacy.get("exam_date", "")
-    target_score = float(legacy.get("target_score", 5.5))
-
-    insert_sql = """
-        INSERT INTO users (email, username, password_hash, email_verified, verification_token,
-                            verification_token_expires, exam_date, target_score)
-        VALUES (?, ?, ?, 0, ?, ?, ?, ?)
-    """
-    params = (email, username, hash_password(data.password), verification_token,
-              verification_expires, exam_date, target_score)
-    if DATABASE_URL:
-        # Postgres has no cursor.lastrowid -- RETURNING id gets the new row's id instead.
-        cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
-        user_id = cursor.fetchone()["id"]
-    else:
-        cursor = conn.execute(insert_sql, params)
-        user_id = cursor.lastrowid
-    conn.commit()
-    conn.close()
-
-    if is_first_user:
-        migrate_legacy_data_to_user(user_id)
-
-    verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
-    send_verification_email(email, verify_link)
-
-    token = create_access_token(user_id)
-    conn = get_db()
-    user = get_user_by_id(conn, user_id)
-    conn.close()
-    return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
 
 ## --- Login brute-force protection ---
 # In-memory only (fine for a single Render instance; would need a shared store like Redis if this
@@ -1073,6 +1082,13 @@ def register(data: RegisterRequest, request: Request):
 LOGIN_ATTEMPT_WINDOW_SECONDS = 15 * 60
 LOGIN_ATTEMPT_MAX = 5
 _login_attempts: dict = collections.defaultdict(list)
+# Guards every read-modify-write below (all these stores' check-then-append sequences aren't
+# atomic on their own) -- without it, concurrent requests sharing a key (e.g. two tabs submitting
+# the login form at once) could each read the same pre-append state and let a couple more attempts
+# through than max_attempts before the limit kicks in. Low-stakes on its own (bcrypt's cost already
+# throttles brute force far more than this off-by-a-couple-attempts race ever could), but cheap to
+# close properly.
+_rate_limit_lock = threading.Lock()
 
 def _client_ip(request: Request) -> str:
     forwarded = request.headers.get("x-forwarded-for", "")
@@ -1082,24 +1098,26 @@ def _client_ip(request: Request) -> str:
 
 def _check_login_rate_limit(key: str):
     _sweep_stale_rate_limit_entries()
-    now = time.time()
-    attempts = [t for t in _login_attempts[key] if now - t < LOGIN_ATTEMPT_WINDOW_SECONDS]
-    # Drop the key entirely once its window has fully expired rather than leaving an empty list
-    # behind -- otherwise the dict accumulates one permanent entry per distinct IP/email this
-    # process has ever seen, for as long as the server stays up.
-    if attempts:
-        _login_attempts[key] = attempts
-    else:
-        _login_attempts.pop(key, None)
-    if len(attempts) >= LOGIN_ATTEMPT_MAX:
-        retry_after_sec = int(LOGIN_ATTEMPT_WINDOW_SECONDS - (now - attempts[0]))
-        raise HTTPException(
-            status_code=429,
-            detail=f"Too many failed login attempts. Please try again in {max(1, retry_after_sec // 60)} minute(s).",
-        )
+    with _rate_limit_lock:
+        now = time.time()
+        attempts = [t for t in _login_attempts[key] if now - t < LOGIN_ATTEMPT_WINDOW_SECONDS]
+        # Drop the key entirely once its window has fully expired rather than leaving an empty list
+        # behind -- otherwise the dict accumulates one permanent entry per distinct IP/email this
+        # process has ever seen, for as long as the server stays up.
+        if attempts:
+            _login_attempts[key] = attempts
+        else:
+            _login_attempts.pop(key, None)
+        if len(attempts) >= LOGIN_ATTEMPT_MAX:
+            retry_after_sec = int(LOGIN_ATTEMPT_WINDOW_SECONDS - (now - attempts[0]))
+            raise HTTPException(
+                status_code=429,
+                detail=f"Too many failed login attempts. Please try again in {max(1, retry_after_sec // 60)} minute(s).",
+            )
 
 def _record_failed_login(key: str):
-    _login_attempts[key].append(time.time())
+    with _rate_limit_lock:
+        _login_attempts[key].append(time.time())
 
 # --- Register / forgot-password brute-force protection ---
 # Unlike login (which only counts *failed* attempts, so a legitimate student who mistypes their
@@ -1132,28 +1150,32 @@ def _sweep_stale_rate_limit_entries():
     now = time.time()
     if now - _last_rate_limit_sweep < 60:
         return
-    _last_rate_limit_sweep = now
-    # Generous upper bound covers every window currently in use (longest is 1 hour) -- a key with
-    # nothing in the last hour can't still be actively rate-limiting anyone.
-    cutoff = 60 * 60
-    for store in _ALL_RATE_LIMIT_STORES:
-        stale_keys = [k for k, v in store.items() if not v or now - max(v) >= cutoff]
-        for k in stale_keys:
-            store.pop(k, None)
+    with _rate_limit_lock:
+        if now - _last_rate_limit_sweep < 60:  # re-check: another thread may have already swept
+            return
+        _last_rate_limit_sweep = now
+        # Generous upper bound covers every window currently in use (longest is 1 hour) -- a key
+        # with nothing in the last hour can't still be actively rate-limiting anyone.
+        cutoff = 60 * 60
+        for store in _ALL_RATE_LIMIT_STORES:
+            stale_keys = [k for k, v in store.items() if not v or now - max(v) >= cutoff]
+            for k in stale_keys:
+                store.pop(k, None)
 
 def _check_and_consume_rate_limit(store: dict, key: str, window_seconds: int, max_attempts: int, what: str):
     _sweep_stale_rate_limit_entries()
-    now = time.time()
-    attempts = [t for t in store[key] if now - t < window_seconds]
-    if len(attempts) >= max_attempts:
+    with _rate_limit_lock:
+        now = time.time()
+        attempts = [t for t in store[key] if now - t < window_seconds]
+        if len(attempts) >= max_attempts:
+            store[key] = attempts
+            retry_after_sec = int(window_seconds - (now - attempts[0]))
+            raise HTTPException(
+                status_code=429,
+                detail=f"Too many {what} attempts from this connection. Please try again in {max(1, retry_after_sec // 60)} minute(s).",
+            )
+        attempts.append(now)
         store[key] = attempts
-        retry_after_sec = int(window_seconds - (now - attempts[0]))
-        raise HTTPException(
-            status_code=429,
-            detail=f"Too many {what} attempts from this connection. Please try again in {max(1, retry_after_sec // 60)} minute(s).",
-        )
-    attempts.append(now)
-    store[key] = attempts
 
 @app.post("/api/auth/login")
 def login(data: LoginRequest, request: Request):
@@ -1161,14 +1183,16 @@ def login(data: LoginRequest, request: Request):
     rate_limit_key = f"{_client_ip(request)}:{email}"
     _check_login_rate_limit(rate_limit_key)
     conn = get_db()
-    user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
-    conn.close()
-    if not user or not verify_password(data.password, user["password_hash"]):
-        _record_failed_login(rate_limit_key)
-        raise HTTPException(status_code=401, detail="Incorrect email or password")
-    _login_attempts.pop(rate_limit_key, None)
-    token = create_access_token(user["id"])
-    return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
+    try:
+        user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
+        if not user or not verify_password(data.password, user["password_hash"]):
+            _record_failed_login(rate_limit_key)
+            raise HTTPException(status_code=401, detail="Incorrect email or password")
+        _login_attempts.pop(rate_limit_key, None)
+        token = create_access_token(user["id"])
+        return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
+    finally:
+        conn.close()
 
 @app.post("/api/auth/google")
 def google_login(data: GoogleLoginRequest):
@@ -1196,39 +1220,41 @@ def google_login(data: GoogleLoginRequest):
         raise HTTPException(status_code=401, detail="Google account is missing a verified email")
 
     conn = get_db()
-    user = conn.execute("SELECT * FROM users WHERE google_id = ?", (google_id,)).fetchone()
-    if not user:
-        user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
-        if user:
-            # Existing password-based account with the same email -- link this Google identity to
-            # it instead of creating a duplicate account.
-            conn.execute("UPDATE users SET google_id = ?, email_verified = 1 WHERE id = ?", (google_id, user["id"]))
-            conn.commit()
-            user = get_user_by_id(conn, user["id"])
-        else:
-            is_first_user = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"] == 0
-            legacy = load_legacy_profile_settings() if is_first_user else {}
-            exam_date = legacy.get("exam_date", "")
-            target_score = float(legacy.get("target_score", 5.5))
-            insert_sql = """
-                INSERT INTO users (email, username, google_id, email_verified, exam_date, target_score)
-                VALUES (?, ?, ?, 1, ?, ?)
-            """
-            params = (email, name, google_id, exam_date, target_score)
-            if DATABASE_URL:
-                cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
-                user_id = cursor.fetchone()["id"]
+    try:
+        user = conn.execute("SELECT * FROM users WHERE google_id = ?", (google_id,)).fetchone()
+        if not user:
+            user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
+            if user:
+                # Existing password-based account with the same email -- link this Google identity to
+                # it instead of creating a duplicate account.
+                conn.execute("UPDATE users SET google_id = ?, email_verified = 1 WHERE id = ?", (google_id, user["id"]))
+                conn.commit()
+                user = get_user_by_id(conn, user["id"])
             else:
-                cursor = conn.execute(insert_sql, params)
-                user_id = cursor.lastrowid
-            conn.commit()
-            if is_first_user:
-                migrate_legacy_data_to_user(user_id)
-            user = get_user_by_id(conn, user_id)
-    conn.close()
+                is_first_user = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"] == 0
+                legacy = load_legacy_profile_settings() if is_first_user else {}
+                exam_date = legacy.get("exam_date", "")
+                target_score = float(legacy.get("target_score", 5.5))
+                insert_sql = """
+                    INSERT INTO users (email, username, google_id, email_verified, exam_date, target_score)
+                    VALUES (?, ?, ?, 1, ?, ?)
+                """
+                params = (email, name, google_id, exam_date, target_score)
+                if DATABASE_URL:
+                    cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
+                    user_id = cursor.fetchone()["id"]
+                else:
+                    cursor = conn.execute(insert_sql, params)
+                    user_id = cursor.lastrowid
+                conn.commit()
+                if is_first_user:
+                    migrate_legacy_data_to_user(user_id)
+                user = get_user_by_id(conn, user_id)
 
-    token = create_access_token(user["id"])
-    return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
+        token = create_access_token(user["id"])
+        return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
+    finally:
+        conn.close()
 
 @app.post("/api/auth/forgot-password")
 def forgot_password(data: ForgotPasswordRequest, request: Request):
@@ -1238,43 +1264,45 @@ def forgot_password(data: ForgotPasswordRequest, request: Request):
     _check_and_consume_rate_limit(_forgot_password_attempts, f"{_client_ip(request)}:{email}", FORGOT_PASSWORD_ATTEMPT_WINDOW_SECONDS, FORGOT_PASSWORD_ATTEMPT_MAX, "password-reset")
     print(f"[password reset] forgot-password called for email={email!r}", flush=True)
     conn = get_db()
-    user = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
-    print(f"[password reset] user lookup result: {'FOUND id=' + str(user['id']) if user else 'NOT FOUND'}", flush=True)
-    if user:
-        reset_token = secrets.token_urlsafe(32)
-        reset_expires = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
-        conn.execute(
-            "UPDATE users SET password_reset_token = ?, password_reset_token_expires = ? WHERE id = ?",
-            (reset_token, reset_expires, user["id"]),
-        )
-        conn.commit()
-        reset_link = f"{FRONTEND_PUBLIC_URL}/?reset_token={reset_token}"
-        send_password_reset_email(email, reset_link)
-    conn.close()
-    return {"status": "success", "message": "If an account exists for that email, a reset link has been sent."}
+    try:
+        user = conn.execute("SELECT id FROM users WHERE email = ?", (email,)).fetchone()
+        print(f"[password reset] user lookup result: {'FOUND id=' + str(user['id']) if user else 'NOT FOUND'}", flush=True)
+        if user:
+            reset_token = secrets.token_urlsafe(32)
+            reset_expires = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+            conn.execute(
+                "UPDATE users SET password_reset_token = ?, password_reset_token_expires = ? WHERE id = ?",
+                (reset_token, reset_expires, user["id"]),
+            )
+            conn.commit()
+            reset_link = f"{FRONTEND_PUBLIC_URL}/?reset_token={reset_token}"
+            send_password_reset_email(email, reset_link)
+        return {"status": "success", "message": "If an account exists for that email, a reset link has been sent."}
+    finally:
+        conn.close()
 
 @app.post("/api/auth/reset-password")
 def reset_password(data: ResetPasswordRequest):
     if len(data.new_password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
     conn = get_db()
-    user = conn.execute(
-        "SELECT * FROM users WHERE password_reset_token = ?", (data.token,)
-    ).fetchone()
-    if not user:
+    try:
+        user = conn.execute(
+            "SELECT * FROM users WHERE password_reset_token = ?", (data.token,)
+        ).fetchone()
+        if not user:
+            raise HTTPException(status_code=400, detail="This reset link is invalid or has already been used")
+        expires = user["password_reset_token_expires"]
+        if not expires or _parse_db_datetime(expires) < datetime.now(timezone.utc):
+            raise HTTPException(status_code=400, detail="This reset link has expired. Please request a new one")
+        conn.execute(
+            "UPDATE users SET password_hash = ?, password_reset_token = NULL, password_reset_token_expires = NULL WHERE id = ?",
+            (hash_password(data.new_password), user["id"]),
+        )
+        conn.commit()
+        return {"status": "success", "message": "Password updated. You can now log in with your new password."}
+    finally:
         conn.close()
-        raise HTTPException(status_code=400, detail="This reset link is invalid or has already been used")
-    expires = user["password_reset_token_expires"]
-    if not expires or _parse_db_datetime(expires) < datetime.now(timezone.utc):
-        conn.close()
-        raise HTTPException(status_code=400, detail="This reset link has expired. Please request a new one")
-    conn.execute(
-        "UPDATE users SET password_hash = ?, password_reset_token = NULL, password_reset_token_expires = NULL WHERE id = ?",
-        (hash_password(data.new_password), user["id"]),
-    )
-    conn.commit()
-    conn.close()
-    return {"status": "success", "message": "Password updated. You can now log in with your new password."}
 
 @app.post("/api/auth/verify-email")
 def verify_email(data: VerifyEmailRequest):
@@ -1282,24 +1310,23 @@ def verify_email(data: VerifyEmailRequest):
     app is gated on email_verified, see gate_pool/require_premium_pool for the actual subscription
     gating), but it's what powers the 'Verified' badge and lets support trust a reported email."""
     conn = get_db()
-    user = conn.execute("SELECT * FROM users WHERE verification_token = ?", (data.token,)).fetchone()
-    if not user:
+    try:
+        user = conn.execute("SELECT * FROM users WHERE verification_token = ?", (data.token,)).fetchone()
+        if not user:
+            raise HTTPException(status_code=400, detail="This verification link is invalid or has already been used")
+        if user["email_verified"]:
+            return {"status": "success", "message": "Your email is already verified."}
+        expires = user["verification_token_expires"]
+        if not expires or _parse_db_datetime(expires) < datetime.now(timezone.utc):
+            raise HTTPException(status_code=400, detail="This verification link has expired. Please request a new one from your profile.")
+        conn.execute(
+            "UPDATE users SET email_verified = 1, verification_token = NULL, verification_token_expires = NULL WHERE id = ?",
+            (user["id"],),
+        )
+        conn.commit()
+        return {"status": "success", "message": "Your email has been verified."}
+    finally:
         conn.close()
-        raise HTTPException(status_code=400, detail="This verification link is invalid or has already been used")
-    if user["email_verified"]:
-        conn.close()
-        return {"status": "success", "message": "Your email is already verified."}
-    expires = user["verification_token_expires"]
-    if not expires or _parse_db_datetime(expires) < datetime.now(timezone.utc):
-        conn.close()
-        raise HTTPException(status_code=400, detail="This verification link has expired. Please request a new one from your profile.")
-    conn.execute(
-        "UPDATE users SET email_verified = 1, verification_token = NULL, verification_token_expires = NULL WHERE id = ?",
-        (user["id"],),
-    )
-    conn.commit()
-    conn.close()
-    return {"status": "success", "message": "Your email has been verified."}
 
 @app.post("/api/auth/resend-verification-email")
 def resend_verification_email(user=Depends(get_current_user)):
@@ -1309,15 +1336,17 @@ def resend_verification_email(user=Depends(get_current_user)):
     verification_token = secrets.token_urlsafe(32)
     verification_expires = (datetime.now(timezone.utc) + timedelta(hours=24)).isoformat()
     conn = get_db()
-    conn.execute(
-        "UPDATE users SET verification_token = ?, verification_token_expires = ? WHERE id = ?",
-        (verification_token, verification_expires, user["id"]),
-    )
-    conn.commit()
-    conn.close()
-    verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
-    send_verification_email(user["email"], verify_link)
-    return {"status": "success", "message": "Verification email sent. Please check your inbox."}
+    try:
+        conn.execute(
+            "UPDATE users SET verification_token = ?, verification_token_expires = ? WHERE id = ?",
+            (verification_token, verification_expires, user["id"]),
+        )
+        conn.commit()
+        verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
+        send_verification_email(user["email"], verify_link)
+        return {"status": "success", "message": "Verification email sent. Please check your inbox."}
+    finally:
+        conn.close()
 
 @app.get("/api/auth/me")
 def get_me(user=Depends(get_current_user)):
@@ -1337,75 +1366,84 @@ class AdminSetSubscriptionRequest(BaseModel):
 @app.get("/api/admin/users")
 def admin_list_users(admin=Depends(require_admin)):
     conn = get_db()
-    rows = conn.execute(
-        "SELECT id, email, username, email_verified, subscription_status, "
-        "iyzico_subscription_reference_code, created_at, current_streak FROM users ORDER BY created_at DESC"
-    ).fetchall()
-    conn.close()
-    def row_is_admin(row):
-        return (row["email"] or "").strip().lower() in ADMIN_EMAILS
-    return [
-        {
-            "id": row["id"],
-            "email": row["email"],
-            "username": row["username"],
-            "email_verified": bool(row["email_verified"]),
-            "subscription_status": row["subscription_status"],
-            "has_premium": row_is_admin(row) or (row["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES,
-            # A real, iyzico-billed subscription -- the admin panel's Revoke button is disabled
-            # for these (see admin_set_subscription below) since silently flipping subscription_status
-            # here would desync from what iyzico is actually still charging the card for. A paying
-            # customer's access should only ever be ended through the real cancel flow.
-            "has_billed_subscription": bool(row["iyzico_subscription_reference_code"]),
-            "is_admin": row_is_admin(row),
-            "created_at": row["created_at"].isoformat() if isinstance(row["created_at"], datetime) else row["created_at"],
-            "current_streak": row["current_streak"],
-        }
-        for row in rows
-    ]
+    try:
+        rows = conn.execute(
+            "SELECT id, email, username, email_verified, subscription_status, "
+            "iyzico_subscription_reference_code, created_at, current_streak FROM users ORDER BY created_at DESC"
+        ).fetchall()
+        def row_is_admin(row):
+            return (row["email"] or "").strip().lower() in ADMIN_EMAILS
+        return [
+            {
+                "id": row["id"],
+                "email": row["email"],
+                "username": row["username"],
+                "email_verified": bool(row["email_verified"]),
+                "subscription_status": row["subscription_status"],
+                "has_premium": row_is_admin(row) or (row["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES,
+                # A real, iyzico-billed subscription -- the admin panel's Revoke button is disabled
+                # for these (see admin_set_subscription below) since silently flipping subscription_status
+                # here would desync from what iyzico is actually still charging the card for. A paying
+                # customer's access should only ever be ended through the real cancel flow.
+                "has_billed_subscription": bool(row["iyzico_subscription_reference_code"]),
+                "is_admin": row_is_admin(row),
+                "created_at": row["created_at"].isoformat() if isinstance(row["created_at"], datetime) else row["created_at"],
+                "current_streak": row["current_streak"],
+            }
+            for row in rows
+        ]
+    finally:
+        conn.close()
 
 @app.get("/api/admin/stats")
 def admin_stats(admin=Depends(require_admin)):
     conn = get_db()
-    total_users = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"]
-    active_subs = conn.execute(
-        "SELECT COUNT(*) AS n FROM users WHERE subscription_status = 'ACTIVE'"
-    ).fetchone()["n"]
-    verified = conn.execute("SELECT COUNT(*) AS n FROM users WHERE email_verified = 1").fetchone()["n"]
-    week_ago = (datetime.now(timezone.utc) - timedelta(days=7)).isoformat()
-    signups_7d = conn.execute(
-        "SELECT COUNT(*) AS n FROM users WHERE created_at >= ?", (week_ago,)
-    ).fetchone()["n"]
-    conn.close()
-    return {
-        "total_users": total_users,
-        "active_subscriptions": active_subs,
-        "verified_emails": verified,
-        "signups_last_7_days": signups_7d,
-    }
+    try:
+        total_users = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"]
+        active_subs = conn.execute(
+            "SELECT COUNT(*) AS n FROM users WHERE subscription_status = 'ACTIVE'"
+        ).fetchone()["n"]
+        verified = conn.execute("SELECT COUNT(*) AS n FROM users WHERE email_verified = 1").fetchone()["n"]
+        week_ago_dt = datetime.now(timezone.utc) - timedelta(days=7)
+        # Postgres' TIMESTAMP column casts the param before comparing, so ISO format works there.
+        # sqlite's created_at is stored as 'YYYY-MM-DD HH:MM:SS' (via CURRENT_TIMESTAMP) and compares
+        # lexicographically -- an ISO string with a 'T' separator and +00:00 offset sorts *after* any
+        # real row (since 'T' > ' '), so every comparison was silently false. Match sqlite's own format.
+        week_ago = week_ago_dt.isoformat() if DATABASE_URL else week_ago_dt.strftime("%Y-%m-%d %H:%M:%S")
+        signups_7d = conn.execute(
+            "SELECT COUNT(*) AS n FROM users WHERE created_at >= ?", (week_ago,)
+        ).fetchone()["n"]
+        return {
+            "total_users": total_users,
+            "active_subscriptions": active_subs,
+            "verified_emails": verified,
+            "signups_last_7_days": signups_7d,
+        }
+    finally:
+        conn.close()
 
 @app.post("/api/admin/users/{user_id}/subscription")
 def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admin=Depends(require_admin)):
     if data.action not in ("grant", "revoke"):
         raise HTTPException(status_code=400, detail="action must be 'grant' or 'revoke'")
     conn = get_db()
-    target = get_user_by_id(conn, user_id)
-    if not target:
+    try:
+        target = get_user_by_id(conn, user_id)
+        if not target:
+            raise HTTPException(status_code=404, detail="User not found")
+        if data.action == "revoke" and target["iyzico_subscription_reference_code"]:
+            raise HTTPException(
+                status_code=400,
+                detail="This account has a real iyzico subscription -- revoking here would only hide "
+                       "their access while iyzico keeps charging their card. Cancel the subscription "
+                       "itself (from their account's Settings, or via /api/subscription/cancel) instead.",
+            )
+        new_status = "ACTIVE" if data.action == "grant" else None
+        conn.execute("UPDATE users SET subscription_status = ? WHERE id = ?", (new_status, user_id))
+        conn.commit()
+        return {"status": "success"}
+    finally:
         conn.close()
-        raise HTTPException(status_code=404, detail="User not found")
-    if data.action == "revoke" and target["iyzico_subscription_reference_code"]:
-        conn.close()
-        raise HTTPException(
-            status_code=400,
-            detail="This account has a real iyzico subscription -- revoking here would only hide "
-                   "their access while iyzico keeps charging their card. Cancel the subscription "
-                   "itself (from their account's Settings, or via /api/subscription/cancel) instead.",
-        )
-    new_status = "ACTIVE" if data.action == "grant" else None
-    conn.execute("UPDATE users SET subscription_status = ? WHERE id = ?", (new_status, user_id))
-    conn.commit()
-    conn.close()
-    return {"status": "success"}
 
 # ============================================================
 # SUBSCRIPTION (iyzico) -- see İYZİCO CONFIG block near the top of this file for env vars,
@@ -1509,6 +1547,12 @@ def get_checkout_result(token: str, user=Depends(get_current_user)):
     if result.get("status") != "success":
         raise HTTPException(status_code=400, detail=result.get("errorMessage", "Could not retrieve checkout result"))
     data = result.get("data") or {}
+    # Security: this checkout token was issued for a specific user (conversationId was set to
+    # that user's id at checkout-init time). Without this check, any authenticated user who gets
+    # hold of a still-valid token belonging to someone else (leaked via the redirect URL, browser
+    # history, referrer, etc.) could bind that person's payment onto their own account.
+    if data.get("conversationId") != str(user["id"]):
+        raise HTTPException(status_code=403, detail="This checkout token does not belong to the current user.")
     status = data.get("subscriptionStatus")
     period_end_ms = data.get("endDate")
     period_end = (
@@ -1602,89 +1646,99 @@ def get_dashboard(user=Depends(get_current_user)):
     # compute_section_band) -- a section with zero attempts shows band 1.0, the scale's floor,
     # rather than a placeholder that makes an untouched section look already-practiced.
     conn = get_db()
-    updates = {}
-    for section in ("reading", "listening", "writing", "speaking"):
-        updates[f"{section}_score"] = compute_section_band(conn, user["id"], section)
-    streak, week_activity = compute_streak_and_week_activity(conn, user["id"])
-    updates["current_streak"] = streak
-    set_clause = ", ".join(f"{k} = ?" for k in updates)
-    conn.execute(f"UPDATE users SET {set_clause} WHERE id = ?", (*updates.values(), user["id"]))
-    conn.commit()
-    fresh_user = get_user_by_id(conn, user["id"])
-    # "mock_overall" is only ever saved once per completed Full Mock Test (all 4 sections) -- see
-    # saveResult('mock_overall', ...) on the frontend -- so its most recent saved_at is exactly
-    # "when did this student last finish a full test", which the Dashboard's mock-test card shows.
-    last_mock_row = conn.execute(
-        "SELECT saved_at FROM attempt_results WHERE user_id = ? AND category = 'mock_overall' "
-        "ORDER BY saved_at DESC LIMIT 1",
-        (user["id"],),
-    ).fetchone()
-    conn.close()
-    result = user_profile_dict(fresh_user)
-    result["week_activity"] = week_activity
-    result["last_mock_test_at"] = (
-        last_mock_row["saved_at"].isoformat() if isinstance(last_mock_row["saved_at"], datetime)
-        else last_mock_row["saved_at"]
-    ) if last_mock_row else None
-    return result
+    try:
+        updates = {}
+        for section in ("reading", "listening", "writing", "speaking"):
+            updates[f"{section}_score"] = compute_section_band(conn, user["id"], section)
+        streak, week_activity = compute_streak_and_week_activity(conn, user["id"])
+        updates["current_streak"] = streak
+        set_clause = ", ".join(f"{k} = ?" for k in updates)
+        conn.execute(f"UPDATE users SET {set_clause} WHERE id = ?", (*updates.values(), user["id"]))
+        conn.commit()
+        fresh_user = get_user_by_id(conn, user["id"])
+        # "mock_overall" is only ever saved once per completed Full Mock Test (all 4 sections) -- see
+        # saveResult('mock_overall', ...) on the frontend -- so its most recent saved_at is exactly
+        # "when did this student last finish a full test", which the Dashboard's mock-test card shows.
+        last_mock_row = conn.execute(
+            "SELECT saved_at FROM attempt_results WHERE user_id = ? AND category = 'mock_overall' "
+            "ORDER BY saved_at DESC LIMIT 1",
+            (user["id"],),
+        ).fetchone()
+        result = user_profile_dict(fresh_user)
+        result["week_activity"] = week_activity
+        result["last_mock_test_at"] = (
+            last_mock_row["saved_at"].isoformat() if isinstance(last_mock_row["saved_at"], datetime)
+            else last_mock_row["saved_at"]
+        ) if last_mock_row else None
+        return result
+    finally:
+        conn.close()
 
 @app.post("/api/profile/update")
 def update_profile(data: DashboardData, user=Depends(get_current_user)):
     conn = get_db()
-    fields = {"username": data.username, "target_score": data.target_score}
-    if data.reading_target is not None:
-        fields["reading_target"] = data.reading_target
-    if data.listening_target is not None:
-        fields["listening_target"] = data.listening_target
-    if data.writing_target is not None:
-        fields["writing_target"] = data.writing_target
-    if data.speaking_target is not None:
-        fields["speaking_target"] = data.speaking_target
-    set_clause = ", ".join(f"{k} = ?" for k in fields)
-    conn.execute(f"UPDATE users SET {set_clause} WHERE id = ?", (*fields.values(), user["id"]))
-    conn.commit()
-    conn.close()
-    return {"status": "success", "message": "Profile updated successfully"}
+    try:
+        fields = {"username": data.username, "target_score": data.target_score}
+        if data.reading_target is not None:
+            fields["reading_target"] = data.reading_target
+        if data.listening_target is not None:
+            fields["listening_target"] = data.listening_target
+        if data.writing_target is not None:
+            fields["writing_target"] = data.writing_target
+        if data.speaking_target is not None:
+            fields["speaking_target"] = data.speaking_target
+        set_clause = ", ".join(f"{k} = ?" for k in fields)
+        conn.execute(f"UPDATE users SET {set_clause} WHERE id = ?", (*fields.values(), user["id"]))
+        conn.commit()
+        return {"status": "success", "message": "Profile updated successfully"}
+    finally:
+        conn.close()
 
 @app.post("/api/profile/exam-date")
 def update_exam_date(data: ExamDateUpdate, user=Depends(get_current_user)):
     conn = get_db()
-    conn.execute("UPDATE users SET exam_date = ? WHERE id = ?", (data.exam_date, user["id"]))
-    conn.commit()
-    conn.close()
-    return {"status": "success", "exam_date": data.exam_date}
+    try:
+        conn.execute("UPDATE users SET exam_date = ? WHERE id = ?", (data.exam_date, user["id"]))
+        conn.commit()
+        return {"status": "success", "exam_date": data.exam_date}
+    finally:
+        conn.close()
 
 # --- Vocabulary ---
 @app.get("/api/vocab")
 def get_vocab(user=Depends(get_current_user)):
     conn = get_db()
-    learned_ids = {row["word_id"] for row in conn.execute(
-        "SELECT word_id FROM vocab_learned WHERE user_id = ?", (user["id"],)
-    ).fetchall()}
-    conn.close()
-    return [{**w, "learned": w["id"] in learned_ids} for w in vocab_words]
+    try:
+        learned_ids = {row["word_id"] for row in conn.execute(
+            "SELECT word_id FROM vocab_learned WHERE user_id = ?", (user["id"],)
+        ).fetchall()}
+        return [{**w, "learned": w["id"] in learned_ids} for w in vocab_words]
+    finally:
+        conn.close()
 
 @app.post("/api/vocab/toggle/{word_id}")
 def toggle_vocab(word_id: int, user=Depends(get_current_user)):
     if not any(w["id"] == word_id for w in vocab_words):
         return {"status": "error", "message": "Word not found"}
     conn = get_db()
-    already = conn.execute(
-        "SELECT 1 FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id)
-    ).fetchone()
-    if already:
-        conn.execute("DELETE FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id))
-        now_learned = False
-    else:
-        conn.execute("INSERT INTO vocab_learned (user_id, word_id) VALUES (?, ?)", (user["id"], word_id))
-        now_learned = True
-    learned_count = conn.execute(
-        "SELECT COUNT(*) AS n FROM vocab_learned WHERE user_id = ?", (user["id"],)
-    ).fetchone()["n"]
-    conn.execute("UPDATE users SET vocab_level = ? WHERE id = ?", (1 + learned_count // 5, user["id"]))
-    conn.commit()
-    conn.close()
-    return {"status": "success", "learned": now_learned}
+    try:
+        already = conn.execute(
+            "SELECT 1 FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id)
+        ).fetchone()
+        if already:
+            conn.execute("DELETE FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id))
+            now_learned = False
+        else:
+            conn.execute("INSERT INTO vocab_learned (user_id, word_id) VALUES (?, ?)", (user["id"], word_id))
+            now_learned = True
+        learned_count = conn.execute(
+            "SELECT COUNT(*) AS n FROM vocab_learned WHERE user_id = ?", (user["id"],)
+        ).fetchone()["n"]
+        conn.execute("UPDATE users SET vocab_level = ? WHERE id = ?", (1 + learned_count // 5, user["id"]))
+        conn.commit()
+        return {"status": "success", "learned": now_learned}
+    finally:
+        conn.close()
 
 # --- Reading: Complete the Words ---
 @app.get("/api/reading/complete-the-words")
@@ -1702,27 +1756,31 @@ def get_ridl_passages(user=Depends(get_current_user_optional)):
 def save_ridl_result(data: RIDLResult, user=Depends(get_current_user)):
     pct = round((data.score / data.total) * 100) if data.total > 0 else 0
     conn = get_db()
-    conn.execute("""
-        INSERT INTO ridl_results (user_id, passage_id, score, total, pct)
-        VALUES (?, ?, ?, ?, ?)
-        ON CONFLICT(user_id, passage_id) DO UPDATE SET
-            score=excluded.score,
-            total=excluded.total,
-            pct=excluded.pct,
-            saved_at=CURRENT_TIMESTAMP
-    """, (user["id"], data.passage_id, data.score, data.total, pct))
-    conn.commit()
-    conn.close()
-    return {"status": "success"}
+    try:
+        conn.execute("""
+            INSERT INTO ridl_results (user_id, passage_id, score, total, pct)
+            VALUES (?, ?, ?, ?, ?)
+            ON CONFLICT(user_id, passage_id) DO UPDATE SET
+                score=excluded.score,
+                total=excluded.total,
+                pct=excluded.pct,
+                saved_at=CURRENT_TIMESTAMP
+        """, (user["id"], data.passage_id, data.score, data.total, pct))
+        conn.commit()
+        return {"status": "success"}
+    finally:
+        conn.close()
 
 @app.get("/api/reading/results")
 def get_ridl_results(user=Depends(get_current_user)):
     conn = get_db()
-    rows = conn.execute(
-        "SELECT passage_id, score, total, pct FROM ridl_results WHERE user_id = ?", (user["id"],)
-    ).fetchall()
-    conn.close()
-    return {str(row["passage_id"]): {"score": row["score"], "total": row["total"], "pct": row["pct"]} for row in rows}
+    try:
+        rows = conn.execute(
+            "SELECT passage_id, score, total, pct FROM ridl_results WHERE user_id = ?", (user["id"],)
+        ).fetchall()
+        return {str(row["passage_id"]): {"score": row["score"], "total": row["total"], "pct": row["pct"]} for row in rows}
+    finally:
+        conn.close()
 
 # --- Unified progress tracking (every exercise type + mock tests) ---
 CATEGORY_LABELS = {
@@ -1808,72 +1866,78 @@ def compute_section_band(conn, user_id, section):
 def save_attempt_result(data: AttemptResult, user=Depends(get_current_user)):
     pct = round((data.score / data.total) * 100) if data.total > 0 else 0
     conn = get_db()
-    conn.execute("""
-        INSERT INTO attempt_results (user_id, category, item_id, label, score, total, pct)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-    """, (user["id"], data.category, data.item_id, data.label, data.score, data.total, pct))
-    conn.commit()
-    conn.close()
-    return {"status": "success"}
+    try:
+        conn.execute("""
+            INSERT INTO attempt_results (user_id, category, item_id, label, score, total, pct)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        """, (user["id"], data.category, data.item_id, data.label, data.score, data.total, pct))
+        conn.commit()
+        return {"status": "success"}
+    finally:
+        conn.close()
 
 @app.get("/api/results/history")
 def get_results_history(category: str = None, limit: int = 300, user=Depends(get_current_user)):
     conn = get_db()
-    if category:
-        rows = conn.execute(
-            "SELECT * FROM attempt_results WHERE category = ? AND user_id = ? ORDER BY saved_at DESC LIMIT ?",
-            (category, user["id"], limit),
-        ).fetchall()
-    else:
-        rows = conn.execute(
-            "SELECT * FROM attempt_results WHERE user_id = ? ORDER BY saved_at DESC LIMIT ?",
-            (user["id"], limit),
-        ).fetchall()
-    conn.close()
-    return [dict(row) for row in rows]
+    try:
+        if category:
+            rows = conn.execute(
+                "SELECT * FROM attempt_results WHERE category = ? AND user_id = ? ORDER BY saved_at DESC LIMIT ?",
+                (category, user["id"], limit),
+            ).fetchall()
+        else:
+            rows = conn.execute(
+                "SELECT * FROM attempt_results WHERE user_id = ? ORDER BY saved_at DESC LIMIT ?",
+                (user["id"], limit),
+            ).fetchall()
+        return [dict(row) for row in rows]
+    finally:
+        conn.close()
 
 @app.get("/api/results/summary")
 def get_results_summary(user=Depends(get_current_user)):
     conn = get_db()
-    rows = conn.execute("""
-        SELECT category,
-               COUNT(*) AS attempts,
-               AVG(pct) AS avg_pct,
-               MAX(pct) AS best_pct,
-               SUM(score) AS total_score,
-               SUM(total) AS total_possible,
-               MAX(saved_at) AS last_attempt
-        FROM attempt_results
-        WHERE user_id = ?
-        GROUP BY category
-    """, (user["id"],)).fetchall()
-    overall = conn.execute("""
-        SELECT COUNT(*) AS attempts, AVG(pct) AS avg_pct, MAX(saved_at) AS last_attempt
-        FROM attempt_results
-        WHERE user_id = ?
-    """, (user["id"],)).fetchone()
-    conn.close()
+    try:
+        rows = conn.execute("""
+            SELECT category,
+                   COUNT(*) AS attempts,
+                   AVG(pct) AS avg_pct,
+                   MAX(pct) AS best_pct,
+                   SUM(score) AS total_score,
+                   SUM(total) AS total_possible,
+                   MAX(saved_at) AS last_attempt
+            FROM attempt_results
+            WHERE user_id = ?
+            GROUP BY category
+        """, (user["id"],)).fetchall()
+        overall = conn.execute("""
+            SELECT COUNT(*) AS attempts, AVG(pct) AS avg_pct, MAX(saved_at) AS last_attempt
+            FROM attempt_results
+            WHERE user_id = ?
+        """, (user["id"],)).fetchone()
 
-    by_category = {}
-    for row in rows:
-        cat = row["category"]
-        by_category[cat] = {
-            "label": CATEGORY_LABELS.get(cat, cat),
-            "attempts": row["attempts"],
-            "avg_pct": round(row["avg_pct"]) if row["avg_pct"] is not None else 0,
-            "best_pct": row["best_pct"] or 0,
-            "total_score": row["total_score"],
-            "total_possible": row["total_possible"],
-            "last_attempt": row["last_attempt"],
+        by_category = {}
+        for row in rows:
+            cat = row["category"]
+            by_category[cat] = {
+                "label": CATEGORY_LABELS.get(cat, cat),
+                "attempts": row["attempts"],
+                "avg_pct": round(row["avg_pct"]) if row["avg_pct"] is not None else 0,
+                "best_pct": row["best_pct"] or 0,
+                "total_score": row["total_score"],
+                "total_possible": row["total_possible"],
+                "last_attempt": row["last_attempt"],
+            }
+        return {
+            "by_category": by_category,
+            "overall": {
+                "attempts": overall["attempts"] or 0,
+                "avg_pct": round(overall["avg_pct"]) if overall["avg_pct"] is not None else 0,
+                "last_attempt": overall["last_attempt"],
+            },
         }
-    return {
-        "by_category": by_category,
-        "overall": {
-            "attempts": overall["attempts"] or 0,
-            "avg_pct": round(overall["avg_pct"]) if overall["avg_pct"] is not None else 0,
-            "last_attempt": overall["last_attempt"],
-        },
-    }
+    finally:
+        conn.close()
 
 # --- Reading: Academic Passage ---
 @app.get("/api/reading/academic-passage")
@@ -2004,20 +2068,22 @@ def get_mock_seen_ids(user=Depends(get_current_user)):
     pool's seen rows and reports it as fresh again, so the pool wraps around and starts repeating
     from the top instead of leaving the student with an ever-shrinking draw."""
     conn = get_db()
-    result = {}
-    for pool, all_ids in ((p, _pool_all_ids(p)) for p in MOCK_POOL_FILES):
-        rows = conn.execute(
-            "SELECT item_id FROM seen_pool_items WHERE user_id = ? AND pool = ?",
-            (user["id"], pool),
-        ).fetchall()
-        seen_ids = {row["item_id"] for row in rows}
-        if all_ids and all_ids.issubset(seen_ids):
-            conn.execute("DELETE FROM seen_pool_items WHERE user_id = ? AND pool = ?", (user["id"], pool))
-            seen_ids = set()
-        result[pool] = sorted(seen_ids)
-    conn.commit()
-    conn.close()
-    return result
+    try:
+        result = {}
+        for pool, all_ids in ((p, _pool_all_ids(p)) for p in MOCK_POOL_FILES):
+            rows = conn.execute(
+                "SELECT item_id FROM seen_pool_items WHERE user_id = ? AND pool = ?",
+                (user["id"], pool),
+            ).fetchall()
+            seen_ids = {row["item_id"] for row in rows}
+            if all_ids and all_ids.issubset(seen_ids):
+                conn.execute("DELETE FROM seen_pool_items WHERE user_id = ? AND pool = ?", (user["id"], pool))
+                seen_ids = set()
+            result[pool] = sorted(seen_ids)
+        conn.commit()
+        return result
+    finally:
+        conn.close()
 
 class MarkSeenRequest(BaseModel):
     pool: str
@@ -2031,15 +2097,17 @@ def mark_mock_seen(data: MarkSeenRequest, user=Depends(get_current_user)):
     if data.pool not in MOCK_POOL_FILES or not data.item_ids:
         return {"status": "success"}
     conn = get_db()
-    for item_id in data.item_ids:
-        conn.execute(
-            "INSERT INTO seen_pool_items (user_id, pool, item_id) VALUES (?, ?, ?) "
-            "ON CONFLICT(user_id, pool, item_id) DO NOTHING",
-            (user["id"], data.pool, str(item_id)),
-        )
-    conn.commit()
-    conn.close()
-    return {"status": "success"}
+    try:
+        for item_id in data.item_ids:
+            conn.execute(
+                "INSERT INTO seen_pool_items (user_id, pool, item_id) VALUES (?, ?, ?) "
+                "ON CONFLICT(user_id, pool, item_id) DO NOTHING",
+                (user["id"], data.pool, str(item_id)),
+            )
+        conn.commit()
+        return {"status": "success"}
+    finally:
+        conn.close()
 
 def _build_fixed_test(path):
     data = _load_json_pool(path)

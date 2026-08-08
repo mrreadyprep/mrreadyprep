@@ -284,16 +284,19 @@ function CompleteTheWords({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/reading/complete-the-words`).then(r => r.json()),
       fetchLatestResults('ctw'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       setExercises(data)
       const mapped = {}
       data.forEach((ex, i) => { const row = results[String(ex.id)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -1181,17 +1184,20 @@ function AcademicPassage({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/reading/academic-passage`).then(r => r.json()),
       fetchLatestResults('ap'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setPassages(list)
       const mapped = {}
       list.forEach(p => { const row = results[String(p.id)]; if (row) mapped[p.id] = { score: row.score, total: row.total } })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ textAlign: 'center', padding: 60, color: '#701fa1' }}>Loading passages…</div>
@@ -1829,17 +1835,20 @@ function ListeningP1({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/listening/choose-response`).then(r => r.json()),
       fetchLatestResults('listening_p1'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setExercises(list)
       const mapped = {}
       list.forEach((ex, i) => { const row = results[String(ex.id ?? i)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -2116,17 +2125,20 @@ function ListeningP2({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/listening/conversation`).then(r => r.json()),
       fetchLatestResults('listening_p2'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setConversations(list)
       const mapped = {}
       list.forEach((ex, i) => { const row = results[String(ex.id ?? i)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -2403,17 +2415,20 @@ function ListeningP3({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/listening/announcement`).then(r => r.json()),
       fetchLatestResults('listening_p3'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setAnnouncements(list)
       const mapped = {}
       list.forEach((ex, i) => { const row = results[String(ex.id ?? i)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -2693,17 +2708,20 @@ function ListeningP4({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/listening/academic-talk`).then(r => r.json()),
       fetchLatestResults('listening_p4'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setTalks(list)
       const mapped = {}
       list.forEach((ex, i) => { const row = results[String(ex.id ?? i)]; if (row) mapped[i] = { correct: row.score, total: row.total } })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -3068,10 +3086,12 @@ function BuildASentence({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/writing/build-a-sentence`).then(r => r.json()),
       fetchLatestResults('bas'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setItems(list)
       const setCount = Math.ceil(list.length / BUILD_SENTENCE_SET_SIZE)
@@ -3079,7 +3099,8 @@ function BuildASentence({ onBack }) {
       for (let i = 0; i < setCount; i++) { const row = results[String(i)]; if (row) mapped[i] = { correct: row.score, total: row.total } }
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -3422,17 +3443,20 @@ function WriteEmail({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/writing/email`).then(r => r.json()),
       fetchLatestResults('email'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setItems(list)
       const mapped = {}
       list.forEach((it, i) => { const row = results[String(it.id ?? i)]; if (row) mapped[i] = row.score })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -3778,17 +3802,20 @@ function AcademicDiscussion({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/writing/academic-discussion`).then(r => r.json()),
       fetchLatestResults('disc'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setItems(list)
       const mapped = {}
       list.forEach((it, i) => { const row = results[String(it.id ?? i)]; if (row) mapped[i] = row.score })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -5266,17 +5293,20 @@ function ListenRepeat({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/speaking/listen-and-repeat`).then(r => r.json()),
       fetchLatestResults('speaking_lr'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setItems(list)
       const mapped = {}
       list.forEach((it, i) => { const row = results[String(it.id ?? i)]; if (row) mapped[i] = row.score })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -5523,17 +5553,20 @@ function TakeInterview({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/speaking/interview`).then(r => r.json()),
       fetchLatestResults('speaking_interview'),
     ]).then(([data, results]) => {
+      if (cancelled) return
       const list = Array.isArray(data) ? data : []
       setItems(list)
       const mapped = {}
       list.forEach((it, i) => { const row = results[String(it.id ?? i)]; if (row) mapped[i] = row.score })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
@@ -5619,16 +5652,19 @@ function ReadInDailyLife({ onBack }) {
   const [scores, setScores] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/reading/read-in-daily-life`).then(r => r.json()),
       apiFetch(`${BACKEND_URL}/api/reading/results`).then(r => r.json()),
     ]).then(([passageData, resultData]) => {
+      if (cancelled) return
       setPassages(passageData)
       const mapped = {}
       passageData.forEach((p, i) => { const key = String(p.id); if (resultData[key]) mapped[i] = resultData[key] })
       setScores(mapped)
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   const handleComplete = (score, total) => {
@@ -6647,6 +6683,10 @@ function FullMockTest({ onBack, hasPremium = false }) {
     // screen's pilot button), not here — this effect only loads the dynamic pools every mock
     // test has used up to now, so the existing "Start Full Mock Test" flow is unaffected.
     if (fixedTestId) return
+    // Guard against a stale response landing after fixedTestId changes again (e.g. the student
+    // backs out to the intro screen and picks a different fixed test before this in-flight fetch
+    // resolves) -- without it, the older response could overwrite state set by the newer request.
+    let cancelled = false
     Promise.all([
       // All Reading/Listening/Writing/Speaking content for the mock test comes from its own
       // /api/mock/* endpoints — pools written specifically for the mock test that never overlap
@@ -6669,9 +6709,11 @@ function FullMockTest({ onBack, hasPremium = false }) {
       // fetch fails, so a network hiccup here never blocks starting the test.
       apiFetch(`${BACKEND_URL}/api/mock/seen-ids`).then(r => r.json()).catch(() => ({})),
     ]).then(([ctw, ridl, ap, car, conv, announce, at, bas, email, disc, lr, interview, seenIds]) => {
+      if (cancelled) return
       setPools(filterPoolsBySeen({ ctw, ridl, ap, car, conv, announce, at, bas, email, disc, lr, interview }, seenIds))
       setPhase('intro')
     })
+    return () => { cancelled = true }
   }, [fixedTestId])
 
   // Persists this attempt's band score(s) into the unified progress table as soon as the
@@ -6690,6 +6732,21 @@ function FullMockTest({ onBack, hasPremium = false }) {
     const basResult = s.writing.find(w => w.kind === 'bas') || { correct: 0, total: 10 }
     const emailResult = s.writing.find(w => w.kind === 'email') || { score: 0 }
     const discResult = s.writing.find(w => w.kind === 'disc') || { score: 0 }
+    // Per ETS's scoring method (same reasoning as Speaking below), each of the three graded
+    // writing tasks is averaged on its own first, then combined with EQUAL (1/3 each) weight for
+    // the band shown here -- not pooled into one raw-points ratio, which would let Build-a-
+    // Sentence's larger item count (its `total` varies per attempt) over-weight the band relative
+    // to Email/Discussion (fixed 5 pts each).
+    const basPct = basResult.total ? basResult.correct / basResult.total : 0
+    const emailPct = (emailResult.score || 0) / 5
+    const discPct = (discResult.score || 0) / 5
+    const writingTaskPct = (basPct + emailPct + discPct) / 3
+    // Raw points earned / points possible across every graded item -- same "sum of what was
+    // actually solved" unit used for practice exercises, so mock attempts blend into the
+    // dashboard's average correctly instead of counting as one flat band value per attempt.
+    // (This pooled sum is only used for the dashboard aggregate via saveResult below, not for the
+    // band shown on this results screen -- same split as Speaking's speakingPts/speakingMax vs.
+    // speakingTaskPct just below.)
     const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
     const writingMax = basResult.total + 5 + 5
     const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
@@ -6705,7 +6762,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
 
     const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
     const listeningBand = pctToBand(listeningRaw.total ? listeningRaw.correct / listeningRaw.total : 0, 'listening')
-    const writingBand = pctToBand(writingMax ? writingPts / writingMax : 0, 'writing')
+    const writingBand = pctToBand(writingTaskPct, 'writing')
     const speakingBand = pctToBand(speakingTaskPct, 'speaking')
     const overallBand = computeOverallBand(readingBand, listeningBand, writingBand, speakingBand)
 
@@ -7052,6 +7109,14 @@ function FullMockTest({ onBack, hasPremium = false }) {
     const discResult = s.writing.find(w => w.kind === 'disc') || { score: 0 }
     const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
     const writingMax = basResult.total + 5 + 5
+    // Per ETS's scoring method (same reasoning as Speaking below), each of the three graded
+    // writing tasks is averaged on its own first, then combined with EQUAL (1/3 each) weight —
+    // not pooled into one raw-points ratio, which would let Build-a-Sentence's item count
+    // over-weight the band relative to Email/Discussion (fixed 5 pts each).
+    const basPct = basResult.total ? basResult.correct / basResult.total : 0
+    const emailPct = (emailResult.score || 0) / 5
+    const discPct = (discResult.score || 0) / 5
+    const writingTaskPct = (basPct + emailPct + discPct) / 3
     const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
     const interviewResult = s.speaking.find(w => w.kind === 'interview') || { items: [] }
     const speakingPts = lrResult.items.reduce((a, x) => a + (x.score || 0), 0) + interviewResult.items.reduce((a, x) => a + (x.score || 0), 0)
@@ -7065,7 +7130,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
 
     const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
     const listeningBand = pctToBand(listeningRaw.total ? listeningRaw.correct / listeningRaw.total : 0, 'listening')
-    const writingBand = pctToBand(writingMax ? writingPts / writingMax : 0, 'writing')
+    const writingBand = pctToBand(writingTaskPct, 'writing')
     const speakingBand = pctToBand(speakingTaskPct, 'speaking')
     const overall = computeOverallBand(readingBand, listeningBand, writingBand, speakingBand)
 
@@ -7217,14 +7282,17 @@ function ProgressScreen({ onBack }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/results/summary`).then(r => r.json()),
       apiFetch(`${BACKEND_URL}/api/results/history?limit=30`).then(r => r.json()),
     ]).then(([summaryData, historyData]) => {
+      if (cancelled) return
       setSummary(summaryData)
       setHistory(Array.isArray(historyData) ? historyData : [])
       setLoading(false)
-    }).catch(() => setLoading(false))
+    }).catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading your progress...</div>
@@ -8456,12 +8524,14 @@ function AuthGate() {
   const [authState, setAuthState] = useState('checking') // 'checking' | 'out' | 'in'
 
   useEffect(() => {
+    let cancelled = false
     const token = getAuthToken()
     if (!token) { setAuthState('out'); return }
     apiFetch(`${BACKEND_URL}/api/auth/me`)
       .then(res => { if (!res.ok) throw new Error(); return res.json() })
-      .then(() => setAuthState('in'))
-      .catch(() => { clearAuthToken(); setAuthState('out') })
+      .then(() => { if (!cancelled) setAuthState('in') })
+      .catch(() => { if (!cancelled) { clearAuthToken(); setAuthState('out') } })
+    return () => { cancelled = true }
   }, [])
 
   // Consumes the "verify your email" link's ?verify_token=... query param regardless of whether
