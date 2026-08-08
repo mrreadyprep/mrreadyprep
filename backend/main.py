@@ -995,6 +995,16 @@ SPEAKING_INTERVIEW_FILE = pathlib.Path(__file__).parent / "speaking_interview_1.
 # API ENDPOINT'LERİ
 # ============================================================
 
+# Lightweight keep-alive target -- Render's free web-service tier spins the instance down after
+# 15 minutes with no incoming HTTP traffic, and the next real visitor then eats a 50+ second cold
+# start. Rather than paying for an always-on instance, an external monitor (e.g. UptimeRobot, free
+# for this) can be pointed at this endpoint on a ~10-minute interval to keep the instance from
+# ever going idle long enough to sleep. Deliberately does no DB/file work -- just confirms the
+# process is up -- so it's cheap enough to hit constantly without adding real load.
+@app.get("/healthz")
+def healthz():
+    return {"status": "ok"}
+
 # --- Auth ---
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
