@@ -1488,7 +1488,10 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
 // backend/generate_audio_intro.py) instead of each browser's own inconsistent built-in TTS voice.
 // Returns true once the narration has finished (or a fallback elapses if the file is missing/
 // blocked), which callers use to gate mounting the main <AudioPlayer>.
-function useIntroNarration(url) {
+// `resetKey` is optional: pass something that changes per-item (e.g. a question index) when the
+// SAME line should be re-announced multiple times within one mounted component -- otherwise the
+// effect only depends on `url`, which is enough for callers that fully remount per item.
+function useIntroNarration(url, resetKey) {
   const [announced, setAnnounced] = useState(false)
   useEffect(() => {
     setAnnounced(false)
@@ -1552,7 +1555,7 @@ function useIntroNarration(url) {
       if (fallbackTimer) clearTimeout(fallbackTimer)
       cleanupListeners()
     }
-  }, [url])
+  }, [url, resetKey])
   return announced
 }
 
@@ -1856,7 +1859,7 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.questions.length} question${ex.questions.length === 1 ? '' : 's'}`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(ex.questions[0] && ex.questions[0].audio_url); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -1883,6 +1886,10 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
+  // Re-announced before every question (not just once) since each one is its own short
+  // conversation the student needs to be cued for, matching the spoken instruction used before
+  // Conversation/Announcement/Academic Talk audio.
+  const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/listen_choose_response.mp3`, currentQ)
 
   const questions = exercise.questions
   const q = questions[currentQ]
@@ -1944,13 +1951,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
 
   const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
   const isLowTime = timeLeft <= 5
-  const handleNext = () => {
-    // Prime the *next* question's audio synchronously, inside this real click handler, so
-    // Safari treats the upcoming autoplay as gesture-backed instead of relying on a timer.
-    const nextQ = questions[currentQ + 1]
-    if (nextQ && nextQ.audio_url) primeAudio(nextQ.audio_url)
-    advance(selected)
-  }
+  const handleNext = () => advance(selected)
   const score = answers.filter(a => a.isCorrect).length
 
   // Score screen
@@ -2064,7 +2065,9 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
         {/* Left: speaker avatar + audio */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
           <SpeakerAvatar gender={q.speaker} seed={q.id} />
-          <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px' }}><AudioPlayer url={q.audio_url} autoPlayKey={currentQ} /></div>
+          <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px' }}>
+            {announced && <AudioPlayer url={q.audio_url} autoPlayKey={currentQ} />}
+          </div>
           {!q.audio_url && (
             <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px', fontSize: '14px', color: '#1a1a1a', fontStyle: 'italic', textAlign: 'center', lineHeight: '1.5' }}>"{q.transcript}"</div>
           )}
