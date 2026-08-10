@@ -620,6 +620,16 @@ def init_db():
         )
     """)
 
+    # Personal "save for later" list -- separate from `vocab_learned`. A student can star a word
+    # they want to revisit regardless of whether they've marked it as learned yet.
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS vocab_starred (
+            user_id INTEGER NOT NULL,
+            word_id INTEGER NOT NULL,
+            PRIMARY KEY (user_id, word_id)
+        )
+    """)
+
     # RIDL sonuçları tablosu
     conn.execute("""
         CREATE TABLE IF NOT EXISTS ridl_results (
@@ -1705,6 +1715,15 @@ def update_exam_date(data: ExamDateUpdate, user=Depends(get_current_user)):
         conn.close()
 
 # --- Vocabulary ---
+class VocabLearnedUpdate(BaseModel):
+    learned: bool
+
+def _set_vocab_level(conn, user_id):
+    learned_count = conn.execute(
+        "SELECT COUNT(*) AS n FROM vocab_learned WHERE user_id = ?", (user_id,)
+    ).fetchone()["n"]
+    conn.execute("UPDATE users SET vocab_level = ? WHERE id = ?", (1 + learned_count // 5, user_id))
+
 @app.get("/api/vocab")
 def get_vocab(user=Depends(get_current_user)):
     conn = get_db()
@@ -1712,7 +1731,10 @@ def get_vocab(user=Depends(get_current_user)):
         learned_ids = {row["word_id"] for row in conn.execute(
             "SELECT word_id FROM vocab_learned WHERE user_id = ?", (user["id"],)
         ).fetchall()}
-        return [{**w, "learned": w["id"] in learned_ids} for w in vocab_words]
+        starred_ids = {row["word_id"] for row in conn.execute(
+            "SELECT word_id FROM vocab_starred WHERE user_id = ?", (user["id"],)
+        ).fetchall()}
+        return [{**w, "learned": w["id"] in learned_ids, "starred": w["id"] in starred_ids} for w in vocab_words]
     finally:
         conn.close()
 
@@ -1731,12 +1753,52 @@ def toggle_vocab(word_id: int, user=Depends(get_current_user)):
         else:
             conn.execute("INSERT INTO vocab_learned (user_id, word_id) VALUES (?, ?)", (user["id"], word_id))
             now_learned = True
-        learned_count = conn.execute(
-            "SELECT COUNT(*) AS n FROM vocab_learned WHERE user_id = ?", (user["id"],)
-        ).fetchone()["n"]
-        conn.execute("UPDATE users SET vocab_level = ? WHERE id = ?", (1 + learned_count // 5, user["id"]))
+        _set_vocab_level(conn, user["id"])
         conn.commit()
         return {"status": "success", "learned": now_learned}
+    finally:
+        conn.close()
+
+# Idempotent set (as opposed to /toggle above) -- used by Flashcard Mode's "I knew it" / "Still
+# learning" buttons, which need to assert a specific state rather than flip whatever it currently
+# is (the student may re-see the same card more than once in a session).
+@app.post("/api/vocab/set/{word_id}")
+def set_vocab_learned(word_id: int, data: VocabLearnedUpdate, user=Depends(get_current_user)):
+    if not any(w["id"] == word_id for w in vocab_words):
+        return {"status": "error", "message": "Word not found"}
+    conn = get_db()
+    try:
+        if data.learned:
+            already = conn.execute(
+                "SELECT 1 FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id)
+            ).fetchone()
+            if not already:
+                conn.execute("INSERT INTO vocab_learned (user_id, word_id) VALUES (?, ?)", (user["id"], word_id))
+        else:
+            conn.execute("DELETE FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id))
+        _set_vocab_level(conn, user["id"])
+        conn.commit()
+        return {"status": "success", "learned": data.learned}
+    finally:
+        conn.close()
+
+@app.post("/api/vocab/star/{word_id}")
+def toggle_vocab_star(word_id: int, user=Depends(get_current_user)):
+    if not any(w["id"] == word_id for w in vocab_words):
+        return {"status": "error", "message": "Word not found"}
+    conn = get_db()
+    try:
+        already = conn.execute(
+            "SELECT 1 FROM vocab_starred WHERE user_id = ? AND word_id = ?", (user["id"], word_id)
+        ).fetchone()
+        if already:
+            conn.execute("DELETE FROM vocab_starred WHERE user_id = ? AND word_id = ?", (user["id"], word_id))
+            now_starred = False
+        else:
+            conn.execute("INSERT INTO vocab_starred (user_id, word_id) VALUES (?, ?)", (user["id"], word_id))
+            now_starred = True
+        conn.commit()
+        return {"status": "success", "starred": now_starred}
     finally:
         conn.close()
 

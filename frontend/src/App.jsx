@@ -7931,6 +7931,353 @@ function AdminPanel() {
   )
 }
 
+// ─── Vocabulary ─────────────────────────────────────────────────────────────
+// Redesigned after researching how Magoosh, BestMyTest, and TestGlider structure their TOEFL
+// vocabulary tools: difficulty-based decks (BestMyTest), a real flip-card study mode with
+// self-report + lightweight resurfacing of "still learning" cards (Magoosh), a self-test quiz
+// mode, and a personal starred/save-for-later list (both BestMyTest's "My List" and TestGlider's
+// "My List").
+const VOCAB_DECKS = [
+  { key: 'easy', label: 'Easy', color: '#16a34a' },
+  { key: 'medium', label: 'Medium', color: '#2563eb' },
+  { key: 'hard', label: 'Hard', color: '#dc2626' },
+]
+
+function vocabGrade(pct) {
+  return pct >= 90 ? { label: 'Excellent!', color: '#2a9d5c', emoji: '🏆' }
+       : pct >= 70 ? { label: 'Good job!', color: '#701fa1', emoji: '🎉' }
+       : pct >= 50 ? { label: 'Keep going', color: '#e07b00', emoji: '💪' }
+       :             { label: 'Practice more', color: '#c0392b', emoji: '📚' }
+}
+
+const VOCAB_TYPE_COLORS = { VERB: '#2563eb', ADJECTIVE: '#16a34a', NOUN: '#701fa1' }
+
+// Full-screen flashcard study session for one deck. Cards marked "Still learning" are requeued
+// at the end of THIS session (the `session` array simply grows), so they resurface again before
+// the deck is considered done -- a simple, honest version of the resurfacing that Magoosh's
+// spaced-repetition algorithm does. "I knew it" marks the word learned server-side immediately.
+function VocabFlashcards({ deckLabel, words, onExit, onSetLearned }) {
+  const isMobile = useIsMobile()
+  const [session, setSession] = useState(() => shuffleArray(words).map(w => w.id))
+  const [ptr, setPtr] = useState(0)
+  const [flipped, setFlipped] = useState(false)
+  const [masteredCount, setMasteredCount] = useState(0)
+  const wordsById = useMemo(() => Object.fromEntries(words.map(w => [w.id, w])), [words])
+
+  if (!words.length) {
+    return (
+      <ExamScreen topLeft={<TestPillButton onClick={onExit}>Exit</TestPillButton>} section="VOCABULARY" contentStyle={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>No words in this deck yet.</div>
+      </ExamScreen>
+    )
+  }
+
+  const done = ptr >= session.length
+  const current = done ? null : wordsById[session[ptr]]
+
+  const answer = (knewIt) => {
+    if (!current) return
+    onSetLearned(current.id, knewIt)
+    if (knewIt) {
+      setMasteredCount(c => c + 1)
+      setPtr(p => p + 1)
+    } else {
+      setSession(prev => [...prev, current.id])
+      setPtr(p => p + 1)
+    }
+    setFlipped(false)
+  }
+
+  const restart = () => { setSession(shuffleArray(words).map(w => w.id)); setPtr(0); setMasteredCount(0); setFlipped(false) }
+
+  if (done) {
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 10, fontFamily: 'sans-serif' }}>
+        <div style={{ background: '#fff', borderRadius: '16px', padding: '48px 56px', textAlign: 'center', maxWidth: '420px', width: '90%', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+          <div style={{ fontSize: '52px', marginBottom: '12px' }}>🎉</div>
+          <div style={{ fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Deck complete!</div>
+          <div style={{ fontSize: '13px', color: '#888', marginBottom: '24px' }}>{deckLabel} · {words.length} words</div>
+          <div style={{ fontSize: '15px', color: '#616473', marginBottom: '28px' }}>You marked <b style={{ color: '#2a9d5c' }}>{masteredCount}</b> of {words.length} words as known this session.</div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button onClick={restart} style={{ flex: 1, padding: '13px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Study Again</button>
+            <button onClick={onExit} style={{ flex: 1, padding: '13px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Back</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onExit}>Exit</TestPillButton>}
+      section="VOCABULARY"
+      questionLabel={`${deckLabel} · Card ${ptr + 1} of ${session.length}`}
+      contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
+    >
+      <div onClick={() => setFlipped(f => !f)} style={{ width: '100%', maxWidth: '560px', minHeight: isMobile ? '240px' : '300px', background: flipped ? '#f4f6fa' : '#fff', border: '2px solid #e1e4ed', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '36px', cursor: 'pointer', boxSizing: 'border-box', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+        {!flipped ? (
+          <>
+            <span style={{ background: (VOCAB_TYPE_COLORS[current.type] || '#616473') + '1a', color: VOCAB_TYPE_COLORS[current.type] || '#616473', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', marginBottom: '18px' }}>{current.type}</span>
+            <div style={{ fontSize: isMobile ? '28px' : '36px', fontWeight: '800', color: '#1a1a1a' }}>{current.word}</div>
+            <div style={{ fontSize: '13px', color: '#9ca3af', marginTop: '24px' }}>Tap to reveal meaning</div>
+          </>
+        ) : (
+          <>
+            <div style={{ fontSize: isMobile ? '20px' : '24px', fontWeight: '700', color: '#1a1a1a', marginBottom: '14px' }}>{current.word}</div>
+            <div style={{ fontSize: '16px', color: '#333', marginBottom: '14px' }}>{current.meaning}</div>
+            {current.example && <div style={{ fontSize: '14px', color: '#7b809a', fontStyle: 'italic' }}>&quot;{current.example}&quot;</div>}
+          </>
+        )}
+      </div>
+      <div style={{ display: 'flex', gap: '12px', marginTop: '28px', width: '100%', maxWidth: '560px' }}>
+        <button onClick={() => answer(false)} style={{ flex: 1, padding: '14px', background: '#fff', color: '#c07000', border: '1.5px solid #f5d08a', borderRadius: '10px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Still learning</button>
+        <button onClick={() => answer(true)} style={{ flex: 1, padding: '14px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>I knew it ✓</button>
+      </div>
+    </ExamScreen>
+  )
+}
+
+// Self-test multiple-choice quiz over one deck (capped at 15 words per round so it stays a quick
+// check-yourself session rather than a slog). Distractor meanings come from the same deck when
+// it has enough words, otherwise from the full word list (e.g. a small Starred deck).
+function VocabQuiz({ deckLabel, words, allWords, onExit }) {
+  const pool = words.length >= 4 ? words : allWords
+  const buildOrder = () => shuffleArray(words).slice(0, Math.min(words.length, 15))
+  const [order, setOrder] = useState(buildOrder)
+  const [qIdx, setQIdx] = useState(0)
+  const [selected, setSelected] = useState(null)
+  const [answers, setAnswers] = useState([])
+  const [done, setDone] = useState(false)
+
+  if (!words.length) {
+    return (
+      <ExamScreen topLeft={<TestPillButton onClick={onExit}>Exit</TestPillButton>} section="VOCABULARY" contentStyle={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center', color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>No words in this deck yet.</div>
+      </ExamScreen>
+    )
+  }
+
+  const totalQ = order.length
+  const current = order[qIdx]
+  const options = useMemo(() => {
+    if (!current) return []
+    const distractorPool = pool.filter(w => w.id !== current.id)
+    const distractors = shuffleArray(distractorPool).slice(0, Math.min(3, distractorPool.length)).map(w => w.meaning)
+    return shuffleArray([current.meaning, ...distractors])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current])
+
+  const handleNext = () => {
+    const isCorrect = selected === current.meaning
+    const newAnswers = [...answers, { wordId: current.id, isCorrect }]
+    setAnswers(newAnswers)
+    setSelected(null)
+    if (qIdx + 1 >= totalQ) setDone(true)
+    else setQIdx(i => i + 1)
+  }
+
+  const restart = () => { setOrder(buildOrder()); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }
+  const score = answers.filter(a => a.isCorrect).length
+
+  if (done) {
+    const pct = Math.round((score / totalQ) * 100)
+    const grade = vocabGrade(pct)
+    return (
+      <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', zIndex: 10, fontFamily: 'sans-serif' }}>
+        <div style={{ background: '#fff', borderRadius: '16px', padding: '48px 56px', textAlign: 'center', maxWidth: '420px', width: '90%', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }}>
+          <div style={{ fontSize: '52px', marginBottom: '12px' }}>{grade.emoji}</div>
+          <div style={{ fontSize: '26px', fontWeight: '700', color: grade.color, marginBottom: '8px' }}>{grade.label}</div>
+          <div style={{ fontSize: '13px', color: '#888', marginBottom: '24px' }}>{deckLabel} Quiz</div>
+          <div style={{ fontSize: '52px', fontWeight: '800', color: '#1a1a1a', lineHeight: '1' }}>{score}<span style={{ fontSize: '20px', color: '#aaa', fontWeight: '400' }}>/{totalQ}</span></div>
+          <div style={{ margin: '20px 0 8px', height: '8px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
+          <div style={{ fontSize: '13px', color: '#777', marginBottom: '32px' }}>{pct}% correct</div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button onClick={restart} style={{ flex: 1, padding: '13px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Try Again</button>
+            <button onClick={onExit} style={{ flex: 1, padding: '13px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Back</button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <ExamScreen
+      topLeft={<TestPillButton onClick={onExit}>Exit</TestPillButton>}
+      topRight={selected !== null && <TestPillButton onClick={handleNext}>{qIdx + 1 >= totalQ ? 'Finish' : 'Next'}</TestPillButton>}
+      section="VOCABULARY"
+      questionLabel={`${deckLabel} Quiz · Question ${qIdx + 1} of ${totalQ}`}
+      contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+    >
+      <span style={{ background: (VOCAB_TYPE_COLORS[current.type] || '#616473') + '1a', color: VOCAB_TYPE_COLORS[current.type] || '#616473', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', marginBottom: '14px' }}>{current.type}</span>
+      <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 32px' }}>What does <span style={{ color: '#701fa1' }}>{current.word}</span> mean?</h1>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', maxWidth: '560px', width: '100%' }}>
+        {options.map((opt, i) => {
+          const isCorrectOpt = opt === current.meaning
+          const isChosen = opt === selected
+          const showResult = selected !== null
+          return (
+            <div key={i} onClick={() => { if (selected === null) setSelected(opt) }}
+              style={{ padding: '16px 20px', borderRadius: '10px', border: showResult ? (isCorrectOpt ? '2px solid #2a9d5c' : isChosen ? '2px solid #d94040' : '1.5px solid #e1e4ed') : '1.5px solid #e1e4ed', background: showResult && isCorrectOpt ? '#edfbf3' : showResult && isChosen ? '#fff2f2' : '#fff', cursor: showResult ? 'default' : 'pointer', fontSize: '15px', color: '#1a1a1a', transition: 'all 0.15s' }}>
+              {opt}
+              {showResult && isCorrectOpt && <span style={{ float: 'right', color: '#2a9d5c', fontWeight: '700', fontSize: '13px' }}>✓</span>}
+              {showResult && isChosen && !isCorrectOpt && <span style={{ float: 'right', color: '#d94040', fontWeight: '700', fontSize: '13px' }}>✗</span>}
+            </div>
+          )
+        })}
+      </div>
+    </ExamScreen>
+  )
+}
+
+// Inline (non-full-screen) browsable list for one deck -- the flip-to-reveal card list the
+// Vocabulary tab used to show for all 210 words at once, now scoped to a single deck, plus a
+// star toggle and a Starred filter.
+function VocabList({ deckLabel, words, onBack, onSetLearned, onToggleStar }) {
+  const [filter, setFilter] = useState('all')
+  const [flippedCards, setFlippedCards] = useState({})
+  const filtered = words.filter(item => filter === 'all' ? true : filter === 'learned' ? item.learned : filter === 'starred' ? item.starred : !item.learned)
+  const filterLabels = { all: 'All', learned: 'Learned', unlearned: 'Not Learned', starred: 'Starred' }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+      <button onClick={onBack} style={{ alignSelf: 'flex-start', background: 'none', border: 'none', color: '#701fa1', fontWeight: '700', fontSize: '13px', cursor: 'pointer', padding: 0 }}>← Back to decks</button>
+      <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>{deckLabel}</div>
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        {Object.keys(filterLabels).map(f => (
+          <button key={f} onClick={() => setFilter(f)} style={{ padding: '7px 14px', borderRadius: '8px', border: '1px solid #d1d5db', backgroundColor: filter === f ? '#701fa1' : '#fff', color: filter === f ? '#fff' : '#616473', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}>
+            {filterLabels[f]}
+          </button>
+        ))}
+      </div>
+      {filtered.map(item => {
+        const vibrantColors = ['#701fa1', '#2563eb', '#dc2626', '#16a34a', '#ea580c', '#0891b2', '#c026d3', '#ca8a04']
+        const wordColor = vibrantColors[item.id % vibrantColors.length]
+        const difficultyStyles = { easy: { bg: '#dcfce7', text: '#15803d' }, medium: { bg: '#dbeafe', text: '#1e40af' }, hard: { bg: '#fce7f3', text: '#9d174d' } }
+        const difficultyBorderColors = { easy: '#16a34a', medium: '#2563eb', hard: '#dc2626' }
+        const borderColor = difficultyBorderColors[item.difficulty] || difficultyBorderColors.medium
+        const diffStyle = difficultyStyles[item.difficulty] || difficultyStyles.medium
+        const isFlipped = !!flippedCards[item.id]
+        return (
+          <div key={item.id} onClick={() => setFlippedCards(prev => ({ ...prev, [item.id]: !prev[item.id] }))}
+            style={{ backgroundColor: isFlipped ? diffStyle.bg : '#fff', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + borderColor, borderRadius: '12px', padding: '18px', minHeight: '140px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', opacity: item.learned ? 0.6 : 1, position: 'relative', transition: 'background-color 0.2s ease' }}>
+            <div style={{ position: 'absolute', top: '14px', right: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span onClick={(e) => { e.stopPropagation(); onToggleStar(item.id) }} style={{ fontSize: '18px', cursor: 'pointer', lineHeight: 1 }} title={item.starred ? 'Remove from starred' : 'Save for later'}>{item.starred ? '⭐' : '☆'}</span>
+              <span style={{ backgroundColor: '#fff', color: borderColor, padding: '4px 10px', borderRadius: '999px', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>{item.difficulty?.toUpperCase()}</span>
+            </div>
+            {!isFlipped ? (
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                  <span style={{ width: '10px', height: '10px', background: wordColor, borderRadius: '4px', display: 'inline-block' }} />
+                  <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
+                </div>
+                <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
+                <div style={{ fontSize: '13px', color: '#616473' }}>Tap to reveal meaning</div>
+              </div>
+            ) : (
+              <div>
+                <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
+                <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
+                {item.example && <p style={{ marginTop: '8px', fontSize: '12px', color: '#7b809a' }}>&quot;{item.example}&quot;</p>}
+              </div>
+            )}
+            <button onClick={(e) => { e.stopPropagation(); onSetLearned(item.id, !item.learned) }}
+              style={{ backgroundColor: item.learned ? '#2ac56c' : '#fff', color: item.learned ? '#fff' : '#11162d', border: '1px solid ' + (item.learned ? '#2ac56c' : '#d1d5db'), padding: '6px 10px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '11px', marginTop: '10px', alignSelf: 'flex-start' }}>
+              {item.learned ? '✅ Learned' : 'Mark as Learned'}
+            </button>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+// Deck hub -- the Vocabulary tab's home screen. Renders inline within the shared sidebar shell
+// (like other list/selection screens); Flashcards and Quiz modes below take over the full screen
+// the same way exercise-taking screens do.
+function Vocabulary() {
+  const [words, setWords] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [view, setView] = useState('hub') // 'hub' | 'flashcards' | 'quiz' | 'list'
+  const [activeDeckKey, setActiveDeckKey] = useState(null)
+
+  useEffect(() => {
+    apiFetch(`${BACKEND_URL}/api/vocab`).then(res => res.json())
+      .then(data => { setWords(Array.isArray(data) ? data : []); setLoading(false) })
+      .catch(() => setLoading(false))
+  }, [])
+
+  const setLearned = (id, learned) => {
+    setWords(prev => prev.map(w => w.id === id ? { ...w, learned } : w))
+    apiFetch(`${BACKEND_URL}/api/vocab/set/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ learned }) }).catch(() => {})
+  }
+
+  const toggleStar = (id) => {
+    setWords(prev => prev.map(w => w.id === id ? { ...w, starred: !w.starred } : w))
+    apiFetch(`${BACKEND_URL}/api/vocab/star/${id}`, { method: 'POST' }).catch(() => {})
+  }
+
+  if (loading) return <LoadingState label="Loading vocabulary..." />
+  if (!words.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No vocabulary found. Make sure the backend is running.</div>
+
+  const decks = [
+    ...VOCAB_DECKS.map(d => ({ ...d, words: words.filter(w => w.difficulty === d.key) })),
+    { key: 'starred', label: 'Starred', color: '#ca8a04', words: words.filter(w => w.starred) },
+  ]
+  const activeDeck = decks.find(d => d.key === activeDeckKey)
+  const openDeck = (deckKey, mode) => { setActiveDeckKey(deckKey); setView(mode) }
+  const totalLearned = words.filter(w => w.learned).length
+
+  if (view === 'flashcards' && activeDeck) {
+    return <VocabFlashcards deckLabel={activeDeck.label} words={activeDeck.words} onExit={() => setView('hub')} onSetLearned={setLearned} />
+  }
+  if (view === 'quiz' && activeDeck) {
+    return <VocabQuiz deckLabel={activeDeck.label} words={activeDeck.words} allWords={words} onExit={() => setView('hub')} />
+  }
+  if (view === 'list' && activeDeck) {
+    return <VocabList deckLabel={activeDeck.label} words={activeDeck.words} onBack={() => setView('hub')} onSetLearned={setLearned} onToggleStar={toggleStar} />
+  }
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+      <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px' }}>
+          <span style={{ fontWeight: '600' }}>Overall Progress</span>
+          <span style={{ color: '#616473' }}>{totalLearned} / {words.length} learned</span>
+        </div>
+        <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px' }}>
+          <div style={{ width: (totalLearned / words.length * 100) + '%', height: '100%', background: '#2ac56c', borderRadius: '4px', transition: 'width 0.3s ease' }} />
+        </div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
+        {decks.map(deck => {
+          const learnedInDeck = deck.words.filter(w => w.learned).length
+          const pct = deck.words.length ? Math.round(learnedInDeck / deck.words.length * 100) : 0
+          const empty = deck.words.length === 0
+          return (
+            <div key={deck.key} style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderTop: `4px solid ${deck.color}`, borderRadius: '12px', padding: '18px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                {deck.key === 'starred' && <span>⭐</span>}
+                <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>{deck.label}</div>
+              </div>
+              <div style={{ fontSize: '12px', color: '#616473', marginBottom: '10px' }}>
+                {empty ? (deck.key === 'starred' ? 'Star words to save them here' : 'No words') : `${deck.words.length} words · ${learnedInDeck} learned`}
+              </div>
+              <div style={{ height: '6px', background: '#f0f2f5', borderRadius: '3px', marginBottom: '16px' }}>
+                <div style={{ width: pct + '%', height: '100%', background: deck.color, borderRadius: '3px' }} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <button disabled={empty} onClick={() => openDeck(deck.key, 'flashcards')} style={{ background: deck.color, color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', fontWeight: '700', fontSize: '13px', cursor: empty ? 'default' : 'pointer', opacity: empty ? 0.5 : 1 }}>🗂 Flashcards</button>
+                <button disabled={empty} onClick={() => openDeck(deck.key, 'quiz')} style={{ background: '#fff', color: deck.color, border: `1.5px solid ${deck.color}`, borderRadius: '8px', padding: '10px', fontWeight: '700', fontSize: '13px', cursor: empty ? 'default' : 'pointer', opacity: empty ? 0.5 : 1 }}>📝 Quiz</button>
+                <button disabled={empty} onClick={() => openDeck(deck.key, 'list')} style={{ background: 'none', color: '#616473', border: '1px solid #d1d5db', borderRadius: '8px', padding: '10px', fontWeight: '600', fontSize: '13px', cursor: empty ? 'default' : 'pointer', opacity: empty ? 0.5 : 1 }}>📋 List</button>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 function App() {
   const isMobile = useIsMobile()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
@@ -7968,9 +8315,6 @@ function App() {
   const [writingTarget, setWritingTarget] = useState(4.5)
   const [speakingTarget, setSpeakingTarget] = useState(4.5)
   const [examDate, setExamDate] = useState('')
-  const [vocabWords, setVocabWords] = useState([])
-  const [vocabFilter, setVocabFilter] = useState('all')
-  const [flippedCards, setFlippedCards] = useState({})
   const [expandedFormat, setExpandedFormat] = useState(false)
   const [editingTargets, setEditingTargets] = useState(false)
   const [readingSubTab, setReadingSubTab] = useState(null)
@@ -8006,15 +8350,6 @@ function App() {
     return goals.slice(0, 5)
   }
 
-  const fetchVocabData = () => {
-    apiFetch(`${BACKEND_URL}/api/vocab`).then(res => res.json()).then(data => setVocabWords(data)).catch(err => console.error(err))
-  }
-
-  const toggleLearned = (id) => {
-    apiFetch(`${BACKEND_URL}/api/vocab/toggle/${id}`, { method: 'POST' })
-      .then(res => res.json()).then(() => { setVocabWords(prev => prev.map(item => item.id === id ? { ...item, learned: !item.learned } : item)); fetchDashboardData() }).catch(err => console.error(err))
-  }
-
   const fetchDashboardData = () => {
     apiFetch(`${BACKEND_URL}/api/dashboard`).then(res => res.json())
       .then(data => {
@@ -8026,7 +8361,7 @@ function App() {
       }).catch(err => console.error(err))
   }
 
-  useEffect(() => { fetchDashboardData(); fetchVocabData() }, [])
+  useEffect(() => { fetchDashboardData() }, [])
   // Section scores/exam date only change as a side effect of finishing practice elsewhere in the
   // app -- re-fetch every time the student lands back on the Dashboard tab (not just on first
   // mount) so those numbers don't go stale for the rest of the session after the first load.
@@ -8509,62 +8844,7 @@ function App() {
         )}
 
         {/* VOCABULARY */}
-        {currentTab === 'vocab' && vocabWords.length === 0 && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '40px' }}><p style={{ color: '#616473', fontSize: '13px' }}>Loading vocabulary...</p></div>}
-        {currentTab === 'vocab' && vocabWords.length > 0 && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px' }}>
-                <span style={{ fontWeight: '600' }}>Progress</span>
-                <span style={{ color: '#616473' }}>{vocabWords.filter(w => w.learned).length} / {vocabWords.length} learned</span>
-              </div>
-              <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px' }}>
-                <div style={{ width: (vocabWords.filter(w => w.learned).length / vocabWords.length * 100) + '%', height: '100%', background: '#2ac56c', borderRadius: '4px', transition: 'width 0.3s ease' }} />
-              </div>
-            </div>
-            <div style={{ display: 'flex', gap: '8px' }}>
-              {['all', 'learned', 'unlearned'].map(f => (
-                <button key={f} onClick={() => setVocabFilter(f)} style={{ padding: '7px 14px', borderRadius: '8px', border: '1px solid #d1d5db', backgroundColor: vocabFilter === f ? '#701fa1' : '#fff', color: vocabFilter === f ? '#fff' : '#616473', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}>
-                  {f === 'all' ? 'All' : f === 'learned' ? 'Learned' : 'Not Learned'}
-                </button>
-              ))}
-            </div>
-            {vocabWords.filter(item => vocabFilter === 'all' ? true : vocabFilter === 'learned' ? item.learned : !item.learned).map(item => {
-              const vibrantColors = ['#701fa1', '#2563eb', '#dc2626', '#16a34a', '#ea580c', '#0891b2', '#c026d3', '#ca8a04']
-              const wordColor = vibrantColors[item.id % vibrantColors.length]
-              const difficultyStyles = { easy: { bg: '#dcfce7', text: '#15803d' }, medium: { bg: '#dbeafe', text: '#1e40af' }, hard: { bg: '#fce7f3', text: '#9d174d' } }
-              const difficultyBorderColors = { easy: '#16a34a', medium: '#2563eb', hard: '#dc2626' }
-              const borderColor = difficultyBorderColors[item.difficulty] || difficultyBorderColors.medium
-              const diffStyle = difficultyStyles[item.difficulty] || difficultyStyles.medium
-              const isFlipped = !!flippedCards[item.id]
-              return (
-                <div key={item.id} onClick={() => setFlippedCards(prev => ({ ...prev, [item.id]: !prev[item.id] }))}
-                  style={{ backgroundColor: isFlipped ? diffStyle.bg : '#fff', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + borderColor, borderRadius: '12px', padding: '18px', minHeight: '140px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', opacity: item.learned ? 0.6 : 1, position: 'relative', transition: 'background-color 0.2s ease' }}>
-                  <div style={{ position: 'absolute', top: '14px', right: '14px', backgroundColor: '#fff', color: borderColor, padding: '4px 10px', borderRadius: '999px', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>{item.difficulty?.toUpperCase()}</div>
-                  {!isFlipped ? (
-                    <div>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                        <span style={{ width: '10px', height: '10px', background: wordColor, borderRadius: '4px', display: 'inline-block' }} />
-                        <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
-                      </div>
-                      <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
-                      <div style={{ fontSize: '13px', color: '#616473' }}>Tap to reveal meaning</div>
-                    </div>
-                  ) : (
-                    <div>
-                      <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
-                      <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
-                      {item.example && <p style={{ marginTop: '8px', fontSize: '12px', color: '#7b809a' }}>&quot;{item.example}&quot;</p>}
-                    </div>
-                  )}
-                  <button onClick={(e) => { e.stopPropagation(); toggleLearned(item.id) }}
-                    style={{ backgroundColor: item.learned ? '#2ac56c' : '#fff', color: item.learned ? '#fff' : '#11162d', border: '1px solid ' + (item.learned ? '#2ac56c' : '#d1d5db'), padding: '6px 10px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '11px', marginTop: '10px', alignSelf: 'flex-start' }}>
-                    {item.learned ? '✅ Learned' : 'Mark as Learned'}
-                  </button>
-                </div>
-              )
-            })}
-          </div>
-        )}
+        {currentTab === 'vocab' && <Vocabulary />}
 
         {/* SETTINGS */}
         {currentTab === 'settings' && (
