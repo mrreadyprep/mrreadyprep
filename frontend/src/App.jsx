@@ -80,14 +80,12 @@ function CTWList({ exercises, scores, onSelect, onBack }) {
   const visible = exercises
     .map((ex, idx) => ({ ex, idx }))
     .filter(({ ex }) => activeCategory === 'All' || ex.category === activeCategory)
+  // Rendered inline in the sidebar shell's content area (the shell already shows a shared
+  // "← Back" + title header above this, driven by `onBack`) -- no fixed-overlay wrapper or
+  // duplicate title/back button here, unlike the single-exercise view below which still goes
+  // full-screen for a distraction-free timed exercise.
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Complete the Words</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '20px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         {categories.length > 1 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
             {['All', ...categories].map(cat => (
@@ -131,7 +129,6 @@ function CTWList({ exercises, scores, onSelect, onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -382,14 +379,11 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
   const grouped = {}
   passages.forEach((p, i) => { if (!grouped[p.type]) grouped[p.type] = []; grouped[p.type].push({ ...p, globalIdx: i }) })
   const displayNumByGlobalIdx = displayNums || computeRIDLDisplayNums(passages)
+  // Rendered inline in the sidebar shell's content area -- the shell already shows the shared
+  // "← Back" + title header, so no fixed-overlay wrapper or duplicate title here (unlike
+  // RIDLQuestion below, which stays full-screen for a distraction-free timed passage).
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Read in Daily Life</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         {typeOrder.filter(t => grouped[t]).map(type => (
           <div key={type} style={{ marginBottom: '28px' }}>
             <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '10px' }}>{RIDL_TYPE_LABELS[type]}</div>
@@ -415,7 +409,6 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
             </div>
           </div>
         ))}
-      </div>
     </div>
   )
 }
@@ -985,14 +978,9 @@ function fetchLatestResults(category) {
 
 function APList({ passages, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
+  // Rendered inline in the sidebar shell's content area -- see CTWList for the same pattern.
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Read an Academic Passage</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {passages.map((p, idx) => {
             const locked = isLocked(p)
@@ -1013,7 +1001,6 @@ function APList({ passages, scores, onSelect, onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -1628,13 +1615,7 @@ function ConversationPhoto({ seed = 0, width = 640, height = 380 }) {
 function ListeningP1List({ exercises, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen and Choose a Response</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {exercises.map((ex, idx) => {
             const locked = isLocked(ex)
@@ -1658,7 +1639,6 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -1909,13 +1889,7 @@ function ListeningP1({ onBack }) {
 function ListeningP2List({ conversations, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to a Conversation</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {conversations.map((c, idx) => {
             const locked = isLocked(c)
@@ -1939,7 +1913,6 @@ function ListeningP2List({ conversations, scores, onSelect, onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -2199,13 +2172,7 @@ function ListeningP2({ onBack }) {
 function ListeningP3List({ announcements, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to an Announcement</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {announcements.map((a, idx) => {
             const locked = isLocked(a)
@@ -2229,7 +2196,6 @@ function ListeningP3List({ announcements, scores, onSelect, onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -2489,13 +2455,7 @@ function ListeningP3({ onBack }) {
 function ListeningP4List({ talks, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen to an Academic Talk</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
           {talks.map((t, idx) => {
             const locked = isLocked(t)
@@ -2519,7 +2479,6 @@ function ListeningP4List({ talks, scores, onSelect, onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -3164,13 +3123,7 @@ function BuildASentence({ onBack }) {
   const totalLabel = `${Math.floor(BUILD_SENTENCE_TOTAL_TIME / 60)}:${String(BUILD_SENTENCE_TOTAL_TIME % 60).padStart(2, '0')}`
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Build a Sentence</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {sets.map((setItems, i) => {
             const locked = setItems.some(isLocked)
@@ -3194,7 +3147,6 @@ function BuildASentence({ onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -3514,13 +3466,7 @@ function WriteEmail({ onBack }) {
   const timeLabel = `${Math.floor(EMAIL_TIME_LIMIT / 60)}:${String(EMAIL_TIME_LIMIT % 60).padStart(2, '0')}`
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Write an Email</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {items.map((it, i) => {
             const locked = isLocked(it)
@@ -3543,7 +3489,6 @@ function WriteEmail({ onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -3873,13 +3818,7 @@ function AcademicDiscussion({ onBack }) {
   const timeLabel = `${Math.floor(DISCUSSION_TIME_LIMIT / 60)}:${String(DISCUSSION_TIME_LIMIT % 60).padStart(2, '0')}`
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Write for an Academic Discussion</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {items.map((it, i) => {
             const locked = isLocked(it)
@@ -3902,7 +3841,6 @@ function AcademicDiscussion({ onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -5365,13 +5303,7 @@ function ListenRepeat({ onBack }) {
   )
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Listen and Repeat</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {items.map((it, i) => {
             const locked = isLocked(it)
@@ -5394,7 +5326,6 @@ function ListenRepeat({ onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -5625,13 +5556,7 @@ function TakeInterview({ onBack }) {
   )
 
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
-          <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Take an Interview</h1>
-          <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
-        </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+    <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
           {items.map((it, i) => {
             const locked = isLocked(it)
@@ -5654,7 +5579,6 @@ function TakeInterview({ onBack }) {
             )
           })}
         </div>
-      </div>
     </div>
   )
 }
@@ -5719,7 +5643,7 @@ function ReadInDailyLife({ onBack }) {
     setScores(prev => ({ ...prev, [selectedIdx]: { score, total } }))
   }
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading...</div>
+  if (loading) return <LoadingState label="Loading passages..." />
 
   const displayNums = computeRIDLDisplayNums(passages)
   if (selectedIdx !== null) return (
@@ -6492,9 +6416,13 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
     return () => { cancelled = true }
   }, [id, available])
 
+  // Rendered inline in the sidebar shell's content area -- unlike the other list screens, this
+  // one keeps its own "← Back" (now in-flow, no longer fixed-positioned) since it needs to
+  // return to MockIntroScreen's test list, a local state the shared shell header doesn't know
+  // about.
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'flex-start', fontFamily: 'sans-serif', zIndex: 10, padding: isMobile ? '90px 16px 30px' : '110px 40px 40px', textAlign: 'center', overflowY: 'auto' }}>
-      <button onClick={onBack} style={{ position: 'fixed', top: '24px', left: '24px', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer', zIndex: 11 }}>← Back</button>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', textAlign: 'center' }}>
+      <button onClick={onBack} style={{ alignSelf: 'flex-start', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer', marginBottom: '20px' }}>← Back</button>
       <div style={{ fontSize: '13px', fontWeight: '700', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>Fixed Mock Test</div>
       <h1 style={{ margin: '0 0 14px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Mock Test {id}</h1>
       <p style={{ maxWidth: '520px', color: '#616473', fontSize: '14px', lineHeight: '1.7', marginBottom: '10px' }}>
@@ -6550,9 +6478,12 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPre
       onStartSection={(sectionKey) => onStartFixed(selectedTestId, sectionKey)} />
   }
 
+  // Rendered inline in the sidebar shell's content area -- the shell already shows the shared
+  // "← Back" (which also goes to the dashboard, same as this screen's own onBack did) so no
+  // fixed-overlay wrapper or duplicate back button here. MockTestDetailScreen below keeps its
+  // own back button since it needs to return to THIS screen's test list, not to the dashboard.
   return (
-    <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: isMobile ? '70px 16px 30px' : '40px', textAlign: 'center', overflowY: 'auto' }}>
-      <button onClick={onBack} style={{ position: 'fixed', top: '24px', left: '24px', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer', zIndex: 11 }}>← Back</button>
+    <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', textAlign: 'center' }}>
       <div style={{ fontSize: '13px', fontWeight: '700', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>Full Mock Test</div>
       <h1 style={{ margin: '0 0 14px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Reading → Listening → Writing → Speaking</h1>
       <p style={{ maxWidth: '520px', color: '#616473', fontSize: '14px', lineHeight: '1.7', marginBottom: '10px' }}>
@@ -7120,7 +7051,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
     goNext()
   }
 
-  if (phase === 'loading') return <LoadingState label="Loading mock test content..." fullScreen />
+  if (phase === 'loading') return <LoadingState label="Loading mock test content..." />
   // The dynamic "Start Full Mock Test" / "practice one section" flow draws from the /api/mock/*
   // pools, which the backend now fully premium-gates (see require_premium_pool in main.py) --
   // Fixed Test 1 (startFixedTest) is the one complete free mock-test experience instead, so it's
