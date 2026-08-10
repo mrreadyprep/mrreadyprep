@@ -18,19 +18,31 @@ def talk_intro_text(subject):
 
 
 async def generate_all():
-    communicate = edge_tts.Communicate("Listen to a conversation.", NARRATOR_VOICE)
-    await communicate.save("audio/intro/listen_to_a_conversation.mp3")
-    print("✓ listen_to_a_conversation.mp3 done")
+    # Skip files that already exist -- this script gets re-run every time the Academic Talk
+    # pools grow (the intro line text is deterministic per subject, so an existing file for a
+    # given id never needs to change). This makes reruns fast and means only the newly-added
+    # ids actually hit the network.
+    if not os.path.exists("audio/intro/listen_to_a_conversation.mp3"):
+        communicate = edge_tts.Communicate("Listen to a conversation.", NARRATOR_VOICE)
+        await communicate.save("audio/intro/listen_to_a_conversation.mp3")
+        print("✓ listen_to_a_conversation.mp3 done")
+    else:
+        print("- listen_to_a_conversation.mp3 already exists, skipping")
 
-    communicate = edge_tts.Communicate("Listen to an announcement.", NARRATOR_VOICE)
-    await communicate.save("audio/intro/listen_to_an_announcement.mp3")
-    print("✓ listen_to_an_announcement.mp3 done")
+    if not os.path.exists("audio/intro/listen_to_an_announcement.mp3"):
+        communicate = edge_tts.Communicate("Listen to an announcement.", NARRATOR_VOICE)
+        await communicate.save("audio/intro/listen_to_an_announcement.mp3")
+        print("✓ listen_to_an_announcement.mp3 done")
+    else:
+        print("- listen_to_an_announcement.mp3 already exists, skipping")
 
     with open('mock_listening_academic_talk.json', 'r', encoding='utf-8') as f:
         mock_talks = json.load(f)
     for t in mock_talks:
-        text = talk_intro_text(t.get('subject'))
         path = f"audio/intro/academic_talk_mock_{t['id']}.mp3"
+        if os.path.exists(path):
+            continue
+        text = talk_intro_text(t.get('subject'))
         communicate = edge_tts.Communicate(text, NARRATOR_VOICE)
         await communicate.save(path)
         print(f"✓ {path} ({text}) done")
@@ -38,11 +50,15 @@ async def generate_all():
     with open('listening_part4.json', 'r', encoding='utf-8') as f:
         practice_talks = json.load(f)
     for t in practice_talks:
-        text = talk_intro_text(t.get('subject'))
         path = f"audio/intro/academic_talk_practice_{t['id']}.mp3"
+        if os.path.exists(path):
+            continue
+        text = talk_intro_text(t.get('subject'))
         communicate = edge_tts.Communicate(text, NARRATOR_VOICE)
         await communicate.save(path)
         print(f"✓ {path} ({text}) done")
+
+    print(f"Total intro files now on disk: {len(os.listdir('audio/intro'))}")
 
 asyncio.run(generate_all())
 print("All done!")
