@@ -8365,7 +8365,7 @@ function App() {
   useEffect(() => {
     const unlock = () => {
       try {
-        if (sharedAudioEl && sharedAudioEl.src && sharedAudioEl.paused) {
+        if (sharedAudioEl && sharedAudioEl.src && sharedAudioEl.paused && !sharedAudioEl.ended) {
           const p = sharedAudioEl.play()
           if (p && p.catch) p.catch(() => {})
         }
