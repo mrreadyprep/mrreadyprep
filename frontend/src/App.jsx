@@ -68,6 +68,71 @@ function LoadingState({ label = 'Loading...', fullScreen = false }) {
   return <div style={{ height: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{content}</div>
 }
 
+// ─── In-progress answer drafts (solo practice only) ───────────────────────────
+// "Save & Exit" used to just exit immediately, discarding whatever the student had typed so
+// far -- the label promised saving that never actually happened. These persist an in-progress
+// (ungraded) exercise's answers to localStorage, keyed by exercise/passage id, so leaving mid-
+// exercise and coming back later resumes exactly where the student left off. Only used in solo
+// practice mode -- Full Mock Test already has its own session-level answer-preservation via
+// FullMockTest's sessionRef + initialAnswers/onAnswersChange, and its own exit confirmation.
+const DRAFT_KEY_PREFIX = 'mrp_draft_'
+function draftKey(category, itemId) { return `${DRAFT_KEY_PREFIX}${category}_${itemId}` }
+function loadDraft(category, itemId) {
+  try {
+    const raw = localStorage.getItem(draftKey(category, itemId))
+    return raw ? JSON.parse(raw) : null
+  } catch { return null }
+}
+function saveDraft(category, itemId, answers) {
+  try { localStorage.setItem(draftKey(category, itemId), JSON.stringify(answers)) } catch { /* ignore quota/availability errors */ }
+}
+function clearDraft(category, itemId) {
+  try { localStorage.removeItem(draftKey(category, itemId)) } catch { /* ignore */ }
+}
+
+// Styled replacement for a native window.confirm() -- offers to save the student's in-progress
+// answers before leaving, discard them, or cancel and keep practicing. `canSave=false` is for
+// exercise types with nothing meaningful to persist (e.g. live audio recordings in Speaking),
+// where only Exit / Keep practicing make sense.
+function ExitConfirmModal({ onSave, onDiscard, onCancel, canSave = true }) {
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
+      <div style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
+        <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Exit this exercise?</div>
+        <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>
+          {canSave
+            ? "We can save your progress so you can pick up where you left off, or discard it and start fresh next time."
+            : "This exercise isn't scored yet and there's nothing to save for this exercise type."}
+        </div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          {canSave && (
+            <button onClick={onSave} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save & exit</button>
+          )}
+          <button onClick={onDiscard} style={{ background: canSave ? '#fff' : '#2ac56c', color: canSave ? '#616473' : '#fff', border: canSave ? '1px solid #d1d5db' : 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>{canSave ? 'Discard & exit' : 'Exit'}</button>
+          <button onClick={onCancel} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', padding: '6px', cursor: 'pointer' }}>Keep practicing</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Shared "Save & Exit" logic for solo-practice exercise screens: in mock mode, behaves exactly
+// as before (calls onBack directly -- FullMockTest owns its own exit confirmation). In solo
+// mode, clicking opens ExitConfirmModal instead of exiting immediately.
+function useExitDraft({ category, itemId, answers, onBack, mockMode, canSave = true }) {
+  const [showModal, setShowModal] = useState(false)
+  const requestExit = mockMode ? onBack : () => setShowModal(true)
+  const modal = !mockMode && showModal ? (
+    <ExitConfirmModal
+      canSave={canSave}
+      onSave={() => { saveDraft(category, itemId, answers); setShowModal(false); onBack() }}
+      onDiscard={() => { clearDraft(category, itemId); setShowModal(false); onBack() }}
+      onCancel={() => setShowModal(false)}
+    />
+  ) : null
+  return { requestExit, modal }
+}
+
 // ─── Complete the Words — Liste Ekranı ───────────────────────────────────────
 function CTWList({ exercises, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
@@ -137,7 +202,9 @@ function CTWList({ exercises, scores, onSelect, onBack }) {
 const QUESTION_TIME = 180
 
 function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false, poolTime, moduleOffset, moduleTotal, onPrevSlot, isLastSlot = true, initialAnswers, onAnswersChange }) {
-  const [answers, setAnswers] = useState(() => initialAnswers || {})
+  // In solo practice mode (not mock), resume a previously saved-and-exited draft if one exists
+  // for this exact exercise.
+  const [answers, setAnswers] = useState(() => initialAnswers || (!mockMode && loadDraft('ctw', exercise.id)) || {})
   const [checked, setChecked] = useState(false)
   const [finished, setFinished] = useState(false)
   const [timeLeft, setTimeLeft] = useState(QUESTION_TIME)
@@ -145,6 +212,7 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
   const timerRef = useRef(null)
   const answersRef = useRef({})
   const checkedRef = useRef(false)
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ctw', itemId: exercise.id, answers, onBack, mockMode })
 
   useEffect(() => { answersRef.current = answers }, [answers])
   useEffect(() => { checkedRef.current = checked }, [checked])
@@ -195,6 +263,7 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
               const ans = answersRef.current
               onComplete(calcCorrect(ans), ex.blanks.length, buildDetail(ans))
             } else {
+              clearDraft('ctw', ex.id) // now graded, no longer an in-progress draft
               setChecked(true)
             }
           }
@@ -261,6 +330,7 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
       onComplete(calcCorrect(answers), ex.blanks.length, buildDetail(answers))
       return
     }
+    clearDraft('ctw', ex.id) // now graded, no longer an in-progress draft
     setChecked(true)
   }
   const questionScore = checked ? calcCorrect(answers) : null
@@ -287,31 +357,34 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
   }
 
   return (
-    <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
-      topRight={!checked
-        ? <>
-            {mockMode && <TestPillButton onClick={onPrevSlot} disabled={!onPrevSlot}>Back</TestPillButton>}
-            <TestPillButton onClick={handleSubmit}>{mockMode ? (isLastSlot ? 'Finish' : 'Next') : 'Submit'}</TestPillButton>
-          </>
-        : <TestPillButton onClick={() => setFinished(true)}>See Results</TestPillButton>}
-      section="READING"
-      questionLabel={questionLabel}
-      timeText={formatTime(displayTime)}
-      lowTime={isLowTime}
-      contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-    >
-      <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 36px', fontFamily: 'sans-serif', maxWidth: '760px' }}>Fill in the missing letters in the paragraph.</h1>
-      <div style={{ maxWidth: '860px', width: '100%', boxSizing: 'border-box', marginBottom: checked ? '20px' : '32px', border: '2.5px solid #1a1a1a', borderRadius: '14px', padding: '28px 34px' }}>
-        <p style={{ fontSize: '16px', lineHeight: '2.6', color: '#1a1a1a', margin: 0, fontFamily: 'Georgia, serif' }}>{renderParagraph()}</p>
-      </div>
-      {checked && (
-        <div style={{ maxWidth: '760px', width: '100%', background: questionScore === ex.blanks.length ? '#edfbf3' : '#fff8ec', border: '1px solid ' + (questionScore === ex.blanks.length ? '#a7e9c3' : '#f5d08a'), borderRadius: '10px', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', fontFamily: 'sans-serif', boxSizing: 'border-box' }}>
-          <span style={{ fontSize: '14px', fontWeight: '700', color: questionScore === ex.blanks.length ? '#1a7a44' : '#c07000' }}>{timeLeft === 0 ? "⏱ Time's up! " : ''}{questionScore === ex.blanks.length ? '🎯 Perfect score!' : `${questionScore} / ${ex.blanks.length} correct`}</span>
-          <span style={{ fontSize: '12px', color: '#888' }}>Correct answers in <span style={{ color: '#2a9d5c', fontWeight: '700' }}>green</span></span>
+    <>
+      <ExamScreen
+        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+        topRight={!checked
+          ? <>
+              {mockMode && <TestPillButton onClick={onPrevSlot} disabled={!onPrevSlot}>Back</TestPillButton>}
+              <TestPillButton onClick={handleSubmit}>{mockMode ? (isLastSlot ? 'Finish' : 'Next') : 'Submit'}</TestPillButton>
+            </>
+          : <TestPillButton onClick={() => setFinished(true)}>See Results</TestPillButton>}
+        section="READING"
+        questionLabel={questionLabel}
+        timeText={formatTime(displayTime)}
+        lowTime={isLowTime}
+        contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      >
+        <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 36px', fontFamily: 'sans-serif', maxWidth: '760px' }}>Fill in the missing letters in the paragraph.</h1>
+        <div style={{ maxWidth: '860px', width: '100%', boxSizing: 'border-box', marginBottom: checked ? '20px' : '32px', border: '2.5px solid #1a1a1a', borderRadius: '14px', padding: '28px 34px' }}>
+          <p style={{ fontSize: '16px', lineHeight: '2.6', color: '#1a1a1a', margin: 0, fontFamily: 'Georgia, serif' }}>{renderParagraph()}</p>
         </div>
-      )}
-    </ExamScreen>
+        {checked && (
+          <div style={{ maxWidth: '760px', width: '100%', background: questionScore === ex.blanks.length ? '#edfbf3' : '#fff8ec', border: '1px solid ' + (questionScore === ex.blanks.length ? '#a7e9c3' : '#f5d08a'), borderRadius: '10px', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', fontFamily: 'sans-serif', boxSizing: 'border-box' }}>
+            <span style={{ fontSize: '14px', fontWeight: '700', color: questionScore === ex.blanks.length ? '#1a7a44' : '#c07000' }}>{timeLeft === 0 ? "⏱ Time's up! " : ''}{questionScore === ex.blanks.length ? '🎯 Perfect score!' : `${questionScore} / ${ex.blanks.length} correct`}</span>
+            <span style={{ fontSize: '12px', color: '#888' }}>Correct answers in <span style={{ color: '#2a9d5c', fontWeight: '700' }}>green</span></span>
+          </div>
+        )}
+      </ExamScreen>
+      {exitModal}
+    </>
   )
 }
 
@@ -422,8 +495,9 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
   const [selected, setSelected] = useState(null)
   const [done, setDone] = useState(false)
   const [timeLeft, setTimeLeft] = useState(RIDL_TIME)
-  const [answers, setAnswers] = useState(() => initialAnswers || []) // answers[i] = { selected, correct, isCorrect } for each question, keyed by index
+  const [answers, setAnswers] = useState(() => initialAnswers || (!mockMode && loadDraft('ridl', passage.id)) || []) // answers[i] = { selected, correct, isCorrect } for each question, keyed by index
   const timerRef = useRef(null)
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ridl', itemId: passage.id, answers, onBack, mockMode })
 
   // Mirror every recorded answer up to the parent so Back-navigating out of this passage and
   // later returning restores exactly what was chosen, instead of remounting blank.
@@ -486,6 +560,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
       onComplete(finalScore, totalQ, detail)
       return
     }
+    clearDraft('ridl', passage.id) // now graded, no longer an in-progress draft
     setDone(true)
   }
 
@@ -611,44 +686,47 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
   const boxColor = RIDL_BOX_COLORS[(passage.id || practiceNum || 0) % RIDL_BOX_COLORS.length]
 
   return (
-    <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
-      topRight={mockMode
-        ? <>
-            <TestPillButton onClick={goBack} disabled={questionIdx === 0 && !onPrevSlot}>Back</TestPillButton>
-            <TestPillButton onClick={goNext}>{(questionIdx + 1 === totalQ && isLastSlot) ? 'Finish' : 'Next'}</TestPillButton>
-          </>
-        : <TestPillButton onClick={goNext}>{questionIdx + 1 === totalQ ? 'Finish' : 'Next'}</TestPillButton>}
-      section="READING"
-      questionLabel={questionLabel}
-      timeText={formatTime(displayTime)}
-      lowTime={isLowTime}
-    >
-      <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: isMobile ? '0 0 20px' : '0 0 32px' }}>{passage.instruction}</h1>
-      <div style={{ display: 'flex', gap: isMobile ? '24px' : '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
-        <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '520px', width: '100%' }}>
-          <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '18px 20px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
-            {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px', color: '#1a1a1a' }}>{passage.title}</div>}
-            {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
-            <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
+    <>
+      <ExamScreen
+        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+        topRight={mockMode
+          ? <>
+              <TestPillButton onClick={goBack} disabled={questionIdx === 0 && !onPrevSlot}>Back</TestPillButton>
+              <TestPillButton onClick={goNext}>{(questionIdx + 1 === totalQ && isLastSlot) ? 'Finish' : 'Next'}</TestPillButton>
+            </>
+          : <TestPillButton onClick={goNext}>{questionIdx + 1 === totalQ ? 'Finish' : 'Next'}</TestPillButton>}
+        section="READING"
+        questionLabel={questionLabel}
+        timeText={formatTime(displayTime)}
+        lowTime={isLowTime}
+      >
+        <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: isMobile ? '0 0 20px' : '0 0 32px' }}>{passage.instruction}</h1>
+        <div style={{ display: 'flex', gap: isMobile ? '24px' : '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
+          <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '520px', width: '100%' }}>
+            <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '18px 20px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
+              {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px', color: '#1a1a1a' }}>{passage.title}</div>}
+              {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
+              <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
+            </div>
+          </div>
+          <div style={{ width: isMobile ? '100%' : '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
+            <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>{question.question}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+              {question.options.map((opt, i) => {
+                const isChosen = i === selected
+                return (
+                  <div key={i} onClick={() => setSelected(i)} style={{ display: 'flex', alignItems: 'center', gap: '14px', cursor: 'pointer', padding: '4px 0' }}>
+                    <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff', transition: 'all 0.1s' }} />
+                    <span style={{ fontSize: '16px', lineHeight: '1.5', color: '#1a1a1a' }}>{opt}</span>
+                  </div>
+                )
+              })}
+            </div>
           </div>
         </div>
-        <div style={{ width: isMobile ? '100%' : '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
-          <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>{question.question}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-            {question.options.map((opt, i) => {
-              const isChosen = i === selected
-              return (
-                <div key={i} onClick={() => setSelected(i)} style={{ display: 'flex', alignItems: 'center', gap: '14px', cursor: 'pointer', padding: '4px 0' }}>
-                  <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff', transition: 'all 0.1s' }} />
-                  <span style={{ fontSize: '16px', lineHeight: '1.5', color: '#1a1a1a' }}>{opt}</span>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-    </ExamScreen>
+      </ExamScreen>
+      {exitModal}
+    </>
   )
 }
 
@@ -1009,12 +1087,13 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
   const isMobile = useIsMobile()
   const TOTAL_TIME = 600
   const [currentQ, setCurrentQ] = useState(() => enterAtEnd ? passage.questions.length - 1 : 0)
-  const [answers, setAnswers] = useState(() => initialAnswers || {})
+  const [answers, setAnswers] = useState(() => initialAnswers || (!mockMode && loadDraft('ap', passage.id)) || {})
   const [submitted, setSubmitted] = useState(false)
   const [showReview, setShowReview] = useState(false)
   const [reviewIdx, setReviewIdx] = useState(null)
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME)
   const answersRef = useRef({})
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ap', itemId: passage.id, answers, onBack, mockMode })
   useEffect(() => { answersRef.current = answers }, [answers])
   // Mirror selections up to the parent so Back-navigating away from this passage and returning
   // later restores exactly what was chosen, instead of remounting blank.
@@ -1049,6 +1128,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
           const finalScore = questions.filter((qq, i) => ans[i] === qq.answer).length
           onComplete(finalScore, questions.length, buildDetail(ans))
         } else {
+          clearDraft('ap', passage.id) // now graded, no longer an in-progress draft
           setSubmitted(true)
         }
         return 0
@@ -1154,8 +1234,9 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
   }
 
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
       topRight={<>
         {mockMode && <TestPillButton onClick={() => {
           if (currentQ === 0) {
@@ -1168,6 +1249,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
               const finalScore = questions.filter((qq, i) => answers[i] === qq.answer).length
               onComplete(finalScore, questions.length, buildDetail(answers))
             } else {
+              clearDraft('ap', passage.id) // now graded, no longer an in-progress draft
               setSubmitted(true)
             }
           } else setCurrentQ(i => i + 1)
@@ -1202,6 +1284,8 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
         </div>
       </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
