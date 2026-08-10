@@ -1372,6 +1372,28 @@ const AUDIO_START_DELAY_MS = 1500
 // rest of the session" trick in App()'s unlock effect hold true across navigation.
 const sharedAudioEl = typeof window !== 'undefined' ? new Audio() : null
 
+// Loads + plays a URL on the shared element SYNCHRONOUSLY, meant to be called directly from
+// inside a real onClick handler (Start / Next / etc.), not from an effect or a timer. Safari
+// only allows audio.play() to bypass its autoplay block when the call happens inside the same
+// synchronous call stack as the user gesture that triggered it -- wrapping it in a setTimeout
+// or a React effect (which always fires asynchronously, after the gesture has already ended)
+// loses that permission every time, no matter how many times the element has played before.
+// Calling this from the click that reveals a new question is what actually satisfies that
+// requirement reliably, instead of hoping a stale "this element unlocked once" state carries
+// forward indefinitely (in testing, it does not).
+function primeAudio(url) {
+  const audio = sharedAudioEl
+  if (!audio || !url) return
+  if (audio.src !== url) {
+    audio.pause()
+    audio.src = url
+    audio.currentTime = 0
+    audio.load()
+  }
+  const p = audio.play()
+  if (p && p.catch) p.catch(() => {})
+}
+
 function AudioPlayer({ url, autoPlayKey, onEnded }) {
   const onEndedRef = useRef(onEnded)
   onEndedRef.current = onEnded
@@ -1394,6 +1416,21 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
   useEffect(() => {
     const audio = sharedAudioEl
     if (!url || !audio) return
+    const registerRetryFallback = () => {
+      const retry = () => { audio.play().catch(() => {}) }
+      document.addEventListener('pointerdown', retry, { once: true, capture: true })
+      document.addEventListener('keydown', retry, { once: true, capture: true })
+    }
+    // If a click handler already primed this exact URL (see primeAudio above, called
+    // synchronously from Start/Next), don't reset currentTime/reload it here -- that would
+    // abort the playback that call just started. Just make sure play() is (still) requested.
+    if (audio.src === url) {
+      if (audio.paused) {
+        const p = audio.play()
+        if (p && p.catch) p.catch(registerRetryFallback)
+      }
+      return
+    }
     audio.pause()
     audio.src = url
     audio.currentTime = 0
@@ -1402,15 +1439,10 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       const p = audio.play()
       if (p && p.catch) {
         p.catch(() => {
-          // Autoplay was blocked (can happen if this is the very first audio attempt of the
-          // whole session and no click has landed anywhere yet). Retry silently the instant
-          // the student's next click/tap/keypress happens anywhere -- since sharedAudioEl is
-          // the same element every question and every exercise reuses, one successful
-          // gesture-backed play() keeps it unlocked for the rest of the session, so this
-          // fallback in practice only ever fires once, right at the very start.
-          const retry = () => { audio.play().catch(() => {}) }
-          document.addEventListener('pointerdown', retry, { once: true, capture: true })
-          document.addEventListener('keydown', retry, { once: true, capture: true })
+          // Best-effort fallback for any path that didn't go through primeAudio() (e.g. a
+          // question reached via mock-test auto-advance rather than a manual Next click).
+          // Retry silently on the student's very next interaction anywhere.
+          registerRetryFallback()
         })
       }
     }
@@ -1780,7 +1812,7 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.questions.length} question${ex.questions.length === 1 ? '' : 's'}`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(ex.questions[0] && ex.questions[0].audio_url); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -1868,7 +1900,13 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
 
   const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
   const isLowTime = timeLeft <= 5
-  const handleNext = () => advance(selected)
+  const handleNext = () => {
+    // Prime the *next* question's audio synchronously, inside this real click handler, so
+    // Safari treats the upcoming autoplay as gesture-backed instead of relying on a timer.
+    const nextQ = questions[currentQ + 1]
+    if (nextQ && nextQ.audio_url) primeAudio(nextQ.audio_url)
+    advance(selected)
+  }
   const score = answers.filter(a => a.isCorrect).length
 
   // Score screen
@@ -2064,7 +2102,7 @@ function ListeningP2List({ conversations, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${c.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(c.audio_url); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2356,7 +2394,7 @@ function ListeningP3List({ announcements, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${a.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(a.audio_url); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2648,7 +2686,7 @@ function ListeningP4List({ talks, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${t.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(t.audio_url); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
