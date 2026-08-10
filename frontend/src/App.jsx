@@ -1371,6 +1371,8 @@ const AUDIO_START_DELAY_MS = 1500
 // module-level singleton is what actually makes the "click anywhere unlocks audio for the
 // rest of the session" trick in App()'s unlock effect hold true across navigation.
 const sharedAudioEl = typeof window !== 'undefined' ? new Audio() : null
+// Exposed for manual debugging from the browser console (window.__mrpAudio.src / .paused / .error).
+if (typeof window !== 'undefined') window.__mrpAudio = sharedAudioEl
 
 // Loads + plays a URL on the shared element SYNCHRONOUSLY, meant to be called directly from
 // inside a real onClick handler (Start / Next / etc.), not from an effect or a timer. Safari
@@ -1391,7 +1393,7 @@ function primeAudio(url) {
     audio.load()
   }
   const p = audio.play()
-  if (p && p.catch) p.catch(() => {})
+  if (p && p.catch) p.catch((err) => { console.warn('[mrp audio] primeAudio play() rejected:', err && err.name, err && err.message, 'for', url) })
 }
 
 function AudioPlayer({ url, autoPlayKey, onEnded }) {
@@ -1404,7 +1406,10 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     const audio = sharedAudioEl
     if (!audio) return
     const handleEnded = () => { onEndedRef.current && onEndedRef.current() }
-    const handleError = () => { onEndedRef.current && onEndedRef.current() }
+    const handleError = () => {
+      console.warn('[mrp audio] element error event:', audio.error && audio.error.code, audio.error && audio.error.message, 'src:', audio.src)
+      onEndedRef.current && onEndedRef.current()
+    }
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('error', handleError)
     return () => {
@@ -1427,7 +1432,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     if (audio.src === url) {
       if (audio.paused) {
         const p = audio.play()
-        if (p && p.catch) p.catch(registerRetryFallback)
+        if (p && p.catch) p.catch((err) => { console.warn('[mrp audio] resume play() rejected:', err && err.name, err && err.message); registerRetryFallback() })
       }
       return
     }
@@ -1438,7 +1443,8 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     const tryPlay = () => {
       const p = audio.play()
       if (p && p.catch) {
-        p.catch(() => {
+        p.catch((err) => {
+          console.warn('[mrp audio] delayed autoplay play() rejected:', err && err.name, err && err.message, 'for', url)
           // Best-effort fallback for any path that didn't go through primeAudio() (e.g. a
           // question reached via mock-test auto-advance rather than a manual Next click).
           // Retry silently on the student's very next interaction anywhere.
