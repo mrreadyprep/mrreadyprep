@@ -1368,10 +1368,12 @@ const AUDIO_START_DELAY_MS = 1500
 // fought against that. Changing .src on one persistent element plays far more reliably.
 function AudioPlayer({ url, autoPlayKey, onEnded }) {
   const audioRef = useRef(null)
+  const [playState, setPlayState] = useState('loading') // 'loading' | 'playing' | 'blocked' | 'error' | 'ended'
 
   useEffect(() => {
     const audio = audioRef.current
     if (!url || !audio) return
+    setPlayState('loading')
     audio.pause()
     audio.src = url
     audio.currentTime = 0
@@ -1381,10 +1383,9 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       if (p && p.catch) {
         p.catch(() => {
           // Autoplay was blocked (can happen on the very first question before the app-wide
-          // unlock listener in App() has caught a click). Rather than showing a manual "Play"
-          // button, silently retry the instant the student's next click/tap/keypress happens
-          // anywhere — which is always within a second or two, since they're actively taking
-          // the test — so playback simply resumes on its own with no extra UI.
+          // unlock listener in App() has caught a click, or if the browser/site has autoplay
+          // disabled entirely). Retry silently on the student's next interaction anywhere...
+          setPlayState('blocked')
           const retry = () => { audio.play().catch(() => {}) }
           document.addEventListener('pointerdown', retry, { once: true, capture: true })
           document.addEventListener('keydown', retry, { once: true, capture: true })
@@ -1404,7 +1405,43 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       </div>
     )
   }
-  return <audio ref={audioRef} style={{ display: 'none' }} onEnded={onEnded} onError={onEnded} />
+
+  const handleManualPlay = () => {
+    const audio = audioRef.current
+    if (!audio) return
+    setPlayState('loading')
+    audio.currentTime = 0
+    audio.play().then(() => setPlayState('playing')).catch(() => setPlayState('error'))
+  }
+
+  return (
+    <div style={{ width: '100%' }}>
+      <audio
+        ref={audioRef}
+        style={{ display: 'none' }}
+        onPlay={() => setPlayState('playing')}
+        onEnded={() => { setPlayState('ended'); onEnded && onEnded() }}
+        onError={() => { setPlayState('error'); onEnded && onEnded() }}
+      />
+      <button
+        type="button"
+        onClick={handleManualPlay}
+        style={{
+          width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+          padding: '10px 16px', borderRadius: '999px', fontSize: '13px', fontWeight: '700', cursor: 'pointer',
+          border: playState === 'error' ? '1.5px solid #d94040' : '1.5px solid #2ac56c',
+          background: playState === 'error' ? '#fff2f2' : '#edfbf3',
+          color: playState === 'error' ? '#d94040' : '#1a9950',
+        }}
+      >
+        {playState === 'playing' && <>🔊 Playing…</>}
+        {playState === 'loading' && <>🔊 Loading audio…</>}
+        {playState === 'blocked' && <>▶ Tap to play audio</>}
+        {playState === 'ended' && <>🔁 Replay audio</>}
+        {playState === 'error' && <>⚠️ Audio failed — tap to retry</>}
+      </button>
+    </div>
+  )
 }
 
 // Plays a short pre-recorded narration line ("Listen to a conversation.", etc.) before the
