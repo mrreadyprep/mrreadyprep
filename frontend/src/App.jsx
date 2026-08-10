@@ -1414,6 +1414,9 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     audio.play().then(() => setPlayState('playing')).catch(() => setPlayState('error'))
   }
 
+  // Normal case: audio autoplays with no visible control at all. The button only ever
+  // appears as a fallback if autoplay genuinely fails to start (blocked or a load error) —
+  // otherwise a student would be stuck with sound that silently never plays and no way to fix it.
   return (
     <div style={{ width: '100%' }}>
       <audio
@@ -1423,23 +1426,22 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
         onEnded={() => { setPlayState('ended'); onEnded && onEnded() }}
         onError={() => { setPlayState('error'); onEnded && onEnded() }}
       />
-      <button
-        type="button"
-        onClick={handleManualPlay}
-        style={{
-          width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-          padding: '10px 16px', borderRadius: '999px', fontSize: '13px', fontWeight: '700', cursor: 'pointer',
-          border: playState === 'error' ? '1.5px solid #d94040' : '1.5px solid #2ac56c',
-          background: playState === 'error' ? '#fff2f2' : '#edfbf3',
-          color: playState === 'error' ? '#d94040' : '#1a9950',
-        }}
-      >
-        {playState === 'playing' && <>🔊 Playing…</>}
-        {playState === 'loading' && <>🔊 Loading audio…</>}
-        {playState === 'blocked' && <>▶ Tap to play audio</>}
-        {playState === 'ended' && <>🔁 Replay audio</>}
-        {playState === 'error' && <>⚠️ Audio failed — tap to retry</>}
-      </button>
+      {(playState === 'blocked' || playState === 'error') && (
+        <button
+          type="button"
+          onClick={handleManualPlay}
+          style={{
+            width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+            padding: '10px 16px', borderRadius: '999px', fontSize: '13px', fontWeight: '700', cursor: 'pointer',
+            border: playState === 'error' ? '1.5px solid #d94040' : '1.5px solid #2ac56c',
+            background: playState === 'error' ? '#fff2f2' : '#edfbf3',
+            color: playState === 'error' ? '#d94040' : '#1a9950',
+          }}
+        >
+          {playState === 'blocked' && <>▶ Tap to play audio</>}
+          {playState === 'error' && <>⚠️ Audio failed — tap to retry</>}
+        </button>
+      )}
     </div>
   )
 }
