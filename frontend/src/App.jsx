@@ -68,6 +68,19 @@ function LoadingState({ label = 'Loading...', fullScreen = false }) {
   return <div style={{ height: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{content}</div>
 }
 
+// Shown instead of auto-locking/auto-advancing when a solo practice exercise's per-question or
+// per-exercise timer runs out. Unlike Full Mock Test and single-section practice (mockMode=true),
+// where a real TOEFL-style hard time limit still applies, solo practice never force-submits --
+// the timer is just a pacing guide there, so this only warns and lets the student keep going.
+function TimeUpBanner() {
+  return (
+    <div style={{ width: '100%', boxSizing: 'border-box', background: '#fff8ec', border: '1px solid #f5d08a', borderRadius: '10px', padding: '12px 18px', display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '20px', fontFamily: 'sans-serif' }}>
+      <span style={{ fontSize: '14px' }}>⏱</span>
+      <span style={{ fontSize: '13px', fontWeight: '600', color: '#c07000' }}>Time's up! Keep working -- submit whenever you're ready.</span>
+    </div>
+  )
+}
+
 // ─── In-progress answer drafts (solo practice only) ───────────────────────────
 // "Save & Exit" used to just exit immediately, discarding whatever the student had typed so
 // far -- the label promised saving that never actually happened. These persist an in-progress
@@ -208,6 +221,9 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
   const [checked, setChecked] = useState(false)
   const [finished, setFinished] = useState(false)
   const [timeLeft, setTimeLeft] = useState(QUESTION_TIME)
+  // Solo practice only: when the pacing timer runs out, warn instead of auto-locking/grading --
+  // mockMode (Full Mock Test / single-section practice) still hard-locks via `checked` below.
+  const [timeUp, setTimeUp] = useState(false)
   const inputRefs = useRef({})
   const timerRef = useRef(null)
   const answersRef = useRef({})
@@ -252,20 +268,21 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
     if (poolTime !== undefined) return
     if (finished || checked) return
     setTimeLeft(QUESTION_TIME)
+    setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          if (!checkedRef.current) {
-            checkedRef.current = true
-            if (mockMode) {
+          if (mockMode) {
+            if (!checkedRef.current) {
+              checkedRef.current = true
               const ans = answersRef.current
               onComplete(calcCorrect(ans), ex.blanks.length, buildDetail(ans))
-            } else {
-              clearDraft('ctw', ex.id) // now graded, no longer an in-progress draft
-              setChecked(true)
             }
+          } else {
+            // Solo practice: don't auto-lock/grade -- just warn and let the student keep going.
+            setTimeUp(true)
           }
           return 0
         }
@@ -376,6 +393,7 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
         <div style={{ maxWidth: '860px', width: '100%', boxSizing: 'border-box', marginBottom: checked ? '20px' : '32px', border: '2.5px solid #1a1a1a', borderRadius: '14px', padding: '28px 34px' }}>
           <p style={{ fontSize: '16px', lineHeight: '2.6', color: '#1a1a1a', margin: 0, fontFamily: 'Georgia, serif' }}>{renderParagraph()}</p>
         </div>
+        {!checked && timeUp && <TimeUpBanner />}
         {checked && (
           <div style={{ maxWidth: '760px', width: '100%', background: questionScore === ex.blanks.length ? '#edfbf3' : '#fff8ec', border: '1px solid ' + (questionScore === ex.blanks.length ? '#a7e9c3' : '#f5d08a'), borderRadius: '10px', padding: '14px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px', fontFamily: 'sans-serif', boxSizing: 'border-box' }}>
             <span style={{ fontSize: '14px', fontWeight: '700', color: questionScore === ex.blanks.length ? '#1a7a44' : '#c07000' }}>{timeLeft === 0 ? "⏱ Time's up! " : ''}{questionScore === ex.blanks.length ? '🎯 Perfect score!' : `${questionScore} / ${ex.blanks.length} correct`}</span>
@@ -496,6 +514,9 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
   const [done, setDone] = useState(false)
   const [timeLeft, setTimeLeft] = useState(RIDL_TIME)
   const [answers, setAnswers] = useState(() => initialAnswers || (!mockMode && loadDraft('ridl', passage.id)) || []) // answers[i] = { selected, correct, isCorrect } for each question, keyed by index
+  // Solo practice only: when a question's pacing timer runs out, warn instead of auto-advancing --
+  // mockMode still hard-advances via goNext() below.
+  const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const { requestExit, modal: exitModal } = useExitDraft({ category: 'ridl', itemId: passage.id, answers, onBack, mockMode })
 
@@ -528,8 +549,19 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
     if (poolTime !== undefined) return
     if (done) return
     setTimeLeft(RIDL_TIME)
+    setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
-    timerRef.current = setInterval(() => { setTimeLeft(prev => { if (prev <= 1) { clearInterval(timerRef.current); goNext(); return 0 } return prev - 1 }) }, 1000)
+    timerRef.current = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timerRef.current)
+          if (mockMode) goNext()
+          else setTimeUp(true) // solo practice: warn, let the student keep working on this question
+          return 0
+        }
+        return prev - 1
+      })
+    }, 1000)
     return () => clearInterval(timerRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [questionIdx, done, poolTime])
@@ -701,6 +733,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
         lowTime={isLowTime}
       >
         <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: isMobile ? '0 0 20px' : '0 0 32px' }}>{passage.instruction}</h1>
+        {timeUp && <div style={{ maxWidth: '1160px', width: '100%', margin: '0 auto 20px' }}><TimeUpBanner /></div>}
         <div style={{ display: 'flex', gap: isMobile ? '24px' : '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
           <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '520px', width: '100%' }}>
             <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '18px 20px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
@@ -1092,6 +1125,9 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
   const [showReview, setShowReview] = useState(false)
   const [reviewIdx, setReviewIdx] = useState(null)
   const [timeLeft, setTimeLeft] = useState(TOTAL_TIME)
+  // Solo practice only: when the passage's overall timer runs out, warn instead of auto-
+  // submitting -- mockMode still hard-submits below.
+  const [timeUp, setTimeUp] = useState(false)
   const answersRef = useRef({})
   const { requestExit, modal: exitModal } = useExitDraft({ category: 'ap', itemId: passage.id, answers, onBack, mockMode })
   useEffect(() => { answersRef.current = answers }, [answers])
@@ -1128,8 +1164,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
           const finalScore = questions.filter((qq, i) => ans[i] === qq.answer).length
           onComplete(finalScore, questions.length, buildDetail(ans))
         } else {
-          clearDraft('ap', passage.id) // now graded, no longer an in-progress draft
-          setSubmitted(true)
+          setTimeUp(true) // solo practice: warn, let the student keep working
         }
         return 0
       }
@@ -1224,7 +1259,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
               })}
             </div>
             <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
-              <button onClick={() => { setAnswers({}); setCurrentQ(0); setSubmitted(false); setTimeLeft(TOTAL_TIME) }} style={{ flex: 1, padding: '13px 0', borderRadius: '8px', border: '1.5px solid #2a9d5c', background: '#fff', color: '#2a9d5c', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { setAnswers({}); setCurrentQ(0); setSubmitted(false); setTimeLeft(TOTAL_TIME); setTimeUp(false) }} style={{ flex: 1, padding: '13px 0', borderRadius: '8px', border: '1.5px solid #2a9d5c', background: '#fff', color: '#2a9d5c', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => { onComplete && onComplete(score, questions.length); onBack() }} style={{ flex: 1, padding: '13px 0', borderRadius: '8px', border: 'none', background: '#2a9d5c', color: '#fff', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Back to List</button>
             </div>
           </div>
@@ -1261,6 +1296,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
       lowTime={isLowTime}
     >
       <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: isMobile ? '0 0 20px' : '0 0 32px' }}>{passage.title}</h1>
+      {timeUp && <div style={{ maxWidth: '1160px', width: '100%', margin: '0 auto 20px' }}><TimeUpBanner /></div>}
       <div style={{ display: 'flex', gap: isMobile ? '24px' : '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
         <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '540px', width: '100%' }}>
           <div style={{ padding: '4px 0', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
@@ -1737,6 +1773,9 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   const [timeLeft, setTimeLeft] = useState(LISTENING_P1_TIME)
   const [answers, setAnswers] = useState([])
   const [reviewQ, setReviewQ] = useState(null)
+  // Solo practice only: when a question's pacing timer runs out, warn instead of auto-advancing
+  // (which would otherwise silently skip the question) -- mockMode still hard-advances below.
+  const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
 
@@ -1777,12 +1816,18 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   useEffect(() => {
     if (done) return
     setTimeLeft(LISTENING_P1_TIME)
+    setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          advance(selectedRef.current)
+          if (mockMode) {
+            advance(selectedRef.current)
+          } else {
+            // Solo practice: don't auto-advance/skip -- just warn and let the student keep choosing.
+            setTimeUp(true)
+          }
           return 0
         }
         return prev - 1
@@ -1903,6 +1948,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
       contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <h1 style={{ margin: isMobile ? '0 0 24px' : '0 0 40px', fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>Choose the best response.</h1>
+      {timeUp && <div style={{ maxWidth: '980px', width: '100%', margin: '-16px 0 20px' }}><TimeUpBanner /></div>}
       <div style={{ maxWidth: '980px', width: '100%', display: 'flex', gap: isMobile ? '24px' : '96px', alignItems: isMobile ? 'stretch' : 'flex-start', justifyContent: 'center', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
         {/* Left: speaker avatar + audio */}
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
@@ -2012,6 +2058,9 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   const [timeLeft, setTimeLeft] = useState(LISTENING_P2_TIME)
   const [answers, setAnswers] = useState([])
   const [reviewQ, setReviewQ] = useState(null)
+  // Solo practice only: when a question's pacing timer runs out, warn instead of auto-advancing --
+  // mockMode still hard-advances via advance() below.
+  const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
   const announced = useIntroNarration(`${AUDIO_BASE_URL}/intro/listen_to_a_conversation.mp3`)
@@ -2053,12 +2102,17 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   useEffect(() => {
     if (phase !== 'question' || done) return
     setTimeLeft(LISTENING_P2_TIME)
+    setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          advance(selectedRef.current)
+          if (mockMode) {
+            advance(selectedRef.current)
+          } else {
+            setTimeUp(true)
+          }
           return 0
         }
         return prev - 1
@@ -2198,6 +2252,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
         </div>
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
           <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
+          {timeUp && <TimeUpBanner />}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
@@ -2295,6 +2350,9 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   const [timeLeft, setTimeLeft] = useState(LISTENING_P3_TIME)
   const [answers, setAnswers] = useState([])
   const [reviewQ, setReviewQ] = useState(null)
+  // Solo practice only: when a question's pacing timer runs out, warn instead of auto-advancing --
+  // mockMode still hard-advances via advance() below.
+  const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
   const announced = useIntroNarration(`${AUDIO_BASE_URL}/intro/listen_to_an_announcement.mp3`)
@@ -2336,12 +2394,17 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   useEffect(() => {
     if (phase !== 'question' || done) return
     setTimeLeft(LISTENING_P3_TIME)
+    setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          advance(selectedRef.current)
+          if (mockMode) {
+            advance(selectedRef.current)
+          } else {
+            setTimeUp(true)
+          }
           return 0
         }
         return prev - 1
@@ -2481,6 +2544,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
         </div>
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
           <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
+          {timeUp && <TimeUpBanner />}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
@@ -2578,6 +2642,9 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   const [timeLeft, setTimeLeft] = useState(LISTENING_P4_TIME)
   const [answers, setAnswers] = useState([])
   const [reviewQ, setReviewQ] = useState(null)
+  // Solo practice only: when a question's pacing timer runs out, warn instead of auto-advancing --
+  // mockMode still hard-advances via advance() below.
+  const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
 
@@ -2620,12 +2687,17 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   useEffect(() => {
     if (phase !== 'question' || done) return
     setTimeLeft(LISTENING_P4_TIME)
+    setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          advance(selectedRef.current)
+          if (mockMode) {
+            advance(selectedRef.current)
+          } else {
+            setTimeUp(true)
+          }
           return 0
         }
         return prev - 1
@@ -2767,6 +2839,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
         </div>
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
           <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
+          {timeUp && <TimeUpBanner />}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
@@ -2983,6 +3056,9 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
   const [done, setDone] = useState(false)
   const [reviewQ, setReviewQ] = useState(null)
   const [timeLeft, setTimeLeft] = useState(BUILD_SENTENCE_TOTAL_TIME)
+  // Solo practice only: when the whole-set timer runs out, warn instead of auto-submitting --
+  // mockMode still hard-submits via finishAll() below.
+  const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const stateRef = useRef(null)
 
@@ -3020,9 +3096,14 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          // Time's up — score whatever was placed in every item (unvisited items are simply
-          // empty, which computeAnswers already treats as unanswered/incorrect).
-          finishAll(computeAnswers(stateRef.current.placedByIndex))
+          if (mockMode) {
+            // Time's up — score whatever was placed in every item (unvisited items are simply
+            // empty, which computeAnswers already treats as unanswered/incorrect).
+            finishAll(computeAnswers(stateRef.current.placedByIndex))
+          } else {
+            // Solo practice: don't auto-submit -- just warn and let the student keep working.
+            setTimeUp(true)
+          }
           return 0
         }
         return prev - 1
@@ -3105,7 +3186,7 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct · all-or-nothing scoring</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { setQIdx(0); setPlacedByIndex(items.map(() => [])); setAnswers([]); setDone(false); setTimeLeft(BUILD_SENTENCE_TOTAL_TIME) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { setQIdx(0); setPlacedByIndex(items.map(() => [])); setAnswers([]); setDone(false); setTimeLeft(BUILD_SENTENCE_TOTAL_TIME); setTimeUp(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -3146,6 +3227,7 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
       contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
       <h1 style={{ fontSize: '24px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 36px', maxWidth: '760px' }}>Make an appropriate sentence.</h1>
+      {timeUp && <div style={{ maxWidth: '760px', width: '100%', marginTop: '-16px', marginBottom: '20px' }}><TimeUpBanner /></div>}
       <div style={{ maxWidth: '760px', width: '100%' }}>
         <BuildSentenceItem key={item.id} item={item} initialPlaced={placed}
           onChange={(vals) => setPlacedByIndex(prev => { const next = [...prev]; next[qIdx] = vals; return next })} />
@@ -3343,6 +3425,9 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
   const [historyState, setHistoryState] = useState({ list: [''], idx: 0 })
   const [phase, setPhase] = useState('writing') // 'writing' | 'analyzing' | 'done'
   const [result, setResult] = useState(null)
+  // Solo practice only: when the timer runs out, warn instead of auto-submitting/locking --
+  // mockMode still hard-submits via finishNow() below.
+  const [timeUp, setTimeUp] = useState(false)
   const textareaRef = useRef(null)
   const timerRef = useRef(null)
   const liveRef = useRef(null)
@@ -3373,7 +3458,12 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          finishNow()
+          if (mockMode) {
+            finishNow()
+          } else {
+            // Solo practice: don't auto-submit/lock -- just warn and let the student keep writing.
+            setTimeUp(true)
+          }
           return 0
         }
         return prev - 1
@@ -3438,6 +3528,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
       lowTime={phase === 'writing' && isLowTime}
       contentStyle={{ display: 'flex', flexDirection: 'column' }}
     >
+        {phase === 'writing' && timeUp && <TimeUpBanner />}
         <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: isMobile ? '18px' : '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
           <div style={{ flex: isMobile ? '1 1 100%' : '0.8 1 320px', minWidth: isMobile ? '100%' : '280px', paddingRight: isMobile ? '0' : '36px' }}>
             <div style={{ fontSize: '15px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '18px' }}>{item.scenario}</div>
@@ -3683,6 +3774,9 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
   const [historyState, setHistoryState] = useState({ list: [''], idx: 0 })
   const [phase, setPhase] = useState('writing') // 'writing' | 'analyzing' | 'done'
   const [result, setResult] = useState(null)
+  // Solo practice only: when the timer runs out, warn instead of auto-submitting/locking --
+  // mockMode still hard-submits via finishNow() below.
+  const [timeUp, setTimeUp] = useState(false)
   const textareaRef = useRef(null)
   const timerRef = useRef(null)
   const liveRef = useRef(null)
@@ -3713,7 +3807,12 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
-          finishNow()
+          if (mockMode) {
+            finishNow()
+          } else {
+            // Solo practice: don't auto-submit/lock -- just warn and let the student keep writing.
+            setTimeUp(true)
+          }
           return 0
         }
         return prev - 1
@@ -3778,6 +3877,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
       lowTime={phase === 'writing' && isLowTime}
       contentStyle={{ display: 'flex', flexDirection: 'column' }}
     >
+        {phase === 'writing' && timeUp && <TimeUpBanner />}
         <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: isMobile ? '18px' : '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
           <div style={{ flex: isMobile ? '1 1 100%' : '0.8 1 320px', minWidth: isMobile ? '100%' : '280px', paddingRight: isMobile ? '0' : '36px' }}>
             <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Your professor is teaching a class on {item.subject}. Write a post responding to the professor's question.</div>
