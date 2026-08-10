@@ -1121,7 +1121,7 @@ function APList({ passages, scores, onSelect, onBack }) {
 
 function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, moduleOffset, moduleTotal, onPrevSlot, enterAtEnd, isLastSlot = true, initialAnswers, onAnswersChange }) {
   const isMobile = useIsMobile()
-  const TOTAL_TIME = 600
+  const TOTAL_TIME = 420
   const [currentQ, setCurrentQ] = useState(() => enterAtEnd ? passage.questions.length - 1 : 0)
   const [answers, setAnswers] = useState(() => initialAnswers || (!mockMode && loadDraft('ap', passage.id)) || {})
   const [submitted, setSubmitted] = useState(false)
