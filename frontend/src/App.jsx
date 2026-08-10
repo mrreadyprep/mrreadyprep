@@ -1423,6 +1423,9 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     return () => {
       audio.removeEventListener('ended', handleEnded)
       audio.removeEventListener('error', handleError)
+      // Stop playback when this screen goes away (e.g. Save & Exit mid-clip) so leftover
+      // audio can't keep playing in the background and overlap with whatever plays next.
+      audio.pause()
     }
   }, [])
 
@@ -1489,38 +1492,65 @@ function useIntroNarration(url) {
   const [announced, setAnnounced] = useState(false)
   useEffect(() => {
     setAnnounced(false)
-    if (!url) {
+    const audio = sharedAudioEl
+    if (!url || !audio) {
       const t = setTimeout(() => setAnnounced(true), 300)
       return () => clearTimeout(t)
     }
     let settled = false
-    let audio = null
-    const finish = () => { if (!settled) { settled = true; setAnnounced(true) } }
-    // The actual Audio object + .play() call is deferred behind a cancelable timer (instead of
-    // firing the instant the effect runs) so that React's development-mode double-invoke of
-    // effects (mount → cleanup → mount) can never end up starting two overlapping playbacks of
-    // the same line — which was the cause of the echoed/doubled-voice sound. The cleanup below
-    // cancels the pending timer outright before it ever creates an Audio element.
+    let fallbackTimer = null
+    // Narration and the main conversation/announcement/talk audio share the SAME <audio>
+    // element (sharedAudioEl) on purpose: setting .src on it inherently stops whatever was
+    // playing before, so narration and the main clip can never sound at once, no matter what
+    // order effects fire in. (An earlier version used a separate `new Audio()` for narration,
+    // which could end up playing at the same time as the main clip started by AudioPlayer --
+    // that's the "sesler üstüste biniyor" bug this fixes.)
+    const cleanupListeners = () => {
+      audio.removeEventListener('ended', handleEnded)
+      audio.removeEventListener('error', handleError)
+    }
+    const finish = () => {
+      if (settled) return
+      settled = true
+      if (fallbackTimer) clearTimeout(fallbackTimer)
+      cleanupListeners()
+      setAnnounced(true)
+    }
+    const handleEnded = () => finish()
+    const handleError = () => {
+      console.warn('[mrp audio] intro narration error event:', audio.error && audio.error.code, audio.error && audio.error.message, 'src:', audio.src)
+      finish()
+    }
+    audio.addEventListener('ended', handleEnded)
+    audio.addEventListener('error', handleError)
+    // The actual play() call is deferred behind a cancelable timer (instead of firing the
+    // instant the effect runs) so that React's development-mode double-invoke of effects
+    // (mount → cleanup → mount) can never end up starting two overlapping playbacks of the
+    // same line. The cleanup below cancels the pending timer outright before it ever plays.
     const startTimer = setTimeout(() => {
-      audio = new Audio(url)
-      audio.onended = finish
-      audio.onerror = finish
+      if (settled) return
+      audio.pause()
+      audio.src = url
+      audio.currentTime = 0
+      audio.load()
       const p = audio.play()
       if (p && p.catch) {
-        p.catch(() => {
+        p.catch((err) => {
+          console.warn('[mrp audio] intro narration play() rejected:', err && err.name, err && err.message, 'for', url)
           // Autoplay blocked — resume on the student's next interaction, same fallback pattern
           // used by AudioPlayer, and don't hold up the test indefinitely if they don't interact.
-          const retry = () => { audio.play().catch(finish) }
+          const retry = () => { if (!settled) audio.play().catch(() => {}) }
           document.addEventListener('pointerdown', retry, { once: true, capture: true })
           document.addEventListener('keydown', retry, { once: true, capture: true })
-          setTimeout(finish, 3000)
+          fallbackTimer = setTimeout(finish, 3000)
         })
       }
     }, 60)
     return () => {
       settled = true
       clearTimeout(startTimer)
-      if (audio) audio.pause()
+      if (fallbackTimer) clearTimeout(fallbackTimer)
+      cleanupListeners()
     }
   }, [url])
   return announced
