@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, HTTPException, Depends, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, StreamingResponse
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 import base64
@@ -21,6 +21,7 @@ import bcrypt
 import jwt
 import urllib.request
 import urllib.error
+import requests as http_requests
 
 # google-auth is only actually exercised once GOOGLE_CLIENT_ID is configured (see
 # /api/auth/google below) -- imported defensively so local/dev environments that haven't run
@@ -281,7 +282,55 @@ app.mount("/audio", StaticFiles(directory="audio"), name="audio")
 # is uploaded to an object storage bucket (Cloudflare R2, S3, etc. -- see AUDIO_DEPLOYMENT.md), set
 # this env var to that bucket's public base URL instead, e.g.:
 #   AUDIO_BASE_URL=https://pub-xxxxxxxx.r2.dev
+# This is used internally (by the /audio-proxy endpoint below) as the real upstream to fetch
+# from -- it is NOT sent to the frontend directly anymore. See AUDIO_PROXY_BASE_URL.
 AUDIO_BASE_URL = os.environ.get("AUDIO_BASE_URL", f"{BACKEND_PUBLIC_URL}/audio")
+
+# Public-facing base URL actually sent to the frontend in every audio_url/audio_url_intro field.
+# Routes every request through THIS backend (/audio-proxy/...) instead of letting the student's
+# browser connect straight to the R2 bucket. Some students' networks/ISPs (observed: Istanbul,
+# Turkey -- matches a documented period of Cloudflare network issues in IST) fail to establish a
+# TLS connection directly to *.r2.dev at all (ERR_SSL_PROTOCOL_ERROR / ERR_CONNECTION_RESET),
+# in both Safari and Chrome, on multiple networks -- while the exact same URL works fine from a
+# server. Proxying through Render's own server-to-server connection to R2 sidesteps that
+# unreliable client-to-R2 path entirely; the browser only ever has to reach our own backend,
+# which it already does successfully for every other API call.
+AUDIO_PROXY_BASE_URL = f"{BACKEND_PUBLIC_URL}/audio-proxy"
+
+# Streams an audio file server-to-server from the real upstream (AUDIO_BASE_URL, e.g. R2) back
+# to the browser, instead of the browser connecting to that upstream directly (see
+# AUDIO_PROXY_BASE_URL above for why). Forwards the Range header both ways so seeking/progressive
+# playback in <audio> elements keeps working exactly as it did with a direct R2 URL (206 Partial
+# Content, Content-Range, Accept-Ranges).
+@app.get("/audio-proxy/{path:path}")
+def audio_proxy(path: str, request: Request):
+    upstream_url = f"{AUDIO_BASE_URL}/{path}"
+    fwd_headers = {}
+    range_header = request.headers.get("range")
+    if range_header:
+        fwd_headers["Range"] = range_header
+    try:
+        upstream = http_requests.get(upstream_url, headers=fwd_headers, stream=True, timeout=20)
+    except http_requests.RequestException:
+        raise HTTPException(status_code=502, detail="Audio upstream unreachable")
+    if upstream.status_code not in (200, 206):
+        upstream.close()
+        code = 404 if upstream.status_code == 404 else 502
+        raise HTTPException(status_code=code, detail="Audio not available")
+    resp_headers = {"Accept-Ranges": "bytes", "Cache-Control": "public, max-age=86400"}
+    for h in ("Content-Type", "Content-Length", "Content-Range"):
+        if h in upstream.headers:
+            resp_headers[h] = upstream.headers[h]
+
+    def iter_bytes():
+        try:
+            for chunk in upstream.iter_content(chunk_size=65536):
+                if chunk:
+                    yield chunk
+        finally:
+            upstream.close()
+
+    return StreamingResponse(iter_bytes(), status_code=upstream.status_code, headers=resp_headers)
 
 # Several Listening JSON pools (listening_part1-4.json, mock_listening_*.json, and the "listening"
 # section embedded in every fixed_test_N.json) were authored with audio_url values hardcoded to
@@ -297,7 +346,7 @@ def _fix_audio_urls(obj):
     if isinstance(obj, str):
         for prefix in _LEGACY_AUDIO_PREFIXES:
             if obj.startswith(prefix):
-                return f"{AUDIO_BASE_URL}/{obj[len(prefix):]}"
+                return f"{AUDIO_PROXY_BASE_URL}/{obj[len(prefix):]}"
         return obj
     if isinstance(obj, list):
         return [_fix_audio_urls(v) for v in obj]
@@ -2067,9 +2116,9 @@ def get_mock_disc(user=Depends(get_current_user_optional)):
 def _build_mock_speaking_lr():
     data = _load_json_pool(MOCK_SPEAKING_LR_FILE)
     for s in data:
-        s["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_lr/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_lr/{s['id']}/intro.mp3"
         for sent in s["sentences"]:
-            sent["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_lr/{s['id']}/{sent['id']}.mp3"
+            sent["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_lr/{s['id']}/{sent['id']}.mp3"
     return data
 
 @app.get("/api/mock/listen-and-repeat")
@@ -2080,9 +2129,9 @@ def get_mock_speaking_lr(user=Depends(get_current_user_optional)):
 def _build_mock_speaking_interview():
     data = _load_json_pool(MOCK_SPEAKING_INTERVIEW_FILE)
     for s in data:
-        s["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_interview/{s['id']}/intro.mp3"
         for q in s["questions"]:
-            q["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{s['id']}/{q['id']}.mp3"
+            q["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_interview/{s['id']}/{q['id']}.mp3"
     return data
 
 @app.get("/api/mock/interview")
@@ -2177,13 +2226,13 @@ def _build_fixed_test(path):
     # above) since their mp3s live under the ORIGINAL shared pool's id-keyed folders — inject
     # the URLs here exactly like the dynamic-pool endpoints do.
     lr = data["speaking"]["lr"]
-    lr["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_lr/{lr['id']}/intro.mp3"
+    lr["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_lr/{lr['id']}/intro.mp3"
     for sent in lr["sentences"]:
-        sent["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_lr/{lr['id']}/{sent['id']}.mp3"
+        sent["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_lr/{lr['id']}/{sent['id']}.mp3"
     interview = data["speaking"]["interview"]
-    interview["audio_url_intro"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{interview['id']}/intro.mp3"
+    interview["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_interview/{interview['id']}/intro.mp3"
     for q in interview["questions"]:
-        q["audio_url"] = f"{AUDIO_BASE_URL}/mock_speaking_interview/{interview['id']}/{q['id']}.mp3"
+        q["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_interview/{interview['id']}/{q['id']}.mp3"
     data["listening"] = _fix_audio_urls(data["listening"])
     return data
 
@@ -2246,9 +2295,9 @@ def get_academic_discussion_list(user=Depends(get_current_user_optional)):
 def _build_speaking_lr():
     data = _load_json_pool(SPEAKING_LR_FILE)
     for s in data:
-        s["audio_url_intro"] = f"{AUDIO_BASE_URL}/speaking_lr/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/speaking_lr/{s['id']}/intro.mp3"
         for sent in s["sentences"]:
-            sent["audio_url"] = f"{AUDIO_BASE_URL}/speaking_lr/{s['id']}/{sent['id']}.mp3"
+            sent["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/speaking_lr/{s['id']}/{sent['id']}.mp3"
     return data
 
 # --- Speaking: Listen and Repeat ---
@@ -2260,9 +2309,9 @@ def get_speaking_listen_repeat(user=Depends(get_current_user_optional)):
 def _build_speaking_interview():
     data = _load_json_pool(SPEAKING_INTERVIEW_FILE)
     for s in data:
-        s["audio_url_intro"] = f"{AUDIO_BASE_URL}/speaking_interview/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/speaking_interview/{s['id']}/intro.mp3"
         for q in s["questions"]:
-            q["audio_url"] = f"{AUDIO_BASE_URL}/speaking_interview/{s['id']}/{q['id']}.mp3"
+            q["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/speaking_interview/{s['id']}/{q['id']}.mp3"
     return data
 
 # --- Speaking: Take an Interview ---
