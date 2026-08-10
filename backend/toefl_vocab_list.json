@@ -1888,5 +1888,6215 @@
     "example": "A summary precedes the report.",
     "difficulty": "hard",
     "learned": false
+  },
+  {
+    "id": 211,
+    "word": "Abandon",
+    "type": "VERB",
+    "meaning": "to give up or leave something completely",
+    "example": "The town was abandoned after the flood.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 212,
+    "word": "Abundant",
+    "type": "ADJECTIVE",
+    "meaning": "existing in large quantities",
+    "example": "Fresh fruit is abundant in the summer market.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 213,
+    "word": "Accompany",
+    "type": "VERB",
+    "meaning": "to go somewhere with someone",
+    "example": "A nurse will accompany the patient to the exam.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 214,
+    "word": "Accomplish",
+    "type": "VERB",
+    "meaning": "to succeed in doing something",
+    "example": "She accomplished her goal of finishing early.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 215,
+    "word": "Accurate",
+    "type": "ADJECTIVE",
+    "meaning": "correct and exact in every detail",
+    "example": "The weather forecast was surprisingly accurate.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 216,
+    "word": "Accustomed",
+    "type": "ADJECTIVE",
+    "meaning": "familiar with something through experience",
+    "example": "He grew accustomed to the noisy city.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 217,
+    "word": "Acknowledge",
+    "type": "VERB",
+    "meaning": "to accept or admit that something exists or is true",
+    "example": "The author acknowledged several earlier studies.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 218,
+    "word": "Additional",
+    "type": "ADJECTIVE",
+    "meaning": "added to what already exists; extra",
+    "example": "Students may request additional time on the test.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 219,
+    "word": "Admit",
+    "type": "VERB",
+    "meaning": "to confess that something is true",
+    "example": "He admitted that the plan had failed.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 220,
+    "word": "Adopt",
+    "type": "VERB",
+    "meaning": "to choose to follow or use a method or policy",
+    "example": "The school adopted a new grading system.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 221,
+    "word": "Advance",
+    "type": "VERB",
+    "meaning": "to move forward or make progress",
+    "example": "Technology has advanced rapidly this decade.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 222,
+    "word": "Advantage",
+    "type": "NOUN",
+    "meaning": "a condition that puts someone in a favorable position",
+    "example": "Speaking two languages gave her an advantage.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 223,
+    "word": "Advocate",
+    "type": "VERB",
+    "meaning": "to publicly support a cause or policy",
+    "example": "The group advocates for cleaner energy sources.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 224,
+    "word": "Aim",
+    "type": "VERB",
+    "meaning": "to intend or plan to achieve something",
+    "example": "The program aims to reduce poverty in the region.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 225,
+    "word": "Alert",
+    "type": "ADJECTIVE",
+    "meaning": "watchful and quick to notice things",
+    "example": "Drivers must stay alert in heavy traffic.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 226,
+    "word": "Alter",
+    "type": "VERB",
+    "meaning": "to change something, usually slightly",
+    "example": "They altered the schedule to fit everyone.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 227,
+    "word": "Amount",
+    "type": "NOUN",
+    "meaning": "a quantity of something",
+    "example": "A large amount of data was collected.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 228,
+    "word": "Analysis",
+    "type": "NOUN",
+    "meaning": "a detailed examination of something",
+    "example": "The report includes an analysis of the results.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 229,
+    "word": "Ancient",
+    "type": "ADJECTIVE",
+    "meaning": "belonging to the very distant past",
+    "example": "Ancient ruins were discovered near the coast.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 230,
+    "word": "Apply",
+    "type": "VERB",
+    "meaning": "to put a method or idea into practical use",
+    "example": "Students applied the formula to solve the problem.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 231,
+    "word": "Appropriate",
+    "type": "ADJECTIVE",
+    "meaning": "suitable or fitting for a situation",
+    "example": "Formal clothing is appropriate for the interview.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 232,
+    "word": "Aspect",
+    "type": "NOUN",
+    "meaning": "one particular part or feature of something",
+    "example": "This essay examines one aspect of the issue.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 233,
+    "word": "Assert",
+    "type": "VERB",
+    "meaning": "to state something confidently as true",
+    "example": "The scientist asserted that the theory was correct.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 234,
+    "word": "Assign",
+    "type": "VERB",
+    "meaning": "to give someone a task or duty",
+    "example": "The teacher assigned three chapters for homework.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 235,
+    "word": "Associate",
+    "type": "VERB",
+    "meaning": "to connect one thing with another in the mind",
+    "example": "People often associate the color red with danger.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 236,
+    "word": "Assure",
+    "type": "VERB",
+    "meaning": "to tell someone confidently that something is true",
+    "example": "She assured the team that funding was secure.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 237,
+    "word": "Attach",
+    "type": "VERB",
+    "meaning": "to fasten or connect one thing to another",
+    "example": "Please attach the document to your email.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 238,
+    "word": "Attempt",
+    "type": "VERB",
+    "meaning": "to try to do something",
+    "example": "He attempted to repair the machine himself.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 239,
+    "word": "Attend",
+    "type": "VERB",
+    "meaning": "to be present at an event",
+    "example": "All employees must attend the meeting.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 240,
+    "word": "Attitude",
+    "type": "NOUN",
+    "meaning": "a settled way of thinking about something",
+    "example": "Her positive attitude motivated the whole team.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 241,
+    "word": "Attract",
+    "type": "VERB",
+    "meaning": "to cause someone to be interested in something",
+    "example": "The museum attracts thousands of visitors yearly.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 242,
+    "word": "Available",
+    "type": "ADJECTIVE",
+    "meaning": "able to be used or obtained",
+    "example": "Tickets are available online starting Monday.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 243,
+    "word": "Aware",
+    "type": "ADJECTIVE",
+    "meaning": "having knowledge of a situation",
+    "example": "Students should be aware of the deadline.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 244,
+    "word": "Background",
+    "type": "NOUN",
+    "meaning": "a person's experience, education, or origin",
+    "example": "She has a strong background in biology.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 245,
+    "word": "Balance",
+    "type": "NOUN",
+    "meaning": "an even distribution of weight or elements",
+    "example": "The report keeps a balance between facts and opinion.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 246,
+    "word": "Barrier",
+    "type": "NOUN",
+    "meaning": "an obstacle that prevents progress",
+    "example": "Language can be a barrier to communication.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 247,
+    "word": "Basic",
+    "type": "ADJECTIVE",
+    "meaning": "forming an essential foundation",
+    "example": "The course covers the basic principles of economics.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 248,
+    "word": "Behavior",
+    "type": "NOUN",
+    "meaning": "the way a person or animal acts",
+    "example": "The study examined animal behavior in the wild.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 249,
+    "word": "Belief",
+    "type": "NOUN",
+    "meaning": "an idea accepted as true",
+    "example": "Cultural beliefs shape how people view illness.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 250,
+    "word": "Beneficial",
+    "type": "ADJECTIVE",
+    "meaning": "producing good results",
+    "example": "Regular exercise is beneficial for the heart.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 251,
+    "word": "Boost",
+    "type": "VERB",
+    "meaning": "to increase or improve something",
+    "example": "The campaign boosted sales significantly.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 252,
+    "word": "Boundary",
+    "type": "NOUN",
+    "meaning": "a line that marks the limits of an area",
+    "example": "The river forms a natural boundary between towns.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 253,
+    "word": "Brief",
+    "type": "ADJECTIVE",
+    "meaning": "lasting only a short time",
+    "example": "She gave a brief summary of the findings.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 254,
+    "word": "Broad",
+    "type": "ADJECTIVE",
+    "meaning": "covering a wide range of topics",
+    "example": "The course offers a broad overview of history.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 255,
+    "word": "Capable",
+    "type": "ADJECTIVE",
+    "meaning": "having the ability to do something",
+    "example": "The new engine is capable of higher speeds.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 256,
+    "word": "Capacity",
+    "type": "NOUN",
+    "meaning": "the maximum amount something can contain or produce",
+    "example": "The stadium has a capacity of fifty thousand.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 257,
+    "word": "Careful",
+    "type": "ADJECTIVE",
+    "meaning": "giving close attention to avoid mistakes",
+    "example": "Careful planning prevented any delays.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 258,
+    "word": "Cause",
+    "type": "VERB",
+    "meaning": "to make something happen",
+    "example": "Heavy rain caused flooding downtown.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 259,
+    "word": "Challenge",
+    "type": "NOUN",
+    "meaning": "a difficult task that tests ability",
+    "example": "Finding funding remains a major challenge.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 260,
+    "word": "Characteristic",
+    "type": "NOUN",
+    "meaning": "a typical feature of someone or something",
+    "example": "Curiosity is a characteristic of young children.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 261,
+    "word": "Circumstance",
+    "type": "NOUN",
+    "meaning": "a fact or condition connected to an event",
+    "example": "Under normal circumstances, the flight departs on time.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 262,
+    "word": "Claim",
+    "type": "VERB",
+    "meaning": "to state that something is true",
+    "example": "The company claims its product is eco-friendly.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 263,
+    "word": "Classify",
+    "type": "VERB",
+    "meaning": "to arrange into groups by shared qualities",
+    "example": "Scientists classify animals by their characteristics.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 264,
+    "word": "Clear",
+    "type": "ADJECTIVE",
+    "meaning": "easy to understand or perceive",
+    "example": "The instructions were clear and simple.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 265,
+    "word": "Collapse",
+    "type": "VERB",
+    "meaning": "to fall down or fail suddenly",
+    "example": "The old bridge collapsed during the storm.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 266,
+    "word": "Collect",
+    "type": "VERB",
+    "meaning": "to gather items together",
+    "example": "Researchers collected samples from the lake.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 267,
+    "word": "Combine",
+    "type": "VERB",
+    "meaning": "to join two or more things together",
+    "example": "The recipe combines local and imported ingredients.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 268,
+    "word": "Comment",
+    "type": "NOUN",
+    "meaning": "a spoken or written remark",
+    "example": "The teacher left a comment on the essay.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 269,
+    "word": "Commit",
+    "type": "VERB",
+    "meaning": "to pledge to do something",
+    "example": "The government committed to reducing emissions.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 270,
+    "word": "Common",
+    "type": "ADJECTIVE",
+    "meaning": "occurring often or shared by many",
+    "example": "This is a common mistake among beginners.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 271,
+    "word": "Communicate",
+    "type": "VERB",
+    "meaning": "to share or exchange information",
+    "example": "Good managers communicate clearly with staff.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 272,
+    "word": "Community",
+    "type": "NOUN",
+    "meaning": "a group of people living in the same area",
+    "example": "The festival brings the whole community together.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 273,
+    "word": "Compare",
+    "type": "VERB",
+    "meaning": "to examine similarities and differences",
+    "example": "Students compared the two poems in their essay.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 274,
+    "word": "Compete",
+    "type": "VERB",
+    "meaning": "to try to win against others",
+    "example": "Small firms compete with large corporations.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 275,
+    "word": "Complete",
+    "type": "ADJECTIVE",
+    "meaning": "having all necessary parts",
+    "example": "Please submit a complete application form.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 276,
+    "word": "Complex",
+    "type": "ADJECTIVE",
+    "meaning": "having many interconnected parts",
+    "example": "The immune system is remarkably complex.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 277,
+    "word": "Comply",
+    "type": "VERB",
+    "meaning": "to act according to a rule or request",
+    "example": "All vehicles must comply with safety standards.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 278,
+    "word": "Concentrate",
+    "type": "VERB",
+    "meaning": "to focus attention on one thing",
+    "example": "It is hard to concentrate in a noisy room.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 279,
+    "word": "Concern",
+    "type": "NOUN",
+    "meaning": "a matter of worry or interest",
+    "example": "Pollution is a growing concern for residents.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 280,
+    "word": "Conclude",
+    "type": "VERB",
+    "meaning": "to decide something after considering evidence",
+    "example": "The jury concluded that he was innocent.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 281,
+    "word": "Condition",
+    "type": "NOUN",
+    "meaning": "the state something is in",
+    "example": "The car is in excellent condition.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 282,
+    "word": "Confirm",
+    "type": "VERB",
+    "meaning": "to state that something is true or correct",
+    "example": "Please confirm your reservation by email.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 283,
+    "word": "Connect",
+    "type": "VERB",
+    "meaning": "to join or link two things",
+    "example": "The bridge connects the island to the mainland.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 284,
+    "word": "Consider",
+    "type": "VERB",
+    "meaning": "to think carefully about something",
+    "example": "The board will consider the proposal next week.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 285,
+    "word": "Constitute",
+    "type": "VERB",
+    "meaning": "to be a part of a whole",
+    "example": "Women constitute half of the workforce.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 286,
+    "word": "Consume",
+    "type": "VERB",
+    "meaning": "to use up a resource",
+    "example": "The factory consumes large amounts of energy.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 287,
+    "word": "Contact",
+    "type": "VERB",
+    "meaning": "to communicate with someone",
+    "example": "Please contact the office for more details.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 288,
+    "word": "Contain",
+    "type": "VERB",
+    "meaning": "to hold or include something within",
+    "example": "The bottle contains a mixture of oils.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 289,
+    "word": "Contract",
+    "type": "NOUN",
+    "meaning": "a formal agreement between parties",
+    "example": "Both companies signed the contract yesterday.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 290,
+    "word": "Contrast",
+    "type": "NOUN",
+    "meaning": "a clear difference between two things",
+    "example": "There is a sharp contrast between the two theories.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 291,
+    "word": "Convey",
+    "type": "VERB",
+    "meaning": "to communicate an idea or feeling",
+    "example": "The painting conveys a sense of loneliness.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 292,
+    "word": "Cooperate",
+    "type": "VERB",
+    "meaning": "to work together toward a shared goal",
+    "example": "The two countries agreed to cooperate on research.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 293,
+    "word": "Coordinate",
+    "type": "VERB",
+    "meaning": "to organize different elements to work together",
+    "example": "She coordinates volunteers for the event.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 294,
+    "word": "Core",
+    "type": "NOUN",
+    "meaning": "the central or most important part",
+    "example": "Trust is at the core of any relationship.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 295,
+    "word": "Correct",
+    "type": "ADJECTIVE",
+    "meaning": "true or accurate; free from error",
+    "example": "Check that all figures are correct before submitting.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 296,
+    "word": "Couple",
+    "type": "NOUN",
+    "meaning": "two things considered together",
+    "example": "It took a couple of weeks to finish the report.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 297,
+    "word": "Credit",
+    "type": "NOUN",
+    "meaning": "acknowledgment for an achievement",
+    "example": "She deserves credit for the project's success.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 298,
+    "word": "Criteria",
+    "type": "NOUN",
+    "meaning": "standards used to judge something",
+    "example": "The judges applied strict criteria to each entry.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 299,
+    "word": "Critical",
+    "type": "ADJECTIVE",
+    "meaning": "extremely important; expressing disapproval",
+    "example": "Sleep is critical for memory formation.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 300,
+    "word": "Cycle",
+    "type": "NOUN",
+    "meaning": "a series of events that repeat regularly",
+    "example": "The water cycle involves evaporation and rainfall.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 301,
+    "word": "Debate",
+    "type": "NOUN",
+    "meaning": "a formal discussion of opposing views",
+    "example": "The debate over the policy continued for hours.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 302,
+    "word": "Decade",
+    "type": "NOUN",
+    "meaning": "a period of ten years",
+    "example": "The city has changed greatly over the past decade.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 303,
+    "word": "Decrease",
+    "type": "VERB",
+    "meaning": "to become smaller or fewer",
+    "example": "Traffic accidents decreased after the new law.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 304,
+    "word": "Dedicate",
+    "type": "VERB",
+    "meaning": "to devote time or effort to a purpose",
+    "example": "She dedicated years to studying coral reefs.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 305,
+    "word": "Definite",
+    "type": "ADJECTIVE",
+    "meaning": "certain and clearly stated",
+    "example": "There is no definite answer to the question yet.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 306,
+    "word": "Degree",
+    "type": "NOUN",
+    "meaning": "an amount or level of something",
+    "example": "The task requires a high degree of precision.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 307,
+    "word": "Deny",
+    "type": "VERB",
+    "meaning": "to state that something is not true",
+    "example": "The company denied any wrongdoing.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 308,
+    "word": "Depend",
+    "type": "VERB",
+    "meaning": "to rely on something or someone",
+    "example": "The harvest depends heavily on rainfall.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 309,
+    "word": "Describe",
+    "type": "VERB",
+    "meaning": "to give an account of something in words",
+    "example": "She described the process step by step.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 310,
+    "word": "Detail",
+    "type": "NOUN",
+    "meaning": "a small individual feature of something",
+    "example": "The report covers every detail of the experiment.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 311,
+    "word": "Detect",
+    "type": "VERB",
+    "meaning": "to discover the presence of something",
+    "example": "The sensor can detect even tiny changes in temperature.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 312,
+    "word": "Determine",
+    "type": "VERB",
+    "meaning": "to establish something precisely",
+    "example": "Tests were used to determine the cause of failure.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 313,
+    "word": "Develop",
+    "type": "VERB",
+    "meaning": "to grow or become more advanced",
+    "example": "The region developed quickly after the railway opened.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 314,
+    "word": "Device",
+    "type": "NOUN",
+    "meaning": "an object made for a particular purpose",
+    "example": "The device measures air quality in real time.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 315,
+    "word": "Differ",
+    "type": "VERB",
+    "meaning": "to be unlike or different",
+    "example": "Opinions differ widely on this topic.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 316,
+    "word": "Dimension",
+    "type": "NOUN",
+    "meaning": "an aspect or feature of a situation",
+    "example": "The crisis added a new dimension to the debate.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 317,
+    "word": "Direct",
+    "type": "ADJECTIVE",
+    "meaning": "going straight to a point without detour",
+    "example": "There is a direct flight to the capital.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 318,
+    "word": "Disappear",
+    "type": "VERB",
+    "meaning": "to cease to be visible",
+    "example": "The species disappeared from the region decades ago.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 319,
+    "word": "Discover",
+    "type": "VERB",
+    "meaning": "to find something for the first time",
+    "example": "Researchers discovered a new species of frog.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 320,
+    "word": "Discuss",
+    "type": "VERB",
+    "meaning": "to talk about something in detail",
+    "example": "The class discussed the causes of the war.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 321,
+    "word": "Display",
+    "type": "VERB",
+    "meaning": "to show something publicly",
+    "example": "The museum displays artifacts from the ancient city.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 322,
+    "word": "Distinguish",
+    "type": "VERB",
+    "meaning": "to recognize a difference between things",
+    "example": "It can be hard to distinguish the two species.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 323,
+    "word": "Distribute",
+    "type": "VERB",
+    "meaning": "to give something out to a number of people",
+    "example": "Volunteers distributed food to the flood victims.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 324,
+    "word": "Disturb",
+    "type": "VERB",
+    "meaning": "to interrupt or interfere with something",
+    "example": "Loud noise can disturb sleep patterns.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 325,
+    "word": "Divide",
+    "type": "VERB",
+    "meaning": "to separate into parts",
+    "example": "The teacher divided the class into small groups.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 326,
+    "word": "Document",
+    "type": "NOUN",
+    "meaning": "a piece of written or printed material",
+    "example": "Sign the document before submitting it.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 327,
+    "word": "Domestic",
+    "type": "ADJECTIVE",
+    "meaning": "relating to one's own country or home",
+    "example": "The airline offers both domestic and international flights.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 328,
+    "word": "Draft",
+    "type": "NOUN",
+    "meaning": "an early version of a piece of writing",
+    "example": "She revised the first draft of her essay.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 329,
+    "word": "Drastic",
+    "type": "ADJECTIVE",
+    "meaning": "extreme and having a strong effect",
+    "example": "The company made drastic cuts to its budget.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 330,
+    "word": "Duration",
+    "type": "NOUN",
+    "meaning": "the length of time something lasts",
+    "example": "The duration of the flight is about six hours.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 331,
+    "word": "Duty",
+    "type": "NOUN",
+    "meaning": "a moral or legal obligation",
+    "example": "It is every citizen's duty to vote.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 332,
+    "word": "Economy",
+    "type": "NOUN",
+    "meaning": "the system of production and trade in a region",
+    "example": "The economy grew steadily last year.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 333,
+    "word": "Edit",
+    "type": "VERB",
+    "meaning": "to prepare a text by correcting or improving it",
+    "example": "She edited the manuscript before publication.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 334,
+    "word": "Educate",
+    "type": "VERB",
+    "meaning": "to give instruction or training",
+    "example": "The program aims to educate farmers about irrigation.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 335,
+    "word": "Effort",
+    "type": "NOUN",
+    "meaning": "a vigorous attempt to do something",
+    "example": "Their effort to save the building succeeded.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 336,
+    "word": "Elaborate",
+    "type": "VERB",
+    "meaning": "to explain something in more detail",
+    "example": "Could you elaborate on your last point?",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 337,
+    "word": "Embrace",
+    "type": "VERB",
+    "meaning": "to accept something willingly",
+    "example": "The company embraced new technology early.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 338,
+    "word": "Emotion",
+    "type": "NOUN",
+    "meaning": "a strong feeling such as joy or fear",
+    "example": "Music can evoke powerful emotions.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 339,
+    "word": "Emphasis",
+    "type": "NOUN",
+    "meaning": "special importance given to something",
+    "example": "The curriculum places emphasis on critical thinking.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 340,
+    "word": "Encounter",
+    "type": "VERB",
+    "meaning": "to unexpectedly experience or meet something",
+    "example": "Explorers encountered many hardships on the journey.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 341,
+    "word": "Encourage",
+    "type": "VERB",
+    "meaning": "to give support or confidence to someone",
+    "example": "Teachers encourage students to ask questions.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 342,
+    "word": "Energy",
+    "type": "NOUN",
+    "meaning": "the power needed for activity or work",
+    "example": "Solar energy is becoming more affordable.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 343,
+    "word": "Enforce",
+    "type": "VERB",
+    "meaning": "to compel observance of a law or rule",
+    "example": "Officials enforce the speed limit on this road.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 344,
+    "word": "Engage",
+    "type": "VERB",
+    "meaning": "to participate or become involved in something",
+    "example": "Students actively engaged in the discussion.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 345,
+    "word": "Enormous",
+    "type": "ADJECTIVE",
+    "meaning": "very large in size or amount",
+    "example": "The project required an enormous amount of funding.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 346,
+    "word": "Entire",
+    "type": "ADJECTIVE",
+    "meaning": "whole; with no part left out",
+    "example": "The entire building was renovated last year.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 347,
+    "word": "Entity",
+    "type": "NOUN",
+    "meaning": "a thing with a distinct existence",
+    "example": "The new department will operate as a separate entity.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 348,
+    "word": "Episode",
+    "type": "NOUN",
+    "meaning": "a single event or period in a series",
+    "example": "This episode of the disease was more severe.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 349,
+    "word": "Equal",
+    "type": "ADJECTIVE",
+    "meaning": "having the same value or status",
+    "example": "All candidates were given equal opportunity.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 350,
+    "word": "Equip",
+    "type": "VERB",
+    "meaning": "to supply someone with what is needed",
+    "example": "The course equips students with practical skills.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 351,
+    "word": "Error",
+    "type": "NOUN",
+    "meaning": "a mistake",
+    "example": "The report contained a small calculation error.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 352,
+    "word": "Essential",
+    "type": "ADJECTIVE",
+    "meaning": "absolutely necessary",
+    "example": "Clean water is essential for good health.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 353,
+    "word": "Event",
+    "type": "NOUN",
+    "meaning": "a thing that happens, especially an important one",
+    "example": "The conference is the biggest event of the year.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 354,
+    "word": "Eventual",
+    "type": "ADJECTIVE",
+    "meaning": "occurring at the end of a process",
+    "example": "Their eventual success surprised many critics.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 355,
+    "word": "Evident",
+    "type": "ADJECTIVE",
+    "meaning": "clearly seen or understood",
+    "example": "It was evident that the plan needed changes.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 356,
+    "word": "Evolve",
+    "type": "VERB",
+    "meaning": "to develop gradually over time",
+    "example": "The company's strategy evolved over several years.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 357,
+    "word": "Examine",
+    "type": "VERB",
+    "meaning": "to inspect something in detail",
+    "example": "Doctors examined the patient's test results.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 358,
+    "word": "Excess",
+    "type": "NOUN",
+    "meaning": "an amount that is more than necessary",
+    "example": "Excess sugar in the diet can cause health problems.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 359,
+    "word": "Exchange",
+    "type": "VERB",
+    "meaning": "to give and receive something in return",
+    "example": "The students exchanged ideas after the lecture.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 360,
+    "word": "Exist",
+    "type": "VERB",
+    "meaning": "to be present or occur in reality",
+    "example": "Few written records exist from that period.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 361,
+    "word": "Expert",
+    "type": "NOUN",
+    "meaning": "a person with special skill or knowledge",
+    "example": "An expert reviewed the design before approval.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 362,
+    "word": "Explicit",
+    "type": "ADJECTIVE",
+    "meaning": "stated clearly and in detail",
+    "example": "The instructions were explicit about the deadline.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 363,
+    "word": "Explore",
+    "type": "VERB",
+    "meaning": "to travel through an area to learn about it",
+    "example": "The team explored the cave system for weeks.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 364,
+    "word": "Export",
+    "type": "VERB",
+    "meaning": "to send goods to another country for sale",
+    "example": "The country exports most of its coffee crop.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 365,
+    "word": "Expose",
+    "type": "VERB",
+    "meaning": "to make something visible or known",
+    "example": "The investigation exposed serious safety failures.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 366,
+    "word": "Extend",
+    "type": "VERB",
+    "meaning": "to make something longer or larger",
+    "example": "The library extended its opening hours.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 367,
+    "word": "Extensive",
+    "type": "ADJECTIVE",
+    "meaning": "covering a large area or scope",
+    "example": "The report is based on extensive research.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 368,
+    "word": "Extent",
+    "type": "NOUN",
+    "meaning": "the degree to which something is true",
+    "example": "The extent of the damage was unclear at first.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 369,
+    "word": "Extract",
+    "type": "VERB",
+    "meaning": "to remove or obtain something from a source",
+    "example": "Workers extract minerals from the mountain.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 370,
+    "word": "Fact",
+    "type": "NOUN",
+    "meaning": "a thing known to be true",
+    "example": "The article presents facts, not opinions.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 371,
+    "word": "Final",
+    "type": "ADJECTIVE",
+    "meaning": "coming at the end; last",
+    "example": "The final decision rests with the committee.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 372,
+    "word": "Finance",
+    "type": "NOUN",
+    "meaning": "the management of money",
+    "example": "She studied finance before joining the bank.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 373,
+    "word": "Finite",
+    "type": "ADJECTIVE",
+    "meaning": "having limits or an end",
+    "example": "Natural resources are finite and must be conserved.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 374,
+    "word": "Flexible",
+    "type": "ADJECTIVE",
+    "meaning": "able to change or adapt easily",
+    "example": "The schedule is flexible enough for working students.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 375,
+    "word": "Focus",
+    "type": "VERB",
+    "meaning": "to direct attention toward something",
+    "example": "The study focuses on childhood nutrition.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 376,
+    "word": "Format",
+    "type": "NOUN",
+    "meaning": "the way something is arranged or presented",
+    "example": "The essay must follow a specific format.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 377,
+    "word": "Former",
+    "type": "ADJECTIVE",
+    "meaning": "having previously held a position",
+    "example": "The former president gave a speech at the event.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 378,
+    "word": "Foundation",
+    "type": "NOUN",
+    "meaning": "the basis on which something is built",
+    "example": "Trust forms the foundation of good teamwork.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 379,
+    "word": "Framework",
+    "type": "NOUN",
+    "meaning": "a basic structure supporting a system",
+    "example": "The report proposes a framework for reform.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 380,
+    "word": "Frequent",
+    "type": "ADJECTIVE",
+    "meaning": "occurring often",
+    "example": "Frequent testing helps catch errors early.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 381,
+    "word": "Gender",
+    "type": "NOUN",
+    "meaning": "the state of being male or female",
+    "example": "The survey examined gender differences in spending.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 382,
+    "word": "Generation",
+    "type": "NOUN",
+    "meaning": "all people born around the same time",
+    "example": "The younger generation relies heavily on technology.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 383,
+    "word": "Global",
+    "type": "ADJECTIVE",
+    "meaning": "relating to the whole world",
+    "example": "Climate change is a global concern.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 384,
+    "word": "Grant",
+    "type": "VERB",
+    "meaning": "to formally give something requested",
+    "example": "The university granted her a scholarship.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 385,
+    "word": "Guarantee",
+    "type": "VERB",
+    "meaning": "to promise that something will happen",
+    "example": "The company guarantees a full refund.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 386,
+    "word": "Guideline",
+    "type": "NOUN",
+    "meaning": "a rule indicating how something should be done",
+    "example": "Follow the guidelines when submitting your report.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 387,
+    "word": "Highlight",
+    "type": "VERB",
+    "meaning": "to draw special attention to something",
+    "example": "The study highlights the need for more funding.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 388,
+    "word": "Historic",
+    "type": "ADJECTIVE",
+    "meaning": "famous or important in history",
+    "example": "The city is known for its historic buildings.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 389,
+    "word": "Huge",
+    "type": "ADJECTIVE",
+    "meaning": "extremely large",
+    "example": "The event attracted a huge crowd.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 390,
+    "word": "Identical",
+    "type": "ADJECTIVE",
+    "meaning": "exactly the same",
+    "example": "The twins wore identical outfits.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 391,
+    "word": "Image",
+    "type": "NOUN",
+    "meaning": "a representation of the appearance of something",
+    "example": "The satellite captured a clear image of the storm.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 392,
+    "word": "Imitate",
+    "type": "VERB",
+    "meaning": "to copy the behavior or actions of someone",
+    "example": "Young children often imitate their parents.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 393,
+    "word": "Immediate",
+    "type": "ADJECTIVE",
+    "meaning": "happening or done at once",
+    "example": "The doctor recommended immediate treatment.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 394,
+    "word": "Implication",
+    "type": "NOUN",
+    "meaning": "a possible effect or result",
+    "example": "The findings have important implications for policy.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 395,
+    "word": "Imply",
+    "type": "VERB",
+    "meaning": "to suggest something without stating it directly",
+    "example": "Her tone implied that she disagreed.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 396,
+    "word": "Import",
+    "type": "VERB",
+    "meaning": "to bring goods into a country from abroad",
+    "example": "The nation imports most of its oil.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 397,
+    "word": "Impose",
+    "type": "VERB",
+    "meaning": "to force a rule or condition on someone",
+    "example": "New taxes were imposed on imported goods.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 398,
+    "word": "Impress",
+    "type": "VERB",
+    "meaning": "to make someone admire or respect you",
+    "example": "The presentation impressed the entire committee.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 399,
+    "word": "Incident",
+    "type": "NOUN",
+    "meaning": "an event, especially an unusual one",
+    "example": "The incident was reported to local police.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 400,
+    "word": "Income",
+    "type": "NOUN",
+    "meaning": "money received from work or investment",
+    "example": "Household income rose slightly this year.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 401,
+    "word": "Incorporate",
+    "type": "VERB",
+    "meaning": "to include something as part of a whole",
+    "example": "The design incorporates several safety features.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 402,
+    "word": "Increase",
+    "type": "VERB",
+    "meaning": "to become or make greater in size or amount",
+    "example": "Demand for the product increased sharply.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 403,
+    "word": "Independent",
+    "type": "ADJECTIVE",
+    "meaning": "not influenced or controlled by others",
+    "example": "The agency operates as an independent body.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 404,
+    "word": "Influence",
+    "type": "NOUN",
+    "meaning": "the power to affect someone or something",
+    "example": "Social media has a strong influence on teenagers.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 405,
+    "word": "Initial",
+    "type": "ADJECTIVE",
+    "meaning": "existing at the beginning",
+    "example": "Initial results were promising.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 406,
+    "word": "Insight",
+    "type": "NOUN",
+    "meaning": "a clear understanding of a complex issue",
+    "example": "The interview offered insight into the artist's process.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 407,
+    "word": "Instance",
+    "type": "NOUN",
+    "meaning": "an example or single occurrence of something",
+    "example": "In this instance, the rule did not apply.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 408,
+    "word": "Institute",
+    "type": "NOUN",
+    "meaning": "an organization for a particular purpose",
+    "example": "She works at a research institute.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 409,
+    "word": "Instruct",
+    "type": "VERB",
+    "meaning": "to give someone directions or teach them",
+    "example": "The manual instructs users on proper assembly.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 410,
+    "word": "Instrument",
+    "type": "NOUN",
+    "meaning": "a tool used for precise tasks",
+    "example": "Surgeons use specialized instruments during operations.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 411,
+    "word": "Intelligent",
+    "type": "ADJECTIVE",
+    "meaning": "having a high mental capacity",
+    "example": "Dolphins are known to be highly intelligent.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 412,
+    "word": "Intense",
+    "type": "ADJECTIVE",
+    "meaning": "very strong or extreme",
+    "example": "The heat was intense during the afternoon.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 413,
+    "word": "Interact",
+    "type": "VERB",
+    "meaning": "to communicate or work with something else",
+    "example": "Children learn by interacting with their environment.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 414,
+    "word": "Interval",
+    "type": "NOUN",
+    "meaning": "a pause or gap between events",
+    "example": "There was a short interval between the two acts.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 415,
+    "word": "Investigate",
+    "type": "VERB",
+    "meaning": "to carry out research into a matter",
+    "example": "Police investigated the cause of the fire.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 416,
+    "word": "Isolate",
+    "type": "VERB",
+    "meaning": "to set apart from others",
+    "example": "The patient was isolated to prevent infection.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 417,
+    "word": "Item",
+    "type": "NOUN",
+    "meaning": "an individual article or object",
+    "example": "Each item on the list was checked twice.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 418,
+    "word": "Justify",
+    "type": "VERB",
+    "meaning": "to show that something is reasonable",
+    "example": "She justified her decision with clear evidence.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 419,
+    "word": "Label",
+    "type": "NOUN",
+    "meaning": "a piece of information attached to an object",
+    "example": "Read the label before taking the medicine.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 420,
+    "word": "Layer",
+    "type": "NOUN",
+    "meaning": "a level of material covering a surface",
+    "example": "The rock formed in layers over millions of years.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 421,
+    "word": "Lecture",
+    "type": "NOUN",
+    "meaning": "a talk given to teach people about a subject",
+    "example": "The professor gave a lecture on ancient history.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 422,
+    "word": "Legal",
+    "type": "ADJECTIVE",
+    "meaning": "relating to or permitted by law",
+    "example": "The company sought legal advice before signing.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 423,
+    "word": "Limit",
+    "type": "NOUN",
+    "meaning": "a point beyond which something cannot go",
+    "example": "There is a strict limit on noise levels at night.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 424,
+    "word": "Link",
+    "type": "VERB",
+    "meaning": "to connect two things",
+    "example": "Studies link poor sleep to weaker memory.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 425,
+    "word": "Locate",
+    "type": "VERB",
+    "meaning": "to discover the exact position of something",
+    "example": "The team used sonar to locate the wreck.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 426,
+    "word": "Logic",
+    "type": "NOUN",
+    "meaning": "reasoning conducted according to strict rules",
+    "example": "Her argument followed a clear logic.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 427,
+    "word": "Maintain",
+    "type": "VERB",
+    "meaning": "to keep something in an existing state",
+    "example": "Regular exercise helps maintain good health.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 428,
+    "word": "Manage",
+    "type": "VERB",
+    "meaning": "to be in charge of and make decisions about",
+    "example": "She manages a team of ten engineers.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 429,
+    "word": "Manual",
+    "type": "ADJECTIVE",
+    "meaning": "operated by hand rather than automatically",
+    "example": "The old printing press required manual operation.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 430,
+    "word": "Margin",
+    "type": "NOUN",
+    "meaning": "an amount by which something exceeds another",
+    "example": "The candidate won by a narrow margin.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 431,
+    "word": "Mature",
+    "type": "ADJECTIVE",
+    "meaning": "fully developed physically or mentally",
+    "example": "The plant takes two years to become mature.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 432,
+    "word": "Maximize",
+    "type": "VERB",
+    "meaning": "to make as large or great as possible",
+    "example": "The factory redesigned its layout to maximize output.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 433,
+    "word": "Mechanism",
+    "type": "NOUN",
+    "meaning": "a system of parts working together",
+    "example": "The lock has a simple mechanism.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 434,
+    "word": "Media",
+    "type": "NOUN",
+    "meaning": "the main means of mass communication",
+    "example": "Social media has changed how news spreads.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 435,
+    "word": "Mental",
+    "type": "ADJECTIVE",
+    "meaning": "relating to the mind",
+    "example": "Chess requires strong mental discipline.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 436,
+    "word": "Minimal",
+    "type": "ADJECTIVE",
+    "meaning": "of a very small amount or degree",
+    "example": "The changes had a minimal effect on sales.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 437,
+    "word": "Minimize",
+    "type": "VERB",
+    "meaning": "to reduce something to the smallest amount",
+    "example": "Engineers worked to minimize the risk of failure.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 438,
+    "word": "Minor",
+    "type": "ADJECTIVE",
+    "meaning": "lesser in importance or seriousness",
+    "example": "Only minor repairs were needed after the storm.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 439,
+    "word": "Mode",
+    "type": "NOUN",
+    "meaning": "a way or manner in which something occurs",
+    "example": "Walking became the main mode of transport downtown.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 440,
+    "word": "Modify",
+    "type": "VERB",
+    "meaning": "to make partial changes to something",
+    "example": "The team modified the design after testing.",
+    "difficulty": "easy",
+    "learned": false
+  },
+  {
+    "id": 441,
+    "word": "Abstract",
+    "type": "ADJECTIVE",
+    "meaning": "existing as an idea rather than a physical thing",
+    "example": "The lecture dealt with fairly abstract concepts.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 442,
+    "word": "Accelerate",
+    "type": "VERB",
+    "meaning": "to increase in speed or rate",
+    "example": "Global warming has accelerated in recent decades.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 443,
+    "word": "Accessible",
+    "type": "ADJECTIVE",
+    "meaning": "able to be reached or obtained easily",
+    "example": "The library made its archives more accessible online.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 444,
+    "word": "Adherence",
+    "type": "NOUN",
+    "meaning": "the act of following a rule or agreement",
+    "example": "Strict adherence to the diet improved her health.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 445,
+    "word": "Adjoin",
+    "type": "VERB",
+    "meaning": "to be next to or in contact with",
+    "example": "The two properties adjoin along the northern edge.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 446,
+    "word": "Aggregate",
+    "type": "VERB",
+    "meaning": "to combine into a total sum",
+    "example": "The survey data were aggregated by region.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 447,
+    "word": "Align",
+    "type": "VERB",
+    "meaning": "to bring into agreement or correct position",
+    "example": "The new policy aligns with international standards.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 448,
+    "word": "Ambivalent",
+    "type": "ADJECTIVE",
+    "meaning": "having mixed feelings about something",
+    "example": "She felt ambivalent about accepting the promotion.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 449,
+    "word": "Amend",
+    "type": "VERB",
+    "meaning": "to make small changes to improve a document",
+    "example": "The committee amended the proposal before voting.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 450,
+    "word": "Amplify",
+    "type": "VERB",
+    "meaning": "to increase the strength or intensity of something",
+    "example": "Social media can amplify small local stories.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 451,
+    "word": "Analogous",
+    "type": "ADJECTIVE",
+    "meaning": "comparable in certain respects",
+    "example": "The heart's function is analogous to a pump.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 452,
+    "word": "Annex",
+    "type": "VERB",
+    "meaning": "to add territory or material to something larger",
+    "example": "The neighboring district was annexed by the city.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 453,
+    "word": "Anomaly",
+    "type": "NOUN",
+    "meaning": "something that deviates from what is expected",
+    "example": "The scientist noticed an anomaly in the data set.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 454,
+    "word": "Antecedent",
+    "type": "NOUN",
+    "meaning": "a thing that came before something else",
+    "example": "The report examines the antecedents of the conflict.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 455,
+    "word": "Apex",
+    "type": "NOUN",
+    "meaning": "the highest point of something",
+    "example": "The company reached the apex of its success in 2010.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 456,
+    "word": "Appraise",
+    "type": "VERB",
+    "meaning": "to assess the value or quality of something",
+    "example": "An expert appraised the painting before the auction.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 457,
+    "word": "Apt",
+    "type": "ADJECTIVE",
+    "meaning": "suitable or fitting in the circumstances",
+    "example": "Her comment was an apt summary of the debate.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 458,
+    "word": "Ascertain",
+    "type": "VERB",
+    "meaning": "to find something out for certain",
+    "example": "Investigators tried to ascertain the cause of the crash.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 459,
+    "word": "Assimilate",
+    "type": "VERB",
+    "meaning": "to absorb and integrate ideas or people",
+    "example": "Immigrants often assimilate local customs over time.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 460,
+    "word": "Attest",
+    "type": "VERB",
+    "meaning": "to provide evidence that something is true",
+    "example": "The witnesses attested to the accuracy of his account.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 461,
+    "word": "Augment",
+    "type": "VERB",
+    "meaning": "to make something greater by adding to it",
+    "example": "The team augmented its budget with private donations.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 462,
+    "word": "Autonomous",
+    "type": "ADJECTIVE",
+    "meaning": "acting independently or having self-government",
+    "example": "Each department operates as an autonomous unit.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 463,
+    "word": "Aversion",
+    "type": "NOUN",
+    "meaning": "a strong dislike for something",
+    "example": "He developed an aversion to crowded places.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 464,
+    "word": "Bias",
+    "type": "NOUN",
+    "meaning": "a tendency to favor one thing over another unfairly",
+    "example": "Researchers tried to eliminate bias from the survey.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 465,
+    "word": "Bureaucracy",
+    "type": "NOUN",
+    "meaning": "a system of officials and administrative rules",
+    "example": "Starting a business involves navigating heavy bureaucracy.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 466,
+    "word": "Candid",
+    "type": "ADJECTIVE",
+    "meaning": "truthful and straightforward",
+    "example": "The interview was refreshingly candid.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 467,
+    "word": "Capitalize",
+    "type": "VERB",
+    "meaning": "to take advantage of an opportunity",
+    "example": "The company capitalized on the sudden demand.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 468,
+    "word": "Catalyst",
+    "type": "NOUN",
+    "meaning": "something that causes an important change",
+    "example": "The scandal acted as a catalyst for reform.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 469,
+    "word": "Circumvent",
+    "type": "VERB",
+    "meaning": "to find a way around an obstacle",
+    "example": "The company found a legal way to circumvent the tax.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 470,
+    "word": "Coincide",
+    "type": "VERB",
+    "meaning": "to occur at the same time as something else",
+    "example": "The festival coincides with the harvest season.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 471,
+    "word": "Collaborate",
+    "type": "VERB",
+    "meaning": "to work jointly with others on a task",
+    "example": "Scientists from three countries collaborated on the study.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 472,
+    "word": "Commodity",
+    "type": "NOUN",
+    "meaning": "a raw material or product that can be traded",
+    "example": "Coffee is a major export commodity for the country.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 473,
+    "word": "Compact",
+    "type": "ADJECTIVE",
+    "meaning": "arranged closely together within a small space",
+    "example": "The device was redesigned to be more compact.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 474,
+    "word": "Compatible",
+    "type": "ADJECTIVE",
+    "meaning": "able to exist or work together without conflict",
+    "example": "The new software is compatible with older systems.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 475,
+    "word": "Compile",
+    "type": "VERB",
+    "meaning": "to collect information from various sources",
+    "example": "Researchers compiled data from twenty different studies.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 476,
+    "word": "Comprehend",
+    "type": "VERB",
+    "meaning": "to fully understand something",
+    "example": "Young children may not comprehend the risks involved.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 477,
+    "word": "Conceal",
+    "type": "VERB",
+    "meaning": "to keep something from being seen or known",
+    "example": "Thick clouds concealed the mountain peak.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 478,
+    "word": "Concede",
+    "type": "VERB",
+    "meaning": "to admit that something is true after resisting it",
+    "example": "She finally conceded that the plan had flaws.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 479,
+    "word": "Conducive",
+    "type": "ADJECTIVE",
+    "meaning": "making a certain outcome likely",
+    "example": "A quiet room is conducive to studying.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 480,
+    "word": "Configure",
+    "type": "VERB",
+    "meaning": "to arrange the parts of something in a particular way",
+    "example": "Technicians configured the network for the office.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 481,
+    "word": "Consolidate",
+    "type": "VERB",
+    "meaning": "to combine separate parts into a single whole",
+    "example": "The two departments were consolidated into one.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 482,
+    "word": "Constrain",
+    "type": "VERB",
+    "meaning": "to severely restrict the scope of something",
+    "example": "Limited funding constrains the project's progress.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 483,
+    "word": "Contend",
+    "type": "VERB",
+    "meaning": "to assert something as a position in an argument",
+    "example": "Critics contend that the policy is unfair.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 484,
+    "word": "Contentious",
+    "type": "ADJECTIVE",
+    "meaning": "likely to cause disagreement",
+    "example": "Immigration remains a contentious political topic.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 485,
+    "word": "Contingent",
+    "type": "ADJECTIVE",
+    "meaning": "dependent on certain conditions",
+    "example": "Funding is contingent on the project's early results.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 486,
+    "word": "Convene",
+    "type": "VERB",
+    "meaning": "to call people together for a meeting",
+    "example": "The council convened to discuss the budget crisis.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 487,
+    "word": "Convention",
+    "type": "NOUN",
+    "meaning": "a widely accepted way of behaving or doing something",
+    "example": "The novel breaks from traditional literary conventions.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 488,
+    "word": "Correlate",
+    "type": "VERB",
+    "meaning": "to have a mutual relationship between variables",
+    "example": "Higher income tends to correlate with better health outcomes.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 489,
+    "word": "Credible",
+    "type": "ADJECTIVE",
+    "meaning": "able to be believed; convincing",
+    "example": "The witness gave a credible account of the events.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 490,
+    "word": "Cultivate",
+    "type": "VERB",
+    "meaning": "to try to develop a quality or relationship",
+    "example": "The teacher cultivates curiosity in her students.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 491,
+    "word": "Deficient",
+    "type": "ADJECTIVE",
+    "meaning": "lacking a necessary quality or element",
+    "example": "The diet was deficient in essential vitamins.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 492,
+    "word": "Delegate",
+    "type": "VERB",
+    "meaning": "to give a task to another person",
+    "example": "Managers should learn to delegate responsibilities.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 493,
+    "word": "Deliberate",
+    "type": "ADJECTIVE",
+    "meaning": "done consciously and intentionally",
+    "example": "The delay appeared to be deliberate.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 494,
+    "word": "Denote",
+    "type": "VERB",
+    "meaning": "to be a sign or indication of something",
+    "example": "A red flag denotes danger on the beach.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 495,
+    "word": "Deploy",
+    "type": "VERB",
+    "meaning": "to move resources into position for use",
+    "example": "The company deployed new software across all offices.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 496,
+    "word": "Designate",
+    "type": "VERB",
+    "meaning": "to officially assign a name or status to something",
+    "example": "The area was designated a protected wildlife reserve.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 497,
+    "word": "Detrimental",
+    "type": "ADJECTIVE",
+    "meaning": "tending to cause harm",
+    "example": "Excessive stress can be detrimental to health.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 498,
+    "word": "Deviate",
+    "type": "VERB",
+    "meaning": "to depart from an established course",
+    "example": "The pilot deviated from the planned route due to weather.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 499,
+    "word": "Discern",
+    "type": "VERB",
+    "meaning": "to perceive or recognize something clearly",
+    "example": "It was hard to discern the truth from the rumors.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 500,
+    "word": "Disclose",
+    "type": "VERB",
+    "meaning": "to make information known",
+    "example": "The company must disclose its financial records annually.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 501,
+    "word": "Disparity",
+    "type": "NOUN",
+    "meaning": "a great difference between things",
+    "example": "There is a wide disparity in income across regions.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 502,
+    "word": "Dispatch",
+    "type": "VERB",
+    "meaning": "to send off to a destination",
+    "example": "Emergency crews were dispatched to the scene.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 503,
+    "word": "Dispel",
+    "type": "VERB",
+    "meaning": "to make a feeling or belief disappear",
+    "example": "The results dispelled doubts about the treatment.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 504,
+    "word": "Disproportionate",
+    "type": "ADJECTIVE",
+    "meaning": "too large or small in relation to something else",
+    "example": "The city has a disproportionate share of traffic accidents.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 505,
+    "word": "Dissent",
+    "type": "NOUN",
+    "meaning": "the expression of opinions differing from official views",
+    "example": "The policy sparked widespread public dissent.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 506,
+    "word": "Diverge",
+    "type": "VERB",
+    "meaning": "to develop in different directions from a common point",
+    "example": "The two theories diverge on the question of causation.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 507,
+    "word": "Divert",
+    "type": "VERB",
+    "meaning": "to cause something to change course or direction",
+    "example": "Funds were diverted to disaster relief efforts.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 508,
+    "word": "Dubious",
+    "type": "ADJECTIVE",
+    "meaning": "not to be relied upon; suspect",
+    "example": "The claims made in the advertisement seemed dubious.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 509,
+    "word": "Elicit",
+    "type": "VERB",
+    "meaning": "to draw out a response or reaction",
+    "example": "The question elicited strong reactions from the audience.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 510,
+    "word": "Elusive",
+    "type": "ADJECTIVE",
+    "meaning": "difficult to find, catch, or achieve",
+    "example": "A cure for the disease remains elusive.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 511,
+    "word": "Embark",
+    "type": "VERB",
+    "meaning": "to begin a course of action",
+    "example": "The scientists embarked on a new research project.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 512,
+    "word": "Embed",
+    "type": "VERB",
+    "meaning": "to fix firmly into a surrounding mass",
+    "example": "The tradition is deeply embedded in local culture.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 513,
+    "word": "Emulate",
+    "type": "VERB",
+    "meaning": "to match or imitate someone admired",
+    "example": "Younger athletes often try to emulate their idols.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 514,
+    "word": "Encompass",
+    "type": "VERB",
+    "meaning": "to include a wide range of things",
+    "example": "The curriculum encompasses both theory and practice.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 515,
+    "word": "Endorse",
+    "type": "VERB",
+    "meaning": "to declare public approval of something",
+    "example": "The scientific community endorsed the new guidelines.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 516,
+    "word": "Enrich",
+    "type": "VERB",
+    "meaning": "to improve the quality or value of something",
+    "example": "Travel can greatly enrich one's understanding of culture.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 517,
+    "word": "Envisage",
+    "type": "VERB",
+    "meaning": "to imagine as a future possibility",
+    "example": "Planners envisage a fully car-free city center.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 518,
+    "word": "Epitomize",
+    "type": "VERB",
+    "meaning": "to be a perfect example of something",
+    "example": "The building epitomizes the architecture of the era.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 519,
+    "word": "Equate",
+    "type": "VERB",
+    "meaning": "to consider one thing as equal to another",
+    "example": "Wealth should not be equated with happiness.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 520,
+    "word": "Erratic",
+    "type": "ADJECTIVE",
+    "meaning": "not consistent or regular in pattern",
+    "example": "The patient's heartbeat was dangerously erratic.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 521,
+    "word": "Escalate",
+    "type": "VERB",
+    "meaning": "to become more intense or serious",
+    "example": "Tensions between the countries began to escalate.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 522,
+    "word": "Evoke",
+    "type": "VERB",
+    "meaning": "to bring a feeling or memory into the mind",
+    "example": "The song evoked memories of her childhood.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 523,
+    "word": "Exert",
+    "type": "VERB",
+    "meaning": "to apply a force or influence",
+    "example": "Parents exert a strong influence on children's habits.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 524,
+    "word": "Exhaustive",
+    "type": "ADJECTIVE",
+    "meaning": "thorough and complete",
+    "example": "The committee conducted an exhaustive review of the case.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 525,
+    "word": "Fabricate",
+    "type": "VERB",
+    "meaning": "to invent false information",
+    "example": "The employee was fired for fabricating expense reports.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 526,
+    "word": "Facet",
+    "type": "NOUN",
+    "meaning": "a particular aspect or feature of something",
+    "example": "Cost is only one facet of the overall decision.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 527,
+    "word": "Falter",
+    "type": "VERB",
+    "meaning": "to lose strength or momentum",
+    "example": "Support for the plan began to falter after the report.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 528,
+    "word": "Fathom",
+    "type": "VERB",
+    "meaning": "to understand something after much thought",
+    "example": "Scientists struggled to fathom the scale of the disaster.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 529,
+    "word": "Feign",
+    "type": "VERB",
+    "meaning": "to pretend to feel or be affected by something",
+    "example": "He feigned interest in the lecture.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 530,
+    "word": "Fortify",
+    "type": "VERB",
+    "meaning": "to strengthen something against attack or failure",
+    "example": "The city walls were fortified before the siege.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 531,
+    "word": "Fragment",
+    "type": "NOUN",
+    "meaning": "a small part broken off from something larger",
+    "example": "Archaeologists found a fragment of ancient pottery.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 532,
+    "word": "Fringe",
+    "type": "NOUN",
+    "meaning": "the outer or marginal part of something",
+    "example": "The movement began on the fringe of mainstream politics.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 533,
+    "word": "Gauge",
+    "type": "VERB",
+    "meaning": "to estimate or measure a quantity or feeling",
+    "example": "Surveys were used to gauge public opinion.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 534,
+    "word": "Genuine",
+    "type": "ADJECTIVE",
+    "meaning": "truly what it is said to be; authentic",
+    "example": "The museum verified that the painting was genuine.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 535,
+    "word": "Grapple",
+    "type": "VERB",
+    "meaning": "to struggle to deal with a difficult problem",
+    "example": "Officials continue to grapple with the housing shortage.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 536,
+    "word": "Grim",
+    "type": "ADJECTIVE",
+    "meaning": "very serious or gloomy",
+    "example": "The economic outlook for the region looks grim.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 537,
+    "word": "Hamper",
+    "type": "VERB",
+    "meaning": "to hinder the progress of something",
+    "example": "Bad weather hampered rescue efforts.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 538,
+    "word": "Hasten",
+    "type": "VERB",
+    "meaning": "to cause something to happen sooner",
+    "example": "Poor diet can hasten the onset of illness.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 539,
+    "word": "Hinder",
+    "type": "VERB",
+    "meaning": "to create difficulty that delays progress",
+    "example": "Heavy traffic hindered the ambulance's arrival.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 540,
+    "word": "Homogeneous",
+    "type": "ADJECTIVE",
+    "meaning": "consisting of parts that are all the same",
+    "example": "The sample was chemically homogeneous.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 541,
+    "word": "Hostile",
+    "type": "ADJECTIVE",
+    "meaning": "unfriendly or opposed",
+    "example": "The proposal met a hostile reaction from residents.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 542,
+    "word": "Impair",
+    "type": "VERB",
+    "meaning": "to weaken or damage something",
+    "example": "Lack of sleep can impair concentration.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 543,
+    "word": "Imperative",
+    "type": "ADJECTIVE",
+    "meaning": "extremely important or urgent",
+    "example": "It is imperative that we act before the deadline.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 544,
+    "word": "Impetus",
+    "type": "NOUN",
+    "meaning": "the force that makes something happen",
+    "example": "The report gave impetus to further research.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 545,
+    "word": "Implicate",
+    "type": "VERB",
+    "meaning": "to show that someone is involved in something",
+    "example": "New evidence implicated a second suspect.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 546,
+    "word": "Impoverish",
+    "type": "VERB",
+    "meaning": "to make someone or something poor",
+    "example": "The drought impoverished many farming families.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 547,
+    "word": "Impromptu",
+    "type": "ADJECTIVE",
+    "meaning": "done without preparation",
+    "example": "The professor gave an impromptu lecture on the topic.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 548,
+    "word": "Impulsive",
+    "type": "ADJECTIVE",
+    "meaning": "acting suddenly without careful thought",
+    "example": "Teenagers can sometimes be impulsive decision makers.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 549,
+    "word": "Inception",
+    "type": "NOUN",
+    "meaning": "the beginning of an organization or activity",
+    "example": "The company has grown steadily since its inception.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 550,
+    "word": "Incur",
+    "type": "VERB",
+    "meaning": "to become subject to something unpleasant",
+    "example": "Late payments incur an additional fee.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 551,
+    "word": "Indispensable",
+    "type": "ADJECTIVE",
+    "meaning": "absolutely necessary",
+    "example": "Clean water is indispensable for public health.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 552,
+    "word": "Induce",
+    "type": "VERB",
+    "meaning": "to succeed in persuading someone to do something",
+    "example": "Discounts were used to induce customers to buy more.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 553,
+    "word": "Infringe",
+    "type": "VERB",
+    "meaning": "to violate a law, right, or agreement",
+    "example": "The company was accused of infringing the patent.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 554,
+    "word": "Ingenuity",
+    "type": "NOUN",
+    "meaning": "the quality of being clever and inventive",
+    "example": "Engineers admired the ingenuity of the design.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 555,
+    "word": "Insulate",
+    "type": "VERB",
+    "meaning": "to protect from something unwanted",
+    "example": "The policy was meant to insulate farmers from price swings.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 556,
+    "word": "Intact",
+    "type": "ADJECTIVE",
+    "meaning": "not damaged or altered in any way",
+    "example": "The ancient vase remained intact after the fall.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 557,
+    "word": "Interim",
+    "type": "ADJECTIVE",
+    "meaning": "existing during a transitional period",
+    "example": "An interim manager was appointed until elections.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 558,
+    "word": "Intermittent",
+    "type": "ADJECTIVE",
+    "meaning": "occurring at irregular intervals",
+    "example": "The signal was weak and intermittent.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 559,
+    "word": "Invalidate",
+    "type": "VERB",
+    "meaning": "to make something no longer valid",
+    "example": "A single error can invalidate the entire experiment.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 560,
+    "word": "Invariably",
+    "type": "ADJECTIVE",
+    "meaning": "always occurring or true; unchanging",
+    "example": "Meetings invariably start late in this office.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 561,
+    "word": "Isolated",
+    "type": "ADJECTIVE",
+    "meaning": "far away from other places; separated",
+    "example": "The village remained isolated during the winter.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 562,
+    "word": "Jeopardize",
+    "type": "VERB",
+    "meaning": "to put something at risk of harm",
+    "example": "The scandal jeopardized the company's reputation.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 563,
+    "word": "Lament",
+    "type": "VERB",
+    "meaning": "to express deep regret or sorrow about something",
+    "example": "Critics lamented the loss of the historic building.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 564,
+    "word": "Lax",
+    "type": "ADJECTIVE",
+    "meaning": "not sufficiently strict or careful",
+    "example": "Security at the facility was surprisingly lax.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 565,
+    "word": "Levy",
+    "type": "VERB",
+    "meaning": "to impose a tax or fee",
+    "example": "The government levied a new tax on luxury goods.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 566,
+    "word": "Liable",
+    "type": "ADJECTIVE",
+    "meaning": "legally responsible for something",
+    "example": "Drivers are liable for damage caused by accidents.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 567,
+    "word": "Longevity",
+    "type": "NOUN",
+    "meaning": "long life or duration",
+    "example": "A healthy diet is linked to greater longevity.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 568,
+    "word": "Lucrative",
+    "type": "ADJECTIVE",
+    "meaning": "producing a great deal of profit",
+    "example": "Tourism has become a lucrative industry for the island.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 569,
+    "word": "Magnitude",
+    "type": "NOUN",
+    "meaning": "the great size or extent of something",
+    "example": "The magnitude of the disaster shocked the world.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 570,
+    "word": "Malleable",
+    "type": "ADJECTIVE",
+    "meaning": "easily influenced or shaped",
+    "example": "Young minds are especially malleable to new ideas.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 571,
+    "word": "Mandate",
+    "type": "NOUN",
+    "meaning": "an official order or commission to do something",
+    "example": "Voters gave the party a clear mandate for reform.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 572,
+    "word": "Marginal",
+    "type": "ADJECTIVE",
+    "meaning": "of little importance; minimal",
+    "example": "The change had only a marginal effect on results.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 573,
+    "word": "Merge",
+    "type": "VERB",
+    "meaning": "to combine or blend into a single entity",
+    "example": "The two companies merged last year.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 574,
+    "word": "Momentum",
+    "type": "NOUN",
+    "meaning": "the impetus gained by a moving object or process",
+    "example": "The campaign gained momentum after the debate.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 575,
+    "word": "Mundane",
+    "type": "ADJECTIVE",
+    "meaning": "lacking interest or excitement; ordinary",
+    "example": "The job involved mostly mundane paperwork.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 576,
+    "word": "Negate",
+    "type": "VERB",
+    "meaning": "to make something ineffective or invalid",
+    "example": "One small error can negate the entire proof.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 577,
+    "word": "Negligible",
+    "type": "ADJECTIVE",
+    "meaning": "so small as to be not worth considering",
+    "example": "The cost increase was negligible.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 578,
+    "word": "Norm",
+    "type": "NOUN",
+    "meaning": "a standard or pattern regarded as typical",
+    "example": "It is the social norm to greet elders first.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 579,
+    "word": "Notable",
+    "type": "ADJECTIVE",
+    "meaning": "worthy of attention or notice",
+    "example": "There were several notable improvements this year.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 580,
+    "word": "Nurture",
+    "type": "VERB",
+    "meaning": "to care for and encourage the growth of",
+    "example": "Good teachers nurture a love of learning.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 581,
+    "word": "Obscure",
+    "type": "ADJECTIVE",
+    "meaning": "not clearly expressed or understood",
+    "example": "The origin of the custom remains obscure.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 582,
+    "word": "Omit",
+    "type": "VERB",
+    "meaning": "to leave out or exclude something",
+    "example": "Several important details were omitted from the report.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 583,
+    "word": "Optimal",
+    "type": "ADJECTIVE",
+    "meaning": "best or most favorable",
+    "example": "Researchers determined the optimal dosage for the drug.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 584,
+    "word": "Orient",
+    "type": "VERB",
+    "meaning": "to align or position something relative to something else",
+    "example": "The building is oriented to capture morning sunlight.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 585,
+    "word": "Outweigh",
+    "type": "VERB",
+    "meaning": "to be greater in importance than something else",
+    "example": "The benefits of the plan outweigh its costs.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 586,
+    "word": "Overhaul",
+    "type": "VERB",
+    "meaning": "to thoroughly examine and repair or improve something",
+    "example": "The company overhauled its entire supply chain.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 587,
+    "word": "Pertain",
+    "type": "VERB",
+    "meaning": "to be relevant or applicable to something",
+    "example": "This rule pertains only to full-time employees.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 588,
+    "word": "Pervasive",
+    "type": "ADJECTIVE",
+    "meaning": "spreading widely throughout an area",
+    "example": "Smartphone use has become pervasive among teenagers.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 589,
+    "word": "Placate",
+    "type": "VERB",
+    "meaning": "to make someone less angry or hostile",
+    "example": "Officials tried to placate angry residents.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 590,
+    "word": "Ponder",
+    "type": "VERB",
+    "meaning": "to think about something carefully",
+    "example": "She pondered the question for several minutes.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 591,
+    "word": "Postulate",
+    "type": "VERB",
+    "meaning": "to suggest or assume as a basis for reasoning",
+    "example": "The theory postulates that light behaves as both wave and particle.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 592,
+    "word": "Precarious",
+    "type": "ADJECTIVE",
+    "meaning": "not securely held or in a dangerous position",
+    "example": "The company's finances were in a precarious state.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 593,
+    "word": "Precedent",
+    "type": "NOUN",
+    "meaning": "an earlier event used as an example for later cases",
+    "example": "The ruling set an important legal precedent.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 594,
+    "word": "Preclude",
+    "type": "VERB",
+    "meaning": "to prevent something from happening",
+    "example": "The rule precludes any changes after submission.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 595,
+    "word": "Prerequisite",
+    "type": "NOUN",
+    "meaning": "a thing required as a prior condition",
+    "example": "Basic chemistry is a prerequisite for this course.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 596,
+    "word": "Prescribe",
+    "type": "VERB",
+    "meaning": "to recommend a course of action or treatment",
+    "example": "The doctor prescribed a course of antibiotics.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 597,
+    "word": "Presuppose",
+    "type": "VERB",
+    "meaning": "to require something as a prior condition",
+    "example": "The argument presupposes that all readers agree.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 598,
+    "word": "Pretext",
+    "type": "NOUN",
+    "meaning": "a reason given to conceal a true intention",
+    "example": "He left early under the pretext of feeling unwell.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 599,
+    "word": "Prevalent",
+    "type": "ADJECTIVE",
+    "meaning": "widespread in a particular area at a particular time",
+    "example": "The disease is most prevalent in rural communities.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 600,
+    "word": "Proficient",
+    "type": "ADJECTIVE",
+    "meaning": "competent or skilled in doing something",
+    "example": "She became proficient in three languages by adulthood.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 601,
+    "word": "Profound",
+    "type": "ADJECTIVE",
+    "meaning": "very great or intense; deeply felt",
+    "example": "The discovery had a profound effect on the field.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 602,
+    "word": "Prolong",
+    "type": "VERB",
+    "meaning": "to extend the duration of something",
+    "example": "The treatment can prolong the patient's life significantly.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 603,
+    "word": "Prominent",
+    "type": "ADJECTIVE",
+    "meaning": "important or well known",
+    "example": "Several prominent scientists attended the conference.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 604,
+    "word": "Propel",
+    "type": "VERB",
+    "meaning": "to drive or push something forward",
+    "example": "New technology propelled the industry forward.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 605,
+    "word": "Provoke",
+    "type": "VERB",
+    "meaning": "to stimulate or cause a reaction",
+    "example": "The comment provoked an angry response.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 606,
+    "word": "Prudent",
+    "type": "ADJECTIVE",
+    "meaning": "acting with care and thought for the future",
+    "example": "It would be prudent to save part of the income.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 607,
+    "word": "Rebut",
+    "type": "VERB",
+    "meaning": "to claim or prove that evidence is false",
+    "example": "The lawyer rebutted the witness's testimony.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 608,
+    "word": "Reciprocal",
+    "type": "ADJECTIVE",
+    "meaning": "given, felt, or done in return",
+    "example": "The two nations signed a reciprocal trade agreement.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 609,
+    "word": "Reconcile",
+    "type": "VERB",
+    "meaning": "to make two conflicting ideas compatible",
+    "example": "It is hard to reconcile the two contradictory reports.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 610,
+    "word": "Recount",
+    "type": "VERB",
+    "meaning": "to describe an event in detail",
+    "example": "She recounted her experiences during the war.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 611,
+    "word": "Rectify",
+    "type": "VERB",
+    "meaning": "to put something right; correct a mistake",
+    "example": "The company promised to rectify the billing error.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 612,
+    "word": "Refute",
+    "type": "VERB",
+    "meaning": "to prove that a statement is wrong",
+    "example": "New evidence refuted the earlier hypothesis.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 613,
+    "word": "Reiterate",
+    "type": "VERB",
+    "meaning": "to say something again for emphasis",
+    "example": "The chairman reiterated the company's commitment to quality.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 614,
+    "word": "Relentless",
+    "type": "ADJECTIVE",
+    "meaning": "not stopping or becoming less severe",
+    "example": "The team faced relentless criticism after the loss.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 615,
+    "word": "Relinquish",
+    "type": "VERB",
+    "meaning": "to voluntarily give up power or possession",
+    "example": "He relinquished control of the company after retiring.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 616,
+    "word": "Render",
+    "type": "VERB",
+    "meaning": "to cause something to be in a particular state",
+    "example": "The storm rendered the road impassable.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 617,
+    "word": "Repel",
+    "type": "VERB",
+    "meaning": "to drive back or force away",
+    "example": "The coating repels water and dirt.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 618,
+    "word": "Replicate",
+    "type": "VERB",
+    "meaning": "to copy or reproduce something exactly",
+    "example": "Other labs failed to replicate the original results.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 619,
+    "word": "Reside",
+    "type": "VERB",
+    "meaning": "to have one's permanent home in a place",
+    "example": "Most of the staff reside within the city limits.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 620,
+    "word": "Resolve",
+    "type": "VERB",
+    "meaning": "to find a solution to a problem or dispute",
+    "example": "The two sides resolved their dispute peacefully.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 621,
+    "word": "Resonate",
+    "type": "VERB",
+    "meaning": "to produce a strong feeling of association",
+    "example": "Her message resonated with young voters.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 622,
+    "word": "Restrain",
+    "type": "VERB",
+    "meaning": "to keep under control; hold back",
+    "example": "It took effort to restrain his anger.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 623,
+    "word": "Retract",
+    "type": "VERB",
+    "meaning": "to withdraw a statement as untrue",
+    "example": "The newspaper retracted its earlier claim.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 624,
+    "word": "Revert",
+    "type": "VERB",
+    "meaning": "to return to a former state or condition",
+    "example": "The land reverted to forest after farming stopped.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 625,
+    "word": "Rigorous",
+    "type": "ADJECTIVE",
+    "meaning": "extremely thorough and careful",
+    "example": "The medication went through rigorous testing.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 626,
+    "word": "Sanction",
+    "type": "VERB",
+    "meaning": "to give official permission or approval",
+    "example": "The board sanctioned the merger last week.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 627,
+    "word": "Sequential",
+    "type": "ADJECTIVE",
+    "meaning": "following a particular order",
+    "example": "The instructions must be followed in sequential order.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 628,
+    "word": "Skeptical",
+    "type": "ADJECTIVE",
+    "meaning": "not easily convinced; having doubts",
+    "example": "Many experts remained skeptical of the new theory.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 629,
+    "word": "Solidarity",
+    "type": "NOUN",
+    "meaning": "unity based on shared interests or goals",
+    "example": "Workers showed solidarity by joining the strike.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 630,
+    "word": "Speculate",
+    "type": "VERB",
+    "meaning": "to form theories without firm evidence",
+    "example": "Analysts speculated about the cause of the collapse.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 631,
+    "word": "Spontaneous",
+    "type": "ADJECTIVE",
+    "meaning": "performed without prior planning",
+    "example": "The applause was spontaneous and enthusiastic.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 632,
+    "word": "Stagnant",
+    "type": "ADJECTIVE",
+    "meaning": "not growing or developing; showing no activity",
+    "example": "Wages have remained stagnant for years.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 633,
+    "word": "Stringent",
+    "type": "ADJECTIVE",
+    "meaning": "strict and precisely controlled",
+    "example": "The lab follows stringent safety regulations.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 634,
+    "word": "Subsidize",
+    "type": "VERB",
+    "meaning": "to support financially, usually by a government",
+    "example": "The government subsidizes public transportation.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 635,
+    "word": "Substitute",
+    "type": "VERB",
+    "meaning": "to use in place of another",
+    "example": "Farmers substituted a new crop for the failing one.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 636,
+    "word": "Succumb",
+    "type": "VERB",
+    "meaning": "to fail to resist pressure or temptation",
+    "example": "The company eventually succumbed to competition.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 637,
+    "word": "Superficial",
+    "type": "ADJECTIVE",
+    "meaning": "existing only on the surface; not thorough",
+    "example": "The report offers only a superficial analysis.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 638,
+    "word": "Supplant",
+    "type": "VERB",
+    "meaning": "to replace and take the position of",
+    "example": "Digital media has largely supplanted print newspapers.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 639,
+    "word": "Suppress",
+    "type": "VERB",
+    "meaning": "to forcibly put an end to something",
+    "example": "The government suppressed the protest quickly.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 640,
+    "word": "Surge",
+    "type": "VERB",
+    "meaning": "to increase suddenly and powerfully",
+    "example": "Demand for masks surged during the outbreak.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 641,
+    "word": "Surpass",
+    "type": "VERB",
+    "meaning": "to exceed or do better than someone or something",
+    "example": "Sales figures surpassed all expectations.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 642,
+    "word": "Symmetry",
+    "type": "NOUN",
+    "meaning": "balanced proportions between parts",
+    "example": "The design relies on perfect symmetry.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 643,
+    "word": "Synthesize",
+    "type": "VERB",
+    "meaning": "to combine separate elements to form a whole",
+    "example": "The essay synthesizes ideas from several fields.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 644,
+    "word": "Tangible",
+    "type": "ADJECTIVE",
+    "meaning": "able to be perceived by touch; clear and definite",
+    "example": "The project produced tangible benefits for the community.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 645,
+    "word": "Tentative",
+    "type": "ADJECTIVE",
+    "meaning": "not certain or fixed; provisional",
+    "example": "They reached a tentative agreement on the terms.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 646,
+    "word": "Thrive",
+    "type": "VERB",
+    "meaning": "to grow or develop successfully",
+    "example": "The business thrived despite the economic downturn.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 647,
+    "word": "Transcend",
+    "type": "VERB",
+    "meaning": "to go beyond the limits of something",
+    "example": "Great art often transcends cultural boundaries.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 648,
+    "word": "Transient",
+    "type": "ADJECTIVE",
+    "meaning": "lasting only for a short time",
+    "example": "The pain was transient and soon disappeared.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 649,
+    "word": "Turbulent",
+    "type": "ADJECTIVE",
+    "meaning": "characterized by conflict or confusion",
+    "example": "The country went through a turbulent period of change.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 650,
+    "word": "Undermine",
+    "type": "VERB",
+    "meaning": "to weaken something gradually",
+    "example": "Corruption undermines public trust in institutions.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 651,
+    "word": "Uphold",
+    "type": "VERB",
+    "meaning": "to confirm or support something",
+    "example": "The court upheld the earlier ruling.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 652,
+    "word": "Vested",
+    "type": "ADJECTIVE",
+    "meaning": "having a personal stake in something",
+    "example": "Investors have a vested interest in the company's success.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 653,
+    "word": "Vigorous",
+    "type": "ADJECTIVE",
+    "meaning": "strong, healthy, and full of energy",
+    "example": "The debate was vigorous and lasted for hours.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 654,
+    "word": "Vindicate",
+    "type": "VERB",
+    "meaning": "to clear someone of blame after being suspected",
+    "example": "New evidence vindicated the accused man.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 655,
+    "word": "Withstand",
+    "type": "VERB",
+    "meaning": "to remain undamaged by a force or situation",
+    "example": "The building was designed to withstand earthquakes.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 656,
+    "word": "Abate",
+    "type": "VERB",
+    "meaning": "to become less intense or widespread",
+    "example": "The storm finally abated after midnight.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 657,
+    "word": "Aberration",
+    "type": "NOUN",
+    "meaning": "a departure from what is normal or expected",
+    "example": "The results were dismissed as a statistical aberration.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 658,
+    "word": "Abscond",
+    "type": "VERB",
+    "meaning": "to leave hurriedly and secretly",
+    "example": "The suspect absconded before police arrived.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 659,
+    "word": "Abstain",
+    "type": "VERB",
+    "meaning": "to restrain oneself from doing something",
+    "example": "Several members chose to abstain from the vote.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 660,
+    "word": "Accentuate",
+    "type": "VERB",
+    "meaning": "to make something more noticeable",
+    "example": "The lighting accentuated the texture of the fabric.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 661,
+    "word": "Acquiesce",
+    "type": "VERB",
+    "meaning": "to accept something reluctantly without protest",
+    "example": "Eventually the board acquiesced to shareholder demands.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 662,
+    "word": "Acute",
+    "type": "ADJECTIVE",
+    "meaning": "present in a sudden and severe form",
+    "example": "The patient suffered an acute case of the illness.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 663,
+    "word": "Adage",
+    "type": "NOUN",
+    "meaning": "a traditional saying expressing common wisdom",
+    "example": "The old adage proved true once again.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 664,
+    "word": "Adept",
+    "type": "ADJECTIVE",
+    "meaning": "very skilled or proficient at something",
+    "example": "She is remarkably adept at solving complex problems.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 665,
+    "word": "Admonish",
+    "type": "VERB",
+    "meaning": "to warn or reprimand someone firmly",
+    "example": "The coach admonished the players for their lack of effort.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 666,
+    "word": "Adroit",
+    "type": "ADJECTIVE",
+    "meaning": "clever and skillful, especially with the hands or mind",
+    "example": "He gave an adroit response to the difficult question.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 667,
+    "word": "Adulterate",
+    "type": "VERB",
+    "meaning": "to make something impure by adding another substance",
+    "example": "The wine had been adulterated with cheap alcohol.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 668,
+    "word": "Aggrandize",
+    "type": "VERB",
+    "meaning": "to increase the power, status, or reputation of",
+    "example": "Critics said the memoir was written to self-aggrandize.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 669,
+    "word": "Alacrity",
+    "type": "NOUN",
+    "meaning": "brisk and cheerful readiness",
+    "example": "She accepted the challenge with surprising alacrity.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 670,
+    "word": "Alleviate",
+    "type": "VERB",
+    "meaning": "to make suffering or a problem less severe",
+    "example": "The new drug helps alleviate chronic pain.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 671,
+    "word": "Aloof",
+    "type": "ADJECTIVE",
+    "meaning": "not friendly or forthcoming; distant",
+    "example": "He remained aloof from his colleagues throughout the project.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 672,
+    "word": "Ambivalence",
+    "type": "NOUN",
+    "meaning": "the state of having mixed feelings about something",
+    "example": "Her ambivalence about the job offer was obvious.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 673,
+    "word": "Ameliorate",
+    "type": "VERB",
+    "meaning": "to make a bad situation better",
+    "example": "New policies were introduced to ameliorate poverty.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 674,
+    "word": "Anecdotal",
+    "type": "ADJECTIVE",
+    "meaning": "based on personal accounts rather than facts or research",
+    "example": "The claims were largely anecdotal, not scientific.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 675,
+    "word": "Anomalous",
+    "type": "ADJECTIVE",
+    "meaning": "deviating from what is standard or expected",
+    "example": "The anomalous reading puzzled the engineers.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 676,
+    "word": "Antagonize",
+    "type": "VERB",
+    "meaning": "to cause someone to become hostile",
+    "example": "His blunt remarks antagonized several committee members.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 677,
+    "word": "Antithesis",
+    "type": "NOUN",
+    "meaning": "the direct opposite of something",
+    "example": "Her calm demeanor was the antithesis of panic.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 678,
+    "word": "Apathy",
+    "type": "NOUN",
+    "meaning": "lack of interest or concern",
+    "example": "Voter apathy has been rising in recent elections.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 679,
+    "word": "Appease",
+    "type": "VERB",
+    "meaning": "to pacify someone by giving in to their demands",
+    "example": "The company offered refunds to appease angry customers.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 680,
+    "word": "Arduous",
+    "type": "ADJECTIVE",
+    "meaning": "involving great effort and difficulty",
+    "example": "The climb to the summit was long and arduous.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 681,
+    "word": "Articulate",
+    "type": "ADJECTIVE",
+    "meaning": "able to express ideas clearly and effectively",
+    "example": "The candidate was articulate during the debate.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 682,
+    "word": "Ascribe",
+    "type": "VERB",
+    "meaning": "to attribute something to a cause",
+    "example": "Experts ascribe the decline to changing consumer habits.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 683,
+    "word": "Assiduous",
+    "type": "ADJECTIVE",
+    "meaning": "showing great care and perseverance",
+    "example": "Her assiduous research led to a major discovery.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 684,
+    "word": "Astute",
+    "type": "ADJECTIVE",
+    "meaning": "having sharp judgment and perception",
+    "example": "He made an astute observation about the market.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 685,
+    "word": "Audacious",
+    "type": "ADJECTIVE",
+    "meaning": "willing to take bold risks",
+    "example": "The plan was audacious but ultimately successful.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 686,
+    "word": "Austere",
+    "type": "ADJECTIVE",
+    "meaning": "severe or strict in appearance or manner",
+    "example": "The monastery had an austere, simple design.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 687,
+    "word": "Belie",
+    "type": "VERB",
+    "meaning": "to give a false impression of something",
+    "example": "Her calm expression belied her inner anxiety.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 688,
+    "word": "Benevolent",
+    "type": "ADJECTIVE",
+    "meaning": "well meaning and kindly",
+    "example": "The foundation is known for its benevolent work.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 689,
+    "word": "Blatant",
+    "type": "ADJECTIVE",
+    "meaning": "completely obvious in an offensive way",
+    "example": "The referee ignored a blatant foul.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 690,
+    "word": "Bolster",
+    "type": "VERB",
+    "meaning": "to support or strengthen something",
+    "example": "New evidence bolstered the prosecution's case.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 691,
+    "word": "Callous",
+    "type": "ADJECTIVE",
+    "meaning": "showing insensitivity to others' feelings",
+    "example": "His callous remarks upset the grieving family.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 692,
+    "word": "Candor",
+    "type": "NOUN",
+    "meaning": "the quality of being open and honest",
+    "example": "She spoke with unusual candor about her failures.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 693,
+    "word": "Capricious",
+    "type": "ADJECTIVE",
+    "meaning": "given to sudden and unaccountable changes of mood",
+    "example": "The weather in the mountains can be capricious.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 694,
+    "word": "Censure",
+    "type": "VERB",
+    "meaning": "to express strong disapproval of someone formally",
+    "example": "The senator was censured for his conduct.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 695,
+    "word": "Chastise",
+    "type": "VERB",
+    "meaning": "to rebuke or criticize severely",
+    "example": "The manager chastised the team for missing the deadline.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 696,
+    "word": "Cogent",
+    "type": "ADJECTIVE",
+    "meaning": "clear, logical, and convincing",
+    "example": "She presented a cogent argument for the reforms.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 697,
+    "word": "Complacent",
+    "type": "ADJECTIVE",
+    "meaning": "showing smug satisfaction with one's achievements",
+    "example": "Success made the company complacent about innovation.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 698,
+    "word": "Conciliatory",
+    "type": "ADJECTIVE",
+    "meaning": "intended to placate or pacify",
+    "example": "The president adopted a conciliatory tone during the speech.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 699,
+    "word": "Confound",
+    "type": "VERB",
+    "meaning": "to cause surprise or confusion",
+    "example": "The results confounded even the leading researchers.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 700,
+    "word": "Congenial",
+    "type": "ADJECTIVE",
+    "meaning": "pleasant because suited to one's taste or nature",
+    "example": "The office has a congenial working atmosphere.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 701,
+    "word": "Connoisseur",
+    "type": "NOUN",
+    "meaning": "an expert judge in matters of taste",
+    "example": "He is a connoisseur of classical music.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 702,
+    "word": "Contrite",
+    "type": "ADJECTIVE",
+    "meaning": "feeling remorseful for a wrongdoing",
+    "example": "The company issued a contrite apology to customers.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 703,
+    "word": "Convoluted",
+    "type": "ADJECTIVE",
+    "meaning": "extremely complex and difficult to follow",
+    "example": "The legal argument was convoluted and hard to summarize.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 704,
+    "word": "Copious",
+    "type": "ADJECTIVE",
+    "meaning": "abundant in supply or quantity",
+    "example": "She took copious notes during the lecture.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 705,
+    "word": "Corroborate",
+    "type": "VERB",
+    "meaning": "to confirm or give support to a statement",
+    "example": "New witnesses corroborated the original testimony.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 706,
+    "word": "Credulous",
+    "type": "ADJECTIVE",
+    "meaning": "having or showing too great a readiness to believe things",
+    "example": "Credulous investors fell for the scheme.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 707,
+    "word": "Culminate",
+    "type": "VERB",
+    "meaning": "to reach a climax or point of highest development",
+    "example": "The negotiations culminated in a formal agreement.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 708,
+    "word": "Cursory",
+    "type": "ADJECTIVE",
+    "meaning": "hasty and not thorough",
+    "example": "He gave the report only a cursory glance.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 709,
+    "word": "Debilitate",
+    "type": "VERB",
+    "meaning": "to make someone weak or feeble",
+    "example": "The illness debilitated him for several months.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 710,
+    "word": "Decry",
+    "type": "VERB",
+    "meaning": "to publicly criticize something strongly",
+    "example": "Activists decried the new development project.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 711,
+    "word": "Deft",
+    "type": "ADJECTIVE",
+    "meaning": "neatly skillful and quick in movement",
+    "example": "The surgeon made a deft incision.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 712,
+    "word": "Deleterious",
+    "type": "ADJECTIVE",
+    "meaning": "causing harm or damage",
+    "example": "Excessive noise can have deleterious effects on hearing.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 713,
+    "word": "Deride",
+    "type": "VERB",
+    "meaning": "to express contempt for something",
+    "example": "Critics derided the film as shallow and predictable.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 714,
+    "word": "Despondent",
+    "type": "ADJECTIVE",
+    "meaning": "in low spirits from loss of hope",
+    "example": "The team became despondent after the third defeat.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 715,
+    "word": "Diligent",
+    "type": "ADJECTIVE",
+    "meaning": "showing careful and persistent effort",
+    "example": "She was diligent in checking every detail of the report.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 716,
+    "word": "Discordant",
+    "type": "ADJECTIVE",
+    "meaning": "disagreeing or incongruous",
+    "example": "The committee members offered discordant opinions.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 717,
+    "word": "Disdain",
+    "type": "NOUN",
+    "meaning": "the feeling that someone is unworthy of respect",
+    "example": "He viewed the offer with obvious disdain.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 718,
+    "word": "Disparage",
+    "type": "VERB",
+    "meaning": "to speak of someone or something with contempt",
+    "example": "The critic disparaged the exhibit as unoriginal.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 719,
+    "word": "Dissipate",
+    "type": "VERB",
+    "meaning": "to disperse or scatter and gradually disappear",
+    "example": "The fog dissipated as the sun rose.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 720,
+    "word": "Dissonance",
+    "type": "NOUN",
+    "meaning": "lack of harmony or agreement",
+    "example": "There was clear dissonance between the two policies.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 721,
+    "word": "Divulge",
+    "type": "VERB",
+    "meaning": "to make known private or secret information",
+    "example": "The source refused to divulge her identity.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 722,
+    "word": "Docile",
+    "type": "ADJECTIVE",
+    "meaning": "ready to accept control or instruction; submissive",
+    "example": "The dog was gentle and docile with children.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 723,
+    "word": "Dogmatic",
+    "type": "ADJECTIVE",
+    "meaning": "asserting opinions firmly without evidence",
+    "example": "He was criticized for being dogmatic about his views.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 724,
+    "word": "Duplicity",
+    "type": "NOUN",
+    "meaning": "deceitfulness; double-dealing",
+    "example": "The scandal revealed years of corporate duplicity.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 725,
+    "word": "Eclectic",
+    "type": "ADJECTIVE",
+    "meaning": "deriving ideas from a broad range of sources",
+    "example": "The museum has an eclectic collection of modern art.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 726,
+    "word": "Efface",
+    "type": "VERB",
+    "meaning": "to erase or make indistinct",
+    "example": "Time had almost effaced the inscription on the stone.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 727,
+    "word": "Effervescent",
+    "type": "ADJECTIVE",
+    "meaning": "vivacious and enthusiastic",
+    "example": "Her effervescent personality lit up the room.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 728,
+    "word": "Egregious",
+    "type": "ADJECTIVE",
+    "meaning": "outstandingly bad; shocking",
+    "example": "The report revealed an egregious violation of safety rules.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 729,
+    "word": "Eloquent",
+    "type": "ADJECTIVE",
+    "meaning": "fluent and persuasive in speaking or writing",
+    "example": "She gave an eloquent speech at the ceremony.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 730,
+    "word": "Embellish",
+    "type": "VERB",
+    "meaning": "to make something more attractive by adding details",
+    "example": "He embellished the story with imaginative details.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 731,
+    "word": "Endemic",
+    "type": "ADJECTIVE",
+    "meaning": "regularly found in a particular area or group",
+    "example": "Malaria is endemic to parts of the tropics.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 732,
+    "word": "Enigma",
+    "type": "NOUN",
+    "meaning": "a person or thing that is mysterious or puzzling",
+    "example": "The ancient script remains an enigma to scholars.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 733,
+    "word": "Ephemeral",
+    "type": "ADJECTIVE",
+    "meaning": "lasting for a very short time",
+    "example": "Fame in the industry can be remarkably ephemeral.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 734,
+    "word": "Equanimity",
+    "type": "NOUN",
+    "meaning": "mental calmness in a difficult situation",
+    "example": "She faced the crisis with remarkable equanimity.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 735,
+    "word": "Equivocal",
+    "type": "ADJECTIVE",
+    "meaning": "open to more than one interpretation; ambiguous",
+    "example": "His equivocal answer left everyone confused.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 736,
+    "word": "Erudite",
+    "type": "ADJECTIVE",
+    "meaning": "having or showing great knowledge or learning",
+    "example": "The professor gave an erudite lecture on ancient philosophy.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 737,
+    "word": "Esoteric",
+    "type": "ADJECTIVE",
+    "meaning": "intended for or understood by only a small group",
+    "example": "The seminar covered rather esoteric mathematical topics.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 738,
+    "word": "Euphoric",
+    "type": "ADJECTIVE",
+    "meaning": "feeling intense excitement and happiness",
+    "example": "Fans were euphoric after the team's victory.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 739,
+    "word": "Exasperate",
+    "type": "VERB",
+    "meaning": "to irritate intensely",
+    "example": "The constant delays exasperated the passengers.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 740,
+    "word": "Exhort",
+    "type": "VERB",
+    "meaning": "to strongly urge someone to do something",
+    "example": "The coach exhorted the team to keep fighting.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 741,
+    "word": "Exonerate",
+    "type": "VERB",
+    "meaning": "to officially clear someone of blame",
+    "example": "New DNA evidence exonerated the wrongly convicted man.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 742,
+    "word": "Expedite",
+    "type": "VERB",
+    "meaning": "to make a process happen more quickly",
+    "example": "The company hired more staff to expedite deliveries.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 743,
+    "word": "Explicable",
+    "type": "ADJECTIVE",
+    "meaning": "able to be explained or accounted for",
+    "example": "The delay was entirely explicable given the storm.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 744,
+    "word": "Extol",
+    "type": "VERB",
+    "meaning": "to praise enthusiastically",
+    "example": "The reviewer extolled the film's stunning visuals.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 745,
+    "word": "Facetious",
+    "type": "ADJECTIVE",
+    "meaning": "treating serious issues with inappropriate humor",
+    "example": "His facetious comment offended several colleagues.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 746,
+    "word": "Fastidious",
+    "type": "ADJECTIVE",
+    "meaning": "very attentive to detail; hard to please",
+    "example": "She is fastidious about the cleanliness of her lab.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 747,
+    "word": "Fervent",
+    "type": "ADJECTIVE",
+    "meaning": "having or displaying passionate intensity",
+    "example": "He is a fervent supporter of environmental causes.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 748,
+    "word": "Flagrant",
+    "type": "ADJECTIVE",
+    "meaning": "conspicuously or obviously offensive",
+    "example": "The referee called a flagrant foul.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 749,
+    "word": "Fortuitous",
+    "type": "ADJECTIVE",
+    "meaning": "happening by a lucky chance",
+    "example": "Their meeting was entirely fortuitous.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 750,
+    "word": "Frivolous",
+    "type": "ADJECTIVE",
+    "meaning": "not having any serious purpose or value",
+    "example": "The lawsuit was dismissed as frivolous.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 751,
+    "word": "Furtive",
+    "type": "ADJECTIVE",
+    "meaning": "attempting to avoid notice or attention",
+    "example": "He gave a furtive glance toward the exit.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 752,
+    "word": "Garrulous",
+    "type": "ADJECTIVE",
+    "meaning": "excessively talkative",
+    "example": "The garrulous guide talked throughout the entire tour.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 753,
+    "word": "Gregarious",
+    "type": "ADJECTIVE",
+    "meaning": "fond of company; sociable",
+    "example": "She is gregarious and makes friends easily.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 754,
+    "word": "Guile",
+    "type": "NOUN",
+    "meaning": "sly or cunning intelligence",
+    "example": "He used guile rather than force to win the negotiation.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 755,
+    "word": "Hapless",
+    "type": "ADJECTIVE",
+    "meaning": "unlucky; unfortunate",
+    "example": "The hapless team lost every match that season.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 756,
+    "word": "Haphazard",
+    "type": "ADJECTIVE",
+    "meaning": "lacking order or organization; random",
+    "example": "The files were stored in a haphazard manner.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 757,
+    "word": "Harangue",
+    "type": "NOUN",
+    "meaning": "a lengthy and aggressive speech",
+    "example": "The manager delivered a harangue about missed deadlines.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 758,
+    "word": "Hedonism",
+    "type": "NOUN",
+    "meaning": "the pursuit of pleasure as the most important goal",
+    "example": "The novel critiques a culture of hedonism.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 759,
+    "word": "Heresy",
+    "type": "NOUN",
+    "meaning": "belief contrary to accepted doctrine",
+    "example": "His theory was considered heresy at the time.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 760,
+    "word": "Idiosyncratic",
+    "type": "ADJECTIVE",
+    "meaning": "peculiar to an individual",
+    "example": "Each artist developed an idiosyncratic style.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 761,
+    "word": "Ignominious",
+    "type": "ADJECTIVE",
+    "meaning": "deserving or causing public disgrace",
+    "example": "The team suffered an ignominious defeat.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 762,
+    "word": "Impartial",
+    "type": "ADJECTIVE",
+    "meaning": "treating all sides equally; not biased",
+    "example": "Judges must remain impartial in every case.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 763,
+    "word": "Impassive",
+    "type": "ADJECTIVE",
+    "meaning": "not feeling or showing emotion",
+    "example": "His face remained impassive despite the news.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 764,
+    "word": "Impeccable",
+    "type": "ADJECTIVE",
+    "meaning": "in accordance with the highest standards; flawless",
+    "example": "Her academic record was impeccable.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 765,
+    "word": "Imperious",
+    "type": "ADJECTIVE",
+    "meaning": "assuming authority without justification; domineering",
+    "example": "His imperious manner alienated his coworkers.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 766,
+    "word": "Impertinent",
+    "type": "ADJECTIVE",
+    "meaning": "not showing proper respect; rude",
+    "example": "The student's impertinent remark surprised the teacher.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 767,
+    "word": "Impervious",
+    "type": "ADJECTIVE",
+    "meaning": "unable to be affected or influenced by something",
+    "example": "He seemed impervious to criticism.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 768,
+    "word": "Impetuous",
+    "type": "ADJECTIVE",
+    "meaning": "acting quickly without thought or care",
+    "example": "Her impetuous decision led to years of regret.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 769,
+    "word": "Implacable",
+    "type": "ADJECTIVE",
+    "meaning": "unable to be appeased or calmed",
+    "example": "He remained implacable in his opposition to the plan.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 770,
+    "word": "Incessant",
+    "type": "ADJECTIVE",
+    "meaning": "not stopping; continuous",
+    "example": "The incessant rain flooded the streets.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 771,
+    "word": "Incongruous",
+    "type": "ADJECTIVE",
+    "meaning": "not in harmony or keeping with the surroundings",
+    "example": "The modern building looked incongruous among old houses.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 772,
+    "word": "Indignant",
+    "type": "ADJECTIVE",
+    "meaning": "feeling anger at unfair treatment",
+    "example": "Residents were indignant about the sudden tax increase.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 773,
+    "word": "Indolent",
+    "type": "ADJECTIVE",
+    "meaning": "wanting to avoid activity or exertion; lazy",
+    "example": "He was criticized for being indolent at work.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 774,
+    "word": "Ineffable",
+    "type": "ADJECTIVE",
+    "meaning": "too great to be expressed in words",
+    "example": "The view from the summit was almost ineffable.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 775,
+    "word": "Inept",
+    "type": "ADJECTIVE",
+    "meaning": "having no skill; clumsy",
+    "example": "The committee's inept handling caused further delays.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 776,
+    "word": "Inexorable",
+    "type": "ADJECTIVE",
+    "meaning": "impossible to stop or prevent",
+    "example": "The inexorable rise in costs alarmed investors.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 777,
+    "word": "Infallible",
+    "type": "ADJECTIVE",
+    "meaning": "incapable of making mistakes",
+    "example": "No system, however advanced, is truly infallible.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 778,
+    "word": "Ingenious",
+    "type": "ADJECTIVE",
+    "meaning": "clever, original, and inventive",
+    "example": "The engineers devised an ingenious solution.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 779,
+    "word": "Innocuous",
+    "type": "ADJECTIVE",
+    "meaning": "not harmful or offensive",
+    "example": "The comment seemed innocuous at the time.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 780,
+    "word": "Insidious",
+    "type": "ADJECTIVE",
+    "meaning": "proceeding in a gradual, harmful way",
+    "example": "The disease has an insidious onset.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 781,
+    "word": "Insipid",
+    "type": "ADJECTIVE",
+    "meaning": "lacking flavor or interest",
+    "example": "The film's plot was insipid and predictable.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 782,
+    "word": "Insolent",
+    "type": "ADJECTIVE",
+    "meaning": "showing a rude and arrogant lack of respect",
+    "example": "His insolent tone annoyed the officer.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 783,
+    "word": "Instigate",
+    "type": "VERB",
+    "meaning": "to bring about or initiate an action",
+    "example": "Officials believe the fire was instigated deliberately.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 784,
+    "word": "Insular",
+    "type": "ADJECTIVE",
+    "meaning": "ignorant of cultures other than one's own; narrow",
+    "example": "Critics called the policy insular and outdated.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 785,
+    "word": "Intransigent",
+    "type": "ADJECTIVE",
+    "meaning": "refusing to change one's views or agree",
+    "example": "The two sides remained intransigent during talks.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 786,
+    "word": "Intrepid",
+    "type": "ADJECTIVE",
+    "meaning": "fearless and adventurous",
+    "example": "The intrepid explorers crossed the frozen sea.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 787,
+    "word": "Inundate",
+    "type": "VERB",
+    "meaning": "to overwhelm with a large amount of something",
+    "example": "The office was inundated with complaints.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 788,
+    "word": "Irascible",
+    "type": "ADJECTIVE",
+    "meaning": "easily made angry",
+    "example": "His irascible temper made him difficult to work with.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 789,
+    "word": "Judicious",
+    "type": "ADJECTIVE",
+    "meaning": "having good judgment; sensible",
+    "example": "She made a judicious use of the limited funds.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 790,
+    "word": "Laconic",
+    "type": "ADJECTIVE",
+    "meaning": "using very few words",
+    "example": "His laconic reply left much unexplained.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 791,
+    "word": "Lassitude",
+    "type": "NOUN",
+    "meaning": "a state of physical or mental weariness",
+    "example": "The heat brought a heavy sense of lassitude.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 792,
+    "word": "Latent",
+    "type": "ADJECTIVE",
+    "meaning": "present but not yet developed or manifest",
+    "example": "The test revealed a latent talent for music.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 793,
+    "word": "Lethargic",
+    "type": "ADJECTIVE",
+    "meaning": "sluggish and lacking energy",
+    "example": "The heat made everyone feel lethargic.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 794,
+    "word": "Loquacious",
+    "type": "ADJECTIVE",
+    "meaning": "tending to talk a great deal",
+    "example": "The loquacious host kept guests entertained for hours.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 795,
+    "word": "Ludicrous",
+    "type": "ADJECTIVE",
+    "meaning": "so foolish as to be laughable",
+    "example": "The claim seemed ludicrous to most scientists.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 796,
+    "word": "Magnanimous",
+    "type": "ADJECTIVE",
+    "meaning": "generous or forgiving toward a rival",
+    "example": "The winner was magnanimous in victory.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 797,
+    "word": "Maudlin",
+    "type": "ADJECTIVE",
+    "meaning": "self-pityingly or tearfully sentimental",
+    "example": "The speech grew maudlin toward the end.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 798,
+    "word": "Meager",
+    "type": "ADJECTIVE",
+    "meaning": "lacking in quantity or quality",
+    "example": "The family survived on a meager income.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 799,
+    "word": "Mercurial",
+    "type": "ADJECTIVE",
+    "meaning": "subject to sudden or unpredictable changes of mood",
+    "example": "The director's mercurial temperament unsettled the crew.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 800,
+    "word": "Mollify",
+    "type": "VERB",
+    "meaning": "to appease the anger or anxiety of someone",
+    "example": "The apology helped mollify the frustrated customer.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 801,
+    "word": "Morose",
+    "type": "ADJECTIVE",
+    "meaning": "sullen and ill-tempered",
+    "example": "He grew morose after the disappointing news.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 802,
+    "word": "Myriad",
+    "type": "ADJECTIVE",
+    "meaning": "a countless or extremely great number",
+    "example": "The city offers myriad opportunities for young professionals.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 803,
+    "word": "Nebulous",
+    "type": "ADJECTIVE",
+    "meaning": "in the form of a cloud; vague or unclear",
+    "example": "The company's plans remained nebulous for months.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 804,
+    "word": "Nefarious",
+    "type": "ADJECTIVE",
+    "meaning": "wicked or criminal",
+    "example": "The film centers on a nefarious plot to steal the treasure.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 805,
+    "word": "Nonchalant",
+    "type": "ADJECTIVE",
+    "meaning": "feeling or appearing casually calm",
+    "example": "She remained nonchalant despite the pressure.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 806,
+    "word": "Obfuscate",
+    "type": "VERB",
+    "meaning": "to make something unclear or confusing",
+    "example": "The report seemed designed to obfuscate the real costs.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 807,
+    "word": "Obstinate",
+    "type": "ADJECTIVE",
+    "meaning": "stubbornly refusing to change one's opinion",
+    "example": "He remained obstinate despite all the evidence.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 808,
+    "word": "Obviate",
+    "type": "VERB",
+    "meaning": "to remove a need or difficulty",
+    "example": "The new process obviates the need for manual checks.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 809,
+    "word": "Officious",
+    "type": "ADJECTIVE",
+    "meaning": "asserting authority in an annoyingly domineering way",
+    "example": "The officious clerk delayed the entire process.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 810,
+    "word": "Onerous",
+    "type": "ADJECTIVE",
+    "meaning": "involving heavy obligations; burdensome",
+    "example": "The regulations placed an onerous burden on small firms.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 811,
+    "word": "Opulent",
+    "type": "ADJECTIVE",
+    "meaning": "ostentatiously rich and luxurious",
+    "example": "The hotel lobby was opulent and grand.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 812,
+    "word": "Ostentatious",
+    "type": "ADJECTIVE",
+    "meaning": "designed to impress or attract notice",
+    "example": "His ostentatious lifestyle drew criticism.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 813,
+    "word": "Palpable",
+    "type": "ADJECTIVE",
+    "meaning": "so intense as to be almost tangible",
+    "example": "The tension in the room was palpable.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 814,
+    "word": "Paradox",
+    "type": "NOUN",
+    "meaning": "a statement that seems contradictory but may be true",
+    "example": "It is a paradox that saving money can sometimes cost more.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 815,
+    "word": "Parochial",
+    "type": "ADJECTIVE",
+    "meaning": "having a narrow or limited outlook",
+    "example": "Critics called the policy parochial and shortsighted.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 816,
+    "word": "Paucity",
+    "type": "NOUN",
+    "meaning": "the presence of something in only small quantities",
+    "example": "There is a paucity of evidence supporting the claim.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 817,
+    "word": "Pedantic",
+    "type": "ADJECTIVE",
+    "meaning": "excessively concerned with minor details or rules",
+    "example": "His pedantic corrections annoyed the entire class.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 818,
+    "word": "Perfunctory",
+    "type": "ADJECTIVE",
+    "meaning": "carried out with minimal effort or reflection",
+    "example": "He gave a perfunctory nod and walked away.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 819,
+    "word": "Pernicious",
+    "type": "ADJECTIVE",
+    "meaning": "having a harmful effect, especially gradually",
+    "example": "Misinformation can have a pernicious influence on society.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 820,
+    "word": "Perpetuate",
+    "type": "VERB",
+    "meaning": "to make something continue indefinitely",
+    "example": "The policy perpetuates existing inequalities.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 821,
+    "word": "Petulant",
+    "type": "ADJECTIVE",
+    "meaning": "childishly sulky or bad-tempered",
+    "example": "The petulant remark surprised his usually calm colleagues.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 822,
+    "word": "Philanthropic",
+    "type": "ADJECTIVE",
+    "meaning": "seeking to promote the welfare of others",
+    "example": "The foundation supports several philanthropic causes.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 823,
+    "word": "Pinnacle",
+    "type": "NOUN",
+    "meaning": "the most successful point of something",
+    "example": "The award marked the pinnacle of her career.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 824,
+    "word": "Placid",
+    "type": "ADJECTIVE",
+    "meaning": "not easily upset or excited; calm",
+    "example": "The lake was placid on that summer morning.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 825,
+    "word": "Pragmatic",
+    "type": "ADJECTIVE",
+    "meaning": "dealing with things sensibly and realistically",
+    "example": "The manager took a pragmatic approach to the budget cuts.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 826,
+    "word": "Precipitate",
+    "type": "VERB",
+    "meaning": "to cause an event to happen suddenly",
+    "example": "The scandal precipitated the minister's resignation.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 827,
+    "word": "Presage",
+    "type": "VERB",
+    "meaning": "to be a sign that something will happen",
+    "example": "The dark clouds presaged a heavy storm.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 828,
+    "word": "Pristine",
+    "type": "ADJECTIVE",
+    "meaning": "in its original, unspoiled condition",
+    "example": "The forest remains largely pristine.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 829,
+    "word": "Prodigal",
+    "type": "ADJECTIVE",
+    "meaning": "wastefully extravagant",
+    "example": "The prodigal spending nearly bankrupted the estate.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 830,
+    "word": "Prodigious",
+    "type": "ADJECTIVE",
+    "meaning": "remarkably great in extent or size",
+    "example": "The scientist made a prodigious contribution to the field.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 831,
+    "word": "Proliferate",
+    "type": "VERB",
+    "meaning": "to increase rapidly in number",
+    "example": "Online scams have proliferated in recent years.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 832,
+    "word": "Propensity",
+    "type": "NOUN",
+    "meaning": "an inclination or tendency toward something",
+    "example": "He has a propensity for taking unnecessary risks.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 833,
+    "word": "Prosaic",
+    "type": "ADJECTIVE",
+    "meaning": "lacking imaginative quality; ordinary",
+    "example": "The report offered a prosaic account of the meeting.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 834,
+    "word": "Providence",
+    "type": "NOUN",
+    "meaning": "timely care or preparation for the future",
+    "example": "It was pure providence that saved the crew.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 835,
+    "word": "Punctilious",
+    "type": "ADJECTIVE",
+    "meaning": "showing great attention to detail or correctness",
+    "example": "She is punctilious about following procedures.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 836,
+    "word": "Quandary",
+    "type": "NOUN",
+    "meaning": "a state of uncertainty or difficult choice",
+    "example": "He was in a quandary about which offer to accept.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 837,
+    "word": "Quell",
+    "type": "VERB",
+    "meaning": "to put an end to something, typically by force",
+    "example": "Troops were sent to quell the uprising.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 838,
+    "word": "Recalcitrant",
+    "type": "ADJECTIVE",
+    "meaning": "resistant to authority or discipline",
+    "example": "The recalcitrant employee refused to follow new rules.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 839,
+    "word": "Recant",
+    "type": "VERB",
+    "meaning": "to say that one no longer holds a former opinion",
+    "example": "He publicly recanted his earlier statement.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 840,
+    "word": "Redundant",
+    "type": "ADJECTIVE",
+    "meaning": "no longer needed; superfluous",
+    "example": "Several phrases in the essay were redundant.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 841,
+    "word": "Repudiate",
+    "type": "VERB",
+    "meaning": "to refuse to accept or be associated with something",
+    "example": "The scientist repudiated the study's flawed methodology.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 842,
+    "word": "Reticent",
+    "type": "ADJECTIVE",
+    "meaning": "not revealing one's thoughts or feelings readily",
+    "example": "He remained reticent about his personal life.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 843,
+    "word": "Reverent",
+    "type": "ADJECTIVE",
+    "meaning": "feeling or showing deep respect",
+    "example": "Visitors spoke in reverent tones inside the memorial.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 844,
+    "word": "Sagacious",
+    "type": "ADJECTIVE",
+    "meaning": "having good judgment; wise",
+    "example": "The sagacious advisor guided the young king wisely.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 845,
+    "word": "Sanguine",
+    "type": "ADJECTIVE",
+    "meaning": "optimistic or positive, especially in a difficult situation",
+    "example": "Despite the setback, she remained sanguine about the future.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 846,
+    "word": "Scathing",
+    "type": "ADJECTIVE",
+    "meaning": "severely critical",
+    "example": "The critic wrote a scathing review of the film.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 847,
+    "word": "Solace",
+    "type": "NOUN",
+    "meaning": "comfort in a time of distress",
+    "example": "She found solace in music after the loss.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 848,
+    "word": "Solicitous",
+    "type": "ADJECTIVE",
+    "meaning": "showing great concern for someone's wellbeing",
+    "example": "The staff were solicitous toward the elderly guests.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 849,
+    "word": "Squander",
+    "type": "VERB",
+    "meaning": "to waste something carelessly",
+    "example": "The team squandered an early lead in the match.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 850,
+    "word": "Staid",
+    "type": "ADJECTIVE",
+    "meaning": "sedate, respectable, and unadventurous",
+    "example": "The bank had a staid, traditional image.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 851,
+    "word": "Stoic",
+    "type": "ADJECTIVE",
+    "meaning": "enduring hardship without complaint",
+    "example": "He remained stoic throughout the difficult treatment.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 852,
+    "word": "Substantiate",
+    "type": "VERB",
+    "meaning": "to provide evidence to support a claim",
+    "example": "The researchers failed to substantiate their theory.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 853,
+    "word": "Surreptitious",
+    "type": "ADJECTIVE",
+    "meaning": "kept secret because it would not be approved of",
+    "example": "He took a surreptitious glance at his phone.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 854,
+    "word": "Tacit",
+    "type": "ADJECTIVE",
+    "meaning": "understood without being stated openly",
+    "example": "There was a tacit agreement not to discuss the topic.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 855,
+    "word": "Taciturn",
+    "type": "ADJECTIVE",
+    "meaning": "reserved or uncommunicative in speech",
+    "example": "The taciturn farmer rarely spoke to strangers.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 856,
+    "word": "Tenacious",
+    "type": "ADJECTIVE",
+    "meaning": "not readily letting go; persistent",
+    "example": "Her tenacious pursuit of the truth eventually paid off.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 857,
+    "word": "Tenuous",
+    "type": "ADJECTIVE",
+    "meaning": "very weak or slight",
+    "example": "The link between the two events is tenuous at best.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 858,
+    "word": "Torpid",
+    "type": "ADJECTIVE",
+    "meaning": "mentally or physically inactive; sluggish",
+    "example": "The heat left the town feeling torpid and quiet.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 859,
+    "word": "Transgress",
+    "type": "VERB",
+    "meaning": "to go beyond the limits set by a rule",
+    "example": "The company transgressed several environmental regulations.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 860,
+    "word": "Truncate",
+    "type": "VERB",
+    "meaning": "to shorten something by cutting off part of it",
+    "example": "The article was truncated to fit the page.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 861,
+    "word": "Ubiquitous",
+    "type": "ADJECTIVE",
+    "meaning": "present, appearing, or found everywhere",
+    "example": "Smartphones have become ubiquitous in modern life.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 862,
+    "word": "Unctuous",
+    "type": "ADJECTIVE",
+    "meaning": "excessively flattering or ingratiating",
+    "example": "His unctuous manner made customers uncomfortable.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 863,
+    "word": "Unprecedented",
+    "type": "ADJECTIVE",
+    "meaning": "never done or known before",
+    "example": "The storm caused unprecedented levels of damage.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 864,
+    "word": "Untenable",
+    "type": "ADJECTIVE",
+    "meaning": "not able to be maintained against argument",
+    "example": "The old theory became untenable after new evidence emerged.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 865,
+    "word": "Vacillate",
+    "type": "VERB",
+    "meaning": "to waver between different opinions or actions",
+    "example": "The council vacillated for weeks before deciding.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 866,
+    "word": "Venerable",
+    "type": "ADJECTIVE",
+    "meaning": "accorded great respect because of age or wisdom",
+    "example": "The venerable professor had taught for fifty years.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 867,
+    "word": "Veracity",
+    "type": "NOUN",
+    "meaning": "conformity to facts; accuracy",
+    "example": "Editors questioned the veracity of the article.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 868,
+    "word": "Verbose",
+    "type": "ADJECTIVE",
+    "meaning": "using more words than needed",
+    "example": "The instructions were unnecessarily verbose.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 869,
+    "word": "Vex",
+    "type": "VERB",
+    "meaning": "to cause annoyance or worry",
+    "example": "The unresolved question continued to vex the committee.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 870,
+    "word": "Vindictive",
+    "type": "ADJECTIVE",
+    "meaning": "having a strong desire for revenge",
+    "example": "His vindictive response surprised his former colleagues.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 871,
+    "word": "Virulent",
+    "type": "ADJECTIVE",
+    "meaning": "extremely severe or harmful in effect",
+    "example": "A virulent strain of the virus spread quickly.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 872,
+    "word": "Vociferous",
+    "type": "ADJECTIVE",
+    "meaning": "vehement or clamorous; loudly expressing opinions",
+    "example": "Vociferous protesters gathered outside the courthouse.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 873,
+    "word": "Waver",
+    "type": "VERB",
+    "meaning": "to be unsteady; to show uncertainty",
+    "example": "Her confidence never wavered during the trial.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 874,
+    "word": "Whimsical",
+    "type": "ADJECTIVE",
+    "meaning": "playfully quaint or fanciful",
+    "example": "The garden had a whimsical design with hidden paths.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 875,
+    "word": "Zealous",
+    "type": "ADJECTIVE",
+    "meaning": "having great energy in pursuit of a cause",
+    "example": "The zealous volunteers worked long into the night.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 876,
+    "word": "Adamant",
+    "type": "ADJECTIVE",
+    "meaning": "refusing to change one's mind; firm",
+    "example": "She was adamant about finishing the project on time.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 877,
+    "word": "Anticipatory",
+    "type": "ADJECTIVE",
+    "meaning": "relating to expecting something to happen",
+    "example": "The market showed anticipatory signs before the announcement.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 878,
+    "word": "Buoyant",
+    "type": "ADJECTIVE",
+    "meaning": "cheerful and optimistic",
+    "example": "Consumer confidence remains buoyant despite the slowdown.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 879,
+    "word": "Cohesive",
+    "type": "ADJECTIVE",
+    "meaning": "forming a united whole",
+    "example": "The team presented a cohesive strategy for growth.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 880,
+    "word": "Discretion",
+    "type": "NOUN",
+    "meaning": "the freedom to decide what should be done",
+    "example": "Teachers use their own discretion when grading essays.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 881,
+    "word": "Disseminate",
+    "type": "VERB",
+    "meaning": "to spread information widely",
+    "example": "The agency disseminates weather warnings to the public.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 882,
+    "word": "Foster",
+    "type": "VERB",
+    "meaning": "to encourage the development of something",
+    "example": "The program aims to foster creativity among students.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 883,
+    "word": "Impartiality",
+    "type": "NOUN",
+    "meaning": "treatment without favoritism",
+    "example": "Judges are expected to maintain strict impartiality.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 884,
+    "word": "Instill",
+    "type": "VERB",
+    "meaning": "to gradually establish an idea or attitude in someone",
+    "example": "Parents try to instill good habits early in life.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 885,
+    "word": "Meticulously",
+    "type": "ADJECTIVE",
+    "meaning": "in a very careful and precise manner",
+    "example": "The lab records were kept meticulously organized.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 886,
+    "word": "Notwithstanding",
+    "type": "ADJECTIVE",
+    "meaning": "in spite of; without being opposed by",
+    "example": "Notwithstanding the criticism, the plan moved forward.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 887,
+    "word": "Overt",
+    "type": "ADJECTIVE",
+    "meaning": "done or shown openly; not secret",
+    "example": "There was no overt sign of disagreement at the meeting.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 888,
+    "word": "Perpetual",
+    "type": "ADJECTIVE",
+    "meaning": "never ending or changing",
+    "example": "The city seemed to be in a state of perpetual construction.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 889,
+    "word": "Plausibility",
+    "type": "NOUN",
+    "meaning": "the quality of seeming reasonable or probable",
+    "example": "Reviewers questioned the plausibility of the theory.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 890,
+    "word": "Pragmatism",
+    "type": "NOUN",
+    "meaning": "an approach based on practical rather than theoretical concerns",
+    "example": "Her pragmatism helped the team meet tight deadlines.",
+    "difficulty": "medium",
+    "learned": false
+  },
+  {
+    "id": 891,
+    "word": "Anachronistic",
+    "type": "ADJECTIVE",
+    "meaning": "belonging to a period other than the one being depicted",
+    "example": "The clock in the painting is an anachronistic detail.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 892,
+    "word": "Circumspect",
+    "type": "ADJECTIVE",
+    "meaning": "wary and unwilling to take risks",
+    "example": "Investors grew circumspect after the market crash.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 893,
+    "word": "Contentment",
+    "type": "NOUN",
+    "meaning": "a state of peaceful happiness",
+    "example": "She found a deep sense of contentment in her work.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 894,
+    "word": "Deference",
+    "type": "NOUN",
+    "meaning": "humble submission and respect",
+    "example": "Junior staff showed deference to the senior partners.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 895,
+    "word": "Discombobulate",
+    "type": "VERB",
+    "meaning": "to confuse or disconcert someone",
+    "example": "The sudden change in plans discombobulated the whole team.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 896,
+    "word": "Enervate",
+    "type": "VERB",
+    "meaning": "to cause someone to feel drained of energy",
+    "example": "The oppressive heat enervated the marathon runners.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 897,
+    "word": "Exuberant",
+    "type": "ADJECTIVE",
+    "meaning": "filled with lively energy and excitement",
+    "example": "The crowd was exuberant after the final goal.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 898,
+    "word": "Impecunious",
+    "type": "ADJECTIVE",
+    "meaning": "having little or no money",
+    "example": "The impecunious student worked two jobs to pay tuition.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 899,
+    "word": "Incisive",
+    "type": "ADJECTIVE",
+    "meaning": "showing clear and sharp analysis",
+    "example": "Her incisive comments exposed a flaw in the argument.",
+    "difficulty": "hard",
+    "learned": false
+  },
+  {
+    "id": 900,
+    "word": "Indefatigable",
+    "type": "ADJECTIVE",
+    "meaning": "persisting tirelessly",
+    "example": "The indefatigable volunteers worked through the night.",
+    "difficulty": "hard",
+    "learned": false
   }
 ]
