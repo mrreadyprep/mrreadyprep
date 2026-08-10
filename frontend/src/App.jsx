@@ -1362,10 +1362,6 @@ function AcademicPassage({ onBack }) {
 
 const AUDIO_START_DELAY_MS = 1500
 
-// Reused across every question instead of being remounted per URL — iOS/desktop Safari treats
-// "has this exact element ever played" as part of what it takes to keep autoplay unlocked, so
-// tearing the element down and recreating it every question (the old `key={url}` approach)
-// fought against that. Changing .src on one persistent element plays far more reliably.
 // A single <audio> element shared by every question, every exercise, for the whole page
 // session -- created once at module load, never torn down. Safari's autoplay policy tracks
 // "has this exact element ever been played via a real user gesture" and keeps allowing
@@ -1377,7 +1373,6 @@ const AUDIO_START_DELAY_MS = 1500
 const sharedAudioEl = typeof window !== 'undefined' ? new Audio() : null
 
 function AudioPlayer({ url, autoPlayKey, onEnded }) {
-  const [playState, setPlayState] = useState('loading') // 'loading' | 'playing' | 'blocked' | 'error' | 'ended'
   const onEndedRef = useRef(onEnded)
   onEndedRef.current = onEnded
 
@@ -1386,14 +1381,11 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
   useEffect(() => {
     const audio = sharedAudioEl
     if (!audio) return
-    const handlePlay = () => setPlayState('playing')
-    const handleEnded = () => { setPlayState('ended'); onEndedRef.current && onEndedRef.current() }
-    const handleError = () => { setPlayState('error'); onEndedRef.current && onEndedRef.current() }
-    audio.addEventListener('play', handlePlay)
+    const handleEnded = () => { onEndedRef.current && onEndedRef.current() }
+    const handleError = () => { onEndedRef.current && onEndedRef.current() }
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('error', handleError)
     return () => {
-      audio.removeEventListener('play', handlePlay)
       audio.removeEventListener('ended', handleEnded)
       audio.removeEventListener('error', handleError)
     }
@@ -1402,7 +1394,6 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
   useEffect(() => {
     const audio = sharedAudioEl
     if (!url || !audio) return
-    setPlayState('loading')
     audio.pause()
     audio.src = url
     audio.currentTime = 0
@@ -1412,11 +1403,11 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       if (p && p.catch) {
         p.catch(() => {
           // Autoplay was blocked (can happen if this is the very first audio attempt of the
-          // whole session and no click has landed anywhere yet, or the browser/site has
-          // autoplay disabled entirely). Retry silently on the student's next interaction
-          // anywhere -- and since sharedAudioEl is the same element every time, once it has
-          // played once via a real gesture it stays unlocked for the rest of the session.
-          setPlayState('blocked')
+          // whole session and no click has landed anywhere yet). Retry silently the instant
+          // the student's next click/tap/keypress happens anywhere -- since sharedAudioEl is
+          // the same element every question and every exercise reuses, one successful
+          // gesture-backed play() keeps it unlocked for the rest of the session, so this
+          // fallback in practice only ever fires once, right at the very start.
           const retry = () => { audio.play().catch(() => {}) }
           document.addEventListener('pointerdown', retry, { once: true, capture: true })
           document.addEventListener('keydown', retry, { once: true, capture: true })
@@ -1437,37 +1428,9 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     )
   }
 
-  const handleManualPlay = () => {
-    const audio = sharedAudioEl
-    if (!audio) return
-    setPlayState('loading')
-    audio.currentTime = 0
-    audio.play().then(() => setPlayState('playing')).catch(() => setPlayState('error'))
-  }
-
-  // Normal case: audio autoplays with no visible control at all. The button only ever
-  // appears as a fallback if autoplay genuinely fails to start (blocked or a load error) —
-  // otherwise a student would be stuck with sound that silently never plays and no way to fix it.
-  return (
-    <div style={{ width: '100%' }}>
-      {(playState === 'blocked' || playState === 'error') && (
-        <button
-          type="button"
-          onClick={handleManualPlay}
-          style={{
-            width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
-            padding: '10px 16px', borderRadius: '999px', fontSize: '13px', fontWeight: '700', cursor: 'pointer',
-            border: playState === 'error' ? '1.5px solid #d94040' : '1.5px solid #2ac56c',
-            background: playState === 'error' ? '#fff2f2' : '#edfbf3',
-            color: playState === 'error' ? '#d94040' : '#1a9950',
-          }}
-        >
-          {playState === 'blocked' && <>▶ Tap to play audio</>}
-          {playState === 'error' && <>⚠️ Audio failed — tap to retry</>}
-        </button>
-      )}
-    </div>
-  )
+  // No visible control at all -- audio just autoplays. The <audio> element itself lives
+  // outside React (sharedAudioEl), so there's nothing to render here.
+  return null
 }
 
 // Plays a short pre-recorded narration line ("Listen to a conversation.", etc.) before the
@@ -8347,24 +8310,21 @@ function App() {
   // Browsers (Safari in particular) block audio.play() unless it happens inside a genuine
   // user gesture. Listening/Speaking audio auto-plays a moment after the screen renders
   // (AUDIO_START_DELAY_MS), which is not itself a gesture, so the very first attempt can be
-  // silently blocked. The fix used by most audio-heavy web apps: play (and immediately pause)
-  // a tiny silent clip on the very first click/keypress anywhere in the app. That one
-  // gesture-backed play() unlocks audio playback for the rest of the page session, so every
-  // later autoplay call — even ones fired from a timer with no direct click behind them —
-  // is allowed to go through with no manual "Play" button ever needed.
-  //
-  // Crucially this has to run on `sharedAudioEl` itself (the same singleton every AudioPlayer
-  // instance reuses), not a throwaway `new Audio(...)`. Safari's autoplay policy tracks unlock
-  // state per DOM element, not per page/origin — priming a different element does nothing for
-  // the one that later plays the real question audio.
+  // silently blocked. Fix: on the very first click/keypress anywhere in the app, if the shared
+  // audio element (see sharedAudioEl, used by every AudioPlayer instance for the whole page
+  // session) already has real question audio loaded but paused, resume it -- that resume call
+  // is gesture-backed, and once this exact element has played once via a real gesture, Safari
+  // keeps allowing programmatic .play() on it afterwards, even from a setTimeout with no
+  // gesture behind it. (Earlier this primed a separate silent placeholder clip instead, which
+  // is unnecessary and was intermittently firing a spurious 'error' event on the shared
+  // element -- resuming the real audio directly is simpler and doesn't have that failure mode.)
   useEffect(() => {
     const unlock = () => {
       try {
-        if (sharedAudioEl && !sharedAudioEl.src) {
-          sharedAudioEl.src = 'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA='
+        if (sharedAudioEl && sharedAudioEl.src && sharedAudioEl.paused) {
+          const p = sharedAudioEl.play()
+          if (p && p.catch) p.catch(() => {})
         }
-        const p = sharedAudioEl && sharedAudioEl.play()
-        if (p && p.catch) p.catch(() => {})
       } catch (e) {}
     }
     document.addEventListener('pointerdown', unlock, true)
