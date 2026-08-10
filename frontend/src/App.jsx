@@ -512,9 +512,11 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
   // never flashes an incorrect selection.
   const [selected, setSelected] = useState(null)
   const [done, setDone] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(RIDL_TIME)
+  // One combined time budget for the WHOLE passage (all questions), matching the real TOEFL
+  // model -- not a per-question timer that resets as the student moves between questions.
+  const [timeLeft, setTimeLeft] = useState(() => RIDL_TIME * passage.questions.length)
   const [answers, setAnswers] = useState(() => initialAnswers || (!mockMode && loadDraft('ridl', passage.id)) || []) // answers[i] = { selected, correct, isCorrect } for each question, keyed by index
-  // Solo practice only: when a question's pacing timer runs out, warn instead of auto-advancing --
+  // Solo practice only: when the passage's overall timer runs out, warn instead of auto-advancing --
   // mockMode still hard-advances via goNext() below.
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
@@ -543,20 +545,21 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
   }, [questionIdx])
 
   // See CTWSingle: when `poolTime` is provided, FullMockTest owns one shared clock for the
-  // whole Reading module, so this per-question timer/auto-expiry is skipped entirely — the
-  // student uses Next/Back freely and only the module-level clock can force it to end.
+  // whole Reading module, so this timer/auto-expiry is skipped entirely — the student uses
+  // Next/Back freely and only the module-level clock can force it to end.
+  // Solo practice: ONE continuous clock for the whole passage (all its questions) -- it does
+  // NOT reset as the student moves between questions with Next/Back, matching the real TOEFL
+  // per-passage time budget instead of a per-question countdown.
   useEffect(() => {
     if (poolTime !== undefined) return
     if (done) return
-    setTimeLeft(RIDL_TIME)
-    setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
           if (mockMode) goNext()
-          else setTimeUp(true) // solo practice: warn, let the student keep working on this question
+          else setTimeUp(true) // solo practice: warn, let the student keep working
           return 0
         }
         return prev - 1
@@ -564,7 +567,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
     }, 1000)
     return () => clearInterval(timerRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [questionIdx, done, poolTime])
+  }, [done, poolTime])
 
   // Returns a fresh copy of `answers` with the given question's answer set — used instead of
   // a functional setState update so callers can immediately use the up-to-date array (e.g. to
@@ -598,8 +601,9 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
 
   // Records the current selection and moves forward — to the next question, or finishes
   // the set if this was the last one. Used by both the NEXT/FINISH button and the timer.
+  // Deliberately does NOT touch the timer: the passage-wide clock keeps running uninterrupted
+  // as the student moves between questions (only `finish()` below stops it).
   const goNext = () => {
-    if (timerRef.current) clearInterval(timerRef.current)
     const finalAnswers = withAnswer(questionIdx, selected)
     setAnswers(finalAnswers)
     if (questionIdx + 1 < totalQ) {
@@ -616,7 +620,6 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
       if (onPrevSlot) onPrevSlot()
       return
     }
-    if (timerRef.current) clearInterval(timerRef.current)
     setAnswers(withAnswer(questionIdx, selected))
     setQuestionIdx(i => i - 1)
   }
