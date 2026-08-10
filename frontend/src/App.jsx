@@ -52,9 +52,34 @@ function ExamScreen({ topLeft, topRight, section, questionLabel, timeText, lowTi
   )
 }
 
+// Shared loading indicator used by every practice list/screen while its data is being
+// fetched, so the app shows one consistent branded spinner instead of a dozen slightly
+// different plain-text "Loading..." strings.
+function LoadingState({ label = 'Loading...', fullScreen = false }) {
+  const content = (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '14px', color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>
+      <div style={{ width: '30px', height: '30px', border: '3px solid #e1e4ed', borderTopColor: EXAM_NAVY, borderRadius: '50%', animation: 'mrpSpin 0.8s linear infinite' }} />
+      <div>{label}</div>
+    </div>
+  )
+  if (fullScreen) {
+    return <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10 }}>{content}</div>
+  }
+  return <div style={{ height: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>{content}</div>
+}
+
 // ─── Complete the Words — Liste Ekranı ───────────────────────────────────────
 function CTWList({ exercises, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
+  // Each exercise carries a real `category` field (Natural Science / Social Science / History /
+  // Arts & Humanities / Health & Biology, ~30 items each) -- expose it as a filter so a 150-item
+  // flat list is actually navigable, matching the "150 questions · 5 categories" copy shown on
+  // the parent Reading screen.
+  const categories = useMemo(() => Array.from(new Set(exercises.map(ex => ex.category).filter(Boolean))), [exercises])
+  const [activeCategory, setActiveCategory] = useState('All')
+  const visible = exercises
+    .map((ex, idx) => ({ ex, idx }))
+    .filter(({ ex }) => activeCategory === 'All' || ex.category === activeCategory)
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
       <div style={{ width: '100%', margin: '0 auto', padding: isMobile ? '20px 16px' : '32px 48px' }}>
@@ -62,9 +87,22 @@ function CTWList({ exercises, scores, onSelect, onBack }) {
           <h1 style={{ margin: 0, fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Complete the Words</h1>
           <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back</button>
         </div>
-        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '28px' }} />
+        <div style={{ height: '2px', background: '#2ac56c', borderRadius: '1px', marginBottom: '20px' }} />
+        {categories.length > 1 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
+            {['All', ...categories].map(cat => (
+              <button key={cat} onClick={() => setActiveCategory(cat)} style={{
+                background: activeCategory === cat ? '#2ac56c' : '#f2f3f5',
+                color: activeCategory === cat ? '#fff' : '#616473',
+                border: 'none', borderRadius: '999px', padding: '7px 16px', fontSize: '12px', fontWeight: '600', cursor: 'pointer',
+              }}>
+                {cat}{cat !== 'All' ? ` (${exercises.filter(ex => ex.category === cat).length})` : ` (${exercises.length})`}
+              </button>
+            ))}
+          </div>
+        )}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          {exercises.map((ex, idx) => {
+          {visible.map(({ ex, idx }) => {
             const locked = isLocked(ex)
             const result = scores[idx]
             const pct = result ? Math.round((result.correct / result.total) * 100) : null
@@ -73,6 +111,9 @@ function CTWList({ exercises, scores, onSelect, onBack }) {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Exercise {idx + 1}</div>
+                    {ex.category && (
+                      <span style={{ fontSize: '10px', fontWeight: '600', color: '#701fa1', background: '#f5edfd', padding: '2px 8px', borderRadius: '999px' }}>{ex.category}</span>
+                    )}
                     {result && !locked && (
                       <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>
                         ✓ {result.correct}/{result.total} · {pct}%
@@ -299,7 +340,7 @@ function CompleteTheWords({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!exercises.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found.</div>
 
   if (selectedIdx !== null) return (
@@ -1200,7 +1241,7 @@ function AcademicPassage({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ textAlign: 'center', padding: 60, color: '#701fa1' }}>Loading passages…</div>
+  if (loading) return <LoadingState label="Loading passages..." />
   if (selected) return <APQuestion passage={selected} onBack={() => setSelected(null)} onComplete={(score, total) => {
     saveResult('ap', selected.id, score, total, selected.title || `Academic Passage #${selected.id}`)
     setScores(prev => ({ ...prev, [selected.id]: { score, total } })); setSelected(null)
@@ -1851,7 +1892,7 @@ function ListeningP1({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!exercises.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (selectedIdx !== null) return (
@@ -2141,7 +2182,7 @@ function ListeningP2({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!conversations.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (selectedIdx !== null) return (
@@ -2431,7 +2472,7 @@ function ListeningP3({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!announcements.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (selectedIdx !== null) return (
@@ -2724,7 +2765,7 @@ function ListeningP4({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!talks.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (selectedIdx !== null) return (
@@ -3103,7 +3144,7 @@ function BuildASentence({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   // Split the full item pool into fixed-size practice sets (10 items · 7:00 each).
@@ -3459,7 +3500,7 @@ function WriteEmail({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (activeIdx !== null) return (
@@ -3818,7 +3859,7 @@ function AcademicDiscussion({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (activeIdx !== null) return (
@@ -5309,7 +5350,7 @@ function ListenRepeat({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (activeIdx !== null) return (
@@ -5569,7 +5610,7 @@ function TakeInterview({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading exercises...</div>
+  if (loading) return <LoadingState label="Loading exercises..." />
   if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (activeIdx !== null) return (
@@ -7079,7 +7120,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
     goNext()
   }
 
-  if (phase === 'loading') return <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 10, color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>Loading mock test content…</div>
+  if (phase === 'loading') return <LoadingState label="Loading mock test content..." fullScreen />
   // The dynamic "Start Full Mock Test" / "practice one section" flow draws from the /api/mock/*
   // pools, which the backend now fully premium-gates (see require_premium_pool in main.py) --
   // Fixed Test 1 (startFixedTest) is the one complete free mock-test experience instead, so it's
@@ -7295,7 +7336,7 @@ function ProgressScreen({ onBack }) {
     return () => { cancelled = true }
   }, [])
 
-  if (loading) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '300px', color: '#555', fontSize: '15px' }}>Loading your progress...</div>
+  if (loading) return <LoadingState label="Loading your progress..." />
 
   const byCategory = summary?.by_category || {}
   const overall = summary?.overall || { attempts: 0, avg_pct: 0, last_attempt: null }
@@ -7304,7 +7345,11 @@ function ProgressScreen({ onBack }) {
     if (!iso) return '—'
     const d = new Date(iso.replace(' ', 'T') + 'Z')
     if (isNaN(d.getTime())) return '—'
-    return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' })
+    // Fixed to 'en-US' so the date always reads like "Aug 5" regardless of the
+    // browser/OS locale -- previously used the system locale (`undefined`), which showed
+    // localized abbreviations (e.g. Turkish "5 Ağu") inconsistent with the rest of the
+    // English-language app UI.
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
   }
 
   if (!overall.attempts) {
@@ -7952,7 +7997,7 @@ function App() {
     }).catch(err => console.error(err))
   }
 
-  if (!userData) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}><h2>Loading mrreadyprep...</h2></div>
+  if (!userData) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}><LoadingState label="Loading mrreadyprep..." /></div>
 
   const examDaysLeft = getExamDaysLeft()
   const streakDays = userData.week_activity || [false, false, false, false, false, false, false]
