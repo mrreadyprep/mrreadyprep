@@ -777,6 +777,14 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000'
 // too, e.g. VITE_AUDIO_BASE_URL=https://pub-xxxxxxxx.r2.dev (same bucket URL used server-side).
 // Falls back to the backend's own /audio mount, which is correct for local dev.
 const AUDIO_BASE_URL = import.meta.env.VITE_AUDIO_BASE_URL || `${BACKEND_URL}/audio`
+// Direct-to-R2 URLs (AUDIO_BASE_URL above) can fail for students whose network/ISP can't reach
+// Cloudflare R2's edge (seen with TLS/connection errors in production). Every audio file the
+// backend returns in an API response is already routed through the backend's own /audio-proxy
+// endpoint for this reason. The few files referenced directly by the frontend itself (intro
+// narration lines, hwcheck clips) need the same treatment -- use this base instead of
+// AUDIO_BASE_URL for those so playback goes through the backend the student already talks to
+// successfully, not straight to R2.
+const AUDIO_PROXY_BASE_URL = `${BACKEND_URL}/audio-proxy`
 
 // ─── Auth: token storage + an authenticated fetch wrapper ────────────────────────────────────
 const AUTH_TOKEN_KEY = 'mrreadyprep_token'
@@ -2136,7 +2144,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  const announced = useIntroNarration(`${AUDIO_BASE_URL}/intro/listen_to_a_conversation.mp3`)
+  const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_a_conversation.mp3`)
 
   const questions = conversation.questions
   const q = questions[qIdx]
@@ -2428,7 +2436,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  const announced = useIntroNarration(`${AUDIO_BASE_URL}/intro/listen_to_an_announcement.mp3`)
+  const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_an_announcement.mp3`)
 
   const questions = announcement.questions
   const q = questions[qIdx]
@@ -2725,7 +2733,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   const q = questions[qIdx]
   const totalQ = questions.length
   const talkIntroText = talk.subject ? `Listen to a talk in ${/^[aeiou]/i.test(talk.subject) ? 'an' : 'a'} ${talk.subject.toLowerCase()} class.` : 'Listen to a talk in an academic class.'
-  const announced = useIntroNarration(`${AUDIO_BASE_URL}/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
+  const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -6480,7 +6488,7 @@ function hwScreenVolume(dependsOnText) {
       "You can adjust your device's system volume at any time during the test using your computer's own volume controls.",
       `Make sure you can comfortably hear audio before continuing — ${dependsOnText}.`,
     ],
-    visual: <VolumeTestPlayer src={`${AUDIO_BASE_URL}/hwcheck/adjusting_volume.mp3`} />,
+    visual: <VolumeTestPlayer src={`${AUDIO_PROXY_BASE_URL}/hwcheck/adjusting_volume.mp3`} />,
   }
 }
 const HW_SCREEN_MICROPHONE = {
@@ -6489,7 +6497,7 @@ const HW_SCREEN_MICROPHONE = {
     'When you record your Speaking answers, speak at your normal volume and keep a steady distance from the microphone.',
     'Try to stay in the "Good" range shown below — not too quiet, and not too loud.',
   ],
-  visual: <MicAdjustVisual src={`${AUDIO_BASE_URL}/hwcheck/adjusting_microphone.mp3`} />,
+  visual: <MicAdjustVisual src={`${AUDIO_PROXY_BASE_URL}/hwcheck/adjusting_microphone.mp3`} />,
 }
 
 // Only the sections that actually use a mic/speaker need their hardware checked before starting.
