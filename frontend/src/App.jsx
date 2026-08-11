@@ -8946,7 +8946,7 @@ function App() {
         {currentTab === 'writing' && !writingSubTab && (
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
             {[
-              { key: 'p1', title: 'Part 1: Build a Sentence', desc: 'Drag word chunks into the correct order to form a grammatical sentence or question.', count: '100 practice items · 10 per set', ready: true },
+              { key: 'p1', title: 'Part 1: Build a Sentence', desc: 'Drag word chunks into the correct order to form a grammatical sentence or question.', count: '1000 practice items · 10 per set', ready: true },
               { key: 'p2', title: 'Part 2: Write an Email', desc: 'Draft formal requests or academic inquiries with contextual formatting.', count: '100 practice emails · 7:00 each', ready: true },
               { key: 'p3', title: 'Part 3: Academic Discussion', desc: 'Contribute opinions and critical analysis to an interactive lecture forum.', count: '100 practice posts · 10:00 each', ready: true },
             ].map((p, i) => (
