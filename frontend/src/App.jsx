@@ -3385,14 +3385,6 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
         <BuildSentenceItem key={item.id} item={item} initialPlaced={placed}
           onChange={(vals) => setPlacedByIndex(prev => { const next = [...prev]; next[qIdx] = vals; return next })} />
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', maxWidth: '760px', width: '100%', marginTop: '28px' }}>
-        <button onClick={handleBack} disabled={qIdx === 0} style={{ background: '#fff', color: qIdx === 0 ? '#c0c0c0' : '#333', border: '1px solid #d0d5dd', borderRadius: '6px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: qIdx === 0 ? 'default' : 'pointer' }}>
-          ← Back
-        </button>
-        <button onClick={handleNext} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>
-          {qIdx + 1 >= totalQ ? 'Finish →' : 'Next →'}
-        </button>
-      </div>
     </ExamScreen>
   )
 }
