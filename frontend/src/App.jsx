@@ -2118,8 +2118,8 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
             {q.options.map((opt, i) => {
               const isChosen = selected === i
               return (
-                <div key={i} onClick={() => setSelected(i)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: 'pointer' }}>
+                <div key={i} onClick={() => { if (audioDone) setSelected(i) }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: audioDone ? 'pointer' : 'not-allowed', opacity: audioDone ? 1 : 0.45 }}>
                   <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
                   <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
                 </div>
