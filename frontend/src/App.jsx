@@ -3486,6 +3486,85 @@ const EMAIL_ANALYZE_DELAY_MS = 1800 // simulated "AI is grading" delay (well und
 // syntax/vocabulary, social/discourse conventions) and note the task's own "at least 100 words"
 // guidance as the practical threshold for full elaboration credit. Wording below is
 // paraphrased, not copied from the ETS document.
+// Maps a 0-1 quality ratio to a 1-5 band, used by the per-dimension rubric breakdown below.
+function bandFromRatio(r) {
+  if (r >= 0.85) return 5
+  if (r >= 0.65) return 4
+  if (r >= 0.45) return 3
+  if (r >= 0.25) return 2
+  return 1
+}
+
+// Shared linking-word list used to proxy "fluency & coherence" for both Write an Email and
+// Academic Discussion -- neither task has a live grammar/discourse checker available, so this
+// (plus sentence-length variance) stands in for it, same as the diversity/range proxies already
+// used above for the holistic band score.
+const WRITING_LINKERS_RE = /(however|therefore|moreover|furthermore|in addition|as a result|for example|for instance|because|since|although|on the other hand|first|second|finally|overall|meanwhile|specifically|in fact|thus|consequently)/gi
+
+// Grammar/mechanics can't be truly checked client-side, so this proxies error frequency via
+// surface signals: consistent capitalization at sentence starts, terminal punctuation, and the
+// absence of obvious run-ons (40+ word sentences) or fragments (<=2 word "sentences").
+function estimateGrammarDimension(trimmed, sentences) {
+  const capOk = sentences.filter(s => /^[A-Z"'(]/.test(s.trim())).length
+  const capRatio = sentences.length ? capOk / sentences.length : 0
+  const endsWithPunct = /[.!?]['")]?\s*$/.test(trimmed)
+  const runOns = sentences.filter(s => s.split(/\s+/).length > 40).length
+  const fragments = sentences.filter(s => s.split(/\s+/).length <= 2).length
+  const ratio = Math.max(0, Math.min(1,
+    capRatio * 0.4 + (endsWithPunct ? 0.2 : 0) + (runOns === 0 ? 0.2 : 0) + (fragments === 0 ? 0.2 : 0)
+  ))
+  const score = bandFromRatio(ratio)
+  const note = score >= 4
+    ? 'Sentences are capitalized and punctuated consistently, with no run-ons or fragments spotted.'
+    : `Watch for ${capRatio < 0.9 ? 'inconsistent capitalization, ' : ''}${!endsWithPunct ? 'missing end punctuation, ' : ''}${runOns ? 'overly long run-on sentences, ' : ''}${fragments ? 'sentence fragments' : ''}`.replace(/,\s*$/, '.') || 'Proofread carefully for small slips.'
+  return { label: 'Grammar & Mechanics', score, note }
+}
+
+function estimateVocabDimension(words, diversity) {
+  const wordLens = words.map(w => w.replace(/[^a-zA-Z']/g, '').length).filter(Boolean)
+  const avgWordLen = wordLens.length ? wordLens.reduce((a, b) => a + b, 0) / wordLens.length : 0
+  const ratio = Math.max(0, Math.min(1, (diversity - 0.35) / 0.35 * 0.65 + (avgWordLen - 3.8) / 1.8 * 0.35))
+  const score = bandFromRatio(ratio)
+  const note = score >= 4
+    ? `Good lexical variety (${Math.round(diversity * 100)}% unique words) and precise word choice.`
+    : `Try using a wider range of words instead of repeating the same ones — currently ${Math.round(diversity * 100)}% unique words.`
+  return { label: 'Vocabulary & Word Choice', score, note }
+}
+
+function estimateFluencyDimension(lower, sentences, wordCount) {
+  const linkerMatches = (lower.match(WRITING_LINKERS_RE) || []).length
+  const linkerRatio = sentences.length ? Math.min(1, linkerMatches / Math.max(2, sentences.length * 0.35)) : 0
+  const lengths = sentences.map(s => s.split(/\s+/).length)
+  const meanLen = lengths.length ? lengths.reduce((a, b) => a + b, 0) / lengths.length : 0
+  const variance = lengths.length > 1 ? Math.sqrt(lengths.reduce((a, l) => a + (l - meanLen) ** 2, 0) / lengths.length) : 0
+  const ratio = Math.max(0, Math.min(1,
+    linkerRatio * 0.4 + (meanLen >= 8 && meanLen <= 26 ? 0.35 : 0.1) + (variance >= 2 ? 0.25 : 0.1)
+  ))
+  const score = bandFromRatio(ratio)
+  const note = score >= 4
+    ? 'Ideas flow naturally with good use of linking words and varied sentence length.'
+    : 'Connect your ideas more smoothly with linking words (e.g., "however", "as a result") and vary your sentence length.'
+  return { label: 'Fluency & Coherence', score, note }
+}
+
+// Small presentational bar used to render each rubric dimension's score + note. Reused by the
+// Write an Email and Academic Discussion "done" screens as well as the Mock Test review list.
+function ScoreDimensionBar({ label, score, note }) {
+  const color = score >= 4 ? '#2ac56c' : score >= 3 ? '#e07b00' : '#d94040'
+  return (
+    <div style={{ marginBottom: '10px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
+        <span style={{ fontSize: '12px', fontWeight: '700', color: '#1a1a1a' }}>{label}</span>
+        <span style={{ fontSize: '12px', fontWeight: '700', color }}>{score}/5</span>
+      </div>
+      <div style={{ height: '6px', borderRadius: '3px', background: '#eef0f4', overflow: 'hidden' }}>
+        <div style={{ height: '100%', width: `${(score / 5) * 100}%`, background: color, borderRadius: '3px' }} />
+      </div>
+      {note && <div style={{ fontSize: '12px', color: '#616473', marginTop: '4px', lineHeight: '1.5' }}>{note}</div>}
+    </div>
+  )
+}
+
 function evaluateEmailResponse(text, tasks) {
   const trimmed = text.trim()
   const words = trimmed ? trimmed.split(/\s+/) : []
@@ -3561,7 +3640,31 @@ function evaluateEmailResponse(text, tasks) {
     : score === 2 ? 'Mostly unsuccessful: your attempt addresses the task, but it is mostly ineffective and may be hard to interpret.'
     : 'Unsuccessful: your attempt to address the task is ineffective — the message may be hard to understand.'
 
-  return { score, wordCount, summary, criteria }
+  // Per-dimension rubric breakdown (grammar / vocabulary / organization / style / fluency),
+  // scored separately from the holistic band above so students can see exactly what's strong
+  // and what needs work, not just a single number.
+  const hasBody = trimmed.split(/\n+/).filter(Boolean).length >= 2
+  const orgRatio = Math.min(1, (hasGreeting ? 0.3 : 0) + (hasClosing ? 0.3 : 0) + (hasBody ? 0.2 : 0) + (taskRatio >= 0.5 ? 0.2 : 0))
+  const orgScore = bandFromRatio(orgRatio)
+  const styleRatio = Math.min(1, (hasPoliteness ? 0.5 : 0) + (rangeOk ? 0.5 : 0.2))
+  const styleScore = bandFromRatio(styleRatio)
+
+  const dimensions = [
+    estimateGrammarDimension(trimmed, sentences),
+    estimateVocabDimension(words, diversity),
+    {
+      label: 'Organization & Format', score: orgScore,
+      note: orgScore >= 4 ? 'Clear email structure with greeting, body, and closing in the right places.'
+        : `Strengthen the structure — ${!hasGreeting ? 'add a greeting, ' : ''}${!hasClosing ? 'add a closing, ' : ''}${!hasBody ? 'separate your ideas into clear parts' : ''}`.replace(/,\s*$/, '.') || 'Make the structure clearer.',
+    },
+    {
+      label: 'Style & Tone', score: styleScore,
+      note: styleScore >= 4 ? 'Polite, appropriately formal register throughout.' : 'Use more polite/formal phrasing (e.g., "Could you...", "I would appreciate...") and vary your sentence patterns.',
+    },
+    estimateFluencyDimension(lower, sentences, wordCount),
+  ]
+
+  return { score, wordCount, summary, criteria, dimensions }
 }
 
 function toolbarBtnStyle(disabled) {
@@ -3598,7 +3701,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
     setTimeout(() => {
       const res = evaluateEmailResponse(text, item.tasks)
       if (mockMode) {
-        onComplete(res.score, { prompt: item.scenario, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria })
+        onComplete(res.score, { prompt: item.scenario, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
         return
       }
       setResult(res)
@@ -3739,6 +3842,15 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
                     </div>
                   ))}
                 </div>
+
+                {result.dimensions && result.dimensions.length > 0 && (
+                  <div style={{ marginBottom: '18px' }}>
+                    <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '10px' }}>Score Breakdown</div>
+                    <div style={{ background: '#f9fafb', border: '0.5px solid #e1e4ed', borderRadius: '8px', padding: '14px 16px' }}>
+                      {result.dimensions.map((d, i) => <ScoreDimensionBar key={i} {...d} />)}
+                    </div>
+                  </div>
+                )}
 
                 <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Example Response</div>
                 <div style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '8px', padding: '16px', fontSize: '13px', color: '#333', lineHeight: '1.7', whiteSpace: 'pre-wrap', marginBottom: '16px' }}>
@@ -3918,7 +4030,29 @@ function evaluateDiscussionResponse(text, classmates) {
     : score === 2 ? 'Mostly unsuccessful: your attempt to contribute is reflected, but limitations in language may make ideas hard to follow.'
     : 'Unsuccessful: limitations in language may prevent your ideas from being expressed clearly.'
 
-  return { score, wordCount, summary, criteria }
+  // Per-dimension rubric breakdown (content / organization / grammar / vocabulary / fluency),
+  // scored separately from the holistic band above -- same rationale as Write an Email.
+  const contentRatio = Math.min(1, (hasOpinion ? 0.4 : 0) + (hasReason ? 0.4 : 0) + (hasExample ? 0.2 : 0))
+  const contentScore = bandFromRatio(contentRatio)
+  const orgRatio = Math.min(1, (engaged ? 0.5 : 0) + (hasExample ? 0.3 : 0) + (rangeOk ? 0.2 : 0))
+  const orgScore = bandFromRatio(orgRatio)
+
+  const dimensions = [
+    {
+      label: 'Content & Relevance', score: contentScore,
+      note: contentScore >= 4 ? 'Your opinion is clear, well-reasoned, and backed by an example.'
+        : `Strengthen your point by ${!hasOpinion ? 'stating a clear opinion, ' : ''}${!hasReason ? 'explaining your reasoning, ' : ''}${!hasExample ? 'adding a concrete example' : ''}`.replace(/,\s*$/, '.') || 'developing your point further.',
+    },
+    {
+      label: 'Organization & Engagement', score: orgScore,
+      note: orgScore >= 4 ? 'Well-organized post that directly engages with the discussion.' : 'Reference a classmate by name and build your response around their point for a more organized, engaged contribution.',
+    },
+    estimateGrammarDimension(trimmed, sentences),
+    estimateVocabDimension(words, diversity),
+    estimateFluencyDimension(lower, sentences, wordCount),
+  ]
+
+  return { score, wordCount, summary, criteria, dimensions }
 }
 
 function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode = false }) {
@@ -3947,7 +4081,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
     setTimeout(() => {
       const res = evaluateDiscussionResponse(text, item.classmates)
       if (mockMode) {
-        onComplete(res.score, { prompt: item.prompt, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria })
+        onComplete(res.score, { prompt: item.prompt, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
         return
       }
       setResult(res)
@@ -4100,6 +4234,15 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
                     </div>
                   ))}
                 </div>
+
+                {result.dimensions && result.dimensions.length > 0 && (
+                  <div style={{ marginBottom: '18px' }}>
+                    <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '10px' }}>Score Breakdown</div>
+                    <div style={{ background: '#f9fafb', border: '0.5px solid #e1e4ed', borderRadius: '8px', padding: '14px 16px' }}>
+                      {result.dimensions.map((d, i) => <ScoreDimensionBar key={i} {...d} />)}
+                    </div>
+                  </div>
+                )}
 
                 <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Example Response</div>
                 <div style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '8px', padding: '16px', fontSize: '13px', color: '#333', lineHeight: '1.7', whiteSpace: 'pre-wrap', marginBottom: '16px' }}>
@@ -6878,6 +7021,17 @@ function MockReviewList({ reviewEntries }) {
                   <div key={ci} style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
                     <span style={{ fontSize: '11px', color: c.ok ? '#2ac56c' : '#d94040', flexShrink: 0, marginTop: '1px' }}>{c.ok ? '✓' : '✗'}</span>
                     <span style={{ fontSize: '11px', color: '#616473', lineHeight: '1.5' }}><strong style={{ color: '#1a1a1a' }}>{c.label}:</strong> {c.detail}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+            {it.dimensions && it.dimensions.length > 0 && (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #f0f0f0' }}>
+                <div style={{ fontSize: '11px', fontWeight: '700', color: '#1a1a1a', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Score Breakdown</div>
+                {it.dimensions.map((d, di) => (
+                  <div key={di} style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
+                    <span style={{ fontSize: '11px', fontWeight: '700', color: d.score >= 4 ? '#2ac56c' : d.score >= 3 ? '#e07b00' : '#d94040', flexShrink: 0, marginTop: '1px' }}>{d.score}/5</span>
+                    <span style={{ fontSize: '11px', color: '#616473', lineHeight: '1.5' }}><strong style={{ color: '#1a1a1a' }}>{d.label}:</strong> {d.note}</span>
                   </div>
                 ))}
               </div>
