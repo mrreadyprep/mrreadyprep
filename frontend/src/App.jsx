@@ -442,7 +442,7 @@ function CompleteTheWords({ onBack }) {
 }
 
 // ─── Read in Daily Life ───────────────────────────────────────────────────────
-const RIDL_TIME = 50
+const RIDL_TIME = 40
 const RIDL_TYPE_LABELS = { email: 'Email', message: 'Message Exchange', sign: 'Sign / Notice', poster: 'Poster', receipt: 'Receipt', advertisement: 'Advertisement', schedule: 'Schedule / Agenda', article: 'Article' }
 // Short 2-question types (sign/schedule/receipt) listed first, then the longer 3-question types
 // (email/message/article/poster/advertisement) -- lets students warm up on the quicker practices
