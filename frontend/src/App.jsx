@@ -3682,18 +3682,18 @@ function evaluateEmailResponse(text, tasks) {
   // "elaboration that supports the communicative purpose" as the primary rubric line), grammar
   // next, then organization/vocabulary/style/fluency.
   const weighted = taskScore * 0.3 + orgScore * 0.15 + grammarDim.score * 0.2 + vocabDim.score * 0.15 + styleScore * 0.1 + fluencyDim.score * 0.1
-  // Floor rather than round: a weighted average of 4.65 (say, two dimensions at 4/5 and the
-  // rest at 5/5) should still show 4/5 overall, not round up to a 5/5 that implies every
-  // dimension was maxed out. This keeps the headline number from ever looking "better" than
-  // the weakest dimensions actually shown in the breakdown below.
-  let score = Math.max(1, Math.min(5, Math.floor(weighted)))
+  // Round to the nearest half-point rather than a whole band: a weighted average of 4.65 (say,
+  // two dimensions at 4/5 and the rest at 5/5) shows as 4.5/5, which is more honest than either
+  // flooring to 4 (undersells the mostly-5 breakdown) or rounding up to 5 (overstates it as if
+  // every dimension were maxed out).
+  let score = Math.max(1, Math.min(5, Math.round(weighted * 2) / 2))
   if (wordCount < 15 || taskRatio === 0) score = 1 // unsuccessful: telegraphic, minimal/no elaboration, or entirely off-task
 
   const summary =
-    score === 5 ? 'Fully successful: your message is effective and clearly expressed, with consistent facility in the use of language.'
-    : score === 4 ? 'Generally successful: your message is mostly effective and easily understood.'
-    : score === 3 ? 'Partially successful: the task is generally accomplished, but limitations in language may prevent parts of the message from being fully clear.'
-    : score === 2 ? 'Mostly unsuccessful: your attempt addresses the task, but it is mostly ineffective and may be hard to interpret.'
+    score >= 5 ? 'Fully successful: your message is effective and clearly expressed, with consistent facility in the use of language.'
+    : score >= 4 ? 'Generally successful: your message is mostly effective and easily understood.'
+    : score >= 3 ? 'Partially successful: the task is generally accomplished, but limitations in language may prevent parts of the message from being fully clear.'
+    : score >= 2 ? 'Mostly unsuccessful: your attempt addresses the task, but it is mostly ineffective and may be hard to interpret.'
     : 'Unsuccessful: your attempt to address the task is ineffective — the message may be hard to understand.'
 
   return { score, wordCount, summary, criteria, dimensions }
@@ -4072,18 +4072,18 @@ function evaluateDiscussionResponse(text, classmates) {
   // well-elaborated contribution" as the primary rubric line), then organization/engagement,
   // grammar, vocabulary, and fluency.
   const weighted = contentScore * 0.3 + orgScore * 0.2 + grammarDim.score * 0.2 + vocabDim.score * 0.15 + fluencyDim.score * 0.15
-  // Floor rather than round: a weighted average of 4.65 (say, two dimensions at 4/5 and the
-  // rest at 5/5) should still show 4/5 overall, not round up to a 5/5 that implies every
-  // dimension was maxed out. This keeps the headline number from ever looking "better" than
-  // the weakest dimensions actually shown in the breakdown below.
-  let score = Math.max(1, Math.min(5, Math.floor(weighted)))
+  // Round to the nearest half-point rather than a whole band: a weighted average of 4.65 (say,
+  // two dimensions at 4/5 and the rest at 5/5) shows as 4.5/5, which is more honest than either
+  // flooring to 4 (undersells the mostly-5 breakdown) or rounding up to 5 (overstates it as if
+  // every dimension were maxed out).
+  let score = Math.max(1, Math.min(5, Math.round(weighted * 2) / 2))
   if (wordCount < 15 || (!hasOpinion && !engaged)) score = 1 // unsuccessful: few or no coherent ideas connecting to the discussion
 
   const summary =
-    score === 5 ? 'Fully successful: your post is a relevant, clearly expressed contribution with consistent facility in the use of language.'
-    : score === 4 ? 'Generally successful: your post is a relevant contribution and your ideas are easily understood.'
-    : score === 3 ? 'Partially successful: your post is mostly relevant and understandable, with some limitations in language.'
-    : score === 2 ? 'Mostly unsuccessful: your attempt to contribute is reflected, but limitations in language may make ideas hard to follow.'
+    score >= 5 ? 'Fully successful: your post is a relevant, clearly expressed contribution with consistent facility in the use of language.'
+    : score >= 4 ? 'Generally successful: your post is a relevant contribution and your ideas are easily understood.'
+    : score >= 3 ? 'Partially successful: your post is mostly relevant and understandable, with some limitations in language.'
+    : score >= 2 ? 'Mostly unsuccessful: your attempt to contribute is reflected, but limitations in language may make ideas hard to follow.'
     : 'Unsuccessful: limitations in language may prevent your ideas from being expressed clearly.'
 
   return { score, wordCount, summary, criteria, dimensions }
