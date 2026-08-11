@@ -3680,11 +3680,13 @@ function evaluateEmailResponse(text, tasks) {
 
   // Weighted rollup of the dimensions above -- task/content counts most (matching ETS's
   // "elaboration that supports the communicative purpose" as the primary rubric line), grammar
-  // next, then organization/vocabulary/style/fluency. The 0.001 epsilon before rounding means an
-  // exact .5 rounds down rather than up, so the headline score never overstates a response that
-  // one of its own dimensions rated only middling.
+  // next, then organization/vocabulary/style/fluency.
   const weighted = taskScore * 0.3 + orgScore * 0.15 + grammarDim.score * 0.2 + vocabDim.score * 0.15 + styleScore * 0.1 + fluencyDim.score * 0.1
-  let score = Math.max(1, Math.min(5, Math.round(weighted - 0.001)))
+  // Floor rather than round: a weighted average of 4.65 (say, two dimensions at 4/5 and the
+  // rest at 5/5) should still show 4/5 overall, not round up to a 5/5 that implies every
+  // dimension was maxed out. This keeps the headline number from ever looking "better" than
+  // the weakest dimensions actually shown in the breakdown below.
+  let score = Math.max(1, Math.min(5, Math.floor(weighted)))
   if (wordCount < 15 || taskRatio === 0) score = 1 // unsuccessful: telegraphic, minimal/no elaboration, or entirely off-task
 
   const summary =
@@ -4068,11 +4070,13 @@ function evaluateDiscussionResponse(text, classmates) {
 
   // Weighted rollup of the dimensions above -- content counts most (matching ETS's "relevant,
   // well-elaborated contribution" as the primary rubric line), then organization/engagement,
-  // grammar, vocabulary, and fluency. The 0.001 epsilon before rounding means an exact .5 rounds
-  // down rather than up, so the headline score never overstates a response that one of its own
-  // dimensions rated only middling.
+  // grammar, vocabulary, and fluency.
   const weighted = contentScore * 0.3 + orgScore * 0.2 + grammarDim.score * 0.2 + vocabDim.score * 0.15 + fluencyDim.score * 0.15
-  let score = Math.max(1, Math.min(5, Math.round(weighted - 0.001)))
+  // Floor rather than round: a weighted average of 4.65 (say, two dimensions at 4/5 and the
+  // rest at 5/5) should still show 4/5 overall, not round up to a 5/5 that implies every
+  // dimension was maxed out. This keeps the headline number from ever looking "better" than
+  // the weakest dimensions actually shown in the breakdown below.
+  let score = Math.max(1, Math.min(5, Math.floor(weighted)))
   if (wordCount < 15 || (!hasOpinion && !engaged)) score = 1 // unsuccessful: few or no coherent ideas connecting to the discussion
 
   const summary =
