@@ -3575,6 +3575,24 @@ function estimateFluencyDimension(lower, sentences, wordCount) {
   return { label: 'Fluency & Coherence', score, note }
 }
 
+// A response that hits every bullet point in one bare sentence each, with no reasoning or
+// supporting detail, is exactly the kind of "telegraphic" response ETS's rubric singles out --
+// clean grammar and correct structure don't make up for barely developing any idea. This proxies
+// that via word count against the task's own published "at least 100 words" full-credit
+// guidance, plus whether the response actually explains/supports its points (because/since/for
+// example/etc.) rather than just stating them.
+const REASONING_MARKERS_RE = /(because|since|due to|as a result|this (is|means|allows|helps)|which (means|allows|helps)|so that|for this reason|therefore|thus|specifically|for example|for instance|such as)/i
+function estimateElaborationDimension(wordCount, lower) {
+  const lengthRatio = Math.min(1, wordCount / 100)
+  const hasReasoning = REASONING_MARKERS_RE.test(lower)
+  const ratio = Math.max(0, Math.min(1, lengthRatio * 0.6 + (hasReasoning ? 0.4 : 0)))
+  const score = bandFromRatio(ratio)
+  const note = score >= 4
+    ? 'Well-developed response with enough length and supporting reasoning.'
+    : `Add more development${wordCount < 100 ? ` — currently just ${wordCount} words (aim for 100+)` : ''}${!hasReasoning ? `${wordCount < 100 ? ', and' : ' —'} explain your reasoning (e.g., "...because...")` : ''}.`
+  return { label: 'Development & Elaboration', score, note }
+}
+
 // Small presentational bar used to render each rubric dimension's score + note. Reused by the
 // Write an Email and Academic Discussion "done" screens as well as the Mock Test review list.
 function ScoreDimensionBar({ label, score, note }) {
@@ -3657,6 +3675,7 @@ function evaluateEmailResponse(text, tasks) {
   const orgScore = bandFromRatio(orgRatio)
   const styleRatio = Math.min(1, (hasPoliteness ? 0.5 : 0) + (rangeOk ? 0.5 : 0.2))
   const styleScore = bandFromRatio(styleRatio)
+  const elabDim = estimateElaborationDimension(wordCount, lower)
   const grammarDim = estimateGrammarDimension(trimmed, sentences)
   const vocabDim = estimateVocabDimension(words, diversity)
   const fluencyDim = estimateFluencyDimension(lower, sentences, wordCount)
@@ -3671,6 +3690,7 @@ function evaluateEmailResponse(text, tasks) {
       note: orgScore >= 4 ? 'Clear email structure with greeting, body, and closing in the right places.'
         : `Strengthen the structure — ${!hasGreeting ? 'add a greeting, ' : ''}${!hasClosing ? 'add a closing, ' : ''}${!hasBody ? 'separate your ideas into clear parts' : ''}`.replace(/,\s*$/, '.') || 'Make the structure clearer.',
     },
+    elabDim,
     grammarDim,
     vocabDim,
     {
@@ -3680,15 +3700,21 @@ function evaluateEmailResponse(text, tasks) {
     fluencyDim,
   ]
 
-  // Weighted rollup of the dimensions above -- task/content counts most (matching ETS's
-  // "elaboration that supports the communicative purpose" as the primary rubric line), grammar
-  // next, then organization/vocabulary/style/fluency.
-  const weighted = taskScore * 0.3 + orgScore * 0.15 + grammarDim.score * 0.2 + vocabDim.score * 0.15 + styleScore * 0.1 + fluencyDim.score * 0.1
+  // Weighted rollup of the dimensions above -- task completion and development/elaboration count
+  // most (matching ETS's "elaboration that supports the communicative purpose" as the primary
+  // rubric line), grammar next, then organization/vocabulary/style/fluency.
+  const weighted = taskScore * 0.2 + elabDim.score * 0.2 + orgScore * 0.15 + grammarDim.score * 0.15 + vocabDim.score * 0.1 + styleScore * 0.1 + fluencyDim.score * 0.1
   // Round to the nearest half-point rather than a whole band: a weighted average of 4.65 (say,
   // two dimensions at 4/5 and the rest at 5/5) shows as 4.5/5, which is more honest than either
   // flooring to 4 (undersells the mostly-5 breakdown) or rounding up to 5 (overstates it as if
   // every dimension were maxed out).
   let score = Math.max(1, Math.min(5, Math.round(weighted * 2) / 2))
+  // Elaboration acts as a ceiling on top of the weighted average, not just one input among many:
+  // a response that's grammatically clean but barely develops any point (one bare sentence per
+  // bullet, no reasoning) shouldn't be able to average its way to a high score just because the
+  // sentences themselves are well-formed -- that's exactly the "telegraphic" pattern ETS singles
+  // out as capping a response well below "generally successful".
+  score = Math.min(score, elabDim.score + 1)
   if (wordCount < 15 || taskRatio === 0) score = 1 // unsuccessful: telegraphic, minimal/no elaboration, or entirely off-task
 
   const summary =
@@ -4056,6 +4082,7 @@ function evaluateDiscussionResponse(text, classmates) {
   const contentScore = bandFromRatio(contentRatio)
   const orgRatio = Math.min(1, (engaged ? 0.5 : 0) + (hasExample ? 0.3 : 0) + (rangeOk ? 0.2 : 0))
   const orgScore = bandFromRatio(orgRatio)
+  const elabDim = estimateElaborationDimension(wordCount, lower)
   const grammarDim = estimateGrammarDimension(trimmed, sentences)
   const vocabDim = estimateVocabDimension(words, diversity)
   const fluencyDim = estimateFluencyDimension(lower, sentences, wordCount)
@@ -4070,20 +4097,24 @@ function evaluateDiscussionResponse(text, classmates) {
       label: 'Organization & Engagement', score: orgScore,
       note: orgScore >= 4 ? 'Well-organized post that directly engages with the discussion.' : 'Reference a classmate by name and build your response around their point for a more organized, engaged contribution.',
     },
+    elabDim,
     grammarDim,
     vocabDim,
     fluencyDim,
   ]
 
-  // Weighted rollup of the dimensions above -- content counts most (matching ETS's "relevant,
-  // well-elaborated contribution" as the primary rubric line), then organization/engagement,
-  // grammar, vocabulary, and fluency.
-  const weighted = contentScore * 0.3 + orgScore * 0.2 + grammarDim.score * 0.2 + vocabDim.score * 0.15 + fluencyDim.score * 0.15
+  // Weighted rollup of the dimensions above -- content and development/elaboration count most
+  // (matching ETS's "relevant, well-elaborated contribution" as the primary rubric line), then
+  // organization/engagement, grammar, vocabulary, and fluency.
+  const weighted = contentScore * 0.2 + elabDim.score * 0.2 + orgScore * 0.15 + grammarDim.score * 0.15 + vocabDim.score * 0.15 + fluencyDim.score * 0.15
   // Round to the nearest half-point rather than a whole band: a weighted average of 4.65 (say,
   // two dimensions at 4/5 and the rest at 5/5) shows as 4.5/5, which is more honest than either
   // flooring to 4 (undersells the mostly-5 breakdown) or rounding up to 5 (overstates it as if
   // every dimension were maxed out).
   let score = Math.max(1, Math.min(5, Math.round(weighted * 2) / 2))
+  // Elaboration acts as a ceiling on top of the weighted average, not just one input among many --
+  // see evaluateEmailResponse for the same logic and rationale.
+  score = Math.min(score, elabDim.score + 1)
   if (wordCount < 15 || (!hasOpinion && !engaged)) score = 1 // unsuccessful: few or no coherent ideas connecting to the discussion
 
   const summary =
