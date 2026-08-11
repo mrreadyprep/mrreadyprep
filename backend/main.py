@@ -447,6 +447,9 @@ class AttemptResult(BaseModel):
     label: str = ""      # human-readable label shown in the progress UI, e.g. "Mock Test 3 · Reading"
     score: float
     total: float
+    detail: str = ""     # optional freeform text of what the student actually wrote/answered
+                          # (e.g. the Write an Email / Academic Discussion response body), so it
+                          # can be recalled later instead of only the numeric score surviving
 
 # ============================================================
 # VERİTABANI BAĞLANTISI
@@ -711,6 +714,8 @@ def init_db():
     """)
     if not _has_column(conn, "attempt_results", "user_id"):
         conn.execute("ALTER TABLE attempt_results ADD COLUMN user_id INTEGER NOT NULL DEFAULT 0")
+    if not _has_column(conn, "attempt_results", "detail"):
+        conn.execute("ALTER TABLE attempt_results ADD COLUMN detail TEXT DEFAULT ''")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_category ON attempt_results(category)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_user ON attempt_results(user_id)")
 
@@ -1979,9 +1984,9 @@ def save_attempt_result(data: AttemptResult, user=Depends(get_current_user)):
     conn = get_db()
     try:
         conn.execute("""
-            INSERT INTO attempt_results (user_id, category, item_id, label, score, total, pct)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        """, (user["id"], data.category, data.item_id, data.label, data.score, data.total, pct))
+            INSERT INTO attempt_results (user_id, category, item_id, label, score, total, pct, detail)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        """, (user["id"], data.category, data.item_id, data.label, data.score, data.total, pct, data.detail))
         conn.commit()
         return {"status": "success"}
     finally:

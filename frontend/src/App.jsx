@@ -1095,12 +1095,14 @@ function timeAgo(isoString) {
 
 // Fire-and-forget: records one finished exercise/attempt into the unified progress table so
 // the student can see their history/improvement later on the Progress screen. Never blocks or
-// throws on failure -- a save hiccup shouldn't interrupt the student's flow.
-function saveResult(category, itemId, score, total, label = '') {
+// throws on failure -- a save hiccup shouldn't interrupt the student's flow. `detail` is an
+// optional freeform copy of what the student actually wrote (used by Write an Email / Academic
+// Discussion so the response text itself isn't lost the moment they navigate away).
+function saveResult(category, itemId, score, total, label = '', detail = '') {
   apiFetch(`${BACKEND_URL}/api/results/save`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ category, item_id: String(itemId), label, score, total }),
+    body: JSON.stringify({ category, item_id: String(itemId), label, score, total, detail }),
   }).catch(() => {})
 }
 
@@ -3736,6 +3738,10 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
         onComplete(res.score, { prompt: item.scenario, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
         return
       }
+      // Save the instant grading finishes, not when the student later clicks "Back to Practice
+      // List" -- previously the score (and the written response itself) only persisted if that
+      // exact button was clicked, so leaving via the sidebar or a browser back lost everything.
+      saveResult('email', item.id ?? index, res.score, 5, `Write an Email #${index + 1}`, text)
       setResult(res)
       setPhase('done')
     }, EMAIL_ANALYZE_DELAY_MS)
@@ -3930,7 +3936,8 @@ function WriteEmail({ onBack }) {
   if (activeIdx !== null) return (
     <EmailExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
       onComplete={(finalScore) => {
-        saveResult('email', items[activeIdx].id ?? activeIdx, finalScore, 5, `Write an Email #${activeIdx + 1}`)
+        // The attempt itself was already saved the moment grading finished (inside
+        // EmailExercise's finishNow), so this just updates the list's own badge state.
         setScores(prev => ({ ...prev, [activeIdx]: finalScore })); setActiveIdx(null)
       }} />
   )
@@ -4118,6 +4125,10 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
         onComplete(res.score, { prompt: item.prompt, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
         return
       }
+      // Save the instant grading finishes, not when the student later clicks "Back to Practice
+      // List" -- previously the score (and the written response itself) only persisted if that
+      // exact button was clicked, so leaving via the sidebar or a browser back lost everything.
+      saveResult('disc', item.id ?? index, res.score, 5, `Academic Discussion #${index + 1}`, text)
       setResult(res)
       setPhase('done')
     }, EMAIL_ANALYZE_DELAY_MS)
@@ -4324,7 +4335,8 @@ function AcademicDiscussion({ onBack }) {
   if (activeIdx !== null) return (
     <AcademicDiscussionExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
       onComplete={(finalScore) => {
-        saveResult('disc', items[activeIdx].id ?? activeIdx, finalScore, 5, `Academic Discussion #${activeIdx + 1}`)
+        // The attempt itself was already saved the moment grading finished (inside
+        // AcademicDiscussionExercise's finishNow), so this just updates the list's own badge state.
         setScores(prev => ({ ...prev, [activeIdx]: finalScore })); setActiveIdx(null)
       }} />
   )
