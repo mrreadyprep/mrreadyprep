@@ -3493,13 +3493,47 @@ function bandFromRatio(r) {
 // used above for the holistic band score.
 const WRITING_LINKERS_RE = /(however|therefore|moreover|furthermore|in addition|as a result|for example|for instance|because|since|although|on the other hand|first|second|finally|overall|meanwhile|specifically|in fact|thus|consequently)/gi
 
+// Splits text into sentences for structural analysis (word counts, capitalization checks,
+// length checks). Protects periods inside common abbreviations (Mr., Mrs., Dr., e.g., etc.)
+// first, so e.g. "Dear Mr. Alvarez," doesn't get mis-split into a bogus 2-word "sentence"
+// ("Dear Mr") that then gets flagged as a grammar fragment.
+function splitIntoSentences(text) {
+  const protectedText = text
+    .replace(/\b(Mr|Mrs|Ms|Dr|Prof|Sr|Jr|St|vs|etc|approx|Inc|Ltd|Co)\.(?=\s|$)/gi, '$1@@')
+    .replace(/\b(e\.g|i\.e)\.(?=\s|$)/gi, '$1@@')
+  return protectedText.split(/[.!?]+/).map(s => s.trim()).filter(Boolean)
+}
+
+// A missing period at the very end of an email/post is often not a grammar error: standard
+// closings like "Best regards,\nMehmet" or "Sincerely, Jane" conventionally end with just a
+// name, no terminal punctuation. Only treat the ending as a problem if it doesn't fit that
+// pattern either.
+function endsAppropriately(trimmedText) {
+  if (/[.!?]['")]?\s*$/.test(trimmedText)) return true
+  const lines = trimmedText.split(/\n+/).map(l => l.trim()).filter(Boolean)
+  if (lines.length >= 2) {
+    const lastLine = lines[lines.length - 1]
+    const prevLine = lines[lines.length - 2]
+    if (lastLine.split(/\s+/).length <= 4 && /,\s*$/.test(prevLine)) return true
+  }
+  // Same-line variant, e.g. "Best regards,Mehmet" (no line break before the name).
+  if (/(sincerely|regards|best wishes|thank you|thanks)\s*,\s*[A-Za-z .'-]{1,40}$/i.test(trimmedText)) return true
+  return false
+}
+
+// A signoff line ("Best regards, Mehmet" / "Sincerely,Mehmet") is not a prose sentence, so it
+// shouldn't be judged by sentence-structure checks (capitalization/length/fragment) below --
+// otherwise a perfectly normal closing gets flagged as a 2-word "fragment".
+const SIGNOFF_LINE_RE = /^(sincerely|regards|best regards|best wishes|warm regards|kind regards|thank you|thanks)\s*,?\s*[A-Za-z .'-]{0,40}$/i
+
 // Grammar/mechanics can't be truly checked client-side, so this proxies error frequency via
 // surface signals: consistent capitalization at sentence starts, terminal punctuation, and the
 // absence of obvious run-ons (40+ word sentences) or fragments (<=2 word "sentences").
-function estimateGrammarDimension(trimmed, sentences) {
+function estimateGrammarDimension(trimmed, sentencesIn) {
+  const sentences = sentencesIn.filter(s => !SIGNOFF_LINE_RE.test(s.trim()))
   const capOk = sentences.filter(s => /^[A-Z"'(]/.test(s.trim())).length
-  const capRatio = sentences.length ? capOk / sentences.length : 0
-  const endsWithPunct = /[.!?]['")]?\s*$/.test(trimmed)
+  const capRatio = sentences.length ? capOk / sentences.length : 1
+  const endsWithPunct = endsAppropriately(trimmed)
   const runOns = sentences.filter(s => s.split(/\s+/).length > 40).length
   const fragments = sentences.filter(s => s.split(/\s+/).length <= 2).length
   const ratio = Math.max(0, Math.min(1,
@@ -3598,7 +3632,7 @@ function evaluateEmailResponse(text, tasks) {
 
   const uniqueWords = new Set(words.map(w => w.toLowerCase().replace(/[^a-z']/g, ''))).size
   const diversity = wordCount ? uniqueWords / wordCount : 0
-  const sentences = trimmed.split(/[.!?]+/).map(s => s.trim()).filter(Boolean)
+  const sentences = splitIntoSentences(trimmed)
   const avgSentenceLen = sentences.length ? wordCount / sentences.length : 0
   const rangeOk = diversity >= 0.55 && sentences.length >= 4
   criteria.push({
@@ -3989,7 +4023,7 @@ function evaluateDiscussionResponse(text, classmates) {
 
   const uniqueWords = new Set(words.map(w => w.toLowerCase().replace(/[^a-z']/g, ''))).size
   const diversity = wordCount ? uniqueWords / wordCount : 0
-  const sentences = trimmed.split(/[.!?]+/).map(s => s.trim()).filter(Boolean)
+  const sentences = splitIntoSentences(trimmed)
   const rangeOk = diversity >= 0.55 && sentences.length >= 4
   criteria.push({
     ok: rangeOk,
