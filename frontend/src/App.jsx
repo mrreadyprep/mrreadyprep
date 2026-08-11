@@ -504,6 +504,29 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
   )
 }
 
+// Vocabulary-in-context questions ("The word 'X' in the passage/email is closest in meaning
+// to...") are used by both Academic Passage and Read in Daily Life -- pull the quoted word out
+// of the question text and highlight it where it appears in the passage/email so the student
+// doesn't have to hunt for it. Requires the literal "the word '...'" phrasing (not just any
+// quote) so possessive apostrophes elsewhere in other question text ("the user's account")
+// never get mistaken for this.
+function extractVocabWord(questionText) {
+  const m = questionText && questionText.match(/the word '([^']+)'/i)
+  return m ? m[1] : null
+}
+
+function renderPassageWithHighlight(text, word) {
+  if (!word || !text) return text
+  const escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const re = new RegExp(`\\b(${escaped})\\b`, 'gi')
+  const lower = word.toLowerCase()
+  return text.split(re).map((part, i) =>
+    part && part.toLowerCase() === lower
+      ? <mark key={i} style={{ background: '#fff2a8', color: '#1a1a1a', padding: '0 3px', borderRadius: '3px', fontWeight: 700 }}>{part}</mark>
+      : part
+  )
+}
+
 function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, onComplete, mockMode = false, poolTime, moduleOffset, moduleTotal, onPrevSlot, enterAtEnd, isLastSlot = true, initialAnswers, onAnswersChange }) {
   const isMobile = useIsMobile()
   const [questionIdx, setQuestionIdx] = useState(() => enterAtEnd ? passage.questions.length - 1 : 0)
@@ -649,7 +672,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
               <div style={{ border: '2px solid #2a9d5c', borderRadius: '8px', padding: '16px 18px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 180px)' }}>
                 {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px' }}>{passage.title}</div>}
                 {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
-                <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
+                <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{renderPassageWithHighlight(passage.text, extractVocabWord(q.question))}</div>
               </div>
             </div>
             <div style={{ width: isMobile ? '100%' : '400px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -742,7 +765,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
             <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '18px 20px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
               {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px', color: '#1a1a1a' }}>{passage.title}</div>}
               {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
-              <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{passage.text}</div>
+              <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{renderPassageWithHighlight(passage.text, extractVocabWord(question.question))}</div>
             </div>
           </div>
           <div style={{ width: isMobile ? '100%' : '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -1210,7 +1233,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
         <div style={{ flex: 1, display: 'flex', padding: isMobile ? '16px' : '24px 32px', gap: isMobile ? '20px' : '40px', overflow: isMobile ? 'auto' : 'hidden', minHeight: 0, ...(isMobile ? { flexDirection: 'column' } : {}) }}>
           <div style={{ flex: 1, border: '2px solid #2a9d5c', borderRadius: '8px', padding: '16px 18px', overflowY: 'auto', boxSizing: 'border-box' }}>
             <div style={{ fontWeight: '700', fontSize: '14px', marginBottom: '12px', color: '#1a1a1a' }}>{passage.title}</div>
-            {isIns ? <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a' }}>{renderMarkedPassage(rPassage)}</div> : <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a', whiteSpace: 'pre-line' }}>{rPassage}</div>}
+            {isIns ? <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a' }}>{renderMarkedPassage(rPassage)}</div> : <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a', whiteSpace: 'pre-line' }}>{renderPassageWithHighlight(rPassage, rq.type === 'vocabulary' ? extractVocabWord(rq.question) : null)}</div>}
           </div>
           <div style={{ width: isMobile ? '100%' : '420px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
             <div style={{ fontSize: '12px', color: '#999' }}>Question {reviewIdx + 1} of {questions.length}</div>
@@ -1311,7 +1334,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
       <div style={{ display: 'flex', gap: isMobile ? '24px' : '56px', alignItems: 'flex-start', maxWidth: '1160px', margin: '0 auto', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
         <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '540px', width: '100%' }}>
           <div style={{ padding: '4px 0', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
-            {isInsert ? <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a' }}>{renderMarkedPassage(activePassage)}</div> : <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a', whiteSpace: 'pre-line' }}>{activePassage}</div>}
+            {isInsert ? <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a' }}>{renderMarkedPassage(activePassage)}</div> : <div style={{ fontSize: '16px', lineHeight: '1.9', color: '#1a1a1a', whiteSpace: 'pre-line' }}>{renderPassageWithHighlight(activePassage, q.type === 'vocabulary' ? extractVocabWord(q.question) : null)}</div>}
           </div>
         </div>
         <div style={{ width: isMobile ? '100%' : '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
