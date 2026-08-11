@@ -3643,21 +3643,49 @@ function evaluateEmailResponse(text, tasks) {
       : `Try varying your sentence length and word choice more — currently ${wordCount} words across ${sentences.length} sentence(s), average ${avgSentenceLen.toFixed(1)} words/sentence.`,
   })
 
-  // Holistic band selection modeled on ETS's official "Write an Email" rubric structure. The
-  // word-count gate for the top band (100 words) matches the task's own published "an effective
-  // response will contain at least 100 words" guidance, echoed by Magoosh/BestMyTest.
-  let score
-  if (wordCount < 15 || taskRatio === 0) {
-    score = 1 // unsuccessful: telegraphic, minimal/no elaboration
-  } else if (taskRatio < 0.5 || (diversity < 0.4 && sentences.length < 3)) {
-    score = 2 // mostly unsuccessful: limited/irrelevant elaboration, limited range
-  } else if (taskRatio < 1 || !(hasGreeting && hasClosing) || diversity < 0.5) {
-    score = 3 // partially successful: task generally accomplished but with noticeable limitations
-  } else if (wordCount < 100 || !rangeOk || !hasPoliteness) {
-    score = 4 // generally successful: adequate elaboration, mostly appropriate conventions
-  } else {
-    score = 5 // fully successful: effective, clear, consistent facility with language
-  }
+  // Per-dimension rubric breakdown (task completion / organization / grammar / vocabulary /
+  // style / fluency). Computed first so the holistic band below is derived FROM these same
+  // numbers -- previously the holistic band used its own separate keyword-gated ladder, which
+  // could disagree with the breakdown (e.g. a response with four strong-looking dimension bars
+  // still landing on an overall 3/5 because one narrow keyword check failed). Deriving the
+  // headline score from the same breakdown the student sees keeps the two consistent.
+  const taskScore = bandFromRatio(taskRatio)
+  const hasBody = trimmed.split(/\n+/).filter(Boolean).length >= 2
+  const orgRatio = Math.min(1, (hasGreeting ? 0.3 : 0) + (hasClosing ? 0.3 : 0) + (hasBody ? 0.2 : 0) + (taskRatio >= 0.5 ? 0.2 : 0))
+  const orgScore = bandFromRatio(orgRatio)
+  const styleRatio = Math.min(1, (hasPoliteness ? 0.5 : 0) + (rangeOk ? 0.5 : 0.2))
+  const styleScore = bandFromRatio(styleRatio)
+  const grammarDim = estimateGrammarDimension(trimmed, sentences)
+  const vocabDim = estimateVocabDimension(words, diversity)
+  const fluencyDim = estimateFluencyDimension(lower, sentences, wordCount)
+
+  const dimensions = [
+    {
+      label: 'Task Completion', score: taskScore,
+      note: tasksMatched === taskCount ? 'You addressed every bullet point in the prompt.' : `You addressed ${tasksMatched} of ${taskCount} bullet points — see the checklist below for which one(s) to revisit.`,
+    },
+    {
+      label: 'Organization & Format', score: orgScore,
+      note: orgScore >= 4 ? 'Clear email structure with greeting, body, and closing in the right places.'
+        : `Strengthen the structure — ${!hasGreeting ? 'add a greeting, ' : ''}${!hasClosing ? 'add a closing, ' : ''}${!hasBody ? 'separate your ideas into clear parts' : ''}`.replace(/,\s*$/, '.') || 'Make the structure clearer.',
+    },
+    grammarDim,
+    vocabDim,
+    {
+      label: 'Style & Tone', score: styleScore,
+      note: styleScore >= 4 ? 'Polite, appropriately formal register throughout.' : 'Use more polite/formal phrasing (e.g., "Could you...", "I would appreciate...") and vary your sentence patterns.',
+    },
+    fluencyDim,
+  ]
+
+  // Weighted rollup of the dimensions above -- task/content counts most (matching ETS's
+  // "elaboration that supports the communicative purpose" as the primary rubric line), grammar
+  // next, then organization/vocabulary/style/fluency. The 0.001 epsilon before rounding means an
+  // exact .5 rounds down rather than up, so the headline score never overstates a response that
+  // one of its own dimensions rated only middling.
+  const weighted = taskScore * 0.3 + orgScore * 0.15 + grammarDim.score * 0.2 + vocabDim.score * 0.15 + styleScore * 0.1 + fluencyDim.score * 0.1
+  let score = Math.max(1, Math.min(5, Math.round(weighted - 0.001)))
+  if (wordCount < 15 || taskRatio === 0) score = 1 // unsuccessful: telegraphic, minimal/no elaboration, or entirely off-task
 
   const summary =
     score === 5 ? 'Fully successful: your message is effective and clearly expressed, with consistent facility in the use of language.'
@@ -3665,30 +3693,6 @@ function evaluateEmailResponse(text, tasks) {
     : score === 3 ? 'Partially successful: the task is generally accomplished, but limitations in language may prevent parts of the message from being fully clear.'
     : score === 2 ? 'Mostly unsuccessful: your attempt addresses the task, but it is mostly ineffective and may be hard to interpret.'
     : 'Unsuccessful: your attempt to address the task is ineffective — the message may be hard to understand.'
-
-  // Per-dimension rubric breakdown (grammar / vocabulary / organization / style / fluency),
-  // scored separately from the holistic band above so students can see exactly what's strong
-  // and what needs work, not just a single number.
-  const hasBody = trimmed.split(/\n+/).filter(Boolean).length >= 2
-  const orgRatio = Math.min(1, (hasGreeting ? 0.3 : 0) + (hasClosing ? 0.3 : 0) + (hasBody ? 0.2 : 0) + (taskRatio >= 0.5 ? 0.2 : 0))
-  const orgScore = bandFromRatio(orgRatio)
-  const styleRatio = Math.min(1, (hasPoliteness ? 0.5 : 0) + (rangeOk ? 0.5 : 0.2))
-  const styleScore = bandFromRatio(styleRatio)
-
-  const dimensions = [
-    estimateGrammarDimension(trimmed, sentences),
-    estimateVocabDimension(words, diversity),
-    {
-      label: 'Organization & Format', score: orgScore,
-      note: orgScore >= 4 ? 'Clear email structure with greeting, body, and closing in the right places.'
-        : `Strengthen the structure — ${!hasGreeting ? 'add a greeting, ' : ''}${!hasClosing ? 'add a closing, ' : ''}${!hasBody ? 'separate your ideas into clear parts' : ''}`.replace(/,\s*$/, '.') || 'Make the structure clearer.',
-    },
-    {
-      label: 'Style & Tone', score: styleScore,
-      note: styleScore >= 4 ? 'Polite, appropriately formal register throughout.' : 'Use more polite/formal phrasing (e.g., "Could you...", "I would appreciate...") and vary your sentence patterns.',
-    },
-    estimateFluencyDimension(lower, sentences, wordCount),
-  ]
 
   return { score, wordCount, summary, criteria, dimensions }
 }
@@ -4033,35 +4037,19 @@ function evaluateDiscussionResponse(text, classmates) {
       : `Try varying your sentence length and word choice more — currently ${wordCount} words across ${sentences.length} sentence(s).`,
   })
 
-  // Holistic band selection modeled on ETS's official "Write for an Academic Discussion"
-  // rubric structure. The word-count gate for the top band (100 words) matches the task's own
-  // published "an effective response will contain at least 100 words" guidance.
-  let score
-  if (wordCount < 15 || (!hasOpinion && !engaged)) {
-    score = 1 // unsuccessful: few or no coherent ideas connecting to the discussion
-  } else if (!hasOpinion || !hasReason || (!engaged && !hasExample)) {
-    score = 2 // mostly unsuccessful: ideas poorly elaborated or only partially relevant
-  } else if (!engaged || !hasExample || diversity < 0.5) {
-    score = 3 // partially successful: mostly relevant/understandable, some limitations
-  } else if (wordCount < 100 || !rangeOk) {
-    score = 4 // generally successful: relevant, adequately elaborated, easily understood
-  } else {
-    score = 5 // fully successful: relevant, well-elaborated, consistent facility with language
-  }
-
-  const summary =
-    score === 5 ? 'Fully successful: your post is a relevant, clearly expressed contribution with consistent facility in the use of language.'
-    : score === 4 ? 'Generally successful: your post is a relevant contribution and your ideas are easily understood.'
-    : score === 3 ? 'Partially successful: your post is mostly relevant and understandable, with some limitations in language.'
-    : score === 2 ? 'Mostly unsuccessful: your attempt to contribute is reflected, but limitations in language may make ideas hard to follow.'
-    : 'Unsuccessful: limitations in language may prevent your ideas from being expressed clearly.'
-
-  // Per-dimension rubric breakdown (content / organization / grammar / vocabulary / fluency),
-  // scored separately from the holistic band above -- same rationale as Write an Email.
+  // Per-dimension rubric breakdown (content / organization / grammar / vocabulary / fluency).
+  // Computed first so the holistic band below is derived FROM this same breakdown -- previously
+  // the holistic band used its own separate keyword-gated ladder (e.g. hard-capping at 3/5 the
+  // moment the narrow "for example / for instance / such as" phrase check failed), which could
+  // disagree with a breakdown that otherwise showed four strong dimension bars. Deriving the
+  // headline score from the same numbers the student sees keeps the two consistent.
   const contentRatio = Math.min(1, (hasOpinion ? 0.4 : 0) + (hasReason ? 0.4 : 0) + (hasExample ? 0.2 : 0))
   const contentScore = bandFromRatio(contentRatio)
   const orgRatio = Math.min(1, (engaged ? 0.5 : 0) + (hasExample ? 0.3 : 0) + (rangeOk ? 0.2 : 0))
   const orgScore = bandFromRatio(orgRatio)
+  const grammarDim = estimateGrammarDimension(trimmed, sentences)
+  const vocabDim = estimateVocabDimension(words, diversity)
+  const fluencyDim = estimateFluencyDimension(lower, sentences, wordCount)
 
   const dimensions = [
     {
@@ -4073,10 +4061,26 @@ function evaluateDiscussionResponse(text, classmates) {
       label: 'Organization & Engagement', score: orgScore,
       note: orgScore >= 4 ? 'Well-organized post that directly engages with the discussion.' : 'Reference a classmate by name and build your response around their point for a more organized, engaged contribution.',
     },
-    estimateGrammarDimension(trimmed, sentences),
-    estimateVocabDimension(words, diversity),
-    estimateFluencyDimension(lower, sentences, wordCount),
+    grammarDim,
+    vocabDim,
+    fluencyDim,
   ]
+
+  // Weighted rollup of the dimensions above -- content counts most (matching ETS's "relevant,
+  // well-elaborated contribution" as the primary rubric line), then organization/engagement,
+  // grammar, vocabulary, and fluency. The 0.001 epsilon before rounding means an exact .5 rounds
+  // down rather than up, so the headline score never overstates a response that one of its own
+  // dimensions rated only middling.
+  const weighted = contentScore * 0.3 + orgScore * 0.2 + grammarDim.score * 0.2 + vocabDim.score * 0.15 + fluencyDim.score * 0.15
+  let score = Math.max(1, Math.min(5, Math.round(weighted - 0.001)))
+  if (wordCount < 15 || (!hasOpinion && !engaged)) score = 1 // unsuccessful: few or no coherent ideas connecting to the discussion
+
+  const summary =
+    score === 5 ? 'Fully successful: your post is a relevant, clearly expressed contribution with consistent facility in the use of language.'
+    : score === 4 ? 'Generally successful: your post is a relevant contribution and your ideas are easily understood.'
+    : score === 3 ? 'Partially successful: your post is mostly relevant and understandable, with some limitations in language.'
+    : score === 2 ? 'Mostly unsuccessful: your attempt to contribute is reflected, but limitations in language may make ideas hard to follow.'
+    : 'Unsuccessful: limitations in language may prevent your ideas from being expressed clearly.'
 
   return { score, wordCount, summary, criteria, dimensions }
 }
