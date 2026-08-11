@@ -1907,6 +1907,10 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   // Solo practice only: when a question's pacing timer runs out, warn instead of auto-advancing
   // (which would otherwise silently skip the question) -- mockMode still hard-advances below.
   const [timeUp, setTimeUp] = useState(false)
+  // The 20s response window shouldn't start ticking until the student has actually heard the
+  // question -- otherwise the clock burns down while the narration/audio is still playing, which
+  // isn't how the real test works (you get your full response time only once the audio ends).
+  const [audioDone, setAudioDone] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
   // Re-announced before every question (not just once) since each one is its own short
@@ -1922,6 +1926,12 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
   // regardless of which code path advanced currentQ.
   useEffect(() => { setSelected(null) }, [currentQ])
+  useEffect(() => { setAudioDone(false) }, [currentQ])
+  // Questions with no recorded audio (transcript-only fallback) have nothing to wait for beyond
+  // the spoken narration line, so they're "done" as soon as that finishes.
+  useEffect(() => {
+    if (announced && !q.audio_url) setAudioDone(true)
+  }, [announced, q.audio_url])
 
   const advance = (sel) => {
     if (timerRef.current) clearInterval(timerRef.current)
@@ -1950,9 +1960,15 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
 
   useEffect(() => {
     if (done) return
-    setTimeLeft(LISTENING_P1_TIME)
     setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
+    if (!audioDone) {
+      // Still listening (narration and/or the question audio hasn't finished yet) -- hold the
+      // full time budget on screen without counting down.
+      setTimeLeft(LISTENING_P1_TIME)
+      return
+    }
+    setTimeLeft(LISTENING_P1_TIME)
     timerRef.current = setInterval(() => {
       setTimeLeft(prev => {
         if (prev <= 1) {
@@ -1970,7 +1986,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
     }, 1000)
     return () => clearInterval(timerRef.current)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentQ, done])
+  }, [currentQ, done, audioDone])
 
   const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
   const isLowTime = timeLeft <= 5
@@ -2089,7 +2105,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
           <SpeakerAvatar gender={q.speaker} seed={q.id} />
           <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px' }}>
-            {announced && <AudioPlayer url={q.audio_url} autoPlayKey={currentQ} />}
+            {announced && <AudioPlayer url={q.audio_url} autoPlayKey={currentQ} onEnded={() => setAudioDone(true)} />}
           </div>
           {!q.audio_url && (
             <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px', fontSize: '14px', color: '#1a1a1a', fontStyle: 'italic', textAlign: 'center', lineHeight: '1.5' }}>"{q.transcript}"</div>
