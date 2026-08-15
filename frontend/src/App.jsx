@@ -7971,6 +7971,61 @@ function loadGoogleIdentityServices() {
   return _gisLoadPromise
 }
 
+// ─── Analytics: Google Analytics 4, gated behind cookie consent ─────────────
+// Set at build time once a GA4 property exists (VITE_GA_MEASUREMENT_ID). Until then
+// CookieConsentBanner below simply doesn't render, and no analytics script is ever loaded.
+const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || ''
+const COOKIE_CONSENT_KEY = 'cookie_consent' // 'accepted' | 'rejected'
+
+let _gaLoaded = false
+function loadGoogleAnalytics() {
+  if (_gaLoaded || !GA_MEASUREMENT_ID) return
+  _gaLoaded = true
+  const script = document.createElement('script')
+  script.async = true
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`
+  document.head.appendChild(script)
+  window.dataLayer = window.dataLayer || []
+  function gtag() { window.dataLayer.push(arguments) }
+  window.gtag = gtag
+  gtag('js', new Date())
+  gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true })
+}
+
+// Small bottom banner asking for consent before any analytics cookies are set. Only appears
+// once (until the user clears site data) and only if a GA4 property is actually configured --
+// on deployments without VITE_GA_MEASUREMENT_ID it renders nothing, since there's nothing to
+// ask consent for. Accepting loads GA4 immediately; rejecting (or ignoring it) means no
+// analytics script ever runs. Mirrors the same accepted-once-then-remembered pattern already
+// used for auth/drafts elsewhere in the app (localStorage, not cookies, for our own state).
+function CookieConsentBanner() {
+  const [choice, setChoice] = useState(() => localStorage.getItem(COOKIE_CONSENT_KEY))
+
+  useEffect(() => {
+    if (choice === 'accepted') loadGoogleAnalytics()
+  }, [choice])
+
+  if (!GA_MEASUREMENT_ID || choice) return null
+
+  const respond = (value) => {
+    localStorage.setItem(COOKIE_CONSENT_KEY, value)
+    setChoice(value)
+  }
+
+  return (
+    <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 9999, backgroundColor: '#11162d', color: '#fff', padding: '14px 20px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '14px', boxShadow: '0 -2px 12px rgba(0,0,0,0.2)' }}>
+      <div style={{ fontSize: '13px', color: '#d1d5db', maxWidth: '560px', lineHeight: '1.5' }}>
+        We use Google Analytics to understand how mrreadyprep is used. This sets a cookie only if you accept. See our{' '}
+        <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ color: '#b67bfb' }}>Privacy Policy</a>.
+      </div>
+      <div style={{ display: 'flex', gap: '8px' }}>
+        <button type="button" onClick={() => respond('rejected')} style={{ background: 'none', border: '1px solid #3f4560', color: '#d1d5db', padding: '8px 14px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Reject</button>
+        <button type="button" onClick={() => respond('accepted')} style={{ background: '#701fa1', border: 'none', color: '#fff', padding: '8px 14px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Accept</button>
+      </div>
+    </div>
+  )
+}
+
 function AuthScreen({ onAuthSuccess }) {
   const isMobile = useIsMobile()
   // 'login' | 'signup' | 'forgot' (request a reset link) | 'reset' (set a new password, reached
@@ -9425,6 +9480,7 @@ function AuthGate() {
   return (
     <>
       <ToastHost />
+      <CookieConsentBanner />
       {authState === 'checking' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />}
       {authState === 'out' && <AuthScreen onAuthSuccess={() => setAuthState('in')} />}
       {authState === 'in' && <App />}
