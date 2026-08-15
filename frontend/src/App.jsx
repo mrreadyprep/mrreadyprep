@@ -7984,6 +7984,7 @@ function AuthScreen({ onAuthSuccess }) {
   const [notice, setNotice] = useState('') // success/info messages (green), separate from errors
   const [loading, setLoading] = useState(false)
   const [resetToken, setResetToken] = useState('')
+  const [agreeTerms, setAgreeTerms] = useState(false)
 
   // If the page was opened from the "reset your password" email link, jump straight into the
   // reset-password form instead of the normal login screen, and strip the token out of the
@@ -8003,7 +8004,7 @@ function AuthScreen({ onAuthSuccess }) {
   const inputStyle = { padding: '11px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }
   const labelStyle = { fontWeight: '600', color: '#616473', fontSize: '12px' }
 
-  const switchMode = (m) => { setMode(m); setError(''); setNotice('') }
+  const switchMode = (m) => { setMode(m); setError(''); setNotice(''); setAgreeTerms(false) }
 
   // Sends the ID token Google handed us to the backend, which verifies it and returns a normal
   // mrreadyprep session token -- from this point on a Google sign-in behaves exactly like an
@@ -8084,6 +8085,7 @@ function AuthScreen({ onAuthSuccess }) {
       if (!username.trim()) { setError('Please enter a username.'); return }
       if (password.length < 8) { setError('Password must be at least 8 characters.'); return }
       if (password !== confirmPassword) { setError('Passwords do not match.'); return }
+      if (!agreeTerms) { setError('Please agree to the Terms of Service and Privacy Policy to continue.'); return }
     }
     setLoading(true)
     const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register'
@@ -8167,6 +8169,18 @@ function AuthScreen({ onAuthSuccess }) {
               </div>
             )}
 
+            {mode === 'signup' && (
+              <label style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '12px', color: '#616473', lineHeight: '1.5', cursor: 'pointer' }}>
+                <input type="checkbox" checked={agreeTerms} onChange={e => setAgreeTerms(e.target.checked)} style={{ marginTop: '2px' }} />
+                <span>
+                  I agree to the{' '}
+                  <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ color: '#701fa1', fontWeight: '600' }}>Terms of Service</a>
+                  {' '}and{' '}
+                  <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ color: '#701fa1', fontWeight: '600' }}>Privacy Policy</a>.
+                </span>
+              </label>
+            )}
+
             {notice && <div style={{ background: '#edfbf3', color: '#1a7a44', fontSize: '12px', fontWeight: '600', padding: '9px 11px', borderRadius: '7px' }}>{notice}</div>}
             {error && <div style={{ background: '#fef2f2', color: '#dc2626', fontSize: '12px', fontWeight: '600', padding: '9px 11px', borderRadius: '7px' }}>{error}</div>}
 
@@ -8190,6 +8204,14 @@ function AuthScreen({ onAuthSuccess }) {
                 <div style={{ flex: 1, height: '1px', background: '#e1e4ed' }} />
               </div>
               <div id="google-signin-button" style={{ display: 'flex', justifyContent: 'center' }} />
+              {mode === 'signup' && (
+                <div style={{ fontSize: '11px', color: '#9ca3af', textAlign: 'center', marginTop: '10px', lineHeight: '1.5' }}>
+                  By continuing with Google, you agree to our{' '}
+                  <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ color: '#701fa1' }}>Terms of Service</a>
+                  {' '}and{' '}
+                  <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ color: '#701fa1' }}>Privacy Policy</a>.
+                </div>
+              )}
             </>
           )}
         </div>
