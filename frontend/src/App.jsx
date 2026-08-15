@@ -8013,17 +8013,17 @@ function CookieConsentBanner() {
   }
 
   return (
-    <div style={{ position: 'fixed', bottom: '18px', left: '18px', right: '18px', maxWidth: '380px', margin: '0 auto', zIndex: 9999, backgroundColor: '#1a2036', color: '#fff', borderRadius: '14px', padding: '18px 20px', boxShadow: '0 8px 28px rgba(0,0,0,0.35)', border: '1px solid #2c3350', fontFamily: 'sans-serif' }}>
+    <div style={{ position: 'fixed', bottom: '18px', left: '18px', right: '18px', maxWidth: '380px', margin: '0 auto', zIndex: 9999, backgroundColor: '#fff', color: '#1a1a1a', borderRadius: '14px', padding: '18px 20px', boxShadow: '0 8px 28px rgba(0,0,0,0.25)', border: '1px solid #e1e4ed', fontFamily: 'sans-serif' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
         <span style={{ fontSize: '16px' }}>🍪</span>
-        <span style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>We value your privacy</span>
+        <span style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}>We value your privacy</span>
       </div>
-      <div style={{ fontSize: '12.5px', color: '#9ca3af', lineHeight: '1.6', marginBottom: '14px' }}>
+      <div style={{ fontSize: '12.5px', color: '#616473', lineHeight: '1.6', marginBottom: '14px' }}>
         We use Google Analytics to understand how mrreadyprep is used. This only sets a cookie if you accept. See our{' '}
-        <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ color: '#b67bfb', fontWeight: '600' }}>Privacy Policy</a>.
+        <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ color: '#701fa1', fontWeight: '600' }}>Privacy Policy</a>.
       </div>
       <div style={{ display: 'flex', gap: '8px' }}>
-        <button type="button" onClick={() => respond('rejected')} style={{ flex: 1, background: 'transparent', border: '1px solid #3f4560', color: '#d1d5db', padding: '9px 0', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Reject</button>
+        <button type="button" onClick={() => respond('rejected')} style={{ flex: 1, background: '#f4f6fa', border: '1px solid #e1e4ed', color: '#616473', padding: '9px 0', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Reject</button>
         <button type="button" onClick={() => respond('accepted')} style={{ flex: 1, background: '#701fa1', border: 'none', color: '#fff', padding: '9px 0', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Accept</button>
       </div>
     </div>
