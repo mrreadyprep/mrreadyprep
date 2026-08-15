@@ -8194,7 +8194,11 @@ function AuthScreen({ onAuthSuccess }) {
           )}
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '18px' }}>
+        <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+          <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#7b809a', textDecoration: 'none' }}>
+            Terms of Service
+          </a>
+          <span style={{ fontSize: '11px', color: '#4b4f66' }}>·</span>
           <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#7b809a', textDecoration: 'none' }}>
             Privacy Policy
           </a>
@@ -9304,7 +9308,11 @@ function App() {
                 </div>
                 <button style={{ backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
                 <button onClick={logout} style={{ backgroundColor: '#fff', color: '#dc2626', border: '1px solid #fecaca', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Log Out</button>
-                <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textAlign: 'center', textDecoration: 'none' }}>Privacy Policy</a>
+                <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
+                  <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Terms of Service</a>
+                  <span style={{ fontSize: '12px', color: '#cbd5e1' }}>·</span>
+                  <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Privacy Policy</a>
+                </div>
               </div>
             </div>
           </div>
