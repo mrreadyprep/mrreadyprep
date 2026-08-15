@@ -8275,7 +8275,11 @@ function AuthScreen({ onAuthSuccess }) {
           )}
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '10px' }}>
+        <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#7b809a', textDecoration: 'none' }}>
+            Blog
+          </a>
+          <span style={{ fontSize: '11px', color: '#4b4f66' }}>·</span>
           <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#7b809a', textDecoration: 'none' }}>
             Terms of Service
           </a>
