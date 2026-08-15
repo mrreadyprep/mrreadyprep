@@ -8193,6 +8193,12 @@ function AuthScreen({ onAuthSuccess }) {
             </>
           )}
         </div>
+
+        <div style={{ textAlign: 'center', marginTop: '18px' }}>
+          <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#7b809a', textDecoration: 'none' }}>
+            Privacy Policy
+          </a>
+        </div>
       </div>
     </div>
   )
@@ -9298,6 +9304,7 @@ function App() {
                 </div>
                 <button style={{ backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
                 <button onClick={logout} style={{ backgroundColor: '#fff', color: '#dc2626', border: '1px solid #fecaca', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Log Out</button>
+                <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textAlign: 'center', textDecoration: 'none' }}>Privacy Policy</a>
               </div>
             </div>
           </div>
