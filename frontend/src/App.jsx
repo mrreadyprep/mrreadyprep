@@ -8275,18 +8275,13 @@ function AuthScreen({ onAuthSuccess }) {
           )}
         </div>
 
-        <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '10px', flexWrap: 'wrap' }}>
-          <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#7b809a', textDecoration: 'none' }}>
-            Blog
-          </a>
-          <span style={{ fontSize: '11px', color: '#4b4f66' }}>·</span>
-          <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#7b809a', textDecoration: 'none' }}>
-            Terms of Service
-          </a>
-          <span style={{ fontSize: '11px', color: '#4b4f66' }}>·</span>
-          <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '11px', color: '#7b809a', textDecoration: 'none' }}>
-            Privacy Policy
-          </a>
+        <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          {[{ href: '/blog/', label: 'Blog' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }].map(link => (
+            <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: '11px', fontWeight: '700', color: '#1a1a1a', textDecoration: 'none', backgroundColor: '#fff', padding: '7px 14px', borderRadius: '999px' }}>
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
     </div>
