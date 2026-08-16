@@ -104,5 +104,19 @@
         <footer>© 2026 mrreadyprep. All rights reserved. · <a href="/privacy.html">Privacy Policy</a> · <a href="/terms.html">Terms of Service</a></footer>
       </div>
     </div>
+      <script>
+    (function() {
+      var token = localStorage.getItem('mrreadyprep_token');
+      if (!token) return;
+      fetch('https://mrreadyprep.onrender.com/api/subscription/status', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      }).then(function(r) { return r.ok ? r.json() : null; })
+        .then(function(data) {
+          if (!data || !data.has_premium) return;
+          var btn = document.querySelector('.cta a.btn');
+          if (btn) btn.textContent = btn.textContent.replace(' free on mrreadyprep', '');
+        }).catch(function() {});
+    })();
+    </script>
   </body>
 </html>
