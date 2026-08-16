@@ -116,7 +116,11 @@
         .then(function(data) {
           if (!data || !data.has_premium) return;
           var btn = document.querySelector('.cta a.btn');
-          if (btn) btn.textContent = btn.textContent.replace(' free on mrreadyprep', '');
+          if (btn) {
+            var t = btn.textContent.replace(' free on mrreadyprep', '');
+            if (!/practice/i.test(t)) t = t.replace(' →', ' Practice →');
+            btn.textContent = t;
+          }
         }).catch(function() {});
     })();
     </script>
