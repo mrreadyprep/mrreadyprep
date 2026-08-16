@@ -860,14 +860,24 @@ function logout() {
 // `fetch` so the logged-in student's session token rides along automatically. On a 401 (missing/
 // expired/invalid token) it clears the stale token and reloads, which drops the student back
 // onto the login screen instead of leaving them stuck on a broken, half-authenticated page.
+// Guards against firing the "session expired" toast + reload more than once if several
+// in-flight requests all come back 401 around the same time (e.g. a page with multiple
+// simultaneous fetches right as the token expires).
+let sessionExpiredHandled = false
+
 function apiFetch(url, options = {}) {
   const token = getAuthToken()
   const headers = { ...(options.headers || {}) }
   if (token) headers['Authorization'] = `Bearer ${token}`
   return fetch(url, { ...options, headers }).then(res => {
-    if (res.status === 401) {
+    if (res.status === 401 && !sessionExpiredHandled) {
+      sessionExpiredHandled = true
       clearAuthToken()
-      window.location.reload()
+      // Give the student a reason for the sudden logout (and a beat to read it) instead of an
+      // unexplained instant reload -- anything they hadn't already saved (a draft answer, an
+      // in-progress mock test) is lost either way, but at least they know why.
+      showToast('Your session expired -- please log in again.', 'info')
+      setTimeout(() => window.location.reload(), 1500)
     }
     return res
   })
@@ -8412,6 +8422,8 @@ function AdminPanel() {
   const [busyId, setBusyId] = useState(null)
   const [error, setError] = useState('')
 
+  // Reusable manual refresh (called after a grant/revoke action below) -- no unmount guard
+  // needed here since it only ever runs in response to a live click on an already-mounted panel.
   const load = () => {
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/admin/stats`).then(r => r.json()),
@@ -8419,7 +8431,18 @@ function AdminPanel() {
     ]).then(([s, u]) => { setStats(s); setUsers(Array.isArray(u) ? u : []) })
       .catch(() => setError('Could not load admin data.'))
   }
-  useEffect(load, [])
+  // Initial mount fetch gets its own cancelled guard (same pattern used everywhere else in the
+  // file) so navigating away from the Admin tab before this resolves doesn't try to set state on
+  // an unmounted component.
+  useEffect(() => {
+    let cancelled = false
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/admin/stats`).then(r => r.json()),
+      apiFetch(`${BACKEND_URL}/api/admin/users`).then(r => r.json()),
+    ]).then(([s, u]) => { if (!cancelled) { setStats(s); setUsers(Array.isArray(u) ? u : []) } })
+      .catch(() => { if (!cancelled) setError('Could not load admin data.') })
+    return () => { cancelled = true }
+  }, [])
 
   const setSubscription = (userId, action) => {
     setBusyId(userId)
@@ -8767,9 +8790,11 @@ function Vocabulary() {
   const [activeDeckKey, setActiveDeckKey] = useState(null)
 
   useEffect(() => {
+    let cancelled = false
     apiFetch(`${BACKEND_URL}/api/vocab`).then(res => res.json())
-      .then(data => { setWords(Array.isArray(data) ? data : []); setLoading(false) })
-      .catch(() => setLoading(false))
+      .then(data => { if (!cancelled) { setWords(Array.isArray(data) ? data : []); setLoading(false) } })
+      .catch(() => { if (!cancelled) setLoading(false) })
+    return () => { cancelled = true }
   }, [])
 
   const setLearned = (id, learned) => {
