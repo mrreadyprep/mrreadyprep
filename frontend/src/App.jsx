@@ -7940,27 +7940,6 @@ function ProgressScreen({ onBack }) {
         </div>
       </div>
 
-      <div style={{ marginTop: '28px' }}>
-        <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '10px' }}>TOEFL Guides</div>
-        <div style={{ background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', padding: '18px 20px' }}>
-          <div style={{ fontSize: '12.5px', color: '#616473', marginBottom: '14px' }}>Want to raise your scores in a specific section? Read our free strategy guides.</div>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '8px' }}>
-            {[
-              { href: '/blog/toefl-reading-strategy-guide.html', label: '📖 Reading Guide' },
-              { href: '/blog/toefl-listening-notetaking-guide.html', label: '🎧 Listening Guide' },
-              { href: '/blog/toefl-writing-overview-guide.html', label: '✍️ Writing Guide' },
-              { href: '/blog/toefl-speaking-overview-guide.html', label: '🗣️ Speaking Guide' },
-            ].map(g => (
-              <a key={g.href} href={g.href} target="_blank" rel="noopener noreferrer"
-                style={{ fontSize: '12.5px', fontWeight: '600', color: '#1a1a1a', textDecoration: 'none', background: '#f9f7fc', border: '1px solid #e6d3f5', borderRadius: '8px', padding: '10px 14px' }}>
-                {g.label}
-              </a>
-            ))}
-          </div>
-          <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', marginTop: '12px', fontSize: '12px', fontWeight: '700', color: '#701fa1', textDecoration: 'none' }}>View all guides →</a>
-        </div>
-      </div>
-
       <button onClick={onBack} style={{ marginTop: '24px', background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back to Dashboard</button>
     </div>
   )
@@ -8991,6 +8970,9 @@ function App() {
             {sb('mocktest', '🧪', 'Full Mock Test')}
             {sb('progress', '📈', 'My Progress')}
             {sb('vocab', '📚', 'Vocabulary')}
+            <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
+              📝 TOEFL Guides
+            </a>
             {sb('subscribe', userData.has_premium ? '⭐' : '💎', userData.has_premium ? 'Premium Active' : 'Upgrade to Premium')}
             {userData.is_admin && sb('admin', '🛠️', 'Admin')}
           </div>
