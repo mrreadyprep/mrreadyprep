@@ -108,9 +108,16 @@ function clearDraft(category, itemId) {
 // exercise types with nothing meaningful to persist (e.g. live audio recordings in Speaking),
 // where only Exit / Keep practicing make sense.
 function ExitConfirmModal({ onSave, onDiscard, onCancel, canSave = true }) {
+  // Basic modal accessibility: Escape dismisses (same as clicking "Keep practicing"), and the
+  // dialog is announced/scoped for screen readers via role="dialog" + aria-modal.
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onCancel() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onCancel])
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
-      <div style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
+      <div role="dialog" aria-modal="true" aria-label="Exit this exercise?" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Exit this exercise?</div>
         <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>
           {canSave
@@ -119,10 +126,33 @@ function ExitConfirmModal({ onSave, onDiscard, onCancel, canSave = true }) {
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           {canSave && (
-            <button onClick={onSave} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save & exit</button>
+            <button autoFocus onClick={onSave} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save & exit</button>
           )}
           <button onClick={onDiscard} style={{ background: canSave ? '#fff' : '#2ac56c', color: canSave ? '#616473' : '#fff', border: canSave ? '1px solid #d1d5db' : 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>{canSave ? 'Discard & exit' : 'Exit'}</button>
           <button onClick={onCancel} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', padding: '6px', cursor: 'pointer' }}>Keep practicing</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// Generic styled replacement for a native window.confirm() -- a simple two-button (confirm/
+// cancel) dialog for one-off destructive or consequential actions (canceling a subscription,
+// exiting a mock test) that don't need ExitConfirmModal's save/discard distinction.
+function ConfirmModal({ title, message, confirmLabel = 'Confirm', cancelLabel = 'Cancel', danger = false, onConfirm, onCancel }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onCancel() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onCancel])
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
+      <div role="dialog" aria-modal="true" aria-label={title} style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
+        <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>{title}</div>
+        <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>{message}</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <button autoFocus onClick={onConfirm} style={{ background: danger ? '#d92d20' : '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>{confirmLabel}</button>
+          <button onClick={onCancel} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', padding: '6px', cursor: 'pointer' }}>{cancelLabel}</button>
         </div>
       </div>
     </div>
@@ -946,6 +976,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [form, setForm] = useState({ name: '', surname: '', gsm_number: '', identity_number: '', address: '', city: '' })
+  const [showCancelConfirm, setShowCancelConfirm] = useState(false)
   const embedRef = useRef(null)
 
   const update = (field) => (e) => setForm(f => ({ ...f, [field]: e.target.value }))
@@ -971,7 +1002,11 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
   }
 
   const handleCancelSubscription = () => {
-    if (!window.confirm('Cancel your mrreadyprep Premium subscription? You will lose access to locked content immediately.')) return
+    setShowCancelConfirm(true)
+  }
+
+  const confirmCancelSubscription = () => {
+    setShowCancelConfirm(false)
     setBusy(true)
     cancelSubscription()
       .then(data => {
@@ -1006,6 +1041,17 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer' }}>← Back</button>
           )}
         </div>
+        {showCancelConfirm && (
+          <ConfirmModal
+            title="Cancel your subscription?"
+            message="Cancel your mrreadyprep Premium subscription? You will lose access to locked content immediately."
+            confirmLabel="Cancel subscription"
+            cancelLabel="Keep my subscription"
+            danger
+            onConfirm={confirmCancelSubscription}
+            onCancel={() => setShowCancelConfirm(false)}
+          />
+        )}
       </div>
     )
   }
@@ -1103,7 +1149,15 @@ function saveResult(category, itemId, score, total, label = '', detail = '') {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ category, item_id: String(itemId), label, score, total, detail }),
-  }).catch(() => {})
+  }).then(res => {
+    // The score shown on-screen is already final either way (this never blocks the student's
+    // flow) -- but if the save itself didn't actually land, silently pretending it did means the
+    // attempt quietly reverts to "not attempted" next time they check My Progress. A toast at
+    // least tells them it didn't stick, instead of them finding out days later.
+    if (!res.ok) showToast("Couldn't save this result -- check your connection. Your score above is correct, but it may not show up in My Progress.", 'error')
+  }).catch(() => {
+    showToast("Couldn't save this result -- check your connection. Your score above is correct, but it may not show up in My Progress.", 'error')
+  })
 }
 
 // Loads every past attempt for a category and reduces it down to the most recent attempt per
@@ -1432,6 +1486,11 @@ function primeAudio(url) {
 function AudioPlayer({ url, autoPlayKey, onEnded }) {
   const onEndedRef = useRef(onEnded)
   onEndedRef.current = onEnded
+  // Tracks a genuine load/playback error (404, CORS, decode failure) separately from a normal
+  // "finished playing" -- previously both fired the same onEnded callback, which silently
+  // auto-advanced the student past a question they never actually heard. Now a failure shows a
+  // visible retry banner instead of pretending the audio played.
+  const [hasError, setHasError] = useState(false)
 
   // Wire listeners onto the shared element (not a JSX-rendered <audio> tag, since the whole
   // point is that this exact DOM node persists across mounts/unmounts).
@@ -1441,7 +1500,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     const handleEnded = () => { onEndedRef.current && onEndedRef.current() }
     const handleError = () => {
       console.warn('[mrp audio] element error event:', audio.error && audio.error.code, audio.error && audio.error.message, 'src:', audio.src)
-      onEndedRef.current && onEndedRef.current()
+      setHasError(true)
     }
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('error', handleError)
@@ -1453,6 +1512,10 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       audio.pause()
     }
   }, [])
+
+  // A fresh url (new question) always gets a clean slate -- clears any error banner left over
+  // from a previous clip on this same screen.
+  useEffect(() => { setHasError(false) }, [url, autoPlayKey])
 
   useEffect(() => {
     const audio = sharedAudioEl
@@ -1498,6 +1561,16 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
         <div style={{ fontSize: '28px', marginBottom: '8px' }}>🎵</div>
         <div style={{ fontSize: '13px', fontWeight: '600', color: '#9ca3af' }}>Audio coming soon</div>
         <div style={{ fontSize: '11px', color: '#c0c0c0', marginTop: '4px' }}>Transcript is shown below for practice</div>
+      </div>
+    )
+  }
+
+  if (hasError) {
+    return (
+      <div style={{ background: '#fff6f0', border: '1px solid #f3b98a', borderRadius: '12px', padding: '18px 20px', textAlign: 'center' }}>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#b35900', marginBottom: '4px' }}>⚠️ Audio failed to load</div>
+        <div style={{ fontSize: '12px', color: '#8a5a2e', marginBottom: '10px' }}>Check your connection and try again -- your answer won't be scored fairly without hearing this first.</div>
+        <button type="button" onClick={() => { setHasError(false); primeAudio(url) }} style={{ background: '#b35900', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 18px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
       </div>
     )
   }
@@ -4570,8 +4643,13 @@ function micGateStyle() {
 }
 
 function MicPermissionGate({ micState, onRetry, onBack }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onBack() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onBack])
   return (
-    <div style={micGateStyle()}>
+    <div style={micGateStyle()} role="dialog" aria-modal="true" aria-label="Microphone access">
       <div style={{ fontSize: '40px' }}>🎙️</div>
       {micState === 'checking' && <div style={{ fontSize: '15px', color: '#616473' }}>Checking microphone access…</div>}
       {micState === 'unsupported' && (
@@ -5773,7 +5851,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
           {phase === 'playing' && (
             <>
               <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '22px 0 8px' }}>{sentence.length} sentence</div>
-              <audio src={sentence.audio_url} autoPlay onEnded={startRecording} onError={startRecording} />
+              <audio src={sentence.audio_url} autoPlay onEnded={startRecording} onError={() => { showToast("Audio didn't load — try recording from memory or go back and retry.", 'error'); startRecording() }} />
             </>
           )}
 
@@ -6018,7 +6096,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
           )}
 
           {phase === 'playing' && (
-            <audio src={question.audio_url} autoPlay onEnded={startRecording} onError={startRecording} />
+            <audio src={question.audio_url} autoPlay onEnded={startRecording} onError={() => { showToast("Audio didn't load — try answering from the question text or go back and retry.", 'error'); startRecording() }} />
           )}
 
           {phase === 'recording' && (
@@ -7175,6 +7253,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
   const [queue, setQueue] = useState([])
   const [idx, setIdx] = useState(0)
   const [openReview, setOpenReview] = useState({ reading: false, listening: false, writing: false, speaking: false })
+  const [showExitConfirm, setShowExitConfirm] = useState(false)
   // Section-intro / module-transition notice screens (testglider.com-style "Continue" pages)
   // shown between stages — see runWithNotices/continueNotice below.
   const [noticeQueue, setNoticeQueue] = useState([])
@@ -7548,7 +7627,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
   // Writing, Speaking), not just in standalone practice mode. Since abandoning a timed mock test
   // partway through discards all progress made so far, confirm before actually leaving.
   const exitMockTest = () => {
-    if (window.confirm('Exit the mock test? Your progress in this session will be lost.')) onBack()
+    setShowExitConfirm(true)
   }
 
   // Keeps a ref to the latest idx/queue/stage so the pooled Reading clock's interval (below),
@@ -7756,7 +7835,23 @@ function FullMockTest({ onBack, hasPremium = false }) {
       {MOCK_STAGE_LABELS[stage]} · {idx + 1}/{queue.length}
     </div>
   )
-  const wrap = (child) => <>{child}{progressBadge}</>
+  const wrap = (child) => (
+    <>
+      {child}
+      {progressBadge}
+      {showExitConfirm && (
+        <ConfirmModal
+          title="Exit the mock test?"
+          message="Your progress in this session will be lost."
+          confirmLabel="Exit"
+          cancelLabel="Keep testing"
+          danger
+          onConfirm={() => { setShowExitConfirm(false); onBack() }}
+          onCancel={() => setShowExitConfirm(false)}
+        />
+      )}
+    </>
+  )
 
   // For Reading modules, number questions across the WHOLE module (not per exercise/passage) —
   // matches the official TOEFL iBT UI (e.g. "Questions 4-9 of 20").
@@ -8013,7 +8108,7 @@ function CookieConsentBanner() {
   }
 
   return (
-    <div style={{ position: 'fixed', bottom: '18px', left: '18px', right: '18px', maxWidth: '380px', margin: '0 auto', zIndex: 9999, backgroundColor: '#fff', color: '#1a1a1a', borderRadius: '14px', padding: '18px 20px', boxShadow: '0 8px 28px rgba(0,0,0,0.25)', border: '1px solid #e1e4ed', fontFamily: 'sans-serif' }}>
+    <div role="region" aria-label="Cookie consent" style={{ position: 'fixed', bottom: '18px', left: '18px', right: '18px', maxWidth: '380px', margin: '0 auto', zIndex: 9999, backgroundColor: '#fff', color: '#1a1a1a', borderRadius: '14px', padding: '18px 20px', boxShadow: '0 8px 28px rgba(0,0,0,0.25)', border: '1px solid #e1e4ed', fontFamily: 'sans-serif' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
         <span style={{ fontSize: '16px' }}>🍪</span>
         <span style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}>We value your privacy</span>
@@ -8781,6 +8876,7 @@ function App() {
   }, [])
 
   const [userData, setUserData] = useState(null)
+  const [dashboardLoadError, setDashboardLoadError] = useState(false)
   const [resendingVerification, setResendingVerification] = useState(false)
   const [currentTab, setCurrentTab] = useState('dashboard')
   const [profileName, setProfileName] = useState('')
@@ -8826,14 +8922,18 @@ function App() {
   }
 
   const fetchDashboardData = () => {
-    apiFetch(`${BACKEND_URL}/api/dashboard`).then(res => res.json())
+    setDashboardLoadError(false)
+    apiFetch(`${BACKEND_URL}/api/dashboard`).then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      return res.json()
+    })
       .then(data => {
         setUserData(data); setProfileName(data.username); setTargetScore(data.target_score); setExamDate(data.exam_date || '')
         setReadingTarget(data.reading_target ?? 5.5)
         setListeningTarget(data.listening_target ?? 5.0)
         setWritingTarget(data.writing_target ?? 4.5)
         setSpeakingTarget(data.speaking_target ?? 4.5)
-      }).catch(err => console.error(err))
+      }).catch(err => { console.error(err); setDashboardLoadError(true) })
   }
 
   useEffect(() => { fetchDashboardData() }, [])
@@ -8877,7 +8977,9 @@ function App() {
           showToast('Payment could not be confirmed yet. If you completed payment, this should update shortly.', 'info')
         }
       })
-      .catch(() => {})
+      .catch(() => {
+        showToast("Couldn't confirm your payment. If you were charged, refresh this page in a moment or contact support -- we won't lose your payment either way.", 'error')
+      })
   }, [])
 
   const handleProfileSave = (e) => {
@@ -8889,7 +8991,10 @@ function App() {
         reading_target: Number(readingTarget), listening_target: Number(listeningTarget),
         writing_target: Number(writingTarget), speaking_target: Number(speakingTarget),
       }),
-    }).then(res => res.json()).then(data => { if (data.status === 'success') { showToast('Saved!'); fetchDashboardData() } })
+    }).then(res => res.json()).then(data => {
+      if (data.status === 'success') { showToast('Saved!'); fetchDashboardData() }
+      else showToast("Couldn't save your changes. Please try again.", 'error')
+    }).catch(() => showToast("Couldn't save your changes -- check your connection.", 'error'))
   }
 
   const handleResendVerification = () => {
@@ -8912,19 +9017,37 @@ function App() {
         reading_target: Number(readingTarget), listening_target: Number(listeningTarget),
         writing_target: Number(writingTarget), speaking_target: Number(speakingTarget),
       }),
-    }).then(res => res.json()).then(data => { if (data.status === 'success') { setEditingTargets(false); fetchDashboardData() } })
+    }).then(res => res.json()).then(data => {
+      if (data.status === 'success') { setEditingTargets(false); fetchDashboardData() }
+      else showToast("Couldn't save your targets. Please try again.", 'error')
+    }).catch(() => showToast("Couldn't save your targets -- check your connection.", 'error'))
   }
 
   // Saved immediately on change (no separate "save" button) so the exam date sticks across
   // reloads and the student can update it again anytime just by picking a new date.
   const handleExamDateChange = (newDate) => {
+    const previousDate = examDate
     setExamDate(newDate)
     apiFetch(`${BACKEND_URL}/api/profile/exam-date`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ exam_date: newDate }),
-    }).catch(err => console.error(err))
+    }).then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    }).catch(err => {
+      console.error(err)
+      setExamDate(previousDate)
+      showToast("Couldn't save your exam date -- check your connection and try again.", 'error')
+    })
   }
 
+  if (!userData && dashboardLoadError) return (
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', gap: '14px', padding: '24px', textAlign: 'center' }}>
+      <div style={{ fontSize: '32px' }}>⚠️</div>
+      <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>Couldn't load your account</div>
+      <div style={{ fontSize: '13px', color: '#616473', maxWidth: '360px' }}>Check your internet connection and try again. If this keeps happening, our servers may be temporarily unavailable.</div>
+      <button onClick={fetchDashboardData} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
+    </div>
+  )
   if (!userData) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}><LoadingState label="Loading mrreadyprep..." /></div>
 
   const examDaysLeft = getExamDaysLeft()
