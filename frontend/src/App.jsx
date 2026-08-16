@@ -9310,7 +9310,8 @@ function App() {
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '12px' }}>
                   <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}>🎯 Keep Going</div>
                   <div style={{ fontSize: '12px', lineHeight: '1.6', color: '#616473' }}>
-                    {examDaysLeft === null ? "Set your exam date and start your journey. Every day of practice counts!"
+                    {examDaysLeft === null && examDate ? "Your exam date has passed — update it above to keep tracking your countdown and daily goals."
+                      : examDaysLeft === null ? "Set your exam date and start your journey. Every day of practice counts!"
                       : examDaysLeft > 30 ? `You have ${examDaysLeft} days ahead — build strong habits now.`
                       : examDaysLeft > 14 ? `${examDaysLeft} days to go — focus on your weakest section daily.`
                       : examDaysLeft > 7 ? `Only ${examDaysLeft} days left — go full intensity.`
@@ -9338,9 +9339,9 @@ function App() {
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flexShrink: 0 }}>
                   <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Exam date</div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                    <div style={{ background: '#11162d', borderRadius: '8px', padding: '6px 10px', textAlign: 'center', flexShrink: 0 }}>
-                      <div style={{ fontSize: '18px', fontWeight: '600', color: '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : '—'}</div>
-                      <div style={{ fontSize: '8px', color: '#7b809a' }}>days left</div>
+                    <div style={{ background: examDaysLeft === null && examDate ? '#4a2020' : '#11162d', borderRadius: '8px', padding: '6px 10px', textAlign: 'center', flexShrink: 0 }}>
+                      <div style={{ fontSize: examDaysLeft === null && examDate ? '10px' : '18px', fontWeight: '600', color: examDaysLeft === null && examDate ? '#f5a3a3' : '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : examDate ? 'Past' : '—'}</div>
+                      <div style={{ fontSize: '8px', color: '#7b809a' }}>{examDaysLeft === null && examDate ? 'update date' : 'days left'}</div>
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: '11px', fontWeight: '500', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}</div>
@@ -9372,7 +9373,9 @@ function App() {
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '12px', border: '0.5px solid #e1e4ed', flex: 1 }}>
                   <div style={{ fontSize: '11px', fontWeight: '600', marginBottom: '8px' }}>Today's goals</div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '7px' }}>
-                    {examDaysLeft === null
+                    {examDaysLeft === null && examDate
+                      ? <div style={{ fontSize: '11px', color: '#999' }}>Your exam date has passed — pick a new one to get daily goals.</div>
+                      : examDaysLeft === null
                       ? <div style={{ fontSize: '11px', color: '#999' }}>Select an exam date to generate your daily goals.</div>
                       : generateGoals(examDaysLeft, userData).map((g, i) => (
                         <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '11px', color: '#444' }}><span style={{ color: '#701fa1', flexShrink: 0 }}>○</span> {g}</div>
