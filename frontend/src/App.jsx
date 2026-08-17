@@ -8906,10 +8906,10 @@ function App() {
   const [currentTab, setCurrentTab] = useState('dashboard')
   const [profileName, setProfileName] = useState('')
   const [targetScore, setTargetScore] = useState(5.5)
-  const [readingTarget, setReadingTarget] = useState(5.5)
-  const [listeningTarget, setListeningTarget] = useState(5.0)
-  const [writingTarget, setWritingTarget] = useState(4.5)
-  const [speakingTarget, setSpeakingTarget] = useState(4.5)
+  const [readingTarget, setReadingTarget] = useState(6.0)
+  const [listeningTarget, setListeningTarget] = useState(6.0)
+  const [writingTarget, setWritingTarget] = useState(5.0)
+  const [speakingTarget, setSpeakingTarget] = useState(5.0)
   const [examDate, setExamDate] = useState('')
   const [expandedFormat, setExpandedFormat] = useState(false)
   const [editingTargets, setEditingTargets] = useState(false)
@@ -8928,10 +8928,10 @@ function App() {
 
   const generateGoals = (daysLeft, data) => {
     const sections = [
-      { name: 'Reading practice', gap: (data.reading_target ?? 5.5) - data.reading_score },
-      { name: 'Listening practice', gap: (data.listening_target ?? 5.0) - data.listening_score },
-      { name: 'Writing practice', gap: (data.writing_target ?? 4.5) - data.writing_score },
-      { name: 'Speaking practice', gap: (data.speaking_target ?? 4.5) - data.speaking_score },
+      { name: 'Reading practice', gap: (data.reading_target ?? 6.0) - data.reading_score },
+      { name: 'Listening practice', gap: (data.listening_target ?? 6.0) - data.listening_score },
+      { name: 'Writing practice', gap: (data.writing_target ?? 5.0) - data.writing_score },
+      { name: 'Speaking practice', gap: (data.speaking_target ?? 5.0) - data.speaking_score },
     ].filter(s => s.gap > 0).sort((a, b) => b.gap - a.gap)
     const goals = []; const today = new Date().getDate()
     sections.forEach((s, i) => {
@@ -8954,10 +8954,10 @@ function App() {
     })
       .then(data => {
         setUserData(data); setProfileName(data.username); setTargetScore(data.target_score); setExamDate(data.exam_date || '')
-        setReadingTarget(data.reading_target ?? 5.5)
-        setListeningTarget(data.listening_target ?? 5.0)
-        setWritingTarget(data.writing_target ?? 4.5)
-        setSpeakingTarget(data.speaking_target ?? 4.5)
+        setReadingTarget(data.reading_target ?? 6.0)
+        setListeningTarget(data.listening_target ?? 6.0)
+        setWritingTarget(data.writing_target ?? 5.0)
+        setSpeakingTarget(data.speaking_target ?? 5.0)
       }).catch(err => { console.error(err); setDashboardLoadError(true) })
   }
 
@@ -9221,13 +9221,17 @@ function App() {
                 )}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
                   {[
-                    { name: 'Reading practice', key: 'reading', current: userData.reading_score, target: userData.reading_target ?? 5.5 },
-                    { name: 'Listening practice', key: 'listening', current: userData.listening_score, target: userData.listening_target ?? 5.0 },
-                    { name: 'Writing practice', key: 'writing', current: userData.writing_score, target: userData.writing_target ?? 4.5 },
-                    { name: 'Speaking practice', key: 'speaking', current: userData.speaking_score, target: userData.speaking_target ?? 4.5 },
+                    { name: 'Reading practice', key: 'reading', current: userData.reading_score, target: userData.reading_target ?? 6.0 },
+                    { name: 'Listening practice', key: 'listening', current: userData.listening_score, target: userData.listening_target ?? 6.0 },
+                    { name: 'Writing practice', key: 'writing', current: userData.writing_score, target: userData.writing_target ?? 5.0 },
+                    { name: 'Speaking practice', key: 'speaking', current: userData.speaking_score, target: userData.speaking_target ?? 5.0 },
                   ].map(s => {
                     const max = SECTION_BAND_MAX[s.key]
-                    const curPct = Math.round((s.current / max) * 100); const tgtPct = Math.round((s.target / max) * 100); const gap = s.target - s.current
+                    // Band scores never go below 1.0 (the scale's floor -- see compute_section_band
+                    // in main.py), so normalizing against the true 1..max range instead of 0..max
+                    // means a student who hasn't practiced yet sees a genuinely empty bar, and the
+                    // bar's fill actually reflects progress across the usable range.
+                    const curPct = Math.round(((s.current - 1) / (max - 1)) * 100); const tgtPct = Math.round(((s.target - 1) / (max - 1)) * 100); const gap = s.target - s.current
                     return (
                       <div key={s.name}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '5px' }}>
@@ -9328,10 +9332,10 @@ function App() {
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                   {[
-                    { name: 'Reading', score: userData.reading_score, target: userData.reading_target ?? 5.5 },
-                    { name: 'Listening', score: userData.listening_score, target: userData.listening_target ?? 5.0 },
-                    { name: 'Writing', score: userData.writing_score, target: userData.writing_target ?? 4.5 },
-                    { name: 'Speaking', score: userData.speaking_score, target: userData.speaking_target ?? 4.5 },
+                    { name: 'Reading', score: userData.reading_score, target: userData.reading_target ?? 6.0 },
+                    { name: 'Listening', score: userData.listening_score, target: userData.listening_target ?? 6.0 },
+                    { name: 'Writing', score: userData.writing_score, target: userData.writing_target ?? 5.0 },
+                    { name: 'Speaking', score: userData.speaking_score, target: userData.speaking_target ?? 5.0 },
                   ].map(raw => {
                     const gap = raw.target - raw.score
                     const note = gap <= 0 ? 'On target' : `${gap.toFixed(1)} to target`

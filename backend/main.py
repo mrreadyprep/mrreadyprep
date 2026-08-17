@@ -605,10 +605,10 @@ def init_db():
             password_reset_token TEXT,
             password_reset_token_expires TIMESTAMP,
             target_score REAL NOT NULL DEFAULT 5.5,
-            reading_target REAL NOT NULL DEFAULT 5.5,
-            listening_target REAL NOT NULL DEFAULT 5.0,
-            writing_target REAL NOT NULL DEFAULT 4.5,
-            speaking_target REAL NOT NULL DEFAULT 4.5,
+            reading_target REAL NOT NULL DEFAULT 6.0,
+            listening_target REAL NOT NULL DEFAULT 6.0,
+            writing_target REAL NOT NULL DEFAULT 5.0,
+            speaking_target REAL NOT NULL DEFAULT 5.0,
             exam_date TEXT NOT NULL DEFAULT '',
             current_streak INTEGER NOT NULL DEFAULT 0,
             reading_score REAL NOT NULL DEFAULT 5.0,
@@ -627,13 +627,13 @@ def init_db():
     if not _has_column(conn, "users", "password_reset_token_expires"):
         conn.execute("ALTER TABLE users ADD COLUMN password_reset_token_expires TIMESTAMP")
     if not _has_column(conn, "users", "reading_target"):
-        conn.execute("ALTER TABLE users ADD COLUMN reading_target REAL NOT NULL DEFAULT 5.5")
+        conn.execute("ALTER TABLE users ADD COLUMN reading_target REAL NOT NULL DEFAULT 6.0")
     if not _has_column(conn, "users", "listening_target"):
-        conn.execute("ALTER TABLE users ADD COLUMN listening_target REAL NOT NULL DEFAULT 5.0")
+        conn.execute("ALTER TABLE users ADD COLUMN listening_target REAL NOT NULL DEFAULT 6.0")
     if not _has_column(conn, "users", "writing_target"):
-        conn.execute("ALTER TABLE users ADD COLUMN writing_target REAL NOT NULL DEFAULT 4.5")
+        conn.execute("ALTER TABLE users ADD COLUMN writing_target REAL NOT NULL DEFAULT 5.0")
     if not _has_column(conn, "users", "speaking_target"):
-        conn.execute("ALTER TABLE users ADD COLUMN speaking_target REAL NOT NULL DEFAULT 4.5")
+        conn.execute("ALTER TABLE users ADD COLUMN speaking_target REAL NOT NULL DEFAULT 5.0")
     # Paddle abonelik alanları -- subscription_status 'ACTIVE'/'TRIALING' olan kullanıcılar premium
     # içeriğe tam erişime sahip olur (bkz. has_active_subscription()). Diğer her şey (None,
     # 'CANCELED', 'PAST_DUE', 'PAUSED' vb.) erişimsiz sayılır. iyzico_* kolonları eski entegrasyondan
