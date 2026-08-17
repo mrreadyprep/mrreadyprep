@@ -883,7 +883,7 @@ function apiFetch(url, options = {}) {
   })
 }
 
-// ─── Subscription / paywall (iyzico) ─────────────────────────────────────────────────────────
+// ─── Subscription / paywall (Paddle) ─────────────────────────────────────────────────────────
 // A list item whose full content was stripped server-side (see gate_pool in main.py) comes back
 // as just { id, ...a couple of title-ish fields, locked: true } instead of the real exercise.
 function isLocked(item) {
@@ -945,68 +945,86 @@ function LockedBadge() {
   )
 }
 
-// Starts an iyzico Subscription Checkout Form -- returns { token, checkoutFormContent,
-// tokenExpireTime }. checkoutFormContent is raw HTML/JS meant to be injected directly into the
-// page (see injectCheckoutForm below), not a URL to redirect to.
-function startCheckout(customer) {
-  return apiFetch(`${BACKEND_URL}/api/subscription/create-checkout-session`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(customer),
-  }).then(res => res.json())
+// Set at build time once real Paddle credentials exist (Paddle dashboard > Developer Tools >
+// Authentication). VITE_PADDLE_CLIENT_TOKEN is the PUBLIC client-side token Paddle.js needs to
+// open the checkout overlay -- not a secret, safe to ship in the frontend bundle, same as Stripe's
+// publishable key. Until this is set, the Subscribe screen shows a "not available yet" message
+// instead of a broken checkout button (same fallback pattern as GOOGLE_CLIENT_ID below).
+const PADDLE_CLIENT_TOKEN = import.meta.env.VITE_PADDLE_CLIENT_TOKEN || ''
+const PADDLE_ENVIRONMENT = import.meta.env.VITE_PADDLE_ENVIRONMENT || 'sandbox'
+
+// Lazily loads Paddle.js (https://cdn.paddle.com/paddle/v2/paddle.js) and initializes it at most
+// once no matter how many times it's called -- returns a promise that resolves once
+// window.Paddle is ready to open a checkout. `onEvent` is (re)registered as Paddle's global
+// eventCallback every call, so the latest caller's handler is always the one that fires.
+let _paddleLoadPromise = null
+function loadPaddle(onEvent) {
+  if (!_paddleLoadPromise) {
+    _paddleLoadPromise = new Promise((resolve, reject) => {
+      const init = () => {
+        if (PADDLE_ENVIRONMENT === 'sandbox') window.Paddle.Environment.set('sandbox')
+        window.Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN, eventCallback: (e) => onEvent && onEvent(e) })
+        resolve(window.Paddle)
+      }
+      if (window.Paddle) { init(); return }
+      const script = document.createElement('script')
+      script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js'
+      script.async = true
+      script.onload = init
+      script.onerror = () => reject(new Error('Failed to load Paddle.js'))
+      document.head.appendChild(script)
+    })
+  }
+  return _paddleLoadPromise
 }
 
-// Asks our backend to confirm (server-side, against iyzico) what happened with a given checkout
-// token, and to persist the resulting subscription onto the logged-in user if it succeeded.
-function confirmCheckoutResult(token) {
-  return apiFetch(`${BACKEND_URL}/api/subscription/checkout-result/${token}`).then(res => res.json())
+// Asks our backend to create a Paddle transaction for the logged-in user (server-side, so the
+// custom_data linking it back to this account can't be tampered with -- see create_checkout in
+// main.py) and returns { transaction_id } to open in the Paddle.Checkout.open overlay.
+function startCheckout() {
+  return apiFetch(`${BACKEND_URL}/api/subscription/create-checkout`, { method: 'POST' }).then(res => res.json())
 }
 
 function cancelSubscription() {
   return apiFetch(`${BACKEND_URL}/api/subscription/cancel`, { method: 'POST' }).then(res => res.json())
 }
 
-// iyzico's checkoutFormContent is a blob of HTML containing a <script> tag that renders the
-// actual card-entry widget into the target element -- setting it via innerHTML does NOT execute
-// embedded <script> tags (a browser security rule), so each script has to be re-created and
-// re-appended manually to actually run.
-function injectCheckoutForm(container, html) {
-  container.innerHTML = html
-  const scripts = container.querySelectorAll('script')
-  scripts.forEach(oldScript => {
-    const newScript = document.createElement('script')
-    Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
-    newScript.textContent = oldScript.textContent
-    oldScript.parentNode.replaceChild(newScript, oldScript)
-  })
-}
-
 function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubscription, isAdmin }) {
-  const [step, setStep] = useState('form') // 'form' | 'embed'
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
-  const [form, setForm] = useState({ name: '', surname: '', gsm_number: '', identity_number: '', address: '', city: '' })
   const [showCancelConfirm, setShowCancelConfirm] = useState(false)
-  const embedRef = useRef(null)
 
-  const update = (field) => (e) => setForm(f => ({ ...f, [field]: e.target.value }))
+  // Fires when the Paddle overlay reports the checkout finished. This is a UI hint only -- the
+  // real subscription activation happens server-side via the /api/subscription/webhook Paddle
+  // calls once the payment actually clears, which typically lands within a few seconds. Poll
+  // /api/subscription/status a few times to pick that up without asking the student to refresh.
+  const handlePaddleEvent = (e) => {
+    if (e && e.name === 'checkout.completed') {
+      showToast('Payment received! Activating your Premium access…', 'info')
+      let attempts = 0
+      const poll = () => {
+        attempts += 1
+        apiFetch(`${BACKEND_URL}/api/subscription/status`).then(res => res.json()).then(data => {
+          if (data.has_premium) { showToast('Subscription successful! You now have full Premium access.'); window.location.reload() }
+          else if (attempts < 8) setTimeout(poll, 1500)
+        }).catch(() => { if (attempts < 8) setTimeout(poll, 1500) })
+      }
+      setTimeout(poll, 1500)
+    }
+  }
 
   const handleSubscribe = (e) => {
     e.preventDefault()
     setError('')
     setBusy(true)
-    startCheckout(form)
-      .then(data => {
-        if (!data.checkoutFormContent) {
+    Promise.all([loadPaddle(handlePaddleEvent), startCheckout()])
+      .then(([Paddle, data]) => {
+        setBusy(false)
+        if (!data.transaction_id) {
           setError(data.detail || 'Could not start checkout. Please try again.')
-          setBusy(false)
           return
         }
-        setStep('embed')
-        setBusy(false)
-        // The container only exists once step flips to 'embed' and React re-renders, so inject
-        // on the next tick.
-        setTimeout(() => { if (embedRef.current) injectCheckoutForm(embedRef.current, data.checkoutFormContent) }, 0)
+        Paddle.Checkout.open({ transactionId: data.transaction_id })
       })
       .catch(() => { setError('Could not reach the server. Please try again.'); setBusy(false) })
   }
@@ -1066,18 +1084,6 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
     )
   }
 
-  if (step === 'embed') {
-    return (
-      <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px' }}>
-        <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '24px' }}>
-          <h2 style={{ margin: '0 0 14px', fontSize: '18px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center' }}>Enter payment details</h2>
-          <div ref={embedRef} />
-          <button onClick={() => setStep('form')} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer', width: '100%', textAlign: 'center' }}>← Back</button>
-        </div>
-      </div>
-    )
-  }
-
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px' }}>
       <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '36px' }}>
@@ -1101,20 +1107,16 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             </div>
           ))}
         </div>
-        <form onSubmit={handleSubscribe} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <input required placeholder="First name" value={form.name} onChange={update('name')} style={inputStyle} />
-            <input required placeholder="Last name" value={form.surname} onChange={update('surname')} style={inputStyle} />
-          </div>
-          <input required placeholder="Phone number (e.g. +1 555 123 4567)" value={form.gsm_number} onChange={update('gsm_number')} style={inputStyle} />
-          <input required placeholder="ID / passport number" value={form.identity_number} onChange={update('identity_number')} style={inputStyle} />
-          <input required placeholder="Billing address" value={form.address} onChange={update('address')} style={inputStyle} />
-          <input required placeholder="City" value={form.city} onChange={update('city')} style={inputStyle} />
-          {error && <p style={{ color: '#d92d20', fontSize: '12px', margin: '2px 0 0' }}>{error}</p>}
-          <button type="submit" disabled={busy} style={{ marginTop: '6px', background: '#701fa1', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
-            {busy ? 'Please wait…' : 'Continue to payment'}
-          </button>
-        </form>
+        {PADDLE_CLIENT_TOKEN ? (
+          <>
+            {error && <p style={{ color: '#d92d20', fontSize: '12px', margin: '0 0 10px' }}>{error}</p>}
+            <button onClick={handleSubscribe} disabled={busy} style={{ background: '#701fa1', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
+              {busy ? 'Please wait…' : 'Continue to payment'}
+            </button>
+          </>
+        ) : (
+          <p style={{ color: '#9ca3af', fontSize: '12px', textAlign: 'center', margin: 0 }}>Payments aren't set up on this site yet -- check back soon.</p>
+        )}
         {onBack && (
           <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer', width: '100%', textAlign: 'center' }}>← Back</button>
         )}
@@ -1122,8 +1124,6 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
     </div>
   )
 }
-
-const inputStyle = { border: '1px solid #e1e4ed', borderRadius: '8px', padding: '11px 12px', fontSize: '13px', flex: 1, fontFamily: 'inherit', color: '#1a1a1a' }
 
 // Turns the "last_mock_test_at" ISO timestamp from /api/dashboard into the short human string
 // shown on the Full Mock Test dashboard card ("today", "3 days ago", etc.) -- null means the
@@ -8503,7 +8503,7 @@ function AdminPanel() {
                     {u.is_admin ? (
                       <span style={{ color: '#9ca3af', fontSize: '11px' }}>—</span>
                     ) : u.has_billed_subscription ? (
-                      <span style={{ color: '#9ca3af', fontSize: '11px' }} title="Real iyzico subscription -- cancel via the customer's own Settings, not here">Paid, not revocable here</span>
+                      <span style={{ color: '#9ca3af', fontSize: '11px' }} title="Real Paddle subscription -- cancel via the customer's own Settings, not here">Paid, not revocable here</span>
                     ) : u.has_premium ? (
                       <button onClick={() => setSubscription(u.id, 'revoke')} disabled={busyId === u.id} style={{ background: '#fff', color: '#dc2626', border: '1px solid #fecaca', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Revoke</button>
                     ) : (
@@ -8978,34 +8978,10 @@ function App() {
     return () => window.removeEventListener('mrreadyprep:paywall', openPaywall)
   }, [])
 
-  // iyzico's embedded checkout widget finishes by POSTing to our backend, which then redirects
-  // the browser back here as "/?subscription_token=<token>" (see /api/subscription/checkout-callback
-  // on the backend -- the static frontend can't receive a POST directly). Confirm the result with
-  // our own server (never trust the redirect alone) and refresh has_premium once confirmed.
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-    const token = params.get('subscription_token')
-    const cancelled = params.get('subscription') === 'cancel'
-    if (!token && !cancelled) return
-    window.history.replaceState({}, '', window.location.pathname)
-    setCurrentTab('subscribe')
-    if (cancelled) {
-      showToast('Checkout was not completed.', 'info')
-      return
-    }
-    confirmCheckoutResult(token)
-      .then(data => {
-        fetchDashboardData()
-        if (data.has_premium) {
-          showToast('Subscription successful! You now have full Premium access.')
-        } else {
-          showToast('Payment could not be confirmed yet. If you completed payment, this should update shortly.', 'info')
-        }
-      })
-      .catch(() => {
-        showToast("Couldn't confirm your payment. If you were charged, refresh this page in a moment or contact support -- we won't lose your payment either way.", 'error')
-      })
-  }, [])
+  // Paddle's Checkout.js opens as an in-page overlay rather than redirecting away to a hosted
+  // payment page, so there's no return-URL/query-param handoff to pick up here the way iyzico's
+  // embedded widget needed -- SubscribeScreen listens for the checkout.completed event directly
+  // and polls /api/subscription/status itself (see handlePaddleEvent above it).
 
   const handleProfileSave = (e) => {
     e.preventDefault()

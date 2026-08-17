@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, HTTPException, Depends, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import RedirectResponse, StreamingResponse
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 import base64
@@ -87,64 +87,48 @@ RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "mrreadyprep <onboarding@resend.dev>")
 
 # ============================================================
-# İYZİCO (abonelik / ödeme) CONFIG
+# PADDLE (abonelik / ödeme) CONFIG
 # ============================================================
-# From the iyzico Merchant Panel (Ayarlar > API Anahtarları -- sandbox keys are issued immediately
-# on signup, before the real vergi levhası/merchant approval finishes, so integration can be built
-# and tested with IYZICO_BASE_URL pointed at the sandbox host before going live). IYZICO_MERCHANT_ID
-# is shown in the same Settings page and is only needed to verify webhook signatures.
-# IYZICO_PRICING_PLAN_REFERENCE_CODE is created once (via the merchant panel's Subscription >
-# Products screen, or the Create Product/Create Pricing Plan API) and then reused for every
-# checkout -- see IYZICO_SUBSCRIPTION_SETUP.md for the one-time setup steps.
-# All blank-safe: if unset, the subscription endpoints raise a clear 500 instead of silently
-# misbehaving, so local dev without iyzico configured doesn't crash the whole app at import time.
-IYZICO_API_KEY = os.environ.get("IYZICO_API_KEY", "")
-IYZICO_SECRET_KEY = os.environ.get("IYZICO_SECRET_KEY", "")
-IYZICO_MERCHANT_ID = os.environ.get("IYZICO_MERCHANT_ID", "")
-IYZICO_PRICING_PLAN_REFERENCE_CODE = os.environ.get("IYZICO_PRICING_PLAN_REFERENCE_CODE", "")
-# https://api.iyzipay.com in production, https://sandbox-api.iyzipay.com while testing with
-# sandbox keys (set IYZICO_BASE_URL=https://sandbox-api.iyzipay.com in Render for the test phase).
-IYZICO_BASE_URL = os.environ.get("IYZICO_BASE_URL", "https://api.iyzipay.com")
-
-IYZICO_RANDOM_HEADER = "x-iyzi-rnd"
-IYZICO_AUTH_SCHEME = "IYZWSv2"
-
-
-def _iyzico_random_string() -> str:
-    return f"{int(datetime.now(timezone.utc).timestamp())}{secrets.randbelow(10**8):08d}"
-
-
-def _iyzico_auth_header(uri_path: str, body_str: str, random_string: str) -> str:
-    """Reproduces iyzico's IYZWSv2 signing scheme exactly as implemented in their official SDKs:
-    signature = HMAC-SHA256(secretKey, randomString + uriPath + rawJsonBody) as lowercase hex,
-    then Authorization = 'IYZWSv2 ' + base64('apiKey:<key>&randomKey:<rnd>&signature:<sig>').
-    `body_str` MUST be byte-for-byte the exact string sent as the request body (an empty body is
-    the literal string '{}'), since the signature covers those exact bytes."""
-    to_sign = f"{random_string}{uri_path}{body_str}"
-    signature = hmac.new(IYZICO_SECRET_KEY.encode("utf-8"), to_sign.encode("utf-8"), hashlib.sha256).hexdigest()
-    auth_params = f"apiKey:{IYZICO_API_KEY}&randomKey:{random_string}&signature:{signature}"
-    return IYZICO_AUTH_SCHEME + " " + base64.b64encode(auth_params.encode("utf-8")).decode("utf-8")
+# Paddle is a Merchant of Record -- unlike iyzico, it does NOT need buyer identity numbers, and it
+# handles global VAT/sales-tax compliance itself, which is why this replaced the iyzico integration.
+# Four separate credentials, all from the Paddle dashboard (Developer Tools > Authentication):
+#   PADDLE_API_KEY               server-side secret, used to call the Paddle API (create a
+#                                 transaction, cancel a subscription). NEVER expose to the frontend.
+#   PADDLE_WEBHOOK_SECRET         per-notification-destination secret, used to verify that incoming
+#                                 /api/subscription/webhook calls really came from Paddle.
+#   PADDLE_PRICE_ID               the recurring price (e.g. "pri_...") created under Catalog >
+#                                 Products for the premium plan -- reused for every checkout.
+#   PADDLE_ENVIRONMENT            "sandbox" while testing with a Paddle Sandbox account, "production"
+#                                 once the real (live) Paddle account is approved and in use.
+# The frontend also needs its own PUBLIC client-side token (VITE_PADDLE_CLIENT_TOKEN, set at build
+# time -- see App.jsx) to open the Paddle.js checkout overlay; that one is not a secret and is not
+# read here. All blank-safe: if unset, the subscription endpoints raise a clear 500 instead of
+# silently misbehaving, so local dev without Paddle configured doesn't crash the whole app at
+# import time.
+PADDLE_API_KEY = os.environ.get("PADDLE_API_KEY", "")
+PADDLE_WEBHOOK_SECRET = os.environ.get("PADDLE_WEBHOOK_SECRET", "")
+PADDLE_PRICE_ID = os.environ.get("PADDLE_PRICE_ID", "")
+PADDLE_ENVIRONMENT = os.environ.get("PADDLE_ENVIRONMENT", "sandbox")
+PADDLE_API_BASE_URL = (
+    "https://sandbox-api.paddle.com" if PADDLE_ENVIRONMENT != "production" else "https://api.paddle.com"
+)
 
 
-def _iyzico_request(method: str, path: str, body: dict = None):
-    """Low-level signed call to the iyzico REST API (used instead of a heavier SDK dependency --
-    mirrors the urllib.request style already used elsewhere in this file for Resend). `path` is
-    the URL path only (e.g. '/v2/subscription/checkoutform/initialize'), no query string -- query
-    strings are never part of the IYZWSv2 signature. Raises HTTPException(502) on any transport
-    failure, and returns the parsed JSON body (which may itself have status: 'failure' -- callers
-    check that) on any HTTP response, so iyzico's own error payloads reach the caller intact."""
+def _paddle_request(method: str, path: str, body: dict = None):
+    """Low-level authenticated call to the Paddle Billing REST API (used instead of a heavier SDK
+    dependency -- mirrors the urllib.request style already used elsewhere in this file for Resend/
+    formerly iyzico). `path` is the URL path only (e.g. '/transactions'). Raises HTTPException(502)
+    on any transport failure, and returns the parsed JSON body on any HTTP response (including
+    error responses, which Paddle returns as JSON too) so Paddle's own error payloads reach the
+    caller intact."""
     body_str = json.dumps(body if body is not None else {}, separators=(",", ":"), ensure_ascii=False)
-    random_string = _iyzico_random_string()
-    auth_header = _iyzico_auth_header(path, body_str, random_string)
     req = urllib.request.Request(
-        IYZICO_BASE_URL + path,
-        data=body_str.encode("utf-8"),
+        PADDLE_API_BASE_URL + path,
+        data=body_str.encode("utf-8") if body is not None else None,
         method=method,
         headers={
-            "Authorization": auth_header,
+            "Authorization": f"Bearer {PADDLE_API_KEY}",
             "Content-Type": "application/json",
-            IYZICO_RANDOM_HEADER: random_string,
-            "x-iyzi-client-version": "mrreadyprep-backend-1.0",
         },
     )
     try:
@@ -154,23 +138,22 @@ def _iyzico_request(method: str, path: str, body: dict = None):
         try:
             return json.loads(e.read().decode("utf-8"))
         except Exception:
-            raise HTTPException(status_code=502, detail=f"iyzico request failed: HTTP {e.code}")
+            raise HTTPException(status_code=502, detail=f"Paddle request failed: HTTP {e.code}")
     except urllib.error.URLError as e:
-        raise HTTPException(status_code=502, detail=f"Could not reach iyzico: {e}")
+        raise HTTPException(status_code=502, detail=f"Could not reach Paddle: {e}")
 
 
-def _require_iyzico():
-    if not IYZICO_API_KEY or not IYZICO_SECRET_KEY:
-        raise HTTPException(status_code=500, detail="iyzico is not configured yet (IYZICO_API_KEY/IYZICO_SECRET_KEY missing)")
-    if not IYZICO_PRICING_PLAN_REFERENCE_CODE:
-        raise HTTPException(status_code=500, detail="iyzico is not configured yet (IYZICO_PRICING_PLAN_REFERENCE_CODE missing)")
+def _require_paddle():
+    if not PADDLE_API_KEY:
+        raise HTTPException(status_code=500, detail="Paddle is not configured yet (PADDLE_API_KEY missing)")
+    if not PADDLE_PRICE_ID:
+        raise HTTPException(status_code=500, detail="Paddle is not configured yet (PADDLE_PRICE_ID missing)")
 
 
-# Which subscription_status values count as "has active premium access". iyzico subscription
-# statuses (GetSubscriptionDetail / our own DB mirror of them): ACTIVE, PENDING, UNPAID, UPGRADED,
-# CANCELED, EXPIRED -- only ACTIVE counts as paid access; PENDING means the card hasn't been
-# charged/verified yet (e.g. a trial not yet started or a checkout not yet completed).
-ACTIVE_SUBSCRIPTION_STATUSES = {"ACTIVE"}
+# Which subscription_status values count as "has active premium access". Paddle subscription
+# statuses (mirrored into our own DB, uppercased for consistency with the rest of this file):
+# ACTIVE, TRIALING, PAST_DUE, PAUSED, CANCELED -- only ACTIVE/TRIALING count as paid access.
+ACTIVE_SUBSCRIPTION_STATUSES = {"ACTIVE", "TRIALING"}
 
 def has_active_subscription(user) -> bool:
     return is_admin_user(user) or (user["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES
@@ -651,13 +634,19 @@ def init_db():
         conn.execute("ALTER TABLE users ADD COLUMN writing_target REAL NOT NULL DEFAULT 4.5")
     if not _has_column(conn, "users", "speaking_target"):
         conn.execute("ALTER TABLE users ADD COLUMN speaking_target REAL NOT NULL DEFAULT 4.5")
-    # iyzico abonelik alanları -- subscription_status 'ACTIVE' olan kullanıcılar premium içeriğe
-    # tam erişime sahip olur (bkz. has_active_subscription()). Diğer her şey (None, 'CANCELED',
-    # 'EXPIRED', 'UNPAID', 'PENDING' vb.) erişimsiz sayılır.
+    # Paddle abonelik alanları -- subscription_status 'ACTIVE'/'TRIALING' olan kullanıcılar premium
+    # içeriğe tam erişime sahip olur (bkz. has_active_subscription()). Diğer her şey (None,
+    # 'CANCELED', 'PAST_DUE', 'PAUSED' vb.) erişimsiz sayılır. iyzico_* kolonları eski entegrasyondan
+    # kalma, artık hiçbir kod yolu tarafından okunmuyor/yazılmıyor -- gerçek/canlı iyzico müşterisi
+    # hiç olmadığı için (bkz. görev #145) veri kaybı riski yok, kolonlar sadece dokunulmadan duruyor.
     if not _has_column(conn, "users", "iyzico_customer_reference_code"):
         conn.execute("ALTER TABLE users ADD COLUMN iyzico_customer_reference_code TEXT")
     if not _has_column(conn, "users", "iyzico_subscription_reference_code"):
         conn.execute("ALTER TABLE users ADD COLUMN iyzico_subscription_reference_code TEXT")
+    if not _has_column(conn, "users", "paddle_customer_id"):
+        conn.execute("ALTER TABLE users ADD COLUMN paddle_customer_id TEXT")
+    if not _has_column(conn, "users", "paddle_subscription_id"):
+        conn.execute("ALTER TABLE users ADD COLUMN paddle_subscription_id TEXT")
     if not _has_column(conn, "users", "subscription_status"):
         conn.execute("ALTER TABLE users ADD COLUMN subscription_status TEXT")
     if not _has_column(conn, "users", "subscription_current_period_end"):
@@ -961,13 +950,13 @@ def user_profile_dict(user) -> dict:
         "subscription_status": user["subscription_status"],
         "has_premium": has_active_subscription(user),
         "is_admin": is_admin_user(user),
-        # Whether there's an actual iyzico subscription behind this account's premium access, as
+        # Whether there's an actual Paddle subscription behind this account's premium access, as
         # opposed to access granted for free (an admin's own account via is_admin, or another
         # account manually comped through the admin panel's Grant button). The Subscribe screen
         # uses this to decide whether "Cancel subscription" makes sense to show at all -- calling
-        # /api/subscription/cancel with no iyzico_subscription_reference_code on file just 400s,
-        # since there's nothing on iyzico's end to actually cancel.
-        "has_billed_subscription": bool(user["iyzico_subscription_reference_code"]),
+        # /api/subscription/cancel with no paddle_subscription_id on file just 400s, since there's
+        # nothing on Paddle's end to actually cancel.
+        "has_billed_subscription": bool(user["paddle_subscription_id"]),
         "subscription_current_period_end": (
             user["subscription_current_period_end"].isoformat()
             if isinstance(user["subscription_current_period_end"], datetime)
@@ -1433,7 +1422,7 @@ def admin_list_users(admin=Depends(require_admin)):
     try:
         rows = conn.execute(
             "SELECT id, email, username, email_verified, subscription_status, "
-            "iyzico_subscription_reference_code, created_at, current_streak FROM users ORDER BY created_at DESC"
+            "paddle_subscription_id, created_at, current_streak FROM users ORDER BY created_at DESC"
         ).fetchall()
         def row_is_admin(row):
             return (row["email"] or "").strip().lower() in ADMIN_EMAILS
@@ -1445,11 +1434,11 @@ def admin_list_users(admin=Depends(require_admin)):
                 "email_verified": bool(row["email_verified"]),
                 "subscription_status": row["subscription_status"],
                 "has_premium": row_is_admin(row) or (row["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES,
-                # A real, iyzico-billed subscription -- the admin panel's Revoke button is disabled
+                # A real, Paddle-billed subscription -- the admin panel's Revoke button is disabled
                 # for these (see admin_set_subscription below) since silently flipping subscription_status
-                # here would desync from what iyzico is actually still charging the card for. A paying
+                # here would desync from what Paddle is actually still charging the card for. A paying
                 # customer's access should only ever be ended through the real cancel flow.
-                "has_billed_subscription": bool(row["iyzico_subscription_reference_code"]),
+                "has_billed_subscription": bool(row["paddle_subscription_id"]),
                 "is_admin": row_is_admin(row),
                 "created_at": row["created_at"].isoformat() if isinstance(row["created_at"], datetime) else row["created_at"],
                 "current_streak": row["current_streak"],
@@ -1495,11 +1484,11 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
         target = get_user_by_id(conn, user_id)
         if not target:
             raise HTTPException(status_code=404, detail="User not found")
-        if data.action == "revoke" and target["iyzico_subscription_reference_code"]:
+        if data.action == "revoke" and target["paddle_subscription_id"]:
             raise HTTPException(
                 status_code=400,
-                detail="This account has a real iyzico subscription -- revoking here would only hide "
-                       "their access while iyzico keeps charging their card. Cancel the subscription "
+                detail="This account has a real Paddle subscription -- revoking here would only hide "
+                       "their access while Paddle keeps charging their card. Cancel the subscription "
                        "itself (from their account's Settings, or via /api/subscription/cancel) instead.",
             )
         new_status = "ACTIVE" if data.action == "grant" else None
@@ -1510,25 +1499,17 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
         conn.close()
 
 # ============================================================
-# SUBSCRIPTION (iyzico) -- see İYZİCO CONFIG block near the top of this file for env vars,
-# _iyzico_request()/_iyzico_auth_header() for the signed HTTP call helper, and
-# has_active_subscription()/gate_pool() for how this gates the actual content endpoints below.
+# SUBSCRIPTION (Paddle) -- see PADDLE CONFIG block near the top of this file for env vars,
+# _paddle_request() for the authenticated HTTP call helper, and has_active_subscription()/
+# gate_pool() for how this gates the actual content endpoints below.
+#
+# Flow: frontend calls create-checkout (below) to get a transaction id, opens Paddle's own
+# Checkout.js overlay with that transaction id (student never leaves mrreadyprep.com, and never
+# has to hand over a TC Kimlik No / identity number the way iyzico required), then Paddle POSTs
+# to the webhook (below) once the payment actually clears -- that webhook is the only thing that
+# ever flips subscription_status to ACTIVE. The overlay closing successfully is a UI hint only,
+# never trusted on its own.
 # ============================================================
-
-class IyzicoCheckoutRequest(BaseModel):
-    # iyzico's subscription API requires this buyer info up front (unlike Stripe, which only
-    # needs an email) -- collected via a short form on the Subscribe screen before the embedded
-    # payment widget renders. identity_number is the Turkish TC Kimlik No field; for a foreign
-    # student without one, a placeholder (e.g. 11111111111) is the common workaround other iyzico
-    # merchants use for non-Turkish cardholders -- confirm this is accepted once real/sandbox
-    # keys are in and this flow can actually be tested end to end.
-    name: str
-    surname: str
-    gsm_number: str
-    identity_number: str
-    address: str
-    city: str
-    country: str = "Turkey"
 
 @app.get("/api/subscription/status")
 def get_subscription_status(user=Depends(get_current_user)):
@@ -1542,112 +1523,45 @@ def get_subscription_status(user=Depends(get_current_user)):
         ),
     }
 
-@app.post("/api/subscription/create-checkout-session")
-def create_checkout_session(data: IyzicoCheckoutRequest, user=Depends(get_current_user)):
-    """Starts an iyzico Subscription Checkout Form flow. Unlike Stripe (which returns a URL to
-    redirect to), iyzico returns an HTML/JS snippet (checkoutFormContent) meant to be embedded
-    directly on THIS site -- the frontend injects it into the Subscribe screen and iyzico's own
-    script renders the card-entry widget in place. The student never leaves mrreadyprep.com."""
-    _require_iyzico()
+@app.post("/api/subscription/create-checkout")
+def create_checkout(user=Depends(get_current_user)):
+    """Creates a Paddle transaction server-side (authenticated) and hands the frontend back just
+    the transaction id to open in Paddle's Checkout.js overlay (Paddle.Checkout.open({
+    transactionId })). Doing this server-side -- rather than letting the frontend pass
+    price/customData straight to Checkout.js -- means custom_data.user_id is set by code that has
+    already verified who the logged-in user is, not by anything the browser could tamper with; a
+    forged user_id in a client-side customData would otherwise let someone grant premium to an
+    account they don't own just by paying for a different one."""
+    _require_paddle()
     body = {
-        "locale": "tr",
-        # iyzico's embedded widget POSTs the result to this URL when the student finishes paying
-        # -- it must be a URL that accepts POST (our own backend), not the static frontend site,
-        # which can only serve GET requests. The handler below re-redirects the browser (a GET)
-        # to the frontend with the token attached as a query param so the SPA can pick it up.
-        "callbackUrl": f"{BACKEND_PUBLIC_URL}/api/subscription/checkout-callback",
-        "pricingPlanReferenceCode": IYZICO_PRICING_PLAN_REFERENCE_CODE,
-        "subscriptionInitialStatus": "ACTIVE",
-        "conversationId": str(user["id"]),
-        "customer": {
-            "name": data.name,
-            "surname": data.surname,
-            "email": user["email"],
-            "gsmNumber": data.gsm_number,
-            "identityNumber": data.identity_number,
-            "billingAddress": {
-                "address": data.address,
-                "contactName": f"{data.name} {data.surname}",
-                "city": data.city,
-                "country": data.country,
-            },
-        },
+        "items": [{"price_id": PADDLE_PRICE_ID, "quantity": 1}],
+        "customer": {"email": user["email"]},
+        "custom_data": {"user_id": str(user["id"])},
     }
-    result = _iyzico_request("POST", "/v2/subscription/checkoutform/initialize", body)
-    if result.get("status") != "success":
-        raise HTTPException(status_code=400, detail=result.get("errorMessage", "iyzico checkout could not be started"))
-    return {
-        "token": result.get("token"),
-        "checkoutFormContent": result.get("checkoutFormContent"),
-        "tokenExpireTime": result.get("tokenExpireTime"),
-    }
-
-@app.post("/api/subscription/checkout-callback")
-async def checkout_callback(request: Request):
-    """iyzico's embedded widget POSTs here (form-encoded, with a `token` field) once the student
-    finishes the payment step in the iframe. This endpoint has no auth of its own -- it just
-    bounces the browser on to the frontend with the token in the URL, and the frontend calls the
-    authenticated /api/subscription/checkout-result/{token} endpoint (above) to actually confirm
-    and persist the result. Also accept a query-string token as a fallback in case the widget
-    ever redirects via GET instead of POST."""
-    token = request.query_params.get("token")
-    if not token:
-        try:
-            form = await request.form()
-            token = form.get("token")
-        except Exception:
-            token = None
-    dest = f"{FRONTEND_PUBLIC_URL}/?subscription_token={token}" if token else f"{FRONTEND_PUBLIC_URL}/?subscription=cancel"
-    return RedirectResponse(url=dest, status_code=303)
-
-@app.get("/api/subscription/checkout-result/{token}")
-def get_checkout_result(token: str, user=Depends(get_current_user)):
-    """Polled by the frontend once iyzico's embedded widget reports the payment step finished --
-    confirms server-side what actually happened and persists the subscription onto this user's
-    account. This (plus the webhook below, for later renewals) is what actually flips
-    subscription_status to ACTIVE; the embedded widget finishing is not itself trusted."""
-    _require_iyzico()
-    result = _iyzico_request("GET", f"/v2/subscription/checkoutform/{token}")
-    if result.get("status") != "success":
-        raise HTTPException(status_code=400, detail=result.get("errorMessage", "Could not retrieve checkout result"))
-    data = result.get("data") or {}
-    # Security: this checkout token was issued for a specific user (conversationId was set to
-    # that user's id at checkout-init time). Without this check, any authenticated user who gets
-    # hold of a still-valid token belonging to someone else (leaked via the redirect URL, browser
-    # history, referrer, etc.) could bind that person's payment onto their own account.
-    if data.get("conversationId") != str(user["id"]):
-        raise HTTPException(status_code=403, detail="This checkout token does not belong to the current user.")
-    status = data.get("subscriptionStatus")
-    period_end_ms = data.get("endDate")
-    period_end = (
-        datetime.fromtimestamp(period_end_ms / 1000, tz=timezone.utc).isoformat() if period_end_ms else None
-    )
-    conn = get_db()
-    try:
-        conn.execute(
-            "UPDATE users SET iyzico_customer_reference_code = ?, iyzico_subscription_reference_code = ?, "
-            "subscription_status = ?, subscription_current_period_end = ? WHERE id = ?",
-            (data.get("customerReferenceCode"), data.get("referenceCode"), status, period_end, user["id"]),
-        )
-        conn.commit()
-    finally:
-        conn.close()
-    return {"subscription_status": status, "has_premium": status in ACTIVE_SUBSCRIPTION_STATUSES}
+    result = _paddle_request("POST", "/transactions", body)
+    txn = (result or {}).get("data")
+    if not txn or not txn.get("id"):
+        detail = ((result or {}).get("error") or {}).get("detail", "Could not start checkout. Please try again.")
+        raise HTTPException(status_code=400, detail=detail)
+    return {"transaction_id": txn["id"]}
 
 @app.post("/api/subscription/cancel")
 def cancel_subscription(user=Depends(get_current_user)):
-    """iyzico has no hosted billing-management page like Stripe's Customer Portal -- cancellation
-    is a direct API call we make on the student's behalf from a confirm button in Settings."""
-    _require_iyzico()
-    if not user["iyzico_subscription_reference_code"]:
+    """Paddle has a hosted Customer Portal, but a direct API call from a confirm button in
+    Settings keeps the cancel flow consistent with the rest of this site's UI (and matches what
+    the old iyzico integration did). effective_from: 'immediately' matches the copy already shown
+    on the Cancel confirmation modal ("You will lose access to locked content immediately")."""
+    _require_paddle()
+    if not user["paddle_subscription_id"]:
         raise HTTPException(status_code=400, detail="No active subscription on file")
-    result = _iyzico_request(
+    result = _paddle_request(
         "POST",
-        f"/v2/subscription/subscriptions/{user['iyzico_subscription_reference_code']}/cancel",
-        {},
+        f"/subscriptions/{user['paddle_subscription_id']}/cancel",
+        {"effective_from": "immediately"},
     )
-    if result.get("status") != "success":
-        raise HTTPException(status_code=400, detail=result.get("errorMessage", "Could not cancel subscription"))
+    if not (result or {}).get("data"):
+        detail = ((result or {}).get("error") or {}).get("detail", "Could not cancel subscription")
+        raise HTTPException(status_code=400, detail=detail)
     conn = get_db()
     try:
         conn.execute("UPDATE users SET subscription_status = 'CANCELED' WHERE id = ?", (user["id"],))
@@ -1656,49 +1570,86 @@ def cancel_subscription(user=Depends(get_current_user)):
         conn.close()
     return {"status": "success"}
 
+# Paddle subscription statuses come back lowercase (active, trialing, past_due, paused, canceled)
+# -- uppercased on the way into our own DB so they line up with the rest of this file's
+# ACTIVE_SUBSCRIPTION_STATUSES / admin-panel / dashboard checks, which have always used uppercase.
+_PADDLE_STATUS_MAP = {
+    "active": "ACTIVE", "trialing": "TRIALING", "past_due": "PAST_DUE",
+    "paused": "PAUSED", "canceled": "CANCELED",
+}
+
 @app.post("/api/subscription/webhook")
-async def iyzico_webhook(request: Request):
-    """iyzico POSTs here (no Authorization header -- verified via X-IYZ-SIGNATURE-V3 instead)
-    after every subscription payment attempt, including renewals, not just the first one -- this
-    is what keeps subscription_status in sync automatically on renewal/failure without anyone
-    needing to poll iyzico. Must be registered as the Merchant Subscription Notifications URL in
-    the iyzico panel (Settings > Merchant Settings > Merchant Subscription Notifications)."""
-    if not IYZICO_MERCHANT_ID or not IYZICO_SECRET_KEY:
-        raise HTTPException(status_code=500, detail="iyzico webhook not configured (IYZICO_MERCHANT_ID missing)")
-    payload = await request.body()
+async def paddle_webhook(request: Request):
+    """Paddle POSTs here (no Authorization header -- verified via the Paddle-Signature header
+    instead, HMAC-SHA256 over 'ts:rawbody' keyed with PADDLE_WEBHOOK_SECRET) on every
+    subscription/transaction lifecycle event, including renewals -- this is what keeps
+    subscription_status in sync automatically without anyone needing to poll Paddle. Must be
+    registered as a Notification destination (pointing at this URL) in the Paddle dashboard under
+    Developer Tools > Notifications, subscribed to at least the subscription.* events."""
+    if not PADDLE_WEBHOOK_SECRET:
+        raise HTTPException(status_code=500, detail="Paddle webhook not configured (PADDLE_WEBHOOK_SECRET missing)")
+    raw_body = await request.body()
+    sig_header = request.headers.get("paddle-signature", "")
+    ts, h1 = "", ""
+    for part in sig_header.split(";"):
+        if part.startswith("ts="):
+            ts = part[3:]
+        elif part.startswith("h1="):
+            h1 = part[3:]
+    if not ts or not h1:
+        raise HTTPException(status_code=400, detail="Missing or malformed Paddle-Signature header")
+    # Reject stale/replayed deliveries -- a generous 5 minute window (rather than Paddle's own
+    # SDK default of 5 seconds) since this is a defense-in-depth check on top of the HMAC compare
+    # below, not the primary protection, and a tight window is easy to blow past under real
+    # network/queueing delay with no actual security benefit.
     try:
-        event = json.loads(payload.decode("utf-8"))
+        if abs(datetime.now(timezone.utc).timestamp() - int(ts)) > 300:
+            raise HTTPException(status_code=400, detail="Webhook timestamp outside allowed window")
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid Paddle-Signature timestamp")
+    signed_payload = f"{ts}:{raw_body.decode('utf-8')}"
+    expected_sig = hmac.new(PADDLE_WEBHOOK_SECRET.encode("utf-8"), signed_payload.encode("utf-8"), hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(h1, expected_sig):
+        raise HTTPException(status_code=400, detail="Invalid webhook signature")
+
+    try:
+        event = json.loads(raw_body.decode("utf-8"))
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid webhook payload")
 
-    event_type = event.get("iyziEventType", "")
-    subscription_ref = event.get("subscriptionReferenceCode", "")
-    order_ref = event.get("orderReferenceCode", "")
-    customer_ref = event.get("customerReferenceCode", "")
+    event_type = event.get("event_type", "")
+    if not event_type.startswith("subscription."):
+        return {"status": "ignored"}
 
-    sig_header = request.headers.get("x-iyz-signature-v3", "") or request.headers.get("X-IYZ-SIGNATURE-V3", "")
-    message = IYZICO_MERCHANT_ID + IYZICO_SECRET_KEY + event_type + subscription_ref + order_ref + customer_ref
-    expected_sig = hmac.new(IYZICO_SECRET_KEY.encode("utf-8"), message.encode("utf-8"), hashlib.sha256).hexdigest()
-    if not sig_header or not hmac.compare_digest(sig_header, expected_sig):
-        raise HTTPException(status_code=400, detail="Invalid webhook signature")
+    data = event.get("data") or {}
+    subscription_id = data.get("id")
+    customer_id = data.get("customer_id")
+    status = _PADDLE_STATUS_MAP.get(data.get("status", ""), None)
+    if not subscription_id or not status:
+        return {"status": "ignored"}
+    period_end = ((data.get("current_billing_period") or {}).get("ends_at"))
+    custom_data = data.get("custom_data") or {}
+    user_id = custom_data.get("user_id")
 
     conn = get_db()
     try:
-        if event_type == "subscription.order.success":
+        # subscription.created is the only event where this subscription_id hasn't been linked to
+        # a user yet -- custom_data.user_id (set server-side in create_checkout above) is what
+        # binds it. Every later event (updated/canceled/past_due) is matched by subscription_id
+        # alone, same as the iyzico webhook matched on subscriptionReferenceCode before it.
+        if event_type == "subscription.created" and user_id:
             conn.execute(
-                "UPDATE users SET subscription_status = 'ACTIVE' WHERE iyzico_subscription_reference_code = ?",
-                (subscription_ref,),
+                "UPDATE users SET paddle_customer_id = ?, paddle_subscription_id = ?, "
+                "subscription_status = ?, subscription_current_period_end = ? WHERE id = ?",
+                (customer_id, subscription_id, status, period_end, int(user_id)),
             )
-            conn.commit()
-        elif event_type == "subscription.order.failure":
-            # A failed renewal charge -- iyzico retries automatically; mark UNPAID so access is
-            # revoked immediately rather than waiting for the retry outcome. If a later retry
-            # succeeds, the next "subscription.order.success" event flips it back to ACTIVE.
+        else:
             conn.execute(
-                "UPDATE users SET subscription_status = 'UNPAID' WHERE iyzico_subscription_reference_code = ?",
-                (subscription_ref,),
+                "UPDATE users SET subscription_status = ?, subscription_current_period_end = ? "
+                "WHERE paddle_subscription_id = ?",
+                (status, period_end, subscription_id),
             )
-            conn.commit()
+        conn.commit()
     finally:
         conn.close()
     return {"status": "ok"}
