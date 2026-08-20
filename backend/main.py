@@ -86,6 +86,13 @@ FRONTEND_PUBLIC_URL = os.environ.get("FRONTEND_PUBLIC_URL", "http://localhost:51
 RESEND_API_KEY = os.environ.get("RESEND_API_KEY", "")
 RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "mrreadyprep <onboarding@resend.dev>")
 
+# Shared secret for the daily "you haven't practiced" reminder cron (see
+# /api/cron/practice-reminders below). This is deliberately NOT a normal user/admin JWT --
+# a scheduler (e.g. a Render Cron Job hitting this endpoint with `curl`) has no logged-in
+# session to present, so it authenticates with this one fixed secret via the
+# X-Cron-Secret header instead. Leave unset to keep the endpoint disabled (returns 503).
+PRACTICE_REMINDER_CRON_SECRET = os.environ.get("PRACTICE_REMINDER_CRON_SECRET", "")
+
 # ============================================================
 # PADDLE (abonelik / ödeme) CONFIG
 # ============================================================
@@ -651,6 +658,11 @@ def init_db():
         conn.execute("ALTER TABLE users ADD COLUMN subscription_status TEXT")
     if not _has_column(conn, "users", "subscription_current_period_end"):
         conn.execute("ALTER TABLE users ADD COLUMN subscription_current_period_end TIMESTAMP")
+    # Tracks the last time this student was sent a "you haven't practiced" nudge email (see
+    # /api/cron/practice-reminders) so a daily cron run never double-sends within the same
+    # ~24h window even if it's triggered more than once.
+    if not _has_column(conn, "users", "last_reminder_sent_at"):
+        conn.execute("ALTER TABLE users ADD COLUMN last_reminder_sent_at TIMESTAMP")
 
     # Which vocab words each student has personally marked as learned.
     conn.execute("""
@@ -893,6 +905,70 @@ def send_verification_email(to_email: str, verify_link: str):
         f"<p>This link expires in 24 hours. If you didn't create a mrreadyprep account, you can safely ignore this email.</p>",
         "email verification",
     )
+
+def send_practice_reminder_email(to_email: str, username: str):
+    _send_transactional_email(
+        to_email,
+        "Haven't practiced today? A few minutes goes a long way",
+        f"<p>Hi {username or 'there'},</p>"
+        f"<p>You haven't done any TOEFL practice on mrreadyprep in the last day. Even a single "
+        f"5-minute exercise keeps your streak going and your skills sharp.</p>"
+        f"<p><a href=\"{FRONTEND_PUBLIC_URL}\">Open mrreadyprep and practice now</a></p>"
+        f"<p style=\"color:#9ca3af;font-size:12px;\">You're receiving this because you have an "
+        f"mrreadyprep account and haven't practiced in a day. We'll stop as soon as you're back.</p>",
+        "practice reminder",
+    )
+
+@app.post("/api/cron/practice-reminders")
+def send_practice_reminders(x_cron_secret: Optional[str] = Header(None, alias="X-Cron-Secret")):
+    """Triggered by an external scheduler (e.g. a Render Cron Job running once a day) to nudge
+    students who've gone quiet -- deliberately NOT reachable via normal user/admin auth, since a
+    scheduler has no logged-in session to present. Requires PRACTICE_REMINDER_CRON_SECRET to be
+    set and match the X-Cron-Secret header; with no secret configured this stays fully disabled
+    (503) so it can never accidentally start firing before it's deliberately turned on -- which
+    in turn depends on Resend actually being able to deliver mail (see RESEND_API_KEY / the
+    verified-domain setup), so don't set this until that's confirmed working.
+
+    "Gone quiet" = no attempt_results row in the last 24h, account is itself more than 24h old
+    (so brand-new signups don't get nagged the same day), and not reminded again within the last
+    24h (so re-running this more than once a day, or running it daily against someone who never
+    comes back, doesn't spam them faster than once/day)."""
+    if not PRACTICE_REMINDER_CRON_SECRET:
+        raise HTTPException(status_code=503, detail="Practice reminders are not configured (PRACTICE_REMINDER_CRON_SECRET unset)")
+    if not x_cron_secret or not hmac.compare_digest(x_cron_secret, PRACTICE_REMINDER_CRON_SECRET):
+        raise HTTPException(status_code=403, detail="Invalid cron secret")
+
+    now = datetime.now(timezone.utc)
+    cutoff_dt = now - timedelta(hours=24)
+    cutoff = cutoff_dt.isoformat() if DATABASE_URL else cutoff_dt.strftime("%Y-%m-%d %H:%M:%S")
+    now_str = now.isoformat() if DATABASE_URL else now.strftime("%Y-%m-%d %H:%M:%S")
+
+    conn = get_db()
+    try:
+        # Capped at 200/run so one cron invocation can't run long enough to time out the web
+        # process -- if the student base outgrows that, this should move to a background worker
+        # instead of raising the cap indefinitely.
+        rows = conn.execute("""
+            SELECT id, email, username FROM users u
+            WHERE u.email_verified = 1
+              AND u.created_at < ?
+              AND (u.last_reminder_sent_at IS NULL OR u.last_reminder_sent_at < ?)
+              AND NOT EXISTS (
+                  SELECT 1 FROM attempt_results ar WHERE ar.user_id = u.id AND ar.saved_at > ?
+              )
+            ORDER BY u.id
+            LIMIT 200
+        """, (cutoff, cutoff, cutoff)).fetchall()
+
+        sent = 0
+        for row in rows:
+            send_practice_reminder_email(row["email"], row["username"])
+            conn.execute("UPDATE users SET last_reminder_sent_at = ? WHERE id = ?", (now_str, row["id"]))
+            sent += 1
+        conn.commit()
+        return {"status": "ok", "reminders_sent": sent}
+    finally:
+        conn.close()
 
 def compute_streak_and_week_activity(conn, user_id: int):
     """Looks at every attempt_results/ridl_results row's saved_at date for this user to compute
@@ -2003,6 +2079,81 @@ def get_results_summary(user=Depends(get_current_user)):
                 "last_attempt": overall["last_attempt"],
             },
         }
+    finally:
+        conn.close()
+
+# Category -> which frontend tab/subTab to send the student to so "Review Mistakes" can jump
+# them straight to that category's own exercise list, where the missed item already shows its
+# score badge and a Retry button (see the sidebar-list screens wired up in App()).
+CATEGORY_NAV = {
+    "ctw": {"tab": "reading", "subTab": "ctw"},
+    "ridl": {"tab": "reading", "subTab": "ridl"},
+    "ap": {"tab": "reading", "subTab": "academic"},
+    "listening_p1": {"tab": "listening", "subTab": "p1"},
+    "listening_p2": {"tab": "listening", "subTab": "p2"},
+    "listening_p3": {"tab": "listening", "subTab": "p3"},
+    "listening_p4": {"tab": "listening", "subTab": "p4"},
+    "bas": {"tab": "writing", "subTab": "p1"},
+    "email": {"tab": "writing", "subTab": "p2"},
+    "disc": {"tab": "writing", "subTab": "p3"},
+    "speaking_lr": {"tab": "speaking", "subTab": "p1"},
+    "speaking_interview": {"tab": "speaking", "subTab": "p2"},
+}
+CATEGORY_SECTION = {
+    "ctw": "reading", "ridl": "reading", "ap": "reading",
+    "listening_p1": "listening", "listening_p2": "listening", "listening_p3": "listening", "listening_p4": "listening",
+    "bas": "writing", "email": "writing", "disc": "writing",
+    "speaking_lr": "speaking", "speaking_interview": "speaking",
+}
+
+@app.get("/api/results/mistakes")
+def get_mistakes(user=Depends(get_current_user)):
+    """Returns this student's most recent attempt on every practice item they've ever done
+    (across all 12 practice categories -- mock test items are deliberately excluded, since a
+    missed mock question isn't a single re-doable exercise the way a practice-pool item is),
+    filtered down to only the ones that weren't a perfect score. Grouped by section then
+    category so the frontend's "Review Mistakes" screen can show a focused list and send the
+    student straight back to that category's exercise list to retry it."""
+    categories = list(CATEGORY_NAV.keys())
+    placeholders = ",".join("?" for _ in categories)
+    conn = get_db()
+    try:
+        rows = conn.execute(f"""
+            SELECT ar.category, ar.item_id, ar.label, ar.pct, ar.saved_at
+            FROM attempt_results ar
+            JOIN (
+                SELECT category, item_id, MAX(id) AS max_id
+                FROM attempt_results
+                WHERE user_id = ? AND category IN ({placeholders})
+                GROUP BY category, item_id
+            ) latest ON ar.id = latest.max_id
+            WHERE ar.pct < 100
+            ORDER BY ar.pct ASC, ar.saved_at DESC
+        """, (user["id"], *categories)).fetchall()
+
+        by_category = {}
+        for row in rows:
+            cat = row["category"]
+            entry = by_category.setdefault(cat, {
+                "category": cat,
+                "label": CATEGORY_LABELS.get(cat, cat),
+                "section": CATEGORY_SECTION.get(cat, ""),
+                "nav": CATEGORY_NAV.get(cat, {}),
+                "items": [],
+            })
+            entry["items"].append({
+                "item_id": row["item_id"],
+                "label": row["label"] or f"{CATEGORY_LABELS.get(cat, cat)} #{row['item_id']}",
+                "pct": row["pct"],
+                "saved_at": row["saved_at"],
+            })
+
+        by_section = {}
+        for entry in by_category.values():
+            by_section.setdefault(entry["section"], []).append(entry)
+
+        total_items = sum(len(e["items"]) for e in by_category.values())
+        return {"by_section": by_section, "total_items": total_items}
     finally:
         conn.close()
 

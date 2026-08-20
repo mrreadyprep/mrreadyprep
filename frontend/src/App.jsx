@@ -7773,6 +7773,29 @@ function FullMockTest({ onBack, hasPremium = false }) {
     const isSingleSection = mode !== 'full'
     const sectionRow = rows.find(r => r.key === mode)
 
+    // Turns a just-finished score into a friend-invite -- Web Share API on mobile (native
+    // share sheet), falls back to copying a ready-to-paste message + link on desktop. No
+    // referral tracking on the link itself (keeps it simple/private) -- this is purely a
+    // word-of-mouth nudge at the moment a student is most likely to want to share a win.
+    const handleShareScore = (text) => {
+      const url = 'https://mrreadyprep.com'
+      if (navigator.share) {
+        navigator.share({ title: 'mrreadyprep', text, url }).catch(() => {})
+        return
+      }
+      const full = `${text} ${url}`
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(full).then(() => showToast('Copied! Paste it anywhere to invite a friend.')).catch(() => showToast('Could not copy — try again.', 'error'))
+      } else {
+        showToast('Sharing is not supported on this browser.', 'error')
+      }
+    }
+    const ShareButton = ({ text }) => (
+      <button onClick={() => handleShareScore(text)} style={{ background: '#fff', color: '#701fa1', border: '1.5px solid #701fa1', borderRadius: '8px', padding: '10px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>
+        📤 Share your score
+      </button>
+    )
+
     if (isSingleSection && sectionRow) {
       const isOpen = openReview[sectionRow.key]
       return (
@@ -7796,7 +7819,10 @@ function FullMockTest({ onBack, hasPremium = false }) {
           <div style={{ fontSize: '11px', color: '#9ca3af', maxWidth: '480px', textAlign: 'center', marginBottom: '20px', lineHeight: '1.6' }}>
             Band scores are estimates based on your raw performance — ETS does not publish its exact scoring formula, so treat this as a practice signal, not a guaranteed test-day result.
           </div>
-          <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
+          <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
+            <ShareButton text={`I just scored ${sectionRow.band.toFixed(1)}/${SECTION_BAND_MAX[sectionRow.key]} on a TOEFL ${sectionRow.label} practice test on mrreadyprep — give it a try!`} />
+          </div>
         </div>
       )
     }
@@ -7829,7 +7855,10 @@ function FullMockTest({ onBack, hasPremium = false }) {
         <div style={{ fontSize: '11px', color: '#9ca3af', maxWidth: '480px', textAlign: 'center', marginBottom: '20px', lineHeight: '1.6' }}>
           Band scores are estimates based on your raw performance — ETS does not publish its exact scoring formula, so treat this as a practice signal, not a guaranteed test-day result.
         </div>
-        <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
+        <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+          <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
+          <ShareButton text={`I just scored ${overall.toFixed(1)}/6 on a full TOEFL mock test on mrreadyprep — give it a try!`} />
+        </div>
       </div>
     )
   }
@@ -7920,10 +7949,13 @@ const PROGRESS_CATEGORY_META = {
 const PROGRESS_SECTION_ORDER = ['Reading', 'Listening', 'Writing', 'Speaking', 'Mock Tests']
 const PROGRESS_SECTION_COLORS = { Reading: '#701fa1', Listening: '#2ac56c', Writing: '#e07b00', Speaking: '#2f6fed', 'Mock Tests': '#d94040' }
 
-function ProgressScreen({ onBack }) {
+const PROGRESS_MISTAKES_SECTION_LABEL = { reading: 'Reading', listening: 'Listening', writing: 'Writing', speaking: 'Speaking' }
+
+function ProgressScreen({ onBack, onPractice }) {
   const isMobile = useIsMobile()
   const [summary, setSummary] = useState(null)
   const [history, setHistory] = useState([])
+  const [mistakes, setMistakes] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -7931,10 +7963,12 @@ function ProgressScreen({ onBack }) {
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/results/summary`).then(r => r.json()),
       apiFetch(`${BACKEND_URL}/api/results/history?limit=30`).then(r => r.json()),
-    ]).then(([summaryData, historyData]) => {
+      apiFetch(`${BACKEND_URL}/api/results/mistakes`).then(r => r.json()).catch(() => null),
+    ]).then(([summaryData, historyData, mistakesData]) => {
       if (cancelled) return
       setSummary(summaryData)
       setHistory(Array.isArray(historyData) ? historyData : [])
+      setMistakes(mistakesData)
       setLoading(false)
     }).catch(() => { if (!cancelled) setLoading(false) })
     return () => { cancelled = true }
@@ -7999,6 +8033,42 @@ function ProgressScreen({ onBack }) {
           <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginTop: '4px' }}>{fmtDate(overall.last_attempt)}</div>
         </div>
       </div>
+
+      {mistakes && mistakes.total_items > 0 && (
+        <div style={{ marginBottom: '28px', background: '#fff', borderRadius: '12px', border: '1px solid #f3d9a8', overflow: 'hidden' }}>
+          <div style={{ padding: '16px 20px', background: '#fff8ec', borderBottom: '0.5px solid #f3d9a8', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <div>
+              <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>🎯 Review Mistakes</div>
+              <div style={{ fontSize: '12px', color: '#616473', marginTop: '2px' }}>{mistakes.total_items} item{mistakes.total_items === 1 ? '' : 's'} you haven't gotten 100% on yet</div>
+            </div>
+          </div>
+          <div>
+            {['reading', 'listening', 'writing', 'speaking'].filter(sec => mistakes.by_section[sec]?.length).map(sec => (
+              <div key={sec}>
+                {mistakes.by_section[sec].map((entry, i) => {
+                  const worst = entry.items.reduce((min, it) => Math.min(min, it.pct), 100)
+                  return (
+                    <div key={entry.category} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '13px 20px', borderTop: '0.5px solid #f0f0f0', flexWrap: isMobile ? 'wrap' : 'nowrap', gap: '10px' }}>
+                      <div>
+                        <div style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a' }}>
+                          <span style={{ fontSize: '10px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', marginRight: '6px' }}>{PROGRESS_MISTAKES_SECTION_LABEL[sec]}</span>
+                          {entry.label}
+                        </div>
+                        <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>
+                          {entry.items.length} item{entry.items.length === 1 ? '' : 's'} to review · lowest {worst}%
+                        </div>
+                      </div>
+                      <button onClick={() => onPractice && onPractice(entry.nav)} style={{ background: '#e07b00', color: '#fff', border: 'none', borderRadius: '6px', padding: '8px 16px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}>
+                        Practice →
+                      </button>
+                    </div>
+                  )
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {PROGRESS_SECTION_ORDER.filter(s => sections[s]).map(secName => {
         const sec = sections[secName]
@@ -9446,7 +9516,16 @@ function App() {
         {/* FULL MOCK TEST */}
         {currentTab === 'mocktest' && <FullMockTest onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} />}
 
-        {currentTab === 'progress' && <ProgressScreen onBack={() => setCurrentTab('dashboard')} />}
+        {currentTab === 'progress' && (
+          <ProgressScreen onBack={() => setCurrentTab('dashboard')} onPractice={(nav) => {
+            if (!nav || !nav.tab) return
+            setCurrentTab(nav.tab)
+            if (nav.tab === 'reading') setReadingSubTab(nav.subTab)
+            else if (nav.tab === 'listening') setListeningSubTab(nav.subTab)
+            else if (nav.tab === 'writing') setWritingSubTab(nav.subTab)
+            else if (nav.tab === 'speaking') setSpeakingSubTab(nav.subTab)
+          }} />
+        )}
 
         {currentTab === 'subscribe' && (
           <SubscribeScreen onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} subscriptionStatus={userData.subscription_status} hasBilledSubscription={!!userData.has_billed_subscription} isAdmin={!!userData.is_admin} />
