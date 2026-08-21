@@ -9434,14 +9434,25 @@ function App() {
   // embedded widget needed -- SubscribeScreen listens for the checkout.completed event directly
   // and polls /api/subscription/status itself (see handlePaddleEvent above it).
 
+  // The <input type="number" min="1" max="6"> constraints on the target fields are only enforced
+  // by the browser on a real <form> submit event -- the Dashboard's inline "Edit targets" panel
+  // saves via a plain onClick button (see saveTargets below), which never triggers that check, so
+  // a student could otherwise save e.g. 0 or 99 as a target with no validation at all. Clamp here
+  // in JS so both save paths are protected the same way regardless of how they're triggered.
+  const clampTarget = (v) => {
+    const n = Number(v)
+    if (!Number.isFinite(n)) return 1
+    return Math.min(6, Math.max(1, n))
+  }
+
   const handleProfileSave = (e) => {
     e.preventDefault()
     apiFetch(`${BACKEND_URL}/api/profile/update`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: profileName, target_score: Number(targetScore),
-        reading_target: Number(readingTarget), listening_target: Number(listeningTarget),
-        writing_target: Number(writingTarget), speaking_target: Number(speakingTarget),
+        reading_target: clampTarget(readingTarget), listening_target: clampTarget(listeningTarget),
+        writing_target: clampTarget(writingTarget), speaking_target: clampTarget(speakingTarget),
       }),
     }).then(res => res.json()).then(data => {
       if (data.status === 'success') { showToast('Saved!'); fetchDashboardData() }
@@ -9466,8 +9477,8 @@ function App() {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: profileName, target_score: Number(targetScore),
-        reading_target: Number(readingTarget), listening_target: Number(listeningTarget),
-        writing_target: Number(writingTarget), speaking_target: Number(speakingTarget),
+        reading_target: clampTarget(readingTarget), listening_target: clampTarget(listeningTarget),
+        writing_target: clampTarget(writingTarget), speaking_target: clampTarget(speakingTarget),
       }),
     }).then(res => res.json()).then(data => {
       if (data.status === 'success') { setEditingTargets(false); fetchDashboardData() }

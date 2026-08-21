@@ -409,21 +409,40 @@ def _fix_audio_urls(obj):
 # added later must follow the same rule (build a new dict/list instead of assigning into the
 # cached one).
 _pool_cache: dict = {}
+# Timestamp (time.time()) each cache_key was last (re)built. Needed because several builders bake
+# a signed, TTL-expiring audio URL (_audio_url, AUDIO_URL_TTL_SECONDS above) into the cached JSON
+# at build time. Without tracking cache age, a pool built once and never invalidated would start
+# serving audio URLs with already-expired HMAC signatures after AUDIO_URL_TTL_SECONDS of process
+# uptime -- audio_proxy would then 403 every request for that pool, for every student, simultaneously,
+# with no code change or deploy to explain it, until the process happens to restart. See
+# _POOL_CACHE_MAX_AGE_SECONDS below for the fix.
+_pool_cache_times: dict = {}
 # Guards the check-then-set below: without it, concurrent first-requests for the same not-yet-
 # cached pool could all see cache_key missing and each run the (redundant, if harmless) builder.
 # All the builders are pure/idempotent so this was never a correctness bug, just wasted CPU on a
 # cold-cache burst -- the lock just makes that burst deterministic (one builder call, not N).
 _pool_cache_lock = threading.Lock()
+# Force a cache rebuild (which re-signs any embedded audio URLs with a fresh expiry) a full day
+# before the previous build's signatures would actually expire, so a long-running process never
+# serves an already-expired signed URL. Rebuild cost equals the original cold-cache cost and now
+# happens roughly every 13 days per pool instead of never -- negligible next to the outage this
+# prevents.
+_POOL_CACHE_MAX_AGE_SECONDS = AUDIO_URL_TTL_SECONDS - 60 * 60 * 24
 
 def _load_json_pool(path):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 def _cached_pool(cache_key, builder):
-    if cache_key not in _pool_cache:
+    def _is_stale():
+        cached_at = _pool_cache_times.get(cache_key)
+        return cached_at is not None and (time.time() - cached_at) > _POOL_CACHE_MAX_AGE_SECONDS
+
+    if cache_key not in _pool_cache or _is_stale():
         with _pool_cache_lock:
-            if cache_key not in _pool_cache:  # re-check: another thread may have won the race
+            if cache_key not in _pool_cache or _is_stale():  # re-check: another thread may have won the race
                 _pool_cache[cache_key] = builder()
+                _pool_cache_times[cache_key] = time.time()
     return _pool_cache[cache_key]
 
 # ============================================================
@@ -1619,8 +1638,11 @@ def admin_stats(admin=Depends(require_admin)):
     conn = get_db()
     try:
         total_users = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"]
+        # Match has_active_subscription()'s definition of "paid/engaged" -- TRIALING users have
+        # full premium access just like ACTIVE ones, so excluding them here understated this
+        # metric for any student currently in a trial period.
         active_subs = conn.execute(
-            "SELECT COUNT(*) AS n FROM users WHERE subscription_status = 'ACTIVE'"
+            "SELECT COUNT(*) AS n FROM users WHERE subscription_status IN ('ACTIVE', 'TRIALING')"
         ).fetchone()["n"]
         verified = conn.execute("SELECT COUNT(*) AS n FROM users WHERE email_verified = 1").fetchone()["n"]
         week_ago_dt = datetime.now(timezone.utc) - timedelta(days=7)
