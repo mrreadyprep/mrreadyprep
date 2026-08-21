@@ -7,6 +7,7 @@ from pydantic import BaseModel, EmailStr
 from typing import List, Optional
 import base64
 import hashlib
+import html as _html
 import hmac
 import json
 import os
@@ -294,13 +295,54 @@ AUDIO_BASE_URL = os.environ.get("AUDIO_BASE_URL", f"{BACKEND_PUBLIC_URL}/audio")
 # which it already does successfully for every other API call.
 AUDIO_PROXY_BASE_URL = f"{BACKEND_PUBLIC_URL}/audio-proxy"
 
+# /audio-proxy/{path} has no auth/entitlement check of its own -- it just streams whatever path
+# it's given. That's fine as long as the ONLY way to learn a valid path is to already have been
+# sent it in a gated API response (gate_pool/require_premium_pool/the fixed-test premium check all
+# withhold audio_url fields from non-subscribers). But every path is a small, guessable pattern
+# (e.g. "speaking_lr/7/intro.mp3", ids 1-100) -- without this, a free user who simply constructs a
+# locked item's path by hand could stream premium audio directly, bypassing the paywall entirely
+# even though the frontend never showed them that URL. So every audio_url this backend hands out is
+# signed with a short-lived HMAC token tied to that exact path, and the proxy rejects any request
+# whose token doesn't verify -- closing that guessing/enumeration gap without needing to duplicate
+# each pool's gating logic inside the proxy itself.
+AUDIO_URL_TTL_SECONDS = 60 * 60 * 24 * 14  # 14 days: long enough that a slow connection or a
+# student resuming a saved draft days later never hits an expired link, short enough to bound how
+# long a leaked/shared URL keeps working.
+
+def _sign_audio_path(path: str, exp: int) -> str:
+    msg = f"{path}:{exp}".encode()
+    return hmac.new(JWT_SECRET_KEY.encode(), msg, hashlib.sha256).hexdigest()[:32]
+
+def _audio_url(path: str) -> str:
+    """Builds a signed /audio-proxy URL for `path` (e.g. "speaking_lr/7/intro.mp3"). This is the
+    ONLY place that should construct an audio_url/audio_url_intro value -- every call site below
+    goes through this instead of f-stringing AUDIO_PROXY_BASE_URL directly, so signing can't be
+    accidentally skipped for a new pool added later."""
+    exp = int(time.time()) + AUDIO_URL_TTL_SECONDS
+    sig = _sign_audio_path(path, exp)
+    return f"{AUDIO_PROXY_BASE_URL}/{path}?t={exp}.{sig}"
+
+def _verify_audio_token(path: str, token: str) -> bool:
+    if not token or "." not in token:
+        return False
+    exp_str, _, sig = token.partition(".")
+    try:
+        exp = int(exp_str)
+    except ValueError:
+        return False
+    if exp < int(time.time()):
+        return False
+    return hmac.compare_digest(_sign_audio_path(path, exp), sig)
+
 # Streams an audio file server-to-server from the real upstream (AUDIO_BASE_URL, e.g. R2) back
 # to the browser, instead of the browser connecting to that upstream directly (see
 # AUDIO_PROXY_BASE_URL above for why). Forwards the Range header both ways so seeking/progressive
 # playback in <audio> elements keeps working exactly as it did with a direct R2 URL (206 Partial
 # Content, Content-Range, Accept-Ranges).
 @app.get("/audio-proxy/{path:path}")
-def audio_proxy(path: str, request: Request):
+def audio_proxy(path: str, request: Request, t: str = ""):
+    if not _verify_audio_token(path, t):
+        raise HTTPException(status_code=403, detail="Invalid or expired audio link")
     upstream_url = f"{AUDIO_BASE_URL}/{path}"
     fwd_headers = {}
     range_header = request.headers.get("range")
@@ -343,7 +385,7 @@ def _fix_audio_urls(obj):
     if isinstance(obj, str):
         for prefix in _LEGACY_AUDIO_PREFIXES:
             if obj.startswith(prefix):
-                return f"{AUDIO_PROXY_BASE_URL}/{obj[len(prefix):]}"
+                return _audio_url(obj[len(prefix):])
         return obj
     if isinstance(obj, list):
         return [_fix_audio_urls(v) for v in obj]
@@ -921,7 +963,7 @@ def send_practice_reminder_email(to_email: str, username: str):
     _send_transactional_email(
         to_email,
         "Haven't practiced today? A few minutes goes a long way",
-        f"<p>Hi {username or 'there'},</p>"
+        f"<p>Hi {_html.escape(username) if username else 'there'},</p>"
         f"<p>You haven't done any TOEFL practice on mrreadyprep in the last day. Even a single "
         f"5-minute exercise keeps your streak going and your skills sharp.</p>"
         f"<p><a href=\"{FRONTEND_PUBLIC_URL}\">Open mrreadyprep and practice now</a></p>"
@@ -1000,7 +1042,10 @@ def compute_streak_and_week_activity(conn, user_id: int):
     # so the isoformat() comparisons below work the same regardless of which engine answered.
     active_dates = {str(row["d"]) for row in rows if row["d"]}
 
-    today = datetime.now().date()
+    # Every timestamp this app writes is UTC (see the note on _parse_db_datetime) -- use UTC here
+    # too, not the server process's local time, so "today"/the streak boundary can't drift by a
+    # day depending on which timezone the deployed container happens to be running in.
+    today = datetime.now(timezone.utc).date()
     monday = today - timedelta(days=today.weekday())
     week_activity = [
         (monday + timedelta(days=i)).isoformat() in active_dates
@@ -1369,7 +1414,15 @@ def google_login(data: GoogleLoginRequest):
             data.id_token, google_auth_requests.Request(), GOOGLE_CLIENT_ID
         )
     except ValueError:
+        # The token itself is malformed/expired/wrong-audience -- genuinely invalid credential.
         raise HTTPException(status_code=401, detail="Invalid Google credential")
+    except Exception as e:
+        # verify_oauth2_token fetches Google's public certs over the network on every call; a
+        # transient DNS/connection failure there raises a transport-layer exception (not a
+        # ValueError), which used to propagate as an opaque, unlogged 500 instead of a clean,
+        # retryable error for what's usually just a momentary network blip.
+        print(f"[google sign-in] token verification failed (non-credential error): {e!r}", flush=True)
+        raise HTTPException(status_code=503, detail="Could not verify Google credential right now -- please try again")
 
     google_id = payload.get("sub")
     email = (payload.get("email") or "").strip().lower()
@@ -1751,11 +1804,23 @@ async def paddle_webhook(request: Request):
         # binds it. Every later event (updated/canceled/past_due) is matched by subscription_id
         # alone, same as the iyzico webhook matched on subscriptionReferenceCode before it.
         if event_type == "subscription.created" and user_id:
+            try:
+                user_id_int = int(user_id)
+            except (TypeError, ValueError):
+                print(f"[paddle webhook] subscription.created with non-numeric custom_data.user_id={user_id!r} -- subscription_id={subscription_id}. Cannot link to a user; premium was NOT granted.", flush=True)
+                raise HTTPException(status_code=400, detail="Invalid custom_data.user_id on subscription.created")
             cur = conn.execute(
                 "UPDATE users SET paddle_customer_id = ?, paddle_subscription_id = ?, "
                 "subscription_status = ?, subscription_current_period_end = ? WHERE id = ?",
-                (customer_id, subscription_id, status, period_end, int(user_id)),
+                (customer_id, subscription_id, status, period_end, user_id_int),
             )
+            if cur.rowcount == 0:
+                # user_id was present and numeric but didn't match any real account (stale/deleted
+                # user, bad data). Same failure mode the "missing custom_data" branch below already
+                # guards against -- the student was charged but premium was never actually granted,
+                # so this needs the same loud, logged failure instead of a silent 200 to Paddle.
+                print(f"[paddle webhook] subscription.created: custom_data.user_id={user_id_int} matched no user -- subscription_id={subscription_id} customer_id={customer_id}. Premium was NOT granted.", flush=True)
+                raise HTTPException(status_code=400, detail="custom_data.user_id did not match any user")
         elif event_type == "subscription.created":
             # custom_data.user_id was missing on the very first event for this subscription --
             # e.g. a subscription created outside our own checkout flow. There's no row with this
@@ -2272,9 +2337,9 @@ def get_mock_disc(user=Depends(get_current_user_optional)):
 def _build_mock_speaking_lr():
     data = _load_json_pool(MOCK_SPEAKING_LR_FILE)
     for s in data:
-        s["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_lr/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = _audio_url(f"mock_speaking_lr/{s['id']}/intro.mp3")
         for sent in s["sentences"]:
-            sent["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_lr/{s['id']}/{sent['id']}.mp3"
+            sent["audio_url"] = _audio_url(f"mock_speaking_lr/{s['id']}/{sent['id']}.mp3")
     return data
 
 @app.get("/api/mock/listen-and-repeat")
@@ -2285,9 +2350,9 @@ def get_mock_speaking_lr(user=Depends(get_current_user_optional)):
 def _build_mock_speaking_interview():
     data = _load_json_pool(MOCK_SPEAKING_INTERVIEW_FILE)
     for s in data:
-        s["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_interview/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = _audio_url(f"mock_speaking_interview/{s['id']}/intro.mp3")
         for q in s["questions"]:
-            q["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_interview/{s['id']}/{q['id']}.mp3"
+            q["audio_url"] = _audio_url(f"mock_speaking_interview/{s['id']}/{q['id']}.mp3")
     return data
 
 @app.get("/api/mock/interview")
@@ -2382,13 +2447,13 @@ def _build_fixed_test(path):
     # above) since their mp3s live under the ORIGINAL shared pool's id-keyed folders — inject
     # the URLs here exactly like the dynamic-pool endpoints do.
     lr = data["speaking"]["lr"]
-    lr["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_lr/{lr['id']}/intro.mp3"
+    lr["audio_url_intro"] = _audio_url(f"mock_speaking_lr/{lr['id']}/intro.mp3")
     for sent in lr["sentences"]:
-        sent["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_lr/{lr['id']}/{sent['id']}.mp3"
+        sent["audio_url"] = _audio_url(f"mock_speaking_lr/{lr['id']}/{sent['id']}.mp3")
     interview = data["speaking"]["interview"]
-    interview["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_interview/{interview['id']}/intro.mp3"
+    interview["audio_url_intro"] = _audio_url(f"mock_speaking_interview/{interview['id']}/intro.mp3")
     for q in interview["questions"]:
-        q["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/mock_speaking_interview/{interview['id']}/{q['id']}.mp3"
+        q["audio_url"] = _audio_url(f"mock_speaking_interview/{interview['id']}/{q['id']}.mp3")
     data["listening"] = _fix_audio_urls(data["listening"])
     return data
 
@@ -2451,9 +2516,9 @@ def get_academic_discussion_list(user=Depends(get_current_user_optional)):
 def _build_speaking_lr():
     data = _load_json_pool(SPEAKING_LR_FILE)
     for s in data:
-        s["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/speaking_lr/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = _audio_url(f"speaking_lr/{s['id']}/intro.mp3")
         for sent in s["sentences"]:
-            sent["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/speaking_lr/{s['id']}/{sent['id']}.mp3"
+            sent["audio_url"] = _audio_url(f"speaking_lr/{s['id']}/{sent['id']}.mp3")
     return data
 
 # --- Speaking: Listen and Repeat ---
@@ -2465,9 +2530,9 @@ def get_speaking_listen_repeat(user=Depends(get_current_user_optional)):
 def _build_speaking_interview():
     data = _load_json_pool(SPEAKING_INTERVIEW_FILE)
     for s in data:
-        s["audio_url_intro"] = f"{AUDIO_PROXY_BASE_URL}/speaking_interview/{s['id']}/intro.mp3"
+        s["audio_url_intro"] = _audio_url(f"speaking_interview/{s['id']}/intro.mp3")
         for q in s["questions"]:
-            q["audio_url"] = f"{AUDIO_PROXY_BASE_URL}/speaking_interview/{s['id']}/{q['id']}.mp3"
+            q["audio_url"] = _audio_url(f"speaking_interview/{s['id']}/{q['id']}.mp3")
     return data
 
 # --- Speaking: Take an Interview ---
