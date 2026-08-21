@@ -433,8 +433,8 @@ def _cached_pool(cache_key, builder):
 class DashboardData(BaseModel):
     username: str
     target_score: float
-    # Per-section goals the student sets for themselves on the Dashboard (Reading/Listening use
-    # the 1.0-6.0 scale, Writing/Speaking use 1.0-5.0 -- see SECTION_BAND_MAX). Optional so older
+    # Per-section goals the student sets for themselves on the Dashboard -- all four sections use
+    # the same unified 1.0-6.0 scale (TOEFL 2026 format; see SECTION_BAND_MAX). Optional so older
     # frontend builds that don't send them yet don't break profile saves.
     reading_target: Optional[float] = None
     listening_target: Optional[float] = None
@@ -663,8 +663,8 @@ def init_db():
             target_score REAL NOT NULL DEFAULT 5.5,
             reading_target REAL NOT NULL DEFAULT 6.0,
             listening_target REAL NOT NULL DEFAULT 6.0,
-            writing_target REAL NOT NULL DEFAULT 5.0,
-            speaking_target REAL NOT NULL DEFAULT 5.0,
+            writing_target REAL NOT NULL DEFAULT 6.0,
+            speaking_target REAL NOT NULL DEFAULT 6.0,
             exam_date TEXT NOT NULL DEFAULT '',
             current_streak INTEGER NOT NULL DEFAULT 0,
             reading_score REAL NOT NULL DEFAULT 5.0,
@@ -687,9 +687,9 @@ def init_db():
     if not _has_column(conn, "users", "listening_target"):
         conn.execute("ALTER TABLE users ADD COLUMN listening_target REAL NOT NULL DEFAULT 6.0")
     if not _has_column(conn, "users", "writing_target"):
-        conn.execute("ALTER TABLE users ADD COLUMN writing_target REAL NOT NULL DEFAULT 5.0")
+        conn.execute("ALTER TABLE users ADD COLUMN writing_target REAL NOT NULL DEFAULT 6.0")
     if not _has_column(conn, "users", "speaking_target"):
-        conn.execute("ALTER TABLE users ADD COLUMN speaking_target REAL NOT NULL DEFAULT 5.0")
+        conn.execute("ALTER TABLE users ADD COLUMN speaking_target REAL NOT NULL DEFAULT 6.0")
     # Paddle abonelik alanları -- subscription_status 'ACTIVE'/'TRIALING' olan kullanıcılar premium
     # içeriğe tam erişime sahip olur (bkz. has_active_subscription()). Diğer her şey (None,
     # 'CANCELED', 'PAST_DUE', 'PAUSED' vb.) erişimsiz sayılır. iyzico_* kolonları eski entegrasyondan
@@ -2076,27 +2076,26 @@ SECTION_MOCK_CATEGORY = {
     "writing": "mock_writing",
     "speaking": "mock_speaking",
 }
-# TOEFL 2026 format: Reading and Listening are reported on a 1.0-6.0 scale, Writing and Speaking
-# on a narrower 1.0-5.0 scale. Mirrors SECTION_BAND_MAX in the frontend (App.jsx).
+# TOEFL 2026 format: all four sections (Reading, Listening, Writing, Speaking) are reported on
+# the same unified 1.0-6.0 scale. Mirrors SECTION_BAND_MAX in the frontend (App.jsx).
 SECTION_BAND_MAX = {
     "reading": 6.0,
     "listening": 6.0,
-    "writing": 5.0,
-    "speaking": 5.0,
+    "writing": 6.0,
+    "speaking": 6.0,
 }
 
 def compute_section_band(conn, user_id, section):
-    """Computes this section's TOEFL-style band (nearest 0.5, on that section's own 1.0-6.0 or
-    1.0-5.0 scale) as the average of that section's PARTS -- Reading, for example, is Complete
-    the Words, Read in Daily Life, Academic Passage, and the Mock Reading module, each its own
-    part. Each part's own score is a true question-solved average (SUM of points earned / SUM of
-    points possible across every attempt of that part, so a 20-question exercise counts more than
-    a 5-question one WITHIN that part). Those part averages are then combined with EQUAL weight
-    across only the parts the student has actually attempted -- an untouched part is skipped
-    entirely rather than dragging the average down to 0%, so getting a perfect score on the one
-    part you've tried shows as a high score right away, even before you've touched the section's
-    other parts.
-    Returns 1.0 (the lowest possible band on any TOEFL section scale) if the student hasn't
+    """Computes this section's TOEFL-style band (nearest 0.5, on the unified 1.0-6.0 scale) as
+    the average of that section's PARTS -- Reading, for example, is Complete the Words, Read in
+    Daily Life, Academic Passage, and the Mock Reading module, each its own part. Each part's own
+    score is a true question-solved average (SUM of points earned / SUM of points possible across
+    every attempt of that part, so a 20-question exercise counts more than a 5-question one
+    WITHIN that part). Those part averages are then combined with EQUAL weight across only the
+    parts the student has actually attempted -- an untouched part is skipped entirely rather than
+    dragging the average down to 0%, so getting a perfect score on the one part you've tried shows
+    as a high score right away, even before you've touched the section's other parts.
+    Returns 1.0 (the lowest possible band on the TOEFL 1.0-6.0 scale) if the student hasn't
     attempted a single part of this section yet, so an untouched section reads as "not started"
     rather than showing an artificially inflated placeholder score."""
     cats = SECTION_PRACTICE_CATEGORIES[section] + [SECTION_MOCK_CATEGORY[section]]

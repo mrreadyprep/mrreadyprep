@@ -3707,9 +3707,13 @@ const EMAIL_ANALYZE_DELAY_MS = 1800 // simulated "AI is grading" delay (well und
 // syntax/vocabulary, social/discourse conventions) and note the task's own "at least 100 words"
 // guidance as the practical threshold for full elaboration credit. Wording below is
 // paraphrased, not copied from the ETS document.
-// Maps a 0-1 quality ratio to a 1-5 band, used by the per-dimension rubric breakdown below.
+// Maps a 0-1 quality ratio to a 1-6 band (TOEFL 2026 format's unified scale), used by the
+// per-dimension rubric breakdown below. Only used by Writing's per-dimension helpers (Email/
+// Discussion) -- Reading/Listening compute their 1-6 bands independently via BAND_TABLES/
+// pctToBand below, so widening this function's top end doesn't touch their scoring at all.
 function bandFromRatio(r) {
-  if (r >= 0.85) return 5
+  if (r >= 0.92) return 6
+  if (r >= 0.8) return 5
   if (r >= 0.65) return 4
   if (r >= 0.45) return 3
   if (r >= 0.25) return 2
@@ -3769,7 +3773,7 @@ function estimateGrammarDimension(trimmed, sentencesIn) {
     capRatio * 0.4 + (endsWithPunct ? 0.2 : 0) + (runOns === 0 ? 0.2 : 0) + (fragments === 0 ? 0.2 : 0)
   ))
   const score = bandFromRatio(ratio)
-  const note = score >= 4
+  const note = score >= 5
     ? 'Sentences are capitalized and punctuated consistently, with no run-ons or fragments spotted.'
     : `Watch for ${capRatio < 0.9 ? 'inconsistent capitalization, ' : ''}${!endsWithPunct ? 'missing end punctuation, ' : ''}${runOns ? 'overly long run-on sentences, ' : ''}${fragments ? 'sentence fragments' : ''}`.replace(/,\s*$/, '.') || 'Proofread carefully for small slips.'
   return { label: 'Grammar & Mechanics', score, note }
@@ -3780,7 +3784,7 @@ function estimateVocabDimension(words, diversity) {
   const avgWordLen = wordLens.length ? wordLens.reduce((a, b) => a + b, 0) / wordLens.length : 0
   const ratio = Math.max(0, Math.min(1, (diversity - 0.35) / 0.35 * 0.65 + (avgWordLen - 3.8) / 1.8 * 0.35))
   const score = bandFromRatio(ratio)
-  const note = score >= 4
+  const note = score >= 5
     ? `Good lexical variety (${Math.round(diversity * 100)}% unique words) and precise word choice.`
     : `Try using a wider range of words instead of repeating the same ones — currently ${Math.round(diversity * 100)}% unique words.`
   return { label: 'Vocabulary & Word Choice', score, note }
@@ -3796,7 +3800,7 @@ function estimateFluencyDimension(lower, sentences, wordCount) {
     linkerRatio * 0.4 + (meanLen >= 8 && meanLen <= 26 ? 0.35 : 0.1) + (variance >= 2 ? 0.25 : 0.1)
   ))
   const score = bandFromRatio(ratio)
-  const note = score >= 4
+  const note = score >= 5
     ? 'Ideas flow naturally with good use of linking words and varied sentence length.'
     : 'Connect your ideas more smoothly with linking words (e.g., "however", "as a result") and vary your sentence length.'
   return { label: 'Fluency & Coherence', score, note }
@@ -3814,7 +3818,7 @@ function estimateElaborationDimension(wordCount, lower) {
   const hasReasoning = REASONING_MARKERS_RE.test(lower)
   const ratio = Math.max(0, Math.min(1, lengthRatio * 0.6 + (hasReasoning ? 0.4 : 0)))
   const score = bandFromRatio(ratio)
-  const note = score >= 4
+  const note = score >= 5
     ? 'Well-developed response with enough length and supporting reasoning.'
     : `Add more development${wordCount < 100 ? ` — currently just ${wordCount} words (aim for 100+)` : ''}${!hasReasoning ? `${wordCount < 100 ? ', and' : ' —'} explain your reasoning (e.g., "...because...")` : ''}.`
   return { label: 'Development & Elaboration', score, note }
@@ -3823,15 +3827,15 @@ function estimateElaborationDimension(wordCount, lower) {
 // Small presentational bar used to render each rubric dimension's score + note. Reused by the
 // Write an Email and Academic Discussion "done" screens as well as the Mock Test review list.
 function ScoreDimensionBar({ label, score, note }) {
-  const color = score >= 4 ? '#2ac56c' : score >= 3 ? '#e07b00' : '#d94040'
+  const color = score >= 5 ? '#2ac56c' : score >= 4 ? '#e07b00' : '#d94040'
   return (
     <div style={{ marginBottom: '10px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '4px' }}>
         <span style={{ fontSize: '12px', fontWeight: '700', color: '#1a1a1a' }}>{label}</span>
-        <span style={{ fontSize: '12px', fontWeight: '700', color }}>{score}/5</span>
+        <span style={{ fontSize: '12px', fontWeight: '700', color }}>{score}/6</span>
       </div>
       <div style={{ height: '6px', borderRadius: '3px', background: '#eef0f4', overflow: 'hidden' }}>
-        <div style={{ height: '100%', width: `${(score / 5) * 100}%`, background: color, borderRadius: '3px' }} />
+        <div style={{ height: '100%', width: `${(score / 6) * 100}%`, background: color, borderRadius: '3px' }} />
       </div>
       {note && <div style={{ fontSize: '12px', color: '#616473', marginTop: '4px', lineHeight: '1.5' }}>{note}</div>}
     </div>
@@ -3914,7 +3918,7 @@ function evaluateEmailResponse(text, tasks) {
     },
     {
       label: 'Organization & Format', score: orgScore,
-      note: orgScore >= 4 ? 'Clear email structure with greeting, body, and closing in the right places.'
+      note: orgScore >= 5 ? 'Clear email structure with greeting, body, and closing in the right places.'
         : `Strengthen the structure — ${!hasGreeting ? 'add a greeting, ' : ''}${!hasClosing ? 'add a closing, ' : ''}${!hasBody ? 'separate your ideas into clear parts' : ''}`.replace(/,\s*$/, '.') || 'Make the structure clearer.',
     },
     elabDim,
@@ -3922,7 +3926,7 @@ function evaluateEmailResponse(text, tasks) {
     vocabDim,
     {
       label: 'Style & Tone', score: styleScore,
-      note: styleScore >= 4 ? 'Polite, appropriately formal register throughout.' : 'Use more polite/formal phrasing (e.g., "Could you...", "I would appreciate...") and vary your sentence patterns.',
+      note: styleScore >= 5 ? 'Polite, appropriately formal register throughout.' : 'Use more polite/formal phrasing (e.g., "Could you...", "I would appreciate...") and vary your sentence patterns.',
     },
     fluencyDim,
   ]
@@ -3931,11 +3935,11 @@ function evaluateEmailResponse(text, tasks) {
   // most (matching ETS's "elaboration that supports the communicative purpose" as the primary
   // rubric line), grammar next, then organization/vocabulary/style/fluency.
   const weighted = taskScore * 0.2 + elabDim.score * 0.2 + orgScore * 0.15 + grammarDim.score * 0.15 + vocabDim.score * 0.1 + styleScore * 0.1 + fluencyDim.score * 0.1
-  // Round to the nearest half-point rather than a whole band: a weighted average of 4.65 (say,
-  // two dimensions at 4/5 and the rest at 5/5) shows as 4.5/5, which is more honest than either
-  // flooring to 4 (undersells the mostly-5 breakdown) or rounding up to 5 (overstates it as if
+  // Round to the nearest half-point rather than a whole band: a weighted average of 5.65 (say,
+  // two dimensions at 5/6 and the rest at 6/6) shows as 5.5/6, which is more honest than either
+  // flooring to 5 (undersells the mostly-6 breakdown) or rounding up to 6 (overstates it as if
   // every dimension were maxed out).
-  let score = Math.max(1, Math.min(5, Math.round(weighted * 2) / 2))
+  let score = Math.max(1, Math.min(6, Math.round(weighted * 2) / 2))
   // Elaboration acts as a ceiling on top of the weighted average, not just one input among many:
   // a response that's grammatically clean but barely develops any point (one bare sentence per
   // bullet, no reasoning) shouldn't be able to average its way to a high score just because the
@@ -3945,8 +3949,8 @@ function evaluateEmailResponse(text, tasks) {
   if (wordCount < 15 || taskRatio === 0) {
     // Unsuccessful override: telegraphic, minimal/no elaboration, or entirely off-task. This
     // used to only touch the headline `score`, leaving the per-dimension breakdown computed
-    // above untouched -- a five-word response could still show "Grammar 4/5, Vocabulary 4/5"
-    // right next to an overall "1/5, Unsuccessful", which reads as a contradiction (and makes
+    // above untouched -- a five-word response could still show "Grammar 4/6, Vocabulary 4/6"
+    // right next to an overall "1/6, Unsuccessful", which reads as a contradiction (and makes
     // it look like a bug) rather than the "too short/off-task to grade the language itself"
     // situation it actually is. Cap every displayed dimension down to match, the same way
     // elaboration already caps the headline score above.
@@ -3955,7 +3959,8 @@ function evaluateEmailResponse(text, tasks) {
   }
 
   const summary =
-    score >= 5 ? 'Fully successful: your message is effective and clearly expressed, with consistent facility in the use of language.'
+    score >= 6 ? 'Fully successful: your message is effective and clearly expressed, with consistent facility in the use of language.'
+    : score >= 5 ? 'Very successful: your message is effective and clearly expressed, with just minor room to reach full marks.'
     : score >= 4 ? 'Generally successful: your message is mostly effective and easily understood.'
     : score >= 3 ? 'Partially successful: the task is generally accomplished, but limitations in language may prevent parts of the message from being fully clear.'
     : score >= 2 ? 'Mostly unsuccessful: your attempt addresses the task, but it is mostly ineffective and may be hard to interpret.'
@@ -4011,13 +4016,13 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
     analyzeTimeoutRef.current = setTimeout(() => {
       const res = evaluateEmailResponse(text, item.tasks)
       if (mockMode) {
-        onComplete(res.score, { prompt: item.scenario, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
+        onComplete(res.score, { prompt: item.scenario, given: text || '(no answer)', score: res.score, maxScore: 6, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
         return
       }
       // Save the instant grading finishes, not when the student later clicks "Back to Practice
       // List" -- previously the score (and the written response itself) only persisted if that
       // exact button was clicked, so leaving via the sidebar or a browser back lost everything.
-      saveResult('email', item.id ?? index, res.score, 5, `Write an Email #${index + 1}`, text)
+      saveResult('email', item.id ?? index, res.score, 6, `Write an Email #${index + 1}`, text)
       clearDraft('email', item.id ?? index) // now graded, no longer an in-progress draft
       setResult(res)
       setPhase('done')
@@ -4111,7 +4116,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
-      timeText={phase === 'writing' ? formatTime(timeLeft) : (phase === 'analyzing' ? 'Analyzing…' : `${result.score} / 5`)}
+      timeText={phase === 'writing' ? formatTime(timeLeft) : (phase === 'analyzing' ? 'Analyzing…' : `${result.score} / 6`)}
       lowTime={phase === 'writing' && isLowTime}
       contentStyle={{ display: 'flex', flexDirection: 'column' }}
     >
@@ -4250,7 +4255,7 @@ function WriteEmail({ onBack }) {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {i + 1}</div>
-                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5</span>}
+                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 4.2 ? '#2ac56c' : '#e07b00', background: score >= 4.2 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/6</span>}
                   </div>
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `To: ${it.recipient} · ${timeLabel} time limit`}</div>
                 </div>
@@ -4359,12 +4364,12 @@ function evaluateDiscussionResponse(text, classmates) {
   const dimensions = [
     {
       label: 'Content & Relevance', score: contentScore,
-      note: contentScore >= 4 ? 'Your opinion is clear, well-reasoned, and backed by an example.'
+      note: contentScore >= 5 ? 'Your opinion is clear, well-reasoned, and backed by an example.'
         : `Strengthen your point by ${!hasOpinion ? 'stating a clear opinion, ' : ''}${!hasReason ? 'explaining your reasoning, ' : ''}${!hasExample ? 'adding a concrete example' : ''}`.replace(/,\s*$/, '.') || 'developing your point further.',
     },
     {
       label: 'Organization & Engagement', score: orgScore,
-      note: orgScore >= 4 ? 'Well-organized post that directly engages with the discussion.' : 'Reference a classmate by name and build your response around their point for a more organized, engaged contribution.',
+      note: orgScore >= 5 ? 'Well-organized post that directly engages with the discussion.' : 'Reference a classmate by name and build your response around their point for a more organized, engaged contribution.',
     },
     elabDim,
     grammarDim,
@@ -4376,24 +4381,25 @@ function evaluateDiscussionResponse(text, classmates) {
   // (matching ETS's "relevant, well-elaborated contribution" as the primary rubric line), then
   // organization/engagement, grammar, vocabulary, and fluency.
   const weighted = contentScore * 0.2 + elabDim.score * 0.2 + orgScore * 0.15 + grammarDim.score * 0.15 + vocabDim.score * 0.15 + fluencyDim.score * 0.15
-  // Round to the nearest half-point rather than a whole band: a weighted average of 4.65 (say,
-  // two dimensions at 4/5 and the rest at 5/5) shows as 4.5/5, which is more honest than either
-  // flooring to 4 (undersells the mostly-5 breakdown) or rounding up to 5 (overstates it as if
+  // Round to the nearest half-point rather than a whole band: a weighted average of 5.65 (say,
+  // two dimensions at 5/6 and the rest at 6/6) shows as 5.5/6, which is more honest than either
+  // flooring to 5 (undersells the mostly-6 breakdown) or rounding up to 6 (overstates it as if
   // every dimension were maxed out).
-  let score = Math.max(1, Math.min(5, Math.round(weighted * 2) / 2))
+  let score = Math.max(1, Math.min(6, Math.round(weighted * 2) / 2))
   // Elaboration acts as a ceiling on top of the weighted average, not just one input among many --
   // see evaluateEmailResponse for the same logic and rationale.
   score = Math.min(score, elabDim.score + 1)
   if (wordCount < 15 || (!hasOpinion && !engaged)) {
     // Unsuccessful override: few or no coherent ideas connecting to the discussion. Same fix as
     // evaluateEmailResponse -- without this, the breakdown could still show high dimension
-    // scores right next to an overall "1/5, Unsuccessful", which looks like a scoring bug.
+    // scores right next to an overall "1/6, Unsuccessful", which looks like a scoring bug.
     score = 1
     dimensions.forEach(d => { d.score = Math.min(d.score, 2) })
   }
 
   const summary =
-    score >= 5 ? 'Fully successful: your post is a relevant, clearly expressed contribution with consistent facility in the use of language.'
+    score >= 6 ? 'Fully successful: your post is a relevant, clearly expressed contribution with consistent facility in the use of language.'
+    : score >= 5 ? 'Very successful: your post is a relevant, clearly expressed contribution, with just minor room to reach full marks.'
     : score >= 4 ? 'Generally successful: your post is a relevant contribution and your ideas are easily understood.'
     : score >= 3 ? 'Partially successful: your post is mostly relevant and understandable, with some limitations in language.'
     : score >= 2 ? 'Mostly unsuccessful: your attempt to contribute is reflected, but limitations in language may make ideas hard to follow.'
@@ -4437,13 +4443,13 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
     analyzeTimeoutRef.current = setTimeout(() => {
       const res = evaluateDiscussionResponse(text, item.classmates)
       if (mockMode) {
-        onComplete(res.score, { prompt: item.prompt, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
+        onComplete(res.score, { prompt: item.prompt, given: text || '(no answer)', score: res.score, maxScore: 6, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
         return
       }
       // Save the instant grading finishes, not when the student later clicks "Back to Practice
       // List" -- previously the score (and the written response itself) only persisted if that
       // exact button was clicked, so leaving via the sidebar or a browser back lost everything.
-      saveResult('disc', item.id ?? index, res.score, 5, `Academic Discussion #${index + 1}`, text)
+      saveResult('disc', item.id ?? index, res.score, 6, `Academic Discussion #${index + 1}`, text)
       clearDraft('disc', item.id ?? index) // now graded, no longer an in-progress draft
       setResult(res)
       setPhase('done')
@@ -4531,7 +4537,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
-      timeText={phase === 'writing' ? formatTime(timeLeft) : (phase === 'analyzing' ? 'Analyzing…' : `${result.score} / 5`)}
+      timeText={phase === 'writing' ? formatTime(timeLeft) : (phase === 'analyzing' ? 'Analyzing…' : `${result.score} / 6`)}
       lowTime={phase === 'writing' && isLowTime}
       contentStyle={{ display: 'flex', flexDirection: 'column' }}
     >
@@ -4682,7 +4688,7 @@ function AcademicDiscussion({ onBack }) {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {i + 1}</div>
-                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5</span>}
+                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 4.2 ? '#2ac56c' : '#e07b00', background: score >= 4.2 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/6</span>}
                   </div>
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `Topic: ${it.subject} · ${timeLabel} time limit`}</div>
                 </div>
@@ -4724,21 +4730,23 @@ function wordSimilarity(a, b) {
 }
 
 // Scoring aligned to ETS's official public "Listen and Repeat" scoring guide (ETS Speaking
-// Scoring Guide, ets.org/pdfs/toefl/speaking-rubrics.pdf), which uses a holistic 0-5 band
-// scale (not additive points): 5 = exact, fully intelligible repetition; 4 = meaning captured
-// with only minor word/grammar differences that don't change the original meaning; 3 =
-// essentially a full response but meaning not fully accurate (several content/function words
-// changed or missing); 2 = a significant part of the prompt missing and/or highly inaccurate,
-// not a self-standing sentence; 1 = very little of the prompt captured, largely unintelligible;
-// 0 = no response, entirely unintelligible, or unconnected to the prompt. Cross-checked against
-// TestGlider/MySpeakingScore's public description of the same task, which summarizes the
-// rubric's three dimensions as fluency, intelligibility, and repeat accuracy, and notes that
-// minor function-word shifts are acceptable at the 4 band while missing content, unintelligible
-// speech, or a fragment (instead of a full sentence) are what push a response down. Word-overlap
-// ratio is used as the measurable proxy for repeat accuracy, and a direct check for missing
-// content words is used for completeness, since pronunciation/intonation/fluency can't be
-// judged from a text transcript alone. Wording below is paraphrased, not copied from the ETS
-// document.
+// Scoring Guide, ets.org/pdfs/toefl/speaking-rubrics.pdf), adapted to the TOEFL 2026 format's
+// unified 1-6 band scale (ets.org/toefl/institutions/ibt/score-scale-update.html) rather than
+// the legacy 0-5 scale the PDF documents: 6 = exact, fully intelligible repetition; 5 = a
+// near-exact repetition with only trivial differences; 4 = meaning captured with only minor
+// word/grammar differences that don't change the original meaning; 3 = essentially a full
+// response but meaning not fully accurate (several content/function words changed or missing);
+// 2 = a significant part of the prompt missing and/or highly inaccurate, not a self-standing
+// sentence; 1 = very little of the prompt captured, largely unintelligible (the scale's floor
+// for any actual attempt); 0 is reserved separately (below) for no response at all. Cross-
+// checked against TestGlider/MySpeakingScore's public description of the same task, which
+// summarizes the rubric's three dimensions as fluency, intelligibility, and repeat accuracy,
+// and notes that minor function-word shifts are acceptable at the 4 band while missing content,
+// unintelligible speech, or a fragment (instead of a full sentence) are what push a response
+// down. Word-overlap ratio is used as the measurable proxy for repeat accuracy, and a direct
+// check for missing content words is used for completeness, since pronunciation/intonation/
+// fluency can't be judged from a text transcript alone. Wording below is paraphrased, not
+// copied from the ETS document.
 function evaluateRepeatResponse(transcript, target) {
   const targetWords = normalizeWords(target)
   const saidWords = normalizeWords(transcript)
@@ -4752,19 +4760,19 @@ function evaluateRepeatResponse(transcript, target) {
   const exact = saidWords.join(' ') === targetWords.join(' ')
   const ratio = wordSimilarity(targetWords, saidWords)
   const score =
-    exact ? 5
-    : ratio >= 0.85 ? 4
-    : ratio >= 0.65 ? 3
-    : ratio >= 0.4 ? 2
-    : ratio >= 0.15 ? 1
-    : 0
+    exact ? 6
+    : ratio >= 0.85 ? 5
+    : ratio >= 0.65 ? 4
+    : ratio >= 0.4 ? 3
+    : ratio >= 0.15 ? 2
+    : 1
   const summary =
-    score === 5 ? 'Exact repetition — fully intelligible.'
+    score === 6 ? 'Exact repetition — fully intelligible.'
+    : score === 5 ? 'Near-exact repetition, with only trivial differences from the prompt.'
     : score === 4 ? 'The meaning is captured, with only minor word or grammar differences from the prompt.'
     : score === 3 ? 'Essentially a full response, but it does not fully capture the original meaning — several words were changed or missing.'
     : score === 2 ? 'A significant part of the sentence is missing and/or the response is largely inaccurate.'
-    : score === 1 ? 'Very little of the sentence was captured — the response is mostly unintelligible.'
-    : 'No usable response was captured — try speaking clearly into the microphone.'
+    : 'Very little of the sentence was captured — the response is mostly unintelligible.'
   const missing = targetWords.filter(w => !saidWords.includes(w))
   const criteria = [
     {
@@ -4782,17 +4790,19 @@ function evaluateRepeatResponse(transcript, target) {
 }
 
 // Scoring aligned to ETS's official public "Take an Interview" scoring guide (ETS Speaking
-// Scoring Guide, ets.org/pdfs/toefl/speaking-rubrics.pdf), which is a holistic 0-5 band scale
-// keyed to four named dimensions: (1) how fully/relevantly the question is addressed and
-// elaborated, (2) speaking pace/pausing, (3) pronunciation/intonation, and (4) the range and
-// accuracy of grammar and vocabulary. Cross-checked against Magoosh's and TestGlider/
-// MySpeakingScore's public descriptions of the same rubric, which name the same four
-// dimensions (fluency, intelligibility/pronunciation, coherence/relevance, grammar-vocabulary
-// range). Since fluency, pausing, and pronunciation can't be measured from a text transcript,
-// this uses the text-derivable proxies the rubric itself points to for the other two
-// dimensions: topic relevance, presence of supporting reasons, elaboration length, and lexical
-// diversity as a stand-in for vocabulary/grammar range. Wording below is paraphrased, not
-// copied from the ETS document.
+// Scoring Guide, ets.org/pdfs/toefl/speaking-rubrics.pdf), adapted to the TOEFL 2026 format's
+// unified 1-6 band scale (ets.org/toefl/institutions/ibt/score-scale-update.html) rather than
+// the legacy 0-5 scale the PDF documents. The rubric is keyed to four named dimensions: (1) how
+// fully/relevantly the question is addressed and elaborated, (2) speaking pace/pausing, (3)
+// pronunciation/intonation, and (4) the range and accuracy of grammar and vocabulary. Cross-
+// checked against Magoosh's and TestGlider/MySpeakingScore's public descriptions of the same
+// rubric, which name the same four dimensions (fluency, intelligibility/pronunciation,
+// coherence/relevance, grammar-vocabulary range). Since fluency, pausing, and pronunciation
+// can't be measured from a text transcript, this uses the text-derivable proxies the rubric
+// itself points to for the other two dimensions: topic relevance, presence of supporting
+// reasons, elaboration length, and lexical diversity as a stand-in for vocabulary/grammar
+// range. Any real (non-blank) attempt floors at 1; 0 is reserved separately (above) for no
+// response at all. Wording below is paraphrased, not copied from the ETS document.
 function evaluateInterviewResponse(transcript, questionText) {
   const words = normalizeWords(transcript)
   const wordCount = words.length
@@ -4848,12 +4858,15 @@ function evaluateInterviewResponse(transcript, questionText) {
     score = 3
   } else if (wordCount < 65 || diversity < 0.5) {
     score = 4
-  } else {
+  } else if (wordCount < 85 || diversity < 0.6) {
     score = 5
+  } else {
+    score = 6
   }
 
   const summary =
-    score === 5 ? 'Fully successful: the response fully addresses the question and is clear and well elaborated.'
+    score === 6 ? 'Fully successful: the response fully addresses the question and is clear, well elaborated, and uses a wide range of vocabulary.'
+    : score === 5 ? 'Very successful: the response fully addresses the question and is clear and well elaborated.'
     : score === 4 ? 'Generally successful: the response addresses the question and is reasonably clear.'
     : score === 3 ? 'Partially successful: the response addresses the question but with limited elaboration or clarity.'
     : score === 2 ? 'Mostly unsuccessful: an attempt is made, but it is not well supported.'
@@ -6043,7 +6056,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
           onComplete(finalAnswers, finalAnswers.map((a, i) => ({
             prompt: item.sentences[i].text,
             given: a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)'),
-            score: a.score, maxScore: 5, feedback: a.summary, criteria: a.criteria,
+            score: a.score, maxScore: 6, feedback: a.summary, criteria: a.criteria,
           })))
         } else {
           setAnswers(finalAnswers)
@@ -6081,7 +6094,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   return (
     <ExamScreen
       topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
-      topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 5</span>}
+      topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 6</span>}
       section="SPEAKING"
       questionLabel={`${item.location} · Sentence ${sentenceIdx + 1} of ${totalQ}`}
       contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
@@ -6139,14 +6152,14 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
             <>
               <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>All sentences complete</div>
               <div style={{ margin: '4px 0 18px' }}>
-                <span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c', background: '#edfbf3', padding: '6px 16px', borderRadius: '999px' }}>Avg {avgLabel} / 5</span>
+                <span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c', background: '#edfbf3', padding: '6px 16px', borderRadius: '999px' }}>Avg {avgLabel} / 6</span>
               </div>
               <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px', maxHeight: '380px', overflowY: 'auto' }}>
                 {answers.map((a, i) => (
                   <div key={i} style={{ background: '#f4f6fa', borderRadius: '8px', padding: '14px 16px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                       <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase' }}>Sentence {i + 1}</span>
-                      <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 5</span>
+                      <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 6</span>
                     </div>
                     <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>Target:</b> {a.target}</div>
                     <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)')}</div>
@@ -6196,7 +6209,7 @@ function ListenRepeat({ onBack }) {
       onComplete={(answers) => {
         const avg = answers.reduce((s, a) => s + a.score, 0) / answers.length
         const rounded = Math.round(avg * 10) / 10
-        saveResult('speaking_lr', items[activeIdx].id ?? activeIdx, rounded, 5, `Listen and Repeat #${activeIdx + 1}`)
+        saveResult('speaking_lr', items[activeIdx].id ?? activeIdx, rounded, 6, `Listen and Repeat #${activeIdx + 1}`)
         setScores(prev => ({ ...prev, [activeIdx]: rounded }))
         setActiveIdx(null)
       }} />
@@ -6213,7 +6226,7 @@ function ListenRepeat({ onBack }) {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>{it.location}</div>
-                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5 avg</span>}
+                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 4.2 ? '#2ac56c' : '#e07b00', background: score >= 4.2 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/6 avg</span>}
                   </div>
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${it.sentences.length} sentences`}</div>
                 </div>
@@ -6325,7 +6338,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
           onComplete(finalAnswers, finalAnswers.map((a, i) => ({
             prompt: item.questions[i].text,
             given: a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)'),
-            score: a.score, maxScore: 5, feedback: a.summary, criteria: a.criteria,
+            score: a.score, maxScore: 6, feedback: a.summary, criteria: a.criteria,
           })))
         } else {
           setAnswers(finalAnswers)
@@ -6360,7 +6373,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
   return (
     <ExamScreen
       topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
-      topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 5</span>}
+      topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 6</span>}
       section="SPEAKING"
       questionLabel={`${item.topic} · Question ${qIdx + 1} of ${totalQ}`}
       contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}
@@ -6407,14 +6420,14 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
             <>
               <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>All questions complete</div>
               <div style={{ margin: '4px 0 18px' }}>
-                <span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c', background: '#edfbf3', padding: '6px 16px', borderRadius: '999px' }}>Avg {avgLabel} / 5</span>
+                <span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c', background: '#edfbf3', padding: '6px 16px', borderRadius: '999px' }}>Avg {avgLabel} / 6</span>
               </div>
               <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '20px', maxHeight: '380px', overflowY: 'auto' }}>
                 {answers.map((a, i) => (
                   <div key={i} style={{ background: '#f4f6fa', borderRadius: '8px', padding: '14px 16px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                       <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase' }}>Question {i + 1}</span>
-                      <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 5</span>
+                      <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 6</span>
                     </div>
                     <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)')}</div>
                     <div style={{ fontSize: '12px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>{a.summary}</div>
@@ -6473,7 +6486,7 @@ function TakeInterview({ onBack }) {
       onComplete={(answers) => {
         const avg = answers.reduce((s, a) => s + a.score, 0) / answers.length
         const rounded = Math.round(avg * 10) / 10
-        saveResult('speaking_interview', items[activeIdx].id ?? activeIdx, rounded, 5, `Take an Interview #${activeIdx + 1}`)
+        saveResult('speaking_interview', items[activeIdx].id ?? activeIdx, rounded, 6, `Take an Interview #${activeIdx + 1}`)
         setScores(prev => ({ ...prev, [activeIdx]: rounded }))
         setActiveIdx(null)
       }} />
@@ -6490,7 +6503,7 @@ function TakeInterview({ onBack }) {
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>{it.topic}</div>
-                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 3.5 ? '#2ac56c' : '#e07b00', background: score >= 3.5 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/5 avg</span>}
+                    {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 4.2 ? '#2ac56c' : '#e07b00', background: score >= 4.2 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/6 avg</span>}
                   </div>
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${it.questions.length} questions · 45s each`}</div>
                 </div>
@@ -6675,26 +6688,30 @@ function markPoolItemsSeen(slots) {
 }
 
 // Section-specific mapping from "percent of points earned" to the TOEFL 2026 format's band
-// scale — Reading and Listening are reported on a 1.0-6.0 scale, Writing and Speaking on a
-// 1.0-5.0 scale. Each table is [minRawOutOf30, band]. Reading/Listening are taken directly from
-// ETS's published 0-30 → 1-6 concordance table (ets.org/toefl/institutions/ibt/score-scale-
-// update.html). Writing/Speaking use the same raw-score thresholds but proportionally rescaled
-// onto the narrower 1.0-5.0 band range this format uses for those two sections.
+// scale — all four sections (Reading, Listening, Writing, Speaking) are reported on the same
+// unified 1.0-6.0 scale (ets.org/toefl/institutions/ibt/score-scale-update.html). Each table is
+// [minRawOutOf30, band]. Reading/Listening are taken directly from ETS's published 0-30 → 1-6
+// concordance table. Writing uses the identical raw-score thresholds as Reading (both have a
+// raw max of 29), and Speaking uses the identical thresholds as Listening (both have a raw max
+// of 28) -- since all four sections now share the same 1-6 band range, there's no longer any
+// need to rescale Writing/Speaking onto a narrower scale the way the pre-2026 format required.
 const BAND_TABLES = {
   reading:   [[29, 6], [27, 5.5], [24, 5], [22, 4.5], [18, 4], [12, 3.5], [6, 3], [4, 2.5], [3, 2], [2, 1.5], [0, 1]],
   listening: [[28, 6], [26, 5.5], [22, 5], [20, 4.5], [17, 4], [13, 3.5], [9, 3], [6, 2.5], [4, 2], [2, 1.5], [0, 1]],
-  writing:   [[29, 5], [27, 4.5], [24, 4], [17, 3.5], [15, 3], [13, 2.5], [11, 2], [3, 1.5], [0, 1]],
-  speaking:  [[28, 5], [27, 4.5], [25, 4], [20, 3.5], [18, 3], [16, 2.5], [13, 2], [5, 1.5], [0, 1]],
+  writing:   [[29, 6], [27, 5.5], [24, 5], [22, 4.5], [18, 4], [12, 3.5], [6, 3], [4, 2.5], [3, 2], [2, 1.5], [0, 1]],
+  speaking:  [[28, 6], [26, 5.5], [22, 5], [20, 4.5], [17, 4], [13, 3.5], [9, 3], [6, 2.5], [4, 2], [2, 1.5], [0, 1]],
 }
 // Top of each section's band scale — used anywhere a band needs to be normalized or displayed
-// against its own max (dashboard progress bars, results screens, mock test detail badges).
-const SECTION_BAND_MAX = { reading: 6, listening: 6, writing: 5, speaking: 5 }
+// against its own max (dashboard progress bars, results screens, mock test detail badges). All
+// four sections share the same 1-6 scale under the TOEFL 2026 format.
+const SECTION_BAND_MAX = { reading: 6, listening: 6, writing: 6, speaking: 6 }
 
-// Reading/Listening top out at 6.0 while Writing/Speaking top out at 5.0, so a straight average
-// of the four raw band values would be unfairly pulled down by Writing/Speaking's narrower
-// scale. Instead, each section's band is normalized to "fraction of its own max" first, then
-// the four fractions are averaged and re-expressed on a 1.0-6.0 scale — an even composite that
-// doesn't penalize a section just because its own scale happens to be shorter.
+// All four sections now share the same 1.0-6.0 top end (SECTION_BAND_MAX above), so this
+// normalize-then-average approach is no longer strictly required to keep any one section from
+// being unfairly pulled down by a narrower scale -- but it's kept as-is (normalize each band to
+// "fraction of its own max" first, then average the fractions and re-expressed on a 1.0-6.0
+// scale) since it's a no-op when every max is identical and keeps this function correct if a
+// section's scale ever changes independently again.
 function computeOverallBand(readingBand, listeningBand, writingBand, speakingBand) {
   const frac = (band, section) => (band - 1) / (SECTION_BAND_MAX[section] - 1)
   const avgFrac = (frac(readingBand, 'reading') + frac(listeningBand, 'listening') + frac(writingBand, 'writing') + frac(speakingBand, 'speaking')) / 4
@@ -7467,7 +7484,7 @@ function MockReviewList({ reviewEntries }) {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
       {items.map((it, i) => {
         const isRightWrong = it.isCorrect !== undefined
-        const good = isRightWrong ? it.isCorrect : (it.score / (it.maxScore || 5)) >= 0.6
+        const good = isRightWrong ? it.isCorrect : (it.score / (it.maxScore || 6)) >= 0.6
         return (
           <div key={i} style={{ background: '#fff', borderRadius: '8px', padding: '12px 16px', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + (good ? '#2ac56c' : '#d94040') }}>
             <div style={{ fontSize: '12px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>{i + 1}. {it.prompt}</div>
@@ -7493,7 +7510,7 @@ function MockReviewList({ reviewEntries }) {
                 <div style={{ fontSize: '11px', fontWeight: '700', color: '#1a1a1a', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Score Breakdown</div>
                 {it.dimensions.map((d, di) => (
                   <div key={di} style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
-                    <span style={{ fontSize: '11px', fontWeight: '700', color: d.score >= 4 ? '#2ac56c' : d.score >= 3 ? '#e07b00' : '#d94040', flexShrink: 0, marginTop: '1px' }}>{d.score}/5</span>
+                    <span style={{ fontSize: '11px', fontWeight: '700', color: d.score >= 5 ? '#2ac56c' : d.score >= 4 ? '#e07b00' : '#d94040', flexShrink: 0, marginTop: '1px' }}>{d.score}/6</span>
                     <span style={{ fontSize: '11px', color: '#616473', lineHeight: '1.5' }}><strong style={{ color: '#1a1a1a' }}>{d.label}:</strong> {d.note}</span>
                   </div>
                 ))}
@@ -7515,8 +7532,8 @@ function WritingScoreBreakdown({ basResult, emailResult, discResult, reviewEntri
   const [open, setOpen] = useState({ bas: false, email: false, disc: false })
   const items = [
     { key: 'bas', label: 'Build a Sentence', scoreText: `${basResult.correct}/${basResult.total}` },
-    { key: 'email', label: 'Write an Email', scoreText: `${(emailResult.score || 0).toFixed(1)}/5` },
-    { key: 'disc', label: 'Academic Discussion', scoreText: `${(discResult.score || 0).toFixed(1)}/5` },
+    { key: 'email', label: 'Write an Email', scoreText: `${(emailResult.score || 0).toFixed(1)}/6` },
+    { key: 'disc', label: 'Academic Discussion', scoreText: `${(discResult.score || 0).toFixed(1)}/6` },
   ]
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -7668,10 +7685,10 @@ function FullMockTest({ onBack, hasPremium = false }) {
     // writing tasks is averaged on its own first, then combined with EQUAL (1/3 each) weight for
     // the band shown here -- not pooled into one raw-points ratio, which would let Build-a-
     // Sentence's larger item count (its `total` varies per attempt) over-weight the band relative
-    // to Email/Discussion (fixed 5 pts each).
+    // to Email/Discussion (fixed 6 pts each).
     const basPct = basResult.total ? basResult.correct / basResult.total : 0
-    const emailPct = (emailResult.score || 0) / 5
-    const discPct = (discResult.score || 0) / 5
+    const emailPct = (emailResult.score || 0) / 6
+    const discPct = (discResult.score || 0) / 6
     const writingTaskPct = (basPct + emailPct + discPct) / 3
     // Raw points earned / points possible across every graded item -- same "sum of what was
     // actually solved" unit used for practice exercises, so mock attempts blend into the
@@ -7680,17 +7697,17 @@ function FullMockTest({ onBack, hasPremium = false }) {
     // band shown on this results screen -- same split as Speaking's speakingPts/speakingMax vs.
     // speakingTaskPct just below.)
     const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
-    const writingMax = basResult.total + 5 + 5
+    const writingMax = basResult.total + 6 + 6
     const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
     const interviewResult = s.speaking.find(w => w.kind === 'interview') || { items: [] }
-    const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 5) : null
-    const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 5) : null
+    const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 6) : null
+    const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 6) : null
     const speakingTaskPct = lrPct != null && ivPct != null ? (lrPct + ivPct) / 2 : (lrPct ?? ivPct ?? 0)
     // Raw points earned / points possible across every graded item -- same "sum of what was
     // actually solved" unit used for practice exercises, so mock attempts blend into the
     // dashboard's average correctly instead of counting as one flat band value per attempt.
     const speakingPts = lrResult.items.reduce((a, x) => a + (x.score || 0), 0) + interviewResult.items.reduce((a, x) => a + (x.score || 0), 0)
-    const speakingMax = lrResult.items.length * 5 + interviewResult.items.length * 5
+    const speakingMax = lrResult.items.length * 6 + interviewResult.items.length * 6
 
     const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
     const listeningBand = pctToBand(listeningRaw.total ? listeningRaw.correct / listeningRaw.total : 0, 'listening')
@@ -8041,24 +8058,24 @@ function FullMockTest({ onBack, hasPremium = false }) {
     const emailResult = s.writing.find(w => w.kind === 'email') || { score: 0 }
     const discResult = s.writing.find(w => w.kind === 'disc') || { score: 0 }
     const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
-    const writingMax = basResult.total + 5 + 5
+    const writingMax = basResult.total + 6 + 6
     // Per ETS's scoring method (same reasoning as Speaking below), each of the three graded
     // writing tasks is averaged on its own first, then combined with EQUAL (1/3 each) weight —
     // not pooled into one raw-points ratio, which would let Build-a-Sentence's item count
-    // over-weight the band relative to Email/Discussion (fixed 5 pts each).
+    // over-weight the band relative to Email/Discussion (fixed 6 pts each).
     const basPct = basResult.total ? basResult.correct / basResult.total : 0
-    const emailPct = (emailResult.score || 0) / 5
-    const discPct = (discResult.score || 0) / 5
+    const emailPct = (emailResult.score || 0) / 6
+    const discPct = (discResult.score || 0) / 6
     const writingTaskPct = (basPct + emailPct + discPct) / 3
     const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
     const interviewResult = s.speaking.find(w => w.kind === 'interview') || { items: [] }
     const speakingPts = lrResult.items.reduce((a, x) => a + (x.score || 0), 0) + interviewResult.items.reduce((a, x) => a + (x.score || 0), 0)
-    const speakingMax = lrResult.items.length * 5 + interviewResult.items.length * 5
+    const speakingMax = lrResult.items.length * 6 + interviewResult.items.length * 6
     // Per ETS's scoring method, the Listen-and-Repeat task score and the Interview task score
     // are each averaged on their own first, then combined with EQUAL (50/50) weight — not
     // pooled into one raw-points ratio, which would over-weight L&R's 7 items vs Interview's 4.
-    const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 5) : null
-    const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 5) : null
+    const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 6) : null
+    const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 6) : null
     const speakingTaskPct = lrPct != null && ivPct != null ? (lrPct + ivPct) / 2 : (lrPct ?? ivPct ?? 0)
 
     const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
@@ -9341,8 +9358,8 @@ function App() {
   const [targetScore, setTargetScore] = useState(5.5)
   const [readingTarget, setReadingTarget] = useState(6.0)
   const [listeningTarget, setListeningTarget] = useState(6.0)
-  const [writingTarget, setWritingTarget] = useState(5.0)
-  const [speakingTarget, setSpeakingTarget] = useState(5.0)
+  const [writingTarget, setWritingTarget] = useState(6.0)
+  const [speakingTarget, setSpeakingTarget] = useState(6.0)
   const [examDate, setExamDate] = useState('')
   const [expandedFormat, setExpandedFormat] = useState(false)
   const [editingTargets, setEditingTargets] = useState(false)
@@ -9363,8 +9380,8 @@ function App() {
     const sections = [
       { name: 'Reading practice', gap: (data.reading_target ?? 6.0) - data.reading_score },
       { name: 'Listening practice', gap: (data.listening_target ?? 6.0) - data.listening_score },
-      { name: 'Writing practice', gap: (data.writing_target ?? 5.0) - data.writing_score },
-      { name: 'Speaking practice', gap: (data.speaking_target ?? 5.0) - data.speaking_score },
+      { name: 'Writing practice', gap: (data.writing_target ?? 6.0) - data.writing_score },
+      { name: 'Speaking practice', gap: (data.speaking_target ?? 6.0) - data.speaking_score },
     ].filter(s => s.gap > 0).sort((a, b) => b.gap - a.gap)
     const goals = []; const today = new Date().getDate()
     sections.forEach((s, i) => {
@@ -9389,8 +9406,8 @@ function App() {
         setUserData(data); setProfileName(data.username); setTargetScore(data.target_score); setExamDate(data.exam_date || '')
         setReadingTarget(data.reading_target ?? 6.0)
         setListeningTarget(data.listening_target ?? 6.0)
-        setWritingTarget(data.writing_target ?? 5.0)
-        setSpeakingTarget(data.speaking_target ?? 5.0)
+        setWritingTarget(data.writing_target ?? 6.0)
+        setSpeakingTarget(data.speaking_target ?? 6.0)
       }).catch(err => { console.error(err); setDashboardLoadError(true) })
   }
 
@@ -9646,12 +9663,12 @@ function App() {
                       <input type="number" min="1" max="6" step="0.5" value={listeningTarget} onChange={e => setListeningTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Writing (1.0–5.0)</label>
-                      <input type="number" min="1" max="5" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Writing (1.0–6.0)</label>
+                      <input type="number" min="1" max="6" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Speaking (1.0–5.0)</label>
-                      <input type="number" min="1" max="5" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Speaking (1.0–6.0)</label>
+                      <input type="number" min="1" max="6" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                     <button onClick={saveTargets} style={{ gridColumn: '1 / -1', background: '#2ac56c', color: '#fff', border: 'none', padding: '8px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', marginTop: '2px' }}>Save targets</button>
                   </div>
@@ -9660,8 +9677,8 @@ function App() {
                   {[
                     { name: 'Reading practice', key: 'reading', current: userData.reading_score, target: userData.reading_target ?? 6.0 },
                     { name: 'Listening practice', key: 'listening', current: userData.listening_score, target: userData.listening_target ?? 6.0 },
-                    { name: 'Writing practice', key: 'writing', current: userData.writing_score, target: userData.writing_target ?? 5.0 },
-                    { name: 'Speaking practice', key: 'speaking', current: userData.speaking_score, target: userData.speaking_target ?? 5.0 },
+                    { name: 'Writing practice', key: 'writing', current: userData.writing_score, target: userData.writing_target ?? 6.0 },
+                    { name: 'Speaking practice', key: 'speaking', current: userData.speaking_score, target: userData.speaking_target ?? 6.0 },
                   ].map(s => {
                     const max = SECTION_BAND_MAX[s.key]
                     // Band scores never go below 1.0 (the scale's floor -- see compute_section_band
@@ -9771,8 +9788,8 @@ function App() {
                   {[
                     { name: 'Reading', score: userData.reading_score, target: userData.reading_target ?? 6.0 },
                     { name: 'Listening', score: userData.listening_score, target: userData.listening_target ?? 6.0 },
-                    { name: 'Writing', score: userData.writing_score, target: userData.writing_target ?? 5.0 },
-                    { name: 'Speaking', score: userData.speaking_score, target: userData.speaking_target ?? 5.0 },
+                    { name: 'Writing', score: userData.writing_score, target: userData.writing_target ?? 6.0 },
+                    { name: 'Speaking', score: userData.speaking_score, target: userData.speaking_target ?? 6.0 },
                   ].map(raw => {
                     const gap = raw.target - raw.score
                     const note = gap <= 0 ? 'On target' : `${gap.toFixed(1)} to target`
@@ -9926,12 +9943,12 @@ function App() {
                     <input type="number" min="1" max="6" step="0.5" value={listeningTarget} onChange={e => setListeningTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Writing (1.0 - 5.0)</label>
-                    <input type="number" min="1" max="5" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Writing (1.0 - 6.0)</label>
+                    <input type="number" min="1" max="6" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Speaking (1.0 - 5.0)</label>
-                    <input type="number" min="1" max="5" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Speaking (1.0 - 6.0)</label>
+                    <input type="number" min="1" max="6" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                 </div>
                 <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
