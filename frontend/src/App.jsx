@@ -162,9 +162,19 @@ function ConfirmModal({ title, message, confirmLabel = 'Confirm', cancelLabel = 
 // Shared "Save & Exit" logic for solo-practice exercise screens: in mock mode, behaves exactly
 // as before (calls onBack directly -- FullMockTest owns its own exit confirmation). In solo
 // mode, clicking opens ExitConfirmModal instead of exiting immediately.
-function useExitDraft({ category, itemId, answers, onBack, mockMode, canSave = true }) {
+// `graded`/`onExitGraded`: once the exercise has already been checked/scored, there's no longer
+// a "draft" to offer saving -- the real graded result exists and needs to be persisted instead.
+// Previously requestExit always opened the save-draft-or-discard modal regardless of grading
+// state; both of that modal's options (save a draft, discard) call onBack() and NEVER call
+// onComplete(), so a student who checked their answers (saw a real score) and then used "Save &
+// Exit" instead of clicking through to the results screen's "Back" button lost that attempt
+// entirely -- it was never sent to saveResult(), so it didn't count anywhere (Dashboard, My
+// Progress, Review Mistakes). When `graded` is true, requestExit now calls `onExitGraded`
+// directly (which the caller wires to the same onComplete(...) call its own results screen uses),
+// skipping the draft modal -- there's nothing destructive to confirm once already graded.
+function useExitDraft({ category, itemId, answers, onBack, mockMode, canSave = true, graded = false, onExitGraded }) {
   const [showModal, setShowModal] = useState(false)
-  const requestExit = mockMode ? onBack : () => setShowModal(true)
+  const requestExit = mockMode ? onBack : (graded ? onExitGraded : () => setShowModal(true))
   const modal = !mockMode && showModal ? (
     <ExitConfirmModal
       canSave={canSave}
@@ -258,7 +268,7 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
   const timerRef = useRef(null)
   const answersRef = useRef({})
   const checkedRef = useRef(false)
-  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ctw', itemId: exercise.id, answers, onBack, mockMode })
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ctw', itemId: exercise.id, answers, onBack, mockMode, graded: checked, onExitGraded: () => onComplete(calcCorrect(answers), ex.blanks.length) })
 
   useEffect(() => { answersRef.current = answers }, [answers])
   useEffect(() => { checkedRef.current = checked }, [checked])
@@ -573,7 +583,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
   // mockMode still hard-advances via goNext() below.
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
-  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ridl', itemId: passage.id, answers, onBack, mockMode })
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ridl', itemId: passage.id, answers, onBack, mockMode, graded: done, onExitGraded: () => { onComplete && onComplete(score, totalQ); onBack() } })
 
   // Mirror every recorded answer up to the parent so Back-navigating out of this passage and
   // later returning restores exactly what was chosen, instead of remounting blank.
@@ -1229,7 +1239,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
   // submitting -- mockMode still hard-submits below.
   const [timeUp, setTimeUp] = useState(false)
   const answersRef = useRef({})
-  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ap', itemId: passage.id, answers, onBack, mockMode })
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'ap', itemId: passage.id, answers, onBack, mockMode, graded: submitted, onExitGraded: () => { onComplete && onComplete(score, questions.length); onBack() } })
   useEffect(() => { answersRef.current = answers }, [answers])
   // Mirror selections up to the parent so Back-navigating away from this passage and returning
   // later restores exactly what was chosen, instead of remounting blank.
@@ -3996,9 +4006,17 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
     URL.revokeObjectURL(url)
   }
 
+  // The header's exit button stays visible through the graded 'done' phase too (so the student
+  // can always leave). Previously it always called plain onBack(), which -- unlike the "Back to
+  // Practice List" button shown only in the 'done' phase -- never told the parent list about the
+  // just-earned score. The attempt itself was already saved to the backend the moment grading
+  // finished (see finishNow), but the list's local badge state stayed stale ("Start" instead of
+  // the real score) until a full reload. Routing through onComplete once graded fixes that.
+  const handleExit = () => { if (phase === 'done' && result) onComplete(result.score); else onBack() }
+
   return (
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
@@ -4388,9 +4406,14 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
     URL.revokeObjectURL(url)
   }
 
+  // See the matching comment in EmailExercise -- the header's exit button stays visible through
+  // the graded 'done' phase, and previously always called plain onBack(), silently skipping the
+  // score-sync that only the "Back to Practice List" button (done phase only) triggered.
+  const handleExit = () => { if (phase === 'done' && result) onComplete(result.score); else onBack() }
+
   return (
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
@@ -4747,6 +4770,13 @@ function MicPermissionGate({ micState, onRetry, onBack }) {
         <>
           <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', maxWidth: '420px' }}>Microphone access was denied.</div>
           <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px' }}>Please allow microphone access for this site in your browser settings, then try again.</div>
+          <button onClick={onRetry} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 20px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', marginTop: '8px' }}>Try Again</button>
+        </>
+      )}
+      {micState === 'timeout' && (
+        <>
+          <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', maxWidth: '420px' }}>This is taking longer than expected.</div>
+          <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px' }}>Check for a microphone permission prompt from your browser, or make sure a microphone is connected, then try again.</div>
           <button onClick={onRetry} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 20px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', marginTop: '8px' }}>Try Again</button>
         </>
       )}
@@ -5821,9 +5851,20 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
 
   const checkMic = () => {
     setMicState('checking')
-    navigator.mediaDevices?.getUserMedia({ audio: true })
-      .then(stream => { stream.getTracks().forEach(t => t.stop()); setMicState('ready') })
-      .catch(() => setMicState('denied'))
+    if (!navigator.mediaDevices?.getUserMedia) { setMicState('unsupported'); return }
+    // Defensive timeout: getUserMedia() can hang indefinitely in rare cases
+    // (blocked permission API, buggy extension, etc.) without ever resolving
+    // or rejecting. Without this, micState stays 'checking' forever with no
+    // way to recover except the Back button. Mirrors the audio stuck-timeout fix.
+    let settled = false
+    const giveUpTimer = setTimeout(() => { if (!settled) { settled = true; setMicState('timeout') } }, 10000)
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        if (settled) { stream.getTracks().forEach(t => t.stop()); return }
+        settled = true; clearTimeout(giveUpTimer)
+        stream.getTracks().forEach(t => t.stop()); setMicState('ready')
+      })
+      .catch(() => { if (settled) return; settled = true; clearTimeout(giveUpTimer); setMicState('denied') })
   }
 
   const startRecording = () => {
@@ -5897,10 +5938,14 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   const score = answers.reduce((s, a) => s + a.score, 0)
   const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
   const progressPct = phase === 'summary' ? 100 : (sentenceIdx / totalQ) * 100
+  // Same fix as EmailExercise/AcademicDiscussion: the header's exit button stays visible through
+  // the graded 'summary' phase, and previously always called plain onBack(), silently skipping
+  // the score-sync that only the "Finish ->" button (summary phase only) triggered.
+  const handleExit = () => { if (phase === 'summary') onComplete(answers); else onBack() }
 
   return (
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
       topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 5</span>}
       section="SPEAKING"
       questionLabel={`${item.location} · Sentence ${sentenceIdx + 1} of ${totalQ}`}
@@ -6076,9 +6121,20 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
 
   const checkMic = () => {
     setMicState('checking')
-    navigator.mediaDevices?.getUserMedia({ audio: true })
-      .then(stream => { stream.getTracks().forEach(t => t.stop()); setMicState('ready') })
-      .catch(() => setMicState('denied'))
+    if (!navigator.mediaDevices?.getUserMedia) { setMicState('unsupported'); return }
+    // Defensive timeout: getUserMedia() can hang indefinitely in rare cases
+    // (blocked permission API, buggy extension, etc.) without ever resolving
+    // or rejecting. Without this, micState stays 'checking' forever with no
+    // way to recover except the Back button. Mirrors the audio stuck-timeout fix.
+    let settled = false
+    const giveUpTimer = setTimeout(() => { if (!settled) { settled = true; setMicState('timeout') } }, 10000)
+    navigator.mediaDevices.getUserMedia({ audio: true })
+      .then(stream => {
+        if (settled) { stream.getTracks().forEach(t => t.stop()); return }
+        settled = true; clearTimeout(giveUpTimer)
+        stream.getTracks().forEach(t => t.stop()); setMicState('ready')
+      })
+      .catch(() => { if (settled) return; settled = true; clearTimeout(giveUpTimer); setMicState('denied') })
   }
 
   const startRecording = () => {
@@ -6152,10 +6208,12 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
   const score = answers.reduce((s, a) => s + a.score, 0)
   const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
   const progressPct = phase === 'summary' ? 100 : (qIdx / totalQ) * 100
+  // Same fix as ListenRepeatExercise/EmailExercise/AcademicDiscussion.
+  const handleExit = () => { if (phase === 'summary') onComplete(answers); else onBack() }
 
   return (
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
       topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 5</span>}
       section="SPEAKING"
       questionLabel={`${item.topic} · Question ${qIdx + 1} of ${totalQ}`}
@@ -6167,7 +6225,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
               <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.topic}</div>
               <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
               <RealPersonAvatar gender={item.speaker} seed={item.id * 10} width={280} height={280} mode="playing" />
-              <audio src={item.audio_url_intro} autoPlay onEnded={beginPractice} onError={beginPractice} />
+              <SafeAudio src={item.audio_url_intro} onEnded={beginPractice} onError={beginPractice} />
             </>
           )}
 
@@ -6181,7 +6239,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
           )}
 
           {phase === 'playing' && (
-            <audio src={question.audio_url} autoPlay onEnded={startRecording} onError={() => { showToast("Audio didn't load — try answering from the question text or go back and retry.", 'error'); startRecording() }} />
+            <SafeAudio src={question.audio_url} onEnded={startRecording} onError={() => { showToast("Audio didn't load — try answering from the question text or go back and retry.", 'error'); startRecording() }} />
           )}
 
           {phase === 'recording' && (

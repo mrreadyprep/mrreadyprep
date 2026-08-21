@@ -43,6 +43,13 @@ try:
 except ImportError:
     psycopg2 = None
 
+# The exception class(es) that mean "a UNIQUE constraint was violated" -- used by call sites that
+# do a SELECT-then-INSERT for uniqueness (e.g. register/google_login checking for an existing
+# email) to turn a race between two concurrent requests for the same email into a clean 409
+# instead of an unhandled 500. sqlite3.IntegrityError always exists; psycopg2's only exists when
+# the driver is actually installed (see the defensive import above).
+_INTEGRITY_ERRORS = (sqlite3.IntegrityError,) + ((psycopg2.IntegrityError,) if psycopg2 else ())
+
 import weakref
 
 app = FastAPI(title="mrreadyprep API", version="2026")
@@ -757,19 +764,23 @@ def load_legacy_profile_settings():
     Used once, only when the very first user account is created, to carry the developer's own
     pre-login testing data (exam date, target score, username) forward instead of losing it."""
     conn = get_db()
-    rows = conn.execute("SELECT key, value FROM profile_settings").fetchall()
-    conn.close()
-    return {row["key"]: row["value"] for row in rows}
+    try:
+        rows = conn.execute("SELECT key, value FROM profile_settings").fetchall()
+        return {row["key"]: row["value"] for row in rows}
+    finally:
+        conn.close()
 
 def migrate_legacy_data_to_user(user_id: int):
     """One-time bootstrap: the very first account ever created on this server inherits any
     attempt_results/ridl_results rows that were recorded before per-user accounts existed
     (user_id = 0), so pre-launch testing progress isn't silently orphaned."""
     conn = get_db()
-    conn.execute("UPDATE attempt_results SET user_id = ? WHERE user_id = 0", (user_id,))
-    conn.execute("UPDATE ridl_results SET user_id = ? WHERE user_id = 0", (user_id,))
-    conn.commit()
-    conn.close()
+    try:
+        conn.execute("UPDATE attempt_results SET user_id = ? WHERE user_id = 0", (user_id,))
+        conn.execute("UPDATE ridl_results SET user_id = ? WHERE user_id = 0", (user_id,))
+        conn.commit()
+    finally:
+        conn.close()
 
 # ============================================================
 # AUTH: password hashing, JWT issuing/verification, current-user dependency
@@ -956,9 +967,12 @@ def send_practice_reminders(x_cron_secret: Optional[str] = Header(None, alias="X
               AND NOT EXISTS (
                   SELECT 1 FROM attempt_results ar WHERE ar.user_id = u.id AND ar.saved_at > ?
               )
+              AND NOT EXISTS (
+                  SELECT 1 FROM ridl_results rr WHERE rr.user_id = u.id AND rr.saved_at > ?
+              )
             ORDER BY u.id
             LIMIT 200
-        """, (cutoff, cutoff, cutoff)).fetchall()
+        """, (cutoff, cutoff, cutoff, cutoff)).fetchall()
 
         sent = 0
         for row in rows:
@@ -1181,14 +1195,22 @@ def register(data: RegisterRequest, request: Request):
         """
         params = (email, username, hash_password(data.password), verification_token,
                   verification_expires, exam_date, target_score)
-        if DATABASE_URL:
-            # Postgres has no cursor.lastrowid -- RETURNING id gets the new row's id instead.
-            cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
-            user_id = cursor.fetchone()["id"]
-        else:
-            cursor = conn.execute(insert_sql, params)
-            user_id = cursor.lastrowid
-        conn.commit()
+        try:
+            if DATABASE_URL:
+                # Postgres has no cursor.lastrowid -- RETURNING id gets the new row's id instead.
+                cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
+                user_id = cursor.fetchone()["id"]
+            else:
+                cursor = conn.execute(insert_sql, params)
+                user_id = cursor.lastrowid
+            conn.commit()
+        except _INTEGRITY_ERRORS:
+            # The SELECT above and this INSERT aren't atomic, so two concurrent requests for the
+            # same email (double-submit, or a race with google_login signing up the same address)
+            # can both pass the "does this email exist" check and both reach here -- the second one
+            # then hits the email UNIQUE constraint. Without this, that surfaces as an unhandled
+            # 500 instead of the same clean 409 the upfront check already gives everyone else.
+            raise HTTPException(status_code=409, detail="An account with this email already exists")
 
         if is_first_user:
             migrate_legacy_data_to_user(user_id)
@@ -1220,9 +1242,17 @@ _login_attempts: dict = collections.defaultdict(list)
 _rate_limit_lock = threading.Lock()
 
 def _client_ip(request: Request) -> str:
+    # Render terminates TLS at its edge and forwards to this app, appending the real client IP
+    # as the LAST hop on X-Forwarded-For. Any earlier entries (including the whole header) can be
+    # set by the client itself, so taking the first entry (as an earlier version of this function
+    # did) let anyone bypass every IP-keyed rate limit below just by sending a different fake
+    # X-Forwarded-For value on each request. The last entry is the one Render itself appended and
+    # can't be spoofed by the caller.
     forwarded = request.headers.get("x-forwarded-for", "")
     if forwarded:
-        return forwarded.split(",")[0].strip()
+        parts = [p.strip() for p in forwarded.split(",") if p.strip()]
+        if parts:
+            return parts[-1]
     return request.client.host if request.client else "unknown"
 
 def _check_login_rate_limit(key: str):
@@ -1369,13 +1399,20 @@ def google_login(data: GoogleLoginRequest):
                     VALUES (?, ?, ?, 1, ?, ?)
                 """
                 params = (email, name, google_id, exam_date, target_score)
-                if DATABASE_URL:
-                    cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
-                    user_id = cursor.fetchone()["id"]
-                else:
-                    cursor = conn.execute(insert_sql, params)
-                    user_id = cursor.lastrowid
-                conn.commit()
+                try:
+                    if DATABASE_URL:
+                        cursor = conn.execute(insert_sql.rstrip() + " RETURNING id", params)
+                        user_id = cursor.fetchone()["id"]
+                    else:
+                        cursor = conn.execute(insert_sql, params)
+                        user_id = cursor.lastrowid
+                    conn.commit()
+                except _INTEGRITY_ERRORS:
+                    # Same email/google_id race as register() above -- e.g. two tabs both
+                    # completing Google Sign-In for the first time at once. Without this, the
+                    # second request's INSERT hits the email or google_id UNIQUE constraint and
+                    # surfaces as an unhandled 500 instead of a clean, actionable error.
+                    raise HTTPException(status_code=409, detail="An account with this email already exists")
                 if is_first_user:
                     migrate_legacy_data_to_user(user_id)
                 user = get_user_by_id(conn, user_id)
@@ -1714,17 +1751,29 @@ async def paddle_webhook(request: Request):
         # binds it. Every later event (updated/canceled/past_due) is matched by subscription_id
         # alone, same as the iyzico webhook matched on subscriptionReferenceCode before it.
         if event_type == "subscription.created" and user_id:
-            conn.execute(
+            cur = conn.execute(
                 "UPDATE users SET paddle_customer_id = ?, paddle_subscription_id = ?, "
                 "subscription_status = ?, subscription_current_period_end = ? WHERE id = ?",
                 (customer_id, subscription_id, status, period_end, int(user_id)),
             )
+        elif event_type == "subscription.created":
+            # custom_data.user_id was missing on the very first event for this subscription --
+            # e.g. a subscription created outside our own checkout flow. There's no row with this
+            # paddle_subscription_id yet (nothing to have set it before now), so falling through
+            # to the WHERE-paddle_subscription_id branch below would silently match zero rows: the
+            # student would have paid with no way to ever get premium access, and no error trail
+            # for support to find. Surface it loudly instead and ask Paddle to retry, in case the
+            # missing custom_data was a transient issue on Paddle's end.
+            print(f"[paddle webhook] subscription.created with no custom_data.user_id -- subscription_id={subscription_id} customer_id={customer_id}. Cannot link to a user; premium was NOT granted.", flush=True)
+            raise HTTPException(status_code=400, detail="Missing custom_data.user_id on subscription.created")
         else:
-            conn.execute(
+            cur = conn.execute(
                 "UPDATE users SET subscription_status = ?, subscription_current_period_end = ? "
                 "WHERE paddle_subscription_id = ?",
                 (status, period_end, subscription_id),
             )
+            if cur.rowcount == 0:
+                print(f"[paddle webhook] {event_type} matched no user for subscription_id={subscription_id} -- no row has this paddle_subscription_id yet.", flush=True)
         conn.commit()
     finally:
         conn.close()
