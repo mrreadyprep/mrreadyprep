@@ -346,7 +346,15 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
     const parts = []; let remaining = ex.paragraph; let globalIdx = 0
     ex.blanks.forEach((blank, blankIdx) => {
       const wordPos = remaining.indexOf(blank.word)
-      if (wordPos === -1) return
+      if (wordPos === -1) {
+        // blank.word isn't found in what's left of the paragraph (bad/edited exercise data).
+        // Bailing out here without advancing globalIdx would desync every later blank's
+        // char-input indices from what calcCorrect/buildDetail expect (off-by-N grading and
+        // inputs writing into the wrong blank's answer slots), so still advance the index by
+        // this blank's length even though we can't render it in place.
+        globalIdx += blank.hidden.length
+        return
+      }
       if (wordPos > 0) parts.push(<span key={`text-${blankIdx}`}>{remaining.slice(0, wordPos)}</span>)
       const startIdx = globalIdx
       const isBlankCorrect = checked ? blank.hidden.split('').every((ch, i) => (answers[startIdx + i] || '').toLowerCase() === ch.toLowerCase()) : null
@@ -3934,7 +3942,17 @@ function evaluateEmailResponse(text, tasks) {
   // sentences themselves are well-formed -- that's exactly the "telegraphic" pattern ETS singles
   // out as capping a response well below "generally successful".
   score = Math.min(score, elabDim.score + 1)
-  if (wordCount < 15 || taskRatio === 0) score = 1 // unsuccessful: telegraphic, minimal/no elaboration, or entirely off-task
+  if (wordCount < 15 || taskRatio === 0) {
+    // Unsuccessful override: telegraphic, minimal/no elaboration, or entirely off-task. This
+    // used to only touch the headline `score`, leaving the per-dimension breakdown computed
+    // above untouched -- a five-word response could still show "Grammar 4/5, Vocabulary 4/5"
+    // right next to an overall "1/5, Unsuccessful", which reads as a contradiction (and makes
+    // it look like a bug) rather than the "too short/off-task to grade the language itself"
+    // situation it actually is. Cap every displayed dimension down to match, the same way
+    // elaboration already caps the headline score above.
+    score = 1
+    dimensions.forEach(d => { d.score = Math.min(d.score, 2) })
+  }
 
   const summary =
     score >= 5 ? 'Fully successful: your message is effective and clearly expressed, with consistent facility in the use of language.'
@@ -4366,7 +4384,13 @@ function evaluateDiscussionResponse(text, classmates) {
   // Elaboration acts as a ceiling on top of the weighted average, not just one input among many --
   // see evaluateEmailResponse for the same logic and rationale.
   score = Math.min(score, elabDim.score + 1)
-  if (wordCount < 15 || (!hasOpinion && !engaged)) score = 1 // unsuccessful: few or no coherent ideas connecting to the discussion
+  if (wordCount < 15 || (!hasOpinion && !engaged)) {
+    // Unsuccessful override: few or no coherent ideas connecting to the discussion. Same fix as
+    // evaluateEmailResponse -- without this, the breakdown could still show high dimension
+    // scores right next to an overall "1/5, Unsuccessful", which looks like a scoring bug.
+    score = 1
+    dimensions.forEach(d => { d.score = Math.min(d.score, 2) })
+  }
 
   const summary =
     score >= 5 ? 'Fully successful: your post is a relevant, clearly expressed contribution with consistent facility in the use of language.'
@@ -5656,7 +5680,11 @@ const AMBIENT_PROPS = {
 // kind of place (an outdoor garden vs. a clinic vs. a shop vs. a train platform) instead of the
 // same generic room every time. Order matters -- more specific categories are checked first.
 function classifyEnvironment(location = '') {
-  const s = location.toLowerCase()
+  // Default params only cover `undefined` -- a pool item with an explicit `"location": null` in
+  // its JSON (or any other non-string value) would sail past the default and crash on
+  // .toLowerCase() below, taking the whole Listen & Repeat scene down with it. Coerce defensively
+  // instead of trusting the data shape.
+  const s = (location || '').toLowerCase()
   const has = (...words) => words.some((w) => s.includes(w))
   if (has('aquarium', 'swimming pool', 'pool front')) return 'water'
   if (has('garden', 'zoo', 'farmers market', 'local farmers', 'amusement park', 'golf course', 'botanical')) return 'outdoor'
@@ -5928,6 +5956,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   const recognitionRef = useRef(null)
   const timerRef = useRef(null)
   const transcriptRef = useRef('')
+  const recErrorRef = useRef(null)
 
   const sentence = item.sentences[sentenceIdx]
   const totalQ = item.sentences.length
@@ -5962,6 +5991,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   const startRecording = () => {
     if (!SR || micState !== 'ready') return
     transcriptRef.current = ''
+    recErrorRef.current = null
     const rec = new SR()
     rec.lang = 'en-US'
     rec.continuous = true
@@ -5973,7 +6003,20 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
       }
       transcriptRef.current = finalText
     }
-    rec.onerror = () => {}
+    rec.onerror = (e) => {
+      // Previously silently swallowed: on a fatal error (mic access pulled mid-recording,
+      // hardware failure, or the browser blocking the recognition service outright) the
+      // recognizer dies but the countdown timer keeps ticking, so the student sits there
+      // talking into a dead mic for the full duration and then gets scored on an empty
+      // transcript with no explanation why. For these fatal cases, stop immediately instead
+      // of waiting out the timer. Recoverable errors (no-speech/aborted/network hiccup) are
+      // just recorded for the summary note and otherwise left alone, since continuous mode
+      // can often keep picking up speech after them.
+      recErrorRef.current = e?.error || 'error'
+      if (['not-allowed', 'audio-capture', 'service-not-allowed'].includes(recErrorRef.current)) {
+        stopRecording()
+      }
+    }
     try { rec.start() } catch (e) {}
     recognitionRef.current = rec
     setPhase('recording')
@@ -5993,13 +6036,13 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
     setTimeout(() => {
       const transcript = transcriptRef.current.trim()
       const evalResult = evaluateRepeatResponse(transcript, sentence.text)
-      const newAnswer = { transcript, target: sentence.text, ...evalResult }
+      const newAnswer = { transcript, target: sentence.text, micError: recErrorRef.current, ...evalResult }
       if (sentenceIdx + 1 >= totalQ) {
         const finalAnswers = [...answers, newAnswer]
         if (mockMode) {
           onComplete(finalAnswers, finalAnswers.map((a, i) => ({
             prompt: item.sentences[i].text,
-            given: a.transcript || '(nothing detected)',
+            given: a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)'),
             score: a.score, maxScore: 5, feedback: a.summary, criteria: a.criteria,
           })))
         } else {
@@ -6106,7 +6149,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
                       <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 5</span>
                     </div>
                     <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>Target:</b> {a.target}</div>
-                    <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || '(nothing detected)'}</div>
+                    <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)')}</div>
                     <div style={{ fontSize: '12px', color: '#616473' }}>{a.summary}</div>
                   </div>
                 ))}
@@ -6198,6 +6241,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
   const recognitionRef = useRef(null)
   const timerRef = useRef(null)
   const transcriptRef = useRef('')
+  const recErrorRef = useRef(null)
 
   const question = item.questions[qIdx]
   const totalQ = item.questions.length
@@ -6232,6 +6276,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
   const startRecording = () => {
     if (!SR || micState !== 'ready') return
     transcriptRef.current = ''
+    recErrorRef.current = null
     const rec = new SR()
     rec.lang = 'en-US'
     rec.continuous = true
@@ -6243,7 +6288,16 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
       }
       transcriptRef.current = finalText
     }
-    rec.onerror = () => {}
+    rec.onerror = (e) => {
+      // See ListenRepeatExercise for why this can't stay a no-op: a dead recognizer would
+      // otherwise leave the student talking for the full countdown and get silently scored
+      // on an empty transcript. Only bail out early on fatal errors; recoverable ones are
+      // just noted for the summary display.
+      recErrorRef.current = e?.error || 'error'
+      if (['not-allowed', 'audio-capture', 'service-not-allowed'].includes(recErrorRef.current)) {
+        stopRecording()
+      }
+    }
     try { rec.start() } catch (e) {}
     recognitionRef.current = rec
     setPhase('recording')
@@ -6263,14 +6317,14 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
     setTimeout(() => {
       const transcript = transcriptRef.current.trim()
       const evalResult = evaluateInterviewResponse(transcript, question.text)
-      const newAnswer = { transcript, ...evalResult }
+      const newAnswer = { transcript, micError: recErrorRef.current, ...evalResult }
       stoppingRef.current = false
       if (qIdx + 1 >= totalQ) {
         const finalAnswers = [...answers, newAnswer]
         if (mockMode) {
           onComplete(finalAnswers, finalAnswers.map((a, i) => ({
             prompt: item.questions[i].text,
-            given: a.transcript || '(nothing detected)',
+            given: a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)'),
             score: a.score, maxScore: 5, feedback: a.summary, criteria: a.criteria,
           })))
         } else {
@@ -6362,7 +6416,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
                       <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase' }}>Question {i + 1}</span>
                       <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 5</span>
                     </div>
-                    <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || '(nothing detected)'}</div>
+                    <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)')}</div>
                     <div style={{ fontSize: '12px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>{a.summary}</div>
                     {a.criteria && (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
@@ -6899,6 +6953,15 @@ function MicVolumeCheckModal({ onStart }) {
   const streamRef = useRef(null)
   const audioCtxRef = useRef(null)
   const rafRef = useRef(null)
+  // Race guard: connect() is async (getUserMedia + AudioContext setup), and can be re-triggered
+  // before the previous call resolves -- either by the student picking a different device quickly
+  // in succession, or the modal unmounting (test hardware-check flow moving on) while a request is
+  // still in flight. Without this, an older connect()'s .then can fire *after* a newer one and
+  // overwrite streamRef.current with its own (now-orphaned) stream -- the newer, correct stream
+  // never gets torn down, so its mic track keeps recording invisibly in the background, and the UI
+  // may flip back to showing the stale device's label. Each call gets a token; only the call whose
+  // token still matches the latest one when its promise resolves is allowed to apply its result.
+  const connectTokenRef = useRef(0)
 
   const teardown = () => {
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
@@ -6912,8 +6975,16 @@ function MicVolumeCheckModal({ onStart }) {
   const connect = (deviceId) => {
     teardown()
     setStatus('checking')
+    const myToken = ++connectTokenRef.current
     const constraints = deviceId ? { audio: { deviceId: { exact: deviceId } } } : { audio: true }
     navigator.mediaDevices?.getUserMedia(constraints).then(stream => {
+      if (myToken !== connectTokenRef.current) {
+        // Superseded by a newer connect() (or the modal is gone) -- stop this stream immediately
+        // instead of leaving it live and orphaned, and don't touch state for a request that's no
+        // longer the one the UI represents.
+        stream.getTracks().forEach(t => t.stop())
+        return
+      }
       streamRef.current = stream
       setStatus('ready')
       const track = stream.getAudioTracks()[0]
@@ -6922,6 +6993,7 @@ function MicVolumeCheckModal({ onStart }) {
       // once -- refresh the device list now so "Change Microphone" shows real names, not
       // generic placeholders.
       navigator.mediaDevices.enumerateDevices().then(list => {
+        if (myToken !== connectTokenRef.current) return
         setDevices(list.filter(d => d.kind === 'audioinput').map(d => ({ deviceId: d.deviceId, label: d.label || 'Microphone' })))
       }).catch(() => {})
       const AudioContextCtor = window.AudioContext || window.webkitAudioContext
@@ -6934,18 +7006,19 @@ function MicVolumeCheckModal({ onStart }) {
       source.connect(analyser)
       const data = new Uint8Array(analyser.frequencyBinCount)
       const tick = () => {
+        if (myToken !== connectTokenRef.current) return
         analyser.getByteFrequencyData(data)
         const avg = data.reduce((a, b) => a + b, 0) / data.length
         setLevel(prev => prev * 0.6 + Math.min(1, avg / 90) * 0.4) // smoothed
         rafRef.current = requestAnimationFrame(tick)
       }
       tick()
-    }).catch(() => setStatus('denied'))
+    }).catch(() => { if (myToken === connectTokenRef.current) setStatus('denied') })
   }
 
   useEffect(() => {
     connect('')
-    return teardown
+    return () => { connectTokenRef.current++; teardown() }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -7483,6 +7556,11 @@ function FullMockTest({ onBack, hasPremium = false }) {
   const [hwCheckStep, setHwCheckStep] = useState(0)
   const hwCheckPlanRef = useRef({ needsMicModal: true, screens: [] })
   const pendingBeginRef = useRef(() => {})
+  // Guards the fixed-test fetch in beginFixedTestAfterHwCheck below: if the student backs out of
+  // Full Mock Test (or navigates elsewhere) while that fetch is still in flight, the .then/.catch
+  // would otherwise call setPhase/setFixedTestId/etc. on an unmounted component.
+  const mountedRef = useRef(true)
+  useEffect(() => () => { mountedRef.current = false }, [])
   const [mode, setMode] = useState('full') // 'full' | 'reading' | 'listening' | 'writing' | 'speaking'
   const [stage, setStage] = useState('reading-m1')
   const [queue, setQueue] = useState([])
@@ -7647,6 +7725,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
   const beginFixedTestAfterHwCheck = (testId, section = 'full') => {
     setPhase('loading')
     apiFetch(`${BACKEND_URL}/api/mock/fixed-test/${testId}`).then(r => r.json()).then(data => {
+      if (!mountedRef.current) return
       setFixedTestId(testId)
       setFixedBundle(data)
       if (section === 'listening') {
@@ -7668,7 +7747,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
         setReadingPoolLeft(computeReadingPoolSeconds(slots))
         runWithNotices([sectionIntroNotice('reading'), module1Notice('reading')], () => setPhase('running'))
       }
-    }).catch(() => setPhase('intro'))
+    }).catch(() => { if (mountedRef.current) setPhase('intro') })
   }
 
   const beginTestAfterHwCheck = (m = 'full') => {
@@ -8738,15 +8817,25 @@ function AdminPanel() {
   const [users, setUsers] = useState(null)
   const [busyId, setBusyId] = useState(null)
   const [error, setError] = useState('')
+  // Grant is low-stakes (worst case you re-revoke it), but Revoke immediately cuts off a real
+  // paying/trial user's access with a single click and no undo -- previously had no confirmation
+  // at all, unlike every other destructive action in the app (cancel subscription, etc.), so a
+  // stray click on the wrong row silently locked someone out.
+  const [revokeTarget, setRevokeTarget] = useState(null)
+  // Covers `load()` and `setSubscription()` below: both are triggered from a live click, but the
+  // fetch they kick off can still resolve after the student has clicked away to another sidebar
+  // tab (e.g. click Revoke, then immediately navigate elsewhere before the request finishes) --
+  // "started while mounted" doesn't guarantee "still mounted when it resolves."
+  const mountedRef = useRef(true)
+  useEffect(() => () => { mountedRef.current = false }, [])
 
-  // Reusable manual refresh (called after a grant/revoke action below) -- no unmount guard
-  // needed here since it only ever runs in response to a live click on an already-mounted panel.
+  // Reusable manual refresh (called after a grant/revoke action below).
   const load = () => {
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/admin/stats`).then(r => r.json()),
       apiFetch(`${BACKEND_URL}/api/admin/users`).then(r => r.json()),
-    ]).then(([s, u]) => { setStats(s); setUsers(Array.isArray(u) ? u : []) })
-      .catch(() => setError('Could not load admin data.'))
+    ]).then(([s, u]) => { if (mountedRef.current) { setStats(s); setUsers(Array.isArray(u) ? u : []) } })
+      .catch(() => { if (mountedRef.current) setError('Could not load admin data.') })
   }
   // Initial mount fetch gets its own cancelled guard (same pattern used everywhere else in the
   // file) so navigating away from the Admin tab before this resolves doesn't try to set state on
@@ -8768,11 +8857,12 @@ function AdminPanel() {
       body: JSON.stringify({ action }),
     }).then(r => r.json().then(data => ({ ok: r.ok, data })))
       .then(({ ok, data }) => {
+        if (!mountedRef.current) return
         if (ok) { showToast(action === 'grant' ? 'Premium granted.' : 'Premium revoked.'); load() }
         else showToast(data.detail || 'Action failed.', 'error')
       })
-      .catch(() => showToast('Action failed.', 'error'))
-      .finally(() => setBusyId(null))
+      .catch(() => { if (mountedRef.current) showToast('Action failed.', 'error') })
+      .finally(() => { if (mountedRef.current) setBusyId(null) })
   }
 
   const statCard = (label, value) => (
@@ -8822,7 +8912,7 @@ function AdminPanel() {
                     ) : u.has_billed_subscription ? (
                       <span style={{ color: '#9ca3af', fontSize: '11px' }} title="Real Paddle subscription -- cancel via the customer's own Settings, not here">Paid, not revocable here</span>
                     ) : u.has_premium ? (
-                      <button onClick={() => setSubscription(u.id, 'revoke')} disabled={busyId === u.id} style={{ background: '#fff', color: '#dc2626', border: '1px solid #fecaca', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Revoke</button>
+                      <button onClick={() => setRevokeTarget(u)} disabled={busyId === u.id} style={{ background: '#fff', color: '#dc2626', border: '1px solid #fecaca', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Revoke</button>
                     ) : (
                       <button onClick={() => setSubscription(u.id, 'grant')} disabled={busyId === u.id} style={{ background: '#11162d', color: '#fff', border: 'none', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Grant</button>
                     )}
@@ -8833,6 +8923,17 @@ function AdminPanel() {
           </table>
         </div>
       </div>
+      {revokeTarget && (
+        <ConfirmModal
+          title="Revoke premium access?"
+          message={`Revoke premium access for ${revokeTarget.email}? They will immediately lose access to locked content.`}
+          confirmLabel="Revoke access"
+          cancelLabel="Cancel"
+          danger
+          onConfirm={() => { setSubscription(revokeTarget.id, 'revoke'); setRevokeTarget(null) }}
+          onCancel={() => setRevokeTarget(null)}
+        />
+      )}
     </div>
   )
 }
@@ -9114,14 +9215,29 @@ function Vocabulary() {
     return () => { cancelled = true }
   }, [])
 
+  // Both handlers below update local state optimistically (so the UI feels instant), but
+  // previously swallowed request failures entirely -- if the save call failed, the checkbox/star
+  // would stay flipped on screen while the backend still had the old value, so the change quietly
+  // reverted itself on the next reload with no indication anything went wrong. Now they roll the
+  // optimistic update back and tell the student via toast if the save didn't actually go through.
   const setLearned = (id, learned) => {
     setWords(prev => prev.map(w => w.id === id ? { ...w, learned } : w))
-    apiFetch(`${BACKEND_URL}/api/vocab/set/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ learned }) }).catch(() => {})
+    apiFetch(`${BACKEND_URL}/api/vocab/set/${id}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ learned }) })
+      .then(res => { if (!res.ok) throw new Error('save failed') })
+      .catch(() => {
+        setWords(prev => prev.map(w => w.id === id ? { ...w, learned: !learned } : w))
+        showToast('Could not save -- check your connection and try again.', 'error')
+      })
   }
 
   const toggleStar = (id) => {
     setWords(prev => prev.map(w => w.id === id ? { ...w, starred: !w.starred } : w))
-    apiFetch(`${BACKEND_URL}/api/vocab/star/${id}`, { method: 'POST' }).catch(() => {})
+    apiFetch(`${BACKEND_URL}/api/vocab/star/${id}`, { method: 'POST' })
+      .then(res => { if (!res.ok) throw new Error('save failed') })
+      .catch(() => {
+        setWords(prev => prev.map(w => w.id === id ? { ...w, starred: !w.starred } : w))
+        showToast('Could not save -- check your connection and try again.', 'error')
+      })
   }
 
   if (loading) return <LoadingState label="Loading vocabulary..." />
