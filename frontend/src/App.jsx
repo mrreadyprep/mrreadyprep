@@ -8279,10 +8279,14 @@ function loadGoogleIdentityServices() {
   return _gisLoadPromise
 }
 
-// ─── Analytics: Google Analytics 4, gated behind cookie consent ─────────────
+// ─── Analytics: Google Analytics 4 + Microsoft Clarity, gated behind cookie consent ─────────
 // Set at build time once a GA4 property exists (VITE_GA_MEASUREMENT_ID). Until then
 // CookieConsentBanner below simply doesn't render, and no analytics script is ever loaded.
 const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || ''
+// Clarity project IDs aren't secret (every visitor's page source has this same value embedded
+// in the tracking script tag regardless), so unlike GA_MEASUREMENT_ID above this is hardcoded
+// rather than routed through a build-time env var -- one less thing to configure per deploy.
+const CLARITY_PROJECT_ID = 'y60gpwz1rb'
 const COOKIE_CONSENT_KEY = 'cookie_consent' // 'accepted' | 'rejected'
 
 let _gaLoaded = false
@@ -8300,6 +8304,21 @@ function loadGoogleAnalytics() {
   gtag('config', GA_MEASUREMENT_ID, { anonymize_ip: true })
 }
 
+// Session-recording/heatmap tool (mouse movement, clicks, scroll) -- separate product from GA4,
+// same consent gate. Loaded the same way Clarity's own "manual install" snippet does it, just
+// translated out of an inline <script> tag into JS since this app has no static HTML shell to
+// paste one into.
+let _clarityLoaded = false
+function loadClarity() {
+  if (_clarityLoaded || !CLARITY_PROJECT_ID) return
+  _clarityLoaded = true
+  window.clarity = window.clarity || function () { (window.clarity.q = window.clarity.q || []).push(arguments) }
+  const script = document.createElement('script')
+  script.async = true
+  script.src = `https://www.clarity.ms/tag/${CLARITY_PROJECT_ID}`
+  document.head.appendChild(script)
+}
+
 // Small bottom banner asking for consent before any analytics cookies are set. Only appears
 // once (until the user clears site data) and only if a GA4 property is actually configured --
 // on deployments without VITE_GA_MEASUREMENT_ID it renders nothing, since there's nothing to
@@ -8310,10 +8329,10 @@ function CookieConsentBanner() {
   const [choice, setChoice] = useState(() => localStorage.getItem(COOKIE_CONSENT_KEY))
 
   useEffect(() => {
-    if (choice === 'accepted') loadGoogleAnalytics()
+    if (choice === 'accepted') { loadGoogleAnalytics(); loadClarity() }
   }, [choice])
 
-  if (!GA_MEASUREMENT_ID || choice) return null
+  if ((!GA_MEASUREMENT_ID && !CLARITY_PROJECT_ID) || choice) return null
 
   const respond = (value) => {
     localStorage.setItem(COOKIE_CONSENT_KEY, value)
@@ -8327,7 +8346,7 @@ function CookieConsentBanner() {
         <span style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}>We value your privacy</span>
       </div>
       <div style={{ fontSize: '12.5px', color: '#616473', lineHeight: '1.6', marginBottom: '14px' }}>
-        We use Google Analytics to understand how mrreadyprep is used. This only sets a cookie if you accept. See our{' '}
+        We use Google Analytics and Microsoft Clarity to understand how mrreadyprep is used. This only sets a cookie if you accept. See our{' '}
         <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ color: '#701fa1', fontWeight: '600' }}>Privacy Policy</a>.
       </div>
       <div style={{ display: 'flex', gap: '8px' }}>
