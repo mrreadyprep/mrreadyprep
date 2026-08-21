@@ -8495,7 +8495,7 @@ function AuthScreen({ onAuthSuccess }) {
       <div style={{ width: '100%', maxWidth: '380px' }}>
         <div style={{ textAlign: 'center', marginBottom: '22px' }}>
           <div style={{ color: '#b67bfb', fontSize: '24px', fontWeight: '700' }}>mrreadyprep</div>
-          <div style={{ fontSize: '10px', color: '#7b809a', letterSpacing: '1.5px', marginTop: '2px' }}>TOEFL IBT PREP</div>
+          <div style={{ fontSize: '10px', color: '#7b809a', letterSpacing: '1.5px', marginTop: '2px' }}>TOEFL® iBT PREP</div>
         </div>
 
         <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '26px', boxSizing: 'border-box' }}>
@@ -8609,6 +8609,9 @@ function AuthScreen({ onAuthSuccess }) {
               {link.label}
             </a>
           ))}
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '14px', fontSize: '10px', color: '#7b809a', lineHeight: '1.5', padding: '0 10px' }}>
+          TOEFL® and TOEFL iBT® are registered trademarks of ETS. This site is not endorsed or approved by ETS.
         </div>
       </div>
     </div>
@@ -9305,7 +9308,7 @@ function App() {
         <div>
           <div style={{ marginBottom: '24px', textAlign: 'center' }}>
             <div style={{ color: '#b67bfb', fontSize: '17px', fontWeight: '600' }}>mrreadyprep</div>
-            <div style={{ fontSize: '9px', color: '#7b809a', letterSpacing: '1px' }}>TOEFL IBT PREP</div>
+            <div style={{ fontSize: '9px', color: '#7b809a', letterSpacing: '1px' }}>TOEFL® iBT PREP</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
             {sb('dashboard', '📊', 'Dashboard')}
@@ -9332,6 +9335,9 @@ function App() {
             </div>
           </div>
           <button onClick={logout} title="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
+        </div>
+        <div style={{ fontSize: '8px', color: '#4b4f66', lineHeight: '1.4', textAlign: 'center', marginTop: '8px', padding: '0 2px' }}>
+          TOEFL® and TOEFL iBT® are registered trademarks of ETS. Not endorsed or approved by ETS.
         </div>
       </div>
 
