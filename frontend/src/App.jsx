@@ -8714,20 +8714,20 @@ function AuthScreen({ onAuthSuccess }) {
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
             {mode === 'signup' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <label style={labelStyle}>Username</label>
-                <input type="text" value={username} onChange={e => setUsername(e.target.value)} style={inputStyle} required />
+                <label style={labelStyle} htmlFor="auth-username">Username</label>
+                <input id="auth-username" type="text" autoComplete="username" value={username} onChange={e => setUsername(e.target.value)} style={inputStyle} required />
               </div>
             )}
             {(mode === 'login' || mode === 'signup' || mode === 'forgot') && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <label style={labelStyle}>Email</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} required />
+                <label style={labelStyle} htmlFor="auth-email">Email</label>
+                <input id="auth-email" type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} style={inputStyle} required />
               </div>
             )}
             {(mode === 'login' || mode === 'signup' || mode === 'reset') && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <label style={labelStyle}>{mode === 'reset' ? 'New Password' : 'Password'}</label>
-                <input type="password" value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} required minLength={mode === 'signup' || mode === 'reset' ? 8 : undefined} />
+                <label style={labelStyle} htmlFor="auth-password">{mode === 'reset' ? 'New Password' : 'Password'}</label>
+                <input id="auth-password" type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} required minLength={mode === 'signup' || mode === 'reset' ? 8 : undefined} />
               </div>
             )}
             {mode === 'login' && (
@@ -8738,8 +8738,8 @@ function AuthScreen({ onAuthSuccess }) {
             )}
             {(mode === 'signup' || mode === 'reset') && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                <label style={labelStyle}>Confirm Password</label>
-                <input type="password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} style={inputStyle} required />
+                <label style={labelStyle} htmlFor="auth-confirm-password">Confirm Password</label>
+                <input id="auth-confirm-password" type="password" autoComplete="new-password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} style={inputStyle} required />
               </div>
             )}
 
@@ -9761,6 +9761,10 @@ function App() {
                       : examDaysLeft > 14 ? `${examDaysLeft} days to go — focus on your weakest section daily.`
                       : examDaysLeft > 7 ? `Only ${examDaysLeft} days left — go full intensity.`
                       : examDaysLeft > 1 ? `${examDaysLeft} days to exam day — rest well and trust your preparation.`
+                      // examDaysLeft === 0 means the exam IS today (getExamDaysLeft returns 0 on
+                      // the exam date itself, not 1) -- the old code fell through to the "Tomorrow"
+                      // copy for this case too, which is wrong on the actual exam day.
+                      : examDaysLeft === 0 ? "Today is the day — stay calm, trust your preparation, and do your best. 💪"
                       : "Tomorrow is the day — stay calm, sleep early, and believe in yourself. 💪"}
                   </div>
                 </div>
@@ -9936,30 +9940,30 @@ function App() {
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🎯 Target & Profile</h3>
               <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Username</label>
-                  <input type="text" value={profileName} onChange={e => setProfileName(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-username">Username</label>
+                  <input id="settings-username" type="text" autoComplete="username" value={profileName} onChange={e => setProfileName(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Target Score (0.0 - 6.0)</label>
-                  <input type="number" min="0" max="6" step="0.5" value={targetScore} onChange={e => setTargetScore(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-target-score">Target Score (0.0 - 6.0)</label>
+                  <input id="settings-target-score" type="number" min="0" max="6" step="0.5" value={targetScore} onChange={e => setTargetScore(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ fontWeight: '700', color: '#374151', fontSize: '12px', marginTop: '4px' }}>Section targets</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Reading (1.0 - 6.0)</label>
-                    <input type="number" min="1" max="6" step="0.5" value={readingTarget} onChange={e => setReadingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-reading-target">Reading (1.0 - 6.0)</label>
+                    <input id="settings-reading-target" type="number" min="1" max="6" step="0.5" value={readingTarget} onChange={e => setReadingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Listening (1.0 - 6.0)</label>
-                    <input type="number" min="1" max="6" step="0.5" value={listeningTarget} onChange={e => setListeningTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-listening-target">Listening (1.0 - 6.0)</label>
+                    <input id="settings-listening-target" type="number" min="1" max="6" step="0.5" value={listeningTarget} onChange={e => setListeningTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Writing (1.0 - 6.0)</label>
-                    <input type="number" min="1" max="6" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-writing-target">Writing (1.0 - 6.0)</label>
+                    <input id="settings-writing-target" type="number" min="1" max="6" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Speaking (1.0 - 6.0)</label>
-                    <input type="number" min="1" max="6" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-speaking-target">Speaking (1.0 - 6.0)</label>
+                    <input id="settings-speaking-target" type="number" min="1" max="6" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                 </div>
                 <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
@@ -9969,8 +9973,8 @@ function App() {
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🔒 Account Security</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Email</label>
-                  <input type="text" value={userData.email || ''} readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-email">Email</label>
+                  <input id="settings-email" type="text" autoComplete="email" value={userData.email || ''} readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
                   {userData.email_verified ? (
                     <span style={{ fontSize: '11px', fontWeight: '700', color: '#2ac56c', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>✓ Verified</span>
                   ) : (
@@ -9983,16 +9987,16 @@ function App() {
                   )}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Current Password</label>
-                  <input type="password" value="••••••••" readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-current-password">Current Password</label>
+                  <input id="settings-current-password" type="password" autoComplete="current-password" value="••••••••" readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>New Password</label>
-                  <input type="password" placeholder="Enter new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-new-password">New Password</label>
+                  <input id="settings-new-password" type="password" autoComplete="new-password" placeholder="Enter new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }}>Confirm New Password</label>
-                  <input type="password" placeholder="Confirm new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-confirm-new-password">Confirm New Password</label>
+                  <input id="settings-confirm-new-password" type="password" autoComplete="new-password" placeholder="Confirm new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <button style={{ backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
                 <button onClick={logout} style={{ backgroundColor: '#fff', color: '#dc2626', border: '1px solid #fecaca', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Log Out</button>

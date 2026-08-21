@@ -3,7 +3,7 @@ from fastapi import FastAPI, HTTPException, Depends, Header, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel, EmailStr
+from pydantic import BaseModel, EmailStr, Field
 from typing import List, Optional
 import base64
 import hashlib
@@ -451,14 +451,21 @@ def _cached_pool(cache_key, builder):
 
 class DashboardData(BaseModel):
     username: str
-    target_score: float
+    # Matches the frontend's own <input min="0" max="6"> for the overall target-score field.
+    # The frontend already clamps its four per-section targets (see clampTarget() in App.jsx,
+    # added after round 12's audit found the Dashboard's inline edit panel could bypass its own
+    # min/max), but that's a client-side convenience only -- a direct API call bypasses it
+    # entirely. Enforcing the same 1.0-6.0 band bound here (0.0-6.0 for the overall target,
+    # matching the frontend's own allowed range) keeps stored values within the range every other
+    # part of this app (band math, progress bars, SECTION_BAND_MAX comparisons) assumes.
+    target_score: float = Field(ge=0.0, le=6.0)
     # Per-section goals the student sets for themselves on the Dashboard -- all four sections use
     # the same unified 1.0-6.0 scale (TOEFL 2026 format; see SECTION_BAND_MAX). Optional so older
     # frontend builds that don't send them yet don't break profile saves.
-    reading_target: Optional[float] = None
-    listening_target: Optional[float] = None
-    writing_target: Optional[float] = None
-    speaking_target: Optional[float] = None
+    reading_target: Optional[float] = Field(default=None, ge=1.0, le=6.0)
+    listening_target: Optional[float] = Field(default=None, ge=1.0, le=6.0)
+    writing_target: Optional[float] = Field(default=None, ge=1.0, le=6.0)
+    speaking_target: Optional[float] = Field(default=None, ge=1.0, le=6.0)
 
 # ============================================================
 # AUTH VERİ MODELLERİ
@@ -548,6 +555,16 @@ if DATABASE_URL and psycopg2 is not None:
         minconn=1,
         maxconn=int(os.environ.get("DB_POOL_MAX_CONN", "10")),
         dsn=DATABASE_URL,
+        # Every "TIMESTAMP" column in this schema (created_at, saved_at, ...) is a plain
+        # `timestamp without time zone`, populated via CURRENT_TIMESTAMP. On Postgres,
+        # CURRENT_TIMESTAMP is evaluated as a true instant (timestamptz) and then converted into
+        # the SESSION's timezone before being stored -- not just string-truncated. Every reader in
+        # this file (streak calculation, practice-reminder cutoffs, admin "signups this week")
+        # assumes those stored values are plain UTC wall-clock. Without pinning the session
+        # timezone here, that assumption silently depends on whatever the Postgres server/provider
+        # happens to default to -- which can differ across hosts, restores, or a provider config
+        # change, silently skewing every one of those UTC-assuming comparisons by the offset.
+        options="-c timezone=UTC",
     )
 
 
