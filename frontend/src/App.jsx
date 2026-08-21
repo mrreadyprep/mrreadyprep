@@ -1483,12 +1483,15 @@ if (typeof window !== 'undefined') window.__mrpAudio = sharedAudioEl
 function primeAudio(url) {
   const audio = sharedAudioEl
   if (!audio || !url) return
-  if (audio.src !== url) {
-    audio.pause()
-    audio.src = url
-    audio.currentTime = 0
-    audio.load()
-  }
+  // Always reset + reload, even if this exact URL was already loaded (e.g. Choose a Response
+  // re-announces the same fixed narration line before every question). Skipping the reset when
+  // audio.src already equals url meant a repeat call after the previous play had already ended
+  // just resumed from the end of the clip -- effectively silent, which looked identical to the
+  // stuck-loading bug this whole mechanism exists to prevent.
+  audio.pause()
+  audio.src = url
+  audio.currentTime = 0
+  audio.load()
   const p = audio.play()
   if (p && p.catch) p.catch((err) => { console.warn('[mrp audio] primeAudio play() rejected:', err && err.name, err && err.message, 'for', url) })
 }
@@ -1535,6 +1538,21 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       document.addEventListener('pointerdown', retry, { once: true, capture: true })
       document.addEventListener('keydown', retry, { once: true, capture: true })
     }
+    // Absolute upper bound on how long we wait for this clip to actually start producing sound.
+    // Covers every path below, including ones where play() neither resolves nor rejects at all
+    // (observed in practice: readyState stuck at HAVE_NOTHING indefinitely with no error event --
+    // the browser can silently decline to even start the network fetch for an autoplay-gated
+    // media element). Without this, a hang here was permanent: the student sat on a silent
+    // screen forever with the question locked and no way forward except "Save & Exit". Once this
+    // fires we surface the existing "Audio failed to load" banner, whose Retry button calls
+    // primeAudio() from inside a real click -- a genuine user gesture, unlike every play() call
+    // in this effect -- so it reliably recovers even when the automatic attempts above did not.
+    const stuckTimer = setTimeout(() => {
+      if (audio.src === url && audio.currentTime === 0 && !audio.ended) {
+        console.warn('[mrp audio] main clip stuck loading, giving up after 9s:', url)
+        setHasError(true)
+      }
+    }, 9000)
     // If a click handler already primed this exact URL (see primeAudio above, called
     // synchronously from Start/Next), don't reset currentTime/reload it here -- that would
     // abort the playback that call just started. Just make sure play() is (still) requested.
@@ -1543,7 +1561,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
         const p = audio.play()
         if (p && p.catch) p.catch((err) => { console.warn('[mrp audio] resume play() rejected:', err && err.name, err && err.message); registerRetryFallback() })
       }
-      return
+      return () => clearTimeout(stuckTimer)
     }
     audio.pause()
     audio.src = url
@@ -1562,7 +1580,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       }
     }
     const timer = setTimeout(tryPlay, AUDIO_START_DELAY_MS)
-    return () => clearTimeout(timer)
+    return () => { clearTimeout(timer); clearTimeout(stuckTimer) }
   }, [url, autoPlayKey])
 
   if (!url) {
@@ -1657,14 +1675,64 @@ function useIntroNarration(url, resetKey) {
         })
       }
     }, 60)
+    // Absolute upper bound, independent of every path above. Observed in practice: the shared
+    // element's play() promise can end up neither resolving nor rejecting at all (readyState
+    // stuck at HAVE_NOTHING indefinitely, no 'ended'/'error' event ever fires) -- e.g. when the
+    // browser silently declines to even start the network fetch for an autoplay-gated media
+    // element. Without this, that hang is permanent: the student is stuck on a silent screen
+    // forever with no error and no retry control (only "Save & Exit"). This narration line is a
+    // nice-to-have, not essential, so once this fires we just move on to the real question/
+    // conversation audio -- which has its own stuck-detection in AudioPlayer below.
+    const hardGiveUpTimer = setTimeout(() => {
+      if (settled) return
+      console.warn('[mrp audio] intro narration stuck loading, giving up after 6s:', url)
+      finish()
+    }, 6000)
     return () => {
       settled = true
       clearTimeout(startTimer)
+      clearTimeout(hardGiveUpTimer)
       if (fallbackTimer) clearTimeout(fallbackTimer)
       cleanupListeners()
     }
   }, [url, resetKey])
   return announced
+}
+
+// Drop-in replacement for a plain `<audio src={..} autoPlay onEnded={..} onError={..} />` (used
+// by the Speaking "Listen & Repeat" / "Take an Interview" screens). A real <audio autoPlay> tag
+// already fires a proper 'error' event on a genuine load failure, which onError already handles
+// -- but it has no protection at all against a silent hang where autoplay is blocked/deferred by
+// the browser and neither 'ended' nor 'error' ever fires. That leaves the student stuck on the
+// current phase (question locked, nothing to do) with no feedback and no way forward except
+// "Save & Exit". This wraps the same tag with a hard timeout that calls onError as a fallback --
+// reusing whatever graceful-degradation each call site already wired up for a real load failure
+// (skip to practice, start recording, show a toast) -- if nothing has happened within timeoutMs.
+function SafeAudio({ src, onEnded, onError, timeoutMs = 8000 }) {
+  const firedRef = useRef(false)
+  const onEndedRef = useRef(onEnded)
+  const onErrorRef = useRef(onError)
+  onEndedRef.current = onEnded
+  onErrorRef.current = onError
+
+  useEffect(() => {
+    firedRef.current = false
+    const timer = setTimeout(() => {
+      if (firedRef.current) return
+      firedRef.current = true
+      console.warn('[mrp audio] SafeAudio stuck loading, falling back after', timeoutMs, 'ms:', src)
+      onErrorRef.current && onErrorRef.current()
+    }, timeoutMs)
+    return () => clearTimeout(timer)
+  }, [src, timeoutMs])
+
+  const wrap = (fn) => () => {
+    if (firedRef.current) return
+    firedRef.current = true
+    fn && fn()
+  }
+
+  return <audio src={src} autoPlay onEnded={wrap(onEndedRef.current)} onError={wrap(onErrorRef.current)} />
 }
 
 // Placeholder speaker photos (free-to-use placeholder avatar set, gender-matched).
@@ -1967,7 +2035,7 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.questions.length} question${ex.questions.length === 1 ? '' : 's'}`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_choose_response.mp3`); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2075,7 +2143,14 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
 
   const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
   const isLowTime = timeLeft <= 5
-  const handleNext = () => advance(selected)
+  const handleNext = () => {
+    // Choose a Response re-announces the same fixed narration line before every question (see
+    // useIntroNarration's resetKey=currentQ above), so -- unlike the other 3 Listening modules,
+    // which only need this on Start/Try Again -- every "Next" here needs a fresh, gesture-backed
+    // primeAudio() call too, or the narration for question 2+ hits the same stuck-autoplay issue.
+    if (currentQ + 1 < totalQ) primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_choose_response.mp3`)
+    advance(selected)
+  }
   const score = answers.filter(a => a.isCorrect).length
 
   // Score screen
@@ -2145,7 +2220,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_choose_response.mp3`); setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -2273,7 +2348,7 @@ function ListeningP2List({ conversations, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${c.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_a_conversation.mp3`); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2425,7 +2500,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_a_conversation.mp3`); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -2565,7 +2640,7 @@ function ListeningP3List({ announcements, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${a.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_an_announcement.mp3`); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2717,7 +2792,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_an_announcement.mp3`); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -2857,7 +2932,7 @@ function ListeningP4List({ talks, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${t.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/academic_talk_practice_${t.id}.mp3`); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -3010,7 +3085,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -5841,7 +5916,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
               ) : (
                 <TopicPhoto icon={item.icon} label={item.location} photoSlug={item.photoSlug} photoUrl={item.photoUrl} width={520} height={420} />
               )}
-              <audio src={item.audio_url_intro} autoPlay onEnded={beginPractice} onError={beginPractice} />
+              <SafeAudio src={item.audio_url_intro} onEnded={beginPractice} onError={beginPractice} />
             </>
           )}
 
@@ -5861,7 +5936,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
           {phase === 'playing' && (
             <>
               <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '22px 0 8px' }}>{sentence.length} sentence</div>
-              <audio src={sentence.audio_url} autoPlay onEnded={startRecording} onError={() => { showToast("Audio didn't load — try recording from memory or go back and retry.", 'error'); startRecording() }} />
+              <SafeAudio src={sentence.audio_url} onEnded={startRecording} onError={() => { showToast("Audio didn't load — try recording from memory or go back and retry.", 'error'); startRecording() }} />
             </>
           )}
 
