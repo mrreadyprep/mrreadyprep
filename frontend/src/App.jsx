@@ -9186,12 +9186,13 @@ function App() {
       }).catch(err => { console.error(err); setDashboardLoadError(true) })
   }
 
-  useEffect(() => { fetchDashboardData() }, [])
   // Section scores/exam date only change as a side effect of finishing practice elsewhere in the
   // app -- re-fetch every time the student lands back on the Dashboard tab (not just on first
   // mount) so those numbers don't go stale for the rest of the session after the first load.
   // Settings is included too so the "email verified" badge picks up a verification done in
   // another tab (e.g. clicking the emailed link) without needing a full page reload.
+  // currentTab starts as 'dashboard', so this single effect also covers the initial fetch on
+  // mount -- a separate mount-only effect used to duplicate this call on every page load.
   useEffect(() => { if (currentTab === 'dashboard' || currentTab === 'settings') fetchDashboardData() }, [currentTab])
 
   // Any locked list item/mock test anywhere in the app calls requestUpgrade() instead of trying
