@@ -2084,6 +2084,13 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   const questions = exercise.questions
   const q = questions[currentQ]
   const totalQ = questions.length
+  // Listening exercises span multiple questions with their own audio/timer state per question,
+  // so (unlike Reading/Writing) there's no simple flat "answers so far" value worth trying to
+  // restore into a resumed draft -- but "Save & Exit" still shouldn't silently discard an
+  // in-progress attempt with zero warning, which is what plain onBack() used to do here. This
+  // offers a confirm-before-discard step (canSave: false, matching the pattern already used for
+  // Speaking's live audio recordings) without the complexity/risk of a full resume.
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p1', itemId: exercise.id, onBack, mockMode, canSave: false })
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -2259,8 +2266,9 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   }
 
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(currentQ + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + currentQ + 1} of ${moduleTotal}` : `Question ${currentQ + 1} of ${totalQ}`}
@@ -2299,6 +2307,8 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
         </div>
       </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
@@ -2391,6 +2401,9 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   const questions = conversation.questions
   const q = questions[qIdx]
   const totalQ = questions.length
+  // See the matching comment in ListeningP1Exercise -- confirm-before-discard instead of a
+  // silent, zero-warning onBack() exit, without a full resumable draft.
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p2', itemId: conversation.id, onBack, mockMode, canSave: false })
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -2541,8 +2554,9 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   // Listening phase — only the two speakers are shown, audio autoplays, no questions yet
   if (phase === 'listening') {
     return (
+      <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Conversation ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -2556,13 +2570,16 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
           </div>
         )}
       </ExamScreen>
+      {exitModal}
+      </>
     )
   }
 
   // Question phase
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
@@ -2591,6 +2608,8 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
         </div>
       </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
@@ -2683,6 +2702,9 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   const questions = announcement.questions
   const q = questions[qIdx]
   const totalQ = questions.length
+  // See the matching comment in ListeningP1Exercise -- confirm-before-discard instead of a
+  // silent, zero-warning onBack() exit, without a full resumable draft.
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p3', itemId: announcement.id, onBack, mockMode, canSave: false })
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -2833,8 +2855,9 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   // Listening phase — a single announcer avatar is shown, audio autoplays, no questions yet
   if (phase === 'listening') {
     return (
+      <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Announcement ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -2848,13 +2871,16 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
           </div>
         )}
       </ExamScreen>
+      {exitModal}
+      </>
     )
   }
 
   // Question phase
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
@@ -2883,6 +2909,8 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
         </div>
       </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
@@ -2976,6 +3004,9 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   const totalQ = questions.length
   const talkIntroText = talk.subject ? `Listen to a talk in ${/^[aeiou]/i.test(talk.subject) ? 'an' : 'a'} ${talk.subject.toLowerCase()} class.` : 'Listen to a talk in an academic class.'
   const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
+  // See the matching comment in ListeningP1Exercise -- confirm-before-discard instead of a
+  // silent, zero-warning onBack() exit, without a full resumable draft.
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p4', itemId: talk.id, onBack, mockMode, canSave: false })
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -3126,8 +3157,9 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   // Listening phase — a single lecturer avatar is shown, audio autoplays, no questions yet
   if (phase === 'listening') {
     return (
+      <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Talk ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -3143,13 +3175,16 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
           </div>
         )}
       </ExamScreen>
+      {exitModal}
+      </>
     )
   }
 
   // Question phase
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
@@ -3178,6 +3213,8 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
         </div>
       </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
@@ -3370,11 +3407,16 @@ function BuildSentenceItem({ item, onChange, initialPlaced }) {
   )
 }
 
-function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) {
+function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode = false }) {
   const [qIdx, setQIdx] = useState(0)
   // Every item's placement is kept (not just the current one), so navigating Back and
   // forward again restores exactly what the student had placed, instead of discarding it.
-  const [placedByIndex, setPlacedByIndex] = useState(() => items.map(() => []))
+  // In solo practice mode, resume a previously saved-and-exited draft for this exact set if one
+  // exists (setIndex identifies the 10-item set, same id saveResult('bas', setIndex, ...) uses).
+  const [placedByIndex, setPlacedByIndex] = useState(() => {
+    const draft = !mockMode && setIndex != null && loadDraft('bas', setIndex)
+    return (Array.isArray(draft) && draft.length === items.length) ? draft : items.map(() => [])
+  })
   const [answers, setAnswers] = useState([])
   const [done, setDone] = useState(false)
   const [reviewQ, setReviewQ] = useState(null)
@@ -3407,6 +3449,7 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
       onComplete(finalScore, totalQ, detail)
       return
     }
+    if (setIndex != null) clearDraft('bas', setIndex) // now graded, no longer an in-progress draft
     setAnswers(finalAnswers)
     setDone(true)
   }
@@ -3453,6 +3496,11 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
   }
 
   const score = answers.filter(a => a.isCorrect).length
+  // The exit button below only ever renders before grading (the 'done' branch fully replaces
+  // this screen with a review/score view that has no Save & Exit control of its own), so there's
+  // no graded-exit path to wire up here -- unlike CTW/Email/Discussion, requestExit only ever
+  // needs to offer save-draft-or-discard, never "sync an already-earned score".
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'bas', itemId: setIndex, answers: placedByIndex, onBack, mockMode })
 
   if (done) {
     const pct = Math.round((score / totalQ) * 100)
@@ -3537,8 +3585,9 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
   }
 
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={onBack}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
       topRight={<>
         <TestPillButton onClick={handleBack} disabled={qIdx === 0}>Back</TestPillButton>
         <TestPillButton variant="dark" onClick={handleNext}>{qIdx + 1 >= totalQ ? 'Finish' : 'Next'}</TestPillButton>
@@ -3556,6 +3605,8 @@ function BuildSentenceExercise({ items, onBack, onComplete, mockMode = false }) 
           onChange={(vals) => setPlacedByIndex(prev => { const next = [...prev]; next[qIdx] = vals; return next })} />
       </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
@@ -3594,7 +3645,7 @@ function BuildASentence({ onBack }) {
   }
 
   if (activeSet !== null) return (
-    <BuildSentenceExercise items={sets[activeSet]} onBack={() => setActiveSet(null)}
+    <BuildSentenceExercise items={sets[activeSet]} setIndex={activeSet} onBack={() => setActiveSet(null)}
       onComplete={(correct, total) => {
         saveResult('bas', activeSet, correct, total, `Build a Sentence · Set ${activeSet + 1}`)
         setScores(prev => ({ ...prev, [activeSet]: { correct, total } })); setActiveSet(null)
@@ -3906,7 +3957,14 @@ function toolbarBtnStyle(disabled) {
 function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
   const isMobile = useIsMobile()
   const [timeLeft, setTimeLeft] = useState(EMAIL_TIME_LIMIT)
-  const [historyState, setHistoryState] = useState({ list: [''], idx: 0 })
+  // In solo practice mode, resume a previously saved-and-exited draft if one exists for this
+  // exact item -- same pattern as CTW/RIDL/AP, applied here because losing several minutes of
+  // typed writing to an unconfirmed "Save & Exit" click was the single worst case this bug
+  // class could produce.
+  const [historyState, setHistoryState] = useState(() => {
+    const draft = !mockMode && loadDraft('email', item.id ?? index)
+    return { list: [typeof draft === 'string' ? draft : ''], idx: 0 }
+  })
   const [phase, setPhase] = useState('writing') // 'writing' | 'analyzing' | 'done'
   const [result, setResult] = useState(null)
   // Solo practice only: when the timer runs out, warn instead of auto-submitting/locking --
@@ -3915,10 +3973,16 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
   const textareaRef = useRef(null)
   const timerRef = useRef(null)
   const liveRef = useRef(null)
+  const analyzeTimeoutRef = useRef(null)
 
   const body = historyState.list[historyState.idx]
   const wordCount = body.trim() ? body.trim().split(/\s+/).length : 0
   liveRef.current = { historyState, phase }
+
+  // Cancel any pending grading timeout on unmount so it can't call setResult/setPhase after the
+  // component (and its state) is gone -- e.g. if the student clicks Save & Exit during the brief
+  // 'analyzing' delay right after Submit.
+  useEffect(() => () => { if (analyzeTimeoutRef.current) clearTimeout(analyzeTimeoutRef.current) }, [])
 
   const finishNow = () => {
     if (timerRef.current) clearInterval(timerRef.current)
@@ -3926,7 +3990,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
     if (curPhase !== 'writing') return
     setPhase('analyzing')
     const text = hs.list[hs.idx]
-    setTimeout(() => {
+    analyzeTimeoutRef.current = setTimeout(() => {
       const res = evaluateEmailResponse(text, item.tasks)
       if (mockMode) {
         onComplete(res.score, { prompt: item.scenario, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
@@ -3936,6 +4000,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
       // List" -- previously the score (and the written response itself) only persisted if that
       // exact button was clicked, so leaving via the sidebar or a browser back lost everything.
       saveResult('email', item.id ?? index, res.score, 5, `Write an Email #${index + 1}`, text)
+      clearDraft('email', item.id ?? index) // now graded, no longer an in-progress draft
       setResult(res)
       setPhase('done')
     }, EMAIL_ANALYZE_DELAY_MS)
@@ -4012,11 +4077,19 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
   // just-earned score. The attempt itself was already saved to the backend the moment grading
   // finished (see finishNow), but the list's local badge state stayed stale ("Start" instead of
   // the real score) until a full reload. Routing through onComplete once graded fixes that.
-  const handleExit = () => { if (phase === 'done' && result) onComplete(result.score); else onBack() }
+  // Before grading finishes (phase 'writing' or 'analyzing'), this used to call onBack()
+  // directly -- silently discarding whatever had been typed, with zero warning, even though the
+  // button is labeled "Save & Exit". useExitDraft now offers an actual save-as-draft/discard
+  // choice instead, same as Reading's exercises.
+  const { requestExit, modal: exitModal } = useExitDraft({
+    category: 'email', itemId: item.id ?? index, answers: body, onBack, mockMode,
+    graded: phase === 'done', onExitGraded: () => onComplete(result.score),
+  })
 
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
@@ -4105,6 +4178,8 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
           </div>
         </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
@@ -4306,7 +4381,12 @@ function evaluateDiscussionResponse(text, classmates) {
 function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode = false }) {
   const isMobile = useIsMobile()
   const [timeLeft, setTimeLeft] = useState(DISCUSSION_TIME_LIMIT)
-  const [historyState, setHistoryState] = useState({ list: [''], idx: 0 })
+  // In solo practice mode, resume a previously saved-and-exited draft if one exists for this
+  // exact item -- same reasoning as EmailExercise above.
+  const [historyState, setHistoryState] = useState(() => {
+    const draft = !mockMode && loadDraft('disc', item.id ?? index)
+    return { list: [typeof draft === 'string' ? draft : ''], idx: 0 }
+  })
   const [phase, setPhase] = useState('writing') // 'writing' | 'analyzing' | 'done'
   const [result, setResult] = useState(null)
   // Solo practice only: when the timer runs out, warn instead of auto-submitting/locking --
@@ -4315,10 +4395,14 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
   const textareaRef = useRef(null)
   const timerRef = useRef(null)
   const liveRef = useRef(null)
+  const analyzeTimeoutRef = useRef(null)
 
   const body = historyState.list[historyState.idx]
   const wordCount = body.trim() ? body.trim().split(/\s+/).length : 0
   liveRef.current = { historyState, phase }
+
+  // Cancel any pending grading timeout on unmount -- see EmailExercise's identical comment above.
+  useEffect(() => () => { if (analyzeTimeoutRef.current) clearTimeout(analyzeTimeoutRef.current) }, [])
 
   const finishNow = () => {
     if (timerRef.current) clearInterval(timerRef.current)
@@ -4326,7 +4410,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
     if (curPhase !== 'writing') return
     setPhase('analyzing')
     const text = hs.list[hs.idx]
-    setTimeout(() => {
+    analyzeTimeoutRef.current = setTimeout(() => {
       const res = evaluateDiscussionResponse(text, item.classmates)
       if (mockMode) {
         onComplete(res.score, { prompt: item.prompt, given: text || '(no answer)', score: res.score, maxScore: 5, feedback: res.summary, criteria: res.criteria, dimensions: res.dimensions })
@@ -4336,6 +4420,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
       // List" -- previously the score (and the written response itself) only persisted if that
       // exact button was clicked, so leaving via the sidebar or a browser back lost everything.
       saveResult('disc', item.id ?? index, res.score, 5, `Academic Discussion #${index + 1}`, text)
+      clearDraft('disc', item.id ?? index) // now graded, no longer an in-progress draft
       setResult(res)
       setPhase('done')
     }, EMAIL_ANALYZE_DELAY_MS)
@@ -4407,13 +4492,18 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
   }
 
   // See the matching comment in EmailExercise -- the header's exit button stays visible through
-  // the graded 'done' phase, and previously always called plain onBack(), silently skipping the
-  // score-sync that only the "Back to Practice List" button (done phase only) triggered.
-  const handleExit = () => { if (phase === 'done' && result) onComplete(result.score); else onBack() }
+  // the graded 'done' phase, and previously always called plain onBack(), silently discarding
+  // whatever had been typed with zero warning before grading finished. useExitDraft now offers
+  // an actual save-as-draft/discard choice instead.
+  const { requestExit, modal: exitModal } = useExitDraft({
+    category: 'disc', itemId: item.id ?? index, answers: body, onBack, mockMode,
+    graded: phase === 'done', onExitGraded: () => onComplete(result.score),
+  })
 
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
@@ -4514,6 +4604,8 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
           </div>
         </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
