@@ -174,6 +174,22 @@ function ConfirmModal({ title, message, confirmLabel = 'Confirm', cancelLabel = 
 // skipping the draft modal -- there's nothing destructive to confirm once already graded.
 function useExitDraft({ category, itemId, answers, onBack, mockMode, canSave = true, graded = false, onExitGraded }) {
   const [showModal, setShowModal] = useState(false)
+  // Warn before an actual browser-level navigation-away (tab close, refresh, typed URL) while a
+  // solo practice exercise is still in progress (mounted, not yet graded). The in-app "Save &
+  // Exit" button above already handles the case where the student clicks something inside the
+  // app, but browser back/forward, closing the tab, or refreshing bypass that entirely and would
+  // otherwise silently discard whatever the student has done so far with zero warning -- this
+  // hook is used by nearly every practice screen (CTWSingle, RIDLQuestion, APQuestion, Listening
+  // P1-P4, BuildASentence, Email/Discussion, Speaking, ...) so adding it once here covers all of
+  // them. Mock-mode exercises are excluded: FullMockTest owns its own exit/unload guard for the
+  // whole test, since a single sub-exercise finishing (graded=true) doesn't mean the overall test
+  // is done.
+  useEffect(() => {
+    if (mockMode || graded) return
+    const handler = (e) => { e.preventDefault(); e.returnValue = ''; return '' }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [mockMode, graded])
   const requestExit = mockMode ? onBack : (graded ? onExitGraded : () => setShowModal(true))
   const modal = !mockMode && showModal ? (
     <ExitConfirmModal
@@ -7578,6 +7594,18 @@ function FullMockTest({ onBack, hasPremium = false }) {
   // would otherwise call setPhase/setFixedTestId/etc. on an unmounted component.
   const mountedRef = useRef(true)
   useEffect(() => () => { mountedRef.current = false }, [])
+  // Warn before an actual browser-level navigation-away (tab close, refresh, typed URL, or a
+  // back/forward that leaves the page) while a mock test is actively running or transitioning
+  // between sections. The in-app exit confirmation (showExitConfirm below) only fires when the
+  // student clicks the in-app "Exit" control -- it has no way to intercept the browser chrome's
+  // own close/refresh/back button, which would otherwise silently discard up to ~90 minutes of
+  // in-progress work with zero warning.
+  useEffect(() => {
+    if (phase !== 'running' && phase !== 'notice') return
+    const handler = (e) => { e.preventDefault(); e.returnValue = ''; return '' }
+    window.addEventListener('beforeunload', handler)
+    return () => window.removeEventListener('beforeunload', handler)
+  }, [phase])
   const [mode, setMode] = useState('full') // 'full' | 'reading' | 'listening' | 'writing' | 'speaking'
   const [stage, setStage] = useState('reading-m1')
   const [queue, setQueue] = useState([])
