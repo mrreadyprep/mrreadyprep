@@ -381,7 +381,7 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
           <span key={gIdx} style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'center', width: '11px' }}>
             <input ref={el => inputRefs.current[gIdx] = el} value={val} maxLength={1}
               onChange={e => { if (checked) return; const newVal = e.target.value.slice(-1); setAnswers(prev => ({ ...prev, [gIdx]: newVal })); if (newVal && inputRefs.current[gIdx + 1]) inputRefs.current[gIdx + 1].focus() }}
-              onKeyDown={e => { if (e.key === 'Backspace' && !val && inputRefs.current[gIdx - 1]) inputRefs.current[gIdx - 1].focus(); if (e.key === 'Tab') { e.preventDefault(); if (inputRefs.current[gIdx + 1]) inputRefs.current[gIdx + 1].focus() } }}
+              onKeyDown={e => { if (e.key === 'Backspace' && !val && inputRefs.current[gIdx - 1]) inputRefs.current[gIdx - 1].focus(); if (e.key === 'Tab') { e.preventDefault(); const targetIdx = e.shiftKey ? gIdx - 1 : gIdx + 1; if (inputRefs.current[targetIdx]) inputRefs.current[targetIdx].focus() } }}
               disabled={checked}
               style={{ width: '11px', height: '14px', border: 'none', borderBottom: checked ? (charCorrect ? '1.5px solid #2a9d5c' : '1.5px solid #d94040') : '1.5px solid #555', outline: 'none', background: 'transparent', textAlign: 'center', fontSize: '13px', fontFamily: 'Georgia, serif', color: checked ? (charCorrect ? '#1a7a44' : '#b03030') : '#1a1a1a', padding: 0, margin: 0, caretColor: '#701fa1', cursor: 'text', boxSizing: 'border-box', lineHeight: '14px' }} />
           </span>
@@ -440,7 +440,7 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
   return (
     <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
         topRight={!checked
           ? <>
               {mockMode && <TestPillButton onClick={onPrevSlot} disabled={!onPrevSlot}>Back</TestPillButton>}
@@ -810,7 +810,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
   return (
     <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
         topRight={mockMode
           ? <>
               <TestPillButton onClick={goBack} disabled={questionIdx === 0 && !onPrevSlot}>Back</TestPillButton>
@@ -834,11 +834,13 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
           </div>
           <div style={{ width: isMobile ? '100%' : '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
             <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>{question.question}</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+            <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
               {question.options.map((opt, i) => {
                 const isChosen = i === selected
                 return (
-                  <div key={i} onClick={() => setSelected(i)} style={{ display: 'flex', alignItems: 'center', gap: '14px', cursor: 'pointer', padding: '4px 0' }}>
+                  <div key={i} onClick={() => setSelected(i)} role="radio" aria-checked={isChosen} tabIndex={0}
+                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(i) } }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '14px', cursor: 'pointer', padding: '4px 0' }}>
                     <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff', transition: 'all 0.1s' }} />
                     <span style={{ fontSize: '16px', lineHeight: '1.5', color: '#1a1a1a' }}>{opt}</span>
                   </div>
@@ -1405,7 +1407,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<>
         {mockMode && <TestPillButton onClick={() => {
           if (currentQ === 0) {
@@ -1440,11 +1442,13 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
         <div style={{ width: isMobile ? '100%' : '440px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '22px' }}>
           {isInsert && <div style={{ background: '#f0faf4', border: '1px solid #2a9d5c', borderRadius: '8px', padding: '12px 14px', fontStyle: 'italic', fontSize: '13px', color: '#1a1a1a', lineHeight: '1.6' }}>"{q.insert_text}"</div>}
           <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>{q.question}</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+          <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
             {q.options.map((opt, i) => {
               const isChosen = answers[currentQ] === i
               return (
-                <div key={i} onClick={() => setAnswers(prev => ({ ...prev, [currentQ]: i }))} style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '4px 0', cursor: 'pointer' }}>
+                <div key={i} onClick={() => setAnswers(prev => ({ ...prev, [currentQ]: i }))} role="radio" aria-checked={isChosen} tabIndex={0}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setAnswers(prev => ({ ...prev, [currentQ]: i })) } }}
+                  style={{ display: 'flex', alignItems: 'center', gap: '14px', padding: '4px 0', cursor: 'pointer' }}>
                   <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
                   <span style={{ fontSize: '16px', lineHeight: '1.5', color: '#1a1a1a' }}>{opt}</span>
                 </div>
@@ -2114,7 +2118,12 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   // in-progress attempt with zero warning, which is what plain onBack() used to do here. This
   // offers a confirm-before-discard step (canSave: false, matching the pattern already used for
   // Speaking's live audio recordings) without the complexity/risk of a full resume.
-  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p1', itemId: exercise.id, onBack, mockMode, canSave: false })
+  // graded: done matters even though the Save & Exit button itself is never rendered on the
+  // results screen (so onExitGraded is never called) -- without it, useExitDraft's beforeunload
+  // guard stayed armed even after the student finished and was looking at the score/review
+  // screen, so closing the tab or refreshing there triggered a confusing "Leave site?" warning
+  // for an already-graded, already-saved attempt.
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p1', itemId: exercise.id, onBack, mockMode, canSave: false, graded: done })
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -2292,7 +2301,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(currentQ + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + currentQ + 1} of ${moduleTotal}` : `Question ${currentQ + 1} of ${totalQ}`}
@@ -2316,11 +2325,13 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
 
         {/* Right: options */}
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '28px', paddingTop: isMobile ? '0' : '48px', maxWidth: isMobile ? '100%' : '520px', width: '100%' }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+          <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
               return (
                 <div key={i} onClick={() => { if (audioDone) setSelected(i) }}
+                  role="radio" aria-checked={isChosen} tabIndex={audioDone ? 0 : -1}
+                  onKeyDown={e => { if ((e.key === 'Enter' || e.key === ' ') && audioDone) { e.preventDefault(); setSelected(i) } }}
                   style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: audioDone ? 'pointer' : 'not-allowed', opacity: audioDone ? 1 : 0.45 }}>
                   <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
                   <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
@@ -2427,7 +2438,9 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   const totalQ = questions.length
   // See the matching comment in ListeningP1Exercise -- confirm-before-discard instead of a
   // silent, zero-warning onBack() exit, without a full resumable draft.
-  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p2', itemId: conversation.id, onBack, mockMode, canSave: false })
+  // graded: done -- see the matching comment in ListeningP1Exercise (stops the beforeunload
+  // "Leave site?" warning from staying armed after the student is already on the score screen).
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p2', itemId: conversation.id, onBack, mockMode, canSave: false, graded: done })
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -2580,7 +2593,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
     return (
       <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Conversation ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -2603,7 +2616,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
@@ -2617,11 +2630,13 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
           <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
           {timeUp && <TimeUpBanner />}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+          <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
               return (
                 <div key={i} onClick={() => setSelected(i)}
+                  role="radio" aria-checked={isChosen} tabIndex={0}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(i) } }}
                   style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: 'pointer' }}>
                   <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
                   <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
@@ -2728,7 +2743,9 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   const totalQ = questions.length
   // See the matching comment in ListeningP1Exercise -- confirm-before-discard instead of a
   // silent, zero-warning onBack() exit, without a full resumable draft.
-  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p3', itemId: announcement.id, onBack, mockMode, canSave: false })
+  // graded: done -- see the matching comment in ListeningP1Exercise (stops the beforeunload
+  // "Leave site?" warning from staying armed after the student is already on the score screen).
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p3', itemId: announcement.id, onBack, mockMode, canSave: false, graded: done })
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -2881,7 +2898,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
     return (
       <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Announcement ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -2904,7 +2921,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
@@ -2918,11 +2935,13 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
           <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
           {timeUp && <TimeUpBanner />}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+          <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
               return (
                 <div key={i} onClick={() => setSelected(i)}
+                  role="radio" aria-checked={isChosen} tabIndex={0}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(i) } }}
                   style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: 'pointer' }}>
                   <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
                   <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
@@ -3030,7 +3049,9 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
   // See the matching comment in ListeningP1Exercise -- confirm-before-discard instead of a
   // silent, zero-warning onBack() exit, without a full resumable draft.
-  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p4', itemId: talk.id, onBack, mockMode, canSave: false })
+  // graded: done -- see the matching comment in ListeningP1Exercise (stops the beforeunload
+  // "Leave site?" warning from staying armed after the student is already on the score screen).
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p4', itemId: talk.id, onBack, mockMode, canSave: false, graded: done })
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -3183,7 +3204,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
     return (
       <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Talk ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -3208,7 +3229,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
@@ -3222,11 +3243,13 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
         <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '8px', paddingTop: isMobile ? '0' : '8px', width: '100%' }}>
           <h1 style={{ margin: 0, fontSize: isMobile ? '18px' : '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: isMobile ? '20px' : '32px' }}>{q.question}</h1>
           {timeUp && <TimeUpBanner />}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+          <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
             {q.options.map((opt, i) => {
               const isChosen = selected === i
               return (
                 <div key={i} onClick={() => setSelected(i)}
+                  role="radio" aria-checked={isChosen} tabIndex={0}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSelected(i) } }}
                   style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '4px 0', cursor: 'pointer' }}>
                   <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isChosen ? '6px solid #2ac56c' : '1.5px solid #c0c0c0', background: '#fff' }} />
                   <span style={{ fontSize: '16px', color: '#1a1a1a', lineHeight: '1.5', flex: 1 }}>{opt}</span>
@@ -3523,8 +3546,10 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
   // The exit button below only ever renders before grading (the 'done' branch fully replaces
   // this screen with a review/score view that has no Save & Exit control of its own), so there's
   // no graded-exit path to wire up here -- unlike CTW/Email/Discussion, requestExit only ever
-  // needs to offer save-draft-or-discard, never "sync an already-earned score".
-  const { requestExit, modal: exitModal } = useExitDraft({ category: 'bas', itemId: setIndex, answers: placedByIndex, onBack, mockMode })
+  // needs to offer save-draft-or-discard, never "sync an already-earned score". graded: done is
+  // still passed so the beforeunload "Leave site?" guard clears once the student reaches the
+  // score screen (see the matching comment in ListeningP1Exercise).
+  const { requestExit, modal: exitModal } = useExitDraft({ category: 'bas', itemId: setIndex, answers: placedByIndex, onBack, mockMode, graded: done })
 
   if (done) {
     const pct = Math.round((score / totalQ) * 100)
@@ -3611,7 +3636,7 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<>
         <TestPillButton onClick={handleBack} disabled={qIdx === 0}>Back</TestPillButton>
         <TestPillButton variant="dark" onClick={handleNext}>{qIdx + 1 >= totalQ ? 'Finish' : 'Next'}</TestPillButton>
@@ -4128,7 +4153,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
@@ -4549,7 +4574,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
@@ -9545,8 +9570,14 @@ function App() {
   const streakDays = userData.week_activity || [false, false, false, false, false, false, false]
   const dayLabels = ['M', 'T', 'W', 'T', 'F', 'S', 'S']
 
+  // Clears ALL four practice sections' sub-tabs (not just Reading/Listening) so clicking a
+  // sidebar item always lands on that section's hub screen. Before this, jumping into e.g.
+  // Writing -> Build a Sentence and then clicking a different sidebar tab, then clicking
+  // "Writing" again, would drop straight back into Build a Sentence instead of the 3-task hub --
+  // writingSubTab/speakingSubTab were never reset here even though readingSubTab/listeningSubTab
+  // always were, an inconsistency between the four sections.
   const sb = (tab, icon, label) => (
-    <button onClick={() => { setCurrentTab(tab); setReadingSubTab(null); setListeningSubTab(null); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <button onClick={() => { setCurrentTab(tab); setReadingSubTab(null); setListeningSubTab(null); setWritingSubTab(null); setSpeakingSubTab(null); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
       {icon} {label}
     </button>
   )
@@ -10020,13 +10051,18 @@ function App() {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-new-password">New Password</label>
-                  <input id="settings-new-password" type="password" autoComplete="new-password" placeholder="Enter new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  <input id="settings-new-password" type="password" autoComplete="new-password" placeholder="Coming soon" disabled style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box', background: '#f4f4f6', color: '#aaa', cursor: 'not-allowed' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-confirm-new-password">Confirm New Password</label>
-                  <input id="settings-confirm-new-password" type="password" autoComplete="new-password" placeholder="Confirm new password" style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  <input id="settings-confirm-new-password" type="password" autoComplete="new-password" placeholder="Coming soon" disabled style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box', background: '#f4f4f6', color: '#aaa', cursor: 'not-allowed' }} />
                 </div>
-                <button style={{ backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Update Password</button>
+                {/* This form isn't wired to a real change-password endpoint yet -- rather than leave
+                    it looking clickable-but-inert (a student fills it in, clicks Update, and nothing
+                    happens with zero feedback), it's disabled with an honest "coming soon" note.
+                    Use "Forgot password" from the login screen in the meantime to change a password. */}
+                <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '-8px' }}>Password changes aren't available here yet -- use "Forgot password" on the login screen to reset it.</div>
+                <button disabled style={{ backgroundColor: '#e5e7eb', color: '#9ca3af', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'not-allowed' }}>Update Password</button>
                 <button onClick={logout} style={{ backgroundColor: '#fff', color: '#dc2626', border: '1px solid #fecaca', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Log Out</button>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
                   <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Terms of Service</a>

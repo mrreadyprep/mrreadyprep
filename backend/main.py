@@ -474,7 +474,10 @@ class DashboardData(BaseModel):
 class RegisterRequest(BaseModel):
     email: EmailStr
     username: str
-    password: str
+    # No hard byte-length rejection here (a password manager's 100-char passphrase should still
+    # work -- see _bcrypt_safe_bytes truncation) -- just a sanity ceiling against pathological
+    # payloads.
+    password: str = Field(max_length=256)
 
 class LoginRequest(BaseModel):
     email: EmailStr
@@ -488,7 +491,7 @@ class ForgotPasswordRequest(BaseModel):
 
 class ResetPasswordRequest(BaseModel):
     token: str
-    new_password: str
+    new_password: str = Field(max_length=256)
 
 class VerifyEmailRequest(BaseModel):
     token: str
@@ -498,8 +501,12 @@ class ExamDateUpdate(BaseModel):
 
 class RIDLResult(BaseModel):
     passage_id: int
-    score: int
-    total: int
+    # Bounded (not just "> 0") so a buggy/forged client can't write a score that inflates the
+    # student's own Read in Daily Life stats -- see the matching check in save_ridl_result() for
+    # the score-can't-exceed-total rule (can't express that as a Field constraint since it's a
+    # relationship between two fields, not a single field's range).
+    score: int = Field(ge=0)
+    total: int = Field(ge=0)
 
 # Generic "a student finished some exercise, here's the score" record. Used across every
 # exercise type (practice pools AND mock tests) so the student's overall progress can be
@@ -510,8 +517,12 @@ class AttemptResult(BaseModel):
                          # 'mock_writing', 'mock_speaking', 'mock_overall'
     item_id: str         # exercise/passage/test id (as string) the attempt belongs to
     label: str = ""      # human-readable label shown in the progress UI, e.g. "Mock Test 3 · Reading"
-    score: float
-    total: float
+    # Bounded so a forged/buggy request can't permanently inflate compute_section_band()'s SUM(score)/
+    # SUM(total) for this student (there's no undo short of DB surgery once a bad row lands). The
+    # category-allowlist and score<=total checks live in save_attempt_result() itself, since
+    # CATEGORY_LABELS is defined further down the file and score-vs-total is a cross-field rule.
+    score: float = Field(ge=0)
+    total: float = Field(ge=0)
     detail: str = ""     # optional freeform text of what the student actually wrote/answered
                           # (e.g. the Write an Email / Academic Discussion response body), so it
                           # can be recalled later instead of only the numeric score surviving
@@ -864,13 +875,30 @@ def migrate_legacy_data_to_user(user_id: int):
 # AUTH: password hashing, JWT issuing/verification, current-user dependency
 # ============================================================
 
+def _bcrypt_safe_bytes(password: str) -> bytes:
+    """bcrypt only looks at the first 72 BYTES of a password and raises ValueError outright on
+    anything longer -- a real-world case, not a theoretical one, since password managers commonly
+    generate 64-128 CHARACTER passwords that can exceed 72 bytes once UTF-8 encoded (even easier
+    with any non-ASCII character in the mix). Without this, register/login/reset-password would
+    500 for those users instead of just working. Truncate at a UTF-8 character boundary (never
+    split a multi-byte character in half, which would corrupt the byte sequence) rather than a
+    raw byte slice."""
+    encoded = password.encode("utf-8")
+    if len(encoded) <= 72:
+        return encoded
+    truncated = encoded[:72]
+    # Back off until we're not mid-character (UTF-8 continuation bytes are 0b10xxxxxx).
+    while truncated and (truncated[-1] & 0xC0) == 0x80:
+        truncated = truncated[:-1]
+    return truncated
+
 def hash_password(password: str) -> str:
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+    return bcrypt.hashpw(_bcrypt_safe_bytes(password), bcrypt.gensalt()).decode("utf-8")
 
 def verify_password(password: str, password_hash: str) -> bool:
     if not password_hash:
         return False
-    return bcrypt.checkpw(password.encode("utf-8"), password_hash.encode("utf-8"))
+    return bcrypt.checkpw(_bcrypt_safe_bytes(password), password_hash.encode("utf-8"))
 
 def create_access_token(user_id: int) -> str:
     payload = {
@@ -1920,9 +1948,18 @@ def get_dashboard(user=Depends(get_current_user)):
 
 @app.post("/api/profile/update")
 def update_profile(data: DashboardData, user=Depends(get_current_user)):
+    # RegisterRequest already rejects an empty/whitespace-only username at signup time -- this
+    # endpoint let that constraint quietly lapse for existing accounts, since DashboardData never
+    # had the same check, so a student could set their own username to "" or all-whitespace from
+    # the Settings screen even though registration never would have allowed it.
+    username = data.username.strip()
+    if not username:
+        raise HTTPException(status_code=400, detail="Username cannot be empty")
+    if len(username) > 50:
+        raise HTTPException(status_code=400, detail="Username is too long")
     conn = get_db()
     try:
-        fields = {"username": data.username, "target_score": data.target_score}
+        fields = {"username": username, "target_score": data.target_score}
         if data.reading_target is not None:
             fields["reading_target"] = data.reading_target
         if data.listening_target is not None:
@@ -2050,6 +2087,8 @@ def get_ridl_passages(user=Depends(get_current_user_optional)):
 
 @app.post("/api/reading/save-result")
 def save_ridl_result(data: RIDLResult, user=Depends(get_current_user)):
+    if data.score > data.total:
+        raise HTTPException(status_code=400, detail="score cannot exceed total")
     pct = round((data.score / data.total) * 100) if data.total > 0 else 0
     conn = get_db()
     try:
@@ -2159,6 +2198,10 @@ def compute_section_band(conn, user_id, section):
 
 @app.post("/api/results/save")
 def save_attempt_result(data: AttemptResult, user=Depends(get_current_user)):
+    if data.category not in CATEGORY_LABELS:
+        raise HTTPException(status_code=400, detail="unknown category")
+    if data.score > data.total:
+        raise HTTPException(status_code=400, detail="score cannot exceed total")
     pct = round((data.score / data.total) * 100) if data.total > 0 else 0
     conn = get_db()
     try:
@@ -2466,9 +2509,15 @@ def mark_mock_seen(data: MarkSeenRequest, user=Depends(get_current_user)):
     it from repeating, whether or not the student actually answers it before saving & exiting."""
     if data.pool not in MOCK_POOL_FILES or not data.item_ids:
         return {"status": "success"}
+    # A real draw is at most a couple dozen items -- cap well above that so a malformed/forged
+    # request can't tie up a pooled DB connection for an extended one-row-at-a-time INSERT loop
+    # (with only DB_POOL_MAX_CONN=10 connections total, a handful of oversized requests in flight
+    # at once could starve the pool for every other student, the same 503 symptom as a genuine
+    # leak).
+    item_ids = data.item_ids[:200]
     conn = get_db()
     try:
-        for item_id in data.item_ids:
+        for item_id in item_ids:
             conn.execute(
                 "INSERT INTO seen_pool_items (user_id, pool, item_id) VALUES (?, ?, ?) "
                 "ON CONFLICT(user_id, pool, item_id) DO NOTHING",
