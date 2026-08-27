@@ -1518,6 +1518,16 @@ if (typeof window !== 'undefined') window.__mrpAudio = sharedAudioEl
 // Calling this from the click that reveals a new question is what actually satisfies that
 // requirement reliably, instead of hoping a stale "this element unlocked once" state carries
 // forward indefinitely (in testing, it does not).
+// Tracks the most recent primeAudio() call so useIntroNarration (below) can tell "a click handler
+// JUST started this exact clip via a real user gesture" apart from "this URL happens to match
+// what's already sitting in .src from an earlier, now-finished playback" -- see the comment in
+// useIntroNarration's effect for why that distinction is what was actually causing the reported
+// "no narration on first open" bug (the effect used to unconditionally reset+reload+replay the
+// clip a few ms after primeAudio had already started it, and that second, effect-driven play()
+// call happens outside the gesture's call stack, which Safari/Chrome are free to autoplay-block).
+let _lastPrimedUrl = null
+let _lastPrimedAt = 0
+
 function primeAudio(url) {
   const audio = sharedAudioEl
   if (!audio || !url) return
@@ -1530,6 +1540,8 @@ function primeAudio(url) {
   audio.src = url
   audio.currentTime = 0
   audio.load()
+  _lastPrimedUrl = url
+  _lastPrimedAt = Date.now()
   const p = audio.play()
   if (p && p.catch) p.catch((err) => { console.warn('[mrp audio] primeAudio play() rejected:', err && err.name, err && err.message, 'for', url) })
 }
@@ -1696,6 +1708,23 @@ function useIntroNarration(url, resetKey) {
     // same line. The cleanup below cancels the pending timer outright before it ever plays.
     const startTimer = setTimeout(() => {
       if (settled) return
+      // If a click handler (the list's "Start"/"Retry" button, or "Next" advancing to the next
+      // question -- see primeAudio() callers) already primed this EXACT url within the last
+      // second, it's already playing from a real user gesture. Resetting .src/.currentTime and
+      // calling .play() again here -- from inside this setTimeout, which runs outside that
+      // gesture's call stack -- used to silently re-trigger Safari/Chrome's autoplay block on
+      // what was otherwise a perfectly good, already-started playback. That was the actual cause
+      // of "no narration when the exercise first opens": primeAudio() started the clip correctly,
+      // then ~60ms later this effect stomped on it and got blocked. Matches the same primed-URL
+      // check AudioPlayer already uses for the main clip below.
+      const justPrimed = _lastPrimedUrl === url && (Date.now() - _lastPrimedAt) < 1000 && audio.src === url && !audio.ended
+      if (justPrimed) {
+        if (audio.paused) {
+          const p = audio.play()
+          if (p && p.catch) p.catch(() => {})
+        }
+        return
+      }
       audio.pause()
       audio.src = url
       audio.currentTime = 0
