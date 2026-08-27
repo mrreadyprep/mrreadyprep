@@ -371,6 +371,41 @@ def audio_proxy(path: str, request: Request, t: str = ""):
 
     return StreamingResponse(iter_bytes(), status_code=upstream.status_code, headers=resp_headers)
 
+# Fixed spoken-instruction narration lines ("Listen to a conversation.", "Listen to a talk in a
+# biology class.", etc.) that the 4 Listening exercise types play before the real
+# conversation/announcement/talk audio. Unlike every other audio_url the backend hands out, these
+# were never signed at all: the frontend used to build "${AUDIO_PROXY_BASE_URL}/intro/<file>.mp3"
+# directly, a plain unsigned URL -- which /audio-proxy above has ALWAYS rejected with 403 "Invalid
+# or expired audio link" ever since signed audio links were introduced (see _audio_url's docstring:
+# it's meant to be the ONLY place a URL under /audio-proxy gets constructed, and this call site
+# was quietly missed). The 403 response body (JSON, not audio) is what the browser's <audio>
+# element reports as a generic "Format error" / NotSupportedError -- which is why this looked like
+# an autoplay problem at first glance instead of the broken-link issue it actually is: the
+# narration never had a working URL to play in the first place, on any browser, for any student.
+_SAFE_INTRO_FILENAME = re.compile(r"^[A-Za-z0-9_\-]+\.mp3$")
+
+class IntroAudioUrlsRequest(BaseModel):
+    filenames: List[str]
+
+@app.post("/api/audio/intro-urls")
+def get_intro_audio_urls(data: IntroAudioUrlsRequest):
+    """Signs a batch of fixed narration filenames for /audio-proxy in one round trip (the frontend
+    calls this once when a Listening list screen mounts, well before the student can click "Start",
+    so the signed URL is already sitting in a client-side cache by the time primeAudio() needs to
+    play it synchronously from that click -- an async fetch happening AT click time would lose the
+    gesture-backed autoplay permission Safari requires, same reasoning as primeAudio() itself).
+    Deliberately unauthenticated and NOT entitlement-gated, unlike every other _audio_url() call
+    site: these narration lines are generic instructional audio reused identically across every
+    item in a pool, free or locked, and carry none of the actual gated exercise content -- there's
+    nothing here worth restricting access to. Restricted to the intro/ namespace via the filename
+    allowlist regex (no slashes, no "..") so this endpoint can never be used to sign a real gated
+    path like "speaking_lr/7/1.mp3" and bypass the entitlement checks that protect those."""
+    result = {}
+    for filename in data.filenames[:300]:
+        if _SAFE_INTRO_FILENAME.match(filename):
+            result[filename] = _audio_url(f"intro/{filename}")
+    return result
+
 # Several Listening JSON pools (listening_part1-4.json, mock_listening_*.json, and the "listening"
 # section embedded in every fixed_test_N.json) were authored with audio_url values hardcoded to
 # "http://localhost:8000/audio/..." instead of being built dynamically like the Speaking pools are.

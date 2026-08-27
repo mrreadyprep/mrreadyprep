@@ -875,6 +875,42 @@ const AUDIO_BASE_URL = import.meta.env.VITE_AUDIO_BASE_URL || `${BACKEND_URL}/au
 // successfully, not straight to R2.
 const AUDIO_PROXY_BASE_URL = `${BACKEND_URL}/audio-proxy`
 
+// Intro narration lines ("Choose the best response.", "Listen to a conversation.", etc.) live at
+// fixed filenames under /audio-proxy/intro/*.mp3 -- but /audio-proxy rejects EVERY request that
+// doesn't carry a valid HMAC-signed ?t= token (see _audio_url/_verify_audio_token in main.py,
+// which exists to stop free users from guessing/enumerating premium audio paths). This code used
+// to build those URLs as plain `${AUDIO_PROXY_BASE_URL}/intro/whatever.mp3` strings with no
+// signature at all, so every single request for them was rejected with 403 "Invalid or expired
+// audio link" -- which the browser only ever surfaces as a generic MEDIA_ELEMENT_ERROR "Format
+// error", making it look like an autoplay/timing bug instead of the real, 100%-reproducible
+// cause. This cache + the /api/audio/intro-urls endpoint below fix that by fetching a real signed
+// URL for each fixed filename ahead of time.
+const _introUrlCache = {}
+// Fetches signed URLs for any of the given filenames not already cached, merging results in.
+// Callers that need a signed URL synchronously at click time (primeAudio(), which must run
+// inside the same call stack as the user gesture -- see the big comment on primeAudio below)
+// should call this from a mount-time effect well before the click can happen, then read via
+// getIntroUrl(). Safe to call with filenames already cached -- becomes a no-op fetch of [].
+async function ensureIntroUrls(filenames) {
+  const missing = [...new Set(filenames)].filter(f => f && !_introUrlCache[f])
+  if (missing.length === 0) return
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/audio/intro-urls`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ filenames: missing }),
+    })
+    if (!res.ok) return
+    const data = await res.json().catch(() => ({}))
+    Object.assign(_introUrlCache, data)
+  } catch (err) {
+    console.warn('[mrp audio] ensureIntroUrls failed:', err && err.message)
+  }
+}
+function getIntroUrl(filename) {
+  return (filename && _introUrlCache[filename]) || null
+}
+
 // ─── Auth: token storage + an authenticated fetch wrapper ────────────────────────────────────
 const AUTH_TOKEN_KEY = 'mrreadyprep_token'
 
@@ -1667,8 +1703,26 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
 // `resetKey` is optional: pass something that changes per-item (e.g. a question index) when the
 // SAME line should be re-announced multiple times within one mounted component -- otherwise the
 // effect only depends on `url`, which is enough for callers that fully remount per item.
-function useIntroNarration(url, resetKey) {
+// Takes a bare filename (e.g. 'listen_choose_response.mp3'), NOT a full URL -- /audio-proxy
+// rejects every request without a valid signed ?t= token (see the big comment on
+// _introUrlCache/ensureIntroUrls above), so a real URL has to come from that signed cache rather
+// than being built as a plain string here. Practice-mode List screens prefetch the filenames
+// they'll need on mount, so getIntroUrl below is normally already populated by the time this
+// mounts; the effect underneath is a safety net for anything that reaches this without having
+// prefetched (e.g. Full Mock Test, which has no preceding "list" screen to prefetch from).
+function useIntroNarration(introFilename, resetKey) {
   const [announced, setAnnounced] = useState(false)
+  const [url, setUrl] = useState(() => getIntroUrl(introFilename))
+  useEffect(() => {
+    if (!introFilename) { setUrl(null); return }
+    const cached = getIntroUrl(introFilename)
+    if (cached) { setUrl(cached); return }
+    let cancelled = false
+    ensureIntroUrls([introFilename]).then(() => {
+      if (!cancelled) setUrl(getIntroUrl(introFilename))
+    })
+    return () => { cancelled = true }
+  }, [introFilename])
   useEffect(() => {
     setAnnounced(false)
     const audio = sharedAudioEl
@@ -2085,6 +2139,10 @@ function ConversationPhoto({ seed = 0, width = 640, height = 380 }) {
 
 function ListeningP1List({ exercises, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
+  // Prefetch the signed intro-narration URL as soon as this list mounts, well before the
+  // student can click Start -- so primeAudio() below can read it synchronously from the cache
+  // at click time instead of needing an async fetch mid-gesture (see ensureIntroUrls above).
+  useEffect(() => { ensureIntroUrls(['listen_choose_response.mp3']) }, [])
   return (
     <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -2102,7 +2160,7 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.questions.length} question${ex.questions.length === 1 ? '' : 's'}`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_choose_response.mp3`); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(getIntroUrl('listen_choose_response.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2136,7 +2194,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   // Re-announced before every question (not just once) since each one is its own short
   // conversation the student needs to be cued for, matching the spoken instruction used before
   // Conversation/Announcement/Academic Talk audio.
-  const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/listen_choose_response.mp3`, currentQ)
+  const announced = useIntroNarration('listen_choose_response.mp3', currentQ)
 
   const questions = exercise.questions
   const q = questions[currentQ]
@@ -2227,7 +2285,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
     // useIntroNarration's resetKey=currentQ above), so -- unlike the other 3 Listening modules,
     // which only need this on Start/Try Again -- every "Next" here needs a fresh, gesture-backed
     // primeAudio() call too, or the narration for question 2+ hits the same stuck-autoplay issue.
-    if (currentQ + 1 < totalQ) primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_choose_response.mp3`)
+    if (currentQ + 1 < totalQ) primeAudio(getIntroUrl('listen_choose_response.mp3'))
     advance(selected)
   }
   const score = answers.filter(a => a.isCorrect).length
@@ -2299,7 +2357,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_choose_response.mp3`); setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { primeAudio(getIntroUrl('listen_choose_response.mp3')); setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -2414,6 +2472,7 @@ function ListeningP1({ onBack }) {
 
 // ─── Listening Part 2 — Listen to a Conversation ──────────────────────────────
 function ListeningP2List({ conversations, scores, onSelect, onBack }) {
+  useEffect(() => { ensureIntroUrls(['listen_to_a_conversation.mp3']) }, [])
   const isMobile = useIsMobile()
   return (
     <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
@@ -2432,7 +2491,7 @@ function ListeningP2List({ conversations, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${c.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_a_conversation.mp3`); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(getIntroUrl('listen_to_a_conversation.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2460,7 +2519,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_a_conversation.mp3`)
+  const announced = useIntroNarration('listen_to_a_conversation.mp3')
 
   const questions = conversation.questions
   const q = questions[qIdx]
@@ -2589,7 +2648,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_a_conversation.mp3`); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { primeAudio(getIntroUrl('listen_to_a_conversation.mp3')); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -2719,6 +2778,7 @@ function ListeningP2({ onBack }) {
 
 // ─── Listening Part 3 — Listen to an Announcement ─────────────────────────────
 function ListeningP3List({ announcements, scores, onSelect, onBack }) {
+  useEffect(() => { ensureIntroUrls(['listen_to_an_announcement.mp3']) }, [])
   const isMobile = useIsMobile()
   return (
     <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
@@ -2737,7 +2797,7 @@ function ListeningP3List({ announcements, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${a.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_an_announcement.mp3`); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(getIntroUrl('listen_to_an_announcement.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2765,7 +2825,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_an_announcement.mp3`)
+  const announced = useIntroNarration('listen_to_an_announcement.mp3')
 
   const questions = announcement.questions
   const q = questions[qIdx]
@@ -2894,7 +2954,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/listen_to_an_announcement.mp3`); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { primeAudio(getIntroUrl('listen_to_an_announcement.mp3')); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -3025,6 +3085,10 @@ function ListeningP3({ onBack }) {
 // ─── Listening Part 4 — Listen to an Academic Talk ────────────────────────────
 function ListeningP4List({ talks, scores, onSelect, onBack }) {
   const isMobile = useIsMobile()
+  // Prefetch every item's signed intro-narration URL up front -- unlike P1-P3 (one fixed line
+  // reused for every item), each Academic Talk has its own narration file keyed by talk.id, and
+  // we don't know in advance which one the student will click Start on.
+  useEffect(() => { ensureIntroUrls(talks.map(t => `academic_talk_practice_${t.id}.mp3`)) }, [talks])
   return (
     <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -3042,7 +3106,7 @@ function ListeningP4List({ talks, scores, onSelect, onBack }) {
                   <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${t.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/academic_talk_practice_${t.id}.mp3`); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(getIntroUrl(`academic_talk_practice_${t.id}.mp3`)); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -3075,7 +3139,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   const q = questions[qIdx]
   const totalQ = questions.length
   const talkIntroText = talk.subject ? `Listen to a talk in ${/^[aeiou]/i.test(talk.subject) ? 'an' : 'a'} ${talk.subject.toLowerCase()} class.` : 'Listen to a talk in an academic class.'
-  const announced = useIntroNarration(`${AUDIO_PROXY_BASE_URL}/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
+  const announced = useIntroNarration(`academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
   // See the matching comment in ListeningP1Exercise -- confirm-before-discard instead of a
   // silent, zero-warning onBack() exit, without a full resumable draft.
   // graded: done -- see the matching comment in ListeningP1Exercise (stops the beforeunload
@@ -3200,7 +3264,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { primeAudio(`${AUDIO_PROXY_BASE_URL}/intro/academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { primeAudio(getIntroUrl(`academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
