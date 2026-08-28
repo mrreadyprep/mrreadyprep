@@ -36,10 +36,9 @@ async def generate_all():
     else:
         print("- listen_to_an_announcement.mp3 already exists, skipping")
 
-    # Listening Part 1 ("Choose the best response") -- re-announced before every question, not
-    # just once per exercise, since each question is its own short standalone exchange.
+    # Listening Part 1 ("Choose the best response") -- announced once when the exercise opens.
     if not os.path.exists("audio/intro/listen_choose_response.mp3"):
-        communicate = edge_tts.Communicate("Listen to a short conversation.", NARRATOR_VOICE)
+        communicate = edge_tts.Communicate("Listen and choose the best response.", NARRATOR_VOICE)
         await communicate.save("audio/intro/listen_choose_response.mp3")
         print("✓ listen_choose_response.mp3 done")
     else:

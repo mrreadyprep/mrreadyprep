@@ -2191,10 +2191,10 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   const [audioDone, setAudioDone] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  // Re-announced before every question (not just once) since each one is its own short
-  // conversation the student needs to be cued for, matching the spoken instruction used before
-  // Conversation/Announcement/Academic Talk audio.
-  const announced = useIntroNarration('listen_choose_response.mp3', currentQ)
+  // Announced once, when the exercise first opens -- not before every question. `announced`
+  // then stays true for the rest of the exercise; each question's own AudioPlayer below still
+  // gets a fresh play via its own `autoPlayKey={currentQ}`, independent of this narration line.
+  const announced = useIntroNarration('listen_choose_response.mp3')
 
   const questions = exercise.questions
   const q = questions[currentQ]
@@ -2281,11 +2281,6 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   const formatTime = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(s % 60).padStart(2, '0')}`
   const isLowTime = timeLeft <= 5
   const handleNext = () => {
-    // Choose a Response re-announces the same fixed narration line before every question (see
-    // useIntroNarration's resetKey=currentQ above), so -- unlike the other 3 Listening modules,
-    // which only need this on Start/Try Again -- every "Next" here needs a fresh, gesture-backed
-    // primeAudio() call too, or the narration for question 2+ hits the same stuck-autoplay issue.
-    if (currentQ + 1 < totalQ) primeAudio(getIntroUrl('listen_choose_response.mp3'))
     advance(selected)
   }
   const score = answers.filter(a => a.isCorrect).length
