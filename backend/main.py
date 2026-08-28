@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-from fastapi import FastAPI, HTTPException, Depends, Header, Request
+from fastapi import FastAPI, HTTPException, Depends, Header, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import StreamingResponse
@@ -66,12 +66,49 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Standard defense-in-depth response headers -- none of these were set anywhere before, so every
+# response (API JSON, streamed audio, everything) went out with browser defaults. Applied via a
+# plain middleware function (not a dedicated package) so there's no new dependency to pin/audit.
+@app.middleware("http")
+async def _security_headers(request: Request, call_next):
+    response = await call_next(request)
+    # Stop this API from ever being framed (clickjacking) -- nothing here is meant to be embedded.
+    response.headers["X-Frame-Options"] = "DENY"
+    # Stop browsers from MIME-sniffing a response into a different content type than declared.
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    # Don't leak the full referring URL (which can contain auth/reset tokens in query strings) to
+    # other origins; same-origin requests still get the full path.
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    # This API is never rendered as a document, so a restrictive CSP costs nothing and closes off
+    # any future accidental HTML-reflection endpoint from being useful for injection.
+    response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'"
+    # Force HTTPS on every subsequent request for a year, including subdomains -- Render always
+    # terminates TLS at its edge, so this is safe to send unconditionally in production. Only add
+    # it once we can tell we're actually behind that HTTPS edge (RENDER env var), so plain local
+    # dev over http://localhost is never redirected/upgraded.
+    if os.environ.get("RENDER"):
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
+
 # ============================================================
 # AUTH CONFIG
 # ============================================================
 # In production (Render, etc.) set JWT_SECRET_KEY as a real environment variable -- this
-# fallback is only for local development so the app still works out of the box.
-JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY") or "dev-only-insecure-secret-change-me"
+# fallback is only for local development so the app still works out of the box. If it's ever
+# unset on Render itself (misconfiguration, a fresh environment spun up without copying vars,
+# an env var accidentally cleared during a redeploy), we must NOT silently fall back to this
+# fixed, publicly-visible string: anyone who has read this file could forge a valid JWT for any
+# user_id (including an admin's), and this same key also signs every /audio-proxy link. RENDER is
+# set automatically by Render's platform on every service, so this only refuses to start in an
+# actual production deploy -- local/dev environments (no RENDER var) keep working out of the box.
+JWT_SECRET_KEY = os.environ.get("JWT_SECRET_KEY")
+if not JWT_SECRET_KEY:
+    if os.environ.get("RENDER"):
+        raise RuntimeError(
+            "JWT_SECRET_KEY is not set. Refusing to start in production with an insecure default "
+            "secret -- set JWT_SECRET_KEY in the Render environment variables."
+        )
+    JWT_SECRET_KEY = "dev-only-insecure-secret-change-me"
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRE_DAYS = 30
 
@@ -272,7 +309,20 @@ def require_premium_pool(user):
 # hasn't had its persistent disk populated yet still boots instead of crashing at startup; audio
 # playback simply 404s until the files are uploaded.
 os.makedirs("audio", exist_ok=True)
-app.mount("/audio", StaticFiles(directory="audio"), name="audio")
+# SECURITY: only expose this raw, unauthenticated static mount outside of production. Every
+# audio_url this backend hands out is deliberately routed through the signed /audio-proxy below
+# instead of a direct link (see the long comment above _audio_url further down: paths are a
+# small, guessable pattern, e.g. "speaking_lr/61/1.mp3", so an unsigned route lets anyone
+# construct a locked item's path by hand and stream premium audio directly, bypassing every
+# pool's paywall). Mounting the same files here too, with zero entitlement check, would quietly
+# reopen exactly that hole -- currently harmless only because production serves audio from R2 and
+# this local audio/ directory is empty there, but nothing would stop it from becoming a live
+# bypass the moment that directory is ever repopulated on the deployed instance (e.g. falling
+# back to a persistent disk instead of R2). RENDER is set automatically by Render's platform, so
+# this mount stays available for local dev (where it's how AUDIO_BASE_URL's default,
+# self-referential value is actually served) while being refused outright in production.
+if not os.environ.get("RENDER"):
+    app.mount("/audio", StaticFiles(directory="audio"), name="audio")
 
 # Base URL prefix for audio files (used to build every audio_url/audio_url_intro field sent to the
 # frontend). Defaults to this backend's own /audio static mount (fine for local dev, and for
@@ -508,7 +558,9 @@ class DashboardData(BaseModel):
 
 class RegisterRequest(BaseModel):
     email: EmailStr
-    username: str
+    # Matches the cap update_profile() already enforces for username changes -- registration had
+    # no bound at all before, so a signup could create an arbitrarily long username.
+    username: str = Field(max_length=50)
     # No hard byte-length rejection here (a password manager's 100-char passphrase should still
     # work -- see _bcrypt_safe_bytes truncation) -- just a sanity ceiling against pathological
     # payloads.
@@ -550,15 +602,18 @@ class AttemptResult(BaseModel):
     category: str       # e.g. 'ctw', 'ridl', 'ap', 'listening_p1'..'p4', 'bas', 'email', 'disc',
                          # 'speaking_lr', 'speaking_interview', 'mock_reading', 'mock_listening',
                          # 'mock_writing', 'mock_speaking', 'mock_overall'
-    item_id: str         # exercise/passage/test id (as string) the attempt belongs to
-    label: str = ""      # human-readable label shown in the progress UI, e.g. "Mock Test 3 · Reading"
+    item_id: str = Field(max_length=100)         # exercise/passage/test id (as string) the attempt belongs to
+    label: str = Field("", max_length=200)      # human-readable label shown in the progress UI, e.g. "Mock Test 3 · Reading"
     # Bounded so a forged/buggy request can't permanently inflate compute_section_band()'s SUM(score)/
     # SUM(total) for this student (there's no undo short of DB surgery once a bad row lands). The
     # category-allowlist and score<=total checks live in save_attempt_result() itself, since
     # CATEGORY_LABELS is defined further down the file and score-vs-total is a cross-field rule.
-    score: float = Field(ge=0)
-    total: float = Field(ge=0)
-    detail: str = ""     # optional freeform text of what the student actually wrote/answered
+    # Upper bound is a generous sanity ceiling, not a real business rule (no real exercise scores
+    # anywhere near this high) -- it only exists to stop a forged request setting e.g. total=1,
+    # score=1000000 to permanently inflate this student's own dashboard band score.
+    score: float = Field(ge=0, le=1000)
+    total: float = Field(ge=0, le=1000)
+    detail: str = Field("", max_length=20000)     # optional freeform text of what the student actually wrote/answered
                           # (e.g. the Write an Email / Academic Discussion response body), so it
                           # can be recalled later instead of only the numeric score surviving
 
@@ -754,6 +809,7 @@ def init_db():
             writing_score REAL NOT NULL DEFAULT 4.5,
             speaking_score REAL NOT NULL DEFAULT 4.0,
             vocab_level INTEGER NOT NULL DEFAULT 1,
+            token_version INTEGER NOT NULL DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     """)
@@ -794,6 +850,13 @@ def init_db():
     # ~24h window even if it's triggered more than once.
     if not _has_column(conn, "users", "last_reminder_sent_at"):
         conn.execute("ALTER TABLE users ADD COLUMN last_reminder_sent_at TIMESTAMP")
+    # Embedded in every JWT this backend issues (see create_access_token) and re-checked on every
+    # authenticated request (see get_current_user). Bumped by reset_password() so a JWT issued
+    # before a password reset -- e.g. one stolen via a compromised device, or a leaked token --
+    # stops working the moment the legitimate owner resets their password specifically to lock an
+    # attacker out, instead of silently remaining valid for the rest of its normal 30-day life.
+    if not _has_column(conn, "users", "token_version"):
+        conn.execute("ALTER TABLE users ADD COLUMN token_version INTEGER NOT NULL DEFAULT 0")
 
     # Which vocab words each student has personally marked as learned.
     conn.execute("""
@@ -935,9 +998,10 @@ def verify_password(password: str, password_hash: str) -> bool:
         return False
     return bcrypt.checkpw(_bcrypt_safe_bytes(password), password_hash.encode("utf-8"))
 
-def create_access_token(user_id: int) -> str:
+def create_access_token(user_id: int, token_version: int = 0) -> str:
     payload = {
         "sub": str(user_id),
+        "tv": token_version,
         "exp": datetime.now(timezone.utc) + timedelta(days=JWT_EXPIRE_DAYS),
         "iat": datetime.now(timezone.utc),
     }
@@ -969,11 +1033,17 @@ def get_current_user(authorization: Optional[str] = Header(None)):
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid authentication token")
     user_id = int(payload["sub"])
+    # Tokens issued before this field existed carry no "tv" claim -- treat that as version 0,
+    # which matches every existing user row's DEFAULT 0, so already-issued valid sessions aren't
+    # retroactively invalidated by this change.
+    token_version = payload.get("tv", 0)
     conn = get_db()
     try:
         user = get_user_by_id(conn, user_id)
         if not user:
             raise HTTPException(status_code=401, detail="Account no longer exists")
+        if int(user["token_version"] or 0) != int(token_version):
+            raise HTTPException(status_code=401, detail="Session expired, please log in again")
         return user
     finally:
         conn.close()
@@ -1362,8 +1432,8 @@ def register(data: RegisterRequest, request: Request):
         verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
         send_verification_email(email, verify_link)
 
-        token = create_access_token(user_id)
         user = get_user_by_id(conn, user_id)
+        token = create_access_token(user_id, user["token_version"])
         return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
     finally:
         conn.close()
@@ -1377,6 +1447,18 @@ def register(data: RegisterRequest, request: Request):
 LOGIN_ATTEMPT_WINDOW_SECONDS = 15 * 60
 LOGIN_ATTEMPT_MAX = 5
 _login_attempts: dict = collections.defaultdict(list)
+# The IP+email key above blocks nothing if an attacker varies ONE of the two on every request:
+# credential stuffing from a single IP (trying many different emails) never repeats a key, and a
+# distributed attack against one known victim email (rotating source IPs/a botnet) gets a fresh
+# 5-attempt allowance per IP. These two extra, coarser, IP-only and email-only backstops close
+# both gaps without punishing normal users, since their thresholds are far above what a real
+# student hitting "wrong password" a few times would ever reach.
+LOGIN_ATTEMPT_IP_WINDOW_SECONDS = 15 * 60
+LOGIN_ATTEMPT_IP_MAX = 30
+_login_attempts_by_ip: dict = collections.defaultdict(list)
+LOGIN_ATTEMPT_EMAIL_WINDOW_SECONDS = 60 * 60
+LOGIN_ATTEMPT_EMAIL_MAX = 15
+_login_attempts_by_email: dict = collections.defaultdict(list)
 # Guards every read-modify-write below (all these stores' check-then-append sequences aren't
 # atomic on their own) -- without it, concurrent requests sharing a key (e.g. two tabs submitting
 # the login form at once) could each read the same pre-append state and let a couple more attempts
@@ -1399,28 +1481,35 @@ def _client_ip(request: Request) -> str:
             return parts[-1]
     return request.client.host if request.client else "unknown"
 
-def _check_login_rate_limit(key: str):
+def _check_bounded_attempts(store: dict, key: str, window_seconds: int, max_attempts: int) -> bool:
+    """Shared helper for the three login backstops below: prunes `key`'s expired timestamps,
+    drops the key entirely once empty (so the dict doesn't accumulate one permanent entry per
+    IP/email ever seen), and returns whether `key` is currently AT the limit. Must be called
+    with _rate_limit_lock already held."""
+    now = time.time()
+    attempts = [t for t in store[key] if now - t < window_seconds]
+    if attempts:
+        store[key] = attempts
+    else:
+        store.pop(key, None)
+    return len(attempts) >= max_attempts
+
+def _check_login_rate_limit(key: str, ip: str, email: str):
     _sweep_stale_rate_limit_entries()
     with _rate_limit_lock:
-        now = time.time()
-        attempts = [t for t in _login_attempts[key] if now - t < LOGIN_ATTEMPT_WINDOW_SECONDS]
-        # Drop the key entirely once its window has fully expired rather than leaving an empty list
-        # behind -- otherwise the dict accumulates one permanent entry per distinct IP/email this
-        # process has ever seen, for as long as the server stays up.
-        if attempts:
-            _login_attempts[key] = attempts
-        else:
-            _login_attempts.pop(key, None)
-        if len(attempts) >= LOGIN_ATTEMPT_MAX:
-            retry_after_sec = int(LOGIN_ATTEMPT_WINDOW_SECONDS - (now - attempts[0]))
-            raise HTTPException(
-                status_code=429,
-                detail=f"Too many failed login attempts. Please try again in {max(1, retry_after_sec // 60)} minute(s).",
-            )
+        if _check_bounded_attempts(_login_attempts, key, LOGIN_ATTEMPT_WINDOW_SECONDS, LOGIN_ATTEMPT_MAX):
+            raise HTTPException(status_code=429, detail="Too many failed login attempts. Please try again in a few minutes.")
+        if _check_bounded_attempts(_login_attempts_by_ip, ip, LOGIN_ATTEMPT_IP_WINDOW_SECONDS, LOGIN_ATTEMPT_IP_MAX):
+            raise HTTPException(status_code=429, detail="Too many failed login attempts from this connection. Please try again in a few minutes.")
+        if _check_bounded_attempts(_login_attempts_by_email, email, LOGIN_ATTEMPT_EMAIL_WINDOW_SECONDS, LOGIN_ATTEMPT_EMAIL_MAX):
+            raise HTTPException(status_code=429, detail="Too many failed login attempts for this account. Please try again in a while, or reset your password.")
 
-def _record_failed_login(key: str):
+def _record_failed_login(key: str, ip: str, email: str):
     with _rate_limit_lock:
-        _login_attempts[key].append(time.time())
+        now = time.time()
+        _login_attempts[key].append(now)
+        _login_attempts_by_ip[ip].append(now)
+        _login_attempts_by_email[email].append(now)
 
 # --- Register / forgot-password brute-force protection ---
 # Unlike login (which only counts *failed* attempts, so a legitimate student who mistypes their
@@ -1445,7 +1534,7 @@ _resend_verification_attempts: dict = collections.defaultdict(list)
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _register_attempts, _forgot_password_attempts, _resend_verification_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _forgot_password_attempts, _resend_verification_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -1483,16 +1572,20 @@ def _check_and_consume_rate_limit(store: dict, key: str, window_seconds: int, ma
 @app.post("/api/auth/login")
 def login(data: LoginRequest, request: Request):
     email = data.email.strip().lower()
-    rate_limit_key = f"{_client_ip(request)}:{email}"
-    _check_login_rate_limit(rate_limit_key)
+    ip = _client_ip(request)
+    rate_limit_key = f"{ip}:{email}"
+    _check_login_rate_limit(rate_limit_key, ip, email)
     conn = get_db()
     try:
         user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
         if not user or not verify_password(data.password, user["password_hash"]):
-            _record_failed_login(rate_limit_key)
+            _record_failed_login(rate_limit_key, ip, email)
             raise HTTPException(status_code=401, detail="Incorrect email or password")
-        _login_attempts.pop(rate_limit_key, None)
-        token = create_access_token(user["id"])
+        with _rate_limit_lock:
+            _login_attempts.pop(rate_limit_key, None)
+            _login_attempts_by_ip.pop(ip, None)
+            _login_attempts_by_email.pop(email, None)
+        token = create_access_token(user["id"], user["token_version"])
         return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
     finally:
         conn.close()
@@ -1569,7 +1662,7 @@ def google_login(data: GoogleLoginRequest):
                     migrate_legacy_data_to_user(user_id)
                 user = get_user_by_id(conn, user_id)
 
-        token = create_access_token(user["id"])
+        token = create_access_token(user["id"], user["token_version"])
         return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
     finally:
         conn.close()
@@ -1613,8 +1706,11 @@ def reset_password(data: ResetPasswordRequest):
         expires = user["password_reset_token_expires"]
         if not expires or _parse_db_datetime(expires) < datetime.now(timezone.utc):
             raise HTTPException(status_code=400, detail="This reset link has expired. Please request a new one")
+        # Bumping token_version here invalidates every JWT issued before this reset (see
+        # get_current_user) -- including one an attacker may have stolen, which is the whole point
+        # of letting a student reset their password in the first place.
         conn.execute(
-            "UPDATE users SET password_hash = ?, password_reset_token = NULL, password_reset_token_expires = NULL WHERE id = ?",
+            "UPDATE users SET password_hash = ?, password_reset_token = NULL, password_reset_token_expires = NULL, token_version = token_version + 1 WHERE id = ?",
             (hash_password(data.new_password), user["id"]),
         )
         conn.commit()
@@ -2250,7 +2346,7 @@ def save_attempt_result(data: AttemptResult, user=Depends(get_current_user)):
         conn.close()
 
 @app.get("/api/results/history")
-def get_results_history(category: str = None, limit: int = 300, user=Depends(get_current_user)):
+def get_results_history(category: str = None, limit: int = Query(300, ge=1, le=1000), user=Depends(get_current_user)):
     conn = get_db()
     try:
         if category:
