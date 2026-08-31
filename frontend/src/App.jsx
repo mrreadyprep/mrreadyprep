@@ -1846,18 +1846,49 @@ function SafeAudio({ src, onEnded, onError, timeoutMs = 8000 }) {
   const firedRef = useRef(false)
   const onEndedRef = useRef(onEnded)
   const onErrorRef = useRef(onError)
+  const audioElRef = useRef(null)
   onEndedRef.current = onEnded
   onErrorRef.current = onError
 
   useEffect(() => {
     firedRef.current = false
-    const timer = setTimeout(() => {
+    // Was previously a single one-shot setTimeout(timeoutMs) that fired the fallback the moment
+    // `timeoutMs` (8s) elapsed since mount, with no regard for whether the audio was actually
+    // still loading/playing fine -- just longer than 8 seconds. Any narration clip over 8s got
+    // cut off partway through, because firing the fallback advances the caller to its next phase,
+    // which unmounts this component (and the underlying <audio>) mid-playback. Confirmed live: a
+    // 9.65s Listen & Repeat intro ("...Repeat only once.") lost its last ~1.6s -- the very phrase
+    // at the end -- every single time, silently.
+    //
+    // Fixed to track real playback progress instead of a flat deadline: `timeupdate` (fires
+    // continuously while genuinely playing) resets the stuck-clock, so a long clip that's playing
+    // normally never trips the fallback. Only true stalls -- blocked by CORS/403, network hang,
+    // autoplay blocked with no user gesture, etc., where no progress happens at all -- still fall
+    // back after `timeoutMs` of silence, exactly as intended.
+    let lastProgressAt = Date.now()
+    const markProgress = () => { lastProgressAt = Date.now() }
+    const el = audioElRef.current
+    if (el) {
+      el.addEventListener('timeupdate', markProgress)
+      el.addEventListener('playing', markProgress)
+      el.addEventListener('canplay', markProgress)
+    }
+    const checkInterval = setInterval(() => {
       if (firedRef.current) return
-      firedRef.current = true
-      console.warn('[mrp audio] SafeAudio stuck loading, falling back after', timeoutMs, 'ms:', src)
-      onErrorRef.current && onErrorRef.current()
-    }, timeoutMs)
-    return () => clearTimeout(timer)
+      if (Date.now() - lastProgressAt >= timeoutMs) {
+        firedRef.current = true
+        console.warn('[mrp audio] SafeAudio stuck loading, falling back after', timeoutMs, 'ms of no progress:', src)
+        onErrorRef.current && onErrorRef.current()
+      }
+    }, 500)
+    return () => {
+      clearInterval(checkInterval)
+      if (el) {
+        el.removeEventListener('timeupdate', markProgress)
+        el.removeEventListener('playing', markProgress)
+        el.removeEventListener('canplay', markProgress)
+      }
+    }
   }, [src, timeoutMs])
 
   const wrap = (fn) => () => {
@@ -1866,7 +1897,7 @@ function SafeAudio({ src, onEnded, onError, timeoutMs = 8000 }) {
     fn && fn()
   }
 
-  return <audio src={src} autoPlay onEnded={wrap(onEndedRef.current)} onError={wrap(onErrorRef.current)} />
+  return <audio ref={audioElRef} src={src} autoPlay onEnded={wrap(onEndedRef.current)} onError={wrap(onErrorRef.current)} />
 }
 
 // Placeholder speaker photos (free-to-use placeholder avatar set, gender-matched).
