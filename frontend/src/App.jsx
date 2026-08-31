@@ -914,14 +914,18 @@ function getIntroUrl(filename) {
 // ─── Auth: token storage + an authenticated fetch wrapper ────────────────────────────────────
 const AUTH_TOKEN_KEY = 'mrreadyprep_token'
 
+// Wrapped in try/catch like the draft helpers above -- localStorage access can throw (private
+// browsing in some browsers, storage full/disabled). getAuthToken() in particular runs on every
+// single apiFetch call including the boot-time auth check, so an uncaught throw here used to
+// crash the whole app into the generic error-boundary screen with no real recovery path.
 function getAuthToken() {
-  return localStorage.getItem(AUTH_TOKEN_KEY) || ''
+  try { return localStorage.getItem(AUTH_TOKEN_KEY) || '' } catch { return '' }
 }
 function setAuthToken(token) {
-  localStorage.setItem(AUTH_TOKEN_KEY, token)
+  try { localStorage.setItem(AUTH_TOKEN_KEY, token) } catch { /* ignore quota/availability errors */ }
 }
 function clearAuthToken() {
-  localStorage.removeItem(AUTH_TOKEN_KEY)
+  try { localStorage.removeItem(AUTH_TOKEN_KEY) } catch { /* ignore */ }
 }
 function logout() {
   clearAuthToken()
@@ -1027,15 +1031,24 @@ const PADDLE_ENVIRONMENT = import.meta.env.VITE_PADDLE_ENVIRONMENT || 'sandbox'
 
 // Lazily loads Paddle.js (https://cdn.paddle.com/paddle/v2/paddle.js) and initializes it at most
 // once no matter how many times it's called -- returns a promise that resolves once
-// window.Paddle is ready to open a checkout. `onEvent` is (re)registered as Paddle's global
-// eventCallback every call, so the latest caller's handler is always the one that fires.
+// window.Paddle is ready to open a checkout.
+//
+// `onEvent` is stored in this module-level ref and updated on EVERY call, not just the first --
+// window.Paddle.Initialize's eventCallback is only ever wired up once (inside `init`, which only
+// runs the first time), so without this indirection every call after the first would silently
+// keep firing the *first* caller's handler forever, discarding whatever handler a later
+// loadPaddle(newHandler) call passed in. Harmless today since SubscribeScreen's handler closes
+// over no per-instance state, but would silently break the moment it needed to (e.g. if
+// SubscribeScreen ever remounts before checkout finishes).
 let _paddleLoadPromise = null
+let _paddleOnEventRef = null
 function loadPaddle(onEvent) {
+  _paddleOnEventRef = onEvent
   if (!_paddleLoadPromise) {
     _paddleLoadPromise = new Promise((resolve, reject) => {
       const init = () => {
         if (PADDLE_ENVIRONMENT === 'sandbox') window.Paddle.Environment.set('sandbox')
-        window.Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN, eventCallback: (e) => onEvent && onEvent(e) })
+        window.Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN, eventCallback: (e) => _paddleOnEventRef && _paddleOnEventRef(e) })
         resolve(window.Paddle)
       }
       if (window.Paddle) { init(); return }
@@ -6215,14 +6228,21 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   const score = answers.reduce((s, a) => s + a.score, 0)
   const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
   const progressPct = phase === 'summary' ? 100 : (sentenceIdx / totalQ) * 100
-  // Same fix as EmailExercise/AcademicDiscussion: the header's exit button stays visible through
-  // the graded 'summary' phase, and previously always called plain onBack(), silently skipping
-  // the score-sync that only the "Finish ->" button (summary phase only) triggered.
-  const handleExit = () => { if (phase === 'summary') onComplete(answers); else onBack() }
+  // Was previously the only place in the whole app doing its own ad-hoc exit handling instead of
+  // useExitDraft -- meant no confirm-before-discard on mid-recording exit, and no beforeunload
+  // "Leave site?" guard if the student closed the tab mid-recording (silently losing the attempt).
+  // canSave: false matches ListeningP1Exercise's live-recording pattern (nothing meaningful to
+  // resume from a draft here); graded: phase === 'summary' + onExitGraded mirrors what the old
+  // handleExit did -- sync the earned score via onComplete(answers) once already graded.
+  const { requestExit, modal: exitModal } = useExitDraft({
+    category: 'speaking_lr', itemId: item.id ?? index, onBack, mockMode,
+    canSave: false, graded: phase === 'summary', onExitGraded: () => onComplete(answers),
+  })
 
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 6</span>}
       section="SPEAKING"
       questionLabel={`${item.location} · Sentence ${sentenceIdx + 1} of ${totalQ}`}
@@ -6303,6 +6323,8 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
           )}
         </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
@@ -6496,12 +6518,17 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
   const score = answers.reduce((s, a) => s + a.score, 0)
   const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
   const progressPct = phase === 'summary' ? 100 : (qIdx / totalQ) * 100
-  // Same fix as ListenRepeatExercise/EmailExercise/AcademicDiscussion.
-  const handleExit = () => { if (phase === 'summary') onComplete(answers); else onBack() }
+  // Same fix as ListenRepeatExercise -- see the comment there. Was the other component missing
+  // useExitDraft entirely.
+  const { requestExit, modal: exitModal } = useExitDraft({
+    category: 'speaking_interview', itemId: item.id ?? index, onBack, mockMode,
+    canSave: false, graded: phase === 'summary', onExitGraded: () => onComplete(answers),
+  })
 
   return (
+    <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={handleExit}>Save &amp; Exit</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 6</span>}
       section="SPEAKING"
       questionLabel={`${item.topic} · Question ${qIdx + 1} of ${totalQ}`}
@@ -6580,6 +6607,8 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
           )}
         </div>
     </ExamScreen>
+    {exitModal}
+    </>
   )
 }
 
@@ -6684,14 +6713,19 @@ function ReadInDailyLife({ onBack }) {
 
   useEffect(() => {
     let cancelled = false
+    // Uses the same unified saveResult/fetchLatestResults('ridl') pattern as every other Reading
+    // sibling (CompleteTheWords, AcademicPassage) -- this used to also read/write the older,
+    // reading-specific /api/reading/results and /api/reading/save-result endpoints in parallel,
+    // which double-wrote every completion to two separate record systems and made this the only
+    // screen whose "done" badges came from a different source than everything else reads from.
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/reading/read-in-daily-life`).then(r => r.json()),
-      apiFetch(`${BACKEND_URL}/api/reading/results`).then(r => r.json()),
-    ]).then(([passageData, resultData]) => {
+      fetchLatestResults('ridl'),
+    ]).then(([passageData, results]) => {
       if (cancelled) return
       setPassages(passageData)
       const mapped = {}
-      passageData.forEach((p, i) => { const key = String(p.id); if (resultData[key]) mapped[i] = resultData[key] })
+      passageData.forEach((p, i) => { const row = results[String(p.id)]; if (row) mapped[i] = { score: row.score, total: row.total } })
       setScores(mapped)
       setLoading(false)
     }).catch(() => { if (!cancelled) setLoading(false) })
@@ -6701,10 +6735,6 @@ function ReadInDailyLife({ onBack }) {
   const handleComplete = (score, total) => {
     if (selectedIdx === null) return
     const passage = passages[selectedIdx]
-    apiFetch(`${BACKEND_URL}/api/reading/save-result`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ passage_id: passage.id, score, total }),
-    }).catch(err => console.error(err))
     saveResult('ridl', passage.id, score, total, `Read in Daily Life #${passage.id}`)
     setScores(prev => ({ ...prev, [selectedIdx]: { score, total } }))
   }
@@ -8655,7 +8685,7 @@ function loadClarity() {
 // analytics script ever runs. Mirrors the same accepted-once-then-remembered pattern already
 // used for auth/drafts elsewhere in the app (localStorage, not cookies, for our own state).
 function CookieConsentBanner() {
-  const [choice, setChoice] = useState(() => localStorage.getItem(COOKIE_CONSENT_KEY))
+  const [choice, setChoice] = useState(() => { try { return localStorage.getItem(COOKIE_CONSENT_KEY) } catch { return null } })
 
   useEffect(() => {
     if (choice === 'accepted') { loadGoogleAnalytics(); loadClarity() }
@@ -8664,7 +8694,10 @@ function CookieConsentBanner() {
   if ((!GA_MEASUREMENT_ID && !CLARITY_PROJECT_ID) || choice) return null
 
   const respond = (value) => {
-    localStorage.setItem(COOKIE_CONSENT_KEY, value)
+    // If localStorage throws (private browsing / storage disabled), still update state so the
+    // banner closes instead of getting stuck open forever -- we just won't remember the choice
+    // across reloads in that case, which is the best available fallback.
+    try { localStorage.setItem(COOKIE_CONSENT_KEY, value) } catch { /* ignore */ }
     setChoice(value)
   }
 

@@ -1065,14 +1065,16 @@ def get_current_user_optional(authorization: Optional[str] = Header(None)):
     except HTTPException:
         return None
 
-def _send_transactional_email(to_email: str, subject: str, html: str, log_prefix: str):
+def _send_transactional_email(to_email: str, subject: str, html: str, log_prefix: str) -> bool:
     """Shared Resend (resend.com) send path for every transactional email this backend sends
     (password reset, email verification, ...). If RESEND_API_KEY isn't configured, or the send
     fails for any reason, this just logs to the server console instead of raising -- the calling
-    endpoint should never itself error out just because email delivery isn't wired up or hiccups."""
+    endpoint should never itself error out just because email delivery isn't wired up or hiccups.
+    Returns whether Resend actually accepted the email, so callers that need to know (e.g. the
+    practice-reminder cron, which must not mark someone as "reminded" on a failed send) can check."""
     if not RESEND_API_KEY:
         print(f"[{log_prefix}] RESEND_API_KEY not set -- email to {to_email} not sent (subject: {subject!r})", flush=True)
-        return
+        return False
     payload = json.dumps({
         "from": RESEND_FROM_EMAIL,
         "to": [to_email],
@@ -1096,11 +1098,14 @@ def _send_transactional_email(to_email: str, subject: str, html: str, log_prefix
     try:
         resp = urllib.request.urlopen(req, timeout=10)
         print(f"[{log_prefix}] Resend accepted the email for {to_email} (status {resp.status})", flush=True)
+        return True
     except urllib.error.HTTPError as e:
         body = e.read().decode("utf-8", errors="replace")
         print(f"[{log_prefix}] Resend rejected the email for {to_email}: HTTP {e.code} -- {body}", flush=True)
+        return False
     except urllib.error.URLError as e:
         print(f"[{log_prefix}] Failed to send email to {to_email}: {e}", flush=True)
+        return False
 
 def send_password_reset_email(to_email: str, reset_link: str):
     if not RESEND_API_KEY:
@@ -1128,8 +1133,8 @@ def send_verification_email(to_email: str, verify_link: str):
         "email verification",
     )
 
-def send_practice_reminder_email(to_email: str, username: str):
-    _send_transactional_email(
+def send_practice_reminder_email(to_email: str, username: str) -> bool:
+    return _send_transactional_email(
         to_email,
         "Haven't practiced today? A few minutes goes a long way",
         f"<p>Hi {_html.escape(username) if username else 'there'},</p>"
@@ -1186,12 +1191,19 @@ def send_practice_reminders(x_cron_secret: Optional[str] = Header(None, alias="X
         """, (cutoff, cutoff, cutoff, cutoff)).fetchall()
 
         sent = 0
+        failed = 0
         for row in rows:
-            send_practice_reminder_email(row["email"], row["username"])
-            conn.execute("UPDATE users SET last_reminder_sent_at = ? WHERE id = ?", (now_str, row["id"]))
-            sent += 1
+            # Only stamp last_reminder_sent_at on an actual successful send -- otherwise a
+            # transient Resend outage (or RESEND_API_KEY being unset/invalid) would silently mark
+            # everyone "reminded" for the day and the 24h re-send gate above would then suppress
+            # any retry, leaving affected students never actually reminded until someone notices.
+            if send_practice_reminder_email(row["email"], row["username"]):
+                conn.execute("UPDATE users SET last_reminder_sent_at = ? WHERE id = ?", (now_str, row["id"]))
+                sent += 1
+            else:
+                failed += 1
         conn.commit()
-        return {"status": "ok", "reminders_sent": sent}
+        return {"status": "ok", "reminders_sent": sent, "reminders_failed": failed}
     finally:
         conn.close()
 
@@ -1468,12 +1480,22 @@ _login_attempts_by_email: dict = collections.defaultdict(list)
 _rate_limit_lock = threading.Lock()
 
 def _client_ip(request: Request) -> str:
-    # Render terminates TLS at its edge and forwards to this app, appending the real client IP
-    # as the LAST hop on X-Forwarded-For. Any earlier entries (including the whole header) can be
-    # set by the client itself, so taking the first entry (as an earlier version of this function
-    # did) let anyone bypass every IP-keyed rate limit below just by sending a different fake
-    # X-Forwarded-For value on each request. The last entry is the one Render itself appended and
-    # can't be spoofed by the caller.
+    # Traffic now flows client -> Cloudflare -> Render -> this app (Cloudflare was added in
+    # front of the backend as api.mrreadyprep.com). Cloudflare sets CF-Connecting-IP to the real
+    # visitor IP and this header cannot be spoofed by the client *when the request actually came
+    # through Cloudflare* -- Cloudflare strips/overwrites any client-supplied value before
+    # forwarding. Prefer it when present.
+    #
+    # Falling back to the last X-Forwarded-For hop (as before) covers local/dev and any request
+    # that somehow bypasses Cloudflare and hits Render directly -- Render still appends the real
+    # connecting IP as the last hop in that case. Note this fallback is only as trustworthy as
+    # "Render is the direct edge", which is no longer guaranteed to be the only path in prod; the
+    # residual fix is to lock the Render origin down to only accept connections from Cloudflare's
+    # IP ranges (Cloudflare Authenticated Origin Pulls / an IP allowlist on Render), so a request
+    # can't reach this app at all without going through Cloudflare first.
+    cf_ip = request.headers.get("cf-connecting-ip", "").strip()
+    if cf_ip:
+        return cf_ip
     forwarded = request.headers.get("x-forwarded-for", "")
     if forwarded:
         parts = [p.strip() for p in forwarded.split(",") if p.strip()]
@@ -1897,6 +1919,13 @@ def create_checkout(user=Depends(get_current_user)):
     forged user_id in a client-side customData would otherwise let someone grant premium to an
     account they don't own just by paying for a different one."""
     _require_paddle()
+    if has_active_subscription(user):
+        # Without this, a stale tab / double-click before the UI re-fetches status / a retried
+        # client request can create a second real Paddle transaction for someone who's already
+        # subscribed. The webhook below just overwrites paddle_subscription_id with whichever one
+        # fires last, silently orphaning the other -- Paddle keeps billing it, and the student has
+        # no self-service way to cancel it since Settings only offers to cancel the one on file.
+        raise HTTPException(status_code=400, detail="You already have an active subscription.")
     body = {
         "items": [{"price_id": PADDLE_PRICE_ID, "quantity": 1}],
         "customer": {"email": user["email"]},
@@ -1952,6 +1981,13 @@ async def paddle_webhook(request: Request):
     Developer Tools > Notifications, subscribed to at least the subscription.* events."""
     if not PADDLE_WEBHOOK_SECRET:
         raise HTTPException(status_code=500, detail="Paddle webhook not configured (PADDLE_WEBHOOK_SECRET missing)")
+    # Defense in depth: real Paddle payloads are a few KB at most. Reject anything absurd before
+    # buffering it into memory, rather than trusting Cloudflare/Render's own body-size limits to
+    # be the only thing standing between this public, pre-auth endpoint and a memory-exhaustion
+    # attempt via a huge POST.
+    content_length = request.headers.get("content-length")
+    if content_length and int(content_length) > 1_000_000:
+        raise HTTPException(status_code=413, detail="Payload too large")
     raw_body = await request.body()
     sig_header = request.headers.get("paddle-signature", "")
     ts, h1 = "", ""
