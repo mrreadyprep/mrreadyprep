@@ -776,8 +776,8 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={onBack} style={{ flex: 1, padding: '11px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>All Practices</button>
-              <button onClick={onFinish} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Exit</button>
+              <button onClick={() => { onComplete && onComplete(score, totalQ); onBack() }} style={{ flex: 1, padding: '11px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>All Practices</button>
+              <button onClick={() => { onComplete && onComplete(score, totalQ); onFinish() }} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Exit</button>
             </div>
           </div>
           <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see the passage</span></div>
