@@ -1603,6 +1603,9 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
   // auto-advanced the student past a question they never actually heard. Now a failure shows a
   // visible retry banner instead of pretending the audio played.
   const [hasError, setHasError] = useState(false)
+  // Bumped by the Retry button below purely to force the stuck-detector effect to re-run for the
+  // exact same url/autoPlayKey -- see the long comment inside that effect for why this exists.
+  const [retryTick, setRetryTick] = useState(0)
 
   // Wire listeners onto the shared element (not a JSX-rendered <audio> tag, since the whole
   // point is that this exact DOM node persists across mounts/unmounts).
@@ -1637,21 +1640,36 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       document.addEventListener('pointerdown', retry, { once: true, capture: true })
       document.addEventListener('keydown', retry, { once: true, capture: true })
     }
-    // Absolute upper bound on how long we wait for this clip to actually start producing sound.
-    // Covers every path below, including ones where play() neither resolves nor rejects at all
-    // (observed in practice: readyState stuck at HAVE_NOTHING indefinitely with no error event --
-    // the browser can silently decline to even start the network fetch for an autoplay-gated
-    // media element). Without this, a hang here was permanent: the student sat on a silent
-    // screen forever with the question locked and no way forward except "Save & Exit". Once this
-    // fires we surface the existing "Audio failed to load" banner, whose Retry button calls
-    // primeAudio() from inside a real click -- a genuine user gesture, unlike every play() call
-    // in this effect -- so it reliably recovers even when the automatic attempts above did not.
-    const stuckTimer = setTimeout(() => {
-      if (audio.src === url && audio.currentTime === 0 && !audio.ended) {
-        console.warn('[mrp audio] main clip stuck loading, giving up after 9s:', url)
+    // Absolute upper bound on how long we wait for real playback progress on this clip, tracked
+    // via a rolling "last progress" clock reset by timeupdate/playing/canplay -- not a flat
+    // one-shot deadline from mount (matches the fix applied to SafeAudio). A flat deadline here
+    // had two compounding problems, both confirmed live: (1) it only ever checked
+    // `currentTime === 0` at the single instant it fired, so a MID-playback stall (started fine,
+    // then buffered/stopped partway through) after that instant was never caught at all; and
+    // (2) clicking the "Retry" banner's button below called primeAudio() directly without
+    // changing `url`/`autoPlayKey`, so this effect -- and the timer/detector it owns -- never
+    // re-ran. If the retried playback also stalled, hasError never got set back to true and the
+    // student was left on a silent screen with no error banner and no way to recover except
+    // Save & Exit. `retryTick` (bumped by Retry, included in this effect's deps below) exists
+    // solely to force this effect to run again for the exact same url so a second stall is
+    // caught too.
+    let lastProgressAt = Date.now()
+    const markProgress = () => { lastProgressAt = Date.now() }
+    audio.addEventListener('timeupdate', markProgress)
+    audio.addEventListener('playing', markProgress)
+    audio.addEventListener('canplay', markProgress)
+    const stuckInterval = setInterval(() => {
+      if (audio.src === url && !audio.ended && Date.now() - lastProgressAt >= 9000) {
+        console.warn('[mrp audio] main clip stuck loading, giving up after 9s of no progress:', url)
         setHasError(true)
       }
-    }, 9000)
+    }, 500)
+    const cleanupStuckDetector = () => {
+      clearInterval(stuckInterval)
+      audio.removeEventListener('timeupdate', markProgress)
+      audio.removeEventListener('playing', markProgress)
+      audio.removeEventListener('canplay', markProgress)
+    }
     // If a click handler already primed this exact URL (see primeAudio above, called
     // synchronously from Start/Next), don't reset currentTime/reload it here -- that would
     // abort the playback that call just started. Just make sure play() is (still) requested.
@@ -1660,7 +1678,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
         const p = audio.play()
         if (p && p.catch) p.catch((err) => { console.warn('[mrp audio] resume play() rejected:', err && err.name, err && err.message); registerRetryFallback() })
       }
-      return () => clearTimeout(stuckTimer)
+      return cleanupStuckDetector
     }
     audio.pause()
     audio.src = url
@@ -1679,8 +1697,8 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       }
     }
     const timer = setTimeout(tryPlay, AUDIO_START_DELAY_MS)
-    return () => { clearTimeout(timer); clearTimeout(stuckTimer) }
-  }, [url, autoPlayKey])
+    return () => { clearTimeout(timer); cleanupStuckDetector() }
+  }, [url, autoPlayKey, retryTick])
 
   if (!url) {
     return (
@@ -1697,7 +1715,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       <div style={{ background: '#fff6f0', border: '1px solid #f3b98a', borderRadius: '12px', padding: '18px 20px', textAlign: 'center' }}>
         <div style={{ fontSize: '13px', fontWeight: '700', color: '#b35900', marginBottom: '4px' }}>⚠️ Audio failed to load</div>
         <div style={{ fontSize: '12px', color: '#8a5a2e', marginBottom: '10px' }}>Check your connection and try again -- your answer won't be scored fairly without hearing this first.</div>
-        <button type="button" onClick={() => { setHasError(false); primeAudio(url) }} style={{ background: '#b35900', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 18px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
+        <button type="button" onClick={() => { setHasError(false); primeAudio(url); setRetryTick(t => t + 1) }} style={{ background: '#b35900', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 18px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
       </div>
     )
   }
@@ -7246,12 +7264,24 @@ function MicVolumeCheckModal({ onStart }) {
     connect(deviceId)
   }
 
+  // Basic modal accessibility, matching ExitConfirmModal/ConfirmModal (this was the one full-
+  // screen-backdrop overlay in the app missing it): role="dialog"/aria-modal so screen readers
+  // announce it correctly, and Escape as a keyboard equivalent for the "Start" button below --
+  // there's no separate "cancel" here (the hardware check isn't skippable), so Escape just
+  // continues past it the same as clicking Start, rather than doing nothing.
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') { teardown(); onStart() } }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [onStart])
+
   const BAR_COUNT = 7
   const activeBars = Math.round(level * BAR_COUNT)
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 30, fontFamily: 'sans-serif' }}>
-      <div style={{ background: '#fff', borderRadius: '16px', padding: '36px 40px', width: '440px', maxWidth: '90vw', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }}>
+      <div role="dialog" aria-modal="true" aria-label="Check Your Microphone Volume" style={{ background: '#fff', borderRadius: '16px', padding: '36px 40px', width: '440px', maxWidth: '90vw', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }}>
         <h2 style={{ margin: '0 0 22px', fontSize: '19px', fontWeight: '800', color: '#1a1a1a', textAlign: 'center' }}>Check Your Microphone Volume</h2>
         <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '20px 24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', height: '64px' }}>
@@ -7550,6 +7580,27 @@ function MockTestList({ onSelect, hasPremium = false }) {
 // actually completed it for this particular test.
 const MOCK_SECTION_CATEGORY = { reading: 'mock_reading', listening: 'mock_listening', writing: 'mock_writing', speaking: 'mock_speaking' }
 
+// Writing/Speaking bands are NOT simply score/total -- FullMockTest's results screen computes
+// them as an equal-weighted average of each sub-task's own pct (see writingTaskPct/speakingTaskPct
+// there), specifically so Build-a-Sentence's larger item count (or Listen&Repeat's 7 vs
+// Interview's 4) doesn't out-weight the other sub-tasks. That equal-weighted value is stashed as
+// JSON in the saved attempt's `detail` field (mock_writing/mock_speaking only) precisely so this
+// screen can reproduce the exact same band instead of re-deriving a different one from the raw
+// pooled score/total ratio -- which used to make the same completed attempt show two different
+// Writing/Speaking bands depending on whether the student looked at the results screen right after
+// finishing or came back here later. Falls back to the pooled ratio for Reading/Listening (no
+// sub-task averaging needed there) and for any older saved attempt from before this existed.
+function mockSectionBandPct(result) {
+  if (!result) return null
+  if (result.detail) {
+    try {
+      const parsed = JSON.parse(result.detail)
+      if (parsed && typeof parsed.taskPct === 'number') return parsed.taskPct
+    } catch {}
+  }
+  return result.pct / 100
+}
+
 // Dedicated full-page screen for one specific fixed mock test, opened by clicking its name in
 // MockTestList — mirrors the layout/style of MockIntroScreen itself (title, section parts,
 // start button) instead of expanding the row in place.
@@ -7604,6 +7655,7 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '28px', marginTop: available ? 0 : '18px' }}>
         {MOCK_SECTION_INFO.map(sec => {
           const result = sectionScores[sec.key]
+          const bandPct = mockSectionBandPct(result)
           return (
             <button key={sec.key} onClick={() => available && onStartSection(sec.key)} disabled={!available}
               style={{
@@ -7613,9 +7665,9 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
               }}>
               <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
                 <span style={{ fontSize: '14px', fontWeight: '700', color: available ? '#1a1a1a' : '#b0b3bd' }}>{sec.emoji} {sec.label}</span>
-                {result && (
-                  <span style={{ fontSize: '11px', fontWeight: '700', color: result.pct >= 70 ? '#2ac56c' : '#e07b00', background: result.pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px', flexShrink: 0 }}>
-                    ✓ {pctToBand(result.pct / 100, sec.key).toFixed(1)}/{SECTION_BAND_MAX[sec.key]}
+                {bandPct != null && (
+                  <span style={{ fontSize: '11px', fontWeight: '700', color: bandPct >= 0.7 ? '#2ac56c' : '#e07b00', background: bandPct >= 0.7 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px', flexShrink: 0 }}>
+                    ✓ {pctToBand(bandPct, sec.key).toFixed(1)}/{SECTION_BAND_MAX[sec.key]}
                   </span>
                 )}
               </span>
@@ -7940,8 +7992,18 @@ function FullMockTest({ onBack, hasPremium = false }) {
     // stays as a band out of 6.
     if ((mode === 'full' || mode === 'reading') && readingRaw.total) saveResult('mock_reading', testItemId, readingRaw.correct, readingRaw.total, `${testLabel} · Reading`)
     if ((mode === 'full' || mode === 'listening') && listeningRaw.total) saveResult('mock_listening', testItemId, listeningRaw.correct, listeningRaw.total, `${testLabel} · Listening`)
-    if ((mode === 'full' || mode === 'writing') && writingMax) saveResult('mock_writing', testItemId, writingPts, writingMax, `${testLabel} · Writing`)
-    if ((mode === 'full' || mode === 'speaking') && speakingMax) saveResult('mock_speaking', testItemId, speakingPts, speakingMax, `${testLabel} · Speaking`)
+    // The score/total saved here is the pooled points ratio (see comment above) -- but the band
+    // MockTestDetailScreen shows for this attempt needs to match the equal-weighted writingTaskPct/
+    // speakingTaskPct band shown on THIS results screen just below, which is a different number
+    // whenever the sub-tasks' pass rates differ (normal). Previously MockTestDetailScreen had no
+    // way to recover that equal-weighted value and fell back to deriving a band from the pooled
+    // ratio instead, so the same completed attempt could show two different Writing/Speaking bands
+    // depending on whether the student was looking at this results screen or the test's detail
+    // page. Stashing it in `detail` (unused by these two categories otherwise) lets
+    // MockTestDetailScreen recover the exact same band without changing what's persisted for the
+    // dashboard aggregate.
+    if ((mode === 'full' || mode === 'writing') && writingMax) saveResult('mock_writing', testItemId, writingPts, writingMax, `${testLabel} · Writing`, JSON.stringify({ taskPct: writingTaskPct }))
+    if ((mode === 'full' || mode === 'speaking') && speakingMax) saveResult('mock_speaking', testItemId, speakingPts, speakingMax, `${testLabel} · Speaking`, JSON.stringify({ taskPct: speakingTaskPct }))
     if (mode === 'full') saveResult('mock_overall', testItemId, overallBand, 6, `${testLabel} · Overall`)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase])

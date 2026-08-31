@@ -591,9 +591,13 @@ class RIDLResult(BaseModel):
     # Bounded (not just "> 0") so a buggy/forged client can't write a score that inflates the
     # student's own Read in Daily Life stats -- see the matching check in save_ridl_result() for
     # the score-can't-exceed-total rule (can't express that as a Field constraint since it's a
-    # relationship between two fields, not a single field's range).
-    score: int = Field(ge=0)
-    total: int = Field(ge=0)
+    # relationship between two fields, not a single field's range). le=1000 matches AttemptResult's
+    # bound and is required, not optional: ridl_results.score/total are Postgres INTEGER columns,
+    # and a value like 99999999999 (still non-negative, still <= a matching total) passes past this
+    # model with no upper bound and then hits "integer out of range" -- an uncaught DataError, not
+    # one of the handled _INTEGRITY_ERRORS -- crashing that request with a 500.
+    score: int = Field(ge=0, le=1000)
+    total: int = Field(ge=0, le=1000)
 
 # Generic "a student finished some exercise, here's the score" record. Used across every
 # exercise type (practice pools AND mock tests) so the student's overall progress can be
@@ -1985,10 +1989,25 @@ async def paddle_webhook(request: Request):
     # buffering it into memory, rather than trusting Cloudflare/Render's own body-size limits to
     # be the only thing standing between this public, pre-auth endpoint and a memory-exhaustion
     # attempt via a huge POST.
+    #
+    # A Content-Length check alone is not enough: it's only present when the client sends one, and
+    # an HTTP/1.1 request using Transfer-Encoding: chunked legitimately omits Content-Length
+    # entirely -- an attacker sending chunked with no Content-Length would sail straight past the
+    # check below and get buffered in full by a plain `await request.body()`, exactly the
+    # unbounded-memory case this was meant to prevent. Fast-path on Content-Length when present
+    # (avoids buffering at all for the common case), then enforce the same ceiling by reading the
+    # body incrementally and aborting the moment it's exceeded, regardless of what any header claims.
     content_length = request.headers.get("content-length")
     if content_length and int(content_length) > 1_000_000:
         raise HTTPException(status_code=413, detail="Payload too large")
-    raw_body = await request.body()
+    body_chunks = []
+    total_len = 0
+    async for chunk in request.stream():
+        total_len += len(chunk)
+        if total_len > 1_000_000:
+            raise HTTPException(status_code=413, detail="Payload too large")
+        body_chunks.append(chunk)
+    raw_body = b"".join(body_chunks)
     sig_header = request.headers.get("paddle-signature", "")
     ts, h1 = "", ""
     for part in sig_header.split(";"):
