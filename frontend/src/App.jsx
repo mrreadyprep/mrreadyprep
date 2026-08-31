@@ -1662,6 +1662,11 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       if (audio.src === url && !audio.ended && Date.now() - lastProgressAt >= 9000) {
         console.warn('[mrp audio] main clip stuck loading, giving up after 9s of no progress:', url)
         setHasError(true)
+        // Stop checking once we've already given up -- without this the interval kept firing
+        // every 500ms forever (confirmed live: repeated identical warnings), redundantly calling
+        // setHasError(true) and spamming the console for as long as the student stayed on this
+        // screen. retryTick's effect re-run (see comment above) is what re-arms detection.
+        clearInterval(stuckInterval)
       }
     }, 500)
     const cleanupStuckDetector = () => {
