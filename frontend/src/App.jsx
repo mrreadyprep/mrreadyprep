@@ -2283,12 +2283,16 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
   // regardless of which code path advanced currentQ.
   useEffect(() => { setSelected(null) }, [currentQ])
-  useEffect(() => { setAudioDone(false) }, [currentQ])
-  // Questions with no recorded audio (transcript-only fallback) have nothing to wait for beyond
-  // the spoken narration line, so they're "done" as soon as that finishes.
+  // Reset for each new question, then immediately mark done if THIS question has no recorded
+  // audio (transcript-only fallback -- nothing to wait for beyond the narration line). Combined
+  // into one effect keyed on `currentQ` itself (not just q.audio_url) so it reliably re-runs on
+  // every question change -- found live: two consecutive audio-less questions share the same
+  // (undefined) audio_url, so a dependency array keyed only on q.audio_url never sees a change
+  // and doesn't re-fire, leaving audioDone permanently stuck at false: no option selectable, no
+  // response timer, no way forward except discarding the attempt via Save & Exit.
   useEffect(() => {
-    if (announced && !q.audio_url) setAudioDone(true)
-  }, [announced, q.audio_url])
+    setAudioDone(announced && !q.audio_url)
+  }, [currentQ, announced, q.audio_url])
 
   const advance = (sel) => {
     if (timerRef.current) clearInterval(timerRef.current)
@@ -2419,7 +2423,17 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { primeAudio(getIntroUrl('listen_choose_response.mp3')); setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => {
+                primeAudio(getIntroUrl('listen_choose_response.mp3')); setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false)
+                // For a 1-question exercise, setCurrentQ(0) above is a no-op (already 0), so the
+                // [currentQ, announced, q.audio_url] effect above never re-fires -- found live:
+                // audioDone was left at whatever it was at the end of the previous attempt
+                // (true), which let the response timer start counting down instantly while the
+                // just-reprimed audio was still replaying in the background. Set it directly here
+                // using the same rule the effect uses, so a retry is gated exactly like the first
+                // attempt regardless of whether currentQ's value actually changes.
+                setAudioDone(announced && !questions[0].audio_url)
+              }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -6236,13 +6250,22 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   }
 
   const stoppingRef = useRef(false)
+  // Holds the id of the 350ms grading setTimeout below so the unmount-cleanup effect can cancel
+  // it -- found live: the exit-confirmation modal (opened via requestExit, always clickable
+  // during 'recording') overlays the still-mounted exercise instead of unmounting it, so a
+  // student who clicks Stop then Exit within this 350ms window could have the pending grading
+  // callback fire underneath the open "Exit?" dialog, silently advancing to the next
+  // question (or, in mock mode, submitting the answer and calling onComplete) before they've
+  // actually confirmed leaving.
+  const gradeTimeoutRef = useRef(null)
 
   const stopRecording = () => {
     if (stoppingRef.current) return
     stoppingRef.current = true
     if (timerRef.current) clearInterval(timerRef.current)
     if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
-    setTimeout(() => {
+    gradeTimeoutRef.current = setTimeout(() => {
+      gradeTimeoutRef.current = null
       const transcript = transcriptRef.current.trim()
       const evalResult = evaluateRepeatResponse(transcript, sentence.text)
       const newAnswer = { transcript, target: sentence.text, micError: recErrorRef.current, ...evalResult }
@@ -6275,7 +6298,17 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   useEffect(() => () => {
     if (timerRef.current) clearInterval(timerRef.current)
     if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
+    if (gradeTimeoutRef.current) clearTimeout(gradeTimeoutRef.current)
   }, [])
+
+  // Cancels any pending grading timeout the instant Exit is clicked, BEFORE requestExit runs --
+  // closes the race described on gradeTimeoutRef above: without this, a click landing inside the
+  // 350ms window let the pending callback still fire (advancing to the next question, or
+  // completing the exercise) after the exit modal was already open, underneath it.
+  const handleExitClick = () => {
+    if (gradeTimeoutRef.current) { clearTimeout(gradeTimeoutRef.current); gradeTimeoutRef.current = null; stoppingRef.current = false }
+    requestExit()
+  }
 
   // Was previously the only place in the whole app doing its own ad-hoc exit handling instead of
   // useExitDraft -- meant no confirm-before-discard on mid-recording exit, and no beforeunload
@@ -6305,7 +6338,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+      topLeft={<TestPillButton onClick={handleExitClick}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 6</span>}
       section="SPEAKING"
       questionLabel={`${item.location} · Sentence ${sentenceIdx + 1} of ${totalQ}`}
@@ -6535,13 +6568,16 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
   }
 
   const stoppingRef = useRef(false)
+  // Same race as ListenRepeatExercise -- see the comment on the equivalent ref there.
+  const gradeTimeoutRef = useRef(null)
 
   const stopRecording = () => {
     if (stoppingRef.current) return
     stoppingRef.current = true
     if (timerRef.current) clearInterval(timerRef.current)
     if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
-    setTimeout(() => {
+    gradeTimeoutRef.current = setTimeout(() => {
+      gradeTimeoutRef.current = null
       const transcript = transcriptRef.current.trim()
       const evalResult = evaluateInterviewResponse(transcript, question.text)
       const newAnswer = { transcript, micError: recErrorRef.current, ...evalResult }
@@ -6574,6 +6610,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
   useEffect(() => () => {
     if (timerRef.current) clearInterval(timerRef.current)
     if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
+    if (gradeTimeoutRef.current) clearTimeout(gradeTimeoutRef.current)
   }, [])
 
   // Same fix as ListenRepeatExercise -- see the comment there. Must run before the micState early
@@ -6584,6 +6621,12 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
     canSave: false, graded: phase === 'summary', onExitGraded: () => onComplete(answers),
   })
 
+  // Same fix as ListenRepeatExercise's handleExitClick -- see the comment on gradeTimeoutRef there.
+  const handleExitClick = () => {
+    if (gradeTimeoutRef.current) { clearTimeout(gradeTimeoutRef.current); gradeTimeoutRef.current = null; stoppingRef.current = false }
+    requestExit()
+  }
+
   if (micState !== 'ready') return <MicPermissionGate micState={micState} onRetry={checkMic} onBack={onBack} />
 
   const score = answers.reduce((s, a) => s + a.score, 0)
@@ -6593,7 +6636,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+      topLeft={<TestPillButton onClick={handleExitClick}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={<span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c' }}>Avg {avgLabel} / 6</span>}
       section="SPEAKING"
       questionLabel={`${item.topic} · Question ${qIdx + 1} of ${totalQ}`}
@@ -9129,7 +9172,13 @@ function AdminPanel() {
   const mountedRef = useRef(true)
   useEffect(() => () => { mountedRef.current = false }, [])
 
-  // Reusable manual refresh (called after a grant/revoke action below).
+  // Reusable refresh -- used both for the initial mount fetch and after a grant/revoke action
+  // below. Previously duplicated verbatim between a `load()` function and a separate mount
+  // effect (each with its own near-identical Promise.all + guard), which fired the exact same
+  // pair of requests twice every time the Admin tab opened. Both resolve to the same data, so
+  // this wasn't producing wrong results -- just doubling load on /api/admin/stats and
+  // /api/admin/users for no benefit. mountedRef (declared above) already covers the guard this
+  // needs, so the mount effect below just calls this instead of repeating the fetch logic.
   const load = () => {
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/admin/stats`).then(r => r.json()),
@@ -9137,18 +9186,7 @@ function AdminPanel() {
     ]).then(([s, u]) => { if (mountedRef.current) { setStats(s); setUsers(Array.isArray(u) ? u : []) } })
       .catch(() => { if (mountedRef.current) setError('Could not load admin data.') })
   }
-  // Initial mount fetch gets its own cancelled guard (same pattern used everywhere else in the
-  // file) so navigating away from the Admin tab before this resolves doesn't try to set state on
-  // an unmounted component.
-  useEffect(() => {
-    let cancelled = false
-    Promise.all([
-      apiFetch(`${BACKEND_URL}/api/admin/stats`).then(r => r.json()),
-      apiFetch(`${BACKEND_URL}/api/admin/users`).then(r => r.json()),
-    ]).then(([s, u]) => { if (!cancelled) { setStats(s); setUsers(Array.isArray(u) ? u : []) } })
-      .catch(() => { if (!cancelled) setError('Could not load admin data.') })
-    return () => { cancelled = true }
-  }, [])
+  useEffect(() => { load() }, [])
 
   const setSubscription = (userId, action) => {
     setBusyId(userId)
@@ -9355,6 +9393,21 @@ function VocabQuiz({ deckLabel, words, allWords, onExit }) {
   const [selected, setSelected] = useState(null)
   const [answers, setAnswers] = useState([])
   const [done, setDone] = useState(false)
+  const totalQ = order.length
+  const current = order[qIdx]
+  // Must be called unconditionally before the `!words.length` early return below -- a hook called
+  // only on some renders is exactly the Rules-of-Hooks violation that has previously caused a
+  // production crash (ListenRepeatExercise/InterviewExercise). Not reachable today (Vocabulary()
+  // disables the Quiz button for any 0-word deck, so this never actually mounts with
+  // words.length === 0), but latent and fragile -- matches the correct pattern already used in
+  // VocabFlashcards right above this component.
+  const options = useMemo(() => {
+    if (!current) return []
+    const distractorPool = pool.filter(w => w.id !== current.id)
+    const distractors = shuffleArray(distractorPool).slice(0, Math.min(3, distractorPool.length)).map(w => w.meaning)
+    return shuffleArray([current.meaning, ...distractors])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [current])
 
   if (!words.length) {
     return (
@@ -9363,16 +9416,6 @@ function VocabQuiz({ deckLabel, words, allWords, onExit }) {
       </ExamScreen>
     )
   }
-
-  const totalQ = order.length
-  const current = order[qIdx]
-  const options = useMemo(() => {
-    if (!current) return []
-    const distractorPool = pool.filter(w => w.id !== current.id)
-    const distractors = shuffleArray(distractorPool).slice(0, Math.min(3, distractorPool.length)).map(w => w.meaning)
-    return shuffleArray([current.meaning, ...distractors])
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current])
 
   const handleNext = () => {
     const isCorrect = selected === current.meaning

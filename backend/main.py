@@ -3,7 +3,7 @@ from fastapi import FastAPI, HTTPException, Depends, Header, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import List, Optional
 import base64
 import hashlib
@@ -435,7 +435,21 @@ def audio_proxy(path: str, request: Request, t: str = ""):
 _SAFE_INTRO_FILENAME = re.compile(r"^[A-Za-z0-9_\-]+\.mp3$")
 
 class IntroAudioUrlsRequest(BaseModel):
-    filenames: List[str]
+    # Deliberately unauthenticated (see docstring below), so unlike every other write-model in this
+    # file these bounds are the ONLY thing standing between an anonymous client and forcing this
+    # process to buffer/parse an arbitrarily large JSON array before the `[:300]` slice below ever
+    # runs -- a straightforward memory-exhaustion DoS otherwise. 300 matches the slice already
+    # applied in the handler; 200 chars is generous for a "name.mp3" filename that must also match
+    # _SAFE_INTRO_FILENAME below (real values are a few dozen chars at most).
+    filenames: List[str] = Field(max_length=300)
+
+    @field_validator("filenames")
+    @classmethod
+    def _bound_filename_length(cls, v):
+        for f in v:
+            if len(f) > 200:
+                raise ValueError("filename too long")
+        return v
 
 @app.post("/api/audio/intro-urls")
 def get_intro_audio_urls(data: IntroAudioUrlsRequest):
@@ -568,23 +582,36 @@ class RegisterRequest(BaseModel):
 
 class LoginRequest(BaseModel):
     email: EmailStr
-    password: str
+    # Matches RegisterRequest.password's cap -- this goes through the same _bcrypt_safe_bytes
+    # path, so an unbounded value isn't a crash risk, but it was still fully parsed by Pydantic
+    # before the rate limiter even runs. Kept consistent with the rest of this file's pattern of
+    # bounding every string field.
+    password: str = Field(max_length=256)
 
 class GoogleLoginRequest(BaseModel):
-    id_token: str
+    # Real Google ID tokens are a few KB at most; this is just a defensive ceiling, not a
+    # functional constraint -- google_login() fully verifies the token's signature regardless.
+    id_token: str = Field(max_length=4096)
 
 class ForgotPasswordRequest(BaseModel):
     email: EmailStr
 
 class ResetPasswordRequest(BaseModel):
-    token: str
+    # secrets.token_urlsafe(32) tokens are well under 64 chars; generous ceiling for defense in
+    # depth, not a functional constraint (an unmatched token is just rejected by the WHERE lookup).
+    token: str = Field(max_length=128)
     new_password: str = Field(max_length=256)
 
 class VerifyEmailRequest(BaseModel):
-    token: str
+    token: str = Field(max_length=128)
 
 class ExamDateUpdate(BaseModel):
-    exam_date: str  # ISO yyyy-mm-dd, or "" to clear the saved date
+    # Nothing parses this as a date today (confirmed: no fromisoformat/strptime call on it
+    # anywhere), so a garbage value can't crash *this* request -- but it's echoed back verbatim
+    # in /api/auth/me and /api/dashboard on every request, and any future "days until exam"
+    # feature that does parse it would crash on unvalidated input with no defense in depth. Every
+    # other user-writable field with a defined shape already gets this treatment.
+    exam_date: str = Field(max_length=10, pattern=r"^\d{4}-\d{2}-\d{2}$|^$")  # ISO yyyy-mm-dd, or "" to clear
 
 class RIDLResult(BaseModel):
     passage_id: int
@@ -603,7 +630,10 @@ class RIDLResult(BaseModel):
 # exercise type (practice pools AND mock tests) so the student's overall progress can be
 # reconstructed from a single table instead of needing per-category storage everywhere.
 class AttemptResult(BaseModel):
-    category: str       # e.g. 'ctw', 'ridl', 'ap', 'listening_p1'..'p4', 'bas', 'email', 'disc',
+    # Bounded for consistency with item_id/label right below -- save_attempt_result() already
+    # rejects unknown categories via an allowlist, but only after Pydantic has fully parsed the
+    # string, so an oversized value was still copied into memory for no reason before that check.
+    category: str = Field(max_length=50)   # e.g. 'ctw', 'ridl', 'ap', 'listening_p1'..'p4', 'bas', 'email', 'disc',
                          # 'speaking_lr', 'speaking_interview', 'mock_reading', 'mock_listening',
                          # 'mock_writing', 'mock_speaking', 'mock_overall'
     item_id: str = Field(max_length=100)         # exercise/passage/test id (as string) the attempt belongs to
@@ -2208,7 +2238,17 @@ def toggle_vocab(word_id: int, user=Depends(get_current_user)):
             conn.execute("DELETE FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id))
             now_learned = False
         else:
-            conn.execute("INSERT INTO vocab_learned (user_id, word_id) VALUES (?, ?)", (user["id"], word_id))
+            # ON CONFLICT DO NOTHING: two concurrent toggles (double-tap on a slow connection,
+            # a double-invoked click handler) can both read `already = None` before either
+            # commits, so the plain INSERT this used to be could raise an unhandled
+            # IntegrityError on (user_id, word_id)'s primary key -- there's no global exception
+            # handler in this file, so that surfaced as a raw 500. Matches the pattern already
+            # used for seen_pool_items below.
+            conn.execute(
+                "INSERT INTO vocab_learned (user_id, word_id) VALUES (?, ?) "
+                "ON CONFLICT(user_id, word_id) DO NOTHING",
+                (user["id"], word_id),
+            )
             now_learned = True
         _set_vocab_level(conn, user["id"])
         conn.commit()
@@ -2230,7 +2270,13 @@ def set_vocab_learned(word_id: int, data: VocabLearnedUpdate, user=Depends(get_c
                 "SELECT 1 FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id)
             ).fetchone()
             if not already:
-                conn.execute("INSERT INTO vocab_learned (user_id, word_id) VALUES (?, ?)", (user["id"], word_id))
+                # Same concurrent-double-insert race as toggle_vocab above -- guard with
+                # ON CONFLICT DO NOTHING instead of a plain INSERT.
+                conn.execute(
+                    "INSERT INTO vocab_learned (user_id, word_id) VALUES (?, ?) "
+                    "ON CONFLICT(user_id, word_id) DO NOTHING",
+                    (user["id"], word_id),
+                )
         else:
             conn.execute("DELETE FROM vocab_learned WHERE user_id = ? AND word_id = ?", (user["id"], word_id))
         _set_vocab_level(conn, user["id"])
@@ -2252,7 +2298,13 @@ def toggle_vocab_star(word_id: int, user=Depends(get_current_user)):
             conn.execute("DELETE FROM vocab_starred WHERE user_id = ? AND word_id = ?", (user["id"], word_id))
             now_starred = False
         else:
-            conn.execute("INSERT INTO vocab_starred (user_id, word_id) VALUES (?, ?)", (user["id"], word_id))
+            # Same concurrent-double-insert race as toggle_vocab above -- guard with
+            # ON CONFLICT DO NOTHING instead of a plain INSERT.
+            conn.execute(
+                "INSERT INTO vocab_starred (user_id, word_id) VALUES (?, ?) "
+                "ON CONFLICT(user_id, word_id) DO NOTHING",
+                (user["id"], word_id),
+            )
             now_starred = True
         conn.commit()
         return {"status": "success", "starred": now_starred}
@@ -2540,7 +2592,12 @@ def get_mistakes(user=Depends(get_current_user)):
 
 # --- Reading: Academic Passage ---
 @app.get("/api/reading/academic-passage")
-async def get_academic_passage(user=Depends(get_current_user_optional)):
+def get_academic_passage(user=Depends(get_current_user_optional)):
+    # Was `async def` with no `await` inside -- every sibling content-pool endpoint is a plain
+    # `def`, which FastAPI runs in a threadpool automatically. As `async def`, a cache-miss (first
+    # request after boot, or the ~13-day _cached_pool staleness rebuild) ran its synchronous
+    # open()/json.load() directly on the event loop instead of a worker thread, briefly blocking
+    # every other concurrent async request. Normalized to match every other pool endpoint.
     json_path = os.path.join(os.path.dirname(__file__), "academic_passage_1.json")
     data = _cached_pool("academic_passage", lambda: _load_json_pool(json_path))
     return gate_pool(data, user)
@@ -2685,8 +2742,21 @@ def get_mock_seen_ids(user=Depends(get_current_user)):
         conn.close()
 
 class MarkSeenRequest(BaseModel):
-    pool: str
-    item_ids: List[str]
+    pool: str = Field(max_length=50)
+    # The handler already slices this to [:200] before use, but that happened after Pydantic had
+    # fully parsed the list -- bounding it here rejects an oversized request before that work
+    # happens. Per-item length capped to match AttemptResult.item_id's bound (real ids are short
+    # pool-relative identifiers); an unconstrained item_id string here would otherwise let a
+    # logged-in user grow seen_pool_items with values far larger than any real item id needs.
+    item_ids: List[str] = Field(max_length=200)
+
+    @field_validator("item_ids")
+    @classmethod
+    def _bound_item_id_length(cls, v):
+        for item_id in v:
+            if len(item_id) > 100:
+                raise ValueError("item_id too long")
+        return v
 
 @app.post("/api/mock/mark-seen")
 def mark_mock_seen(data: MarkSeenRequest, user=Depends(get_current_user)):
