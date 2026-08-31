@@ -208,7 +208,33 @@ def _require_paddle():
 ACTIVE_SUBSCRIPTION_STATUSES = {"ACTIVE", "TRIALING"}
 
 def has_active_subscription(user) -> bool:
-    return is_admin_user(user) or (user["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES
+    if is_admin_user(user):
+        return True
+    if (user["subscription_status"] or "") not in ACTIVE_SUBSCRIPTION_STATUSES:
+        return False
+    # Defense in depth, not the primary gate: subscription_status only ever changes when a Paddle
+    # webhook lands and is successfully processed. If a webhook is ever missed for an extended
+    # period (webhook URL misconfigured after an infra change, PADDLE_WEBHOOK_SECRET rotated out
+    # of sync between Paddle and here, a dropped cancellation event during a Paddle-side outage),
+    # subscription_status can stay ACTIVE/TRIALING indefinitely even though Paddle has stopped
+    # billing and access should have lapsed -- there's no periodic reconciliation job elsewhere in
+    # this file. As a backstop, also treat access as lapsed once
+    # subscription_current_period_end is more than a couple of days in the past (a small grace
+    # window, not same-day, since a legitimate renewal can land a little after the exact period
+    # boundary). Missing/unparsable is treated as still-active, NOT lapsed -- some rows (comped/
+    # admin-granted access, or accounts created before this column existed) may have this unset,
+    # and a parsing edge case must never accidentally lock a paying student out.
+    period_end = user["subscription_current_period_end"]
+    if period_end is None:
+        return True
+    if isinstance(period_end, str):
+        try:
+            period_end = datetime.fromisoformat(period_end)
+        except ValueError:
+            return True
+    if period_end.tzinfo is None:
+        period_end = period_end.replace(tzinfo=timezone.utc)
+    return (datetime.now(timezone.utc) - period_end) < timedelta(days=2)
 
 # Comma-separated list of email addresses that get admin rights (full premium content access +
 # the /api/admin/* management endpoints), e.g. ADMIN_EMAILS=owner@mrreadyprep.com,helper@x.com.
@@ -279,7 +305,13 @@ def gate_pool(data, user, free_ids=frozenset({FREE_ITEM_ID})):
     if user is not None and has_active_subscription(user):
         return data
     if not isinstance(data, list):
-        return data
+        # Fail CLOSED, not open: every non-mock content endpoint routes free-tier gating through
+        # this function, so if a pool's top-level JSON shape is ever anything other than a list --
+        # a corrupted save, a schema change wrapping items in an object, a partial write during a
+        # content update -- returning `data` unchanged here would silently serve the full,
+        # ungated pool to every non-subscriber with no error, no log line, nothing. Better to
+        # return nothing than to accidentally unlock everything.
+        return []
     out = []
     for item in data:
         if isinstance(item, dict) and item.get("id") in free_ids:
@@ -1320,8 +1352,22 @@ def user_profile_dict(user) -> dict:
 
 # Vocabulary verisi
 VOCAB_FILE = os.path.join(os.path.dirname(__file__), "toefl_vocab_list.json")
-with open(VOCAB_FILE, "r", encoding="utf-8") as f:
-    vocab_words = json.load(f)
+
+def _get_vocab_words():
+    # Lazy-loaded + cached via _cached_pool, like every other content pool in this file -- this
+    # used to be a plain `with open(...) as f: vocab_words = json.load(f)` run unconditionally at
+    # module import time, the one exception to this file's stated convention (see the comment on
+    # every other pool file-path constant below) of only opening content files inside a request
+    # handler specifically so a bad/missing file breaks just that one endpoint. If
+    # toefl_vocab_list.json were ever missing, truncated, or had a JSON syntax error, the eager
+    # version would crash the entire FastAPI app at import -- every endpoint down, not just
+    # /api/vocab/* -- and fail Render's health check outright. Falls back to [] (not a crash) if
+    # the file is genuinely broken; /api/vocab/* would just report zero words instead of the
+    # whole process refusing to boot.
+    try:
+        return _cached_pool("vocab_words", lambda: _load_json_pool(VOCAB_FILE))
+    except Exception:
+        return []
 
 # Complete the Words verisi
 # NOTE: these are file-path constants only — every endpoint below opens and json.load()s the
@@ -2221,13 +2267,13 @@ def get_vocab(user=Depends(get_current_user)):
         starred_ids = {row["word_id"] for row in conn.execute(
             "SELECT word_id FROM vocab_starred WHERE user_id = ?", (user["id"],)
         ).fetchall()}
-        return [{**w, "learned": w["id"] in learned_ids, "starred": w["id"] in starred_ids} for w in vocab_words]
+        return [{**w, "learned": w["id"] in learned_ids, "starred": w["id"] in starred_ids} for w in _get_vocab_words()]
     finally:
         conn.close()
 
 @app.post("/api/vocab/toggle/{word_id}")
 def toggle_vocab(word_id: int, user=Depends(get_current_user)):
-    if not any(w["id"] == word_id for w in vocab_words):
+    if not any(w["id"] == word_id for w in _get_vocab_words()):
         return {"status": "error", "message": "Word not found"}
     conn = get_db()
     try:
@@ -2261,7 +2307,7 @@ def toggle_vocab(word_id: int, user=Depends(get_current_user)):
 # is (the student may re-see the same card more than once in a session).
 @app.post("/api/vocab/set/{word_id}")
 def set_vocab_learned(word_id: int, data: VocabLearnedUpdate, user=Depends(get_current_user)):
-    if not any(w["id"] == word_id for w in vocab_words):
+    if not any(w["id"] == word_id for w in _get_vocab_words()):
         return {"status": "error", "message": "Word not found"}
     conn = get_db()
     try:
@@ -2287,7 +2333,7 @@ def set_vocab_learned(word_id: int, data: VocabLearnedUpdate, user=Depends(get_c
 
 @app.post("/api/vocab/star/{word_id}")
 def toggle_vocab_star(word_id: int, user=Depends(get_current_user)):
-    if not any(w["id"] == word_id for w in vocab_words):
+    if not any(w["id"] == word_id for w in _get_vocab_words()):
         return {"status": "error", "message": "Word not found"}
     conn = get_db()
     try:

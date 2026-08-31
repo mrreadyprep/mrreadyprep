@@ -159,6 +159,32 @@ function ConfirmModal({ title, message, confirmLabel = 'Confirm', cancelLabel = 
   )
 }
 
+// Module-level singleton tracking whether ANY screen currently has in-progress, not-yet-saved
+// work (a solo practice exercise mid-attempt via useExitDraft below, or a running Full Mock
+// Test). Found live via audit: every one of those screens already warns on an actual
+// browser-level navigation (beforeunload, below) if the student tries to close the tab or hit
+// refresh -- but the sidebar's own tab switcher (and Settings/Log Out) is a same-page React
+// state change, not a browser navigation, so beforeunload never fires for it and clicking any
+// other sidebar item silently discarded whatever was in progress with zero warning -- for a
+// mock test, up to ~90 minutes of work, directly contradicting the "no going back once you
+// start" notice shown on its own intro screen. A plain module-level counter (not React state)
+// is enough here since multiple screens never have in-progress work simultaneously in practice,
+// and it lets every existing call site opt in for free via the same effect that already manages
+// beforeunload, instead of threading a new prop through every exercise component.
+let _exitGuardCount = 0
+const _exitGuardListeners = new Set()
+function _pushExitGuard() { _exitGuardCount++; _exitGuardListeners.forEach(fn => fn(_exitGuardCount > 0)) }
+function _popExitGuard() { _exitGuardCount = Math.max(0, _exitGuardCount - 1); _exitGuardListeners.forEach(fn => fn(_exitGuardCount > 0)) }
+function useExitGuardActive() {
+  const [active, setActive] = useState(_exitGuardCount > 0)
+  useEffect(() => {
+    _exitGuardListeners.add(setActive)
+    setActive(_exitGuardCount > 0)
+    return () => _exitGuardListeners.delete(setActive)
+  }, [])
+  return active
+}
+
 // Shared "Save & Exit" logic for solo-practice exercise screens: in mock mode, behaves exactly
 // as before (calls onBack directly -- FullMockTest owns its own exit confirmation). In solo
 // mode, clicking opens ExitConfirmModal instead of exiting immediately.
@@ -186,9 +212,10 @@ function useExitDraft({ category, itemId, answers, onBack, mockMode, canSave = t
   // is done.
   useEffect(() => {
     if (mockMode || graded) return
+    _pushExitGuard()
     const handler = (e) => { e.preventDefault(); e.returnValue = ''; return '' }
     window.addEventListener('beforeunload', handler)
-    return () => window.removeEventListener('beforeunload', handler)
+    return () => { _popExitGuard(); window.removeEventListener('beforeunload', handler) }
   }, [mockMode, graded])
   const requestExit = mockMode ? onBack : (graded ? onExitGraded : () => setShowModal(true))
   const modal = !mockMode && showModal ? (
@@ -7887,9 +7914,14 @@ function FullMockTest({ onBack, hasPremium = false }) {
   // in-progress work with zero warning.
   useEffect(() => {
     if (phase !== 'running' && phase !== 'notice') return
+    // See _pushExitGuard's definition (near useExitDraft) for why this is also needed here:
+    // the sidebar's tab switcher bypasses this beforeunload guard entirely since it's a
+    // same-page state change, not a browser navigation -- found live, clicking any other
+    // sidebar item mid-mock-test silently discarded the whole in-progress attempt.
+    _pushExitGuard()
     const handler = (e) => { e.preventDefault(); e.returnValue = ''; return '' }
     window.addEventListener('beforeunload', handler)
-    return () => window.removeEventListener('beforeunload', handler)
+    return () => { _popExitGuard(); window.removeEventListener('beforeunload', handler) }
   }, [phase])
   const [mode, setMode] = useState('full') // 'full' | 'reading' | 'listening' | 'writing' | 'speaking'
   const [stage, setStage] = useState('reading-m1')
@@ -9680,6 +9712,18 @@ function App() {
   const [dashboardLoadError, setDashboardLoadError] = useState(false)
   const [resendingVerification, setResendingVerification] = useState(false)
   const [currentTab, setCurrentTab] = useState('dashboard')
+  // Guards every sidebar/Settings/Log-Out tab switch against silently discarding in-progress work
+  // (a running mock test, or a solo practice exercise mid-attempt) -- see _pushExitGuard's
+  // definition for the full story on why this exists (beforeunload alone doesn't cover same-page
+  // navigation). `pendingTab` holds the destination the student tried to navigate to while a
+  // guard was active; null means no confirmation is pending. 'logout' is a sentinel value (not a
+  // real tab) so requestTabChange can also gate the Log Out button through the same modal.
+  const [pendingTab, setPendingTab] = useState(null)
+  const exitGuardActive = useExitGuardActive()
+  const requestTabChange = (tab) => {
+    if (exitGuardActive && tab !== currentTab) { setPendingTab(tab); return }
+    setCurrentTab(tab)
+  }
   const [profileName, setProfileName] = useState('')
   const [targetScore, setTargetScore] = useState(5.5)
   const [readingTarget, setReadingTarget] = useState(6.0)
@@ -9850,7 +9894,7 @@ function App() {
   // writingSubTab/speakingSubTab were never reset here even though readingSubTab/listeningSubTab
   // always were, an inconsistency between the four sections.
   const sb = (tab, icon, label) => (
-    <button onClick={() => { setCurrentTab(tab); setReadingSubTab(null); setListeningSubTab(null); setWritingSubTab(null); setSpeakingSubTab(null); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <button onClick={() => { requestTabChange(tab); setReadingSubTab(null); setListeningSubTab(null); setWritingSubTab(null); setSpeakingSubTab(null); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
       {icon} {label}
     </button>
   )
@@ -9896,14 +9940,14 @@ function App() {
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', borderTop: '1px solid #252a44', paddingTop: '4px' }}>
-          <div onClick={() => { setCurrentTab('settings'); if (isMobile) setMobileNavOpen(false) }} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
+          <div onClick={() => { requestTabChange('settings'); if (isMobile) setMobileNavOpen(false) }} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
             <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px', flexShrink: 0 }}>{(userData.username || '?').charAt(0).toUpperCase()}</div>
             <div style={{ minWidth: 0, overflow: 'hidden' }}>
               <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userData.username}</div>
               <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
             </div>
           </div>
-          <button onClick={logout} title="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
+          <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} title="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
         </div>
         <div style={{ fontSize: '8px', color: '#4b4f66', lineHeight: '1.4', textAlign: 'center', marginTop: '8px', padding: '0 2px' }}>
           TOEFL® and TOEFL iBT® are registered trademarks of ETS. Not endorsed or approved by ETS.
@@ -9929,7 +9973,7 @@ function App() {
               else if (listeningSubTab) setListeningSubTab(null)
               else if (writingSubTab) setWritingSubTab(null)
               else if (speakingSubTab) setSpeakingSubTab(null)
-              else setCurrentTab('dashboard')
+              else requestTabChange('dashboard')
             }} style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
             <h2 style={{ margin: '0 0 0 14px', fontSize: '18px', fontWeight: '700' }}>
               {currentTab === 'reading' && !readingSubTab && '📖 Reading Practice'}
@@ -10353,6 +10397,21 @@ function App() {
         {currentTab === 'admin' && userData.is_admin && <AdminPanel />}
 
       </div>
+
+      {/* Guards sidebar/Settings/Log-Out navigation against silently discarding in-progress work
+          -- see requestTabChange/_pushExitGuard above for why this exists (a running mock test
+          or a solo exercise mid-attempt has no other way to intercept a same-page tab switch). */}
+      {pendingTab !== null && (
+        <ConfirmModal
+          title="Leave and lose your progress?"
+          message="You have an exercise or test in progress. Switching screens now will discard it -- it hasn't been saved yet."
+          confirmLabel="Leave anyway"
+          cancelLabel="Keep going"
+          danger
+          onConfirm={() => { const t = pendingTab; setPendingTab(null); if (t === 'logout') logout(); else setCurrentTab(t) }}
+          onCancel={() => setPendingTab(null)}
+        />
+      )}
     </div>
   )
 }
