@@ -6223,21 +6223,30 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
     if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
   }, [])
 
-  if (micState !== 'ready') return <MicPermissionGate micState={micState} onRetry={checkMic} onBack={onBack} />
-
-  const score = answers.reduce((s, a) => s + a.score, 0)
-  const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
-  const progressPct = phase === 'summary' ? 100 : (sentenceIdx / totalQ) * 100
   // Was previously the only place in the whole app doing its own ad-hoc exit handling instead of
   // useExitDraft -- meant no confirm-before-discard on mid-recording exit, and no beforeunload
   // "Leave site?" guard if the student closed the tab mid-recording (silently losing the attempt).
   // canSave: false matches ListeningP1Exercise's live-recording pattern (nothing meaningful to
   // resume from a draft here); graded: phase === 'summary' + onExitGraded mirrors what the old
   // handleExit did -- sync the earned score via onComplete(answers) once already graded.
+  //
+  // MUST be called before the micState early return below -- React hooks must run in the same
+  // order on every render. This was originally placed after that return, so the very first render
+  // (micState still 'checking') skipped this hook entirely, then the render where the mic became
+  // ready called it -- a different hook count between renders, which throws a hard "Rendered fewer
+  // hooks than expected" error and crashes to the top-level error boundary. Confirmed live: opening
+  // any Listen & Repeat exercise with real microphone access (i.e. actually reaching 'ready', which
+  // never happened in mic-less test environments) hit this immediately.
   const { requestExit, modal: exitModal } = useExitDraft({
     category: 'speaking_lr', itemId: item.id ?? index, onBack, mockMode,
     canSave: false, graded: phase === 'summary', onExitGraded: () => onComplete(answers),
   })
+
+  if (micState !== 'ready') return <MicPermissionGate micState={micState} onRetry={checkMic} onBack={onBack} />
+
+  const score = answers.reduce((s, a) => s + a.score, 0)
+  const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
+  const progressPct = phase === 'summary' ? 100 : (sentenceIdx / totalQ) * 100
 
   return (
     <>
@@ -6513,17 +6522,19 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
     if (recognitionRef.current) { try { recognitionRef.current.stop() } catch (e) {} }
   }, [])
 
+  // Same fix as ListenRepeatExercise -- see the comment there. Must run before the micState early
+  // return below (Rules of Hooks: same hook count on every render) or opening this exercise with
+  // real microphone access crashes to the top-level error boundary the moment the mic becomes ready.
+  const { requestExit, modal: exitModal } = useExitDraft({
+    category: 'speaking_interview', itemId: item.id ?? index, onBack, mockMode,
+    canSave: false, graded: phase === 'summary', onExitGraded: () => onComplete(answers),
+  })
+
   if (micState !== 'ready') return <MicPermissionGate micState={micState} onRetry={checkMic} onBack={onBack} />
 
   const score = answers.reduce((s, a) => s + a.score, 0)
   const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
   const progressPct = phase === 'summary' ? 100 : (qIdx / totalQ) * 100
-  // Same fix as ListenRepeatExercise -- see the comment there. Was the other component missing
-  // useExitDraft entirely.
-  const { requestExit, modal: exitModal } = useExitDraft({
-    category: 'speaking_interview', itemId: item.id ?? index, onBack, mockMode,
-    canSave: false, graded: phase === 'summary', onExitGraded: () => onComplete(answers),
-  })
 
   return (
     <>
