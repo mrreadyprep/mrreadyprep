@@ -4557,7 +4557,14 @@ function evaluateDiscussionResponse(text, classmates) {
     }
   }
 
-  const hasOpinion = /(i believe|i think|in my opinion|my view|i would argue|i'd argue|i'd say)/i.test(lower)
+  // Found live: a response opening with "I agree with Diego that affordable housing should be
+  // the priority" -- an unambiguous opinion statement, and exactly the natural way this task
+  // type invites students to answer (react to a classmate, take a side) -- was still marked as
+  // not stating an opinion, because "i agree/i disagree (with X)" wasn't in this list even
+  // though it's already recognized as an engagement phrase a few lines below. Added agreement/
+  // disagreement phrasing plus a few other common natural openers so a response doesn't get
+  // penalized on Content & Relevance for stating its opinion in a way that isn't "I believe...".
+  const hasOpinion = /(i believe|i think|in my opinion|my view|i would argue|i'd argue|i'd say|i agree|i disagree|personally|i side with|i'm inclined to|i am inclined to|from my (view|perspective)|for me,)/i.test(lower)
   const hasReason = /(because|since|as a result|due to|therefore|this is why)/i.test(lower)
   criteria.push({
     ok: hasOpinion && hasReason,
