@@ -2284,8 +2284,15 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
 
 const LISTENING_P1_TIME = 20
 
-function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal, paused = false }) {
   const isMobile = useIsMobile()
+  // Full Mock Test overlays its "Exit the mock test?" confirmation on top of this still-mounted
+  // component (see FullMockTest's wrap()) rather than unmounting it -- without this ref, the
+  // response timer below kept ticking (and could auto-advance to the next question) silently
+  // behind that dialog. A ref (not state) so the interval callback always reads the latest value
+  // without needing to be recreated every time the modal opens/closes.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [currentQ, setCurrentQ] = useState(0)
   const [selected, setSelected] = useState(null)
   const [done, setDone] = useState(false)
@@ -2374,6 +2381,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
     }
     setTimeLeft(LISTENING_P1_TIME)
     timerRef.current = setInterval(() => {
+      if (pausedRef.current) return
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
@@ -2624,8 +2632,12 @@ function ListeningP2List({ conversations, scores, onSelect, onBack }) {
 
 const LISTENING_P2_TIME = 30
 
-function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal, paused = false }) {
   const isMobile = useIsMobile()
+  // See the matching comment in ListeningP1Exercise -- keeps the response timer below from
+  // silently ticking (and auto-advancing) underneath Full Mock Test's "Exit the mock test?" dialog.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [phase, setPhase] = useState('listening') // 'listening' | 'question'
   const [qIdx, setQIdx] = useState(0)
   const [selected, setSelected] = useState(null)
@@ -2685,6 +2697,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
     setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
+      if (pausedRef.current) return
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
@@ -2930,8 +2943,11 @@ function ListeningP3List({ announcements, scores, onSelect, onBack }) {
 
 const LISTENING_P3_TIME = 30
 
-function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal, paused = false }) {
   const isMobile = useIsMobile()
+  // See the matching comment in ListeningP1Exercise.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [phase, setPhase] = useState('listening') // 'listening' | 'question'
   const [qIdx, setQIdx] = useState(0)
   const [selected, setSelected] = useState(null)
@@ -2991,6 +3007,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
     setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
+      if (pausedRef.current) return
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
@@ -3239,8 +3256,11 @@ function ListeningP4List({ talks, scores, onSelect, onBack }) {
 
 const LISTENING_P4_TIME = 30
 
-function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal }) {
+function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode = false, isLastSlot = true, moduleOffset, moduleTotal, paused = false }) {
   const isMobile = useIsMobile()
+  // See the matching comment in ListeningP1Exercise.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [phase, setPhase] = useState('listening') // 'listening' | 'question'
   const [qIdx, setQIdx] = useState(0)
   const [selected, setSelected] = useState(null)
@@ -3301,6 +3321,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
     setTimeUp(false)
     if (timerRef.current) clearInterval(timerRef.current)
     timerRef.current = setInterval(() => {
+      if (pausedRef.current) return
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
@@ -3610,6 +3631,8 @@ function BuildSentenceItem({ item, onChange, initialPlaced }) {
                 onDragLeave={() => setDragOverSlot(prev => (prev === i ? null : prev))}
                 onDrop={(e) => { e.preventDefault(); placeAt(i, getDragData(e)); setDragOverSlot(null) }}
                 onClick={() => removeSlot(i)}
+                role="button" tabIndex={0} aria-label={`${slot.text}, placed in blank ${i + 1}. Press Enter to remove.`}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); removeSlot(i) } }}
                 title="Drag to reorder, or click to remove"
                 style={{ fontSize: '17px', color: '#1a5c3a', background: '#edfbf3', border: '1px solid #2ac56c', borderRadius: '6px', padding: '4px 10px', cursor: 'grab' }}>
                 {slot.text}
@@ -3650,6 +3673,9 @@ function BuildSentenceItem({ item, onChange, initialPlaced }) {
               draggable={!isUsed}
               onDragStart={(e) => setDragData(e, { from: 'bank', bankIdx: i, text })}
               onClick={() => !isUsed && placeFirstEmpty(i, text)}
+              role="button" tabIndex={isUsed ? -1 : 0} aria-disabled={isUsed}
+              aria-label={isUsed ? `${text}, already placed` : `${text}, press Enter to place in the next blank`}
+              onKeyDown={(e) => { if (!isUsed && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); placeFirstEmpty(i, text) } }}
               style={{
                 fontSize: '17px', padding: '8px 14px', borderRadius: '6px',
                 background: isUsed ? '#f4f6fa' : '#e9ecf3',
@@ -3666,7 +3692,10 @@ function BuildSentenceItem({ item, onChange, initialPlaced }) {
   )
 }
 
-function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode = false }) {
+function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode = false, paused = false }) {
+  // See the matching comment in ListeningP1Exercise.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [qIdx, setQIdx] = useState(0)
   // Every item's placement is kept (not just the current one), so navigating Back and
   // forward again restores exactly what the student had placed, instead of discarding it.
@@ -3718,6 +3747,7 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
   useEffect(() => {
     if (done) return
     timerRef.current = setInterval(() => {
+      if (pausedRef.current) return
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
@@ -4230,8 +4260,11 @@ function toolbarBtnStyle(disabled) {
   }
 }
 
-function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
+function EmailExercise({ item, index, onBack, onComplete, mockMode = false, paused = false }) {
   const isMobile = useIsMobile()
+  // See the matching comment in ListeningP1Exercise.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [timeLeft, setTimeLeft] = useState(EMAIL_TIME_LIMIT)
   // In solo practice mode, resume a previously saved-and-exited draft if one exists for this
   // exact item -- same pattern as CTW/RIDL/AP, applied here because losing several minutes of
@@ -4284,6 +4317,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
+      if (pausedRef.current) return
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
@@ -4361,11 +4395,27 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false }) {
     category: 'email', itemId: item.id ?? index, answers: body, onBack, mockMode,
     graded: phase === 'done', onExitGraded: () => onComplete(result.score),
   })
+  // Found live via audit: clicking "Save & Exit" during the ~1.8s 'analyzing' phase (after Submit,
+  // before grading finishes) opened the exit dialog as an overlay on top of this still-mounted
+  // component, but didn't stop the pending analyzeTimeoutRef -- it fired underneath the dialog
+  // regardless, silently completing grading (saving the result, clearing the draft, moving to
+  // 'done'). If the student then chose "Save a draft" in the dialog, it saved the *already-graded*
+  // text as a fresh in-progress draft, so reopening this exercise later showed already-scored text
+  // as if it were unfinished work. Cancelling the pending grade and reverting to 'writing' before
+  // requestExit runs means the exit dialog always reflects real, ungraded state.
+  const handleExitClick = () => {
+    if (phase === 'analyzing' && analyzeTimeoutRef.current) {
+      clearTimeout(analyzeTimeoutRef.current)
+      analyzeTimeoutRef.current = null
+      setPhase('writing')
+    }
+    requestExit()
+  }
 
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+      topLeft={<TestPillButton onClick={handleExitClick}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
@@ -4668,8 +4718,11 @@ function evaluateDiscussionResponse(text, classmates) {
   return { score, wordCount, summary, criteria, dimensions }
 }
 
-function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode = false }) {
+function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode = false, paused = false }) {
   const isMobile = useIsMobile()
+  // See the matching comment in ListeningP1Exercise.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [timeLeft, setTimeLeft] = useState(DISCUSSION_TIME_LIMIT)
   // In solo practice mode, resume a previously saved-and-exited draft if one exists for this
   // exact item -- same reasoning as EmailExercise above.
@@ -4718,6 +4771,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
 
   useEffect(() => {
     timerRef.current = setInterval(() => {
+      if (pausedRef.current) return
       setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current)
@@ -4789,11 +4843,20 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
     category: 'disc', itemId: item.id ?? index, answers: body, onBack, mockMode,
     graded: phase === 'done', onExitGraded: () => onComplete(result.score),
   })
+  // See the matching comment in EmailExercise -- same 'analyzing'-phase exit race, same fix.
+  const handleExitClick = () => {
+    if (phase === 'analyzing' && analyzeTimeoutRef.current) {
+      clearTimeout(analyzeTimeoutRef.current)
+      analyzeTimeoutRef.current = null
+      setPhase('writing')
+    }
+    requestExit()
+  }
 
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+      topLeft={<TestPillButton onClick={handleExitClick}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
       topRight={phase === 'writing' && <TestPillButton variant="dark" onClick={finishNow}>Submit</TestPillButton>}
       section="WRITING"
       questionLabel={`Practice ${index + 1}`}
@@ -5079,7 +5142,14 @@ function evaluateInterviewResponse(transcript, questionText) {
   const stop = new Set(['the', 'a', 'an', 'is', 'are', 'was', 'were', 'to', 'of', 'in', 'on', 'for', 'and', 'or', 'you', 'your', 'do', 'did', 'does', 'think', 'why', 'what', 'which', 'some', 'people', 'that', 'this', 'with', 'about', 'from', 'would', 'could', 'should', 'will', 'can', 'i', 'we', 'they', 'he', 'she', 'it', 'one', 'last', 'question'])
   const keywords = normalizeWords(questionText).filter(w => w.length > 3 && !stop.has(w))
   const hits = keywords.filter(k => words.includes(k)).length
-  const relevance = keywords.length ? hits / keywords.length : 0
+  // Found via audit: this used to fall back to 0 (maximally "off-topic") whenever a question text
+  // yields zero scorable keywords (e.g. a short/edited prompt made mostly of stop-listed or
+  // <=3-letter words) -- with the score ladder below treating relevance < 0.15 as an automatic cap
+  // at 2/6, that silently capped every answer to such a question at 2/6 regardless of length,
+  // reasoning, or grammar, since there's no real signal here to conclude the response is off-topic.
+  // Default to 1 (fully relevant) instead -- same "don't penalize for a signal we can't detect"
+  // fix already applied to evaluateDiscussionResponse's opinion check this session.
+  const relevance = keywords.length ? hits / keywords.length : 1
 
   const hasReason = /(because|since|so that|the reason|due to)/i.test(transcript)
   const uniqueWords = new Set(words).size
@@ -6220,7 +6290,12 @@ function TopicPhoto({ icon, label, photoSlug, photoUrl, width = 140, height = 14
   )
 }
 
-function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = false }) {
+function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = false, paused = false }) {
+  // See the matching comment in ListeningP1Exercise -- keeps the recording countdown below from
+  // ticking to 0 and auto-stopping/auto-grading while Full Mock Test's "Exit the mock test?"
+  // dialog is open on top of this still-mounted, still-recording component.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [micState, setMicState] = useState('checking')
   const [sentenceIdx, setSentenceIdx] = useState(0)
   const [phase, setPhase] = useState('intro') // 'intro' | 'playing' | 'recording' | 'summary'
@@ -6290,13 +6365,25 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
         stopRecording()
       }
     }
-    try { rec.start() } catch (e) {}
+    // rec.start() can throw synchronously (e.g. InvalidStateError from a recognition session that's
+    // still technically active on quick re-entry) -- previously swallowed entirely, so the
+    // recognizer never actually started, onresult/onerror never fired, and the student sat through
+    // the full countdown talking into a dead mic before being scored 0 with "(nothing detected)",
+    // indistinguishable from genuinely staying silent. Recording the error and skipping straight to
+    // stopRecording (same fatal-error path onerror above uses) surfaces the real cause instead.
+    let startFailed = false
+    try { rec.start() } catch (e) { recErrorRef.current = e?.name || 'start-error'; startFailed = true }
     recognitionRef.current = rec
     setPhase('recording')
     setCountdown(sentence.recordSeconds)
-    timerRef.current = setInterval(() => {
-      setCountdown(prev => prev - 1)
-    }, 1000)
+    if (startFailed) {
+      stopRecording()
+    } else {
+      timerRef.current = setInterval(() => {
+        if (pausedRef.current) return
+        setCountdown(prev => prev - 1)
+      }, 1000)
+    }
   }
 
   const stoppingRef = useRef(false)
@@ -6542,7 +6629,10 @@ function ListenRepeat({ onBack }) {
 
 // ─── Speaking Part 2: Take an Interview ────────────────────────────────────
 
-function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }) {
+function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, paused = false }) {
+  // See the matching comment in ListenRepeatExercise.
+  const pausedRef = useRef(paused)
+  useEffect(() => { pausedRef.current = paused }, [paused])
   const [micState, setMicState] = useState('checking')
   const [qIdx, setQIdx] = useState(0)
   const [phase, setPhase] = useState('intro') // 'intro' | 'playing' | 'recording' | 'summary'
@@ -6608,13 +6698,21 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false }
         stopRecording()
       }
     }
-    try { rec.start() } catch (e) {}
+    // See ListenRepeatExercise's identical fix -- rec.start() throwing was previously swallowed,
+    // silently scoring the student 0 with "(nothing detected)" instead of surfacing a real error.
+    let startFailed = false
+    try { rec.start() } catch (e) { recErrorRef.current = e?.name || 'start-error'; startFailed = true }
     recognitionRef.current = rec
     setPhase('recording')
     setCountdown(question.recordSeconds)
-    timerRef.current = setInterval(() => {
-      setCountdown(prev => prev - 1)
-    }, 1000)
+    if (startFailed) {
+      stopRecording()
+    } else {
+      timerRef.current = setInterval(() => {
+        if (pausedRef.current) return
+        setCountdown(prev => prev - 1)
+      }, 1000)
+    }
   }
 
   const stoppingRef = useRef(false)
@@ -8361,6 +8459,19 @@ function FullMockTest({ onBack, hasPremium = false }) {
 
   const handleReadingPoolExpired = () => {
     const { idx: curIdx, queue: curQueue, stage: curStage } = readingLiveRef.current
+    // Guard against a stale firing: this function is called from the pool-clock interval effect
+    // below, whose callback closure captures whichever `stage`/`advanceStage` existed when that
+    // effect last (re)ran -- it isn't recreated on every render, only when [stage, phase,
+    // showExitConfirm] change. If the student submits the very last question of the module in the
+    // same instant this interval's callback was already scheduled to fire, both paths can call
+    // advanceStage() -- the legitimate one (via onComplete/goNext, using fresh state) and this one
+    // (using the closure's now-stale `stage`). Since readingLiveRef.current is written synchronously
+    // on every render, curStage here is always current; if it no longer matches the closure's
+    // `stage`, a real advance already happened moments ago and this firing is stale -- bail out
+    // instead of calling advanceStage() again, which would otherwise silently rebuild and overwrite
+    // whatever the legitimate advance just set up (found via code audit: this could look like the
+    // whole test "rewinding" from Listening back into a freshly-drawn Reading Module 2).
+    if (curStage !== stage) return
     // Score every remaining (not-yet-recorded) slot as 0/N — but don't touch slots the student
     // already completed and recorded (including ones they'd gone Back to revisit), since
     // recordSlot below would otherwise wipe out a real score with an unattempted one.
@@ -8378,7 +8489,13 @@ function FullMockTest({ onBack, hasPremium = false }) {
   // a reading-m1/reading-m2 stage is actively running, and pauses during notice/intro screens.
   useEffect(() => {
     const isReadingModule = stage === 'reading-m1' || stage === 'reading-m2'
-    if (!isReadingModule || phase !== 'running') return
+    // Also pause while the "Exit the mock test?" confirmation is open. Found live: that dialog is
+    // rendered as an overlay on top of the still-mounted exercise (see wrap() below) rather than
+    // replacing it, so without this guard the pool clock kept ticking underneath the dialog and
+    // could expire (auto-scoring remaining questions as 0 and silently calling advanceStage()) while
+    // the student was just reading "Exit the mock test?" — they'd land back on a completely
+    // different question/module than the one they meant to leave from if they clicked "Keep testing".
+    if (!isReadingModule || phase !== 'running' || showExitConfirm) return
     const t = setInterval(() => {
       setReadingPoolLeft(prev => {
         if (prev === null) return prev
@@ -8392,7 +8509,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
     }, 1000)
     return () => clearInterval(t)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stage, phase])
+  }, [stage, phase, showExitConfirm])
 
   const addReview = (section, kind, detail) => {
     if (!detail) return
@@ -8625,15 +8742,15 @@ function FullMockTest({ onBack, hasPremium = false }) {
   if (slot.kind === 'ctw') return wrap(<CTWSingle key={idx} exercise={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(c, t, detail) => handleReadingListening(slot, c, t, detail)} poolTime={readingPoolLeft === null ? undefined : readingPoolLeft} moduleOffset={moduleOffset} moduleTotal={moduleTotal} onPrevSlot={prevSlotHandler} isLastSlot={isLastSlotInModule} initialAnswers={getSlotAnswers(stage, idx)} onAnswersChange={(val) => setSlotAnswers(stage, idx, val)} />)
   if (slot.kind === 'ridl') return wrap(<RIDLQuestion key={idx} passage={slot.data} practiceNum={idx + 1} totalPractices={queue.length} onBack={exitMockTest} onFinish={goNext} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} poolTime={readingPoolLeft === null ? undefined : readingPoolLeft} moduleOffset={moduleOffset} moduleTotal={moduleTotal} onPrevSlot={prevSlotHandler} enterAtEnd={shouldEnterAtEnd} isLastSlot={isLastSlotInModule} initialAnswers={getSlotAnswers(stage, idx)} onAnswersChange={(val) => setSlotAnswers(stage, idx, val)} />)
   if (slot.kind === 'ap') return wrap(<APQuestion key={idx} passage={slot.data} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} poolTime={readingPoolLeft === null ? undefined : readingPoolLeft} moduleOffset={moduleOffset} moduleTotal={moduleTotal} onPrevSlot={prevSlotHandler} enterAtEnd={shouldEnterAtEnd} isLastSlot={isLastSlotInModule} initialAnswers={getSlotAnswers(stage, idx)} onAnswersChange={(val) => setSlotAnswers(stage, idx, val)} />)
-  if (slot.kind === 'car') return wrap(<ListeningP1Exercise key={idx} exercise={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} />)
-  if (slot.kind === 'conv') return wrap(<ListeningP2Exercise key={idx} conversation={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} />)
-  if (slot.kind === 'announce') return wrap(<ListeningP3Exercise key={idx} announcement={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} />)
-  if (slot.kind === 'at') return wrap(<ListeningP4Exercise key={idx} talk={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} />)
-  if (slot.kind === 'bas') return wrap(<BuildSentenceExercise key={idx} items={slot.data} onBack={exitMockTest} mockMode onComplete={(c, t, detail) => handleWriting(slot, { correct: c, total: t }, detail)} />)
-  if (slot.kind === 'email') return wrap(<EmailExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(score, detail) => handleWriting(slot, { score }, detail)} />)
-  if (slot.kind === 'disc') return wrap(<AcademicDiscussionExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(score, detail) => handleWriting(slot, { score }, detail)} />)
-  if (slot.kind === 'lr') return wrap(<ListenRepeatExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(answers, detail) => handleSpeaking(slot, answers, detail)} />)
-  if (slot.kind === 'interview') return wrap(<InterviewExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(answers, detail) => handleSpeaking(slot, answers, detail)} />)
+  if (slot.kind === 'car') return wrap(<ListeningP1Exercise key={idx} exercise={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} paused={showExitConfirm} />)
+  if (slot.kind === 'conv') return wrap(<ListeningP2Exercise key={idx} conversation={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} paused={showExitConfirm} />)
+  if (slot.kind === 'announce') return wrap(<ListeningP3Exercise key={idx} announcement={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} paused={showExitConfirm} />)
+  if (slot.kind === 'at') return wrap(<ListeningP4Exercise key={idx} talk={slot.data} exerciseNum={idx + 1} onBack={exitMockTest} mockMode onComplete={(s2, t, detail) => handleReadingListening(slot, s2, t, detail)} isLastSlot={isLastSlotInModule} moduleOffset={moduleOffset} moduleTotal={moduleTotal} paused={showExitConfirm} />)
+  if (slot.kind === 'bas') return wrap(<BuildSentenceExercise key={idx} items={slot.data} onBack={exitMockTest} mockMode onComplete={(c, t, detail) => handleWriting(slot, { correct: c, total: t }, detail)} paused={showExitConfirm} />)
+  if (slot.kind === 'email') return wrap(<EmailExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(score, detail) => handleWriting(slot, { score }, detail)} paused={showExitConfirm} />)
+  if (slot.kind === 'disc') return wrap(<AcademicDiscussionExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(score, detail) => handleWriting(slot, { score }, detail)} paused={showExitConfirm} />)
+  if (slot.kind === 'lr') return wrap(<ListenRepeatExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(answers, detail) => handleSpeaking(slot, answers, detail)} paused={showExitConfirm} />)
+  if (slot.kind === 'interview') return wrap(<InterviewExercise key={idx} item={slot.data} index={idx} onBack={exitMockTest} mockMode onComplete={(answers, detail) => handleSpeaking(slot, answers, detail)} paused={showExitConfirm} />)
   return null
 }
 

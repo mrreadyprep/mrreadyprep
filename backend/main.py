@@ -1198,6 +1198,7 @@ def get_current_user(authorization: Optional[str] = Header(None)):
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid authentication token")
     user_id = int(payload["sub"])
+    _check_api_throttle(user_id)
     # Tokens issued before this field existed carry no "tv" claim -- treat that as version 0,
     # which matches every existing user row's DEFAULT 0, so already-issued valid sessions aren't
     # retroactively invalidated by this change.
@@ -1726,16 +1727,52 @@ _register_attempts: dict = collections.defaultdict(list)
 FORGOT_PASSWORD_ATTEMPT_WINDOW_SECONDS = 15 * 60
 FORGOT_PASSWORD_ATTEMPT_MAX = 5
 _forgot_password_attempts: dict = collections.defaultdict(list)
+# The IP+email key above blocks nothing against an attacker who rotates IPs against one fixed
+# victim email (same gap login's IP+email key alone would have had -- see LOGIN_ATTEMPT_EMAIL_MAX
+# above). Without an email-only backstop, that lets someone spam a specific student's inbox with
+# password-reset emails indefinitely (nuisance/harassment, and burns the transactional-email
+# provider's send quota) just by cycling through a handful of proxy IPs. Wider window and higher
+# ceiling than the IP+email limiter so it only kicks in for genuinely abusive volume, never for a
+# real student who legitimately requests a reset a few times.
+FORGOT_PASSWORD_EMAIL_WINDOW_SECONDS = 60 * 60
+FORGOT_PASSWORD_EMAIL_MAX = 10
+_forgot_password_attempts_by_email: dict = collections.defaultdict(list)
 
 RESEND_VERIFICATION_WINDOW_SECONDS = 60 * 60
 RESEND_VERIFICATION_MAX = 5
 _resend_verification_attempts: dict = collections.defaultdict(list)
 
+# --- General per-user API throttle ---
+# Every authenticated endpoint funnels through get_current_user() below, so this is the one choke
+# point that can bound how many requests a single account can throw at the DB_POOL_MAX_CONN=10
+# connection pool. Without this, a single signed-up (even free-tier) student's own valid JWT lets
+# them fire a tight loop of requests at any DB-backed endpoint (save-result, dashboard, vocab
+# toggle, ...) and hold enough pooled connections in flight to starve every other concurrent
+# user -- login, checkout, dashboard, everything -- with 503s, since the pool itself becomes the
+# bottleneck. The threshold below is deliberately generous: normal usage (loading the dashboard,
+# which already batches its own queries into one call, tapping through vocab flashcards, saving
+# an exercise result) never comes close to it, so this should be invisible to every real student.
+API_THROTTLE_WINDOW_SECONDS = 30
+API_THROTTLE_MAX = 60
+_api_throttle_attempts: dict = collections.defaultdict(list)
+
+def _check_api_throttle(user_id: int):
+    _sweep_stale_rate_limit_entries()
+    key = str(user_id)
+    with _rate_limit_lock:
+        now = time.time()
+        attempts = [t for t in _api_throttle_attempts[key] if now - t < API_THROTTLE_WINDOW_SECONDS]
+        if len(attempts) >= API_THROTTLE_MAX:
+            _api_throttle_attempts[key] = attempts
+            raise HTTPException(status_code=429, detail="Too many requests. Please slow down and try again in a moment.")
+        attempts.append(now)
+        _api_throttle_attempts[key] = attempts
+
 # A key (IP, or IP+email) only ever gets its list re-trimmed when that *exact* key is checked
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _forgot_password_attempts, _resend_verification_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -1820,7 +1857,11 @@ def google_login(data: GoogleLoginRequest):
     google_id = payload.get("sub")
     email = (payload.get("email") or "").strip().lower()
     email_verified_by_google = bool(payload.get("email_verified"))
-    name = payload.get("name") or (email.split("@")[0] if email else "Student")
+    # Google doesn't guarantee any particular length limit on the profile-name claim it hands back
+    # to relying parties -- every other path that sets `username` (register, update_profile) is
+    # bounded to 50 chars via Field(max_length=50)/an explicit re-check, so mirror that bound here
+    # too rather than inserting an arbitrarily long value into that column.
+    name = (payload.get("name") or (email.split("@")[0] if email else "Student"))[:50]
     if not google_id or not email or not email_verified_by_google:
         raise HTTPException(status_code=401, detail="Google account is missing a verified email")
 
@@ -1874,6 +1915,7 @@ def forgot_password(data: ForgotPasswordRequest, request: Request):
     this stops someone from using this endpoint to check which emails have an account here."""
     email = data.email.strip().lower()
     _check_and_consume_rate_limit(_forgot_password_attempts, f"{_client_ip(request)}:{email}", FORGOT_PASSWORD_ATTEMPT_WINDOW_SECONDS, FORGOT_PASSWORD_ATTEMPT_MAX, "password-reset")
+    _check_and_consume_rate_limit(_forgot_password_attempts_by_email, email, FORGOT_PASSWORD_EMAIL_WINDOW_SECONDS, FORGOT_PASSWORD_EMAIL_MAX, "password-reset")
     print(f"[password reset] forgot-password called for email={email!r}", flush=True)
     conn = get_db()
     try:
@@ -2108,6 +2150,18 @@ def _checkout_lock_for(user_id: int) -> threading.Lock:
             _checkout_locks[user_id] = lock
         return lock
 
+# The lock above only serializes *concurrent* create_checkout calls for one user -- it does nothing
+# to stop a script from calling this endpoint many times in a row, sequentially, each call passing
+# the "not already subscribed" check (since no transaction from a prior call was ever completed)
+# and making a real server-to-server call to Paddle's API. That racks up abandoned transaction
+# records against the merchant account and burns Paddle's own API rate limit, which could degrade
+# checkout for real, paying customers. A generous per-user ceiling closes this without affecting
+# any real student, who only ever calls this once per genuine subscribe attempt.
+CREATE_CHECKOUT_WINDOW_SECONDS = 10 * 60
+CREATE_CHECKOUT_MAX = 8
+_create_checkout_attempts: dict = collections.defaultdict(list)
+_ALL_RATE_LIMIT_STORES.append(_create_checkout_attempts)
+
 @app.post("/api/subscription/create-checkout")
 def create_checkout(user=Depends(get_current_user)):
     """Creates a Paddle transaction server-side (authenticated) and hands the frontend back just
@@ -2118,6 +2172,7 @@ def create_checkout(user=Depends(get_current_user)):
     forged user_id in a client-side customData would otherwise let someone grant premium to an
     account they don't own just by paying for a different one."""
     _require_paddle()
+    _check_and_consume_rate_limit(_create_checkout_attempts, str(user["id"]), CREATE_CHECKOUT_WINDOW_SECONDS, CREATE_CHECKOUT_MAX, "checkout")
     with _checkout_lock_for(user["id"]):
         # Re-check against a fresh row (not the possibly-stale `user` the dependency fetched at
         # request start) now that we hold this user's lock -- see _checkout_locks above.
@@ -2201,8 +2256,15 @@ async def paddle_webhook(request: Request):
     # (avoids buffering at all for the common case), then enforce the same ceiling by reading the
     # body incrementally and aborting the moment it's exceeded, regardless of what any header claims.
     content_length = request.headers.get("content-length")
-    if content_length and int(content_length) > 1_000_000:
-        raise HTTPException(status_code=413, detail="Payload too large")
+    if content_length:
+        try:
+            content_length_int = int(content_length)
+        except ValueError:
+            # This runs before the webhook signature check below, on a public pre-auth endpoint --
+            # a malformed (non-numeric) header value must not be able to raise an unhandled 500 here.
+            raise HTTPException(status_code=400, detail="Invalid Content-Length header")
+        if content_length_int > 1_000_000:
+            raise HTTPException(status_code=413, detail="Payload too large")
     body_chunks = []
     total_len = 0
     async for chunk in request.stream():
