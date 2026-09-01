@@ -7779,11 +7779,25 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPre
         Reading and Listening are adaptive: your Module 2 content depends on how well you do in Module 1,
         just like the real TOEFL iBT 2026 test.
       </p>
-      <p style={{ maxWidth: '520px', color: '#9ca3af', fontSize: '12px', lineHeight: '1.6', marginBottom: '28px' }}>
+      <p style={{ maxWidth: '520px', color: '#9ca3af', fontSize: '12px', lineHeight: '1.6', marginBottom: '18px' }}>
         At the end you'll get an estimated 1–6 band score for each section plus an overall average —
         estimated because ETS doesn't publish its exact scoring formula.
       </p>
-      {onStartFixed && <MockTestList onSelect={setSelectedTestId} hasPremium={hasPremium} />}
+      {onStart && (
+        <button onClick={() => onStart()} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '13px 32px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', marginBottom: onStartFixed ? '28px' : '18px' }}>
+          Start Full Mock Test
+        </button>
+      )}
+      {onStartFixed && (
+        <>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '18px' }}>
+            <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
+            <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or take a fixed test (same content every time)</span>
+            <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
+          </div>
+          <MockTestList onSelect={setSelectedTestId} hasPremium={hasPremium} />
+        </>
+      )}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '18px' }}>
         <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
         <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or practice one section only</span>
@@ -10380,7 +10394,7 @@ function App() {
                     Use "Forgot password" from the login screen in the meantime to change a password. */}
                 <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '-8px' }}>Password changes aren't available here yet -- use "Forgot password" on the login screen to reset it.</div>
                 <button disabled style={{ backgroundColor: '#e5e7eb', color: '#9ca3af', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'not-allowed' }}>Update Password</button>
-                <button onClick={logout} style={{ backgroundColor: '#fff', color: '#dc2626', border: '1px solid #fecaca', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Log Out</button>
+                <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} style={{ backgroundColor: '#fff', color: '#dc2626', border: '1px solid #fecaca', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Log Out</button>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
                   <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Terms of Service</a>
                   <span style={{ fontSize: '12px', color: '#cbd5e1' }}>·</span>

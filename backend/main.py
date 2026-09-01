@@ -5,6 +5,7 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import List, Optional
+import asyncio
 import base64
 import hashlib
 import html as _html
@@ -581,7 +582,12 @@ def _cached_pool(cache_key, builder):
 # ============================================================
 
 class DashboardData(BaseModel):
-    username: str
+    # RegisterRequest.username is already bounded to max_length=50; this is the equivalent field
+    # on the existing-account profile-update path (/api/profile/update). update_profile() does
+    # check len(username) > 50, but only after Pydantic has already parsed and copied an
+    # arbitrarily large string into memory first -- the exact gap already closed for
+    # AttemptResult.category. Bounding it here at the model closes it for real.
+    username: str = Field(max_length=50)
     # Matches the frontend's own <input min="0" max="6"> for the overall target-score field.
     # The frontend already clamps its four per-section targets (see clampTarget() in App.jsx,
     # added after round 12's audit found the Dashboard's inline edit panel could bypass its own
@@ -646,7 +652,11 @@ class ExamDateUpdate(BaseModel):
     exam_date: str = Field(max_length=10, pattern=r"^\d{4}-\d{2}-\d{2}$|^$")  # ISO yyyy-mm-dd, or "" to clear
 
 class RIDLResult(BaseModel):
-    passage_id: int
+    # Bounded for the same reason score/total are below: ridl_results.passage_id is a Postgres
+    # INTEGER NOT NULL column, and an out-of-range value (e.g. 99999999999) passes an unbounded
+    # `int` field with no problem, then hits "integer out of range" -- an uncaught DataError, not
+    # one of the handled _INTEGRITY_ERRORS -- crashing the request with a 500 in production.
+    passage_id: int = Field(ge=0, le=100000)
     # Bounded (not just "> 0") so a buggy/forged client can't write a score that inflates the
     # student's own Read in Daily Life stats -- see the matching check in save_ridl_result() for
     # the score-can't-exceed-total rule (can't express that as a Field constraint since it's a
@@ -2126,51 +2136,61 @@ async def paddle_webhook(request: Request):
     custom_data = data.get("custom_data") or {}
     user_id = custom_data.get("user_id")
 
-    conn = get_db()
-    try:
-        # subscription.created is the only event where this subscription_id hasn't been linked to
-        # a user yet -- custom_data.user_id (set server-side in create_checkout above) is what
-        # binds it. Every later event (updated/canceled/past_due) is matched by subscription_id
-        # alone, same as the iyzico webhook matched on subscriptionReferenceCode before it.
-        if event_type == "subscription.created" and user_id:
-            try:
-                user_id_int = int(user_id)
-            except (TypeError, ValueError):
-                print(f"[paddle webhook] subscription.created with non-numeric custom_data.user_id={user_id!r} -- subscription_id={subscription_id}. Cannot link to a user; premium was NOT granted.", flush=True)
-                raise HTTPException(status_code=400, detail="Invalid custom_data.user_id on subscription.created")
-            cur = conn.execute(
-                "UPDATE users SET paddle_customer_id = ?, paddle_subscription_id = ?, "
-                "subscription_status = ?, subscription_current_period_end = ? WHERE id = ?",
-                (customer_id, subscription_id, status, period_end, user_id_int),
-            )
-            if cur.rowcount == 0:
-                # user_id was present and numeric but didn't match any real account (stale/deleted
-                # user, bad data). Same failure mode the "missing custom_data" branch below already
-                # guards against -- the student was charged but premium was never actually granted,
-                # so this needs the same loud, logged failure instead of a silent 200 to Paddle.
-                print(f"[paddle webhook] subscription.created: custom_data.user_id={user_id_int} matched no user -- subscription_id={subscription_id} customer_id={customer_id}. Premium was NOT granted.", flush=True)
-                raise HTTPException(status_code=400, detail="custom_data.user_id did not match any user")
-        elif event_type == "subscription.created":
-            # custom_data.user_id was missing on the very first event for this subscription --
-            # e.g. a subscription created outside our own checkout flow. There's no row with this
-            # paddle_subscription_id yet (nothing to have set it before now), so falling through
-            # to the WHERE-paddle_subscription_id branch below would silently match zero rows: the
-            # student would have paid with no way to ever get premium access, and no error trail
-            # for support to find. Surface it loudly instead and ask Paddle to retry, in case the
-            # missing custom_data was a transient issue on Paddle's end.
-            print(f"[paddle webhook] subscription.created with no custom_data.user_id -- subscription_id={subscription_id} customer_id={customer_id}. Cannot link to a user; premium was NOT granted.", flush=True)
-            raise HTTPException(status_code=400, detail="Missing custom_data.user_id on subscription.created")
-        else:
-            cur = conn.execute(
-                "UPDATE users SET subscription_status = ?, subscription_current_period_end = ? "
-                "WHERE paddle_subscription_id = ?",
-                (status, period_end, subscription_id),
-            )
-            if cur.rowcount == 0:
-                print(f"[paddle webhook] {event_type} matched no user for subscription_id={subscription_id} -- no row has this paddle_subscription_id yet.", flush=True)
-        conn.commit()
-    finally:
-        conn.close()
+    # The DB work below is synchronous (sqlite3, or a real network round-trip to Postgres in
+    # production via psycopg2) and was previously run directly inside this `async def` coroutine --
+    # the same event-loop-blocking bug already fixed for get_academic_passage, but worse here since
+    # Paddle can deliver a webhook for every subscription lifecycle event (creation, renewal,
+    # cancellation, past-due, ...) and each one would stall every other concurrent async request on
+    # this worker for the duration of the DB round-trip. Running it via asyncio.to_thread keeps the
+    # event loop free while this executes on a worker thread.
+    def _apply_webhook():
+        conn = get_db()
+        try:
+            # subscription.created is the only event where this subscription_id hasn't been linked to
+            # a user yet -- custom_data.user_id (set server-side in create_checkout above) is what
+            # binds it. Every later event (updated/canceled/past_due) is matched by subscription_id
+            # alone, same as the iyzico webhook matched on subscriptionReferenceCode before it.
+            if event_type == "subscription.created" and user_id:
+                try:
+                    user_id_int = int(user_id)
+                except (TypeError, ValueError):
+                    print(f"[paddle webhook] subscription.created with non-numeric custom_data.user_id={user_id!r} -- subscription_id={subscription_id}. Cannot link to a user; premium was NOT granted.", flush=True)
+                    raise HTTPException(status_code=400, detail="Invalid custom_data.user_id on subscription.created")
+                cur = conn.execute(
+                    "UPDATE users SET paddle_customer_id = ?, paddle_subscription_id = ?, "
+                    "subscription_status = ?, subscription_current_period_end = ? WHERE id = ?",
+                    (customer_id, subscription_id, status, period_end, user_id_int),
+                )
+                if cur.rowcount == 0:
+                    # user_id was present and numeric but didn't match any real account (stale/deleted
+                    # user, bad data). Same failure mode the "missing custom_data" branch below already
+                    # guards against -- the student was charged but premium was never actually granted,
+                    # so this needs the same loud, logged failure instead of a silent 200 to Paddle.
+                    print(f"[paddle webhook] subscription.created: custom_data.user_id={user_id_int} matched no user -- subscription_id={subscription_id} customer_id={customer_id}. Premium was NOT granted.", flush=True)
+                    raise HTTPException(status_code=400, detail="custom_data.user_id did not match any user")
+            elif event_type == "subscription.created":
+                # custom_data.user_id was missing on the very first event for this subscription --
+                # e.g. a subscription created outside our own checkout flow. There's no row with this
+                # paddle_subscription_id yet (nothing to have set it before now), so falling through
+                # to the WHERE-paddle_subscription_id branch below would silently match zero rows: the
+                # student would have paid with no way to ever get premium access, and no error trail
+                # for support to find. Surface it loudly instead and ask Paddle to retry, in case the
+                # missing custom_data was a transient issue on Paddle's end.
+                print(f"[paddle webhook] subscription.created with no custom_data.user_id -- subscription_id={subscription_id} customer_id={customer_id}. Cannot link to a user; premium was NOT granted.", flush=True)
+                raise HTTPException(status_code=400, detail="Missing custom_data.user_id on subscription.created")
+            else:
+                cur = conn.execute(
+                    "UPDATE users SET subscription_status = ?, subscription_current_period_end = ? "
+                    "WHERE paddle_subscription_id = ?",
+                    (status, period_end, subscription_id),
+                )
+                if cur.rowcount == 0:
+                    print(f"[paddle webhook] {event_type} matched no user for subscription_id={subscription_id} -- no row has this paddle_subscription_id yet.", flush=True)
+            conn.commit()
+        finally:
+            conn.close()
+
+    await asyncio.to_thread(_apply_webhook)
     return {"status": "ok"}
 
 # --- Dashboard ---
