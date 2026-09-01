@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, HTTPException, Depends, Header, Request, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import StreamingResponse
+from fastapi.responses import Response
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import List, Optional
 import asyncio
@@ -418,74 +418,115 @@ def _verify_audio_token(path: str, token: str) -> bool:
         return False
     return hmac.compare_digest(_sign_audio_path(path, exp), sig)
 
-# Streams an audio file server-to-server from the real upstream (AUDIO_BASE_URL, e.g. R2) back
-# to the browser, instead of the browser connecting to that upstream directly (see
-# AUDIO_PROXY_BASE_URL above for why). Forwards the Range header both ways so seeking/progressive
-# playback in <audio> elements keeps working exactly as it did with a direct R2 URL (206 Partial
-# Content, Content-Range, Accept-Ranges).
+# Fetches an audio file server-to-server from the real upstream (AUDIO_BASE_URL, e.g. R2) and
+# serves it back to the browser, instead of the browser connecting to that upstream directly (see
+# AUDIO_PROXY_BASE_URL above for why). Range requests are honored so seeking/progressive playback
+# in <audio> elements keeps working exactly as it did with a direct R2 URL (206 Partial Content,
+# Content-Range, Accept-Ranges) -- but by slicing bytes we already hold, not by relaying a live
+# upstream stream (see below for why that distinction matters).
 #
 # IMPORTANT: this must stay a genuinely `async def` route using an async HTTP client (httpx), not
 # a sync `def` using `requests`. Root-caused incident (2026-09-01): <audio> elements routinely
 # open-then-abort/abandon connections while probing Range support, which is completely normal
-# browser media-loading behavior. With the old sync-`requests` version, an abandoned client
-# connection left the worker thread blocked forever inside `upstream.iter_content()` -- `requests`'
-# `timeout=` only bounds connect/first-byte time, NOT total streaming duration or inter-chunk
-# gaps, and Starlette cannot cancel a sync-threadpool-wrapped generator when the client
-# disconnects. Enough abandoned requests (ordinary usage, not an attack) permanently exhausted the
-# whole thread pool, so EVERY subsequent request -- even a brand new, valid one -- queued forever
-# waiting for a thread that never freed up. Symptom: <audio> elements hung indefinitely
-# (networkState stuck LOADING, no error ever fired) while plain fetch() calls to the identical URL
-# kept working, because fetch() calls don't get abandoned mid-stream the way media-element Range
-# probing does. The async version below fixes this two ways: (1) a bounded per-phase httpx timeout
-# (including a read timeout, so a stalled upstream/client raises instead of hanging forever) and
-# (2) genuine async cancellation -- when the ASGI server detects the client disconnected, it can
-# actually cancel this coroutine (unlike a thread, which cannot be force-killed), so no request can
-# ever pin resources indefinitely again.
-_AUDIO_PROXY_TIMEOUT = httpx.Timeout(connect=10.0, read=15.0, write=10.0, pool=10.0)
+# browser media-loading behavior. A sync `requests`-based version left the worker thread blocked
+# forever inside `upstream.iter_content()` on an abandoned connection, eventually exhausting
+# FastAPI's whole thread pool so EVERY request -- even a brand new, valid one -- queued forever.
+# Staying async plus a bounded httpx timeout (below) means a stalled/abandoned request can only
+# ever pin one coroutine for at most `_AUDIO_PROXY_TIMEOUT`, and the ASGI server can actually
+# cancel it on disconnect (unlike a thread, which can't be force-killed).
+#
+# Second incident, same endpoint (2026-09-01, later same day): the *first* fix above made audio
+# load reliably, but playback still stuttered -- a very brief, silent pause mid-clip while the
+# avatar was still "talking". Root cause: that version relayed bytes live, chunk by chunk, as they
+# arrived from R2 (`StreamingResponse` over `upstream.aiter_bytes()`). That makes the browser's
+# playback buffer only ever as far ahead as Render's *current* connection to R2 -- so any brief
+# latency blip between Render and R2 (normal network jitter, nothing wrong on either end) starved
+# the client's buffer in real time and the <audio> element paused for that instant, exactly like a
+# live radio stream cutting out. Fixed by decoupling the two legs entirely: fetch the *complete*
+# file from R2 into memory first (cached after that -- see _audio_cache below), THEN hand the
+# browser a plain, fully-buffered response. Worst case this adds a small one-time delay before
+# playback starts (bounded by _AUDIO_PROXY_TIMEOUT); it can never stutter mid-playback again,
+# because by the time the browser has any bytes at all, every byte of the file is already sitting
+# in RAM on our side with no further network dependency.
+_AUDIO_PROXY_TIMEOUT = httpx.Timeout(connect=10.0, read=20.0, write=10.0, pool=10.0)
+
+# In-memory cache of fully-fetched audio files, keyed by the R2 object path (not the signed
+# URL/token, so a freshly re-signed link for the same file still hits the cache). Every practice
+# item's audio gets re-requested often -- Retry, mock-test re-attempts, the same Listening intro
+# narration line reused across many exercises -- so caching turns almost every repeat play into an
+# instant in-memory response with zero R2 round-trip, on top of fixing the stutter above. Bounded
+# by total bytes with simple LRU eviction (OrderedDict) so a long-running instance can't grow this
+# unbounded; 100MB comfortably holds hundreds of these clips (typically well under 1MB each) while
+# staying small next to what even a modest Render instance has available.
+_audio_cache: "collections.OrderedDict[str, tuple]" = collections.OrderedDict()
+_audio_cache_lock = threading.Lock()
+_audio_cache_bytes = 0
+_AUDIO_CACHE_MAX_BYTES = 100 * 1024 * 1024
+
+def _audio_cache_get(path: str):
+    with _audio_cache_lock:
+        entry = _audio_cache.get(path)
+        if entry is not None:
+            _audio_cache.move_to_end(path)
+        return entry
+
+def _audio_cache_put(path: str, body: bytes, content_type: str):
+    global _audio_cache_bytes
+    with _audio_cache_lock:
+        if path in _audio_cache:
+            return  # a concurrent request for the same file already won the race and cached it
+        _audio_cache[path] = (body, content_type)
+        _audio_cache_bytes += len(body)
+        while _audio_cache_bytes > _AUDIO_CACHE_MAX_BYTES and _audio_cache:
+            _, (evicted_body, _) = _audio_cache.popitem(last=False)
+            _audio_cache_bytes -= len(evicted_body)
+
+_RANGE_RE = re.compile(r"bytes=(\d*)-(\d*)")
 
 @app.get("/audio-proxy/{path:path}")
 async def audio_proxy(path: str, request: Request, t: str = ""):
     if not _verify_audio_token(path, t):
         raise HTTPException(status_code=403, detail="Invalid or expired audio link")
-    upstream_url = f"{AUDIO_BASE_URL}/{path}"
-    fwd_headers = {}
+
+    cached = _audio_cache_get(path)
+    if cached is not None:
+        body, content_type = cached
+    else:
+        upstream_url = f"{AUDIO_BASE_URL}/{path}"
+        try:
+            async with httpx.AsyncClient(timeout=_AUDIO_PROXY_TIMEOUT) as client:
+                upstream = await client.get(upstream_url)
+        except httpx.HTTPError:
+            raise HTTPException(status_code=502, detail="Audio upstream unreachable")
+        if upstream.status_code != 200:
+            code = 404 if upstream.status_code == 404 else 502
+            raise HTTPException(status_code=code, detail="Audio not available")
+        body = upstream.content
+        content_type = upstream.headers.get("Content-Type") or "audio/mpeg"
+        _audio_cache_put(path, body, content_type)
+
+    total_len = len(body)
+    resp_headers = {"Accept-Ranges": "bytes", "Cache-Control": "public, max-age=86400"}
+
     range_header = request.headers.get("range")
     if range_header:
-        fwd_headers["Range"] = range_header
+        m = _RANGE_RE.match(range_header)
+        if m:
+            start_s, end_s = m.groups()
+            if start_s == "" and end_s != "":
+                # Suffix range ("bytes=-500" means "the last 500 bytes"), distinct from "bytes=0-500".
+                start = max(0, total_len - int(end_s))
+                end = total_len - 1
+            else:
+                start = int(start_s) if start_s else 0
+                end = int(end_s) if end_s else total_len - 1
+                end = min(end, total_len - 1)
+            if 0 <= start <= end < total_len:
+                chunk = body[start:end + 1]
+                resp_headers["Content-Range"] = f"bytes {start}-{end}/{total_len}"
+                return Response(content=chunk, status_code=206, headers=resp_headers, media_type=content_type)
 
-    client = httpx.AsyncClient(timeout=_AUDIO_PROXY_TIMEOUT)
-    try:
-        req = client.build_request("GET", upstream_url, headers=fwd_headers)
-        upstream = await client.send(req, stream=True)
-    except httpx.HTTPError:
-        await client.aclose()
-        raise HTTPException(status_code=502, detail="Audio upstream unreachable")
-
-    if upstream.status_code not in (200, 206):
-        await upstream.aclose()
-        await client.aclose()
-        code = 404 if upstream.status_code == 404 else 502
-        raise HTTPException(status_code=code, detail="Audio not available")
-
-    resp_headers = {"Accept-Ranges": "bytes", "Cache-Control": "public, max-age=86400"}
-    for h in ("Content-Type", "Content-Length", "Content-Range"):
-        if h in upstream.headers:
-            resp_headers[h] = upstream.headers[h]
-
-    async def iter_bytes():
-        try:
-            async for chunk in upstream.aiter_bytes(chunk_size=65536):
-                if await request.is_disconnected():
-                    break
-                if chunk:
-                    yield chunk
-        except httpx.HTTPError:
-            pass
-        finally:
-            await upstream.aclose()
-            await client.aclose()
-
-    return StreamingResponse(iter_bytes(), status_code=upstream.status_code, headers=resp_headers)
+    return Response(content=body, status_code=200, headers=resp_headers, media_type=content_type)
 
 # Fixed spoken-instruction narration lines ("Listen to a conversation.", "Listen to a talk in a
 # biology class.", etc.) that the 4 Listening exercise types play before the real
