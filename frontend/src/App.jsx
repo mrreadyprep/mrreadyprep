@@ -1669,7 +1669,13 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     }
     // Absolute upper bound on how long we wait for real playback progress on this clip, tracked
     // via a rolling "last progress" clock reset by timeupdate/playing/canplay -- not a flat
-    // one-shot deadline from mount (matches the fix applied to SafeAudio). A flat deadline here
+    // one-shot deadline from mount (matches the fix applied to SafeAudio). Bumped from 9s to 15s
+    // (2026-09-01) after the backend's /audio-proxy was changed to fully buffer a file server-side
+    // before sending any bytes (see main.py), instead of relaying live chunks as they arrived --
+    // that fixed an audible mid-playback stutter, but it also means the FIRST byte can now take
+    // noticeably longer to arrive on a cold cache / slow connection, since nothing streams until
+    // the whole file is already in hand. 9s was tight enough that a merely-slow (not actually
+    // broken) load could trip this and show a false "failed to load" banner. A flat deadline here
     // had two compounding problems, both confirmed live: (1) it only ever checked
     // `currentTime === 0` at the single instant it fired, so a MID-playback stall (started fine,
     // then buffered/stopped partway through) after that instant was never caught at all; and
@@ -1686,8 +1692,8 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     audio.addEventListener('playing', markProgress)
     audio.addEventListener('canplay', markProgress)
     const stuckInterval = setInterval(() => {
-      if (audio.src === url && !audio.ended && Date.now() - lastProgressAt >= 9000) {
-        console.warn('[mrp audio] main clip stuck loading, giving up after 9s of no progress:', url)
+      if (audio.src === url && !audio.ended && Date.now() - lastProgressAt >= 15000) {
+        console.warn('[mrp audio] main clip stuck loading, giving up after 15s of no progress:', url)
         setHasError(true)
         // Stop checking once we've already given up -- without this the interval kept firing
         // every 500ms forever (confirmed live: repeated identical warnings), redundantly calling
@@ -1867,11 +1873,16 @@ function useIntroNarration(introFilename, resetKey) {
     // forever with no error and no retry control (only "Save & Exit"). This narration line is a
     // nice-to-have, not essential, so once this fires we just move on to the real question/
     // conversation audio -- which has its own stuck-detection in AudioPlayer below.
+    // Bumped from 6s to 10s (2026-09-01) for the same reason as AudioPlayer/SafeAudio above --
+    // /audio-proxy now fully buffers a file before responding, raising worst-case TTFB on a cold
+    // cache. This narration line is still a nice-to-have (we move on either way), so it doesn't
+    // need as generous a bound as the actual question/conversation audio, but 6s risked skipping
+    // a merely-slow-but-fine load more often than intended.
     const hardGiveUpTimer = setTimeout(() => {
       if (settled) return
-      console.warn('[mrp audio] intro narration stuck loading, giving up after 6s:', url)
+      console.warn('[mrp audio] intro narration stuck loading, giving up after 10s:', url)
       finish()
-    }, 6000)
+    }, 10000)
     return () => {
       settled = true
       clearTimeout(startTimer)
@@ -1892,7 +1903,12 @@ function useIntroNarration(introFilename, resetKey) {
 // "Save & Exit". This wraps the same tag with a hard timeout that calls onError as a fallback --
 // reusing whatever graceful-degradation each call site already wired up for a real load failure
 // (skip to practice, start recording, show a toast) -- if nothing has happened within timeoutMs.
-function SafeAudio({ src, onEnded, onError, timeoutMs = 8000 }) {
+// Default bumped from 8s to 15s (2026-09-01, alongside the matching AudioPlayer change) after the
+// backend's /audio-proxy switched to fully buffering a file before sending any bytes -- that fixed
+// a mid-playback stutter, but raised worst-case time-to-first-byte on a cold cache / slow
+// connection. 8s was tight enough that a merely-slow (not actually broken) Speaking question load
+// could trip this and start the recording timer with the student never having heard the question.
+function SafeAudio({ src, onEnded, onError, timeoutMs = 15000 }) {
   const firedRef = useRef(false)
   const onEndedRef = useRef(onEnded)
   const onErrorRef = useRef(onError)
@@ -10436,10 +10452,16 @@ function App() {
 class ExamErrorBoundary extends Component {
   constructor(props) {
     super(props)
-    this.state = { hasError: false }
+    this.state = { hasError: false, hadInProgressExam: false }
   }
   static getDerivedStateFromError() {
-    return { hasError: true }
+    // Captured right here (synchronously, the instant React catches the error) rather than read
+    // live in render: by the time this boundary re-renders, React has already unmounted the
+    // crashed subtree and run its effects' cleanup functions, which would have already popped
+    // _exitGuardCount back toward 0 (see _pushExitGuard/_popExitGuard) — reading it in render
+    // would almost always see 0 and wrongly call every crash "safe," including ones that happen
+    // mid-Full-Mock-Test where sessionRef is memory-only and a reload truly discards the attempt.
+    return { hasError: true, hadInProgressExam: _exitGuardCount > 0 }
   }
   componentDidCatch(error, info) {
     // eslint-disable-next-line no-console
@@ -10447,12 +10469,15 @@ class ExamErrorBoundary extends Component {
   }
   render() {
     if (this.state.hasError) {
+      const lostProgress = this.state.hadInProgressExam
       return (
         <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: 'sans-serif', zIndex: 999, padding: '24px', textAlign: 'center' }}>
           <div style={{ fontSize: '44px', marginBottom: '12px' }}>⚠️</div>
           <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Something went wrong</div>
           <div style={{ fontSize: '13px', color: '#616473', marginBottom: '20px', maxWidth: '420px' }}>
-            This screen hit an unexpected error. Your progress up to this point wasn't lost — reload to pick back up from the dashboard.
+            {lostProgress
+              ? "This screen hit an unexpected error while you had an exam in progress. Unfortunately reloading will lose your current attempt — sorry about that. Reload to get back to the dashboard and start again."
+              : "This screen hit an unexpected error. Your progress up to this point wasn't lost — reload to pick back up from the dashboard."}
           </div>
           <button onClick={() => window.location.reload()} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 26px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>Reload</button>
         </div>

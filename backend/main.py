@@ -462,23 +462,38 @@ _audio_cache: "collections.OrderedDict[str, tuple]" = collections.OrderedDict()
 _audio_cache_lock = threading.Lock()
 _audio_cache_bytes = 0
 _AUDIO_CACHE_MAX_BYTES = 100 * 1024 * 1024
+# Unlike _pool_cache (which re-signs expiring URLs and so MUST rebuild on a schedule), the audio
+# bytes cached here have no expiry of their own -- but without any staleness check at all, if the
+# file at an R2 path is ever replaced (re-recorded narration, a content fix) without also
+# redeploying the backend, this process would keep serving the old bytes from RAM forever, until
+# LRU pressure happens to evict that one path. A day is long enough that the cache still does its
+# job (repeat plays/retries/mock-test re-attempts within the same sitting all still hit it) while
+# bounding how long a stale re-upload could linger.
+_AUDIO_CACHE_MAX_AGE_SECONDS = 24 * 60 * 60
 
 def _audio_cache_get(path: str):
+    global _audio_cache_bytes
     with _audio_cache_lock:
         entry = _audio_cache.get(path)
-        if entry is not None:
-            _audio_cache.move_to_end(path)
-        return entry
+        if entry is None:
+            return None
+        body, content_type, cached_at = entry
+        if (time.time() - cached_at) > _AUDIO_CACHE_MAX_AGE_SECONDS:
+            del _audio_cache[path]
+            _audio_cache_bytes -= len(body)
+            return None
+        _audio_cache.move_to_end(path)
+        return body, content_type
 
 def _audio_cache_put(path: str, body: bytes, content_type: str):
     global _audio_cache_bytes
     with _audio_cache_lock:
         if path in _audio_cache:
             return  # a concurrent request for the same file already won the race and cached it
-        _audio_cache[path] = (body, content_type)
+        _audio_cache[path] = (body, content_type, time.time())
         _audio_cache_bytes += len(body)
         while _audio_cache_bytes > _AUDIO_CACHE_MAX_BYTES and _audio_cache:
-            _, (evicted_body, _) = _audio_cache.popitem(last=False)
+            _, (evicted_body, _, _) = _audio_cache.popitem(last=False)
             _audio_cache_bytes -= len(evicted_body)
 
 _RANGE_RE = re.compile(r"bytes=(\d*)-(\d*)")
@@ -2073,6 +2088,26 @@ def get_subscription_status(user=Depends(get_current_user)):
         ),
     }
 
+# Per-user locks guarding create_checkout below. The has_active_subscription check that opens
+# that function reads the `user` row handed in by the get_current_user dependency, which was
+# fetched once at request start -- two concurrent create_checkout calls for the same user (a
+# stale tab plus a fresh one, a double-click before the UI's own re-fetch lands, a retried client
+# request) can both read "not subscribed" before either one finishes creating its Paddle
+# transaction, producing two real transactions for one student. Serializing per user_id (not a
+# single global lock, which would make one user's checkout block every other user's) and
+# re-reading the row from the DB after acquiring the lock closes that window; the dict itself
+# is small and never cleaned up, but at most one Lock per user account ever exists.
+_checkout_locks: dict = {}
+_checkout_locks_guard = threading.Lock()
+
+def _checkout_lock_for(user_id: int) -> threading.Lock:
+    with _checkout_locks_guard:
+        lock = _checkout_locks.get(user_id)
+        if lock is None:
+            lock = threading.Lock()
+            _checkout_locks[user_id] = lock
+        return lock
+
 @app.post("/api/subscription/create-checkout")
 def create_checkout(user=Depends(get_current_user)):
     """Creates a Paddle transaction server-side (authenticated) and hands the frontend back just
@@ -2083,24 +2118,32 @@ def create_checkout(user=Depends(get_current_user)):
     forged user_id in a client-side customData would otherwise let someone grant premium to an
     account they don't own just by paying for a different one."""
     _require_paddle()
-    if has_active_subscription(user):
-        # Without this, a stale tab / double-click before the UI re-fetches status / a retried
-        # client request can create a second real Paddle transaction for someone who's already
-        # subscribed. The webhook below just overwrites paddle_subscription_id with whichever one
-        # fires last, silently orphaning the other -- Paddle keeps billing it, and the student has
-        # no self-service way to cancel it since Settings only offers to cancel the one on file.
-        raise HTTPException(status_code=400, detail="You already have an active subscription.")
-    body = {
-        "items": [{"price_id": PADDLE_PRICE_ID, "quantity": 1}],
-        "customer": {"email": user["email"]},
-        "custom_data": {"user_id": str(user["id"])},
-    }
-    result = _paddle_request("POST", "/transactions", body)
-    txn = (result or {}).get("data")
-    if not txn or not txn.get("id"):
-        detail = ((result or {}).get("error") or {}).get("detail", "Could not start checkout. Please try again.")
-        raise HTTPException(status_code=400, detail=detail)
-    return {"transaction_id": txn["id"]}
+    with _checkout_lock_for(user["id"]):
+        # Re-check against a fresh row (not the possibly-stale `user` the dependency fetched at
+        # request start) now that we hold this user's lock -- see _checkout_locks above.
+        conn = get_db()
+        try:
+            fresh_user = get_user_by_id(conn, user["id"])
+        finally:
+            conn.close()
+        if fresh_user is not None and has_active_subscription(fresh_user):
+            # Without this, a stale tab / double-click before the UI re-fetches status / a retried
+            # client request can create a second real Paddle transaction for someone who's already
+            # subscribed. The webhook below just overwrites paddle_subscription_id with whichever one
+            # fires last, silently orphaning the other -- Paddle keeps billing it, and the student has
+            # no self-service way to cancel it since Settings only offers to cancel the one on file.
+            raise HTTPException(status_code=400, detail="You already have an active subscription.")
+        body = {
+            "items": [{"price_id": PADDLE_PRICE_ID, "quantity": 1}],
+            "customer": {"email": user["email"]},
+            "custom_data": {"user_id": str(user["id"])},
+        }
+        result = _paddle_request("POST", "/transactions", body)
+        txn = (result or {}).get("data")
+        if not txn or not txn.get("id"):
+            detail = ((result or {}).get("error") or {}).get("detail", "Could not start checkout. Please try again.")
+            raise HTTPException(status_code=400, detail=detail)
+        return {"transaction_id": txn["id"]}
 
 @app.post("/api/subscription/cancel")
 def cancel_subscription(user=Depends(get_current_user)):
@@ -2203,8 +2246,17 @@ async def paddle_webhook(request: Request):
     data = event.get("data") or {}
     subscription_id = data.get("id")
     customer_id = data.get("customer_id")
-    status = _PADDLE_STATUS_MAP.get(data.get("status", ""), None)
+    raw_status = data.get("status", "")
+    status = _PADDLE_STATUS_MAP.get(raw_status, None)
     if not subscription_id or not status:
+        # Previously silent -- if Paddle ever adds/renames a subscription status (their docs list
+        # more values than _PADDLE_STATUS_MAP covers, e.g. any future addition), every webhook
+        # delivery for it would 200 as "ignored" with no trace anywhere that anything was skipped.
+        # That's fine for event_types we deliberately don't act on, but a subscription.* event with
+        # an unrecognized `status` is a real gap worth a log line to notice from Render's logs,
+        # rather than only ever surfacing as a confused "why didn't my subscription update" report.
+        if subscription_id and not status:
+            print(f"[paddle webhook] ignoring subscription {subscription_id}: unrecognized status {raw_status!r} (event_type={event_type!r})", flush=True)
         return {"status": "ignored"}
     period_end = ((data.get("current_billing_period") or {}).get("ends_at"))
     custom_data = data.get("custom_data") or {}
