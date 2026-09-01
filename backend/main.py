@@ -24,6 +24,7 @@ import jwt
 import urllib.request
 import urllib.error
 import requests as http_requests
+import httpx
 
 # google-auth is only actually exercised once GOOGLE_CLIENT_ID is configured (see
 # /api/auth/google below) -- imported defensively so local/dev environments that haven't run
@@ -422,8 +423,28 @@ def _verify_audio_token(path: str, token: str) -> bool:
 # AUDIO_PROXY_BASE_URL above for why). Forwards the Range header both ways so seeking/progressive
 # playback in <audio> elements keeps working exactly as it did with a direct R2 URL (206 Partial
 # Content, Content-Range, Accept-Ranges).
+#
+# IMPORTANT: this must stay a genuinely `async def` route using an async HTTP client (httpx), not
+# a sync `def` using `requests`. Root-caused incident (2026-09-01): <audio> elements routinely
+# open-then-abort/abandon connections while probing Range support, which is completely normal
+# browser media-loading behavior. With the old sync-`requests` version, an abandoned client
+# connection left the worker thread blocked forever inside `upstream.iter_content()` -- `requests`'
+# `timeout=` only bounds connect/first-byte time, NOT total streaming duration or inter-chunk
+# gaps, and Starlette cannot cancel a sync-threadpool-wrapped generator when the client
+# disconnects. Enough abandoned requests (ordinary usage, not an attack) permanently exhausted the
+# whole thread pool, so EVERY subsequent request -- even a brand new, valid one -- queued forever
+# waiting for a thread that never freed up. Symptom: <audio> elements hung indefinitely
+# (networkState stuck LOADING, no error ever fired) while plain fetch() calls to the identical URL
+# kept working, because fetch() calls don't get abandoned mid-stream the way media-element Range
+# probing does. The async version below fixes this two ways: (1) a bounded per-phase httpx timeout
+# (including a read timeout, so a stalled upstream/client raises instead of hanging forever) and
+# (2) genuine async cancellation -- when the ASGI server detects the client disconnected, it can
+# actually cancel this coroutine (unlike a thread, which cannot be force-killed), so no request can
+# ever pin resources indefinitely again.
+_AUDIO_PROXY_TIMEOUT = httpx.Timeout(connect=10.0, read=15.0, write=10.0, pool=10.0)
+
 @app.get("/audio-proxy/{path:path}")
-def audio_proxy(path: str, request: Request, t: str = ""):
+async def audio_proxy(path: str, request: Request, t: str = ""):
     if not _verify_audio_token(path, t):
         raise HTTPException(status_code=403, detail="Invalid or expired audio link")
     upstream_url = f"{AUDIO_BASE_URL}/{path}"
@@ -431,26 +452,38 @@ def audio_proxy(path: str, request: Request, t: str = ""):
     range_header = request.headers.get("range")
     if range_header:
         fwd_headers["Range"] = range_header
+
+    client = httpx.AsyncClient(timeout=_AUDIO_PROXY_TIMEOUT)
     try:
-        upstream = http_requests.get(upstream_url, headers=fwd_headers, stream=True, timeout=20)
-    except http_requests.RequestException:
+        req = client.build_request("GET", upstream_url, headers=fwd_headers)
+        upstream = await client.send(req, stream=True)
+    except httpx.HTTPError:
+        await client.aclose()
         raise HTTPException(status_code=502, detail="Audio upstream unreachable")
+
     if upstream.status_code not in (200, 206):
-        upstream.close()
+        await upstream.aclose()
+        await client.aclose()
         code = 404 if upstream.status_code == 404 else 502
         raise HTTPException(status_code=code, detail="Audio not available")
+
     resp_headers = {"Accept-Ranges": "bytes", "Cache-Control": "public, max-age=86400"}
     for h in ("Content-Type", "Content-Length", "Content-Range"):
         if h in upstream.headers:
             resp_headers[h] = upstream.headers[h]
 
-    def iter_bytes():
+    async def iter_bytes():
         try:
-            for chunk in upstream.iter_content(chunk_size=65536):
+            async for chunk in upstream.aiter_bytes(chunk_size=65536):
+                if await request.is_disconnected():
+                    break
                 if chunk:
                     yield chunk
+        except httpx.HTTPError:
+            pass
         finally:
-            upstream.close()
+            await upstream.aclose()
+            await client.aclose()
 
     return StreamingResponse(iter_bytes(), status_code=upstream.status_code, headers=resp_headers)
 
