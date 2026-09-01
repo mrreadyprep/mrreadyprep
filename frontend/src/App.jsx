@@ -2447,7 +2447,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
                     </div>
                   )
                 })}
-                {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You ran out of time — no answer selected.</div>}
+                {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You moved on without selecting an answer.</div>}
               </div>
             </div>
           </div>
@@ -2492,7 +2492,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
                       <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
                       <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.context}</span>
                     </div>
-                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer (time ran out)')}</div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer selected')}</div>
                   </div>
                   <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
                 </div>
@@ -2749,7 +2749,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
                   </div>
                 )
               })}
-              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You ran out of time — no answer selected.</div>}
+              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You moved on without selecting an answer.</div>}
             </div>
           </div>
         </div>
@@ -2783,7 +2783,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
                       <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
                       <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.question}</span>
                     </div>
-                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer (time ran out)')}</div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer selected')}</div>
                   </div>
                   <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
                 </div>
@@ -3055,7 +3055,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
                   </div>
                 )
               })}
-              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You ran out of time — no answer selected.</div>}
+              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You moved on without selecting an answer.</div>}
             </div>
           </div>
         </div>
@@ -3089,7 +3089,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
                       <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
                       <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.question}</span>
                     </div>
-                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer (time ran out)')}</div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer selected')}</div>
                   </div>
                   <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
                 </div>
@@ -3365,7 +3365,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
                   </div>
                 )
               })}
-              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You ran out of time — no answer selected.</div>}
+              {a.selected === null && <div style={{ fontSize: '12px', color: '#c07000', fontStyle: 'italic' }}>You moved on without selecting an answer.</div>}
             </div>
           </div>
         </div>
@@ -3399,7 +3399,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
                       <span style={{ fontSize: '11px', background: a.isCorrect ? '#edfbf3' : '#fff2f2', color: a.isCorrect ? '#2ac56c' : '#d94040', padding: '2px 8px', borderRadius: '999px', fontWeight: '700', flexShrink: 0 }}>{a.isCorrect ? '✓' : '✗'} Q{qi + 1}</span>
                       <span style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{qq.question}</span>
                     </div>
-                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer (time ran out)')}</div>
+                    <div style={{ fontSize: '12px', color: a.isCorrect ? '#2ac56c' : '#b03030' }}>{a.isCorrect ? '✓ ' + qq.options[qq.answer] : (a.selected !== null ? '✗ You chose: ' + qq.options[a.selected] : '✗ No answer selected')}</div>
                   </div>
                   <span style={{ fontSize: '16px', color: '#c0c0c0', flexShrink: 0 }}>›</span>
                 </div>
