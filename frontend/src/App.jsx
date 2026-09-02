@@ -9189,6 +9189,28 @@ function AuthScreen({ onAuthSuccess }) {
     setError('')
     setNotice('')
 
+    // Found in the 25th audit round, reported live by the user: this form's <input required>/
+    // type="email" attributes relied on the BROWSER's own native constraint-validation popup to
+    // catch an empty/malformed email or a missing required field -- and that native popup's text
+    // ("Please fill out this field", "Please include an '@' in the email address", etc.) is
+    // rendered in the *browser's* UI language, not this site's. A Turkish-language browser showed
+    // a Turkish popup ("Değer 6 veya daha küçük olmalıdır" on the Settings screen's analogous
+    // field) on an otherwise all-English site. The <form> below now has noValidate to stop the
+    // browser from ever showing that popup; these explicit checks (plus the ones already below for
+    // signup) replace what the native validation used to catch, in the site's own English copy.
+    if ((mode === 'login' || mode === 'signup' || mode === 'forgot') && !email.trim()) {
+      setError('Please enter your email.'); return
+    }
+    if ((mode === 'login' || mode === 'signup' || mode === 'forgot') && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email.trim())) {
+      setError('Please enter a valid email address.'); return
+    }
+    if (mode === 'login' && !password) {
+      setError('Please enter your password.'); return
+    }
+    // mode === 'reset' has no explicit empty-password check here -- the existing
+    // `password.length < 8` check just below already catches an empty password too (0 < 8),
+    // with a clearer message than a separate "field is empty" check would add.
+
     if (mode === 'forgot') {
       setLoading(true)
       fetch(`${BACKEND_URL}/api/auth/forgot-password`, {
@@ -9276,7 +9298,7 @@ function AuthScreen({ onAuthSuccess }) {
             </div>
           )}
 
-          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
+          <form onSubmit={handleSubmit} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '13px' }}>
             {mode === 'signup' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                 <label style={labelStyle} htmlFor="auth-username">Username</label>
@@ -10538,7 +10560,7 @@ function App() {
           <div style={{ display: 'flex', gap: '20px', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
             <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: isMobile ? '18px' : '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🎯 Target & Profile</h3>
-              <form onSubmit={handleProfileSave} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+              <form onSubmit={handleProfileSave} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-username">Username</label>
                   <input id="settings-username" type="text" autoComplete="username" value={profileName} onChange={e => setProfileName(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
