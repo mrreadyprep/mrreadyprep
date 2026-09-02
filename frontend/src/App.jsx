@@ -7551,19 +7551,40 @@ function MicLevelExampleRow({ label, good }) {
 // the rest of the mock test's TOEFL-style narration, produced by backend/generate_audio_hwcheck.py)
 // as soon as this screen mounts. This replaces the browser's built-in speech synthesis, which
 // sounds robotic and inconsistent across browsers/OSes.
-function HwCheckAudioPlayer({ src }) {
+// Takes a bare filename ('adjusting_volume.mp3'), NOT a full URL — found via round-23 audit: this
+// used to be built as a plain `${AUDIO_PROXY_BASE_URL}/hwcheck/...` string with no signature at
+// all. /audio-proxy rejects EVERY request without a valid signed ?t= token (see _audio_url /
+// _verify_audio_token in main.py), so both hardware-check screens' narration 403'd on every single
+// load, in production, for every student, on every browser — the exact same bug class as
+// "Fix real root cause of missing Listening narration: unsigned /audio-proxy intro URLs" (commit
+// f49d02d), just never applied to this second, separate call site. Resolved through the same
+// signed-URL cache as intro narration (see ensureIntroUrls/getIntroUrl and the backend's
+// _HWCHECK_FILENAMES allowlist) instead of building the URL directly.
+function HwCheckAudioPlayer({ filename }) {
   const [playing, setPlaying] = useState(false)
+  const [url, setUrl] = useState(() => getIntroUrl(filename))
   const audioRef = useRef(null)
 
   useEffect(() => {
-    const audio = new Audio(src)
+    let cancelled = false
+    const cached = getIntroUrl(filename)
+    if (cached) { setUrl(cached); return }
+    ensureIntroUrls([filename]).then(() => {
+      if (!cancelled) setUrl(getIntroUrl(filename))
+    })
+    return () => { cancelled = true }
+  }, [filename])
+
+  useEffect(() => {
+    if (!url) return
+    const audio = new Audio(url)
     audioRef.current = audio
     audio.onplay = () => setPlaying(true)
     audio.onended = () => setPlaying(false)
     audio.onerror = () => setPlaying(false)
     audio.play().catch(() => setPlaying(false))
     return () => { audio.pause(); audioRef.current = null }
-  }, [src])
+  }, [url])
 
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
@@ -7576,17 +7597,17 @@ function HwCheckAudioPlayer({ src }) {
 }
 
 // Thin wrapper kept for the "Adjusting the Volume" screen so its visual prop reads clearly.
-function VolumeTestPlayer({ src }) {
-  return <HwCheckAudioPlayer src={src} />
+function VolumeTestPlayer({ filename }) {
+  return <HwCheckAudioPlayer filename={filename} />
 }
 
 // Wraps the Good/Too Loud example rows and automatically plays a short demonstration chime the
 // moment this screen appears (no click needed) — the student hears it as soon as they land here.
-function MicAdjustVisual({ src }) {
+function MicAdjustVisual({ filename }) {
   const isMobile = useIsMobile()
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-      <HwCheckAudioPlayer src={src} />
+      <HwCheckAudioPlayer filename={filename} />
       <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '20px' : '56px' }}>
         <MicLevelExampleRow label="Good" good />
         <MicLevelExampleRow label="Too Loud" good={false} />
@@ -7610,7 +7631,7 @@ function hwScreenVolume(dependsOnText) {
       "You can adjust your device's system volume at any time during the test using your computer's own volume controls.",
       `Make sure you can comfortably hear audio before continuing — ${dependsOnText}.`,
     ],
-    visual: <VolumeTestPlayer src={`${AUDIO_PROXY_BASE_URL}/hwcheck/adjusting_volume.mp3`} />,
+    visual: <VolumeTestPlayer filename="adjusting_volume.mp3" />,
   }
 }
 const HW_SCREEN_MICROPHONE = {
@@ -7619,7 +7640,7 @@ const HW_SCREEN_MICROPHONE = {
     'When you record your Speaking answers, speak at your normal volume and keep a steady distance from the microphone.',
     'Try to stay in the "Good" range shown below — not too quiet, and not too loud.',
   ],
-  visual: <MicAdjustVisual src={`${AUDIO_PROXY_BASE_URL}/hwcheck/adjusting_microphone.mp3`} />,
+  visual: <MicAdjustVisual filename="adjusting_microphone.mp3" />,
 }
 
 // Only the sections that actually use a mic/speaker need their hardware checked before starting.

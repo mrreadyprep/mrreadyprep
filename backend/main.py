@@ -573,6 +573,15 @@ class IntroAudioUrlsRequest(BaseModel):
                 raise ValueError("filename too long")
         return v
 
+# Hardware-check narration (backend/generate_audio_hwcheck.py) lives in its own audio/hwcheck/
+# folder, not audio/intro/ -- found via round-23 audit: the "Adjusting the Volume" and "Adjusting
+# the Microphone" screens were building their src as a raw, unsigned AUDIO_PROXY_BASE_URL string
+# (no ?t= token at all), which /audio-proxy has ALWAYS rejected with 403 "Invalid or expired audio
+# link" for every single request, on every browser, for every student -- these two screens have
+# never actually played their narration in production. Named explicitly (not a second wildcard
+# regex) since there are exactly two of these and it keeps this endpoint's blast radius obvious.
+_HWCHECK_FILENAMES = {"adjusting_volume.mp3", "adjusting_microphone.mp3"}
+
 @app.post("/api/audio/intro-urls")
 def get_intro_audio_urls(data: IntroAudioUrlsRequest):
     """Signs a batch of fixed narration filenames for /audio-proxy in one round trip (the frontend
@@ -583,13 +592,15 @@ def get_intro_audio_urls(data: IntroAudioUrlsRequest):
     Deliberately unauthenticated and NOT entitlement-gated, unlike every other _audio_url() call
     site: these narration lines are generic instructional audio reused identically across every
     item in a pool, free or locked, and carry none of the actual gated exercise content -- there's
-    nothing here worth restricting access to. Restricted to the intro/ namespace via the filename
-    allowlist regex (no slashes, no "..") so this endpoint can never be used to sign a real gated
-    path like "speaking_lr/7/1.mp3" and bypass the entitlement checks that protect those."""
+    nothing here worth restricting access to. Restricted to the intro/ and hwcheck/ namespaces via
+    the filename allowlist regex (no slashes, no "..") plus the explicit _HWCHECK_FILENAMES set, so
+    this endpoint can never be used to sign a real gated path like "speaking_lr/7/1.mp3" and bypass
+    the entitlement checks that protect those."""
     result = {}
     for filename in data.filenames[:300]:
         if _SAFE_INTRO_FILENAME.match(filename):
-            result[filename] = _audio_url(f"intro/{filename}")
+            folder = "hwcheck" if filename in _HWCHECK_FILENAMES else "intro"
+            result[filename] = _audio_url(f"{folder}/{filename}")
     return result
 
 # Several Listening JSON pools (listening_part1-4.json, mock_listening_*.json, and the "listening"
@@ -739,6 +750,21 @@ class ExamDateUpdate(BaseModel):
     # feature that does parse it would crash on unvalidated input with no defense in depth. Every
     # other user-writable field with a defined shape already gets this treatment.
     exam_date: str = Field(max_length=10, pattern=r"^\d{4}-\d{2}-\d{2}$|^$")  # ISO yyyy-mm-dd, or "" to clear
+
+    @field_validator("exam_date")
+    @classmethod
+    def _valid_calendar_date(cls, v):
+        # The regex above only checks digit *shape* -- "2026-13-99" or "2026-02-30" matches it fine
+        # but isn't a real date. Reject anything the calendar itself wouldn't accept, so a garbage-
+        # but-shaped value (e.g. sent via a direct API call bypassing the frontend's
+        # <input type="date">, which itself can't produce an invalid date) never gets saved and
+        # echoed back to the student as their exam date.
+        if v:
+            try:
+                datetime.strptime(v, "%Y-%m-%d")
+            except ValueError:
+                raise ValueError("exam_date must be a real calendar date")
+        return v
 
 class RIDLResult(BaseModel):
     # Bounded for the same reason score/total are below: ridl_results.passage_id is a Postgres
@@ -1198,7 +1224,6 @@ def get_current_user(authorization: Optional[str] = Header(None)):
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid authentication token")
     user_id = int(payload["sub"])
-    _check_api_throttle(user_id)
     # Tokens issued before this field existed carry no "tv" claim -- treat that as version 0,
     # which matches every existing user row's DEFAULT 0, so already-issued valid sessions aren't
     # retroactively invalidated by this change.
@@ -1210,6 +1235,16 @@ def get_current_user(authorization: Optional[str] = Header(None)):
             raise HTTPException(status_code=401, detail="Account no longer exists")
         if int(user["token_version"] or 0) != int(token_version):
             raise HTTPException(status_code=401, detail="Session expired, please log in again")
+        # Deliberately checked AFTER the token_version match above, not right after decoding the
+        # JWT: token_version is bumped specifically so a stolen/old JWT stops working the instant
+        # its real owner resets their password (see reset_password()). If this throttle counted
+        # every request keyed only on user_id -- before confirming the token is still the current
+        # session -- an attacker replaying an old, already-invalidated token for a victim's account
+        # could keep burning that account's shared 60-req/30s budget even though every single replay
+        # is ultimately rejected as "Session expired", denial-of-servicing the real, currently
+        # logged-in victim the password reset was meant to protect. Counting only requests that
+        # already passed the version check closes that gap.
+        _check_api_throttle(user_id)
         return user
     finally:
         conn.close()
@@ -1821,8 +1856,14 @@ def login(data: LoginRequest, request: Request):
             raise HTTPException(status_code=401, detail="Incorrect email or password")
         with _rate_limit_lock:
             _login_attempts.pop(rate_limit_key, None)
-            _login_attempts_by_ip.pop(ip, None)
             _login_attempts_by_email.pop(email, None)
+            # _login_attempts_by_ip is deliberately NOT cleared here (unlike the two keys above).
+            # It exists specifically as a backstop against credential stuffing -- one IP trying many
+            # *different* emails -- so it has to keep counting across accounts. Clearing the whole
+            # per-IP bucket just because *this one* login happened to succeed would let an attacker
+            # who owns (or has stuffed into) any single account on that IP log into it right before
+            # hitting LOGIN_ATTEMPT_IP_MAX, wiping the counter and resuming the attack indefinitely.
+            # It's left to decay naturally via the existing sliding window / periodic sweep instead.
         token = create_access_token(user["id"], user["token_version"])
         return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
     finally:
@@ -2026,7 +2067,8 @@ def admin_list_users(admin=Depends(require_admin)):
     try:
         rows = conn.execute(
             "SELECT id, email, username, email_verified, subscription_status, "
-            "paddle_subscription_id, created_at, current_streak FROM users ORDER BY created_at DESC"
+            "subscription_current_period_end, paddle_subscription_id, created_at, current_streak "
+            "FROM users ORDER BY created_at DESC"
         ).fetchall()
         def row_is_admin(row):
             return (row["email"] or "").strip().lower() in ADMIN_EMAILS
@@ -2037,7 +2079,13 @@ def admin_list_users(admin=Depends(require_admin)):
                 "username": row["username"],
                 "email_verified": bool(row["email_verified"]),
                 "subscription_status": row["subscription_status"],
-                "has_premium": row_is_admin(row) or (row["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES,
+                # Routed through the same has_active_subscription() used everywhere access is
+                # actually gated (not a separately hand-rolled status check) so this can never show
+                # "Premium: yes" for an account whose real access has already lapsed under the
+                # subscription_current_period_end staleness backstop -- e.g. right after a missed
+                # Paddle webhook, which is exactly when support staff would be looking at this panel
+                # and need it to be accurate.
+                "has_premium": has_active_subscription(row),
                 # A real, Paddle-billed subscription -- the admin panel's Revoke button is disabled
                 # for these (see admin_set_subscription below) since silently flipping subscription_status
                 # here would desync from what Paddle is actually still charging the card for. A paying
