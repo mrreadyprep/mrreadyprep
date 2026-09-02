@@ -6373,6 +6373,21 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
         stopRecording()
       }
     }
+    // Found in the 25th audit round: `continuous: true` does NOT guarantee the recognizer survives
+    // every gap -- an extended silence (very natural right after the sentence finishes playing, or
+    // just a student pausing to gather themselves) or a service-level hiccup can still end the
+    // session outright in mainstream browsers, firing a recoverable `error` (handled above, left
+    // alone on purpose) followed by `end` -- which nothing previously listened for. Once that
+    // happens the recognizer is silently dead: onresult never fires again, but the countdown keeps
+    // running and the UI still reads "recording", so whatever the student then says is never
+    // captured and they're scored on an empty/partial transcript, indistinguishable on-screen from
+    // not having answered. Restart transparently unless this is an intentional stop (stopRecording
+    // sets stoppingRef.current before calling rec.stop(), which also fires `end`) or a newer
+    // recognizer has since replaced this one.
+    rec.onend = () => {
+      if (stoppingRef.current || recognitionRef.current !== rec) return
+      try { rec.start() } catch (e) {}
+    }
     // rec.start() can throw synchronously (e.g. InvalidStateError from a recognition session that's
     // still technically active on quick re-entry) -- previously swallowed entirely, so the
     // recognizer never actually started, onresult/onerror never fired, and the student sat through
@@ -6705,6 +6720,15 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, 
       if (['not-allowed', 'audio-capture', 'service-not-allowed'].includes(recErrorRef.current)) {
         stopRecording()
       }
+    }
+    // See ListenRepeatExercise's identical fix -- continuous mode doesn't survive every gap (an
+    // extended silence, a service-level timeout), and this component's recording window starts
+    // the instant the question audio ends with no separate "thinking time" phase, so a student who
+    // pauses even briefly before answering an open-ended interview question was especially exposed
+    // to the recognizer dying silently mid-question with nothing restarting it.
+    rec.onend = () => {
+      if (stoppingRef.current || recognitionRef.current !== rec) return
+      try { rec.start() } catch (e) {}
     }
     // See ListenRepeatExercise's identical fix -- rec.start() throwing was previously swallowed,
     // silently scoring the student 0 with "(nothing detected)" instead of surfacing a real error.
@@ -9992,10 +10016,17 @@ function App() {
   // saves via a plain onClick button (see saveTargets below), which never triggers that check, so
   // a student could otherwise save e.g. 0 or 99 as a target with no validation at all. Clamp here
   // in JS so both save paths are protected the same way regardless of how they're triggered.
+  // Both clamp functions round to the nearest 0.5 step, not just clamp the min/max range -- found
+  // in the 25th audit round: the Settings tab's real <form onSubmit> gets 0.5-step enforcement for
+  // free from the <input type="number" step="0.5">'s native validation, but the Dashboard's inline
+  // "Edit targets" panel saves via a plain onClick (see comment above), which never runs that
+  // native check. Without rounding here too, typing e.g. 3.37 directly into a Dashboard target
+  // field and clicking Save persisted 3.37 verbatim -- a value the UI never intends to produce --
+  // and fed that slightly-off number into generateGoals's gap math and the progress bars.
   const clampTarget = (v) => {
     const n = Number(v)
     if (!Number.isFinite(n)) return 1
-    return Math.min(6, Math.max(1, n))
+    return Math.min(6, Math.max(1, Math.round(n * 2) / 2))
   }
   // Same reasoning as clampTarget above, but for the overall "Target Score" field, which (unlike
   // the four section targets) allows 0 as a valid value and 0.5 steps -- found live during the
@@ -10005,7 +10036,7 @@ function App() {
   const clampOverallTarget = (v) => {
     const n = Number(v)
     if (!Number.isFinite(n)) return 5.5
-    return Math.min(6, Math.max(0, n))
+    return Math.min(6, Math.max(0, Math.round(n * 2) / 2))
   }
 
   const handleProfileSave = (e) => {

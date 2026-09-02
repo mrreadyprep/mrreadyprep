@@ -1104,6 +1104,14 @@ def init_db():
         conn.execute("ALTER TABLE attempt_results ADD COLUMN detail TEXT DEFAULT ''")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_category ON attempt_results(category)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_user ON attempt_results(user_id)")
+    # Every real query against this table filters on user_id AND category together (or user_id
+    # alone ordered by saved_at) -- _fetch_category_sums's GROUP BY, get_results_history, and
+    # get_mistakes's subquery all do this -- so the two single-column indexes above are
+    # considerably less effective than one composite index covering the actual access pattern.
+    # Found in the 25th audit round; added alongside the existing ones rather than replacing them
+    # since save_attempt_result's plain INSERT and any category-only lookups still benefit from
+    # the single-column ones.
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_user_category ON attempt_results(user_id, category, saved_at)")
 
     # Tracks which items from each random-draw mock pool (ctw/ridl/ap/car/conv/announce/at/bas/
     # email/disc/lr/interview) a given student has already been shown by a dynamic (non-fixed)
@@ -1188,6 +1196,18 @@ def verify_password(password: str, password_hash: str) -> bool:
     if not password_hash:
         return False
     return bcrypt.checkpw(_bcrypt_safe_bytes(password), password_hash.encode("utf-8"))
+
+# Used by login() below to keep its response time constant regardless of whether the email exists
+# or has a password set. bcrypt.checkpw() (~100-300ms at this cost factor) only used to run when a
+# real password_hash was found -- an unregistered email or a Google-only account (password_hash is
+# NULL) returned in a few ms instead, via Python's `or` short-circuiting past verify_password
+# entirely. That's a large, reliably-measurable timing gap behind an identical "Incorrect email or
+# password" response, which lets an attacker enumerate which emails are registered (and which of
+# those are password-vs-Google-only accounts) purely by timing login attempts -- exactly the kind
+# of enumeration forgot_password's own generic-response comment says this codebase cares about
+# preventing. Computed once at import time (bcrypt.hashpw is the expensive part) so every login
+# call, real or not, pays the same bcrypt.checkpw() cost.
+_DUMMY_PASSWORD_HASH = bcrypt.hashpw(b"dummy-password-for-constant-time-login", bcrypt.gensalt()).decode("utf-8")
 
 def create_access_token(user_id: int, token_version: int = 0) -> str:
     payload = {
@@ -1512,9 +1532,13 @@ def _get_vocab_words():
         return []
 
 # Complete the Words verisi
-# NOTE: these are file-path constants only — every endpoint below opens and json.load()s the
-# file fresh on each request (instead of caching the parsed content at import time), so editing
-# any of these JSON files takes effect immediately without needing to restart the backend.
+# NOTE: these are file-path constants only. Every endpoint below reads its pool through
+# _cached_pool() (see near line 628), which parses the JSON once and then serves that cached
+# result for up to _POOL_CACHE_MAX_AGE_SECONDS (~13 days) rather than re-reading the file on every
+# request as this comment used to claim -- that claim predates the caching layer being added and
+# was never updated to match. Practically: editing one of these JSON files in a running local/dev
+# instance will NOT take effect until either that cache entry ages out or the process restarts; on
+# Render, a normal redeploy always restarts the process, so this only matters for local testing.
 CTW_FILE = pathlib.Path(__file__).parent / "complete_the_words_1.json"
 
 # Read in Daily Life verisi
@@ -1766,6 +1790,18 @@ REGISTER_ATTEMPT_WINDOW_SECONDS = 60 * 60
 REGISTER_ATTEMPT_MAX = 8
 _register_attempts: dict = collections.defaultdict(list)
 
+# google_login (below) is the one account-creating/DB-writing auth endpoint that had no rate limit
+# at all -- found in the 25th audit round. Same IP-keyed shape as register above (mints a new
+# account row on first sign-in, updates one on repeat sign-ins) and the same rationale: nothing
+# server-side bounded how many times it could be called besides the attacker's ability to obtain
+# Google ID tokens, so a scripted flood could still tie up worker threads / DB connections the same
+# way the audio-proxy incident (see AUDIO_PROXY comments elsewhere in this file) did before that was
+# fixed. A little more headroom than register's limit since a legitimate multi-account household
+# sharing one IP/router calls this far more casually than the register form.
+GOOGLE_LOGIN_ATTEMPT_WINDOW_SECONDS = 60 * 60
+GOOGLE_LOGIN_ATTEMPT_MAX = 20
+_google_login_attempts: dict = collections.defaultdict(list)
+
 FORGOT_PASSWORD_ATTEMPT_WINDOW_SECONDS = 15 * 60
 FORGOT_PASSWORD_ATTEMPT_MAX = 5
 _forgot_password_attempts: dict = collections.defaultdict(list)
@@ -1814,7 +1850,7 @@ def _check_api_throttle(user_id: int):
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -1858,7 +1894,14 @@ def login(data: LoginRequest, request: Request):
     conn = get_db()
     try:
         user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
-        if not user or not verify_password(data.password, user["password_hash"]):
+        # Always run bcrypt.checkpw() against *some* hash -- the user's real one if they exist and
+        # have a password set, otherwise the fixed dummy hash above -- so this line takes the same
+        # ~100-300ms regardless of whether the email is registered. See _DUMMY_PASSWORD_HASH's
+        # comment for why: without this, `user and verify_password(...)` short-circuits past the
+        # slow bcrypt call for any nonexistent/Google-only email, making those cases reliably
+        # faster than a real password mismatch and defeating the generic error message below.
+        password_ok = verify_password(data.password, (user["password_hash"] if user else None) or _DUMMY_PASSWORD_HASH)
+        if not user or not user["password_hash"] or not password_ok:
             _record_failed_login(rate_limit_key, ip, email)
             raise HTTPException(status_code=401, detail="Incorrect email or password")
         with _rate_limit_lock:
@@ -1877,13 +1920,14 @@ def login(data: LoginRequest, request: Request):
         conn.close()
 
 @app.post("/api/auth/google")
-def google_login(data: GoogleLoginRequest):
+def google_login(data: GoogleLoginRequest, request: Request):
     """Verifies the ID token Google Identity Services hands back to the frontend after the
     student picks their Google account, then either logs them into their existing account
     (matched by google_id first, then by email so someone who registered with a password can
     still link their Google account by signing in with the same address) or creates a brand new
     one. Google has already verified the student's email for us, so accounts created this way
     start out email_verified = 1 -- no separate verification email is needed."""
+    _check_and_consume_rate_limit(_google_login_attempts, _client_ip(request), GOOGLE_LOGIN_ATTEMPT_WINDOW_SECONDS, GOOGLE_LOGIN_ATTEMPT_MAX, "Google sign-in")
     if not GOOGLE_CLIENT_ID or not google_id_token:
         raise HTTPException(status_code=503, detail="Google Sign-In is not configured on this server yet")
 
@@ -2465,8 +2509,9 @@ def get_dashboard(user=Depends(get_current_user)):
     conn = get_db()
     try:
         updates = {}
+        category_sums = _fetch_category_sums(conn, user["id"])
         for section in ("reading", "listening", "writing", "speaking"):
-            updates[f"{section}_score"] = compute_section_band(conn, user["id"], section)
+            updates[f"{section}_score"] = compute_section_band(category_sums, section)
         streak, week_activity = compute_streak_and_week_activity(conn, user["id"])
         updates["current_streak"] = streak
         set_clause = ", ".join(f"{k} = ?" for k in updates)
@@ -2730,7 +2775,23 @@ SECTION_BAND_MAX = {
     "speaking": 6.0,
 }
 
-def compute_section_band(conn, user_id, section):
+def _fetch_category_sums(conn, user_id):
+    """One query, one GROUP BY, covering every category a student could have attempts in --
+    replaces what compute_section_band used to do with a separate SELECT per category (16 queries
+    per /api/dashboard call: 4 sections x ~4 parts each). Found in the 25th audit round: that
+    N+1-style pattern held a connection checked out of the DB_POOL_MAX_CONN=10 pool for roughly
+    20x longer than a typical single-query endpoint on every single dashboard load (this is a
+    high-frequency endpoint -- it refetches on every tab visit, not just once per session), making
+    it disproportionately likely to be what exhausts the pool under real concurrent traffic.
+    Returns {category: (total_score, total_possible, n)}."""
+    rows = conn.execute(
+        "SELECT category, SUM(score) AS total_score, SUM(total) AS total_possible, COUNT(*) AS n "
+        "FROM attempt_results WHERE user_id = ? GROUP BY category",
+        (user_id,),
+    ).fetchall()
+    return {row["category"]: (row["total_score"], row["total_possible"], row["n"]) for row in rows}
+
+def compute_section_band(category_sums, section):
     """Computes this section's TOEFL-style band (nearest 0.5, on the unified 1.0-6.0 scale) as
     the average of that section's PARTS -- Reading, for example, is Complete the Words, Read in
     Daily Life, Academic Passage, and the Mock Reading module, each its own part. Each part's own
@@ -2742,17 +2803,15 @@ def compute_section_band(conn, user_id, section):
     as a high score right away, even before you've touched the section's other parts.
     Returns 1.0 (the lowest possible band on the TOEFL 1.0-6.0 scale) if the student hasn't
     attempted a single part of this section yet, so an untouched section reads as "not started"
-    rather than showing an artificially inflated placeholder score."""
+    rather than showing an artificially inflated placeholder score.
+    `category_sums` is the dict _fetch_category_sums() returns -- computed once per request and
+    shared across all four section calls, rather than each call re-querying the DB itself."""
     cats = SECTION_PRACTICE_CATEGORIES[section] + [SECTION_MOCK_CATEGORY[section]]
     part_pcts = []
     for cat in cats:
-        row = conn.execute(
-            "SELECT SUM(score) AS total_score, SUM(total) AS total_possible, COUNT(*) AS n "
-            "FROM attempt_results WHERE category = ? AND user_id = ?",
-            (cat, user_id),
-        ).fetchone()
-        if row["n"] and row["total_possible"]:
-            part_pcts.append((row["total_score"] / row["total_possible"]) * 100)
+        total_score, total_possible, n = category_sums.get(cat, (None, None, 0))
+        if n and total_possible:
+            part_pcts.append((total_score / total_possible) * 100)
 
     if not part_pcts:
         return 1.0
