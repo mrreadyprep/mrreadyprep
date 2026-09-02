@@ -1223,7 +1223,14 @@ def get_current_user(authorization: Optional[str] = Header(None)):
         raise HTTPException(status_code=401, detail="Session expired, please log in again")
     except jwt.InvalidTokenError:
         raise HTTPException(status_code=401, detail="Invalid authentication token")
-    user_id = int(payload["sub"])
+    try:
+        user_id = int(payload["sub"])
+    except (KeyError, TypeError, ValueError):
+        # Not attacker-reachable today (every token this server issues sets "sub" to a real integer
+        # user id), but a malformed/forged token here previously fell through to an unguarded
+        # int(...) and surfaced as a raw 500 instead of the 401 every other invalid-token path
+        # already returns above.
+        raise HTTPException(status_code=401, detail="Invalid authentication token")
     # Tokens issued before this field existed carry no "tv" claim -- treat that as version 0,
     # which matches every existing user row's DEFAULT 0, so already-issued valid sessions aren't
     # retroactively invalidated by this change.
@@ -2105,12 +2112,19 @@ def admin_stats(admin=Depends(require_admin)):
     conn = get_db()
     try:
         total_users = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"]
-        # Match has_active_subscription()'s definition of "paid/engaged" -- TRIALING users have
-        # full premium access just like ACTIVE ones, so excluding them here understated this
-        # metric for any student currently in a trial period.
-        active_subs = conn.execute(
-            "SELECT COUNT(*) AS n FROM users WHERE subscription_status IN ('ACTIVE', 'TRIALING')"
-        ).fetchone()["n"]
+        # Route through has_active_subscription() itself -- same function admin_list_users()'s
+        # has_premium field uses (see the fix there) -- rather than a separately hand-rolled status
+        # filter, so this count can never silently disagree with the per-row values shown just below
+        # it in the admin panel. A raw "status IN (...)" filter would both miss the staleness
+        # backstop (a lapsed Paddle webhook leaves subscription_status stuck at ACTIVE/TRIALING
+        # indefinitely, see has_active_subscription()'s own comment) and undercount comped admin
+        # accounts that have full access without ever having a real subscription row.
+        active_subs = sum(
+            1 for row in conn.execute(
+                "SELECT email, subscription_status, subscription_current_period_end FROM users"
+            ).fetchall()
+            if has_active_subscription(row)
+        )
         verified = conn.execute("SELECT COUNT(*) AS n FROM users WHERE email_verified = 1").fetchone()["n"]
         week_ago_dt = datetime.now(timezone.utc) - timedelta(days=7)
         # Postgres' TIMESTAMP column casts the param before comparing, so ISO format works there.
@@ -2147,7 +2161,20 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
                        "itself (from their account's Settings, or via /api/subscription/cancel) instead.",
             )
         new_status = "ACTIVE" if data.action == "grant" else None
-        conn.execute("UPDATE users SET subscription_status = ? WHERE id = ?", (new_status, user_id))
+        if data.action == "grant":
+            # Also clear any stale subscription_current_period_end. Without this, comping access to
+            # an account that had a real Paddle subscription before (now lapsed, with a
+            # current_period_end sitting in the past) was silently ineffective: has_active_subscription()'s
+            # staleness backstop would immediately treat the grant as lapsed again the moment it was
+            # checked, since it only looks at subscription_status AFTER first checking whether
+            # current_period_end is more than a couple of days in the past. NULL reads as "still
+            # active" there (comped/admin-granted access has no period to expire).
+            conn.execute(
+                "UPDATE users SET subscription_status = ?, subscription_current_period_end = NULL WHERE id = ?",
+                (new_status, user_id),
+            )
+        else:
+            conn.execute("UPDATE users SET subscription_status = ? WHERE id = ?", (new_status, user_id))
         conn.commit()
         return {"status": "success"}
     finally:

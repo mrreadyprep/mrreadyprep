@@ -218,15 +218,23 @@ function useExitDraft({ category, itemId, answers, onBack, mockMode, canSave = t
     return () => { _popExitGuard(); window.removeEventListener('beforeunload', handler) }
   }, [mockMode, graded])
   const requestExit = mockMode ? onBack : (graded ? onExitGraded : () => setShowModal(true))
+  // graded can flip from false to true WHILE the modal is already open -- e.g. a Speaking
+  // recording's countdown finishes and grades itself in the background after the student has
+  // already clicked "Save & Exit" but before they've clicked "Discard"/"Save" in the modal. Without
+  // this re-check, onDiscard would silently throw away an attempt that has since become a real,
+  // graded, save-worthy result (never reaching onComplete/saveResult), and onSave would save it as
+  // an in-progress draft instead of the finished result it actually is. Re-reading `graded` at
+  // click time (not just when the modal was first opened) routes both buttons through the same
+  // onExitGraded path requestExit itself would have taken if grading had finished a moment sooner.
   const modal = !mockMode && showModal ? (
     <ExitConfirmModal
       canSave={canSave}
-      onSave={() => { saveDraft(category, itemId, answers); setShowModal(false); onBack() }}
-      onDiscard={() => { clearDraft(category, itemId); setShowModal(false); onBack() }}
+      onSave={() => { if (graded) { setShowModal(false); onExitGraded(); return } saveDraft(category, itemId, answers); setShowModal(false); onBack() }}
+      onDiscard={() => { if (graded) { setShowModal(false); onExitGraded(); return } clearDraft(category, itemId); setShowModal(false); onBack() }}
       onCancel={() => setShowModal(false)}
     />
   ) : null
-  return { requestExit, modal }
+  return { requestExit, modal, showModal }
 }
 
 // ─── Complete the Words — Liste Ekranı ───────────────────────────────────────
@@ -9989,13 +9997,23 @@ function App() {
     if (!Number.isFinite(n)) return 1
     return Math.min(6, Math.max(1, n))
   }
+  // Same reasoning as clampTarget above, but for the overall "Target Score" field, which (unlike
+  // the four section targets) allows 0 as a valid value and 0.5 steps -- found live during the
+  // 24th audit round: this field's save paths passed Number(targetScore) straight through with no
+  // clamping at all, so unlike the four section targets just below it, a student could save e.g.
+  // -3 or 40 here with zero validation.
+  const clampOverallTarget = (v) => {
+    const n = Number(v)
+    if (!Number.isFinite(n)) return 5.5
+    return Math.min(6, Math.max(0, n))
+  }
 
   const handleProfileSave = (e) => {
     e.preventDefault()
     apiFetch(`${BACKEND_URL}/api/profile/update`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: profileName, target_score: Number(targetScore),
+        username: profileName, target_score: clampOverallTarget(targetScore),
         reading_target: clampTarget(readingTarget), listening_target: clampTarget(listeningTarget),
         writing_target: clampTarget(writingTarget), speaking_target: clampTarget(speakingTarget),
       }),
@@ -10021,7 +10039,7 @@ function App() {
     apiFetch(`${BACKEND_URL}/api/profile/update`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        username: profileName, target_score: Number(targetScore),
+        username: profileName, target_score: clampOverallTarget(targetScore),
         reading_target: clampTarget(readingTarget), listening_target: clampTarget(listeningTarget),
         writing_target: clampTarget(writingTarget), speaking_target: clampTarget(speakingTarget),
       }),
