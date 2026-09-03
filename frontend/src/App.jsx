@@ -1630,9 +1630,11 @@ function primeAudio(url) {
   if (p && p.catch) p.catch((err) => { console.warn('[mrp audio] primeAudio play() rejected:', err && err.name, err && err.message, 'for', url) })
 }
 
-function AudioPlayer({ url, autoPlayKey, onEnded }) {
+function AudioPlayer({ url, autoPlayKey, onEnded, onError }) {
   const onEndedRef = useRef(onEnded)
   onEndedRef.current = onEnded
+  const onErrorRef = useRef(onError)
+  onErrorRef.current = onError
   // Tracks a genuine load/playback error (404, CORS, decode failure) separately from a normal
   // "finished playing" -- previously both fired the same onEnded callback, which silently
   // auto-advanced the student past a question they never actually heard. Now a failure shows a
@@ -1651,6 +1653,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
     const handleError = () => {
       console.warn('[mrp audio] element error event:', audio.error && audio.error.code, audio.error && audio.error.message, 'src:', audio.src)
       setHasError(true)
+      onErrorRef.current && onErrorRef.current()
     }
     audio.addEventListener('ended', handleEnded)
     audio.addEventListener('error', handleError)
@@ -1703,6 +1706,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded }) {
       if (audio.src === url && !audio.ended && Date.now() - lastProgressAt >= 15000) {
         console.warn('[mrp audio] main clip stuck loading, giving up after 15s of no progress:', url)
         setHasError(true)
+        onErrorRef.current && onErrorRef.current()
         // Stop checking once we've already given up -- without this the interval kept firing
         // every 500ms forever (confirmed live: repeated identical warnings), redundantly calling
         // setHasError(true) and spamming the console for as long as the student stayed on this
@@ -2319,7 +2323,14 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   // Announced once, when the exercise first opens -- not before every question. `announced`
   // then stays true for the rest of the exercise; each question's own AudioPlayer below still
   // gets a fresh play via its own `autoPlayKey={currentQ}`, independent of this narration line.
-  const announced = useIntroNarration('listen_choose_response.mp3')
+  // retryCount is passed as useIntroNarration's resetKey so "Try Again" (below) re-announces the
+  // narration line instead of leaving `announced` stuck at true from the first attempt -- found
+  // in the 27th audit round: without it, Try Again's primeAudio() call restarted the narration
+  // clip on the shared <audio> element, but AudioPlayer (gated on the already-true `announced`)
+  // mounted in the very same render and immediately overwrote that element's .src with the main
+  // question clip, cutting the narration off after a fraction of a second on every retry.
+  const [retryCount, setRetryCount] = useState(0)
+  const announced = useIntroNarration('listen_choose_response.mp3', retryCount)
 
   const questions = exercise.questions
   const q = questions[currentQ]
@@ -2483,6 +2494,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
               <button onClick={() => {
+                setRetryCount(c => c + 1)
                 primeAudio(getIntroUrl('listen_choose_response.mp3')); setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false)
                 // For a 1-question exercise, setCurrentQ(0) above is a no-op (already 0), so the
                 // [currentQ, announced, q.audio_url] effect above never re-fires -- found live:
@@ -2538,7 +2550,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px', flexShrink: 0 }}>
           <SpeakerAvatar gender={q.speaker} seed={q.id} />
           <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px' }}>
-            {announced && <AudioPlayer url={q.audio_url} autoPlayKey={currentQ} onEnded={() => setAudioDone(true)} />}
+            {announced && <AudioPlayer url={q.audio_url} autoPlayKey={currentQ} onEnded={() => setAudioDone(true)} onError={() => setAudioDone(true)} />}
           </div>
           {!q.audio_url && (
             <div style={{ width: isMobile ? '100%' : '300px', maxWidth: '300px', fontSize: '14px', color: '#1a1a1a', fontStyle: 'italic', textAlign: 'center', lineHeight: '1.5' }}>"{q.transcript}"</div>
@@ -2658,7 +2670,11 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  const announced = useIntroNarration('listen_to_a_conversation.mp3')
+  // retryCount is passed as useIntroNarration's resetKey so "Try Again" re-announces the
+  // narration line instead of it staying stuck at already-announced -- see the matching comment
+  // in ListeningP1Exercise (Choose-Response) above for the full explanation; same bug, same fix.
+  const [retryCount, setRetryCount] = useState(0)
+  const announced = useIntroNarration('listen_to_a_conversation.mp3', retryCount)
 
   const questions = conversation.questions
   const q = questions[qIdx]
@@ -2788,7 +2804,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { primeAudio(getIntroUrl('listen_to_a_conversation.mp3')); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { setRetryCount(c => c + 1); primeAudio(getIntroUrl('listen_to_a_conversation.mp3')); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -2831,7 +2847,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
         <ConversationPhoto seed={conversation.id} />
         {announced && (
           <div style={{ width: '1px', height: '1px', overflow: 'hidden' }}>
-            <AudioPlayer url={conversation.audio_url} autoPlayKey={conversation.id} onEnded={() => setPhase('question')} />
+            <AudioPlayer url={conversation.audio_url} autoPlayKey={conversation.id} onEnded={() => setPhase('question')} onError={() => setPhase('question')} />
           </div>
         )}
       </ExamScreen>
@@ -2968,7 +2984,10 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   const [timeUp, setTimeUp] = useState(false)
   const timerRef = useRef(null)
   const selectedRef = useRef(null)
-  const announced = useIntroNarration('listen_to_an_announcement.mp3')
+  // retryCount is passed as useIntroNarration's resetKey so "Try Again" re-announces the
+  // narration line -- see the matching comment in ListeningP1Exercise (Choose-Response).
+  const [retryCount, setRetryCount] = useState(0)
+  const announced = useIntroNarration('listen_to_an_announcement.mp3', retryCount)
 
   const questions = announcement.questions
   const q = questions[qIdx]
@@ -3098,7 +3117,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { primeAudio(getIntroUrl('listen_to_an_announcement.mp3')); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { setRetryCount(c => c + 1); primeAudio(getIntroUrl('listen_to_an_announcement.mp3')); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -3141,7 +3160,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
         <SpeakerAvatar gender={announcement.speaker} seed={announcement.id} width={260} height={340} />
         {announced && (
           <div style={{ width: '1px', height: '1px', overflow: 'hidden' }}>
-            <AudioPlayer url={announcement.audio_url} autoPlayKey={announcement.id} onEnded={() => setPhase('question')} />
+            <AudioPlayer url={announcement.audio_url} autoPlayKey={announcement.id} onEnded={() => setPhase('question')} onError={() => setPhase('question')} />
           </div>
         )}
       </ExamScreen>
@@ -3286,7 +3305,10 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   const q = questions[qIdx]
   const totalQ = questions.length
   const talkIntroText = talk.subject ? `Listen to a talk in ${/^[aeiou]/i.test(talk.subject) ? 'an' : 'a'} ${talk.subject.toLowerCase()} class.` : 'Listen to a talk in an academic class.'
-  const announced = useIntroNarration(`academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)
+  // retryCount is passed as useIntroNarration's resetKey so "Try Again" re-announces the
+  // narration line -- see the matching comment in ListeningP1Exercise (Choose-Response).
+  const [retryCount, setRetryCount] = useState(0)
+  const announced = useIntroNarration(`academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`, retryCount)
   // See the matching comment in ListeningP1Exercise -- confirm-before-discard instead of a
   // silent, zero-warning onBack() exit, without a full resumable draft.
   // graded: done -- see the matching comment in ListeningP1Exercise (stops the beforeunload
@@ -3412,7 +3434,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { primeAudio(getIntroUrl(`academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { setRetryCount(c => c + 1); primeAudio(getIntroUrl(`academic_talk_${mockMode ? 'mock' : 'practice'}_${talk.id}.mp3`)); setPhase('listening'); setQIdx(0); setSelected(null); setAnswers([]); setDone(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -3457,7 +3479,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
         <SpeakerAvatar gender={talk.speaker} seed={talk.id} width={260} height={340} />
         {announced && (
           <div style={{ width: '1px', height: '1px', overflow: 'hidden' }}>
-            <AudioPlayer url={talk.audio_url} autoPlayKey={talk.id} onEnded={() => setPhase('question')} />
+            <AudioPlayer url={talk.audio_url} autoPlayKey={talk.id} onEnded={() => setPhase('question')} onError={() => setPhase('question')} />
           </div>
         )}
       </ExamScreen>

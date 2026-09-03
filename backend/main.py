@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-from fastapi import FastAPI, HTTPException, Depends, Header, Request, Query
+from fastapi import FastAPI, HTTPException, Depends, Header, Request, Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import Response
@@ -187,7 +187,18 @@ def _paddle_request(method: str, path: str, body: dict = None):
     )
     try:
         with urllib.request.urlopen(req, timeout=15) as resp:
-            return json.loads(resp.read().decode("utf-8"))
+            raw = resp.read().decode("utf-8")
+        try:
+            return json.loads(raw)
+        except ValueError:
+            # Found in the 27th audit round: only the error branch below was guarded against a
+            # non-JSON body -- a 200 response that somehow isn't valid JSON (a CDN/WAF
+            # interstitial in front of Paddle, a truncated response, any transport-level anomaly)
+            # used to let json.JSONDecodeError propagate straight out of this function and become
+            # an unhandled 500 in create_checkout/cancel_subscription, right when Paddle's own
+            # infrastructure is already having problems -- exactly when graceful degradation to a
+            # clean "please try again" error matters most.
+            raise HTTPException(status_code=502, detail="Paddle returned an unexpected response. Please try again.")
     except urllib.error.HTTPError as e:
         try:
             return json.loads(e.read().decode("utf-8"))
@@ -953,6 +964,16 @@ def get_db():
         except psycopg2.pool.PoolError:
             # Pool exhausted (DB_POOL_MAX_CONN concurrent requests already in flight) -- fail this
             # one request fast with a clear error instead of hanging or crashing unpredictably.
+            raise HTTPException(status_code=503, detail="Server is busy, please try again in a moment.")
+        except psycopg2.Error:
+            # Found in the 27th audit round: PoolError only covers "pool is full" -- it does NOT
+            # cover Postgres itself being transiently unreachable (a Render-side restart, a
+            # maintenance window, a network blip), which getconn() surfaces as e.g.
+            # OperationalError instead. Since virtually every endpoint in this file starts with
+            # `conn = get_db()` with no surrounding try/except of its own, an uncaught driver
+            # exception here used to become an opaque, unhandled 500 across the ENTIRE app on any
+            # transient DB hiccup, instead of the same clean "server is busy" 503 the line above
+            # was clearly meant to cover for every connection failure, not just pool exhaustion.
             raise HTTPException(status_code=503, detail="Server is busy, please try again in a moment.")
         return _PGConnection(conn, pool=_pg_pool)
     conn = sqlite3.connect(str(DB_FILE))
@@ -2069,9 +2090,19 @@ def google_login(data: GoogleLoginRequest, request: Request):
         conn.close()
 
 @app.post("/api/auth/forgot-password")
-def forgot_password(data: ForgotPasswordRequest, request: Request):
+def forgot_password(data: ForgotPasswordRequest, request: Request, background_tasks: BackgroundTasks):
     """Always returns the same generic success message whether or not the email is registered --
-    this stops someone from using this endpoint to check which emails have an account here."""
+    this stops someone from using this endpoint to check which emails have an account here.
+
+    The actual send is deferred via BackgroundTasks (found in the 27th audit round) rather than
+    called inline -- send_password_reset_email() makes a real, synchronous network call to Resend
+    (up to its own 10s timeout), which used to run only on the "account exists" branch. That made
+    this endpoint's response latency a reliable timing side-channel: a request for a registered
+    email took measurably longer than one for an unregistered email, even though both bodies were
+    identical -- defeating the whole point of the generic response, the same class of bug login()
+    already closed years ago via its constant-time bcrypt comparison. Queuing the send as a
+    background task means the HTTP response returns immediately on both branches regardless of
+    whether an email actually goes out, closing the timing gap the same way."""
     email = data.email.strip().lower()
     _check_and_consume_rate_limit(_forgot_password_attempts, f"{_client_ip(request)}:{email}", FORGOT_PASSWORD_ATTEMPT_WINDOW_SECONDS, FORGOT_PASSWORD_ATTEMPT_MAX, "password-reset")
     _check_and_consume_rate_limit(_forgot_password_attempts_by_email, email, FORGOT_PASSWORD_EMAIL_WINDOW_SECONDS, FORGOT_PASSWORD_EMAIL_MAX, "password-reset")
@@ -2089,7 +2120,7 @@ def forgot_password(data: ForgotPasswordRequest, request: Request):
             )
             conn.commit()
             reset_link = f"{FRONTEND_PUBLIC_URL}/?reset_token={reset_token}"
-            send_password_reset_email(email, reset_link)
+            background_tasks.add_task(send_password_reset_email, email, reset_link)
         return {"status": "success", "message": "If an account exists for that email, a reset link has been sent."}
     finally:
         conn.close()
