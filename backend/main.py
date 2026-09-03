@@ -1908,6 +1908,20 @@ RESEND_VERIFICATION_WINDOW_SECONDS = 60 * 60
 RESEND_VERIFICATION_MAX = 5
 _resend_verification_attempts: dict = collections.defaultdict(list)
 
+# reset_password/verify_email (below) consume a high-entropy secrets.token_urlsafe(32) token, so
+# brute-forcing the token itself isn't practical -- but found in the 28th audit round: unlike every
+# other token/account-mutating endpoint in this file (forgot-password, login, register, google,
+# resend-verification-email), these two called no rate limiter at all, each still costing a full DB
+# round-trip per request. IP-keyed is enough here (the token is the real secret, this is just a
+# floor on how many free DB hits an anonymous caller gets), with a generous ceiling since a
+# household/NAT sharing one IP could plausibly complete a few resets/verifications back to back.
+RESET_PASSWORD_ATTEMPT_WINDOW_SECONDS = 15 * 60
+RESET_PASSWORD_ATTEMPT_MAX = 20
+_reset_password_attempts: dict = collections.defaultdict(list)
+VERIFY_EMAIL_ATTEMPT_WINDOW_SECONDS = 15 * 60
+VERIFY_EMAIL_ATTEMPT_MAX = 20
+_verify_email_attempts: dict = collections.defaultdict(list)
+
 # --- General per-user API throttle ---
 # Every authenticated endpoint funnels through get_current_user() below, so this is the one choke
 # point that can bound how many requests a single account can throw at the DB_POOL_MAX_CONN=10
@@ -1938,7 +1952,7 @@ def _check_api_throttle(user_id: int):
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -2051,9 +2065,27 @@ def google_login(data: GoogleLoginRequest, request: Request):
         if not user:
             user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
             if user:
-                # Existing password-based account with the same email -- link this Google identity to
-                # it instead of creating a duplicate account.
-                conn.execute("UPDATE users SET google_id = ?, email_verified = 1 WHERE id = ?", (google_id, user["id"]))
+                # Existing account with the same email -- link this Google identity to it instead
+                # of creating a duplicate. Found in the 28th audit round: register() never confirms
+                # mailbox ownership, so anyone could have pre-registered an arbitrary email address
+                # with a password only they know, then simply waited. If the real owner of that
+                # email later signs in here for the first time via Google, this lookup finds the
+                # attacker's dangling row by email and would previously link it as "the real owner's
+                # account" without touching the attacker's password -- silently handing over
+                # whatever data/subscription accumulates from then on, while the attacker could
+                # still log in with their original password at any time. Google's email_verified
+                # claim is the strongest ownership signal available, so treat this link as a full
+                # handover: clear any existing password_hash (so a pre-set password can no longer be
+                # used to sign in) and bump token_version (so any session/JWT issued before this
+                # point, e.g. the attacker's, stops working immediately) -- the same
+                # invalidate-on-credential-change pattern reset_password() already uses below. A
+                # legitimate account owner who registered with a password and later links Google
+                # loses nothing they can't immediately redo via "Forgot password" if they still want
+                # a password login option.
+                conn.execute(
+                    "UPDATE users SET google_id = ?, email_verified = 1, password_hash = NULL, token_version = token_version + 1 WHERE id = ?",
+                    (google_id, user["id"]),
+                )
                 conn.commit()
                 user = get_user_by_id(conn, user["id"])
             else:
@@ -2126,7 +2158,8 @@ def forgot_password(data: ForgotPasswordRequest, request: Request, background_ta
         conn.close()
 
 @app.post("/api/auth/reset-password")
-def reset_password(data: ResetPasswordRequest):
+def reset_password(data: ResetPasswordRequest, request: Request):
+    _check_and_consume_rate_limit(_reset_password_attempts, _client_ip(request), RESET_PASSWORD_ATTEMPT_WINDOW_SECONDS, RESET_PASSWORD_ATTEMPT_MAX, "password reset")
     if len(data.new_password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
     conn = get_db()
@@ -2152,10 +2185,11 @@ def reset_password(data: ResetPasswordRequest):
         conn.close()
 
 @app.post("/api/auth/verify-email")
-def verify_email(data: VerifyEmailRequest):
+def verify_email(data: VerifyEmailRequest, request: Request):
     """Confirms the student's real email address -- purely informational for now (nothing in the
     app is gated on email_verified, see gate_pool/require_premium_pool for the actual subscription
     gating), but it's what powers the 'Verified' badge and lets support trust a reported email."""
+    _check_and_consume_rate_limit(_verify_email_attempts, _client_ip(request), VERIFY_EMAIL_ATTEMPT_WINDOW_SECONDS, VERIFY_EMAIL_ATTEMPT_MAX, "email verification")
     conn = get_db()
     try:
         user = conn.execute("SELECT * FROM users WHERE verification_token = ?", (data.token,)).fetchone()
@@ -3264,12 +3298,23 @@ def mark_mock_seen(data: MarkSeenRequest, user=Depends(get_current_user)):
     item_ids = data.item_ids[:200]
     conn = get_db()
     try:
+        # Batched into a single multi-row INSERT instead of looping conn.execute() once per item
+        # -- found in the 28th audit round: a single account can legitimately call this endpoint
+        # up to API_THROTTLE_MAX times per API_THROTTLE_WINDOW_SECONDS, each with up to 200 items,
+        # which meant up to thousands of sequential single-row round trips per window, all held on
+        # one checked-out connection out of the fixed DB_POOL_MAX_CONN=10 pool -- exactly the
+        # N+1/pool-exhaustion pattern the rest of this file (e.g. _fetch_category_sums) was written
+        # to avoid elsewhere. ON CONFLICT applies per-row regardless of how many rows are in one
+        # VALUES clause, so behavior is unchanged -- just one round trip instead of up to 200.
+        placeholders = ", ".join(["(?, ?, ?)"] * len(item_ids))
+        flat_params = []
         for item_id in item_ids:
-            conn.execute(
-                "INSERT INTO seen_pool_items (user_id, pool, item_id) VALUES (?, ?, ?) "
-                "ON CONFLICT(user_id, pool, item_id) DO NOTHING",
-                (user["id"], data.pool, str(item_id)),
-            )
+            flat_params.extend([user["id"], data.pool, str(item_id)])
+        conn.execute(
+            f"INSERT INTO seen_pool_items (user_id, pool, item_id) VALUES {placeholders} "
+            "ON CONFLICT(user_id, pool, item_id) DO NOTHING",
+            flat_params,
+        )
         conn.commit()
         return {"status": "success"}
     finally:

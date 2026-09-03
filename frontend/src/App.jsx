@@ -2514,14 +2514,23 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
               <button onClick={() => {
                 setRetryCount(c => c + 1)
                 primeAudio(getIntroUrl('listen_choose_response.mp3')); setCurrentQ(0); setSelected(null); setAnswers([]); setDone(false)
-                // For a 1-question exercise, setCurrentQ(0) above is a no-op (already 0), so the
-                // [currentQ, announced, q.audio_url] effect above never re-fires -- found live:
-                // audioDone was left at whatever it was at the end of the previous attempt
-                // (true), which let the response timer start counting down instantly while the
-                // just-reprimed audio was still replaying in the background. Set it directly here
-                // using the same rule the effect uses, so a retry is gated exactly like the first
-                // attempt regardless of whether currentQ's value actually changes.
-                setAudioDone(announced && !questions[0].audio_url)
+                // For a 1-question exercise, setCurrentQ(0) above is a no-op (already 0), so
+                // audioDone needs to be force-closed here rather than left at whatever it was at
+                // the end of the previous attempt (true) -- otherwise the response timer could
+                // start counting down instantly while the just-reprimed audio is still replaying.
+                // Found in the 28th audit round: this used to read `announced && !questions[0]
+                // .audio_url`, but `announced` here is the value from THIS click handler's own
+                // closure -- i.e. still stale-true from the attempt that just finished, since
+                // useIntroNarration's resetKey-driven reset hasn't applied yet at the moment this
+                // handler runs. For a question with no audio_url, that stale true meant this line
+                // unlocked the answer options immediately, before the retried narration had even
+                // started playing. Just force it closed instead: useIntroNarration now resets
+                // `announced` synchronously during the render this click triggers (see the
+                // lastResetKeyRef comment in that hook), so the [currentQ, announced, q.audio_url]
+                // effect above reliably re-fires on its own once announced flips back to true --
+                // this line only needs to guarantee the door starts closed, not decide when it
+                // reopens.
+                setAudioDone(false)
               }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
@@ -3745,6 +3754,14 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
   const pausedRef = useRef(paused)
   useEffect(() => { pausedRef.current = paused }, [paused])
   const [qIdx, setQIdx] = useState(0)
+  // Bumped by Try Again below purely to force BuildSentenceItem to remount even when item.id
+  // doesn't change (a single-item set, or retrying while already viewing item 0, which Try Again
+  // always does). Found in the 28th audit round: BuildSentenceItem seeds its internal `slots`
+  // state only once via useState(() => ...initialPlaced), keyed on item.id alone -- so without
+  // this, a retry on a one-item set left the student's previously-placed (and now-wrong) word
+  // chips visually in place despite placedByIndex having just been cleared below. Not reachable
+  // with today's fixed 10-item sets, but a latent trap if set sizes ever change.
+  const [retryGen, setRetryGen] = useState(0)
   // Every item's placement is kept (not just the current one), so navigating Back and
   // forward again restores exactly what the student had placed, instead of discarding it.
   // In solo practice mode, resume a previously saved-and-exited draft for this exact set if one
@@ -3896,7 +3913,7 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
             <div style={{ margin: '14px 0 6px', height: '7px', background: '#efefef', borderRadius: '4px' }}><div style={{ width: pct + '%', height: '100%', background: grade.color, borderRadius: '4px' }} /></div>
             <div style={{ fontSize: '12px', color: '#777', marginBottom: '20px' }}>{pct}% correct · all-or-nothing scoring</div>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <button onClick={() => { setQIdx(0); setPlacedByIndex(items.map(() => [])); setAnswers([]); setDone(false); setTimeLeft(BUILD_SENTENCE_TOTAL_TIME); setTimeUp(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
+              <button onClick={() => { setRetryGen(g => g + 1); setQIdx(0); setPlacedByIndex(items.map(() => [])); setAnswers([]); setDone(false); setTimeLeft(BUILD_SENTENCE_TOTAL_TIME); setTimeUp(false) }} style={{ flex: 1, padding: '11px', background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '13px', cursor: 'pointer' }}>Try Again</button>
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
@@ -3940,7 +3957,7 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
       <h1 style={{ fontSize: '24px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 36px', maxWidth: '760px' }}>Make an appropriate sentence.</h1>
       {timeUp && <div style={{ maxWidth: '760px', width: '100%', marginTop: '-16px', marginBottom: '20px' }}><TimeUpBanner /></div>}
       <div style={{ maxWidth: '760px', width: '100%' }}>
-        <BuildSentenceItem key={item.id} item={item} initialPlaced={placed}
+        <BuildSentenceItem key={`${item.id}-${retryGen}`} item={item} initialPlaced={placed}
           onChange={(vals) => setPlacedByIndex(prev => { const next = [...prev]; next[qIdx] = vals; return next })} />
       </div>
     </ExamScreen>
