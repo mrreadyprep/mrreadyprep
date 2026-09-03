@@ -1794,6 +1794,24 @@ function AudioPlayer({ url, autoPlayKey, onEnded, onError }) {
 function useIntroNarration(introFilename, resetKey) {
   const [announced, setAnnounced] = useState(false)
   const [url, setUrl] = useState(() => getIntroUrl(introFilename))
+  // Reset `announced` synchronously during render the instant resetKey changes, instead of
+  // waiting for the effect below (which only runs after commit) to call setAnnounced(false).
+  // Found live (27th round, after shipping the resetKey fix itself): on the very first render
+  // right after "Try Again", `announced` was still stale-true from the previous attempt for one
+  // full render -- long enough for the AudioPlayer gated on it to mount and briefly steal the
+  // shared audio element's .src out from under the narration primeAudio() had just started in the
+  // same click handler. The effect's own justPrimed check caught and self-corrected this ~60ms
+  // later, so the narration still played in full, but the element's src briefly flashed to the
+  // main clip's URL first -- not the fully clean replay the resetKey fix was meant to produce.
+  // This is React's documented "adjust state while rendering" pattern: calling setState mid-render
+  // when a tracked value changes bails out and re-renders immediately, before anything commits or
+  // paints, so `announced` is already false on the very first render Try Again produces -- no
+  // stale-true window for AudioPlayer to observe at all.
+  const lastResetKeyRef = useRef(resetKey)
+  if (lastResetKeyRef.current !== resetKey) {
+    lastResetKeyRef.current = resetKey
+    if (announced) setAnnounced(false)
+  }
   useEffect(() => {
     if (!introFilename) { setUrl(null); return }
     const cached = getIntroUrl(introFilename)
