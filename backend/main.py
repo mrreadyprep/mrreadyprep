@@ -583,7 +583,7 @@ class IntroAudioUrlsRequest(BaseModel):
 _HWCHECK_FILENAMES = {"adjusting_volume.mp3", "adjusting_microphone.mp3"}
 
 @app.post("/api/audio/intro-urls")
-def get_intro_audio_urls(data: IntroAudioUrlsRequest):
+def get_intro_audio_urls(data: IntroAudioUrlsRequest, request: Request):
     """Signs a batch of fixed narration filenames for /audio-proxy in one round trip (the frontend
     calls this once when a Listening list screen mounts, well before the student can click "Start",
     so the signed URL is already sitting in a client-side cache by the time primeAudio() needs to
@@ -596,6 +596,10 @@ def get_intro_audio_urls(data: IntroAudioUrlsRequest):
     the filename allowlist regex (no slashes, no "..") plus the explicit _HWCHECK_FILENAMES set, so
     this endpoint can never be used to sign a real gated path like "speaking_lr/7/1.mp3" and bypass
     the entitlement checks that protect those."""
+    _check_and_consume_rate_limit(
+        _intro_audio_attempts, _client_ip(request),
+        INTRO_AUDIO_ATTEMPT_WINDOW_SECONDS, INTRO_AUDIO_ATTEMPT_MAX, "audio URL signing",
+    )
     result = {}
     for filename in data.filenames[:300]:
         if _SAFE_INTRO_FILENAME.match(filename):
@@ -995,10 +999,10 @@ def init_db():
             speaking_target REAL NOT NULL DEFAULT 6.0,
             exam_date TEXT NOT NULL DEFAULT '',
             current_streak INTEGER NOT NULL DEFAULT 0,
-            reading_score REAL NOT NULL DEFAULT 5.0,
-            listening_score REAL NOT NULL DEFAULT 4.5,
-            writing_score REAL NOT NULL DEFAULT 4.5,
-            speaking_score REAL NOT NULL DEFAULT 4.0,
+            reading_score REAL NOT NULL DEFAULT 1.0,
+            listening_score REAL NOT NULL DEFAULT 1.0,
+            writing_score REAL NOT NULL DEFAULT 1.0,
+            speaking_score REAL NOT NULL DEFAULT 1.0,
             vocab_level INTEGER NOT NULL DEFAULT 1,
             token_version INTEGER NOT NULL DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -1048,6 +1052,10 @@ def init_db():
     # attacker out, instead of silently remaining valid for the rest of its normal 30-day life.
     if not _has_column(conn, "users", "token_version"):
         conn.execute("ALTER TABLE users ADD COLUMN token_version INTEGER NOT NULL DEFAULT 0")
+    # reset_password()/verify_email() both look a token up by scanning these columns -- cheap today
+    # at low user counts, but with no index they'd become full table scans as the user base grows.
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_users_password_reset_token ON users(password_reset_token)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_users_verification_token ON users(verification_token)")
 
     # Which vocab words each student has personally marked as learned.
     conn.execute("""
@@ -1103,6 +1111,20 @@ def init_db():
     if not _has_column(conn, "attempt_results", "detail"):
         conn.execute("ALTER TABLE attempt_results ADD COLUMN detail TEXT DEFAULT ''")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_category ON attempt_results(category)")
+    # One-time backfill: reading/listening/writing/speaking_score used to default to 5.0/4.5/4.5/4.0
+    # at signup (an "average-looking" placeholder), which contradicted compute_section_band()'s own
+    # documented contract of returning 1.0 for a section with zero attempts. Every existing account
+    # that has visited /api/dashboard at least once already has correct, freshly-computed values in
+    # these columns regardless of this old default, so it's safe to only touch accounts with zero
+    # attempt_results rows at all (i.e. definitely never opened the Dashboard tab) -- those are the
+    # only rows that could still be showing the stale, artificially-inflated placeholder. Idempotent:
+    # once backfilled to 1.0 the WHERE clause no longer matches, so this is a no-op on every
+    # subsequent server start.
+    conn.execute("""
+        UPDATE users SET reading_score = 1.0, listening_score = 1.0, writing_score = 1.0, speaking_score = 1.0
+        WHERE id NOT IN (SELECT DISTINCT user_id FROM attempt_results)
+          AND (reading_score = 5.0 OR listening_score = 4.5 OR writing_score = 4.5 OR speaking_score = 4.0)
+    """)
     conn.execute("CREATE INDEX IF NOT EXISTS idx_attempt_results_user ON attempt_results(user_id)")
     # Every real query against this table filters on user_id AND category together (or user_id
     # alone ordered by saved_at) -- _fetch_category_sums's GROUP BY, get_results_history, and
@@ -1290,8 +1312,18 @@ def get_current_user_optional(authorization: Optional[str] = Header(None)):
         return None
     try:
         return get_current_user(authorization)
-    except HTTPException:
-        return None
+    except HTTPException as e:
+        # Only a bad/missing/expired token means "treat as logged out" -- that's the only case
+        # this dependency exists to soften. get_current_user can also raise 429 (via
+        # _check_api_throttle) for a perfectly valid, currently-logged-in session that's just
+        # made too many requests too fast. Swallowing that too used to silently downgrade a
+        # throttled paying subscriber to "anonymous" on every content endpoint that uses this
+        # dependency (all the practice/mock pool GETs), which made gate_pool()/require_premium_pool()
+        # falsely lock content they'd already paid for -- a 429 must propagate as a 429, not get
+        # reinterpreted as "not logged in".
+        if e.status_code == 401:
+            return None
+        raise
 
 def _send_transactional_email(to_email: str, subject: str, html: str, log_prefix: str) -> bool:
     """Shared Resend (resend.com) send path for every transactional email this backend sends
@@ -1725,6 +1757,26 @@ _login_attempts_by_email: dict = collections.defaultdict(list)
 # close properly.
 _rate_limit_lock = threading.Lock()
 
+# Opt-in defense against the gap described in _client_ip below: Render sits its own load balancer
+# in front of every web service, so the TCP peer this app actually sees (request.client.host) is
+# Render's internal proxy, not the real internet-facing hop -- that's true whether a request came
+# via Cloudflare or hit Render directly, so it can't be used to distinguish the two. There's no way
+# to verify that distinction from inside the app without Render-side config, so instead: if
+# CLOUDFLARE_ORIGIN_SECRET is set, a Cloudflare Transform Rule can be configured to stamp every
+# request that actually passes through Cloudflare with a static header carrying this same secret,
+# and only THEN is CF-Connecting-IP trusted. Unset (the default), behavior is unchanged from before
+# -- this is additive, not a behavior change on its own.
+CLOUDFLARE_ORIGIN_SECRET = os.environ.get("CLOUDFLARE_ORIGIN_SECRET", "").strip()
+
+def _peer_is_cloudflare(request: Request) -> bool:
+    """True when this request is safe to treat as having come through Cloudflare. See
+    CLOUDFLARE_ORIGIN_SECRET above for why this can't be determined from request.client.host."""
+    if not CLOUDFLARE_ORIGIN_SECRET:
+        return True
+    return hmac.compare_digest(
+        request.headers.get("x-cf-origin-secret", ""), CLOUDFLARE_ORIGIN_SECRET
+    )
+
 def _client_ip(request: Request) -> str:
     # Traffic now flows client -> Cloudflare -> Render -> this app (Cloudflare was added in
     # front of the backend as api.mrreadyprep.com). Cloudflare sets CF-Connecting-IP to the real
@@ -1734,13 +1786,19 @@ def _client_ip(request: Request) -> str:
     #
     # Falling back to the last X-Forwarded-For hop (as before) covers local/dev and any request
     # that somehow bypasses Cloudflare and hits Render directly -- Render still appends the real
-    # connecting IP as the last hop in that case. Note this fallback is only as trustworthy as
-    # "Render is the direct edge", which is no longer guaranteed to be the only path in prod; the
-    # residual fix is to lock the Render origin down to only accept connections from Cloudflare's
-    # IP ranges (Cloudflare Authenticated Origin Pulls / an IP allowlist on Render), so a request
-    # can't reach this app at all without going through Cloudflare first.
+    # connecting IP as the last hop in that case.
+    #
+    # CF-Connecting-IP is only trustworthy when the request actually transited Cloudflare -- Render's
+    # default *.onrender.com origin is still reachable directly unless separately locked down, and
+    # anyone hitting that origin directly could set an arbitrary CF-Connecting-IP to get a fresh
+    # identity on every request, silently voiding every IP-keyed rate limiter in this file (login,
+    # register, Google sign-in, forgot-password, checkout). See CLOUDFLARE_ORIGIN_SECRET /
+    # _peer_is_cloudflare above for the (opt-in, requires a one-time Cloudflare-side Transform Rule)
+    # mitigation -- request.client.host can't be used for this the way it can on a bare VM, since
+    # Render puts its own load balancer in front of every service, so the TCP peer this app sees is
+    # always Render's internal proxy regardless of whether Cloudflare was actually in the path.
     cf_ip = request.headers.get("cf-connecting-ip", "").strip()
-    if cf_ip:
+    if cf_ip and _peer_is_cloudflare(request):
         return cf_ip
     forwarded = request.headers.get("x-forwarded-for", "")
     if forwarded:
@@ -1789,6 +1847,15 @@ def _record_failed_login(key: str, ip: str, email: str):
 REGISTER_ATTEMPT_WINDOW_SECONDS = 60 * 60
 REGISTER_ATTEMPT_MAX = 8
 _register_attempts: dict = collections.defaultdict(list)
+
+# get_intro_audio_urls (below) is deliberately public and does no DB/file work, but was the one
+# unauthenticated write-adjacent-cost endpoint in this file with no rate limit at all -- found in
+# the 26th audit round. Generous limit since it's a legitimate, frequent call (every Listening list
+# screen mount signs a fresh batch) -- this is defense-in-depth/cost-control against being hammered
+# for free CPU, not a meaningful security boundary on its own.
+INTRO_AUDIO_ATTEMPT_WINDOW_SECONDS = 60
+INTRO_AUDIO_ATTEMPT_MAX = 60
+_intro_audio_attempts: dict = collections.defaultdict(list)
 
 # google_login (below) is the one account-creating/DB-writing auth endpoint that had no rate limit
 # at all -- found in the 25th audit round. Same IP-keyed shape as register above (mints a new
@@ -1850,7 +1917,7 @@ def _check_api_throttle(user_id: int):
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -2517,7 +2584,12 @@ def get_dashboard(user=Depends(get_current_user)):
         set_clause = ", ".join(f"{k} = ?" for k in updates)
         conn.execute(f"UPDATE users SET {set_clause} WHERE id = ?", (*updates.values(), user["id"]))
         conn.commit()
-        fresh_user = get_user_by_id(conn, user["id"])
+        # Build the fresh profile from the already-fetched `user` row plus the just-written
+        # `updates`, instead of re-SELECTing the row we just UPDATEd -- this is a high-frequency
+        # endpoint (refetches on every Dashboard tab visit), and the only fields the UPDATE above
+        # can have changed are exactly the keys in `updates`, so a second round trip to read back
+        # values we already know is pure overhead.
+        fresh_user = {**dict(user), **updates}
         # "mock_overall" is only ever saved once per completed Full Mock Test (all 4 sections) -- see
         # saveResult('mock_overall', ...) on the frontend -- so its most recent saved_at is exactly
         # "when did this student last finish a full test", which the Dashboard's mock-test card shows.

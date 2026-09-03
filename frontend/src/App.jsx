@@ -9949,9 +9949,29 @@ function App() {
   // real tab) so requestTabChange can also gate the Log Out button through the same modal.
   const [pendingTab, setPendingTab] = useState(null)
   const exitGuardActive = useExitGuardActive()
+  const clearSubTabs = () => { setReadingSubTab(null); setListeningSubTab(null); setWritingSubTab(null); setSpeakingSubTab(null) }
+  // Guarded on `exitGuardActive` alone -- NOT `exitGuardActive && tab !== currentTab` as this used
+  // to read. That extra condition let a student click the sidebar item for the section they were
+  // ALREADY in (e.g. "Listening" while mid-exercise in Listening P1) bypass the guard entirely,
+  // because sb()'s onClick used to clear all four subTab states unconditionally right after this
+  // call -- since the exercise components are gated on `currentTab === 'x' && xSubTab === 'y'`,
+  // clearing the subTab alone silently unmounted the in-progress exercise with no confirmation at
+  // all, even though `requestTabChange` itself "correctly" decided nothing needed to change. Now
+  // subTab-clearing only ever happens here (on actual, confirmed proceed), never unconditionally
+  // at the call site -- see sb() and the breadcrumb "← Back" handler below, and the pendingTab
+  // modal's onConfirm, which is the only other place allowed to call clearSubTabs().
   const requestTabChange = (tab) => {
-    if (exitGuardActive && tab !== currentTab) { setPendingTab(tab); return }
+    if (exitGuardActive) { setPendingTab(tab); return }
     setCurrentTab(tab)
+    clearSubTabs()
+  }
+  // Same guard, for the breadcrumb "← Back" link stepping out of a subTab without changing
+  // currentTab (e.g. Writing hub -> Write an Email -> "← Back" to the Writing hub). This used to
+  // clear the active subTab completely unguarded -- no confirmation at all, not even the
+  // half-working one sb() had -- discarding an in-progress exercise on a single click.
+  const requestSubTabBack = () => {
+    if (exitGuardActive) { setPendingTab('subtab-back'); return }
+    clearSubTabs()
   }
   const [profileName, setProfileName] = useState('')
   const [targetScore, setTargetScore] = useState(5.5)
@@ -10139,8 +10159,15 @@ function App() {
   // "Writing" again, would drop straight back into Build a Sentence instead of the 3-task hub --
   // writingSubTab/speakingSubTab were never reset here even though readingSubTab/listeningSubTab
   // always were, an inconsistency between the four sections.
+  //
+  // The subTab-clearing itself now happens ONLY inside requestTabChange (immediately when no
+  // guard is active, or deferred to the confirm modal when one is) -- NOT unconditionally here at
+  // the click site. Doing it here used to run even when requestTabChange decided to defer via the
+  // "leave and lose your progress?" modal, so an in-progress exercise in the clicked section (or
+  // the CURRENT section, since exercise components are gated on subTab alone) got silently
+  // unmounted before the student ever saw the confirmation. See requestTabChange's comment.
   const sb = (tab, icon, label) => (
-    <button onClick={() => { requestTabChange(tab); setReadingSubTab(null); setListeningSubTab(null); setWritingSubTab(null); setSpeakingSubTab(null); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <button onClick={() => { requestTabChange(tab); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
       {icon} {label}
     </button>
   )
@@ -10215,10 +10242,7 @@ function App() {
         {currentTab !== 'dashboard' && (
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
             <span onClick={() => {
-              if (readingSubTab) setReadingSubTab(null)
-              else if (listeningSubTab) setListeningSubTab(null)
-              else if (writingSubTab) setWritingSubTab(null)
-              else if (speakingSubTab) setSpeakingSubTab(null)
+              if (readingSubTab || listeningSubTab || writingSubTab || speakingSubTab) requestSubTabBack()
               else requestTabChange('dashboard')
             }} style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
             <h2 style={{ margin: '0 0 0 14px', fontSize: '18px', fontWeight: '700' }}>
@@ -10654,7 +10678,12 @@ function App() {
           confirmLabel="Leave anyway"
           cancelLabel="Keep going"
           danger
-          onConfirm={() => { const t = pendingTab; setPendingTab(null); if (t === 'logout') logout(); else setCurrentTab(t) }}
+          onConfirm={() => {
+            const t = pendingTab; setPendingTab(null)
+            if (t === 'logout') logout()
+            else if (t === 'subtab-back') clearSubTabs()
+            else { setCurrentTab(t); clearSubTabs() }
+          }}
           onCancel={() => setPendingTab(null)}
         />
       )}
