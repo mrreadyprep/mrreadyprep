@@ -7429,13 +7429,13 @@ function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue, 
   const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      {/* onCancel is only passed for the pre-test hardware-check screens (see FullMockTest's
-          phase === 'hwcheck' render) -- the mid-test transition notices between mock test
-          sections (phase === 'notice') never pass it, so this stays hidden there, matching that
-          there's genuinely no "back" once a test is actually running. Found in the 29th audit
-          round: before this, a student who clicked into a mock test (even by accident) had no
-          in-app way back to the dashboard until clicking all the way through every hardware-check
-          screen -- no Back/Exit control existed anywhere in this phase. */}
+      {/* onCancel is passed both for the pre-test hardware-check screens (FullMockTest's
+          phase === 'hwcheck', where it just returns to the intro screen since nothing is at
+          stake yet -- added in the 29th audit round) and for the mid-test transition notices
+          between mock test sections (phase === 'notice', where it routes through the same
+          "Exit the mock test?" confirmation as the running phase since real answers are already
+          recorded -- added in the 30th audit round, closing the one phase that previously had
+          no way out at all). When omitted the Cancel button stays hidden. */}
       <TestTopBar left={onCancel ? <TestPillButton variant="light" onClick={onCancel}>← Cancel</TestPillButton> : null} right={<TestPillButton variant="light" onClick={onContinue}>Continue</TestPillButton>} />
       <div style={{ padding: isMobile ? '20px 16px 80px' : '48px 64px 100px', boxSizing: 'border-box' }}>
         <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 14px' }}>{title}</h1>
@@ -8696,7 +8696,27 @@ function FullMockTest({ onBack, hasPremium = false }) {
   if (phase === 'notice') {
     const n = noticeQueue[0]
     if (!n) return null
-    return <TestNoticeScreen title={n.title} paragraphs={n.paragraphs} rows={n.rows} onContinue={continueNotice} />
+    // Unlike hwcheck's cancelHwCheck (nothing at stake yet), a notice screen appears BETWEEN
+    // mock-test sections -- an attempt is already in progress with real answers recorded, so
+    // cancelling here goes through the same "Exit the mock test?" confirmation as the running
+    // phase (exitMockTest/showExitConfirm), not a silent return to the intro screen. Found in
+    // the 30th audit round: this was the one phase of the mock test with no way out at all.
+    return (
+      <>
+        <TestNoticeScreen title={n.title} paragraphs={n.paragraphs} rows={n.rows} onContinue={continueNotice} onCancel={exitMockTest} />
+        {showExitConfirm && (
+          <ConfirmModal
+            title="Exit the mock test?"
+            message="Your progress in this session will be lost."
+            confirmLabel="Exit"
+            cancelLabel="Keep testing"
+            danger
+            onConfirm={() => { setShowExitConfirm(false); onBack() }}
+            onCancel={() => setShowExitConfirm(false)}
+          />
+        )}
+      </>
+    )
   }
 
   if (phase === 'results') {
@@ -8835,7 +8855,31 @@ function FullMockTest({ onBack, hasPremium = false }) {
 
   // phase === 'running'
   const slot = queue[idx]
-  if (!slot) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', color: '#616473' }}>Loading next section…</div>
+  if (!slot) {
+    // Defensive fallback for an out-of-range idx/empty queue (shouldn't normally happen, but if
+    // it ever does this used to be a dead end with zero controls -- no way out except closing the
+    // tab and losing the attempt. Found in the 30th audit round: give it the same exit path as
+    // every other phase instead of a bare unactionable message.
+    return (
+      <>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center', alignItems: 'center', height: '100vh', color: '#616473' }}>
+          <div>Loading next section…</div>
+          <button onClick={exitMockTest} style={{ background: 'none', border: '1px solid #c7c9d9', borderRadius: '999px', padding: '8px 18px', fontSize: '13px', fontWeight: '600', color: '#44475a', cursor: 'pointer' }}>← Exit</button>
+        </div>
+        {showExitConfirm && (
+          <ConfirmModal
+            title="Exit the mock test?"
+            message="Your progress in this session will be lost."
+            confirmLabel="Exit"
+            cancelLabel="Keep testing"
+            danger
+            onConfirm={() => { setShowExitConfirm(false); onBack() }}
+            onCancel={() => setShowExitConfirm(false)}
+          />
+        )}
+      </>
+    )
+  }
 
   // A small floating badge (bottom-left, out of the way of every module's own header/controls)
   // shows overall mock-test progress without interfering with each exercise's own fixed-position layout.
@@ -8927,12 +8971,20 @@ function ProgressScreen({ onBack, onPractice }) {
   const [history, setHistory] = useState([])
   const [mistakes, setMistakes] = useState(null)
   const [loading, setLoading] = useState(true)
+  // Mirrors Dashboard's dashboardLoadError pattern (fetchDashboardData). Before this, a failed
+  // summary/history fetch here fell into the outer .catch(() => setLoading(false)) with nothing
+  // else set, so the screen rendered the "No activity yet" empty state -- indistinguishable from
+  // a genuinely new user, but actually meaning "we couldn't reach the server". Found in the 30th
+  // audit round.
+  const [loadError, setLoadError] = useState(false)
 
-  useEffect(() => {
+  const load = () => {
+    setLoading(true)
+    setLoadError(false)
     let cancelled = false
     Promise.all([
-      apiFetch(`${BACKEND_URL}/api/results/summary`).then(r => r.json()),
-      apiFetch(`${BACKEND_URL}/api/results/history?limit=30`).then(r => r.json()),
+      apiFetch(`${BACKEND_URL}/api/results/summary`).then(r => { if (!r.ok) throw new Error('summary fetch failed'); return r.json() }),
+      apiFetch(`${BACKEND_URL}/api/results/history?limit=30`).then(r => { if (!r.ok) throw new Error('history fetch failed'); return r.json() }),
       apiFetch(`${BACKEND_URL}/api/results/mistakes`).then(r => r.json()).catch(() => null),
     ]).then(([summaryData, historyData, mistakesData]) => {
       if (cancelled) return
@@ -8940,11 +8992,26 @@ function ProgressScreen({ onBack, onPractice }) {
       setHistory(Array.isArray(historyData) ? historyData : [])
       setMistakes(mistakesData)
       setLoading(false)
-    }).catch(() => { if (!cancelled) setLoading(false) })
+    }).catch(() => { if (!cancelled) { setLoading(false); setLoadError(true) } })
     return () => { cancelled = true }
+  }
+
+  useEffect(() => {
+    const cleanup = load()
+    return cleanup
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (loading) return <LoadingState label="Loading your progress..." />
+
+  if (loadError && !summary) return (
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', gap: '14px', padding: '24px', textAlign: 'center' }}>
+      <div style={{ fontSize: '32px' }}>⚠️</div>
+      <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>Couldn't load your progress</div>
+      <div style={{ fontSize: '13px', color: '#616473', maxWidth: '360px' }}>Check your internet connection and try again. If this keeps happening, our servers may be temporarily unavailable.</div>
+      <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
+    </div>
+  )
 
   const byCategory = summary?.by_category || {}
   const overall = summary?.overall || { attempts: 0, avg_pct: 0, last_attempt: null }

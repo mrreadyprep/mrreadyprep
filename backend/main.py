@@ -1244,6 +1244,21 @@ def _bcrypt_safe_bytes(password: str) -> bytes:
 def hash_password(password: str) -> str:
     return bcrypt.hashpw(_bcrypt_safe_bytes(password), bcrypt.gensalt()).decode("utf-8")
 
+def _hash_verification_token(token: str) -> str:
+    """Email-verification and password-reset tokens are otherwise stored in the users table exactly
+    as generated (secrets.token_urlsafe(32) -- see register()/forgot_password()/resend-verification
+    below) -- found in the 30th audit round. High-entropy enough that brute-forcing one isn't
+    practical, but plaintext storage means anyone who ever gets read access to that table (a backup
+    leak, a misconfigured read replica, an over-broad support/BI query tool) can directly hijack any
+    account's password reset or force-verify any email within the token's validity window, with zero
+    additional work -- the same class of exposure password_hash itself is protected against by never
+    being stored reversibly. A fast SHA-256 hash (not bcrypt -- these tokens are already
+    high-entropy random values, not human-chosen secrets, so there's no offline-guessing risk to
+    slow down, only the "don't store the literal bearer secret" property to add) is compared instead
+    of the raw token: the raw token still goes out in the email link (that's the actual bearer
+    credential the student's browser presents back), only what's persisted in the database changes."""
+    return hashlib.sha256(token.encode("utf-8")).hexdigest()
+
 def verify_password(password: str, password_hash: str) -> bool:
     if not password_hash:
         return False
@@ -1736,7 +1751,11 @@ def register(data: RegisterRequest, request: Request):
                                 verification_token_expires, exam_date, target_score)
             VALUES (?, ?, ?, 0, ?, ?, ?, ?)
         """
-        params = (email, username, hash_password(data.password), verification_token,
+        # Only the SHA-256 hash of the token is persisted -- see _hash_verification_token's
+        # comment. The raw verification_token (below, in verify_link) is what actually goes out in
+        # the email; the student's browser sends it back as data.token in verify_email(), which
+        # hashes it the same way before looking it up.
+        params = (email, username, hash_password(data.password), _hash_verification_token(verification_token),
                   verification_expires, exam_date, target_score)
         try:
             if DATABASE_URL:
@@ -2166,9 +2185,12 @@ def forgot_password(data: ForgotPasswordRequest, request: Request, background_ta
         if user:
             reset_token = secrets.token_urlsafe(32)
             reset_expires = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+            # Only the hash is persisted -- see _hash_verification_token's comment. reset_token
+            # (raw) still goes out in reset_link below; reset_password() hashes the token it
+            # receives back before looking it up.
             conn.execute(
                 "UPDATE users SET password_reset_token = ?, password_reset_token_expires = ? WHERE id = ?",
-                (reset_token, reset_expires, user["id"]),
+                (_hash_verification_token(reset_token), reset_expires, user["id"]),
             )
             conn.commit()
             reset_link = f"{FRONTEND_PUBLIC_URL}/?reset_token={reset_token}"
@@ -2185,7 +2207,7 @@ def reset_password(data: ResetPasswordRequest, request: Request):
     conn = get_db()
     try:
         user = conn.execute(
-            "SELECT * FROM users WHERE password_reset_token = ?", (data.token,)
+            "SELECT * FROM users WHERE password_reset_token = ?", (_hash_verification_token(data.token),)
         ).fetchone()
         if not user:
             raise HTTPException(status_code=400, detail="This reset link is invalid or has already been used")
@@ -2212,7 +2234,7 @@ def verify_email(data: VerifyEmailRequest, request: Request):
     _check_and_consume_rate_limit(_verify_email_attempts, _client_ip(request), VERIFY_EMAIL_ATTEMPT_WINDOW_SECONDS, VERIFY_EMAIL_ATTEMPT_MAX, "email verification")
     conn = get_db()
     try:
-        user = conn.execute("SELECT * FROM users WHERE verification_token = ?", (data.token,)).fetchone()
+        user = conn.execute("SELECT * FROM users WHERE verification_token = ?", (_hash_verification_token(data.token),)).fetchone()
         if not user:
             raise HTTPException(status_code=400, detail="This verification link is invalid or has already been used")
         if user["email_verified"]:
@@ -2240,7 +2262,7 @@ def resend_verification_email(user=Depends(get_current_user)):
     try:
         conn.execute(
             "UPDATE users SET verification_token = ?, verification_token_expires = ? WHERE id = ?",
-            (verification_token, verification_expires, user["id"]),
+            (_hash_verification_token(verification_token), verification_expires, user["id"]),
         )
         conn.commit()
         verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
@@ -2351,12 +2373,25 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
         target = get_user_by_id(conn, user_id)
         if not target:
             raise HTTPException(status_code=404, detail="User not found")
-        if data.action == "revoke" and target["paddle_subscription_id"]:
+        # Gated on the subscription actually being CURRENTLY billed (ACTIVE/TRIALING), not merely on
+        # paddle_subscription_id ever having been set -- found in the 30th audit round.
+        # paddle_subscription_id is never cleared anywhere in this file (not by cancel_subscription,
+        # not by the webhook handler), so it stays populated forever on any account that has ever
+        # had a real Paddle subscription, even one canceled months ago and no longer billing. The
+        # original guard here checked only that column's presence, which meant a very plausible
+        # support flow -- student subscribes, later cancels, support comps them free access, support
+        # later needs to revoke that comp -- became permanently impossible through this panel the
+        # instant that student's subscription_status stopped being ACTIVE/TRIALING, since the id
+        # column outlives the actual subscription. Checking subscription_status directly (the same
+        # set has_active_subscription() itself trusts) is what actually distinguishes "Paddle is
+        # still charging this card" from "this account merely used to have a Paddle subscription".
+        if data.action == "revoke" and target["paddle_subscription_id"] and (target["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES:
             raise HTTPException(
                 status_code=400,
-                detail="This account has a real Paddle subscription -- revoking here would only hide "
-                       "their access while Paddle keeps charging their card. Cancel the subscription "
-                       "itself (from their account's Settings, or via /api/subscription/cancel) instead.",
+                detail="This account has a real, currently-active Paddle subscription -- revoking here "
+                       "would only hide their access while Paddle keeps charging their card. Cancel the "
+                       "subscription itself (from their account's Settings, or via "
+                       "/api/subscription/cancel) instead.",
             )
         new_status = "ACTIVE" if data.action == "grant" else None
         if data.action == "grant":
@@ -3272,17 +3307,29 @@ def get_mock_seen_ids(user=Depends(get_current_user)):
     from the top instead of leaving the student with an ever-shrinking draw."""
     conn = get_db()
     try:
+        # Fetched once for every pool this student has any seen rows in, instead of one SELECT per
+        # pool in MOCK_POOL_FILES (12 sequential round trips on every call, all on a single pooled
+        # connection) -- found in the 30th audit round. This endpoint runs on every dynamic Full
+        # Mock Test / single-section practice drill start, exactly the kind of frequent, connection-
+        # holding hot path _fetch_category_sums and mark_mock_seen were already fixed for in
+        # earlier rounds. Grouping in Python after one query is equivalent (pool is a small, fixed
+        # set of short strings) and collapses this to a single round trip regardless of how many
+        # pools exist.
+        rows = conn.execute("SELECT pool, item_id FROM seen_pool_items WHERE user_id = ?", (user["id"],)).fetchall()
+        seen_by_pool = collections.defaultdict(set)
+        for row in rows:
+            seen_by_pool[row["pool"]].add(row["item_id"])
         result = {}
-        for pool, all_ids in ((p, _pool_all_ids(p)) for p in MOCK_POOL_FILES):
-            rows = conn.execute(
-                "SELECT item_id FROM seen_pool_items WHERE user_id = ? AND pool = ?",
-                (user["id"], pool),
-            ).fetchall()
-            seen_ids = {row["item_id"] for row in rows}
+        pools_to_clear = []
+        for pool in MOCK_POOL_FILES:
+            all_ids = _pool_all_ids(pool)
+            seen_ids = seen_by_pool.get(pool, set())
             if all_ids and all_ids.issubset(seen_ids):
-                conn.execute("DELETE FROM seen_pool_items WHERE user_id = ? AND pool = ?", (user["id"], pool))
+                pools_to_clear.append(pool)
                 seen_ids = set()
             result[pool] = sorted(seen_ids)
+        for pool in pools_to_clear:
+            conn.execute("DELETE FROM seen_pool_items WHERE user_id = ? AND pool = ?", (user["id"], pool))
         conn.commit()
         return result
     finally:
@@ -3318,6 +3365,17 @@ def mark_mock_seen(data: MarkSeenRequest, user=Depends(get_current_user)):
     # at once could starve the pool for every other student, the same 503 symptom as a genuine
     # leak).
     item_ids = data.item_ids[:200]
+    # Bound to real ids for this pool -- found in the 30th audit round: previously any string
+    # (already length-capped by the validator above) was accepted and inserted as-is, so a buggy
+    # or malicious client could mark arbitrary junk ids as "seen" for a pool. Not a security issue
+    # (this only ever affects that student's own future draws, and get_mock_seen_ids's wraparound
+    # check already only compares against real ids), but silently accepting garbage input here
+    # doesn't match every other write path in this file, which validates against a known-good set
+    # before writing.
+    valid_ids = _pool_all_ids(data.pool)
+    item_ids = [i for i in item_ids if str(i) in valid_ids]
+    if not item_ids:
+        return {"status": "success"}
     conn = get_db()
     try:
         # Batched into a single multi-row INSERT instead of looping conn.execute() once per item
