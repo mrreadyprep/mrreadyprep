@@ -258,7 +258,16 @@ def has_active_subscription(user) -> bool:
 ADMIN_EMAILS = {e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "").split(",") if e.strip()}
 
 def is_admin_user(user) -> bool:
-    return bool(user) and (user["email"] or "").strip().lower() in ADMIN_EMAILS
+    # Also requires email_verified -- found in the 29th audit round. register() never confirms
+    # mailbox ownership before creating a row (only clicking the verification-email link does), so
+    # without this check, anyone who registers an address listed in ADMIN_EMAILS *before* its real
+    # owner does -- entirely plausible during this exact launch window, e.g. an operator adds a new
+    # staff email to the env var ahead of that person's first signup -- would get full admin-panel
+    # access (every user's email/subscription status, grant/revoke premium for any account) plus
+    # free premium for themselves, with zero proof they actually own that inbox. Google-created
+    # accounts are unaffected: google_login() always sets email_verified=1 immediately, since
+    # Google has already verified the address for us.
+    return bool(user) and bool(user["email_verified"]) and (user["email"] or "").strip().lower() in ADMIN_EMAILS
 
 # Item id (as it appears in each pool's "id" field) that stays free for every student regardless
 # of subscription status -- lets a non-subscriber try exactly one full exercise per category (plus
@@ -1303,7 +1312,16 @@ def get_current_user(authorization: Optional[str] = Header(None)):
         user = get_user_by_id(conn, user_id)
         if not user:
             raise HTTPException(status_code=401, detail="Account no longer exists")
-        if int(user["token_version"] or 0) != int(token_version):
+        try:
+            token_version_matches = int(user["token_version"] or 0) == int(token_version)
+        except (TypeError, ValueError):
+            # Same defensive gap the "sub" fix above closes, just missed here (found in the 29th
+            # audit round): a non-int-castable "tv" claim previously reached an unguarded int(...)
+            # and surfaced as a raw 500 instead of a clean 401. Only reachable with a JWT that
+            # still carries a valid HMAC signature (i.e. already requires JWT_SECRET_KEY), so not
+            # attacker-reachable today, but there's no reason to leave the crash path open.
+            raise HTTPException(status_code=401, detail="Invalid authentication token")
+        if not token_version_matches:
             raise HTTPException(status_code=401, detail="Session expired, please log in again")
         # Deliberately checked AFTER the token_version match above, not right after decoding the
         # JWT: token_version is bumped specifically so a stolen/old JWT stops working the instant
@@ -2051,11 +2069,13 @@ def google_login(data: GoogleLoginRequest, request: Request):
     google_id = payload.get("sub")
     email = (payload.get("email") or "").strip().lower()
     email_verified_by_google = bool(payload.get("email_verified"))
-    # Google doesn't guarantee any particular length limit on the profile-name claim it hands back
-    # to relying parties -- every other path that sets `username` (register, update_profile) is
-    # bounded to 50 chars via Field(max_length=50)/an explicit re-check, so mirror that bound here
-    # too rather than inserting an arbitrarily long value into that column.
-    name = (payload.get("name") or (email.split("@")[0] if email else "Student"))[:50]
+    # Google doesn't guarantee any particular length (or non-blank) format for the profile-name
+    # claim it hands back -- every other path that sets `username` (register, update_profile)
+    # strips whitespace and rejects an empty result before accepting it. Found in the 29th audit
+    # round: the `or` fallback here only catches a literal "", not a whitespace-only name (" "),
+    # so that slipped through as-is; `.strip()` first closes that gap and keeps this consistent
+    # with the other two call sites. Also bounded to 50 chars, same as those.
+    name = ((payload.get("name") or "").strip() or (email.split("@")[0] if email else "Student"))[:50]
     if not google_id or not email or not email_verified_by_google:
         raise HTTPException(status_code=401, detail="Google account is missing a verified email")
 
@@ -2254,7 +2274,9 @@ def admin_list_users(admin=Depends(require_admin)):
             "FROM users ORDER BY created_at DESC"
         ).fetchall()
         def row_is_admin(row):
-            return (row["email"] or "").strip().lower() in ADMIN_EMAILS
+            # Mirrors is_admin_user()'s email_verified requirement (see its comment) so this panel
+            # never labels an unverified, potentially-not-yet-owned account as "Admin".
+            return bool(row["email_verified"]) and (row["email"] or "").strip().lower() in ADMIN_EMAILS
         return [
             {
                 "id": row["id"],

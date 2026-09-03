@@ -1127,7 +1127,18 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
         apiFetch(`${BACKEND_URL}/api/subscription/status`).then(res => res.json()).then(data => {
           if (data.has_premium) { showToast('Subscription successful! You now have full Premium access.'); window.location.reload() }
           else if (attempts < 8) setTimeout(poll, 1500)
-        }).catch(() => { if (attempts < 8) setTimeout(poll, 1500) })
+          // Found in the 29th audit round: after the 8th attempt (12s) with no has_premium yet,
+          // this used to just stop silently -- the student, having just paid, was left staring at
+          // the paywall with zero indication of whether it worked, failed, or is still pending.
+          // The webhook usually lands within a few seconds, so 12s without it is unusual but not
+          // necessarily a failure (queue backlog, a slow retry) -- tell the student plainly and
+          // point them at the one thing that actually resolves it (a refresh re-fetches
+          // /api/subscription/status fresh) instead of leaving them guessing.
+          else showToast("Still activating your Premium access -- this can take a minute. Refresh the page in a moment, or contact support if it doesn't unlock.", 'error')
+        }).catch(() => {
+          if (attempts < 8) setTimeout(poll, 1500)
+          else showToast("Still activating your Premium access -- this can take a minute. Refresh the page in a moment, or contact support if it doesn't unlock.", 'error')
+        })
       }
       setTimeout(poll, 1500)
     }
@@ -7414,11 +7425,18 @@ function buildFixedSpeakingQueue(bundle) {
 // ─── Section intro / module transition notice screens (match testglider.com's ─────
 // official-style TOEFL iBT UI: navy top bar with only a Continue button, plain title +
 // underline + paragraph(s), and an optional "Type of Task" table for section overviews.
-function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue }) {
+function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue, onCancel }) {
   const isMobile = useIsMobile()
   return (
     <div style={{ position: 'fixed', inset: 0, background: '#fff', display: 'flex', flexDirection: 'column', fontFamily: 'sans-serif', zIndex: 10, overflowY: 'auto' }}>
-      <TestTopBar left={null} right={<TestPillButton variant="light" onClick={onContinue}>Continue</TestPillButton>} />
+      {/* onCancel is only passed for the pre-test hardware-check screens (see FullMockTest's
+          phase === 'hwcheck' render) -- the mid-test transition notices between mock test
+          sections (phase === 'notice') never pass it, so this stays hidden there, matching that
+          there's genuinely no "back" once a test is actually running. Found in the 29th audit
+          round: before this, a student who clicked into a mock test (even by accident) had no
+          in-app way back to the dashboard until clicking all the way through every hardware-check
+          screen -- no Back/Exit control existed anywhere in this phase. */}
+      <TestTopBar left={onCancel ? <TestPillButton variant="light" onClick={onCancel}>← Cancel</TestPillButton> : null} right={<TestPillButton variant="light" onClick={onContinue}>Continue</TestPillButton>} />
       <div style={{ padding: isMobile ? '20px 16px 80px' : '48px 64px 100px', boxSizing: 'border-box' }}>
         <h1 style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: '700', color: '#1a1a1a', margin: '0 0 14px' }}>{title}</h1>
         <div style={{ height: '1px', background: '#1a1a1a', marginBottom: '28px' }} />
@@ -7464,7 +7482,7 @@ function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue }
 // this at all (see getHwCheckPlan below). Step 0, when present, is the live microphone level
 // check (modal); the rest are short static screens using the same TestNoticeScreen shell as the
 // rest of the mock test's transition notices.
-function MicVolumeCheckModal({ onStart }) {
+function MicVolumeCheckModal({ onStart, onCancel }) {
   const [micLabel, setMicLabel] = useState('Detecting…')
   const [level, setLevel] = useState(0) // 0-1, smoothed live input level
   const [status, setStatus] = useState('checking') // checking | ready | denied
@@ -7551,15 +7569,17 @@ function MicVolumeCheckModal({ onStart }) {
 
   // Basic modal accessibility, matching ExitConfirmModal/ConfirmModal (this was the one full-
   // screen-backdrop overlay in the app missing it): role="dialog"/aria-modal so screen readers
-  // announce it correctly, and Escape as a keyboard equivalent for the "Start" button below --
-  // there's no separate "cancel" here (the hardware check isn't skippable), so Escape just
-  // continues past it the same as clicking Start, rather than doing nothing.
+  // announce it correctly. Escape maps to onCancel (return to the test intro screen) when the
+  // caller provides one -- matching the Escape-means-cancel convention every other modal in the
+  // app uses -- added in the 29th audit round alongside the on-screen Cancel button below (there
+  // was previously no way out of this modal at all short of abandoning the tab). Falls back to
+  // onStart if no onCancel was passed, preserving the original behavior for any other caller.
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') { teardown(); onStart() } }
+    const onKey = (e) => { if (e.key === 'Escape') { teardown(); if (onCancel) onCancel(); else onStart() } }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onStart])
+  }, [onStart, onCancel])
 
   const BAR_COUNT = 7
   const activeBars = Math.round(level * BAR_COUNT)
@@ -7607,6 +7627,11 @@ function MicVolumeCheckModal({ onStart }) {
         <button onClick={() => { teardown(); onStart() }} style={{ width: '100%', marginTop: '22px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '13px', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }}>
           Start
         </button>
+        {onCancel && (
+          <button onClick={() => { teardown(); onCancel() }} style={{ width: '100%', marginTop: '10px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '13px', padding: '4px', cursor: 'pointer' }}>
+            ← Cancel
+          </button>
+        )}
       </div>
     </div>
   )
@@ -8657,11 +8682,16 @@ function FullMockTest({ onBack, hasPremium = false }) {
   if (phase === 'intro') return <MockIntroScreen onStart={startTestGated} onStartSection={(sec) => startTestGated(sec)} onBack={onBack} onStartFixed={startFixedTest} hasPremium={hasPremium} />
   if (phase === 'hwcheck') {
     const plan = hwCheckPlanRef.current
-    if (plan.needsMicModal && hwCheckStep === 0) return <MicVolumeCheckModal onStart={() => setHwCheckStep(1)} />
+    // onCancel returns to the intro screen the student just came from -- added in the 29th audit
+    // round: nothing valuable is at stake yet at this point (no attempt has started), but there
+    // was previously no in-app way back to the dashboard once a student clicked into this flow,
+    // not even by accident.
+    const cancelHwCheck = () => setPhase('intro')
+    if (plan.needsMicModal && hwCheckStep === 0) return <MicVolumeCheckModal onStart={() => setHwCheckStep(1)} onCancel={cancelHwCheck} />
     const screenIdx = hwCheckStep - (plan.needsMicModal ? 1 : 0)
     const screen = plan.screens[screenIdx]
     return <TestNoticeScreen title={screen.title} paragraphs={screen.paragraphs} icons={screen.icons} visual={screen.visual}
-      onContinue={() => { if (screenIdx < plan.screens.length - 1) setHwCheckStep(hwCheckStep + 1); else pendingBeginRef.current() }} />
+      onContinue={() => { if (screenIdx < plan.screens.length - 1) setHwCheckStep(hwCheckStep + 1); else pendingBeginRef.current() }} onCancel={cancelHwCheck} />
   }
   if (phase === 'notice') {
     const n = noticeQueue[0]
