@@ -8959,9 +8959,10 @@ const PROGRESS_CATEGORY_META = {
   mock_writing: { section: 'Mock Tests', label: 'Writing' },
   mock_speaking: { section: 'Mock Tests', label: 'Speaking' },
   mock_overall: { section: 'Mock Tests', label: 'Overall Band' },
+  vocab: { section: 'Vocabulary', label: 'Vocabulary Quiz' },
 }
-const PROGRESS_SECTION_ORDER = ['Reading', 'Listening', 'Writing', 'Speaking', 'Mock Tests']
-const PROGRESS_SECTION_COLORS = { Reading: '#701fa1', Listening: '#2ac56c', Writing: '#e07b00', Speaking: '#2f6fed', 'Mock Tests': '#d94040' }
+const PROGRESS_SECTION_ORDER = ['Reading', 'Listening', 'Writing', 'Speaking', 'Mock Tests', 'Vocabulary']
+const PROGRESS_SECTION_COLORS = { Reading: '#701fa1', Listening: '#2ac56c', Writing: '#e07b00', Speaking: '#2f6fed', 'Mock Tests': '#d94040', Vocabulary: '#ca8a04' }
 
 const PROGRESS_MISTAKES_SECTION_LABEL = { reading: 'Reading', listening: 'Listening', writing: 'Writing', speaking: 'Speaking' }
 
@@ -9800,7 +9801,7 @@ function VocabFlashcards({ deckLabel, words, onExit, onSetLearned }) {
 // Self-test multiple-choice quiz over one deck (capped at 15 words per round so it stays a quick
 // check-yourself session rather than a slog). Distractor meanings come from the same deck when
 // it has enough words, otherwise from the full word list (e.g. a small Starred deck).
-function VocabQuiz({ deckLabel, words, allWords, onExit }) {
+function VocabQuiz({ deckLabel, deckKey, words, allWords, onExit }) {
   const pool = words.length >= 4 ? words : allWords
   const buildOrder = () => shuffleArray(words).slice(0, Math.min(words.length, 15))
   const [order, setOrder] = useState(buildOrder)
@@ -9837,7 +9838,16 @@ function VocabQuiz({ deckLabel, words, allWords, onExit }) {
     const newAnswers = [...answers, { wordId: current.id, isCorrect }]
     setAnswers(newAnswers)
     setSelected(null)
-    if (qIdx + 1 >= totalQ) setDone(true)
+    if (qIdx + 1 >= totalQ) {
+      setDone(true)
+      // Every other scored exercise in the app calls saveResult() the moment it's graded, so the
+      // attempt shows up in My Progress / Dashboard section scores -- Vocabulary Quiz was the one
+      // exception, silently never recording a completed quiz anywhere. Found in the 31st audit
+      // round. deckKey (easy/medium/hard/starred) doubles as the itemId since a quiz isn't tied to
+      // one specific pool item the way other exercises are.
+      const finalScore = newAnswers.filter(a => a.isCorrect).length
+      saveResult('vocab', deckKey || deckLabel, finalScore, totalQ, `${deckLabel} Quiz`)
+    }
     else setQIdx(i => i + 1)
   }
 
@@ -10013,7 +10023,7 @@ function Vocabulary() {
     return <VocabFlashcards deckLabel={activeDeck.label} words={activeDeck.words} onExit={() => setView('hub')} onSetLearned={setLearned} />
   }
   if (view === 'quiz' && activeDeck) {
-    return <VocabQuiz deckLabel={activeDeck.label} words={activeDeck.words} allWords={words} onExit={() => setView('hub')} />
+    return <VocabQuiz deckLabel={activeDeck.label} deckKey={activeDeckKey} words={activeDeck.words} allWords={words} onExit={() => setView('hub')} />
   }
   if (view === 'list' && activeDeck) {
     return <VocabList deckLabel={activeDeck.label} words={activeDeck.words} onBack={() => setView('hub')} onSetLearned={setLearned} onToggleStar={toggleStar} />

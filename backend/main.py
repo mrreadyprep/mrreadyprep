@@ -1503,23 +1503,42 @@ def send_practice_reminders(x_cron_secret: Optional[str] = Header(None, alias="X
             ORDER BY u.id
             LIMIT 200
         """, (cutoff, cutoff, cutoff, cutoff)).fetchall()
-
-        sent = 0
-        failed = 0
-        for row in rows:
-            # Only stamp last_reminder_sent_at on an actual successful send -- otherwise a
-            # transient Resend outage (or RESEND_API_KEY being unset/invalid) would silently mark
-            # everyone "reminded" for the day and the 24h re-send gate above would then suppress
-            # any retry, leaving affected students never actually reminded until someone notices.
-            if send_practice_reminder_email(row["email"], row["username"]):
-                conn.execute("UPDATE users SET last_reminder_sent_at = ? WHERE id = ?", (now_str, row["id"]))
-                sent += 1
-            else:
-                failed += 1
-        conn.commit()
-        return {"status": "ok", "reminders_sent": sent, "reminders_failed": failed}
+        rows = [dict(r) for r in rows]
     finally:
         conn.close()
+
+    # The connection is closed BEFORE the send loop below -- up to 200 sequential, blocking
+    # Resend calls (each up to ~10s) used to run with a pooled DB connection held open the whole
+    # time, which could pin one of only DB_POOL_MAX_CONN connections for minutes and made the
+    # cron HTTP request itself vulnerable to being killed by an upstream timeout mid-loop (losing
+    # the remaining un-sent reminders for the day with no partial-commit safety net). Sending now
+    # happens with no connection held, and the successful last_reminder_sent_at stamps are
+    # written back in one short batched UPDATE afterward. Found in the 31st audit round.
+    sent_ids = []
+    failed = 0
+    for row in rows:
+        # Only stamp last_reminder_sent_at on an actual successful send -- otherwise a transient
+        # Resend outage (or RESEND_API_KEY being unset/invalid) would silently mark everyone
+        # "reminded" for the day and the 24h re-send gate above would then suppress any retry,
+        # leaving affected students never actually reminded until someone notices.
+        if send_practice_reminder_email(row["email"], row["username"]):
+            sent_ids.append(row["id"])
+        else:
+            failed += 1
+
+    if sent_ids:
+        conn = get_db()
+        try:
+            placeholders = ", ".join(["?"] * len(sent_ids))
+            conn.execute(
+                f"UPDATE users SET last_reminder_sent_at = ? WHERE id IN ({placeholders})",
+                [now_str, *sent_ids],
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
+    return {"status": "ok", "reminders_sent": len(sent_ids), "reminders_failed": failed}
 
 def compute_streak_and_week_activity(conn, user_id: int):
     """Looks at every attempt_results/ridl_results row's saved_at date for this user to compute
@@ -1720,7 +1739,7 @@ def healthz():
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 @app.post("/api/auth/register")
-def register(data: RegisterRequest, request: Request):
+def register(data: RegisterRequest, request: Request, background_tasks: BackgroundTasks):
     _check_and_consume_rate_limit(_register_attempts, _client_ip(request), REGISTER_ATTEMPT_WINDOW_SECONDS, REGISTER_ATTEMPT_MAX, "registration")
     email = data.email.strip().lower()
     username = data.username.strip()
@@ -1778,7 +1797,13 @@ def register(data: RegisterRequest, request: Request):
             migrate_legacy_data_to_user(user_id)
 
         verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
-        send_verification_email(email, verify_link)
+        # Deferred via BackgroundTasks (matches forgot_password()'s pattern) -- send_verification_email
+        # makes a synchronous, up-to-10s outbound HTTP call to Resend. Calling it inline here, before
+        # conn.close(), used to hold this pooled DB connection open for the entire round trip. A burst
+        # of signups (very plausible right after launch) combined with any Resend slowness could
+        # exhaust the whole DB_POOL_MAX_CONN pool and 503 the entire site -- not just registration.
+        # Found in the 31st audit round.
+        background_tasks.add_task(send_verification_email, email, verify_link)
 
         user = get_user_by_id(conn, user_id)
         token = create_access_token(user_id, user["token_version"])
@@ -2252,7 +2277,7 @@ def verify_email(data: VerifyEmailRequest, request: Request):
         conn.close()
 
 @app.post("/api/auth/resend-verification-email")
-def resend_verification_email(user=Depends(get_current_user)):
+def resend_verification_email(background_tasks: BackgroundTasks, user=Depends(get_current_user)):
     if user["email_verified"]:
         return {"status": "success", "message": "Your email is already verified."}
     _check_and_consume_rate_limit(_resend_verification_attempts, str(user["id"]), RESEND_VERIFICATION_WINDOW_SECONDS, RESEND_VERIFICATION_MAX, "verification-email resend")
@@ -2266,7 +2291,9 @@ def resend_verification_email(user=Depends(get_current_user)):
         )
         conn.commit()
         verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
-        send_verification_email(user["email"], verify_link)
+        # Deferred via BackgroundTasks -- see register()'s matching comment above. Same DB-pool-
+        # exhaustion risk from holding a connection open across the blocking Resend call.
+        background_tasks.add_task(send_verification_email, user["email"], verify_link)
         return {"status": "success", "message": "Verification email sent. Please check your inbox."}
     finally:
         conn.close()
@@ -2599,13 +2626,21 @@ async def paddle_webhook(request: Request):
             raise HTTPException(status_code=400, detail="Webhook timestamp outside allowed window")
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid Paddle-Signature timestamp")
-    signed_payload = f"{ts}:{raw_body.decode('utf-8')}"
+    # A malformed (non-UTF-8) body reaches here before the signature check -- this endpoint is
+    # public and pre-auth, so a bare .decode('utf-8') that could raise UnicodeDecodeError on
+    # attacker-controlled bytes would surface as an unhandled 500 instead of a clean 400. Found in
+    # the 31st audit round.
+    try:
+        raw_body_text = raw_body.decode("utf-8")
+    except UnicodeDecodeError:
+        raise HTTPException(status_code=400, detail="Request body is not valid UTF-8")
+    signed_payload = f"{ts}:{raw_body_text}"
     expected_sig = hmac.new(PADDLE_WEBHOOK_SECRET.encode("utf-8"), signed_payload.encode("utf-8"), hashlib.sha256).hexdigest()
     if not hmac.compare_digest(h1, expected_sig):
         raise HTTPException(status_code=400, detail="Invalid webhook signature")
 
     try:
-        event = json.loads(raw_body.decode("utf-8"))
+        event = json.loads(raw_body_text)
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid webhook payload")
 
@@ -3035,7 +3070,7 @@ def save_attempt_result(data: AttemptResult, user=Depends(get_current_user)):
         conn.close()
 
 @app.get("/api/results/history")
-def get_results_history(category: str = None, limit: int = Query(300, ge=1, le=1000), user=Depends(get_current_user)):
+def get_results_history(category: str = Query(None, max_length=50), limit: int = Query(300, ge=1, le=1000), user=Depends(get_current_user)):
     conn = get_db()
     try:
         if category:
