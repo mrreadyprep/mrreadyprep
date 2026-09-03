@@ -10471,7 +10471,22 @@ function App() {
               <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                   <div style={{ fontSize: '13px', fontWeight: '600' }}>Section scores vs targets</div>
-                  <button onClick={() => setEditingTargets(v => !v)} style={{ background: editingTargets ? '#701fa1' : '#f4f0fb', color: editingTargets ? '#fff' : '#701fa1', border: 'none', padding: '5px 10px', borderRadius: '7px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>✏️ {editingTargets ? 'Close' : 'Edit targets'}</button>
+                  <button onClick={() => {
+                    // Closing without saving used to leave any edited-but-unsaved target values
+                    // sitting in this shared state -- reopening the panel (or navigating straight to
+                    // Settings, which reads these same fields) would then show the abandoned edit as
+                    // if it were the real saved target, and clicking "Save targets" later would
+                    // silently overwrite the real value with it. Reset from the last-fetched
+                    // userData on Close so an abandoned edit can never leak. Found in the 32nd audit
+                    // round.
+                    if (editingTargets && userData) {
+                      setReadingTarget(userData.reading_target ?? 6.0)
+                      setListeningTarget(userData.listening_target ?? 6.0)
+                      setWritingTarget(userData.writing_target ?? 6.0)
+                      setSpeakingTarget(userData.speaking_target ?? 6.0)
+                    }
+                    setEditingTargets(v => !v)
+                  }} style={{ background: editingTargets ? '#701fa1' : '#f4f0fb', color: editingTargets ? '#fff' : '#701fa1', border: 'none', padding: '5px 10px', borderRadius: '7px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>✏️ {editingTargets ? 'Close' : 'Edit targets'}</button>
                 </div>
                 {editingTargets && (
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', background: '#f8f7fb', borderRadius: '10px', padding: '12px', marginBottom: '14px' }}>

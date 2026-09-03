@@ -2366,9 +2366,16 @@ def admin_stats(admin=Depends(require_admin)):
         # backstop (a lapsed Paddle webhook leaves subscription_status stuck at ACTIVE/TRIALING
         # indefinitely, see has_active_subscription()'s own comment) and undercount comped admin
         # accounts that have full access without ever having a real subscription row.
+        # email_verified is included here even though this query is only about subscription
+        # status -- has_active_subscription() calls is_admin_user(row), which reads
+        # row["email_verified"]. Without this column present, that lookup throws (IndexError on
+        # sqlite / KeyError on Postgres) the moment any row exists, 500ing this endpoint on every
+        # call. Found in the 32nd audit round: this had been broken since has_active_subscription()
+        # was routed in here in round 30, and would have 500'd the admin panel's Stats view as
+        # soon as the first real user signed up after launch.
         active_subs = sum(
             1 for row in conn.execute(
-                "SELECT email, subscription_status, subscription_current_period_end FROM users"
+                "SELECT email, subscription_status, subscription_current_period_end, email_verified FROM users"
             ).fetchall()
             if has_active_subscription(row)
         )
@@ -2689,7 +2696,7 @@ async def paddle_webhook(request: Request):
                     raise HTTPException(status_code=400, detail="Invalid custom_data.user_id on subscription.created")
                 cur = conn.execute(
                     "UPDATE users SET paddle_customer_id = ?, paddle_subscription_id = ?, "
-                    "subscription_status = ?, subscription_current_period_end = ? WHERE id = ?",
+                    "subscription_status = ?, subscription_current_period_end = COALESCE(?, subscription_current_period_end) WHERE id = ?",
                     (customer_id, subscription_id, status, period_end, user_id_int),
                 )
                 if cur.rowcount == 0:
@@ -2710,8 +2717,15 @@ async def paddle_webhook(request: Request):
                 print(f"[paddle webhook] subscription.created with no custom_data.user_id -- subscription_id={subscription_id} customer_id={customer_id}. Cannot link to a user; premium was NOT granted.", flush=True)
                 raise HTTPException(status_code=400, detail="Missing custom_data.user_id on subscription.created")
             else:
+                # COALESCE(?, subscription_current_period_end) -- not a plain overwrite -- because
+                # some subscription.* event payloads omit current_billing_period.ends_at entirely,
+                # which would otherwise null out a previously-correct future period end. That value
+                # feeds has_active_subscription()'s own staleness backstop (a grace period past the
+                # last known period end, for when a cancellation webhook is ever missed) -- nulling
+                # it out here would quietly disarm that backstop for this user until some later
+                # event happens to carry a real ends_at. Found in the 32nd audit round.
                 cur = conn.execute(
-                    "UPDATE users SET subscription_status = ?, subscription_current_period_end = ? "
+                    "UPDATE users SET subscription_status = ?, subscription_current_period_end = COALESCE(?, subscription_current_period_end) "
                     "WHERE paddle_subscription_id = ?",
                     (status, period_end, subscription_id),
                 )
