@@ -2428,7 +2428,16 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
                        "/api/subscription/cancel) instead.",
             )
         new_status = "ACTIVE" if data.action == "grant" else None
-        if data.action == "grant":
+        # Mirrors the revoke guard above -- a real, currently-billing Paddle subscription (not just
+        # a stale paddle_subscription_id) means this account's subscription_current_period_end is
+        # meaningful data, not staleness to clear. Unconditionally nulling it on every grant (e.g. an
+        # admin double-clicking Grant, or comping someone believed to be unsubscribed who actually
+        # still has a live subscription) used to wipe that real date -- access wasn't lost (NULL
+        # reads as "still active"), but the account's true renewal/expiry date became invisible in
+        # both the admin panel and the student's own Settings screen until the next Paddle webhook
+        # happened to carry a fresh ends_at. Found in the 33rd audit round.
+        target_has_real_active_sub = bool(target["paddle_subscription_id"]) and (target["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES
+        if data.action == "grant" and not target_has_real_active_sub:
             # Also clear any stale subscription_current_period_end. Without this, comping access to
             # an account that had a real Paddle subscription before (now lapsed, with a
             # current_period_end sitting in the past) was silently ineffective: has_active_subscription()'s
@@ -2438,6 +2447,11 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
             # active" there (comped/admin-granted access has no period to expire).
             conn.execute(
                 "UPDATE users SET subscription_status = ?, subscription_current_period_end = NULL WHERE id = ?",
+                (new_status, user_id),
+            )
+        elif data.action == "grant":
+            conn.execute(
+                "UPDATE users SET subscription_status = ? WHERE id = ?",
                 (new_status, user_id),
             )
         else:
