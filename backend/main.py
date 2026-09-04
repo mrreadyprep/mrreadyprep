@@ -525,6 +525,23 @@ def _audio_cache_put(path: str, body: bytes, content_type: str):
 
 _RANGE_RE = re.compile(r"bytes=(\d*)-(\d*)")
 
+# audio_proxy is the one "does real work" endpoint in this file that never went through
+# _check_and_consume_rate_limit / _check_api_throttle (round 37 audit) -- it authenticates via
+# the signed `t` token instead of a JWT, so the per-user throttle never applied, and it doesn't
+# touch the DB, so it fell outside the earlier "rate-limit every DB endpoint" pass entirely.
+# A signed link stays valid for up to 14 days (_verify_audio_token), so anyone holding one --
+# including any legitimately subscribed student -- could otherwise script through the hundreds of
+# distinct audio paths in this app, forcing a cache-miss/upstream R2 fetch on each one, running up
+# real bandwidth cost with no limit. Only cache-miss requests are throttled here (not every
+# request) so that normal scrubbing/replay of an already-cached clip -- which is the overwhelming
+# majority of real traffic -- is never affected; only the expensive "go fetch from R2" path is.
+AUDIO_PROXY_FETCH_WINDOW_SECONDS = 60
+AUDIO_PROXY_FETCH_MAX = 90
+_audio_proxy_fetch_attempts: dict = collections.defaultdict(list)
+# Registered into _ALL_RATE_LIMIT_STORES further down in this file, right after that list is
+# defined (it doesn't exist yet at this point in the module) -- same pattern already used for
+# _create_checkout_attempts below.
+
 @app.get("/audio-proxy/{path:path}")
 async def audio_proxy(path: str, request: Request, t: str = ""):
     if not _verify_audio_token(path, t):
@@ -534,6 +551,7 @@ async def audio_proxy(path: str, request: Request, t: str = ""):
     if cached is not None:
         body, content_type = cached
     else:
+        _check_and_consume_rate_limit(_audio_proxy_fetch_attempts, _client_ip(request), AUDIO_PROXY_FETCH_WINDOW_SECONDS, AUDIO_PROXY_FETCH_MAX, "audio fetch")
         upstream_url = f"{AUDIO_BASE_URL}/{path}"
         try:
             async with httpx.AsyncClient(timeout=_AUDIO_PROXY_TIMEOUT) as client:
@@ -2039,7 +2057,7 @@ def _check_api_throttle(user_id: int):
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts, _audio_proxy_fetch_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -2342,10 +2360,15 @@ class AdminSetSubscriptionRequest(BaseModel):
 def admin_list_users(admin=Depends(require_admin)):
     conn = get_db()
     try:
+        # LIMIT is a safety cap, not real pagination (round 37 audit: this had none at all) -- at
+        # today's user counts it never gets hit, so the admin panel's client-side search still sees
+        # every account. It exists purely so this can't eventually pull the entire users table into
+        # one response/memory footprint as signups grow; a real paginated/search-driven query is the
+        # right fix once the user base is large enough for that to matter.
         rows = conn.execute(
             "SELECT id, email, username, email_verified, subscription_status, "
             "subscription_current_period_end, paddle_subscription_id, created_at, current_streak "
-            "FROM users ORDER BY created_at DESC"
+            "FROM users ORDER BY created_at DESC LIMIT 2000"
         ).fetchall()
         def row_is_admin(row):
             # Mirrors is_admin_user()'s email_verified requirement (see its comment) so this panel

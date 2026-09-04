@@ -9840,7 +9840,9 @@ function VocabFlashcards({ deckLabel, words, onExit, onSetLearned }) {
       questionLabel={`${deckLabel} · Card ${ptr + 1} of ${session.length}`}
       contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
     >
-      <div onClick={() => setFlipped(f => !f)} style={{ width: '100%', maxWidth: '560px', minHeight: isMobile ? '240px' : '300px', background: flipped ? '#f4f6fa' : '#fff', border: '2px solid #e1e4ed', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '36px', cursor: 'pointer', boxSizing: 'border-box', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
+      <div onClick={() => setFlipped(f => !f)} role="button" tabIndex={0} aria-pressed={flipped}
+        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFlipped(f => !f) } }}
+        style={{ width: '100%', maxWidth: '560px', minHeight: isMobile ? '240px' : '300px', background: flipped ? '#f4f6fa' : '#fff', border: '2px solid #e1e4ed', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '36px', cursor: 'pointer', boxSizing: 'border-box', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
         {!flipped ? (
           <>
             <span style={{ background: (VOCAB_TYPE_COLORS[current.type] || '#616473') + '1a', color: VOCAB_TYPE_COLORS[current.type] || '#616473', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', marginBottom: '18px' }}>{current.type}</span>
@@ -9950,13 +9952,15 @@ function VocabQuiz({ deckLabel, deckKey, words, allWords, onExit }) {
     >
       <span style={{ background: (VOCAB_TYPE_COLORS[current.type] || '#616473') + '1a', color: VOCAB_TYPE_COLORS[current.type] || '#616473', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', marginBottom: '14px' }}>{current.type}</span>
       <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 32px' }}>What does <span style={{ color: '#701fa1' }}>{current.word}</span> mean?</h1>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', maxWidth: '560px', width: '100%' }}>
+      <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '14px', maxWidth: '560px', width: '100%' }}>
         {options.map((opt, i) => {
           const isCorrectOpt = opt === current.meaning
           const isChosen = opt === selected
           const showResult = selected !== null
           return (
             <div key={i} onClick={() => { if (selected === null) setSelected(opt) }}
+              role="radio" aria-checked={isChosen} tabIndex={showResult ? -1 : 0}
+              onKeyDown={e => { if (selected === null && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); setSelected(opt) } }}
               style={{ padding: '16px 20px', borderRadius: '10px', border: showResult ? (isCorrectOpt ? '2px solid #2a9d5c' : isChosen ? '2px solid #d94040' : '1.5px solid #e1e4ed') : '1.5px solid #e1e4ed', background: showResult && isCorrectOpt ? '#edfbf3' : showResult && isChosen ? '#fff2f2' : '#fff', cursor: showResult ? 'default' : 'pointer', fontSize: '15px', color: '#1a1a1a', transition: 'all 0.15s' }}>
               {opt}
               {showResult && isCorrectOpt && <span style={{ float: 'right', color: '#2a9d5c', fontWeight: '700', fontSize: '13px' }}>✓</span>}
@@ -9999,9 +10003,13 @@ function VocabList({ deckLabel, words, onBack, onSetLearned, onToggleStar }) {
         const isFlipped = !!flippedCards[item.id]
         return (
           <div key={item.id} onClick={() => setFlippedCards(prev => ({ ...prev, [item.id]: !prev[item.id] }))}
+            role="button" tabIndex={0} aria-pressed={isFlipped}
+            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setFlippedCards(prev => ({ ...prev, [item.id]: !prev[item.id] })) } }}
             style={{ backgroundColor: isFlipped ? diffStyle.bg : '#fff', border: '0.5px solid #e1e4ed', borderLeft: '4px solid ' + borderColor, borderRadius: '12px', padding: '18px', minHeight: '140px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', cursor: 'pointer', opacity: item.learned ? 0.6 : 1, position: 'relative', transition: 'background-color 0.2s ease' }}>
             <div style={{ position: 'absolute', top: '14px', right: '14px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <span onClick={(e) => { e.stopPropagation(); onToggleStar(item.id) }} style={{ fontSize: '18px', cursor: 'pointer', lineHeight: 1 }} title={item.starred ? 'Remove from starred' : 'Save for later'}>{item.starred ? '⭐' : '☆'}</span>
+              <span onClick={(e) => { e.stopPropagation(); onToggleStar(item.id) }} role="button" tabIndex={0} aria-pressed={!!item.starred}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); e.stopPropagation(); onToggleStar(item.id) } }}
+                style={{ fontSize: '18px', cursor: 'pointer', lineHeight: 1 }} title={item.starred ? 'Remove from starred' : 'Save for later'} aria-label={item.starred ? 'Remove from starred' : 'Save for later'}>{item.starred ? '⭐' : '☆'}</span>
               <span style={{ backgroundColor: '#fff', color: borderColor, padding: '4px 10px', borderRadius: '999px', fontSize: '10px', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px' }}>{item.difficulty?.toUpperCase()}</span>
             </div>
             {!isFlipped ? (
