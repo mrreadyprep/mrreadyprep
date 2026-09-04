@@ -9603,6 +9603,13 @@ function AdminPanel() {
   // at all, unlike every other destructive action in the app (cancel subscription, etc.), so a
   // stray click on the wrong row silently locked someone out.
   const [revokeTarget, setRevokeTarget] = useState(null)
+  // Client-side filter over the already-fetched user list -- found in the 35th audit round: the
+  // admin table rendered every registered account with no way to search, fine at launch scale but
+  // an unusable, slow-to-scroll wall of rows (with no way to find one specific account to grant/
+  // revoke premium for support) the moment the user base grows past a screenful. Filtering
+  // client-side rather than adding a backend search param since /api/admin/users already returns
+  // the full list in one call and there's no pagination to preserve.
+  const [userFilter, setUserFilter] = useState('')
   // Covers `load()` and `setSubscription()` below: both are triggered from a live click, but the
   // fetch they kick off can still resolve after the student has clicked away to another sidebar
   // tab (e.g. click Revoke, then immediately navigate elsewhere before the request finishes) --
@@ -9651,6 +9658,11 @@ function AdminPanel() {
   if (error) return <div style={{ padding: '20px', color: '#dc2626', fontSize: '13px' }}>{error}</div>
   if (!stats || !users) return <div style={{ padding: '20px', color: '#616473', fontSize: '13px' }}>Loading admin data...</div>
 
+  const filterQuery = userFilter.trim().toLowerCase()
+  const filteredUsers = filterQuery
+    ? users.filter(u => (u.email || '').toLowerCase().includes(filterQuery) || (u.username || '').toLowerCase().includes(filterQuery))
+    : users
+
   return (
     <div>
       <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', marginBottom: '18px' }}>
@@ -9659,6 +9671,13 @@ function AdminPanel() {
         {statCard('Verified emails', stats.verified_emails)}
         {statCard('Signups (7 days)', stats.signups_last_7_days)}
       </div>
+      <input
+        type="text"
+        value={userFilter}
+        onChange={e => setUserFilter(e.target.value)}
+        placeholder="Search by email or username..."
+        style={{ width: '100%', maxWidth: '360px', padding: '9px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', boxSizing: 'border-box', marginBottom: '12px' }}
+      />
       <div style={{ background: '#fff', borderRadius: '14px', border: '0.5px solid #e1e4ed', overflow: 'hidden' }}>
         <div style={{ overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', minWidth: isMobile ? '640px' : 'auto' }}>
@@ -9673,7 +9692,10 @@ function AdminPanel() {
               </tr>
             </thead>
             <tbody>
-              {users.map(u => (
+              {filteredUsers.length === 0 && (
+                <tr><td colSpan={6} style={{ padding: '18px 14px', color: '#9ca3af', textAlign: 'center' }}>No users match "{userFilter}".</td></tr>
+              )}
+              {filteredUsers.map(u => (
                 <tr key={u.id} style={{ borderTop: '0.5px solid #f0f1f5' }}>
                   <td style={{ padding: '10px 14px' }}>{u.email}{u.is_admin && <span style={{ marginLeft: '6px', fontSize: '10px', fontWeight: '700', color: '#701fa1' }}>ADMIN</span>}</td>
                   <td style={{ padding: '10px 14px' }}>{u.username}</td>
