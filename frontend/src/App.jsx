@@ -1704,8 +1704,16 @@ function AudioPlayer({ url, autoPlayKey, onEnded, onError }) {
   useEffect(() => {
     const audio = sharedAudioEl
     if (!url || !audio) return
+    // Guards the retry fallback below against firing after THIS effect run is no longer relevant
+    // (question changed, component unmounted) -- mirrors the `settled` pattern useIntroNarration
+    // already uses for its own autoplay-retry fallback. Without this, a blocked-autoplay retry
+    // listener registered here stayed attached to `document` (they're `once: true`, so not an
+    // unbounded leak, but not a no-op either) and could later call .play() on the SHARED <audio>
+    // element from the student's very next click/keypress anywhere in the app -- e.g. resuming
+    // playback of a question they'd already moved past. Found in the 36th audit round.
+    let effectActive = true
     const registerRetryFallback = () => {
-      const retry = () => { audio.play().catch(() => {}) }
+      const retry = () => { if (effectActive) audio.play().catch(() => {}) }
       document.addEventListener('pointerdown', retry, { once: true, capture: true })
       document.addEventListener('keydown', retry, { once: true, capture: true })
     }
@@ -1759,7 +1767,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded, onError }) {
         const p = audio.play()
         if (p && p.catch) p.catch((err) => { console.warn('[mrp audio] resume play() rejected:', err && err.name, err && err.message); registerRetryFallback() })
       }
-      return cleanupStuckDetector
+      return () => { effectActive = false; cleanupStuckDetector() }
     }
     audio.pause()
     audio.src = url
@@ -1778,7 +1786,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded, onError }) {
       }
     }
     const timer = setTimeout(tryPlay, AUDIO_START_DELAY_MS)
-    return () => { clearTimeout(timer); cleanupStuckDetector() }
+    return () => { effectActive = false; clearTimeout(timer); cleanupStuckDetector() }
   }, [url, autoPlayKey, retryTick])
 
   if (!url) {
@@ -9392,7 +9400,12 @@ function AuthScreen({ onAuthSuccess }) {
       fetch(`${BACKEND_URL}/api/auth/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        // .trim() -- the validation just above already checks email.trim() against the format
+        // regex, but was sending the raw (possibly whitespace-padded) value here. Harmless for
+        // forgot-password specifically (the backend look-up would just find no match and return
+        // the same generic "if an account exists" message either way), but kept consistent with
+        // the login/signup fix below. Found in the 36th audit round.
+        body: JSON.stringify({ email: email.trim() }),
       }).then(async res => {
         const data = await res.json().catch(() => ({}))
         if (!res.ok) throw new Error(data.detail || 'Something went wrong. Please try again.')
@@ -9426,7 +9439,15 @@ function AuthScreen({ onAuthSuccess }) {
     }
     setLoading(true)
     const endpoint = mode === 'login' ? '/api/auth/login' : '/api/auth/register'
-    const body = mode === 'login' ? { email, password } : { email, username, password }
+    // .trim() on email/username -- validation above checks the trimmed value (e.g.
+    // email.trim() against the format regex, username.trim() for non-empty), but this used to
+    // send the raw, possibly whitespace-padded state instead. Leading/trailing whitespace is
+    // common from mobile autofill or copy-pasting an address out of an email client -- with the
+    // untrimmed value actually persisted, a student could pass this validation, register/log in
+    // successfully, and then hit confusing "account not found" symptoms on a later login attempt
+    // typed without the same stray whitespace (or vice versa), which would look like a backend
+    // bug rather than the real cause. Found in the 36th audit round.
+    const body = mode === 'login' ? { email: email.trim(), password } : { email: email.trim(), username: username.trim(), password }
     fetch(`${BACKEND_URL}${endpoint}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
