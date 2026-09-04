@@ -102,6 +102,24 @@ function saveDraft(category, itemId, answers) {
 function clearDraft(category, itemId) {
   try { localStorage.removeItem(draftKey(category, itemId)) } catch { /* ignore */ }
 }
+// draftKey() above has no per-account component -- on a shared/lab/family computer, a draft User
+// A saved (Save & Exit on a Reading/Writing exercise) used to still be sitting in localStorage,
+// keyed only by category+itemId, after User A logged out. User B logging in on the same browser
+// and opening that same item would silently see User A's unfinished answer pre-filled into their
+// own textarea. Called on every logout/session-expiry AND on every successful login/register (in
+// case a prior session ended uncleanly -- browser closed, tab killed -- without going through
+// logout() at all) so no draft can ever survive into a different account's session. Found in the
+// 34th audit round.
+function clearAllDrafts() {
+  try {
+    const keys = []
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i)
+      if (k && k.startsWith(DRAFT_KEY_PREFIX)) keys.push(k)
+    }
+    keys.forEach(k => localStorage.removeItem(k))
+  } catch { /* ignore */ }
+}
 
 // Styled replacement for a native window.confirm() -- offers to save the student's in-progress
 // answers before leaving, discard them, or cancel and keep practicing. `canSave=false` is for
@@ -964,6 +982,7 @@ function clearAuthToken() {
 }
 function logout() {
   clearAuthToken()
+  clearAllDrafts()
   window.location.reload()
 }
 
@@ -984,6 +1003,7 @@ function apiFetch(url, options = {}) {
     if (res.status === 401 && !sessionExpiredHandled) {
       sessionExpiredHandled = true
       clearAuthToken()
+      clearAllDrafts()
       // Give the student a reason for the sudden logout (and a beat to read it) instead of an
       // unexplained instant reload -- anything they hadn't already saved (a draft answer, an
       // in-progress mock test) is lost either way, but at least they know why.
@@ -9314,6 +9334,7 @@ function AuthScreen({ onAuthSuccess }) {
       if (!res.ok) throw new Error(data.detail || 'Google sign-in failed. Please try again.')
       return data
     }).then(data => {
+      clearAllDrafts()
       setAuthToken(data.access_token)
       onAuthSuccess(data.user)
     }).catch(err => setError(err.message)).finally(() => setLoading(false))
@@ -9415,6 +9436,7 @@ function AuthScreen({ onAuthSuccess }) {
       if (!res.ok) throw new Error(data.detail || 'Something went wrong. Please try again.')
       return data
     }).then(data => {
+      clearAllDrafts()
       setAuthToken(data.access_token)
       onAuthSuccess(data.user)
     }).catch(err => setError(err.message)).finally(() => setLoading(false))

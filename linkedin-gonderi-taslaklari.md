@@ -23,13 +23,13 @@ TOEFL'a hazırlanan ya da hazırlanan birini tanıyan varsa, memnuniyetle konuş
 
 ## 2. Kuruluş hikayesi (kişisel ton)
 
-[X ay] önce bir sorunla karşılaştım: [TOEFL'a hazırlanan biri tanıyordum / kendim hazırlanıyordum / farklı bir gözlem — burayı kendi gerçek motivasyonunla doldur].
+Uzun süre TOEFL'a hazırlandım ve sınava birçok kez girdim. İlk başta bir öğrenciydim — çok fazla ders aldım, çok soru çözdüm. Ama sınav sistemi yeni değiştiği için kaliteli soru ve site bulmak gittikçe zorlaştı.
 
-Mevcut kaynaklara baktığımda [gördüğün eksiklik — örneğin: çoğu kaynağın 2026'daki yeni format değişikliğine (adaptif Reading/Listening, yeni puanlama skalası) henüz uyum sağlamadığını / fiyatların çok yüksek olduğunu / gerçek geri bildirim eksikliğini fark ettim].
+TOEFL'la ilgili neredeyse tüm siteleri denedim, her birinin bir problemi vardı: bazılarının soruları gerçek sınavdan uzaktı, bazılarının mock testleri gerçek sınava hiç benzemiyordu, bazılarında ise aynı sorular sürekli karşıma çıkıyordu.
 
-Bunun üzerine mrreadyprep'i kurmaya karar verdim — TOEFL iBT'nin güncel formatına göre sıfırdan tasarlanmış bir hazırlık platformu.
+Bu sorunlar yüzünden öğrencilerin tek bir siteden, rahat ve eğlenceli bir şekilde, kısa sürede hazır olup istedikleri puanı alabilmeleri için mrreadyprep'i kurdum.
 
-Bugün itibarıyla canlıda ve gerçek kullanıcılarla test ediyorum. Bu süreçte en çok öğrendiğim şey [buraya süreçte öğrendiğin somut bir şeyi yazabilirsin, örneğin: öğrencilerin en çok Speaking'de geri bildirim eksikliğinden şikayet ettiği].
+Bugün itibarıyla canlıda ve gerçek kullanıcılarla test ediyorum. Bu süreçte en çok öğrendiğim şey, doğru ve çeşitli soru havuzunun aslında hazırlığın en kritik parçası olduğu oldu — geri kalan her şey ondan sonra geliyor.
 
 TOEFL'a hazırlanan biri tanıyorsanız, memnuniyetle ücretsiz erişim veririm — geri bildiriminiz benim için değerli: mrreadyprep.com
 

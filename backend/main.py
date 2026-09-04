@@ -205,7 +205,14 @@ def _paddle_request(method: str, path: str, body: dict = None):
         except Exception:
             raise HTTPException(status_code=502, detail=f"Paddle request failed: HTTP {e.code}")
     except urllib.error.URLError as e:
-        raise HTTPException(status_code=502, detail=f"Could not reach Paddle: {e}")
+        # str(e) on a URLError can include low-level socket/DNS/OS error text -- unlike the
+        # HTTPError branch just above (which returns Paddle's own parsed JSON error), this used to
+        # echo that raw exception text straight into the 502 `detail` an authenticated caller
+        # (create_checkout/cancel_subscription) sees. Not a secrets leak, but inconsistent with
+        # this file's general practice of not exposing internal error internals. Logged server-side
+        # instead. Found in the 34th audit round.
+        print(f"[paddle] request failed: {e}", flush=True)
+        raise HTTPException(status_code=502, detail="Could not reach Paddle. Please try again.")
 
 
 def _require_paddle():
@@ -548,15 +555,27 @@ async def audio_proxy(path: str, request: Request, t: str = ""):
         m = _RANGE_RE.match(range_header)
         if m:
             start_s, end_s = m.groups()
-            if start_s == "" and end_s != "":
-                # Suffix range ("bytes=-500" means "the last 500 bytes"), distinct from "bytes=0-500".
-                start = max(0, total_len - int(end_s))
-                end = total_len - 1
-            else:
-                start = int(start_s) if start_s else 0
-                end = int(end_s) if end_s else total_len - 1
-                end = min(end, total_len - 1)
-            if 0 <= start <= end < total_len:
+            try:
+                # _RANGE_RE's \d* groups place no length limit on the digit string a client can
+                # send -- an absurdly long numeric string here (trivially craftable in a Range
+                # header, no auth beyond the signed `t` token which is valid/reusable for up to 14
+                # days) makes int() raise ValueError ("Exceeds the limit for integer string
+                # conversion" on Python 3.11+) with nothing catching it, 500ing this endpoint.
+                # Every other place in this file that parses attacker-controlled digits already
+                # guards against this; this one didn't. Found in the 34th audit round. A malformed
+                # or oversized Range header just falls through to a normal full 200 response below,
+                # same as any other client that doesn't send Range at all.
+                if start_s == "" and end_s != "":
+                    # Suffix range ("bytes=-500" means "the last 500 bytes"), distinct from "bytes=0-500".
+                    start = max(0, total_len - int(end_s))
+                    end = total_len - 1
+                else:
+                    start = int(start_s) if start_s else 0
+                    end = int(end_s) if end_s else total_len - 1
+                    end = min(end, total_len - 1)
+            except ValueError:
+                start = end = None
+            if start is not None and 0 <= start <= end < total_len:
                 chunk = body[start:end + 1]
                 resp_headers["Content-Range"] = f"bytes {start}-{end}/{total_len}"
                 return Response(content=chunk, status_code=206, headers=resp_headers, media_type=content_type)
@@ -574,7 +593,13 @@ async def audio_proxy(path: str, request: Request, t: str = ""):
 # element reports as a generic "Format error" / NotSupportedError -- which is why this looked like
 # an autoplay problem at first glance instead of the broken-link issue it actually is: the
 # narration never had a working URL to play in the first place, on any browser, for any student.
-_SAFE_INTRO_FILENAME = re.compile(r"^[A-Za-z0-9_\-]+\.mp3$")
+# \Z (not $) anchors strictly at the true end of the string -- Python's re module treats a bare
+# $ as matching either end-of-string OR just before one trailing "\n", so e.g.
+# "adjusting_volume.mp3\n" would otherwise pass this "safe filename" check despite not actually
+# being one. No exploit path was found (this value only ever gets baked into a signed
+# /audio-proxy path, which URL-encodes it safely either way), but it's a genuine gap in the
+# intended validation and a classic Python regex gotcha. Found in the 34th audit round.
+_SAFE_INTRO_FILENAME = re.compile(r"^[A-Za-z0-9_\-]+\.mp3\Z")
 
 class IntroAudioUrlsRequest(BaseModel):
     # Deliberately unauthenticated (see docstring below), so unlike every other write-model in this
@@ -2573,10 +2598,20 @@ def cancel_subscription(user=Depends(get_current_user)):
     if not (result or {}).get("data"):
         detail = ((result or {}).get("error") or {}).get("detail", "Could not cancel subscription")
         raise HTTPException(status_code=400, detail=detail)
+    # Paddle has already canceled the subscription by this point (the check above already
+    # confirmed a successful `data` response) -- a transient failure in this local write must not
+    # surface as an error to the student, who would otherwise see a confusing failure for an
+    # action that actually succeeded, and could reasonably re-click and hit Paddle's own "already
+    # canceled" error on the retry. The subscription.canceled webhook (paddle_webhook() below) is
+    # the actual source of truth for subscription_status and will reconcile this row the moment it
+    # lands regardless of whether this local UPDATE below succeeds -- so log and swallow rather
+    # than raise. Found in the 34th audit round.
     conn = get_db()
     try:
         conn.execute("UPDATE users SET subscription_status = 'CANCELED' WHERE id = ?", (user["id"],))
         conn.commit()
+    except Exception as e:
+        print(f"[cancel_subscription] Paddle cancel succeeded but local DB update failed for user_id={user['id']}: {e}", flush=True)
     finally:
         conn.close()
     return {"status": "success"}
@@ -2859,7 +2894,13 @@ def get_vocab(user=Depends(get_current_user)):
 @app.post("/api/vocab/toggle/{word_id}")
 def toggle_vocab(word_id: int, user=Depends(get_current_user)):
     if not any(w["id"] == word_id for w in _get_vocab_words()):
-        return {"status": "error", "message": "Word not found"}
+        # Was a 200 with an embedded {"status": "error"} body -- every other invalid-input path in
+        # this file raises HTTPException instead, and the frontend's own error handling for these
+        # three endpoints only checks res.ok (see setLearned()/toggleStar() in App.jsx), so a 200
+        # here was silently treated as success client-side: the optimistic UI update never rolled
+        # back and no error toast ever showed, even though nothing was actually saved server-side.
+        # Found in the 34th audit round.
+        raise HTTPException(status_code=404, detail="Word not found")
     conn = get_db()
     try:
         already = conn.execute(
@@ -2893,7 +2934,13 @@ def toggle_vocab(word_id: int, user=Depends(get_current_user)):
 @app.post("/api/vocab/set/{word_id}")
 def set_vocab_learned(word_id: int, data: VocabLearnedUpdate, user=Depends(get_current_user)):
     if not any(w["id"] == word_id for w in _get_vocab_words()):
-        return {"status": "error", "message": "Word not found"}
+        # Was a 200 with an embedded {"status": "error"} body -- every other invalid-input path in
+        # this file raises HTTPException instead, and the frontend's own error handling for these
+        # three endpoints only checks res.ok (see setLearned()/toggleStar() in App.jsx), so a 200
+        # here was silently treated as success client-side: the optimistic UI update never rolled
+        # back and no error toast ever showed, even though nothing was actually saved server-side.
+        # Found in the 34th audit round.
+        raise HTTPException(status_code=404, detail="Word not found")
     conn = get_db()
     try:
         if data.learned:
@@ -2919,7 +2966,13 @@ def set_vocab_learned(word_id: int, data: VocabLearnedUpdate, user=Depends(get_c
 @app.post("/api/vocab/star/{word_id}")
 def toggle_vocab_star(word_id: int, user=Depends(get_current_user)):
     if not any(w["id"] == word_id for w in _get_vocab_words()):
-        return {"status": "error", "message": "Word not found"}
+        # Was a 200 with an embedded {"status": "error"} body -- every other invalid-input path in
+        # this file raises HTTPException instead, and the frontend's own error handling for these
+        # three endpoints only checks res.ok (see setLearned()/toggleStar() in App.jsx), so a 200
+        # here was silently treated as success client-side: the optimistic UI update never rolled
+        # back and no error toast ever showed, even though nothing was actually saved server-side.
+        # Found in the 34th audit round.
+        raise HTTPException(status_code=404, detail="Word not found")
     conn = get_db()
     try:
         already = conn.execute(
@@ -3378,6 +3431,16 @@ def get_mock_seen_ids(user=Depends(get_current_user)):
         # earlier rounds. Grouping in Python after one query is equivalent (pool is a small, fixed
         # set of short strings) and collapses this to a single round trip regardless of how many
         # pools exist.
+        # Captured BEFORE the SELECT below, and used to scope the wraparound DELETE further down to
+        # only rows that existed at read time. Without this, a concurrent POST /api/mock/mark-seen
+        # (e.g. a second tab/device starting a fresh draw right at the wrap boundary) that commits
+        # its INSERTs between this function's SELECT and its unconditional pool-wide DELETE would
+        # have those freshly-recorded rows silently wiped along with the old ones -- the student
+        # could then see a just-served item repeated shortly after a wraparound. Found in the 34th
+        # audit round. Low blast radius (variety only, no security/score impact) but a genuine
+        # correctness gap, not just the performance one the 30th round fixed here.
+        read_cutoff = datetime.now(timezone.utc)
+        read_cutoff_str = read_cutoff.isoformat() if DATABASE_URL else read_cutoff.strftime("%Y-%m-%d %H:%M:%S")
         rows = conn.execute("SELECT pool, item_id FROM seen_pool_items WHERE user_id = ?", (user["id"],)).fetchall()
         seen_by_pool = collections.defaultdict(set)
         for row in rows:
@@ -3392,7 +3455,10 @@ def get_mock_seen_ids(user=Depends(get_current_user)):
                 seen_ids = set()
             result[pool] = sorted(seen_ids)
         for pool in pools_to_clear:
-            conn.execute("DELETE FROM seen_pool_items WHERE user_id = ? AND pool = ?", (user["id"], pool))
+            conn.execute(
+                "DELETE FROM seen_pool_items WHERE user_id = ? AND pool = ? AND seen_at <= ?",
+                (user["id"], pool, read_cutoff_str),
+            )
         conn.commit()
         return result
     finally:
