@@ -1189,12 +1189,20 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
     setBusy(true)
     Promise.all([loadPaddle(handlePaddleEvent), startCheckout()])
       .then(([Paddle, data]) => {
-        setBusy(false)
         if (!data.transaction_id) {
+          setBusy(false)
           setError(extractErrorMessage(data, 'Could not start checkout. Please try again.'))
           return
         }
+        // setBusy(false) intentionally happens AFTER Paddle.Checkout.open() is called, not before
+        // (as it used to). The button stays disabled for the entire loadPaddle+startCheckout
+        // round-trip, so a student who double-clicks "Continue to payment" used to be able to
+        // re-trigger handleSubscribe in the brief window between this .then() resolving and the
+        // Paddle overlay actually opening -- each click creates a brand new
+        // /api/subscription/create-checkout transaction server-side, so a fast double-click could
+        // fire off two separate Paddle transactions. Found in the 40th audit round.
         Paddle.Checkout.open({ transactionId: data.transaction_id })
+        setBusy(false)
       })
       .catch(() => { setError('Could not reach the server. Please try again.'); setBusy(false) })
   }
@@ -7671,7 +7679,12 @@ function MicVolumeCheckModal({ onStart, onCancel }) {
             Microphone access was blocked. You can still continue, but Speaking questions won't be able to record your voice.
           </div>
         )}
-        <button onClick={() => { teardown(); onStart() }} style={{ width: '100%', marginTop: '22px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '13px', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }}>
+        {/* autoFocus matches ConfirmModal/ExitConfirmModal's primary-action buttons -- without it,
+            this modal (opened right before a Speaking section starts) left keyboard/screen-reader
+            focus wherever it happened to be on the page before the overlay appeared, so the
+            student had to Tab in from an arbitrary point just to reach the Start button. Found in
+            the 40th audit round. */}
+        <button onClick={() => { teardown(); onStart() }} autoFocus style={{ width: '100%', marginTop: '22px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '13px', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }}>
           Start
         </button>
         {onCancel && (
@@ -10550,7 +10563,7 @@ function App() {
               <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
             </div>
           </div>
-          <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} title="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
+          <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} title="Log out" aria-label="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
         </div>
         <div style={{ fontSize: '8px', color: '#4b4f66', lineHeight: '1.4', textAlign: 'center', marginTop: '8px', padding: '0 2px' }}>
           TOEFL® and TOEFL iBT® are registered trademarks of ETS. Not endorsed or approved by ETS.
@@ -10564,7 +10577,7 @@ function App() {
             always-visible sidebar instead, so this never renders there. */}
         {isMobile && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-            <button onClick={() => setMobileNavOpen(true)} style={{ background: '#11162d', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '9px', fontSize: '17px', cursor: 'pointer', flexShrink: 0 }}>☰</button>
+            <button onClick={() => setMobileNavOpen(true)} aria-label="Open menu" style={{ background: '#11162d', border: 'none', color: '#fff', width: '36px', height: '36px', borderRadius: '9px', fontSize: '17px', cursor: 'pointer', flexShrink: 0 }}>☰</button>
             <div style={{ color: '#701fa1', fontSize: '15px', fontWeight: '700' }}>mrreadyprep</div>
           </div>
         )}

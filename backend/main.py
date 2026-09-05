@@ -273,6 +273,14 @@ def _require_paddle():
 # statuses (mirrored into our own DB, uppercased for consistency with the rest of this file):
 # ACTIVE, TRIALING, PAST_DUE, PAUSED, CANCELED -- only ACTIVE/TRIALING count as paid access.
 ACTIVE_SUBSCRIPTION_STATUSES = {"ACTIVE", "TRIALING"}
+# Statuses under which Paddle can still, on its own, send a future webhook event that flips the
+# same subscription_id's status back to ACTIVE/TRIALING (a retried payment recovers a PAST_DUE
+# subscription; a resumed subscription leaves PAUSED) -- as opposed to CANCELED, which Paddle
+# never resurrects for the same subscription_id. Used by admin_set_subscription()'s revoke guard:
+# revoking access on an account in one of these states only hides it in this app, it does not stop
+# Paddle from billing, and a later webhook can silently un-revoke it with no trace of the admin's
+# decision. Found in the 40th audit round.
+REVOKE_UNSAFE_SUBSCRIPTION_STATUSES = ACTIVE_SUBSCRIPTION_STATUSES | {"PAST_DUE", "PAUSED"}
 
 def has_active_subscription(user) -> bool:
     if is_admin_user(user):
@@ -2494,9 +2502,15 @@ def admin_stats(admin=Depends(require_admin)):
         # call. Found in the 32nd audit round: this had been broken since has_active_subscription()
         # was routed in here in round 30, and would have 500'd the admin panel's Stats view as
         # soon as the first real user signed up after launch.
+        # LIMIT 2000: same safety cap as admin_list_users() (round 37) -- this query pulls every
+        # row into Python to run has_active_subscription() per-row (it can't be expressed as a
+        # single SQL predicate, see the comment above), so without a cap it grows unbounded with
+        # the user base exactly like admin_list_users() did before that fix. Missed here at the
+        # time since this endpoint returns an aggregate count rather than a row list, but the
+        # underlying full-table-scan-into-Python cost is identical. Found in the 40th audit round.
         active_subs = sum(
             1 for row in conn.execute(
-                "SELECT email, subscription_status, subscription_current_period_end, email_verified FROM users"
+                "SELECT email, subscription_status, subscription_current_period_end, email_verified FROM users LIMIT 2000"
             ).fetchall()
             if has_active_subscription(row)
         )
@@ -2540,13 +2554,22 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
         # column outlives the actual subscription. Checking subscription_status directly (the same
         # set has_active_subscription() itself trusts) is what actually distinguishes "Paddle is
         # still charging this card" from "this account merely used to have a Paddle subscription".
-        if data.action == "revoke" and target["paddle_subscription_id"] and (target["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES:
+        # Guards on REVOKE_UNSAFE_SUBSCRIPTION_STATUSES (ACTIVE/TRIALING/PAST_DUE/PAUSED), not just
+        # ACTIVE_SUBSCRIPTION_STATUSES -- a PAST_DUE or PAUSED subscription is still a live Paddle
+        # subscription_id that Paddle can flip back to ACTIVE on its own (a retried card charge, a
+        # resume) with no further admin action. Revoking here only clears subscription_status locally;
+        # it never touches paddle_subscription_id or Paddle itself, so that next webhook would silently
+        # re-grant access with no record the admin ever revoked it. Widened in the 40th audit round --
+        # originally only checked ACTIVE_SUBSCRIPTION_STATUSES, which meant a PAST_DUE/PAUSED account
+        # could be "revoked" here and then quietly resurrected by Paddle's own retry/resume webhook.
+        if data.action == "revoke" and target["paddle_subscription_id"] and (target["subscription_status"] or "") in REVOKE_UNSAFE_SUBSCRIPTION_STATUSES:
             raise HTTPException(
                 status_code=400,
-                detail="This account has a real, currently-active Paddle subscription -- revoking here "
-                       "would only hide their access while Paddle keeps charging their card. Cancel the "
-                       "subscription itself (from their account's Settings, or via "
-                       "/api/subscription/cancel) instead.",
+                detail="This account has a real Paddle subscription that is still active, past-due, or "
+                       "paused -- revoking here would only hide their access while Paddle can still bill "
+                       "or resume it, and a later webhook could silently restore access with no record of "
+                       "this decision. Cancel the subscription itself (from their account's Settings, or "
+                       "via /api/subscription/cancel) instead.",
             )
         new_status = "ACTIVE" if data.action == "grant" else None
         # Mirrors the revoke guard above -- a real, currently-billing Paddle subscription (not just
