@@ -9013,7 +9013,10 @@ function ProgressScreen({ onBack, onPractice }) {
     let cancelled = false
     Promise.all([
       apiFetch(`${BACKEND_URL}/api/results/summary`).then(r => { if (!r.ok) throw new Error('summary fetch failed'); return r.json() }),
-      apiFetch(`${BACKEND_URL}/api/results/history?limit=30`).then(r => { if (!r.ok) throw new Error('history fetch failed'); return r.json() }),
+      // limit matches the 20 the render below actually shows (history.slice(0, 20)) -- this used
+      // to ask for 30 and silently discard the extra 10, wasted transfer with no "Show more" UI to
+      // ever use them. Found in the 38th audit round.
+      apiFetch(`${BACKEND_URL}/api/results/history?limit=20`).then(r => { if (!r.ok) throw new Error('history fetch failed'); return r.json() }),
       apiFetch(`${BACKEND_URL}/api/results/mistakes`).then(r => r.json()).catch(() => null),
     ]).then(([summaryData, historyData, mistakesData]) => {
       if (cancelled) return
@@ -9276,7 +9279,12 @@ function CookieConsentBanner() {
   }
 
   return (
-    <div role="region" aria-label="Cookie consent" style={{ position: 'fixed', bottom: '18px', left: '18px', right: '18px', maxWidth: '380px', margin: '0 auto', zIndex: 9999, backgroundColor: '#fff', color: '#1a1a1a', borderRadius: '14px', padding: '18px 20px', boxShadow: '0 8px 28px rgba(0,0,0,0.25)', border: '1px solid #e1e4ed', fontFamily: 'sans-serif' }}>
+    // Anchored to the TOP of the viewport, not the bottom -- ToastHost (below) is bottom-right,
+    // and on a narrow/mobile screen this banner's own left:18/right:18 span left it wide enough to
+    // overlap and obscure a toast that fired while it was still showing (e.g. a login success/error
+    // toast right after a first-time visitor's consent banner appears). Found in the 38th audit
+    // round. Nothing else in the app anchors to the top, so this can never collide with anything.
+    <div role="region" aria-label="Cookie consent" style={{ position: 'fixed', top: '18px', left: '18px', right: '18px', maxWidth: '380px', margin: '0 auto', zIndex: 9999, backgroundColor: '#fff', color: '#1a1a1a', borderRadius: '14px', padding: '18px 20px', boxShadow: '0 8px 28px rgba(0,0,0,0.25)', border: '1px solid #e1e4ed', fontFamily: 'sans-serif' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
         <span style={{ fontSize: '16px' }}>🍪</span>
         <span style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}>We value your privacy</span>
@@ -9993,6 +10001,14 @@ function VocabList({ deckLabel, words, onBack, onSetLearned, onToggleStar }) {
           </button>
         ))}
       </div>
+      {filtered.length === 0 && (
+        <div style={{ textAlign: 'center', color: '#9ca3af', fontSize: '13px', padding: '32px 12px' }}>
+          {filter === 'learned' && "You haven't marked any words as learned yet."}
+          {filter === 'starred' && "You haven't starred any words yet."}
+          {filter === 'unlearned' && "You've marked every word in this deck as learned!"}
+          {filter === 'all' && 'No words in this deck.'}
+        </div>
+      )}
       {filtered.map(item => {
         const vibrantColors = ['#701fa1', '#2563eb', '#dc2626', '#16a34a', '#ea580c', '#0891b2', '#c026d3', '#ca8a04']
         const wordColor = vibrantColors[item.id % vibrantColors.length]
@@ -10211,6 +10227,13 @@ function App() {
     clearSubTabs()
   }
   const [profileName, setProfileName] = useState('')
+  // Shared by both save paths that hit /api/profile/update (the Settings form's "Save Changes"
+  // and the Dashboard's inline "Edit targets" panel's "Save targets") -- neither previously
+  // disabled its button or showed any busy state while the request was in flight, unlike every
+  // other save action in the app (SubscribeScreen's `busy`, AdminPanel's `busyId`, AuthScreen's
+  // `loading`), so a fast double-click could fire two concurrent update requests. Found in the
+  // 38th audit round.
+  const [savingProfile, setSavingProfile] = useState(false)
   const [targetScore, setTargetScore] = useState(5.5)
   const [readingTarget, setReadingTarget] = useState(6.0)
   const [listeningTarget, setListeningTarget] = useState(6.0)
@@ -10318,8 +10341,32 @@ function App() {
     return Math.min(6, Math.max(0, Math.round(n * 2) / 2))
   }
 
+  // Settings tab: the profile/target fields above double as this form's local edit buffer, and
+  // the effect near fetchDashboardData() re-syncs them from the server every time the student
+  // lands back on the Settings (or Dashboard) tab. If the student edits a field here and then
+  // clicks any other sidebar item without clicking "Save Changes" first, the edit is silently
+  // discarded with no warning -- unlike every exercise/mock-test screen in the app, which all push
+  // this same exit guard (see _pushExitGuard) the moment there's unsaved work in progress. Scoped
+  // to currentTab === 'settings' specifically so it doesn't double up with the Dashboard's own
+  // inline "Edit targets" panel, which already reverts its own local state on Close (25th/32nd
+  // audit rounds). Found in the 38th audit round.
+  useEffect(() => {
+    if (currentTab !== 'settings' || !userData) return
+    const dirty = profileName !== (userData.username || '') ||
+      clampOverallTarget(targetScore) !== clampOverallTarget(userData.target_score) ||
+      clampTarget(readingTarget) !== clampTarget(userData.reading_target ?? 6.0) ||
+      clampTarget(listeningTarget) !== clampTarget(userData.listening_target ?? 6.0) ||
+      clampTarget(writingTarget) !== clampTarget(userData.writing_target ?? 6.0) ||
+      clampTarget(speakingTarget) !== clampTarget(userData.speaking_target ?? 6.0)
+    if (!dirty) return
+    _pushExitGuard()
+    return () => _popExitGuard()
+  }, [currentTab, userData, profileName, targetScore, readingTarget, listeningTarget, writingTarget, speakingTarget])
+
   const handleProfileSave = (e) => {
     e.preventDefault()
+    if (savingProfile) return
+    setSavingProfile(true)
     apiFetch(`${BACKEND_URL}/api/profile/update`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -10331,6 +10378,7 @@ function App() {
       if (data.status === 'success') { showToast('Saved!'); fetchDashboardData() }
       else showToast("Couldn't save your changes. Please try again.", 'error')
     }).catch(() => showToast("Couldn't save your changes -- check your connection.", 'error'))
+      .finally(() => setSavingProfile(false))
   }
 
   const handleResendVerification = () => {
@@ -10346,6 +10394,8 @@ function App() {
   // without a <form> submit event -- lets a student adjust their section goals right where they
   // see them instead of having to go find the Settings tab.
   const saveTargets = () => {
+    if (savingProfile) return
+    setSavingProfile(true)
     apiFetch(`${BACKEND_URL}/api/profile/update`, {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -10357,6 +10407,7 @@ function App() {
       if (data.status === 'success') { setEditingTargets(false); fetchDashboardData() }
       else showToast("Couldn't save your targets. Please try again.", 'error')
     }).catch(() => showToast("Couldn't save your targets -- check your connection.", 'error'))
+      .finally(() => setSavingProfile(false))
   }
 
   // Saved immediately on change (no separate "save" button) so the exam date sticks across
@@ -10450,7 +10501,10 @@ function App() {
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '6px', borderTop: '1px solid #252a44', paddingTop: '4px' }}>
-          <div onClick={() => { requestTabChange('settings'); if (isMobile) setMobileNavOpen(false) }} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
+          <div onClick={() => { requestTabChange('settings'); if (isMobile) setMobileNavOpen(false) }}
+            role="button" tabIndex={0} aria-label="Settings"
+            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); requestTabChange('settings'); if (isMobile) setMobileNavOpen(false) } }}
+            style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
             <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px', flexShrink: 0 }}>{(userData.username || '?').charAt(0).toUpperCase()}</div>
             <div style={{ minWidth: 0, overflow: 'hidden' }}>
               <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userData.username}</div>
@@ -10481,7 +10535,14 @@ function App() {
             <span onClick={() => {
               if (readingSubTab || listeningSubTab || writingSubTab || speakingSubTab) requestSubTabBack()
               else requestTabChange('dashboard')
-            }} style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
+            }} role="button" tabIndex={0}
+              onKeyDown={e => {
+                if (e.key !== 'Enter' && e.key !== ' ') return
+                e.preventDefault()
+                if (readingSubTab || listeningSubTab || writingSubTab || speakingSubTab) requestSubTabBack()
+                else requestTabChange('dashboard')
+              }}
+              style={{ fontSize: '13px', fontWeight: '600', color: '#9047f5', cursor: 'pointer' }}>← Back</span>
             <h2 style={{ margin: '0 0 0 14px', fontSize: '18px', fontWeight: '700' }}>
               {currentTab === 'reading' && !readingSubTab && '📖 Reading Practice'}
               {currentTab === 'reading' && readingSubTab === 'ctw' && '📖 Complete the Words'}
@@ -10579,7 +10640,7 @@ function App() {
                       <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Speaking (1.0–6.0)</label>
                       <input type="number" min="1" max="6" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
                     </div>
-                    <button onClick={saveTargets} style={{ gridColumn: '1 / -1', background: '#2ac56c', color: '#fff', border: 'none', padding: '8px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', marginTop: '2px' }}>Save targets</button>
+                    <button onClick={saveTargets} disabled={savingProfile} style={{ gridColumn: '1 / -1', background: '#2ac56c', color: '#fff', border: 'none', padding: '8px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: savingProfile ? 'default' : 'pointer', opacity: savingProfile ? 0.7 : 1, marginTop: '2px' }}>{savingProfile ? 'Saving…' : 'Save targets'}</button>
                   </div>
                 )}
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
@@ -10614,7 +10675,9 @@ function App() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '11px', color: '#888' }}><div style={{ width: '3px', height: '10px', background: '#701fa1', borderRadius: '2px' }} /> Target</div>
                 </div>
 
-                <div onClick={() => setExpandedFormat(!expandedFormat)} style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '16px', cursor: 'pointer' }}>
+                <div onClick={() => setExpandedFormat(!expandedFormat)} role="button" tabIndex={0} aria-expanded={expandedFormat}
+                  onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpandedFormat(!expandedFormat) } }}
+                  style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '16px', cursor: 'pointer' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
                     <div style={{ fontSize: '13px', fontWeight: '700' }}>📋 TOEFL 2026 Format</div>
                     <span style={{ fontSize: '11px', color: '#701fa1', fontWeight: '600' }}>{expandedFormat ? '▲ Less' : '▼ Details'}</span>
@@ -10692,7 +10755,7 @@ function App() {
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: '11px', fontWeight: '500', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}</div>
-                      <input type="date" value={examDate} onChange={e => handleExamDateChange(e.target.value)} style={{ marginTop: '4px', fontSize: '10px', padding: '2px 5px', borderRadius: '5px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d', width: '100%', boxSizing: 'border-box' }} />
+                      <input type="date" value={examDate} onChange={e => handleExamDateChange(e.target.value)} aria-label="Exam date" style={{ marginTop: '4px', fontSize: '10px', padding: '2px 5px', borderRadius: '5px', border: '0.5px solid #cbd5e1', background: '#f4f6fa', color: '#11162d', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                   </div>
                 </div>
@@ -10864,7 +10927,7 @@ function App() {
                     <input id="settings-speaking-target" type="number" min="1" max="6" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                 </div>
-                <button type="submit" style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save Changes</button>
+                <button type="submit" disabled={savingProfile} style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: savingProfile ? 'default' : 'pointer', opacity: savingProfile ? 0.7 : 1 }}>{savingProfile ? 'Saving…' : 'Save Changes'}</button>
               </form>
             </div>
             <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: isMobile ? '18px' : '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>

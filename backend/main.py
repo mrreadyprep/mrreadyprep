@@ -2,7 +2,7 @@ from datetime import datetime, timedelta, timezone
 from fastapi import FastAPI, HTTPException, Depends, Header, Request, Query, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
-from fastapi.responses import Response
+from fastapi.responses import Response, JSONResponse
 from pydantic import BaseModel, EmailStr, Field, field_validator
 from typing import List, Optional
 import asyncio
@@ -91,6 +91,39 @@ async def _security_headers(request: Request, call_next):
     if os.environ.get("RENDER"):
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return response
+
+# Small, generic JSON body-size ceiling applied to the handful of pre-auth POST endpoints below
+# (register/login/google-login/forgot-password/reset-password/verify-email). Unlike every other
+# POST endpoint that takes user input, these six require no credentials AND have no rate limit in
+# effect until AFTER the body is already fully parsed (the rate-limit key is a field *inside* the
+# body, e.g. email) -- so a large enough request body gets buffered into memory by Starlette/
+# Pydantic before anything gets a chance to reject it on frequency grounds. Real bodies for these
+# endpoints are tiny (an email + a password, some KB at most), so a generous ceiling here can never
+# affect a real student. This only inspects Content-Length -- unlike paddle_webhook's own
+# body-size guard, it can't intercept and abort a chunked-transfer-encoding body mid-stream (these
+# six endpoints get their body parsed internally by FastAPI's own Pydantic binding, not read
+# manually the way the webhook handler reads it), so a request that omits Content-Length
+# specifically to bypass this check is a more sophisticated attack than this defense-in-depth
+# layer is meant to cover -- Cloudflare/Render's own platform-level limits are the backstop for
+# that case. Found in the 38th audit round.
+_PRE_AUTH_BODY_LIMIT_PATHS = {
+    "/api/auth/register", "/api/auth/login", "/api/auth/google",
+    "/api/auth/forgot-password", "/api/auth/reset-password", "/api/auth/verify-email",
+}
+_PRE_AUTH_BODY_LIMIT_BYTES = 20_000
+
+@app.middleware("http")
+async def _pre_auth_body_size_limit(request: Request, call_next):
+    if request.method == "POST" and request.url.path in _PRE_AUTH_BODY_LIMIT_PATHS:
+        content_length = request.headers.get("content-length")
+        if content_length:
+            try:
+                too_large = int(content_length) > _PRE_AUTH_BODY_LIMIT_BYTES
+            except ValueError:
+                too_large = False  # malformed header -- let normal request handling surface its own error
+            if too_large:
+                return JSONResponse(status_code=413, content={"detail": "Payload too large"})
+    return await call_next(request)
 
 # ============================================================
 # AUTH CONFIG
@@ -1113,6 +1146,13 @@ def init_db():
         conn.execute("ALTER TABLE users ADD COLUMN subscription_status TEXT")
     if not _has_column(conn, "users", "subscription_current_period_end"):
         conn.execute("ALTER TABLE users ADD COLUMN subscription_current_period_end TIMESTAMP")
+    # Paddle does not guarantee webhooks are delivered in the order the underlying events actually
+    # occurred (retries/queueing can reorder them) -- without tracking which event was last applied,
+    # a delayed-but-stale "still active" delivery arriving after a newer "canceled" one would
+    # silently resurrect access it shouldn't, or vice versa. paddle_webhook() only ever applies an
+    # event whose own occurred_at is newer than what's stored here. Found in the 38th audit round.
+    if not _has_column(conn, "users", "subscription_last_event_at"):
+        conn.execute("ALTER TABLE users ADD COLUMN subscription_last_event_at TIMESTAMP")
     # Tracks the last time this student was sent a "you haven't practiced" nudge email (see
     # /api/cron/practice-reminders) so a daily cron run never double-sends within the same
     # ~24h window even if it's triggered more than once.
@@ -1589,9 +1629,14 @@ def compute_streak_and_week_activity(conn, user_id: int):
     exercise, used to render the Dashboard's weekly dot row, and (b) current_streak: the number of
     consecutive days with activity counting backwards from today (today itself doesn't break an
     otherwise-unbroken streak if nothing has been done yet today)."""
+    # total > 0 excludes rows that can't represent real practice (e.g. a 0-question attempt) --
+    # without it, a student could keep a streak/week-activity dot alive indefinitely by submitting
+    # a score=0,total=0 result once a day with no actual questions answered. Harmless to anyone but
+    # themselves, but it undermines what streak/week-activity are supposed to represent. Found in
+    # the 38th audit round.
     rows = conn.execute(
-        "SELECT DISTINCT date(saved_at) AS d FROM attempt_results WHERE user_id = ? "
-        "UNION SELECT DISTINCT date(saved_at) AS d FROM ridl_results WHERE user_id = ?",
+        "SELECT DISTINCT date(saved_at) AS d FROM attempt_results WHERE user_id = ? AND total > 0 "
+        "UNION SELECT DISTINCT date(saved_at) AS d FROM ridl_results WHERE user_id = ? AND total > 0",
         (user_id, user_id)
     ).fetchall()
     # sqlite's date() returns a plain 'YYYY-MM-DD' string; Postgres's date() returns a native
@@ -2647,6 +2692,24 @@ _PADDLE_STATUS_MAP = {
     "paused": "PAUSED", "canceled": "CANCELED",
 }
 
+def _parse_paddle_ts(value):
+    """Parses a Paddle event's occurred_at (or a subscription_last_event_at value read back from
+    the DB, which comes back as a datetime from Postgres but a plain string from SQLite) into an
+    aware UTC datetime. Returns None for anything missing or unparseable, rather than raising --
+    callers treat None as "can't compare, don't block the update" so a webhook payload that's
+    missing/malformed in this one field never gets stuck unable to apply at all."""
+    if value is None:
+        return None
+    if isinstance(value, datetime):
+        return value if value.tzinfo else value.replace(tzinfo=timezone.utc)
+    if isinstance(value, str):
+        try:
+            dt = datetime.fromisoformat(value)
+        except ValueError:
+            return None
+        return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+    return None
+
 @app.post("/api/subscription/webhook")
 async def paddle_webhook(request: Request):
     """Paddle POSTs here (no Authorization header -- verified via the Paddle-Signature header
@@ -2745,6 +2808,12 @@ async def paddle_webhook(request: Request):
     period_end = ((data.get("current_billing_period") or {}).get("ends_at"))
     custom_data = data.get("custom_data") or {}
     user_id = custom_data.get("user_id")
+    # Paddle does not guarantee in-order delivery -- retries/queueing on their end can mean a
+    # stale event for this subscription arrives AFTER a newer one already landed (e.g. a delayed
+    # "still active" delivery showing up after a "canceled" one already processed). occurred_at is
+    # each event's own timestamp of when it actually happened (not when it was delivered), used
+    # below to detect and skip exactly that case. Found in the 38th audit round.
+    occurred_at = event.get("occurred_at")
 
     # The DB work below is synchronous (sqlite3, or a real network round-trip to Postgres in
     # production via psycopg2) and was previously run directly inside this `async def` coroutine --
@@ -2766,10 +2835,15 @@ async def paddle_webhook(request: Request):
                 except (TypeError, ValueError):
                     print(f"[paddle webhook] subscription.created with non-numeric custom_data.user_id={user_id!r} -- subscription_id={subscription_id}. Cannot link to a user; premium was NOT granted.", flush=True)
                     raise HTTPException(status_code=400, detail="Invalid custom_data.user_id on subscription.created")
+                # subscription.created is, by definition, the first event Paddle can ever send for
+                # this subscription_id -- there's no earlier state on this row to be stale relative
+                # to, so it's applied unconditionally (no _parse_paddle_ts staleness check here,
+                # unlike the `else` branch below).
                 cur = conn.execute(
                     "UPDATE users SET paddle_customer_id = ?, paddle_subscription_id = ?, "
-                    "subscription_status = ?, subscription_current_period_end = COALESCE(?, subscription_current_period_end) WHERE id = ?",
-                    (customer_id, subscription_id, status, period_end, user_id_int),
+                    "subscription_status = ?, subscription_current_period_end = COALESCE(?, subscription_current_period_end), "
+                    "subscription_last_event_at = COALESCE(?, subscription_last_event_at) WHERE id = ?",
+                    (customer_id, subscription_id, status, period_end, occurred_at, user_id_int),
                 )
                 if cur.rowcount == 0:
                     # user_id was present and numeric but didn't match any real account (stale/deleted
@@ -2789,20 +2863,38 @@ async def paddle_webhook(request: Request):
                 print(f"[paddle webhook] subscription.created with no custom_data.user_id -- subscription_id={subscription_id} customer_id={customer_id}. Cannot link to a user; premium was NOT granted.", flush=True)
                 raise HTTPException(status_code=400, detail="Missing custom_data.user_id on subscription.created")
             else:
-                # COALESCE(?, subscription_current_period_end) -- not a plain overwrite -- because
-                # some subscription.* event payloads omit current_billing_period.ends_at entirely,
-                # which would otherwise null out a previously-correct future period end. That value
-                # feeds has_active_subscription()'s own staleness backstop (a grace period past the
-                # last known period end, for when a cancellation webhook is ever missed) -- nulling
-                # it out here would quietly disarm that backstop for this user until some later
-                # event happens to carry a real ends_at. Found in the 32nd audit round.
-                cur = conn.execute(
-                    "UPDATE users SET subscription_status = ?, subscription_current_period_end = COALESCE(?, subscription_current_period_end) "
-                    "WHERE paddle_subscription_id = ?",
-                    (status, period_end, subscription_id),
-                )
-                if cur.rowcount == 0:
-                    print(f"[paddle webhook] {event_type} matched no user for subscription_id={subscription_id} -- no row has this paddle_subscription_id yet.", flush=True)
+                # Paddle doesn't guarantee delivery order -- a delayed, now-stale event for this
+                # subscription could otherwise land AFTER a newer one already applied (e.g. a
+                # slow-to-arrive "still active" showing up after a "canceled" already processed),
+                # silently resurrecting or clobbering the correct state. Compare against the
+                # occurred_at of whatever event was last actually applied to this row and skip if
+                # this one isn't newer; a missing/unparseable timestamp on either side (None from
+                # _parse_paddle_ts) is treated as "can't prove staleness" and applied anyway, same
+                # as before this check existed. Found in the 38th audit round.
+                existing = conn.execute(
+                    "SELECT subscription_last_event_at FROM users WHERE paddle_subscription_id = ?",
+                    (subscription_id,),
+                ).fetchone()
+                new_dt = _parse_paddle_ts(occurred_at)
+                existing_dt = _parse_paddle_ts(existing["subscription_last_event_at"]) if existing else None
+                if existing and new_dt is not None and existing_dt is not None and existing_dt >= new_dt:
+                    print(f"[paddle webhook] ignoring stale {event_type} for subscription_id={subscription_id}: occurred_at={occurred_at} is not newer than last applied event at {existing['subscription_last_event_at']}", flush=True)
+                else:
+                    # COALESCE(?, subscription_current_period_end) -- not a plain overwrite -- because
+                    # some subscription.* event payloads omit current_billing_period.ends_at entirely,
+                    # which would otherwise null out a previously-correct future period end. That value
+                    # feeds has_active_subscription()'s own staleness backstop (a grace period past the
+                    # last known period end, for when a cancellation webhook is ever missed) -- nulling
+                    # it out here would quietly disarm that backstop for this user until some later
+                    # event happens to carry a real ends_at. Found in the 32nd audit round.
+                    cur = conn.execute(
+                        "UPDATE users SET subscription_status = ?, subscription_current_period_end = COALESCE(?, subscription_current_period_end), "
+                        "subscription_last_event_at = COALESCE(?, subscription_last_event_at) "
+                        "WHERE paddle_subscription_id = ?",
+                        (status, period_end, occurred_at, subscription_id),
+                    )
+                    if cur.rowcount == 0:
+                        print(f"[paddle webhook] {event_type} matched no user for subscription_id={subscription_id} -- no row has this paddle_subscription_id yet.", flush=True)
             conn.commit()
         finally:
             conn.close()
