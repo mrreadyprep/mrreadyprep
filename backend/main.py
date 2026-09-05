@@ -57,17 +57,6 @@ import weakref
 
 app = FastAPI(title="mrreadyprep API", version="2026")
 
-# CORS ayarları -- CORS_ALLOWED_ORIGINS can be a comma-separated list of extra origins (e.g. the
-# production frontend domain once deployed). localhost:5173 is always allowed for local dev.
-_extra_origins = [o.strip() for o in os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",") if o.strip()]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:5173"] + _extra_origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 # Standard defense-in-depth response headers -- none of these were set anywhere before, so every
 # response (API JSON, streamed audio, everything) went out with browser defaults. Applied via a
 # plain middleware function (not a dedicated package) so there's no new dependency to pin/audit.
@@ -124,6 +113,31 @@ async def _pre_auth_body_size_limit(request: Request, call_next):
             if too_large:
                 return JSONResponse(status_code=413, content={"detail": "Payload too large"})
     return await call_next(request)
+
+# CORS ayarları -- CORS_ALLOWED_ORIGINS can be a comma-separated list of extra origins (e.g. the
+# production frontend domain once deployed). localhost:5173 is always allowed for local dev.
+#
+# Registered LAST (after the two @app.middleware("http") functions above), not first -- this is
+# deliberate, not incidental. Starlette wraps middleware in the reverse of registration order, so
+# the LAST middleware added ends up OUTERMOST (the first to see an incoming request, and the last
+# to see its response) while the FIRST-added ends up innermost, right next to routing. This used to
+# be registered first (making it innermost), which meant _pre_auth_body_size_limit's early-return
+# 413 responses (see above -- it returns directly instead of calling call_next when a body is too
+# large) never actually reached CORSMiddleware, so the response went out with no
+# Access-Control-Allow-Origin header at all. A browser enforces CORS on the *response*, not just
+# the request, so the frontend (a different origin, mrreadyprep.com vs. api.mrreadyprep.com) saw
+# that as an opaque network/CORS failure instead of the actual 413 "Payload too large" -- same
+# root cause would hit any future middleware that short-circuits before call_next(). Registering
+# CORS last -- outermost -- guarantees every response, short-circuited or not, passes through it.
+# Found in the 39th audit round.
+_extra_origins = [o.strip() for o in os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",") if o.strip()]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"] + _extra_origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # ============================================================
 # AUTH CONFIG
@@ -1169,6 +1183,20 @@ def init_db():
     # at low user counts, but with no index they'd become full table scans as the user base grows.
     conn.execute("CREATE INDEX IF NOT EXISTS idx_users_password_reset_token ON users(password_reset_token)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_users_verification_token ON users(verification_token)")
+    # paddle_webhook()'ün her subscription.* event'i (creation dışında) WHERE paddle_subscription_id
+    # = ? ile eşleştirdiği kolon -- index'siz her webhook UPDATE'i tam tablo taraması yapıyordu.
+    # UNIQUE olarak da tanımlandı: şema seviyesinde hiçbir şey iki farklı hesabın aynı
+    # paddle_subscription_id'yi taşımasını engellemiyordu -- öyle bir durum oluşsaydı (kod hatası,
+    # elle DB müdahalesi), tek bir Paddle event'i sessizce iki hesabı birden güncelleyebilirdi.
+    # UNIQUE + NULL: hem SQLite hem Postgres birden fazla NULL'a izin verir, bu yüzden henüz Paddle
+    # aboneliği olmayan (paddle_subscription_id NULL) satırlar arasında çakışma olmaz. try/except ile
+    # sarılı -- gerçek üretimde bugüne kadar hiç canlı Paddle aboneliği işlenmediği için (bkz. görev
+    # #263) bunun başarısız olması beklenmiyor, ama var olan bir çakışma yüzünden tüm backend'in
+    # başlangıçta çökmesindense bunu loglayıp devam etmek daha güvenli. Found in the 39th audit round.
+    try:
+        conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_paddle_subscription_id ON users(paddle_subscription_id)")
+    except Exception as e:
+        print(f"[startup] Could not create unique index on users.paddle_subscription_id (likely pre-existing duplicate data): {e}", flush=True)
 
     # Which vocab words each student has personally marked as learned.
     conn.execute("""
@@ -2877,7 +2905,14 @@ async def paddle_webhook(request: Request):
                 ).fetchone()
                 new_dt = _parse_paddle_ts(occurred_at)
                 existing_dt = _parse_paddle_ts(existing["subscription_last_event_at"]) if existing else None
-                if existing and new_dt is not None and existing_dt is not None and existing_dt >= new_dt:
+                # Strictly greater-than, not >= -- two genuinely different events can legitimately
+                # share the same occurred_at (Paddle's timestamps aren't guaranteed sub-second-unique
+                # across separate notifications). >= would silently drop a second, real event that
+                # happens to tie on timestamp with the first; a same-event retry landing here also
+                # ties, but re-applying identical status/period_end values is a harmless no-op
+                # (this UPDATE was already idempotent for exact retries before this check existed).
+                # Found in the 39th audit round.
+                if existing and new_dt is not None and existing_dt is not None and existing_dt > new_dt:
                     print(f"[paddle webhook] ignoring stale {event_type} for subscription_id={subscription_id}: occurred_at={occurred_at} is not newer than last applied event at {existing['subscription_last_event_at']}", flush=True)
                 else:
                     # COALESCE(?, subscription_current_period_end) -- not a plain overwrite -- because

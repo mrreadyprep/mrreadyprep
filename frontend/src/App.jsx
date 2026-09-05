@@ -1014,6 +1014,25 @@ function apiFetch(url, options = {}) {
   })
 }
 
+// Every error path in this file that reads a failed response's `data.detail` assumed it's always
+// a plain string -- true for every HTTPException this backend raises by hand, but NOT true for
+// FastAPI's own automatic 422 response when a Pydantic field fails validation (e.g. a username or
+// password longer than the backend's max_length): in that case `detail` is an ARRAY of
+// {type, loc, msg, ...} objects, not a string. `data.detail || fallback` still passes that array
+// straight through as a truthy value, and the call site (new Error(...), setError(...), a toast)
+// ends up rendering the literal text "[object Object]" (or, for an Error's message, the array's
+// default toString) instead of anything a student could act on. Pulls the first validation
+// message out when that's the shape; falls back to the given default for anything else
+// (undefined, null, an already-fine string). Found in the 39th audit round.
+function extractErrorMessage(data, fallback) {
+  const detail = data && data.detail
+  if (typeof detail === 'string' && detail) return detail
+  if (Array.isArray(detail) && detail.length && typeof detail[0] === 'object' && detail[0] && typeof detail[0].msg === 'string') {
+    return detail[0].msg
+  }
+  return fallback
+}
+
 // ─── Subscription / paywall (Paddle) ─────────────────────────────────────────────────────────
 // A list item whose full content was stripped server-side (see gate_pool in main.py) comes back
 // as just { id, ...a couple of title-ish fields, locked: true } instead of the real exercise.
@@ -1172,7 +1191,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
       .then(([Paddle, data]) => {
         setBusy(false)
         if (!data.transaction_id) {
-          setError(data.detail || 'Could not start checkout. Please try again.')
+          setError(extractErrorMessage(data, 'Could not start checkout. Please try again.'))
           return
         }
         Paddle.Checkout.open({ transactionId: data.transaction_id })
@@ -1191,7 +1210,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
       .then(data => {
         setBusy(false)
         if (data.status === 'success') { showToast('Subscription canceled.'); setTimeout(() => window.location.reload(), 1200) }
-        else setError(data.detail || 'Could not cancel subscription.')
+        else setError(extractErrorMessage(data, 'Could not cancel subscription.'))
       })
       .catch(() => { setBusy(false); setError('Could not reach the server. Please try again.') })
   }
@@ -9347,7 +9366,7 @@ function AuthScreen({ onAuthSuccess }) {
       body: JSON.stringify({ id_token: response.credential }),
     }).then(async res => {
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.detail || 'Google sign-in failed. Please try again.')
+      if (!res.ok) throw new Error(extractErrorMessage(data, 'Google sign-in failed. Please try again.'))
       return data
     }).then(data => {
       clearAllDrafts()
@@ -9416,7 +9435,7 @@ function AuthScreen({ onAuthSuccess }) {
         body: JSON.stringify({ email: email.trim() }),
       }).then(async res => {
         const data = await res.json().catch(() => ({}))
-        if (!res.ok) throw new Error(data.detail || 'Something went wrong. Please try again.')
+        if (!res.ok) throw new Error(extractErrorMessage(data, 'Something went wrong. Please try again.'))
         setNotice("If an account exists for that email, we've sent a password reset link. Check your inbox.")
       }).catch(err => setError(err.message)).finally(() => setLoading(false))
       return
@@ -9432,7 +9451,7 @@ function AuthScreen({ onAuthSuccess }) {
         body: JSON.stringify({ token: resetToken, new_password: password }),
       }).then(async res => {
         const data = await res.json().catch(() => ({}))
-        if (!res.ok) throw new Error(data.detail || 'Something went wrong. Please try again.')
+        if (!res.ok) throw new Error(extractErrorMessage(data, 'Something went wrong. Please try again.'))
         setNotice('Your password has been updated. You can now log in below.')
         setPassword(''); setConfirmPassword(''); setMode('login')
       }).catch(err => setError(err.message)).finally(() => setLoading(false))
@@ -9462,7 +9481,7 @@ function AuthScreen({ onAuthSuccess }) {
       body: JSON.stringify(body),
     }).then(async res => {
       const data = await res.json().catch(() => ({}))
-      if (!res.ok) throw new Error(data.detail || 'Something went wrong. Please try again.')
+      if (!res.ok) throw new Error(extractErrorMessage(data, 'Something went wrong. Please try again.'))
       return data
     }).then(data => {
       clearAllDrafts()
@@ -9508,7 +9527,7 @@ function AuthScreen({ onAuthSuccess }) {
             {mode === 'signup' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                 <label style={labelStyle} htmlFor="auth-username">Username</label>
-                <input id="auth-username" type="text" autoComplete="username" value={username} onChange={e => setUsername(e.target.value)} style={inputStyle} required />
+                <input id="auth-username" type="text" autoComplete="username" value={username} onChange={e => setUsername(e.target.value)} style={inputStyle} required maxLength={50} />
               </div>
             )}
             {(mode === 'login' || mode === 'signup' || mode === 'forgot') && (
@@ -9520,7 +9539,7 @@ function AuthScreen({ onAuthSuccess }) {
             {(mode === 'login' || mode === 'signup' || mode === 'reset') && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                 <label style={labelStyle} htmlFor="auth-password">{mode === 'reset' ? 'New Password' : 'Password'}</label>
-                <input id="auth-password" type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} required minLength={mode === 'signup' || mode === 'reset' ? 8 : undefined} />
+                <input id="auth-password" type="password" autoComplete={mode === 'login' ? 'current-password' : 'new-password'} value={password} onChange={e => setPassword(e.target.value)} style={inputStyle} required minLength={mode === 'signup' || mode === 'reset' ? 8 : undefined} maxLength={256} />
               </div>
             )}
             {mode === 'login' && (
@@ -9532,7 +9551,7 @@ function AuthScreen({ onAuthSuccess }) {
             {(mode === 'signup' || mode === 'reset') && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                 <label style={labelStyle} htmlFor="auth-confirm-password">Confirm Password</label>
-                <input id="auth-confirm-password" type="password" autoComplete="new-password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} style={inputStyle} required />
+                <input id="auth-confirm-password" type="password" autoComplete="new-password" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} style={inputStyle} required maxLength={256} />
               </div>
             )}
 
@@ -9671,7 +9690,7 @@ function AdminPanel() {
       .then(({ ok, data }) => {
         if (!mountedRef.current) return
         if (ok) { showToast(action === 'grant' ? 'Premium granted.' : 'Premium revoked.'); load() }
-        else showToast(data.detail || 'Action failed.', 'error')
+        else showToast(extractErrorMessage(data, 'Action failed.'), 'error')
       })
       .catch(() => { if (mountedRef.current) showToast('Action failed.', 'error') })
       .finally(() => { if (mountedRef.current) setBusyId(null) })
@@ -10162,6 +10181,16 @@ function Vocabulary() {
 function App() {
   const isMobile = useIsMobile()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  // The mobile off-canvas sidebar's backdrop is otherwise mouse/touch-only to dismiss; add
+  // Escape-to-close so keyboard users have a way out too, matching ConfirmModal/ExitConfirmModal's
+  // existing Escape support. Only listens while the drawer is actually open. Found in the 39th
+  // audit round.
+  useEffect(() => {
+    if (!mobileNavOpen) return
+    const onKey = e => { if (e.key === 'Escape') setMobileNavOpen(false) }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [mobileNavOpen])
   // Browsers (Safari in particular) block audio.play() unless it happens inside a genuine
   // user gesture. Listening/Speaking audio auto-plays a moment after the screen renders
   // (AUDIO_START_DELAY_MS), which is not itself a gesture, so the very first attempt can be
@@ -10341,17 +10370,22 @@ function App() {
     return Math.min(6, Math.max(0, Math.round(n * 2) / 2))
   }
 
-  // Settings tab: the profile/target fields above double as this form's local edit buffer, and
-  // the effect near fetchDashboardData() re-syncs them from the server every time the student
-  // lands back on the Settings (or Dashboard) tab. If the student edits a field here and then
-  // clicks any other sidebar item without clicking "Save Changes" first, the edit is silently
-  // discarded with no warning -- unlike every exercise/mock-test screen in the app, which all push
-  // this same exit guard (see _pushExitGuard) the moment there's unsaved work in progress. Scoped
-  // to currentTab === 'settings' specifically so it doesn't double up with the Dashboard's own
-  // inline "Edit targets" panel, which already reverts its own local state on Close (25th/32nd
-  // audit rounds). Found in the 38th audit round.
+  // Settings tab (and the Dashboard's inline "Edit targets" panel): the profile/target fields
+  // above double as both forms' local edit buffer, and the effect near fetchDashboardData()
+  // re-syncs them from the server every time the student lands back on the Settings/Dashboard tab.
+  // If the student edits a field and then clicks any OTHER sidebar item (Reading, Log Out, ...)
+  // without clicking "Save Changes"/"Close" first, the edit used to be silently discarded with no
+  // warning -- unlike every exercise/mock-test screen in the app, which all push this same exit
+  // guard (see _pushExitGuard) the moment there's unsaved work in progress. Settings alone was
+  // covered in the 38th audit round; the Dashboard panel was still missing it (its own Close
+  // button already reverts local state on a deliberate Close -- 25th/32nd rounds -- but that
+  // never covered navigating away WITHOUT clicking Close, which this effect now also catches, via
+  // the same dirty check, since both forms share the exact same state variables). Found in the
+  // 39th audit round.
   useEffect(() => {
-    if (currentTab !== 'settings' || !userData) return
+    const onSettings = currentTab === 'settings'
+    const onDashboardEditingTargets = currentTab === 'dashboard' && editingTargets
+    if ((!onSettings && !onDashboardEditingTargets) || !userData) return
     const dirty = profileName !== (userData.username || '') ||
       clampOverallTarget(targetScore) !== clampOverallTarget(userData.target_score) ||
       clampTarget(readingTarget) !== clampTarget(userData.reading_target ?? 6.0) ||
@@ -10361,7 +10395,7 @@ function App() {
     if (!dirty) return
     _pushExitGuard()
     return () => _popExitGuard()
-  }, [currentTab, userData, profileName, targetScore, readingTarget, listeningTarget, writingTarget, speakingTarget])
+  }, [currentTab, editingTargets, userData, profileName, targetScore, readingTarget, listeningTarget, writingTarget, speakingTarget])
 
   const handleProfileSave = (e) => {
     e.preventDefault()
@@ -10385,7 +10419,7 @@ function App() {
     setResendingVerification(true)
     apiFetch(`${BACKEND_URL}/api/auth/resend-verification-email`, { method: 'POST' })
       .then(res => res.json().then(data => ({ ok: res.ok, data })))
-      .then(({ ok, data }) => showToast(ok ? (data.message || 'Verification email sent.') : (data.detail || 'Could not send verification email.'), ok ? 'success' : 'error'))
+      .then(({ ok, data }) => showToast(ok ? (data.message || 'Verification email sent.') : (extractErrorMessage(data, 'Could not send verification email.')), ok ? 'success' : 'error'))
       .catch(() => showToast('Could not send verification email.', 'error'))
       .finally(() => setResendingVerification(false))
   }
@@ -10463,9 +10497,14 @@ function App() {
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#f4f6fa', overflow: 'hidden', boxSizing: 'border-box' }}>
       {/* Backdrop behind the off-canvas sidebar on mobile -- tapping it closes the drawer, same
-          as tapping outside any slide-in menu. Only exists in the DOM while open. */}
+          as tapping outside any slide-in menu. Only exists in the DOM while open. Made keyboard-
+          accessible (role="button"/tabIndex/onKeyDown) and Escape-dismissible (see the useEffect
+          near mobileNavOpen's declaration) to match ConfirmModal/ExitConfirmModal's existing
+          Escape support elsewhere in the app -- found in the 39th audit round. */}
       {isMobile && mobileNavOpen && (
-        <div onClick={() => setMobileNavOpen(false)} style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 998 }} />
+        <div onClick={() => setMobileNavOpen(false)} role="button" tabIndex={0} aria-label="Close menu"
+          onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setMobileNavOpen(false) } }}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 998 }} />
       )}
 
       {/* SIDEBAR -- on desktop this sits in normal flex flow at a fixed 200px. On mobile it's
@@ -10902,7 +10941,7 @@ function App() {
               <form onSubmit={handleProfileSave} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-username">Username</label>
-                  <input id="settings-username" type="text" autoComplete="username" value={profileName} onChange={e => setProfileName(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
+                  <input id="settings-username" type="text" autoComplete="username" value={profileName} onChange={e => setProfileName(e.target.value)} maxLength={50} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-target-score">Target Score (0.0 - 6.0)</label>
@@ -11080,7 +11119,7 @@ function AuthGate() {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token }),
     }).then(res => res.json().then(data => ({ ok: res.ok, data })))
-      .then(({ ok, data }) => showToast(ok ? (data.message || 'Your email has been verified.') : (data.detail || 'This verification link is invalid or has expired.'), ok ? 'success' : 'error'))
+      .then(({ ok, data }) => showToast(ok ? (data.message || 'Your email has been verified.') : (extractErrorMessage(data, 'This verification link is invalid or has expired.')), ok ? 'success' : 'error'))
       .catch(() => showToast('Could not verify your email right now.', 'error'))
   }, [])
 
