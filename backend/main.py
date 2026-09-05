@@ -11,6 +11,7 @@ import hashlib
 import html as _html
 import hmac
 import json
+import math
 import os
 import re
 import secrets
@@ -101,13 +102,31 @@ _PRE_AUTH_BODY_LIMIT_PATHS = {
 }
 _PRE_AUTH_BODY_LIMIT_BYTES = 20_000
 
+# General-purpose backstop for every OTHER POST/PUT endpoint, i.e. the authenticated (JWT-gated)
+# ones -- results/save, reading/save-result, profile/update, mock/mark-seen, vocab star/learned,
+# etc. These weren't covered by the pre-auth check above (that one was deliberately scoped tight,
+# see its comment), which meant _check_api_throttle's per-account request-*count* limit was the
+# only backstop -- it bounds how many requests an account can make, not how large any single one
+# of those requests can be, so a single logged-in (even unverified-email) account could still send
+# a small number of very large bodies per window and get them fully buffered into memory by
+# Starlette/Pydantic before any handler-level validation (e.g. a Field max_length) gets a chance to
+# reject it. Set well above the pre-auth ceiling -- SaveAttemptResultRequest's `detail` field alone
+# is allowed up to 20,000 chars and MockMarkSeenRequest's `item_ids` can hold 200 entries -- so a
+# real request from the actual frontend can never come close, while still bounding the worst case
+# to a two-digit KB count instead of whatever a client chooses to send. Found in the 41st audit
+# round: the pre-auth-only scope of the original check left every authenticated write endpoint
+# with no body-size ceiling at all.
+_GENERAL_BODY_LIMIT_BYTES = 200_000
+
 @app.middleware("http")
 async def _pre_auth_body_size_limit(request: Request, call_next):
-    if request.method == "POST" and request.url.path in _PRE_AUTH_BODY_LIMIT_PATHS:
+    if request.method in ("POST", "PUT"):
+        in_pre_auth_set = request.url.path in _PRE_AUTH_BODY_LIMIT_PATHS
+        limit = _PRE_AUTH_BODY_LIMIT_BYTES if in_pre_auth_set else _GENERAL_BODY_LIMIT_BYTES
         content_length = request.headers.get("content-length")
         if content_length:
             try:
-                too_large = int(content_length) > _PRE_AUTH_BODY_LIMIT_BYTES
+                too_large = int(content_length) > limit
             except ValueError:
                 too_large = False  # malformed header -- let normal request handling surface its own error
             if too_large:
@@ -131,9 +150,16 @@ async def _pre_auth_body_size_limit(request: Request, call_next):
 # CORS last -- outermost -- guarantees every response, short-circuited or not, passes through it.
 # Found in the 39th audit round.
 _extra_origins = [o.strip() for o in os.environ.get("CORS_ALLOWED_ORIGINS", "").split(",") if o.strip()]
+# localhost:5173 (the Vite dev server) is only added outside of Render -- same RENDER-var check the
+# /audio static mount already uses just below. Auth here is Bearer-token-based, not cookie-based,
+# so allow_credentials=True trusting a dev origin in production was never a real attack surface
+# (there's no ambient cookie for a malicious localhost:5173 page to ride along on), but it's an
+# unnecessary standing trust grant with no purpose in production nonetheless -- no real student's
+# browser is ever actually running anything on localhost:5173. Found in the 41st audit round.
+_dev_origins = [] if os.environ.get("RENDER") else ["http://localhost:5173"]
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"] + _extra_origins,
+    allow_origins=_dev_origins + _extra_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -353,6 +379,19 @@ def _ridl_free_id(data) -> int:
         if t in by_type:
             return by_type[t].get("id", FREE_ITEM_ID)
     return FREE_ITEM_ID
+
+# Python's built-in round() uses "round half to even" (banker's rounding) on exact .5 boundaries,
+# e.g. round(12.5) == 12 and round(37.5) == 38 -- correct for statistical work, but produces
+# percentage displays that look inconsistent to a student comparing two attempts that happen to
+# land on a .5 boundary (1/8 -> 12.5% shown as 12%, 3/8 -> 37.5% shown as 38%, with no visible
+# pattern to why one rounds down and the other up). Used everywhere a score/total is turned into a
+# whole-number pct for display (save_ridl_result, save_attempt_result) so every score->pct
+# conversion in this file rounds .5 the way a student actually expects (always up). Found in the
+# 41st audit round.
+def _round_half_up_pct(score, total) -> int:
+    if total <= 0:
+        return 0
+    return math.floor((score / total) * 100 + 0.5)
 
 # Fields worth keeping on a locked list item so the browsing/list screen can still show a
 # meaningful title/topic under the lock icon, without leaking the actual exercise content
@@ -3184,7 +3223,17 @@ def get_ridl_passages(user=Depends(get_current_user_optional)):
 def save_ridl_result(data: RIDLResult, user=Depends(get_current_user)):
     if data.score > data.total:
         raise HTTPException(status_code=400, detail="score cannot exceed total")
-    pct = round((data.score / data.total) * 100) if data.total > 0 else 0
+    # Bound passage_id to a real passage in the RIDL pool, the same way mark_mock_seen() bounds
+    # item_ids against _pool_all_ids() -- without this, a forged passage_id (any int in
+    # RIDLResult's ge=0/le=100000 range) would insert a row that compute_streak_and_week_activity's
+    # `total > 0` filter (round 38) can't catch, since a fabricated result can trivially set
+    # total > 0 too. That filter was added specifically to stop meaningless 0/0 submissions from
+    # padding a student's streak; an unvalidated passage_id left a second, equally easy way to
+    # fabricate streak-qualifying activity with zero real practice. Found in the 41st audit round.
+    valid_ridl_ids = {int(item["id"]) for item in _cached_pool("ridl", lambda: _load_json_pool(RIDL_FILE))}
+    if data.passage_id not in valid_ridl_ids:
+        raise HTTPException(status_code=400, detail="Unknown passage_id")
+    pct = _round_half_up_pct(data.score, data.total)
     conn = get_db()
     try:
         conn.execute("""
@@ -3311,7 +3360,7 @@ def save_attempt_result(data: AttemptResult, user=Depends(get_current_user)):
         raise HTTPException(status_code=400, detail="unknown category")
     if data.score > data.total:
         raise HTTPException(status_code=400, detail="score cannot exceed total")
-    pct = round((data.score / data.total) * 100) if data.total > 0 else 0
+    pct = _round_half_up_pct(data.score, data.total)
     conn = get_db()
     try:
         conn.execute("""

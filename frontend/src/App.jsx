@@ -121,6 +121,47 @@ function clearAllDrafts() {
   } catch { /* ignore */ }
 }
 
+// Traps Tab/Shift+Tab focus inside a modal's DOM subtree for as long as it's mounted, and returns
+// focus to whatever element had it right before the modal opened once it unmounts. Every
+// full-screen-backdrop overlay in the app (ExitConfirmModal, ConfirmModal, MicPermissionGate,
+// MicVolumeCheckModal) already has role="dialog"/aria-modal + Escape support, but none of them
+// actually removed the page behind them from the DOM or marked it inert -- just visually covered
+// it -- so a keyboard user holding Tab could tab straight past the dialog's own buttons and back
+// into the (invisible but still focusable/clickable) page underneath. Attach the returned ref to
+// the dialog's own outer DOM node. Found in the 41st audit round.
+function useFocusTrap() {
+  const containerRef = useRef(null)
+  useEffect(() => {
+    const previouslyFocused = document.activeElement
+    const onKeyDown = (e) => {
+      if (e.key !== 'Tab' || !containerRef.current) return
+      const focusable = containerRef.current.querySelectorAll(
+        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      )
+      const list = Array.from(focusable).filter(el => !el.disabled && el.offsetParent !== null)
+      if (list.length === 0) return
+      const first = list[0]
+      const last = list[list.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => {
+      document.removeEventListener('keydown', onKeyDown)
+      // Guard with `.focus` -- previouslyFocused can be document.body (has no meaningful focus
+      // state to restore) or, rarely, an element that's since been unmounted along with whatever
+      // screen was showing before this modal opened.
+      if (previouslyFocused && typeof previouslyFocused.focus === 'function') previouslyFocused.focus()
+    }
+  }, [])
+  return containerRef
+}
+
 // Styled replacement for a native window.confirm() -- offers to save the student's in-progress
 // answers before leaving, discard them, or cancel and keep practicing. `canSave=false` is for
 // exercise types with nothing meaningful to persist (e.g. live audio recordings in Speaking),
@@ -133,9 +174,10 @@ function ExitConfirmModal({ onSave, onDiscard, onCancel, canSave = true }) {
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [onCancel])
+  const trapRef = useFocusTrap()
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
-      <div role="dialog" aria-modal="true" aria-label="Exit this exercise?" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Exit this exercise?" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Exit this exercise?</div>
         <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>
           {canSave
@@ -147,7 +189,10 @@ function ExitConfirmModal({ onSave, onDiscard, onCancel, canSave = true }) {
             <button autoFocus onClick={onSave} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save & exit</button>
           )}
           <button onClick={onDiscard} style={{ background: canSave ? '#fff' : '#2ac56c', color: canSave ? '#616473' : '#fff', border: canSave ? '1px solid #d1d5db' : 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>{canSave ? 'Discard & exit' : 'Exit'}</button>
-          <button onClick={onCancel} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', padding: '6px', cursor: 'pointer' }}>Keep practicing</button>
+          {/* color: #6b7280 (was #9ca3af, ~2.5:1 contrast on white -- below WCAG AA's 4.5:1 for
+              real text) -- this is a genuine clickable action ("Keep practicing"), not decorative
+              text, so it needs to actually be readable. Found in the 41st audit round. */}
+          <button onClick={onCancel} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: '12px', padding: '6px', cursor: 'pointer' }}>Keep practicing</button>
         </div>
       </div>
     </div>
@@ -163,14 +208,16 @@ function ConfirmModal({ title, message, confirmLabel = 'Confirm', cancelLabel = 
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [onCancel])
+  const trapRef = useFocusTrap()
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
-      <div role="dialog" aria-modal="true" aria-label={title} style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-label={title} style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>{title}</div>
         <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>{message}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <button autoFocus onClick={onConfirm} style={{ background: danger ? '#d92d20' : '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>{confirmLabel}</button>
-          <button onClick={onCancel} style={{ background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', padding: '6px', cursor: 'pointer' }}>{cancelLabel}</button>
+          {/* color: #6b7280, same WCAG AA contrast fix as ExitConfirmModal's "Keep practicing" above. */}
+          <button onClick={onCancel} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: '12px', padding: '6px', cursor: 'pointer' }}>{cancelLabel}</button>
         </div>
       </div>
     </div>
@@ -1152,6 +1199,11 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [showCancelConfirm, setShowCancelConfirm] = useState(false)
+  // Guards the checkout.completed poll below against firing after this screen has unmounted --
+  // see its own comment for why that matters. A plain ref (not state) since it's read inside
+  // setTimeout callbacks that outlive any single render.
+  const mountedRef = useRef(true)
+  useEffect(() => () => { mountedRef.current = false }, [])
 
   // Fires when the Paddle overlay reports the checkout finished. This is a UI hint only -- the
   // real subscription activation happens server-side via the /api/subscription/webhook Paddle
@@ -1162,8 +1214,17 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
       showToast('Payment received! Activating your Premium access…', 'info')
       let attempts = 0
       const poll = () => {
+        // mountedRef check first thing in both branches below -- without this, a student who
+        // closes the Paddle overlay right after paying and immediately navigates elsewhere in
+        // the app (Dashboard, an exercise) could have this background poll chain fire
+        // window.location.reload() or a toast from a completely different screen moments later,
+        // out of nowhere -- the poll has no cleanup tied to SubscribeScreen's own lifecycle, so it
+        // kept running (and could still act on the page) long after the component that started it
+        // was gone. Found in the 41st audit round.
+        if (!mountedRef.current) return
         attempts += 1
         apiFetch(`${BACKEND_URL}/api/subscription/status`).then(res => res.json()).then(data => {
+          if (!mountedRef.current) return
           if (data.has_premium) { showToast('Subscription successful! You now have full Premium access.'); window.location.reload() }
           else if (attempts < 8) setTimeout(poll, 1500)
           // Found in the 29th audit round: after the 8th attempt (12s) with no has_premium yet,
@@ -1175,6 +1236,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
           // /api/subscription/status fresh) instead of leaving them guessing.
           else showToast("Still activating your Premium access -- this can take a minute. Refresh the page in a moment, or contact support if it doesn't unlock.", 'error')
         }).catch(() => {
+          if (!mountedRef.current) return
           if (attempts < 8) setTimeout(poll, 1500)
           else showToast("Still activating your Premium access -- this can take a minute. Refresh the page in a moment, or contact support if it doesn't unlock.", 'error')
         })
@@ -5346,8 +5408,9 @@ function MicPermissionGate({ micState, onRetry, onBack }) {
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [onBack])
+  const trapRef = useFocusTrap()
   return (
-    <div style={micGateStyle()} role="dialog" aria-modal="true" aria-label="Microphone access">
+    <div ref={trapRef} style={micGateStyle()} role="dialog" aria-modal="true" aria-label="Microphone access">
       <div style={{ fontSize: '40px' }}>🎙️</div>
       {micState === 'checking' && <div style={{ fontSize: '15px', color: '#616473' }}>Checking microphone access…</div>}
       {micState === 'unsupported' && (
@@ -7638,10 +7701,11 @@ function MicVolumeCheckModal({ onStart, onCancel }) {
 
   const BAR_COUNT = 7
   const activeBars = Math.round(level * BAR_COUNT)
+  const trapRef = useFocusTrap()
 
   return (
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.6)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 30, fontFamily: 'sans-serif' }}>
-      <div role="dialog" aria-modal="true" aria-label="Check Your Microphone Volume" style={{ background: '#fff', borderRadius: '16px', padding: '36px 40px', width: '440px', maxWidth: '90vw', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }}>
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Check Your Microphone Volume" style={{ background: '#fff', borderRadius: '16px', padding: '36px 40px', width: '440px', maxWidth: '90vw', boxShadow: '0 12px 40px rgba(0,0,0,0.25)' }}>
         <h2 style={{ margin: '0 0 22px', fontSize: '19px', fontWeight: '800', color: '#1a1a1a', textAlign: 'center' }}>Check Your Microphone Volume</h2>
         <div style={{ border: '1px solid #e5e7eb', borderRadius: '12px', padding: '20px 24px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px', height: '64px' }}>
@@ -9737,6 +9801,7 @@ function AdminPanel() {
         value={userFilter}
         onChange={e => setUserFilter(e.target.value)}
         placeholder="Search by email or username..."
+        aria-label="Search users by email or username"
         style={{ width: '100%', maxWidth: '360px', padding: '9px 12px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', boxSizing: 'border-box', marginBottom: '12px' }}
       />
       <div style={{ background: '#fff', borderRadius: '14px', border: '0.5px solid #e1e4ed', overflow: 'hidden' }}>
