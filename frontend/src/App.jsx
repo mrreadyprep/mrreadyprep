@@ -4632,7 +4632,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false, paus
           {!isMobile && <div style={{ width: '1px', alignSelf: 'stretch', background: '#e5e7eb', margin: '0 4px' }} />}
 
           <div style={{ flex: isMobile ? '1 1 100%' : '1.4 1 480px', minWidth: isMobile ? '100%' : '360px', paddingLeft: isMobile ? '0' : '36px', marginTop: isMobile ? '20px' : '0' }}>
-            <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '14px' }}>Your Response:</div>
+            <div id="email-response-label" style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '14px' }}>Your Response:</div>
             <div style={{ fontSize: '14px', color: '#1a1a1a', marginBottom: '4px' }}><u>To:</u> {item.recipient}</div>
             <div style={{ fontSize: '14px', color: '#1a1a1a', marginBottom: '14px' }}><u>Subject:</u> {item.subject}</div>
 
@@ -4646,6 +4646,7 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false, paus
               </div>
               <textarea ref={textareaRef} value={body} onChange={handleTextChange} disabled={locked}
                 placeholder={`Dear ${item.recipient},\n\n...`}
+                aria-labelledby="email-response-label"
                 style={{ width: '100%', minHeight: '260px', border: 'none', outline: 'none', resize: 'vertical', padding: '14px', fontSize: '14px', lineHeight: '1.6', fontFamily: 'sans-serif', color: locked ? '#9ca3af' : '#1a1a1a', boxSizing: 'border-box', background: locked ? '#fbfbfc' : '#fff' }} />
             </div>
 
@@ -5088,7 +5089,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
               </div>
             ))}
 
-            <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Your Response:</div>
+            <div id="discussion-response-label" style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Your Response:</div>
             <div style={{ border: '1px solid #d0d5dd', borderRadius: '8px', overflow: 'hidden', background: '#fff' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 10px', borderBottom: '1px solid #e5e7eb', background: '#fafbfc' }}>
                 <button onClick={handleCut} disabled={locked} style={toolbarBtnStyle(locked)}>Cut</button>
@@ -5099,6 +5100,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
               </div>
               <textarea ref={textareaRef} value={body} onChange={handleTextChange} disabled={locked}
                 placeholder="Share your opinion and respond to your classmates..."
+                aria-labelledby="discussion-response-label"
                 style={{ width: '100%', minHeight: '220px', border: 'none', outline: 'none', resize: 'vertical', padding: '14px', fontSize: '14px', lineHeight: '1.6', fontFamily: 'sans-serif', color: locked ? '#9ca3af' : '#1a1a1a', boxSizing: 'border-box', background: locked ? '#fbfbfc' : '#fff' }} />
             </div>
 
@@ -6730,7 +6732,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
               <div style={{ maxWidth: '300px', margin: '0 auto', borderRadius: '10px', overflow: 'hidden', border: '1px solid #d0d5dd' }}>
                 <div style={{ background: '#5b5f6b', color: '#fff', fontSize: '13px', fontWeight: '700', letterSpacing: '0.5px', padding: '10px', textTransform: 'uppercase' }}>Response Time</div>
                 <div style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '18px' }}>
-                  <button onClick={stopRecording} title="Stop recording" style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#d94040', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <button onClick={stopRecording} title="Stop recording" aria-label="Stop recording" style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#d94040', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <span style={{ width: '12px', height: '12px', background: '#fff', borderRadius: '2px', display: 'block' }} />
                   </button>
                   <span style={{ fontSize: '28px', fontWeight: '700', color: '#1a1a1a', fontVariantNumeric: 'tabular-nums' }}>00:00:{String(countdown).padStart(2, '0')}</span>
@@ -7037,7 +7039,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, 
               <div style={{ maxWidth: '300px', margin: '0 auto', borderRadius: '10px', overflow: 'hidden', border: '1px solid #d0d5dd' }}>
                 <div style={{ background: '#5b5f6b', color: '#fff', fontSize: '13px', fontWeight: '700', letterSpacing: '0.5px', padding: '10px', textTransform: 'uppercase' }}>Response Time</div>
                 <div style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '18px' }}>
-                  <button onClick={stopRecording} title="Stop recording" style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#d94040', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                  <button onClick={stopRecording} title="Stop recording" aria-label="Stop recording" style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#d94040', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <span style={{ width: '12px', height: '12px', background: '#fff', borderRadius: '2px', display: 'block' }} />
                   </button>
                   <span style={{ fontSize: '28px', fontWeight: '700', color: '#1a1a1a', fontVariantNumeric: 'tabular-nums' }}>00:00:{String(countdown).padStart(2, '0')}</span>
@@ -7665,6 +7667,7 @@ function MicVolumeCheckModal({ onStart, onCancel }) {
   const [devices, setDevices] = useState([]) // [{deviceId, label}] -- all known audio inputs
   const [selectedDeviceId, setSelectedDeviceId] = useState('') // '' = browser default
   const [pickerOpen, setPickerOpen] = useState(false)
+  const pickerRef = useRef(null) // wraps the "Change Microphone" button + its dropdown, for outside-click detection
   const streamRef = useRef(null)
   const audioCtxRef = useRef(null)
   const rafRef = useRef(null)
@@ -7751,11 +7754,31 @@ function MicVolumeCheckModal({ onStart, onCancel }) {
   // was previously no way out of this modal at all short of abandoning the tab). Falls back to
   // onStart if no onCancel was passed, preserving the original behavior for any other caller.
   useEffect(() => {
-    const onKey = (e) => { if (e.key === 'Escape') { teardown(); if (onCancel) onCancel(); else onStart() } }
+    const onKey = (e) => {
+      if (e.key !== 'Escape') return
+      // If the "Change Microphone" dropdown is open, the first Escape just closes that (matching
+      // the outside-click behavior added alongside this) -- only a second Escape (dropdown already
+      // closed) cancels the whole hardware-check modal. Found in the 43rd audit round: previously
+      // Escape always closed the entire modal even while the dropdown was open, which is surprising
+      // and skips past a state the student was still interacting with.
+      if (pickerOpen) { setPickerOpen(false); return }
+      teardown()
+      if (onCancel) onCancel(); else onStart()
+    }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [onStart, onCancel])
+  }, [onStart, onCancel, pickerOpen])
+
+  // Closes the "Change Microphone" dropdown on any click outside it -- previously the only way to
+  // close it once opened was clicking the toggle button again, which is inconsistent with every
+  // other dropdown/menu pattern in the app. Found in the 43rd audit round.
+  useEffect(() => {
+    if (!pickerOpen) return
+    const onClick = (e) => { if (pickerRef.current && !pickerRef.current.contains(e.target)) setPickerOpen(false) }
+    document.addEventListener('mousedown', onClick)
+    return () => document.removeEventListener('mousedown', onClick)
+  }, [pickerOpen])
 
   const BAR_COUNT = 7
   const activeBars = Math.round(level * BAR_COUNT)
@@ -7780,18 +7803,20 @@ function MicVolumeCheckModal({ onStart, onCancel }) {
               <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{status === 'denied' ? 'Not available' : micLabel}</div>
             </div>
             {devices.length > 1 && status !== 'denied' && (
-              <button onClick={() => setPickerOpen(prev => !prev)} style={{ flexShrink: 0, background: 'none', border: 'none', color: '#701fa1', fontSize: '12px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px', padding: '4px 0' }}>
-                Change Microphone <span>{pickerOpen ? '▲' : '›'}</span>
-              </button>
-            )}
-            {pickerOpen && (
-              <div style={{ position: 'absolute', top: '100%', right: 0, marginTop: '6px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '10px', boxShadow: '0 6px 20px rgba(0,0,0,0.12)', width: '260px', overflow: 'hidden', zIndex: 5 }}>
-                {devices.map(d => (
-                  <button key={d.deviceId} onClick={() => handlePick(d.deviceId)}
-                    style={{ display: 'block', width: '100%', textAlign: 'left', background: d.deviceId === selectedDeviceId ? '#f4eafb' : '#fff', border: 'none', borderBottom: '1px solid #f0f0f0', padding: '10px 14px', fontSize: '13px', color: '#1a1a1a', cursor: 'pointer', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {d.label}
-                  </button>
-                ))}
+              <div ref={pickerRef} style={{ position: 'relative', flexShrink: 0 }}>
+                <button onClick={() => setPickerOpen(prev => !prev)} aria-haspopup="listbox" aria-expanded={pickerOpen} style={{ background: 'none', border: 'none', color: '#701fa1', fontSize: '12px', fontWeight: '700', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '3px', padding: '4px 0' }}>
+                  Change Microphone <span>{pickerOpen ? '▲' : '›'}</span>
+                </button>
+                {pickerOpen && (
+                  <div role="listbox" aria-label="Available microphones" style={{ position: 'absolute', top: '100%', right: 0, marginTop: '6px', background: '#fff', border: '1px solid #e5e7eb', borderRadius: '10px', boxShadow: '0 6px 20px rgba(0,0,0,0.12)', width: '260px', overflow: 'hidden', zIndex: 5 }}>
+                    {devices.map(d => (
+                      <button key={d.deviceId} role="option" aria-selected={d.deviceId === selectedDeviceId} onClick={() => handlePick(d.deviceId)}
+                        style={{ display: 'block', width: '100%', textAlign: 'left', background: d.deviceId === selectedDeviceId ? '#f4eafb' : '#fff', border: 'none', borderBottom: '1px solid #f0f0f0', padding: '10px 14px', fontSize: '13px', color: '#1a1a1a', cursor: 'pointer', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>

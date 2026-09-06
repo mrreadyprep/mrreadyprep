@@ -118,9 +118,18 @@ _PRE_AUTH_BODY_LIMIT_BYTES = 20_000
 # with no body-size ceiling at all.
 _GENERAL_BODY_LIMIT_BYTES = 200_000
 
+# paddle_webhook() below already enforces its own 1MB Content-Length ceiling (see its own comment
+# a few hundred lines down), sized for Paddle's actual notification payloads. That endpoint isn't
+# in _PRE_AUTH_BODY_LIMIT_PATHS (it's pre-auth but not a user-submitted form), so before this fix it
+# fell through to the 200KB general limit above -- silently shadowing the webhook's own 1MB check
+# with a stricter one nobody intended for it, since the general limit was written with authenticated
+# JSON request bodies in mind, not Paddle's payloads. Carved out here so paddle_webhook() is the only
+# place that decides its own limit. Found in the 43rd audit round.
+_PADDLE_WEBHOOK_PATH = "/api/subscription/webhook"
+
 @app.middleware("http")
 async def _pre_auth_body_size_limit(request: Request, call_next):
-    if request.method in ("POST", "PUT"):
+    if request.method in ("POST", "PUT") and request.url.path != _PADDLE_WEBHOOK_PATH:
         in_pre_auth_set = request.url.path in _PRE_AUTH_BODY_LIMIT_PATHS
         limit = _PRE_AUTH_BODY_LIMIT_BYTES if in_pre_auth_set else _GENERAL_BODY_LIMIT_BYTES
         content_length = request.headers.get("content-length")
@@ -3367,7 +3376,10 @@ def compute_section_band(category_sums, section):
     # Simple linear map from question-solving accuracy % to this section's 1.0-max_band scale
     # (0% -> 1.0, 100% -> max_band).
     band = max(1.0, min(max_band, 1 + (avg_pct / 100) * (max_band - 1)))
-    return round(band * 2) / 2
+    # Round-half-up (not Python's banker's round-half-to-even) so a band sitting exactly on a
+    # .25/.75 boundary always rounds the same intuitive direction a student expects -- same fix
+    # as _round_half_up_pct(), applied here to the nearest-0.5-band step instead of a percentage.
+    return math.floor(band * 2 + 0.5) / 2
 
 @app.post("/api/results/save")
 def save_attempt_result(data: AttemptResult, user=Depends(get_current_user)):
@@ -3451,7 +3463,9 @@ def get_results_summary(user=Depends(get_current_user)):
             by_category[cat] = {
                 "label": CATEGORY_LABELS.get(cat, cat),
                 "attempts": row["attempts"],
-                "avg_pct": round(row["avg_pct"]) if row["avg_pct"] is not None else 0,
+                # Round-half-up, not banker's rounding -- matches _round_half_up_pct()'s intent,
+                # applied directly to the already-computed AVG(pct) instead of a score/total pair.
+                "avg_pct": math.floor(row["avg_pct"] + 0.5) if row["avg_pct"] is not None else 0,
                 "best_pct": row["best_pct"] or 0,
                 "total_score": row["total_score"],
                 "total_possible": row["total_possible"],
@@ -3461,7 +3475,7 @@ def get_results_summary(user=Depends(get_current_user)):
             "by_category": by_category,
             "overall": {
                 "attempts": overall["attempts"] or 0,
-                "avg_pct": round(overall["avg_pct"]) if overall["avg_pct"] is not None else 0,
+                "avg_pct": math.floor(overall["avg_pct"] + 0.5) if overall["avg_pct"] is not None else 0,
                 "last_attempt": overall["last_attempt"],
             },
         }
