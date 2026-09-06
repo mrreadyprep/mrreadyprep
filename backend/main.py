@@ -1355,28 +1355,24 @@ def init_db():
 
 init_db()
 
-def load_legacy_profile_settings():
+def load_legacy_profile_settings(conn):
     """Reads the old pre-accounts profile_settings kv-store, if any values were ever saved there.
     Used once, only when the very first user account is created, to carry the developer's own
-    pre-login testing data (exam date, target score, username) forward instead of losing it."""
-    conn = get_db()
-    try:
-        rows = conn.execute("SELECT key, value FROM profile_settings").fetchall()
-        return {row["key"]: row["value"] for row in rows}
-    finally:
-        conn.close()
+    pre-login testing data (exam date, target score, username) forward instead of losing it.
+    Takes the caller's own `conn` rather than opening its own -- see the comment on its call sites
+    (register()/google_login()) for why opening a second get_db() here, on the same thread, while
+    the caller's own connection is still open, is unsafe with the Postgres connection pool."""
+    rows = conn.execute("SELECT key, value FROM profile_settings").fetchall()
+    return {row["key"]: row["value"] for row in rows}
 
-def migrate_legacy_data_to_user(user_id: int):
+def migrate_legacy_data_to_user(conn, user_id: int):
     """One-time bootstrap: the very first account ever created on this server inherits any
     attempt_results/ridl_results rows that were recorded before per-user accounts existed
-    (user_id = 0), so pre-launch testing progress isn't silently orphaned."""
-    conn = get_db()
-    try:
-        conn.execute("UPDATE attempt_results SET user_id = ? WHERE user_id = 0", (user_id,))
-        conn.execute("UPDATE ridl_results SET user_id = ? WHERE user_id = 0", (user_id,))
-        conn.commit()
-    finally:
-        conn.close()
+    (user_id = 0), so pre-launch testing progress isn't silently orphaned. Takes the caller's own
+    `conn` -- see load_legacy_profile_settings()'s comment just above."""
+    conn.execute("UPDATE attempt_results SET user_id = ? WHERE user_id = 0", (user_id,))
+    conn.execute("UPDATE ridl_results SET user_id = ? WHERE user_id = 0", (user_id,))
+    conn.commit()
 
 # ============================================================
 # AUTH: password hashing, JWT issuing/verification, current-user dependency
@@ -1924,7 +1920,17 @@ def register(data: RegisterRequest, request: Request, background_tasks: Backgrou
 
         # Legacy pre-account testing data (if this is literally the first account ever created on
         # this server) gets carried over as this user's starting profile values instead of defaults.
-        legacy = load_legacy_profile_settings() if is_first_user else {}
+        # Pass this function's own `conn` through rather than letting load_legacy_profile_settings()
+        # open a second one -- psycopg2's ThreadedConnectionPool keys getconn()/putconn() by thread
+        # id, so a *second* get_db() call on this same thread while `conn` (above) is still open
+        # doesn't hand back a fresh pooled connection, it hands back the SAME raw connection object
+        # -- and the moment the inner call's own conn.close() ran, that connection got returned to
+        # the pool's free list *while this outer request was still using it*, letting a concurrent
+        # request grab and use it simultaneously (corrupted/interleaved query results). Only
+        # reachable when is_first_user is True (the very first signup on a fresh DB), so the window
+        # is narrow in an already-live deployment, but real on any freshly reset Postgres (staging,
+        # migration, disaster recovery). Found in the 42nd audit round.
+        legacy = load_legacy_profile_settings(conn) if is_first_user else {}
         exam_date = legacy.get("exam_date", "")
         target_score = float(legacy.get("target_score", 5.5))
 
@@ -1957,7 +1963,7 @@ def register(data: RegisterRequest, request: Request, background_tasks: Backgrou
             raise HTTPException(status_code=409, detail="An account with this email already exists")
 
         if is_first_user:
-            migrate_legacy_data_to_user(user_id)
+            migrate_legacy_data_to_user(conn, user_id)
 
         verify_link = f"{FRONTEND_PUBLIC_URL}/?verify_token={verification_token}"
         # Deferred via BackgroundTasks (matches forgot_password()'s pattern) -- send_verification_email
@@ -2317,7 +2323,11 @@ def google_login(data: GoogleLoginRequest, request: Request):
                 user = get_user_by_id(conn, user["id"])
             else:
                 is_first_user = conn.execute("SELECT COUNT(*) AS n FROM users").fetchone()["n"] == 0
-                legacy = load_legacy_profile_settings() if is_first_user else {}
+                # Pass conn through -- same reasoning as register()'s call site (see its comment):
+                # a second get_db() on this same thread while `conn` is still open can hand back
+                # the SAME pooled connection and return it to the pool early, mid-use. Found in the
+                # 42nd audit round.
+                legacy = load_legacy_profile_settings(conn) if is_first_user else {}
                 exam_date = legacy.get("exam_date", "")
                 target_score = float(legacy.get("target_score", 5.5))
                 insert_sql = """
@@ -2340,7 +2350,7 @@ def google_login(data: GoogleLoginRequest, request: Request):
                     # surfaces as an unhandled 500 instead of a clean, actionable error.
                     raise HTTPException(status_code=409, detail="An account with this email already exists")
                 if is_first_user:
-                    migrate_legacy_data_to_user(user_id)
+                    migrate_legacy_data_to_user(conn, user_id)
                 user = get_user_by_id(conn, user_id)
 
         token = create_access_token(user["id"], user["token_version"])
@@ -2474,7 +2484,12 @@ def get_me(user=Depends(get_current_user)):
 # ============================================================
 
 class AdminSetSubscriptionRequest(BaseModel):
-    action: str  # "grant" | "revoke"
+    # max_length added for consistency with every other string field in this file (username,
+    # category, pool, etc. all carry an explicit bound) -- practical risk here was already low
+    # (admin-only, and the general 200KB body-size limit from round 41 caps the worst case), but an
+    # unbounded field was the one exception to an otherwise file-wide convention. Found in the 42nd
+    # audit round.
+    action: str = Field(max_length=10)  # "grant" | "revoke"
 
 @app.get("/api/admin/users")
 def admin_list_users(admin=Depends(require_admin)):
@@ -3360,6 +3375,24 @@ def save_attempt_result(data: AttemptResult, user=Depends(get_current_user)):
         raise HTTPException(status_code=400, detail="unknown category")
     if data.score > data.total:
         raise HTTPException(status_code=400, detail="score cannot exceed total")
+    # Bound item_id for the 5 mock_* categories the same way save_ridl_result() bounds passage_id
+    # (round 41): the frontend's FullMockTest always sends either a real fixed-test id (as a
+    # string, e.g. "7") or the literal string "practice" for a dynamic/random drill -- see
+    # `testItemId` in App.jsx -- so this is a narrow, unambiguous, exactly-matches-real-traffic
+    # check, unlike the ~10 non-mock practice categories below (ctw/ridl/ap/listening_p1-4/bas/
+    # email/disc/speaking_lr/speaking_interview), where item_id encodes a different id scheme per
+    # category (some use a real pool item id, some -- e.g. 'bas' -- use a set INDEX, and several
+    # fall back to a raw array index via `?? idx` when an item has no explicit id) -- validating
+    # those correctly needs a per-category mapping matched exactly against what the live frontend
+    # sends, which is deferred rather than risking rejecting real students' legitimate scores right
+    # before launch on a guess. The actual exposure of an unvalidated item_id here is also narrower
+    # than passage_id was: it can only ever inflate that same student's own streak/dashboard/
+    # Review-Mistakes view, never another account's data or anyone else's. Found in the 42nd
+    # audit round.
+    if data.category.startswith("mock_"):
+        valid_mock_item_ids = {str(k) for k in FIXED_TEST_FILES} | {"practice"}
+        if data.item_id not in valid_mock_item_ids:
+            raise HTTPException(status_code=400, detail="Unknown item_id")
     pct = _round_half_up_pct(data.score, data.total)
     conn = get_db()
     try:

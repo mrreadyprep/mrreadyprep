@@ -7359,6 +7359,64 @@ function pctToBand(pct, section) {
   return 1
 }
 
+// Single source of truth for turning a finished FullMockTest session (sessionRef.current) into
+// its four section bands + overall band, plus the raw points/pct figures the results screen and
+// the mockResultSavedRef effect both need. Previously this exact calculation (readingRaw/
+// listeningRaw reduce, writing/speaking task-pct-vs-pooled-points math, pctToBand/
+// computeOverallBand calls) was independently duplicated in two places in FullMockTest -- the
+// effect that persists the attempt via saveResult(), and the results screen's own render. Nothing
+// had actually diverged between the two copies, but a future tweak to the scoring formula (very
+// plausible -- these have already been revised multiple times per the comments below) updating one
+// copy and not the other would have silently made the band a student sees on THIS results screen
+// disagree with the band saved to (and later shown from) their Progress/Mock-Test-detail history,
+// with no error to catch it. Found in the 42nd audit round.
+function computeMockResultBands(s) {
+  const readingRaw = ['reading-m1', 'reading-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
+  const listeningRaw = ['listening-m1', 'listening-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
+  const basResult = s.writing.find(w => w.kind === 'bas') || { correct: 0, total: 10 }
+  const emailResult = s.writing.find(w => w.kind === 'email') || { score: 0 }
+  const discResult = s.writing.find(w => w.kind === 'disc') || { score: 0 }
+  // Per ETS's scoring method (same reasoning as Speaking below), each of the three graded writing
+  // tasks is averaged on its own first, then combined with EQUAL (1/3 each) weight for the band --
+  // not pooled into one raw-points ratio, which would let Build-a-Sentence's larger item count
+  // (its `total` varies per attempt) over-weight the band relative to Email/Discussion (fixed 6
+  // pts each).
+  const basPct = basResult.total ? basResult.correct / basResult.total : 0
+  const emailPct = (emailResult.score || 0) / 6
+  const discPct = (discResult.score || 0) / 6
+  const writingTaskPct = (basPct + emailPct + discPct) / 3
+  // Raw points earned / points possible across every graded item -- same "sum of what was
+  // actually solved" unit used for practice exercises, so mock attempts blend into the dashboard's
+  // average correctly instead of counting as one flat band value per attempt. (This pooled sum is
+  // only used for the dashboard aggregate via saveResult, not for the band below -- same split as
+  // Speaking's speakingPts/speakingMax vs. speakingTaskPct just below.)
+  const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
+  const writingMax = basResult.total + 6 + 6
+  const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
+  const interviewResult = s.speaking.find(w => w.kind === 'interview') || { items: [] }
+  // Per ETS's scoring method, the Listen-and-Repeat task score and the Interview task score are
+  // each averaged on their own first, then combined with EQUAL (50/50) weight -- not pooled into
+  // one raw-points ratio, which would over-weight whichever task has more items.
+  const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 6) : null
+  const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 6) : null
+  const speakingTaskPct = lrPct != null && ivPct != null ? (lrPct + ivPct) / 2 : (lrPct ?? ivPct ?? 0)
+  const speakingPts = lrResult.items.reduce((a, x) => a + (x.score || 0), 0) + interviewResult.items.reduce((a, x) => a + (x.score || 0), 0)
+  const speakingMax = lrResult.items.length * 6 + interviewResult.items.length * 6
+
+  const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
+  const listeningBand = pctToBand(listeningRaw.total ? listeningRaw.correct / listeningRaw.total : 0, 'listening')
+  const writingBand = pctToBand(writingTaskPct, 'writing')
+  const speakingBand = pctToBand(speakingTaskPct, 'speaking')
+  const overallBand = computeOverallBand(readingBand, listeningBand, writingBand, speakingBand)
+
+  return {
+    readingRaw, listeningRaw, basResult, emailResult, discResult,
+    writingPts, writingMax, writingTaskPct, lrResult, interviewResult,
+    speakingPts, speakingMax, speakingTaskPct,
+    readingBand, listeningBand, writingBand, speakingBand, overallBand,
+  }
+}
+
 function flattenCarPool(carPool) {
   const flat = []
   ;(carPool || []).forEach(ex => (ex.questions || []).forEach(q => flat.push({ ...q, _uid: `${ex.id}-${q.id}` })))
@@ -8415,44 +8473,15 @@ function FullMockTest({ onBack, hasPremium = false }) {
     mockResultSavedRef.current = true
 
     const s = sessionRef.current
-    const readingRaw = ['reading-m1', 'reading-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
-    const listeningRaw = ['listening-m1', 'listening-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
-    const basResult = s.writing.find(w => w.kind === 'bas') || { correct: 0, total: 10 }
-    const emailResult = s.writing.find(w => w.kind === 'email') || { score: 0 }
-    const discResult = s.writing.find(w => w.kind === 'disc') || { score: 0 }
-    // Per ETS's scoring method (same reasoning as Speaking below), each of the three graded
-    // writing tasks is averaged on its own first, then combined with EQUAL (1/3 each) weight for
-    // the band shown here -- not pooled into one raw-points ratio, which would let Build-a-
-    // Sentence's larger item count (its `total` varies per attempt) over-weight the band relative
-    // to Email/Discussion (fixed 6 pts each).
-    const basPct = basResult.total ? basResult.correct / basResult.total : 0
-    const emailPct = (emailResult.score || 0) / 6
-    const discPct = (discResult.score || 0) / 6
-    const writingTaskPct = (basPct + emailPct + discPct) / 3
-    // Raw points earned / points possible across every graded item -- same "sum of what was
-    // actually solved" unit used for practice exercises, so mock attempts blend into the
-    // dashboard's average correctly instead of counting as one flat band value per attempt.
-    // (This pooled sum is only used for the dashboard aggregate via saveResult below, not for the
-    // band shown on this results screen -- same split as Speaking's speakingPts/speakingMax vs.
-    // speakingTaskPct just below.)
-    const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
-    const writingMax = basResult.total + 6 + 6
-    const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
-    const interviewResult = s.speaking.find(w => w.kind === 'interview') || { items: [] }
-    const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 6) : null
-    const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 6) : null
-    const speakingTaskPct = lrPct != null && ivPct != null ? (lrPct + ivPct) / 2 : (lrPct ?? ivPct ?? 0)
-    // Raw points earned / points possible across every graded item -- same "sum of what was
-    // actually solved" unit used for practice exercises, so mock attempts blend into the
-    // dashboard's average correctly instead of counting as one flat band value per attempt.
-    const speakingPts = lrResult.items.reduce((a, x) => a + (x.score || 0), 0) + interviewResult.items.reduce((a, x) => a + (x.score || 0), 0)
-    const speakingMax = lrResult.items.length * 6 + interviewResult.items.length * 6
-
-    const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
-    const listeningBand = pctToBand(listeningRaw.total ? listeningRaw.correct / listeningRaw.total : 0, 'listening')
-    const writingBand = pctToBand(writingTaskPct, 'writing')
-    const speakingBand = pctToBand(speakingTaskPct, 'speaking')
-    const overallBand = computeOverallBand(readingBand, listeningBand, writingBand, speakingBand)
+    // See computeMockResultBands's own comment -- this used to be an independent copy of the same
+    // calculation the results screen's render does below, with the two able to silently drift
+    // apart if only one was ever updated. Found in the 42nd audit round.
+    const {
+      readingRaw, listeningRaw,
+      writingPts, writingMax, writingTaskPct,
+      speakingPts, speakingMax, speakingTaskPct,
+      readingBand, listeningBand, writingBand, speakingBand, overallBand,
+    } = computeMockResultBands(s)
 
     const testLabel = fixedTestId ? `Mock Test ${fixedTestId}` : 'Full Mock Test'
     const testItemId = fixedTestId ? String(fixedTestId) : 'practice'
@@ -8845,37 +8874,14 @@ function FullMockTest({ onBack, hasPremium = false }) {
 
   if (phase === 'results') {
     const s = sessionRef.current
-    const readingRaw = ['reading-m1', 'reading-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
-    const listeningRaw = ['listening-m1', 'listening-m2'].reduce((acc, k) => ({ correct: acc.correct + (s.stageRaw[k]?.correct || 0), total: acc.total + (s.stageRaw[k]?.total || 0) }), { correct: 0, total: 0 })
-    const basResult = s.writing.find(w => w.kind === 'bas') || { correct: 0, total: 10 }
-    const emailResult = s.writing.find(w => w.kind === 'email') || { score: 0 }
-    const discResult = s.writing.find(w => w.kind === 'disc') || { score: 0 }
-    const writingPts = basResult.correct + (emailResult.score || 0) + (discResult.score || 0)
-    const writingMax = basResult.total + 6 + 6
-    // Per ETS's scoring method (same reasoning as Speaking below), each of the three graded
-    // writing tasks is averaged on its own first, then combined with EQUAL (1/3 each) weight —
-    // not pooled into one raw-points ratio, which would let Build-a-Sentence's item count
-    // over-weight the band relative to Email/Discussion (fixed 6 pts each).
-    const basPct = basResult.total ? basResult.correct / basResult.total : 0
-    const emailPct = (emailResult.score || 0) / 6
-    const discPct = (discResult.score || 0) / 6
-    const writingTaskPct = (basPct + emailPct + discPct) / 3
-    const lrResult = s.speaking.find(w => w.kind === 'lr') || { items: [] }
-    const interviewResult = s.speaking.find(w => w.kind === 'interview') || { items: [] }
-    const speakingPts = lrResult.items.reduce((a, x) => a + (x.score || 0), 0) + interviewResult.items.reduce((a, x) => a + (x.score || 0), 0)
-    const speakingMax = lrResult.items.length * 6 + interviewResult.items.length * 6
-    // Per ETS's scoring method, the Listen-and-Repeat task score and the Interview task score
-    // are each averaged on their own first, then combined with EQUAL (50/50) weight — not
-    // pooled into one raw-points ratio, which would over-weight L&R's 7 items vs Interview's 4.
-    const lrPct = lrResult.items.length ? lrResult.items.reduce((a, x) => a + (x.score || 0), 0) / (lrResult.items.length * 6) : null
-    const ivPct = interviewResult.items.length ? interviewResult.items.reduce((a, x) => a + (x.score || 0), 0) / (interviewResult.items.length * 6) : null
-    const speakingTaskPct = lrPct != null && ivPct != null ? (lrPct + ivPct) / 2 : (lrPct ?? ivPct ?? 0)
-
-    const readingBand = pctToBand(readingRaw.total ? readingRaw.correct / readingRaw.total : 0, 'reading')
-    const listeningBand = pctToBand(listeningRaw.total ? listeningRaw.correct / listeningRaw.total : 0, 'listening')
-    const writingBand = pctToBand(writingTaskPct, 'writing')
-    const speakingBand = pctToBand(speakingTaskPct, 'speaking')
-    const overall = computeOverallBand(readingBand, listeningBand, writingBand, speakingBand)
+    // See computeMockResultBands's own comment (round 42) -- this used to be an independent copy
+    // of the same calculation the mockResultSavedRef effect above does, with the two able to
+    // silently drift apart if a future scoring tweak only touched one copy.
+    const {
+      readingRaw, listeningRaw, writingPts, writingMax,
+      speakingPts, speakingMax,
+      readingBand, listeningBand, writingBand, speakingBand, overallBand: overall,
+    } = computeMockResultBands(s)
 
     const rows = [
       { key: 'reading', label: 'Reading', band: readingBand, detail: `${readingRaw.correct}/${readingRaw.total} correct` },
