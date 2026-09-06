@@ -10648,21 +10648,29 @@ function App() {
             {userData.is_admin && sb('admin', '🛠️', 'Admin')}
           </div>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', borderTop: '1px solid #252a44', paddingTop: '4px' }}>
-          <div onClick={() => { requestTabChange('settings'); if (isMobile) setMobileNavOpen(false) }}
-            role="button" tabIndex={0} aria-label="Settings"
-            onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); requestTabChange('settings'); if (isMobile) setMobileNavOpen(false) } }}
-            style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
-            <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px', flexShrink: 0 }}>{(userData.username || '?').charAt(0).toUpperCase()}</div>
-            <div style={{ minWidth: 0, overflow: 'hidden' }}>
-              <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userData.username}</div>
-              <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
+        {/* Wrapped together (profile row + disclaimer) so the parent's justify-content:'space-
+            between' treats this as ONE bottom-anchored group instead of two separately-spaced
+            items -- previously the profile/Settings/Log-out row sat evenly spaced between the nav
+            list and the disclaimer (i.e. floating in the middle of the leftover space) rather than
+            flush near the bottom where a student expects an account/logout control to live. Found
+            via user screenshot in the 44th audit round. */}
+        <div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', borderTop: '1px solid #252a44', paddingTop: '4px' }}>
+            <div onClick={() => { requestTabChange('settings'); if (isMobile) setMobileNavOpen(false) }}
+              role="button" tabIndex={0} aria-label="Settings"
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); requestTabChange('settings'); if (isMobile) setMobileNavOpen(false) } }}
+              style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '10px 4px' }}>
+              <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px', flexShrink: 0 }}>{(userData.username || '?').charAt(0).toUpperCase()}</div>
+              <div style={{ minWidth: 0, overflow: 'hidden' }}>
+                <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userData.username}</div>
+                <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
+              </div>
             </div>
+            <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} title="Log out" aria-label="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
           </div>
-          <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} title="Log out" aria-label="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
-        </div>
-        <div style={{ fontSize: '8px', color: '#4b4f66', lineHeight: '1.4', textAlign: 'center', marginTop: '8px', padding: '0 2px' }}>
-          TOEFL® and TOEFL iBT® are registered trademarks of ETS. Not endorsed or approved by ETS.
+          <div style={{ fontSize: '8px', color: '#4b4f66', lineHeight: '1.4', textAlign: 'center', marginTop: '8px', padding: '0 2px' }}>
+            TOEFL® and TOEFL iBT® are registered trademarks of ETS. Not endorsed or approved by ETS.
+          </div>
         </div>
       </div>
 
