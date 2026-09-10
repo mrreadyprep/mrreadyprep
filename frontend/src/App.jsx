@@ -9925,10 +9925,24 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
   return (
     // overflowY: auto (not the app shell's usual overflow: hidden) + minHeight instead of a fixed
     // height -- this screen is the one place in the whole app that must stay usable with real,
-    // visible page content even when nothing else has run yet (no JS, no auth). The marketing
-    // block below makes this screen taller than one viewport on narrow phones, so it needs to be
-    // able to scroll instead of getting clipped by index.html's global `body { overflow: hidden }`.
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#11162d', boxSizing: 'border-box', padding: '20px', overflowY: 'auto' }}>
+    // visible page content even when nothing else has run yet (no JS, no auth). The content below
+    // (logo + back-link + the login/signup card) can be taller than one viewport on short screens,
+    // so it needs to be able to scroll instead of getting clipped by index.html's global
+    // `body { overflow: hidden }`.
+    //
+    // alignItems: 'flex-start' (NOT 'center') is deliberate, not an oversight -- a flex container
+    // with align-items:center + overflow:auto has a well-known browser bug: when its content is
+    // TALLER than the container, the browser still centers it, which pushes the overflowing top
+    // portion into NEGATIVE scroll territory that scrollTop can never reach (scrollTop has no
+    // negative values). Confirmed live: on a 669px-tall viewport with 748px of content, scrollTop
+    // was permanently stuck at 0 and the top ~40px -- which is exactly the "<- Back to home" link
+    // and part of the logo -- was rendered but completely unreachable and unclickable, on every
+    // browser, with no way for the visitor to scroll to it. flex-start avoids this entirely: content
+    // always starts flush at the top and the full height is reachable by scrolling down. The only
+    // cost is that on a viewport taller than the content, it now sits near the top instead of being
+    // perfectly vertically centered -- a minor cosmetic tradeoff against a genuinely unusable/
+    // unclickable element. Found live-testing the landing-page work, same session it was added in.
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#11162d', boxSizing: 'border-box', padding: '20px', overflowY: 'auto' }}>
       <div style={{ width: '100%', maxWidth: '380px' }}>
         {/* Reached by clicking "Log In"/"Get Started" on LandingPage (the site's actual root view
             now -- see LandingPage above), so this link takes the visitor back there instead of
