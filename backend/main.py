@@ -118,6 +118,19 @@ _PRE_AUTH_BODY_LIMIT_BYTES = 20_000
 # with no body-size ceiling at all.
 _GENERAL_BODY_LIMIT_BYTES = 200_000
 
+# Known, deliberate limitation (not an oversight): this check -- like the pre-auth one above --
+# only inspects the Content-Length header, so a request sent with Transfer-Encoding: chunked and
+# no Content-Length sails past it and gets buffered in full by Starlette/Pydantic before any
+# handler-level validation runs. paddle_webhook() closes this exact gap for itself by reading its
+# body incrementally off request.stream() instead of trusting the header (see its own comment) --
+# that was worth doing there because it's a single, narrow, pre-auth endpoint. Generalizing the
+# same incremental-read approach to EVERY authenticated POST/PUT here was evaluated in the 44th
+# audit round and deliberately not done: reading the body inside this middleware and then handing
+# the same Request through to the route below is exactly the kind of thing that silently breaks
+# downstream body/JSON parsing depending on the exact Starlette version in use, and validating that
+# it doesn't regress every write endpoint in the app isn't something to gamble on right before a
+# commercial launch. Cloudflare/Render's own platform-level body-size limits remain the real
+# backstop for the chunked-encoding case, same reasoning as the pre-auth check's own comment above.
 # paddle_webhook() below already enforces its own 1MB Content-Length ceiling (see its own comment
 # a few hundred lines down), sized for Paddle's actual notification payloads. That endpoint isn't
 # in _PRE_AUTH_BODY_LIMIT_PATHS (it's pre-auth but not a user-submitted form), so before this fix it
@@ -1253,6 +1266,17 @@ def init_db():
         conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_paddle_subscription_id ON users(paddle_subscription_id)")
     except Exception as e:
         print(f"[startup] Could not create unique index on users.paddle_subscription_id (likely pre-existing duplicate data): {e}", flush=True)
+    # admin_list_users() sorts the whole table by created_at DESC before applying its LIMIT 2000,
+    # and admin_stats() filters WHERE created_at >= ? -- both were doing a full table scan/sort on
+    # an unindexed column, cheap today at low user counts but a real cost once the user base grows
+    # past what fits comfortably in memory. A plain index on created_at (rather than a composite
+    # with email_verified) is what actually serves admin_list_users' unfiltered ORDER BY -- a
+    # leading email_verified column would only help queries that filter on it, like
+    # send_practice_reminders()'s WHERE email_verified = 1 AND created_at < ?, which still benefits
+    # from this same index as a range scan (email_verified is then just an in-scan filter on a
+    # cheap boolean, and that endpoint is a once-a-day capped-at-200-rows cron, not something
+    # sensitive to a few extra row checks). Found in the 44th audit round.
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_users_created_at ON users(created_at)")
 
     # Which vocab words each student has personally marked as learned.
     conn.execute("""
@@ -1904,7 +1928,6 @@ def healthz():
     return {"status": "ok"}
 
 # --- Auth ---
-EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 @app.post("/api/auth/register")
 def register(data: RegisterRequest, request: Request, background_tasks: BackgroundTasks):
