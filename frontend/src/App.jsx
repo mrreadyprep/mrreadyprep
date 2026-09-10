@@ -512,6 +512,10 @@ function CTWSingle({ exercise, exerciseNum, onBack, onComplete, mockMode = false
       return
     }
     clearDraft('ctw', ex.id) // now graded, no longer an in-progress draft
+    // Save the instant grading finishes, not when the student later clicks "Back" on the
+    // results screen -- previously the attempt was lost if they left any other way (sidebar,
+    // browser back, typed URL) before clicking that exact button.
+    saveResult('ctw', ex.id, calcCorrect(answers), ex.blanks.length, `Complete the Words #${exerciseNum}`)
     setChecked(true)
   }
   const questionScore = checked ? calcCorrect(answers) : null
@@ -598,7 +602,8 @@ function CompleteTheWords({ onBack }) {
   if (selectedIdx !== null) return (
     <CTWSingle exercise={exercises[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
       onComplete={(correct, total) => {
-        saveResult('ctw', exercises[selectedIdx].id, correct, total, `Complete the Words #${selectedIdx + 1}`)
+        // saveResult is now called inside CTWSingle the instant grading finishes (see comment
+        // there); this callback only needs to update local list UI state.
         setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
       }} />
   )
@@ -783,6 +788,11 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
       return
     }
     clearDraft('ridl', passage.id) // now graded, no longer an in-progress draft
+    // Save the instant grading finishes, not when the student later clicks "All Practices"/
+    // "Exit" on the results screen -- previously the attempt was lost if they left any other
+    // way (sidebar, browser back, typed URL) before clicking one of those exact buttons.
+    const finalScore = finalAnswers.reduce((s, a) => s + (a && a.isCorrect ? 1 : 0), 0)
+    saveResult('ridl', passage.id, finalScore, totalQ, `Read in Daily Life #${passage.id}`)
     setDone(true)
   }
 
@@ -1642,6 +1652,11 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
               onComplete(finalScore, questions.length, buildDetail(answers))
             } else {
               clearDraft('ap', passage.id) // now graded, no longer an in-progress draft
+              // Save the instant grading finishes, not when the student later clicks "Back to
+              // List" on the results screen -- previously the attempt was lost if they left any
+              // other way (sidebar, browser back, typed URL) before clicking that exact button.
+              const finalScore = questions.filter((qq, i) => answers[i] === qq.answer).length
+              saveResult('ap', passage.id, finalScore, questions.length, passage.title || `Academic Passage #${passage.id}`)
               setSubmitted(true)
             }
           } else setCurrentQ(i => i + 1)
@@ -1709,7 +1724,8 @@ function AcademicPassage({ onBack }) {
 
   if (loading) return <LoadingState label="Loading passages..." />
   if (selected) return <APQuestion passage={selected} onBack={() => setSelected(null)} onComplete={(score, total) => {
-    saveResult('ap', selected.id, score, total, selected.title || `Academic Passage #${selected.id}`)
+    // saveResult is now called inside APQuestion the instant grading finishes (see comment
+    // there); this callback only needs to update local list UI state.
     setScores(prev => ({ ...prev, [selected.id]: { score, total } })); setSelected(null)
   }} />
   return <APList passages={passages} scores={scores} onSelect={p => setSelected(p)} onBack={onBack} />
@@ -2561,6 +2577,11 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
         onComplete(finalScore, totalQ, detail)
       } else {
         setAnswers(newAnswers)
+        // Save the instant grading finishes, not when the student later clicks "Back" on the
+        // results screen -- previously the attempt was lost if they left any other way (sidebar,
+        // browser back, typed URL) before clicking that exact button.
+        const finalScore = newAnswers.filter(a => a.isCorrect).length
+        saveResult('listening_p1', exercise.id ?? (exerciseNum - 1), finalScore, totalQ, `Choose a Response #${exerciseNum}`)
         setDone(true)
       }
     } else {
@@ -2801,7 +2822,8 @@ function ListeningP1({ onBack }) {
   if (selectedIdx !== null) return (
     <ListeningP1Exercise exercise={exercises[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
       onComplete={(correct, total) => {
-        saveResult('listening_p1', exercises[selectedIdx].id ?? selectedIdx, correct, total, `Choose a Response #${selectedIdx + 1}`)
+        // saveResult is now called inside ListeningP1Exercise the instant grading finishes (see
+        // comment there); this callback only needs to update local list UI state.
         setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
       }} />
   )
@@ -2897,6 +2919,11 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
         onComplete(finalScore, totalQ, detail)
       } else {
         setAnswers(newAnswers)
+        // Save the instant grading finishes, not when the student later clicks "Back" on the
+        // results screen -- previously the attempt was lost if they left any other way (sidebar,
+        // browser back, typed URL) before clicking that exact button.
+        const finalScore = newAnswers.filter(a => a.isCorrect).length
+        saveResult('listening_p2', conversation.id ?? (exerciseNum - 1), finalScore, totalQ, `Conversation #${exerciseNum}`)
         setDone(true)
       }
     } else {
@@ -3116,7 +3143,8 @@ function ListeningP2({ onBack }) {
   if (selectedIdx !== null) return (
     <ListeningP2Exercise conversation={conversations[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
       onComplete={(correct, total) => {
-        saveResult('listening_p2', conversations[selectedIdx].id ?? selectedIdx, correct, total, `Conversation #${selectedIdx + 1}`)
+        // saveResult is now called inside ListeningP2Exercise the instant grading finishes (see
+        // comment there); this callback only needs to update local list UI state.
         setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
       }} />
   )
@@ -3210,6 +3238,11 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
         onComplete(finalScore, totalQ, detail)
       } else {
         setAnswers(newAnswers)
+        // Save the instant grading finishes, not when the student later clicks "Back" on the
+        // results screen -- previously the attempt was lost if they left any other way (sidebar,
+        // browser back, typed URL) before clicking that exact button.
+        const finalScore = newAnswers.filter(a => a.isCorrect).length
+        saveResult('listening_p3', announcement.id ?? (exerciseNum - 1), finalScore, totalQ, `Announcement #${exerciseNum}`)
         setDone(true)
       }
     } else {
@@ -3429,7 +3462,8 @@ function ListeningP3({ onBack }) {
   if (selectedIdx !== null) return (
     <ListeningP3Exercise announcement={announcements[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
       onComplete={(correct, total) => {
-        saveResult('listening_p3', announcements[selectedIdx].id ?? selectedIdx, correct, total, `Announcement #${selectedIdx + 1}`)
+        // saveResult is now called inside ListeningP3Exercise the instant grading finishes (see
+        // comment there); this callback only needs to update local list UI state.
         setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
       }} />
   )
@@ -3527,6 +3561,11 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
         onComplete(finalScore, totalQ, detail)
       } else {
         setAnswers(newAnswers)
+        // Save the instant grading finishes, not when the student later clicks "Back" on the
+        // results screen -- previously the attempt was lost if they left any other way (sidebar,
+        // browser back, typed URL) before clicking that exact button.
+        const finalScore = newAnswers.filter(a => a.isCorrect).length
+        saveResult('listening_p4', talk.id ?? (exerciseNum - 1), finalScore, totalQ, `Academic Talk #${exerciseNum}`)
         setDone(true)
       }
     } else {
@@ -3748,7 +3787,8 @@ function ListeningP4({ onBack }) {
   if (selectedIdx !== null) return (
     <ListeningP4Exercise talk={talks[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
       onComplete={(correct, total) => {
-        saveResult('listening_p4', talks[selectedIdx].id ?? selectedIdx, correct, total, `Academic Talk #${selectedIdx + 1}`)
+        // saveResult is now called inside ListeningP4Exercise the instant grading finishes (see
+        // comment there); this callback only needs to update local list UI state.
         setScores(prev => ({ ...prev, [selectedIdx]: { correct, total } })); setSelectedIdx(null)
       }} />
   )
@@ -3967,6 +4007,13 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
       return
     }
     if (setIndex != null) clearDraft('bas', setIndex) // now graded, no longer an in-progress draft
+    // Save the instant grading finishes, not when the student later clicks "Back" on the
+    // results screen -- previously the attempt was lost if they left any other way (sidebar,
+    // browser back, typed URL) before clicking that exact button.
+    if (setIndex != null) {
+      const finalScore = finalAnswers.filter(a => a.isCorrect).length
+      saveResult('bas', setIndex, finalScore, totalQ, `Build a Sentence · Set ${setIndex + 1}`)
+    }
     setAnswers(finalAnswers)
     setDone(true)
   }
@@ -4167,7 +4214,8 @@ function BuildASentence({ onBack }) {
   if (activeSet !== null) return (
     <BuildSentenceExercise items={sets[activeSet]} setIndex={activeSet} onBack={() => setActiveSet(null)}
       onComplete={(correct, total) => {
-        saveResult('bas', activeSet, correct, total, `Build a Sentence · Set ${activeSet + 1}`)
+        // saveResult is now called inside BuildSentenceExercise the instant grading finishes
+        // (see comment there); this callback only needs to update local list UI state.
         setScores(prev => ({ ...prev, [activeSet]: { correct, total } })); setActiveSet(null)
       }} />
   )
@@ -6845,7 +6893,7 @@ function ListenRepeat({ onBack }) {
     <ListenRepeatExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
       onComplete={(answers) => {
         const avg = answers.reduce((s, a) => s + a.score, 0) / answers.length
-        const rounded = Math.round(avg * 10) / 10
+        const rounded = Math.round(avg * 2) / 2
         saveResult('speaking_lr', items[activeIdx].id ?? activeIdx, rounded, 6, `Listen and Repeat #${activeIdx + 1}`)
         setScores(prev => ({ ...prev, [activeIdx]: rounded }))
         setActiveIdx(null)
@@ -7167,7 +7215,7 @@ function TakeInterview({ onBack }) {
     <InterviewExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
       onComplete={(answers) => {
         const avg = answers.reduce((s, a) => s + a.score, 0) / answers.length
-        const rounded = Math.round(avg * 10) / 10
+        const rounded = Math.round(avg * 2) / 2
         saveResult('speaking_interview', items[activeIdx].id ?? activeIdx, rounded, 6, `Take an Interview #${activeIdx + 1}`)
         setScores(prev => ({ ...prev, [activeIdx]: rounded }))
         setActiveIdx(null)
@@ -7258,8 +7306,8 @@ function ReadInDailyLife({ onBack }) {
 
   const handleComplete = (score, total) => {
     if (selectedIdx === null) return
-    const passage = passages[selectedIdx]
-    saveResult('ridl', passage.id, score, total, `Read in Daily Life #${passage.id}`)
+    // saveResult is now called inside RIDLQuestion the instant grading finishes (see comment
+    // there); this callback only needs to update local list UI state.
     setScores(prev => ({ ...prev, [selectedIdx]: { score, total } }))
   }
 
