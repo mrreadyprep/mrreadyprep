@@ -1357,10 +1357,23 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '38px', marginBottom: '10px' }}>⭐</div>
           <h2 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>Upgrade to mrreadyprep Premium</h2>
-          <p style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '20px' }}>
+          <p style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '14px' }}>
             You've hit the free-plan limit. Subscribe for unlimited access to every Reading, Listening,
             Writing and Speaking practice exercise, plus all 20 Full Mock Tests.
           </p>
+          {/* Shows the list price before the student ever reaches Paddle's own checkout overlay --
+              without this, "Continue to payment" was the first place any number appeared anywhere
+              in the flow, which is both a bad look for a subscription product and, in some
+              jurisdictions, expected to be disclosed before a payment flow is even started (Paddle's
+              overlay itself always shows the price too, so this doesn't skip that -- it just isn't
+              the *only* place it's shown). Any active discount code is applied inside the Paddle
+              overlay itself, so it isn't hardcoded here -- this always reflects the undiscounted
+              list price. */}
+          <div style={{ marginBottom: '20px' }}>
+            <span style={{ fontSize: '30px', fontWeight: '800', color: '#701fa1' }}>$50</span>
+            <span style={{ fontSize: '14px', color: '#6b7280', fontWeight: '500' }}> / month</span>
+            <div style={{ fontSize: '11.5px', color: '#9ca3af', marginTop: '4px' }}>Any active discount code is applied automatically at checkout.</div>
+          </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', textAlign: 'left', background: '#f9fafb', borderRadius: '10px', padding: '18px', marginBottom: '24px' }}>
           {[
