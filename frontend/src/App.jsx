@@ -639,12 +639,32 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
   const grouped = {}
   passages.forEach((p, i) => { if (!grouped[p.type]) grouped[p.type] = []; grouped[p.type].push({ ...p, globalIdx: i }) })
   const displayNumByGlobalIdx = displayNums || computeRIDLDisplayNums(passages)
+  // Type-filter pills, matching CTWList's category filter above the Complete the Words list --
+  // RIDL already grouped its list under a section header per type (below), but with 8 types and
+  // dozens of items per type there was previously no quick way to jump straight to e.g. just the
+  // "Email" items without scrolling past every earlier section first.
+  const presentTypes = typeOrder.filter(t => grouped[t])
+  const [activeType, setActiveType] = useState('All')
+  const visibleTypes = presentTypes.filter(t => activeType === 'All' || t === activeType)
   // Rendered inline in the sidebar shell's content area -- the shell already shows the shared
   // "← Back" + title header, so no fixed-overlay wrapper or duplicate title here (unlike
   // RIDLQuestion below, which stays full-screen for a distraction-free timed passage).
   return (
     <div style={{ width: '100%', fontFamily: 'sans-serif' }}>
-        {typeOrder.filter(t => grouped[t]).map(type => (
+        {presentTypes.length > 1 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: '20px' }}>
+            {['All', ...presentTypes].map(type => (
+              <button key={type} onClick={() => setActiveType(type)} style={{
+                background: activeType === type ? '#2ac56c' : '#f2f3f5',
+                color: activeType === type ? '#fff' : '#616473',
+                border: 'none', borderRadius: '999px', padding: '7px 16px', fontSize: '12px', fontWeight: '600', cursor: 'pointer',
+              }}>
+                {type === 'All' ? `All (${passages.length})` : `${RIDL_TYPE_LABELS[type]} (${grouped[type].length})`}
+              </button>
+            ))}
+          </div>
+        )}
+        {visibleTypes.map(type => (
           <div key={type} style={{ marginBottom: '28px' }}>
             <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '10px' }}>{RIDL_TYPE_LABELS[type]}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
