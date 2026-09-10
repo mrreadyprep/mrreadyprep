@@ -9600,11 +9600,163 @@ function CookieConsentBanner() {
   )
 }
 
-function AuthScreen({ onAuthSuccess }) {
+// The site's default "logged-out" view (shown at "/" before a "Log In" / "Get Started" click
+// reveals AuthScreen below). Added because Paddle's automated website-verification crawler
+// repeatedly rejected mrreadyprep.com as "restricted by a login wall" -- the root URL used to
+// render nothing but a bare credential form, with no visible product/business content for an
+// anonymous visitor or crawler to read. Modeled on the structure of competitor TOEFL-prep
+// homepages (Magoosh, BestMyTest, TestGlider): hero pitch, skill-by-skill feature breakdown,
+// how-it-works, pricing teaser, footer -- all real static content, visible with no login and no
+// client-side data fetch (everything here is hard-coded copy, not an API call).
+function LandingPage({ onGetStarted, onLogIn }) {
+  const isMobile = useIsMobile()
+  const purple = '#701fa1'
+
+  const skills = [
+    { icon: '📖', title: 'Reading', desc: 'Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback.' },
+    { icon: '🎧', title: 'Listening', desc: 'Conversations, announcements, and academic talks with note-taking practice, just like the real exam.' },
+    { icon: '✍️', title: 'Writing', desc: 'Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI against the real TOEFL rubric.' },
+    { icon: '🎤', title: 'Speaking', desc: 'Interview, Listen & Repeat, and full speaking tasks with AI feedback on delivery, language use, and content.' },
+  ]
+
+  const steps = [
+    { n: '1', title: 'Create a free account', desc: 'Sign up in seconds — no credit card required to get started.' },
+    { n: '2', title: 'Practice by skill or take a mock test', desc: 'Drill individual question types or sit a full mock exam under real timing.' },
+    { n: '3', title: 'Get instant, AI-powered feedback', desc: 'See your score, mistakes, and personalized feedback the moment you finish.' },
+  ]
+
+  const navLinkStyle = { fontSize: '13px', fontWeight: '700', color: '#fff', textDecoration: 'none', cursor: 'pointer', background: 'none', border: 'none' }
+
+  return (
+    <div style={{ width: '100%', minHeight: '100vh', overflowY: 'auto', fontFamily: 'sans-serif', backgroundColor: '#fff' }}>
+      {/* Top nav */}
+      <div style={{ backgroundColor: '#11162d', padding: isMobile ? '14px 18px' : '16px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ color: '#b67bfb', fontSize: '19px', fontWeight: '800' }}>mrreadyprep</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '10px' : '18px' }}>
+          <button type="button" onClick={onLogIn} style={navLinkStyle}>Log In</button>
+          <button type="button" onClick={onGetStarted} style={{ backgroundColor: '#b67bfb', color: '#11162d', border: 'none', borderRadius: '8px', padding: '9px 16px', fontSize: '13px', fontWeight: '800', cursor: 'pointer' }}>
+            Get Started Free
+          </button>
+        </div>
+      </div>
+
+      {/* Hero */}
+      <div style={{ backgroundColor: '#11162d', padding: isMobile ? '44px 20px 56px' : '64px 40px 80px', textAlign: 'center' }}>
+        <div style={{ fontSize: '10.5px', color: '#b67bfb', letterSpacing: '2px', fontWeight: '700', marginBottom: '14px' }}>TOEFL® iBT EXAM PREPARATION</div>
+        <h1 style={{ color: '#fff', fontSize: isMobile ? '28px' : '42px', fontWeight: '800', lineHeight: '1.25', margin: '0 auto 16px', maxWidth: '760px' }}>
+          Practice for the TOEFL® iBT with realistic exercises and full mock tests
+        </h1>
+        <p style={{ color: '#9ca3af', fontSize: isMobile ? '14px' : '16px', lineHeight: '1.7', margin: '0 auto 30px', maxWidth: '560px' }}>
+          Reading, Listening, Writing, and Speaking practice with instant, AI-powered feedback — plus full-length mock tests that mirror the real exam's format, timing, and scoring.
+        </p>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <button type="button" onClick={onGetStarted} style={{ backgroundColor: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '14px 28px', fontSize: '15px', fontWeight: '800', cursor: 'pointer' }}>
+            Get Started Free
+          </button>
+          <button type="button" onClick={onLogIn} style={{ backgroundColor: 'transparent', color: '#fff', border: '1px solid #3a3f5c', borderRadius: '10px', padding: '14px 28px', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }}>
+            Log In
+          </button>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? '14px' : '26px', flexWrap: 'wrap', marginTop: '36px', fontSize: '12.5px', color: '#b67bfb', fontWeight: '700' }}>
+          <span>✓ Free to start</span>
+          <span>✓ Full-length mock tests</span>
+          <span>✓ Instant AI scoring</span>
+          <span>✓ No credit card required</span>
+        </div>
+      </div>
+
+      {/* Skills grid */}
+      <div style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '1000px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>
+          Every section of the TOEFL iBT, covered
+        </h2>
+        <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 36px', maxWidth: '520px', lineHeight: '1.6' }}>
+          Realistic question types for all four skills, drawn from a large question bank so you never run out of fresh practice.
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '18px' }}>
+          {skills.map(s => (
+            <div key={s.title} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', backgroundColor: '#f9f8fc' }}>
+              <div style={{ fontSize: '28px', marginBottom: '10px' }}>{s.icon}</div>
+              <div style={{ fontSize: '16px', fontWeight: '800', color: '#1a1a1a', marginBottom: '6px' }}>{s.title}</div>
+              <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6' }}>{s.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* How it works */}
+      <div style={{ backgroundColor: '#f4f6fa', padding: isMobile ? '48px 20px' : '64px 40px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+          <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 36px' }}>
+            How it works
+          </h2>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '24px' }}>
+            {steps.map(step => (
+              <div key={step.n} style={{ textAlign: 'center' }}>
+                <div style={{ width: '38px', height: '38px', borderRadius: '50%', backgroundColor: purple, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: '800', fontSize: '15px', margin: '0 auto 14px' }}>
+                  {step.n}
+                </div>
+                <div style={{ fontSize: '15px', fontWeight: '800', color: '#1a1a1a', marginBottom: '6px' }}>{step.title}</div>
+                <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6' }}>{step.desc}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Pricing teaser */}
+      <div style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '820px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 36px' }}>
+          Simple pricing
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '18px' }}>
+          <div style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '28px' }}>
+            <div style={{ fontSize: '14px', fontWeight: '700', color: '#616473', marginBottom: '6px' }}>Free</div>
+            <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginBottom: '14px' }}>$0</div>
+            <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7' }}>A limited number of items from every practice category, across all four skills. No credit card required.</div>
+          </div>
+          <div style={{ border: `2px solid ${purple}`, borderRadius: '14px', padding: '28px', backgroundColor: '#f9f8fc' }}>
+            <div style={{ fontSize: '14px', fontWeight: '700', color: purple, marginBottom: '6px' }}>Premium</div>
+            <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginBottom: '14px' }}>$50<span style={{ fontSize: '14px', fontWeight: '500', color: '#6b7280' }}> / month</span></div>
+            <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7' }}>Full question bank, all full-length mock tests, and AI-based scoring for Writing and Speaking. Cancel anytime.</div>
+          </div>
+        </div>
+        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+          <a href="/pricing.html" style={{ fontSize: '13px', fontWeight: '700', color: purple }}>See full pricing details →</a>
+        </div>
+      </div>
+
+      {/* Final CTA */}
+      <div style={{ backgroundColor: '#11162d', padding: isMobile ? '44px 20px' : '56px 40px', textAlign: 'center' }}>
+        <h2 style={{ color: '#fff', fontSize: isMobile ? '22px' : '26px', fontWeight: '800', margin: '0 0 18px' }}>
+          Start practicing for free today
+        </h2>
+        <button type="button" onClick={onGetStarted} style={{ backgroundColor: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '14px 30px', fontSize: '15px', fontWeight: '800', cursor: 'pointer' }}>
+          Get Started Free
+        </button>
+      </div>
+
+      {/* Footer */}
+      <div style={{ padding: isMobile ? '28px 20px' : '28px 40px', backgroundColor: '#fff', textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '12px' }}>
+          {[{ href: '/blog/', label: 'Blog' }, { href: '/pricing.html', label: 'Pricing' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }].map(link => (
+            <a key={link.href} href={link.href} style={{ fontSize: '12px', fontWeight: '700', color: '#616473', textDecoration: 'none' }}>{link.label}</a>
+          ))}
+        </div>
+        <div style={{ fontSize: '10.5px', color: '#9ca3af', lineHeight: '1.6' }}>
+          TOEFL® and TOEFL iBT® are registered trademarks of ETS. This site is not endorsed or approved by ETS.<br />
+          © 2026 mrreadyprep. All rights reserved.
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
   const isMobile = useIsMobile()
   // 'login' | 'signup' | 'forgot' (request a reset link) | 'reset' (set a new password, reached
   // via the emailed link's ?reset_token=... query param)
-  const [mode, setMode] = useState('login')
+  const [mode, setMode] = useState(initialMode || 'login')
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -9778,30 +9930,20 @@ function AuthScreen({ onAuthSuccess }) {
     // able to scroll instead of getting clipped by index.html's global `body { overflow: hidden }`.
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#11162d', boxSizing: 'border-box', padding: '20px', overflowY: 'auto' }}>
       <div style={{ width: '100%', maxWidth: '380px' }}>
+        {/* Reached by clicking "Log In"/"Get Started" on LandingPage (the site's actual root view
+            now -- see LandingPage above), so this link takes the visitor back there instead of
+            leaving them stranded on a bare form with no way out except the browser's back button.
+            Also shown for the reset-password deep link (?reset_token=... from the emailed link,
+            which lands here directly via AuthGate's initial showAuth=true) -- going "back" from
+            there just lands on LandingPage, which is a reasonable fallback either way. */}
+        {onBack && (
+          <button type="button" onClick={onBack} style={{ background: 'none', border: 'none', padding: 0, marginBottom: '14px', fontSize: '12px', fontWeight: '600', color: '#9ca3af', cursor: 'pointer' }}>
+            ← Back to home
+          </button>
+        )}
         <div style={{ textAlign: 'center', marginBottom: '22px' }}>
           <div style={{ color: '#b67bfb', fontSize: '24px', fontWeight: '700' }}>mrreadyprep</div>
           <div style={{ fontSize: '10px', color: '#7b809a', letterSpacing: '1.5px', marginTop: '2px' }}>TOEFL® iBT PREP</div>
-        </div>
-
-        {/* Real, visible product content ABOVE the login form -- previously this screen (the site's
-            own root URL) was nothing but a bare login/signup card with no description of what
-            mrreadyprep actually is, which is exactly what an automated payment-provider review
-            (Paddle) flags as a "restricted by a login wall" site: a crawler landing on "/" saw only
-            credential fields, no product info, no pricing, no proof this is a real, live business.
-            This block gives every visitor -- logged in or not, JS-crawler or not -- the same
-            substance already on /pricing.html, right on the homepage itself. */}
-        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
-          <h1 style={{ color: '#fff', fontSize: '19px', fontWeight: '800', lineHeight: '1.35', margin: '0 0 8px' }}>
-            Practice for the TOEFL® iBT with realistic exercises and full mock tests
-          </h1>
-          <p style={{ color: '#9ca3af', fontSize: '12.5px', lineHeight: '1.6', margin: '0 0 12px' }}>
-            Reading, Listening, Writing and Speaking practice with instant, AI-powered feedback — plus 20 full-length mock tests that mirror the real exam.
-          </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', fontSize: '10.5px', color: '#b67bfb', fontWeight: '700' }}>
-            <span>✓ Realistic exam format</span>
-            <span>✓ Instant scoring</span>
-            <span>✓ Free to start</span>
-          </div>
         </div>
 
         <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '26px', boxSizing: 'border-box' }}>
@@ -11411,6 +11553,13 @@ class ExamErrorBoundary extends Component {
 // showing a broken app); otherwise the login/signup screen renders immediately.
 function AuthGate() {
   const [authState, setAuthState] = useState('checking') // 'checking' | 'out' | 'in'
+  // Whether to show AuthScreen (the login/signup form) instead of LandingPage. Defaults to true
+  // only when the URL already carries a ?reset_token=... (the "set a new password" email link
+  // points straight at "/") -- AuthScreen itself is what reads and consumes that token (see its
+  // own useEffect), so a visitor arriving that way must land directly on AuthScreen, not on
+  // LandingPage with no obvious way to reach the reset form.
+  const [showAuth, setShowAuth] = useState(() => new URLSearchParams(window.location.search).has('reset_token'))
+  const [authMode, setAuthMode] = useState('login')
 
   useEffect(() => {
     let cancelled = false
@@ -11451,7 +11600,14 @@ function AuthGate() {
       <ToastHost />
       <CookieConsentBanner />
       {authState === 'checking' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />}
-      {authState === 'out' && <AuthScreen onAuthSuccess={() => setAuthState('in')} />}
+      {authState === 'out' && (
+        showAuth
+          ? <AuthScreen initialMode={authMode} onBack={() => setShowAuth(false)} onAuthSuccess={() => setAuthState('in')} />
+          : <LandingPage
+              onGetStarted={() => { setAuthMode('signup'); setShowAuth(true) }}
+              onLogIn={() => { setAuthMode('login'); setShowAuth(true) }}
+            />
+      )}
       {authState === 'in' && <App />}
     </>
   )
