@@ -2780,7 +2780,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Exit</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(currentQ + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + currentQ + 1} of ${moduleTotal}` : `Question ${currentQ + 1} of ${totalQ}`}
@@ -3088,7 +3088,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
     return (
       <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>Exit</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Conversation ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -3111,7 +3111,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Exit</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
@@ -3407,7 +3407,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
     return (
       <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>Exit</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Announcement ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -3430,7 +3430,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Exit</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
@@ -3730,7 +3730,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
     return (
       <>
       <ExamScreen
-        topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+        topLeft={<TestPillButton onClick={requestExit}>Exit</TestPillButton>}
         section="LISTENING"
         questionLabel={moduleTotal !== undefined ? (totalQ > 1 ? `Questions ${moduleOffset + 1}-${moduleOffset + totalQ} of ${moduleTotal}` : `Question ${moduleOffset + 1} of ${moduleTotal}`) : `Talk ${exerciseNum}`}
         contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -3755,7 +3755,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   return (
     <>
     <ExamScreen
-      topLeft={<TestPillButton onClick={requestExit}>{mockMode ? 'Exit' : 'Save & Exit'}</TestPillButton>}
+      topLeft={<TestPillButton onClick={requestExit}>Exit</TestPillButton>}
       topRight={<TestPillButton onClick={handleNext}>{(qIdx + 1 >= totalQ && (!mockMode || isLastSlot)) ? 'Finish' : 'Next'}</TestPillButton>}
       section="LISTENING"
       questionLabel={moduleTotal !== undefined ? `Question ${moduleOffset + qIdx + 1} of ${moduleTotal}` : `Question ${qIdx + 1} of ${totalQ}`}
