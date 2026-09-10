@@ -29,6 +29,19 @@
   </head>
   <body>
     <div id="root"></div>
+    <!-- Static fallback links for crawlers/verifiers that fetch this page without executing
+         JavaScript (e.g. Paddle's website-verification check) -- the React app itself links to
+         these same pages from its footer/sidebar, but that only exists after the JS bundle runs. -->
+    <noscript>
+      <div style="padding:40px 24px;text-align:center;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a1a;">
+        <p style="margin-bottom:12px;">mrreadyprep — TOEFL® iBT exam preparation platform.</p>
+        <p>
+          <a href="/pricing.html" style="color:#701fa1;">Pricing</a> ·
+          <a href="/terms.html" style="color:#701fa1;">Terms of Service (includes refund policy)</a> ·
+          <a href="/privacy.html" style="color:#701fa1;">Privacy Policy</a>
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
