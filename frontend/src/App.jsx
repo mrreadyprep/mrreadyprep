@@ -9739,7 +9739,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
       {/* Footer */}
       <div style={{ padding: isMobile ? '28px 20px' : '28px 40px', backgroundColor: '#fff', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '12px' }}>
-          {[{ href: '/blog/', label: 'Blog' }, { href: '/pricing.html', label: 'Pricing' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }].map(link => (
+          {[{ href: '/blog/', label: 'Blog' }, { href: '/pricing.html', label: 'Pricing' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }, { href: '/terms.html#refund-policy', label: 'Refund Policy' }].map(link => (
             <a key={link.href} href={link.href} style={{ fontSize: '12px', fontWeight: '700', color: '#616473', textDecoration: 'none' }}>{link.label}</a>
           ))}
         </div>
@@ -10065,7 +10065,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
-          {[{ href: '/blog/', label: 'Blog' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }].map(link => (
+          {[{ href: '/blog/', label: 'Blog' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }, { href: '/terms.html#refund-policy', label: 'Refund Policy' }].map(link => (
             <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer"
               style={{ fontSize: '11px', fontWeight: '700', color: '#1a1a1a', textDecoration: 'none', backgroundColor: '#fff', padding: '7px 14px', borderRadius: '999px' }}>
               {link.label}
@@ -11485,6 +11485,8 @@ function App() {
                   <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Terms of Service</a>
                   <span style={{ fontSize: '12px', color: '#cbd5e1' }}>·</span>
                   <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Privacy Policy</a>
+                  <span style={{ fontSize: '12px', color: '#cbd5e1' }}>·</span>
+                  <a href="/terms.html#refund-policy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Refund Policy</a>
                 </div>
               </div>
             </div>
