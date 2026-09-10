@@ -453,30 +453,40 @@
           ]
         },
         {
-          "id": 35,
-          "type": "receipt",
-          "instruction": "Read a receipt.",
-          "title": "Green Leaf Florist",
-          "subtitle": "Date: May 5, 2025 | Time: 1:15 p.m. | Order #6650",
-          "text": "Mixed Spring Bouquet (x1) ....... $45.00\nVase (x1) ........................ $8.00\nDelivery Fee ..................... $10.00\n\nSubtotal: $63.00\nTax (6%): $3.78\nTotal: $66.78\n\nPayment: Mobile App\n\nDelivery scheduled between 2:00 p.m. and 5:00 p.m. today. A signature will be required.",
+          "id": 155,
+          "type": "article",
+          "instruction": "Read an article.",
+          "title": "New Bike Lane Opens Downtown",
+          "subtitle": "",
+          "text": "City officials celebrated the opening of a new protected bike lane along Main Street on Tuesday, marking the completion of a project that took nearly a year to finish. The two-mile lane connects the downtown business district to the riverside park and includes physical barriers separating cyclists from car traffic.\n\nProject planners say the lane was designed in response to a survey in which more than 60 percent of downtown workers said they would consider commuting by bicycle if safer routes were available. Early data from similar lanes in neighboring cities suggests that protected lanes can reduce cyclist injuries by as much as 40 percent compared with painted lanes that offer no physical separation.\n\nSome downtown business owners initially opposed the project, worried that removing street parking to make room for the lane would hurt sales. City planners addressed this by adding a parking structure two blocks away before construction began. Since the lane's opening, several shop owners have reported that bicycle traffic has actually brought in new customers who previously avoided downtown due to limited parking.",
           "questions": [
             {
-              "question": "What is indicated about the delivery?",
+              "question": "What is the article mainly about?",
               "options": [
-                "It requires a signature upon arrival",
-                "It will arrive before noon",
-                "It is free of charge",
-                "It can be rescheduled at any time"
+                "A survey about downtown parking problems",
+                "The opening of a new protected bike lane",
+                "A debate over city budget spending",
+                "Plans to build a new parking structure"
               ],
-              "answer": 0
+              "answer": 1
             },
             {
-              "question": "How was this order paid for?",
+              "question": "Why were protected bike lanes chosen over painted lanes?",
               "options": [
-                "Cash on delivery",
-                "A mobile payment app",
-                "A gift card",
-                "Store credit"
+                "They are cheaper to build",
+                "They can significantly reduce cyclist injuries",
+                "They require less space",
+                "They were requested by car drivers"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "How did city planners respond to business owners' concerns about parking?",
+              "options": [
+                "They canceled the project",
+                "They built a parking structure nearby",
+                "They shortened the bike lane",
+                "They removed the physical barriers"
               ],
               "answer": 1
             }

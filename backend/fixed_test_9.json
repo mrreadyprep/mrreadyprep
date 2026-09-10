@@ -453,30 +453,40 @@
           ]
         },
         {
-          "id": 45,
-          "type": "receipt",
-          "instruction": "Read a receipt.",
-          "title": "Riverside Cafe",
-          "subtitle": "",
-          "text": "1x Turkey Sandwich — $8.50\n1x Iced Tea — $3.00\n1x Side Salad — $4.50\nSubtotal: $16.00\nTip: $3.00\nTotal: $19.00\nPayment: Credit Card",
+          "id": 199,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Interview Confirmation",
+          "subtitle": "Dear Ms. Chen,",
+          "text": "Thank you for your application for the Marketing Coordinator position at Bluewater Media. We would like to invite you to an interview on Wednesday, September 17, at 10:00 a.m. at our downtown office, located on the fourth floor of the Harrison Building.\n\nThe interview will last approximately 45 minutes and will include a conversation with our marketing director as well as a short writing exercise related to social media campaign planning. Please bring a printed copy of your resume and two professional references, even though we already have digital copies on file, as our interview panel prefers paper copies during discussion.\n\nIf this time does not work for your schedule, please reply to this email by Friday so we can arrange an alternative slot. Parking validation is available at the front desk for visitors using the Harrison Building garage.\n\nWe look forward to meeting you.\n\nBest regards,\nHiring Team, Bluewater Media",
           "questions": [
             {
-              "question": "How much was the tip?",
+              "question": "What is the main purpose of the email?",
               "options": [
-                "$3.00",
-                "$4.50",
-                "$8.50",
-                "$16.00"
+                "To reject Ms. Chen's job application",
+                "To confirm details of an upcoming interview",
+                "To offer Ms. Chen the position",
+                "To request additional application documents by mail"
               ],
-              "answer": 0
+              "answer": 1
             },
             {
-              "question": "What was the total amount charged?",
+              "question": "What will the interview include, in addition to a conversation with the marketing director?",
               "options": [
-                "$16.00",
-                "$19.00",
-                "$21.00",
-                "$24.50"
+                "A group presentation",
+                "A short writing exercise",
+                "A skills test on video editing",
+                "A tour of the office"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why does Ms. Chen need to bring printed documents even though digital copies are on file?",
+              "options": [
+                "The office has no computers",
+                "The interview panel prefers paper copies during discussion",
+                "Digital copies were lost",
+                "It is a company policy for all visitors"
               ],
               "answer": 1
             }

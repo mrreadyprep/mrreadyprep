@@ -453,34 +453,44 @@
           "id": 99
         },
         {
-          "type": "receipt",
-          "instruction": "Read a receipt.",
-          "title": "Cedar Street Electronics",
-          "subtitle": "Date: January 15, 2025 | Time: 5:40 p.m. | Order #6634",
-          "text": "Wireless Earbuds (x1) ... $59.99 ... $59.99\nProtective Case (x1) ... $9.99 ... $9.99\nExtended Warranty (x1) ... $12.00 ... $12.00\n\nSubtotal: $81.98\nTax (7%): $5.74\nTotal: $87.72\n\nPayment: Credit Card\n\nExtended warranty covers accidental damage for 2 years.",
+          "id": 441,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Package Delivery Delay",
+          "subtitle": "Dear Mr. Ibrahim,",
+          "text": "We are writing to inform you that your recent order, tracking number 88213-A, has been delayed due to unexpected weather conditions affecting our regional distribution center. Your package was originally scheduled to arrive on Tuesday, but it is now expected to reach you by Friday of this week.\n\nWe understand that delays can be frustrating, especially for time-sensitive orders, and we sincerely apologize for any inconvenience this may cause. As a gesture of goodwill, we have applied a 15% discount code to your account, which can be used on your next purchase within the next 90 days.\n\nYou can track your package's updated status at any time using the tracking number above on our website. If the package does not arrive by Friday, please contact our customer support team directly so we can investigate further and, if necessary, arrange a replacement shipment at no additional cost.\n\nThank you for your patience and for being a valued customer.\n\nSincerely,\nCustomer Support Team",
           "questions": [
             {
-              "question": "What does the extended warranty cover?",
+              "question": "Why was the package delayed?",
               "options": [
-                "Theft protection",
-                "Accidental damage for 2 years",
-                "Battery replacement only",
-                "Lost item replacement"
+                "It was lost in transit",
+                "Unexpected weather conditions affected the distribution center",
+                "The customer changed the delivery address",
+                "The item was out of stock"
               ],
               "answer": 1
             },
             {
-              "question": "How many items were purchased in total?",
+              "question": "What did the company offer as a gesture of goodwill?",
               "options": [
-                "One",
-                "Two",
-                "Three",
-                "Four"
+                "A full refund",
+                "Free express shipping on all future orders",
+                "A 15% discount code valid for 90 days",
+                "A replacement item sent immediately"
               ],
               "answer": 2
+            },
+            {
+              "question": "What should Mr. Ibrahim do if the package does not arrive by Friday?",
+              "options": [
+                "Reorder the item himself",
+                "Contact customer support",
+                "Wait an additional two weeks",
+                "Return the original order"
+              ],
+              "answer": 1
             }
-          ],
-          "id": 100
+          ]
         }
       ],
       "ap": []

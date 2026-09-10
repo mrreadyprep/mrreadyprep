@@ -3488,7 +3488,14 @@ def get_results_summary(user=Depends(get_current_user)):
                 "attempts": row["attempts"],
                 # Round-half-up, not banker's rounding -- matches _round_half_up_pct()'s intent,
                 # applied directly to the already-computed AVG(pct) instead of a score/total pair.
-                "avg_pct": math.floor(row["avg_pct"] + 0.5) if row["avg_pct"] is not None else 0,
+                # float() is required here: Postgres's AVG() over an INTEGER column (pct) returns
+                # NUMERIC, which psycopg2 hands back as decimal.Decimal, and Decimal + float raises
+                # TypeError -- this crashed /api/results/summary with a 500 on every real (Postgres)
+                # account the moment this endpoint was hit, taking down the whole My Progress screen.
+                # Never caught in dev because SQLite's AVG() returns a plain float there. Reported
+                # live by the user as "My Progress doesn't work" and fixed same-day in the 44th audit
+                # round -- this was a genuine regression introduced by the round-43 rounding fix.
+                "avg_pct": math.floor(float(row["avg_pct"]) + 0.5) if row["avg_pct"] is not None else 0,
                 "best_pct": row["best_pct"] or 0,
                 "total_score": row["total_score"],
                 "total_possible": row["total_possible"],
@@ -3498,7 +3505,7 @@ def get_results_summary(user=Depends(get_current_user)):
             "by_category": by_category,
             "overall": {
                 "attempts": overall["attempts"] or 0,
-                "avg_pct": math.floor(overall["avg_pct"] + 0.5) if overall["avg_pct"] is not None else 0,
+                "avg_pct": math.floor(float(overall["avg_pct"]) + 0.5) if overall["avg_pct"] is not None else 0,
                 "last_attempt": overall["last_attempt"],
             },
         }

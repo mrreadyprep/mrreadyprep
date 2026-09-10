@@ -453,34 +453,44 @@
           "id": 84
         },
         {
-          "type": "sign",
-          "instruction": "Read a sign.",
-          "title": "NOTICE: Recycling Collection Change",
+          "id": 375,
+          "type": "poster",
+          "instruction": "Read a poster.",
+          "title": "Annual Campus Career Fair",
           "subtitle": "",
-          "text": "Due to the upcoming holiday, recycling collection will shift from Monday to Tuesday this week only.\n\nPlease place bins at the curb by seven in the morning on Tuesday.\n\nRegular Monday collection will resume the following week.",
+          "text": "ANNUAL CAMPUS CAREER FAIR\nThursday, October 9, 10:00 a.m. - 3:00 p.m.\nGreat Hall, Student Union Building\n\nMeet representatives from over 60 companies across technology, healthcare, finance, and education. Bring several copies of your resume and dress in business casual attire.\n\nSpecial sessions:\n- 10:30 a.m.: Resume Review Workshop (Room 204)\n- 12:00 p.m.: Panel - 'Transitioning from Internship to Full-Time Offer' (Room 210)\n- 2:00 p.m.: Mock Interview Sessions (sign up required, limited spots)\n\nAll students and recent graduates are welcome. Registration is free but recommended in advance through the Career Services website so employers can review your profile beforehand.\n\nQuestions? Contact the Career Services Office at careers@campus.edu.",
           "questions": [
             {
-              "question": "Why is the recycling collection date changing?",
+              "question": "What is the poster mainly advertising?",
               "options": [
-                "A truck malfunction",
-                "The upcoming holiday",
-                "New city regulations",
-                "A staffing shortage"
+                "A university open house",
+                "An annual career fair",
+                "A job training certification course",
+                "A graduation ceremony"
               ],
               "answer": 1
             },
             {
-              "question": "When should bins be placed at the curb this week?",
+              "question": "What is recommended before attending the mock interview sessions?",
               "options": [
-                "Monday morning",
-                "Tuesday morning",
-                "Wednesday afternoon",
-                "Sunday night"
+                "Paying a registration fee",
+                "Signing up in advance",
+                "Bringing a business suit only",
+                "Submitting a video resume"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why might a student register in advance through the Career Services website?",
+              "options": [
+                "It is required to enter the building",
+                "So employers can review their profile beforehand",
+                "To receive a free lunch",
+                "To reserve a parking spot"
               ],
               "answer": 1
             }
-          ],
-          "id": 85
+          ]
         }
       ],
       "ap": []

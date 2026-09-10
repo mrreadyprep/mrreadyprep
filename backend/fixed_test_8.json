@@ -453,30 +453,40 @@
           ]
         },
         {
-          "id": 40,
-          "type": "schedule",
-          "instruction": "Read a schedule.",
-          "title": "Community Center Weekly Class Schedule",
+          "id": 177,
+          "type": "advertisement",
+          "instruction": "Read an advertisement.",
+          "title": "Summit Fitness Studio - New Class Launch",
           "subtitle": "",
-          "text": "Monday — 9:00 a.m. Yoga\nTuesday — 6:00 p.m. Pottery\nWednesday — 9:00 a.m. Yoga\nThursday — 5:30 p.m. Beginner Spanish\nFriday — 6:00 p.m. Pottery",
+          "text": "Summit Fitness Studio is excited to introduce Sunrise Strength, a new 45-minute class combining resistance training and mobility work, starting this month. Classes run Monday, Wednesday, and Friday at 6:15 a.m., before the studio's regular schedule begins.\n\nCurrent members can join Sunrise Strength at no extra cost as part of their existing membership. New members who sign up for an annual plan this month will receive their first two weeks free, plus a complimentary consultation with one of our certified trainers to build a personalized fitness plan.\n\nClass size is limited to 15 participants to ensure everyone receives proper guidance with form and technique, so early registration is strongly encouraged. Sign up through the studio app or at the front desk. All fitness levels are welcome, and modifications will be offered for every exercise.",
           "questions": [
             {
-              "question": "What class is offered on Thursday?",
+              "question": "What is the main purpose of this advertisement?",
               "options": [
-                "Yoga",
-                "Pottery",
-                "Beginner Spanish",
-                "No class is offered"
+                "To announce the studio's closing",
+                "To introduce a new fitness class",
+                "To advertise a change in membership prices",
+                "To recruit new personal trainers"
               ],
-              "answer": 2
+              "answer": 1
             },
             {
-              "question": "How many days a week is Yoga offered?",
+              "question": "What do new members receive if they sign up for an annual plan this month?",
               "options": [
-                "One",
-                "Two",
-                "Three",
-                "Four"
+                "A free gym bag",
+                "Two free weeks and a free consultation",
+                "A discount on personal training",
+                "Free parking for a year"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why is class size limited to 15 participants?",
+              "options": [
+                "The room is very small",
+                "To ensure proper guidance with form",
+                "Because of equipment shortages",
+                "To reduce noise levels"
               ],
               "answer": 1
             }

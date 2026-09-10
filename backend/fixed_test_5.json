@@ -473,30 +473,40 @@
           ]
         },
         {
-          "id": 24,
-          "type": "sign",
-          "instruction": "Read a sign.",
-          "title": "NOTICE: Loading Dock Access Change",
-          "subtitle": "",
-          "text": "Beginning next Monday, all deliveries must use the loading dock on Elm Street instead of the Main Street entrance.\n\nThis change is due to ongoing sidewalk repairs near the Main Street doors.\n\nDelivery drivers should check in with the security desk upon arrival.",
+          "id": 111,
+          "type": "email",
+          "instruction": "Read an email.",
+          "title": "Library Membership Renewal",
+          "subtitle": "Dear Mr. Alvarez,",
+          "text": "Our records show that your membership at Hillcrest Public Library is set to expire on April 30. To continue borrowing books, using our digital archive, and reserving study rooms, please renew before that date. Renewal can be completed online through your account portal, by phone, or in person at the front desk.\n\nIf you renew online, the standard annual fee of $15 applies, and your new card will be valid immediately. Members over 65 or under 18 qualify for a reduced fee of $8, but this discount can only be applied in person, since we need to verify eligibility with identification.\n\nPlease note that if your membership lapses for more than 60 days, any items still checked out will be considered overdue and standard late fees will apply, even though the account itself is inactive. We encourage you to renew a few days early to avoid any interruption in service.\n\nThank you for being a loyal member of Hillcrest Public Library.\n\nSincerely,\nMembership Services",
           "questions": [
             {
-              "question": "Why is the delivery entrance being changed?",
+              "question": "What is the main purpose of the email?",
               "options": [
-                "The Main Street entrance is being permanently closed",
-                "Sidewalk repairs are underway near the Main Street doors",
-                "The Elm Street dock is closer to the loading area",
-                "New security cameras are being installed"
+                "To announce new library hours",
+                "To remind Mr. Alvarez to renew his membership",
+                "To notify Mr. Alvarez of a lost book fee",
+                "To invite Mr. Alvarez to a library event"
               ],
               "answer": 1
             },
             {
-              "question": "What should delivery drivers do when they arrive?",
+              "question": "According to the email, how can a member receive the reduced $8 fee?",
               "options": [
-                "Park on Main Street and wait",
-                "Check in with the security desk",
-                "Call ahead before arriving",
-                "Use a separate entrance for pedestrians"
+                "By renewing online",
+                "By calling the library",
+                "By renewing in person with identification",
+                "By renewing more than 60 days early"
+              ],
+              "answer": 2
+            },
+            {
+              "question": "What does the email say will happen if a membership lapses for more than 60 days?",
+              "options": [
+                "The account will be permanently deleted",
+                "Checked-out items will be considered overdue",
+                "The member must reapply from the beginning",
+                "All borrowing privileges will move to a waiting list"
               ],
               "answer": 1
             }

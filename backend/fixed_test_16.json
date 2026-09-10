@@ -483,34 +483,44 @@
           "id": 79
         },
         {
-          "type": "sign",
-          "instruction": "Read a sign.",
-          "title": "Farmers Market: Saturday Hours Update",
+          "id": 353,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Splitting the Utility Bill",
           "subtitle": "",
-          "text": "Starting this weekend, the farmers market will open one hour earlier, from seven in the morning until one in the afternoon.\n\nThis change is due to increasing summer heat and vendor requests for cooler working hours.\n\nRegular Sunday hours remain unchanged at nine to two.",
+          "text": "Jordan (7:40 p.m.)\nHey, the electric bill came in higher than usual this month, $142 total. Want to split it like always?\n\nTaylor (7:42 p.m.)\nSure, that's $71 each. Any idea why it jumped?\n\nJordan (7:44 p.m.)\nProbably the air conditioning, it's been really hot. I can send you the breakdown if you want.\n\nTaylor (7:45 p.m.)\nNo need, I trust you. I'll transfer my half tonight.\n\nJordan (7:46 p.m.)\nThanks. Maybe we should set the thermostat a couple degrees higher next month.",
           "questions": [
             {
-              "question": "Why did the Saturday hours change?",
+              "question": "What are Jordan and Taylor mainly discussing?",
               "options": [
-                "Fewer vendors were available",
-                "Increasing summer heat and vendor requests",
-                "A new parking restriction",
-                "Lower customer turnout"
+                "Planning a trip together",
+                "Splitting a higher-than-usual electric bill",
+                "Choosing a new apartment",
+                "Fixing a broken air conditioner"
               ],
               "answer": 1
             },
             {
-              "question": "What time does the market now open on Saturdays?",
+              "question": "How much does Taylor owe?",
               "options": [
-                "Six in the morning",
-                "Seven in the morning",
-                "Nine in the morning",
-                "Eight in the morning"
+                "$35.50",
+                "$71",
+                "$142",
+                "$140"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does Jordan suggest for next month?",
+              "options": [
+                "Switching electricity providers",
+                "Setting the thermostat higher",
+                "Splitting the bill unevenly",
+                "Turning off the air conditioning completely"
               ],
               "answer": 1
             }
-          ],
-          "id": 80
+          ]
         }
       ],
       "ap": []

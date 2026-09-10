@@ -453,34 +453,44 @@
           "id": 94
         },
         {
-          "type": "receipt",
-          "instruction": "Read a receipt.",
-          "title": "Green Valley Hardware",
-          "subtitle": "Date: June 9, 2025 | Time: 3:15 p.m. | Order #7761",
-          "text": "Paint Roller Set (x1) ... $8.00 ... $8.00\nInterior Paint, 1 Gallon (x2) ... $28.00 ... $56.00\nPainter's Tape (x3) ... $4.50 ... $13.50\n\nSubtotal: $77.50\nTax (8%): $6.20\nTotal: $83.70\n\nPayment: Debit Card\n\nReturns accepted within 30 days with receipt.",
+          "id": 419,
+          "type": "advertisement",
+          "instruction": "Read an advertisement.",
+          "title": "One-Bedroom Apartment for Rent",
+          "subtitle": "",
+          "text": "FOR RENT: Bright one-bedroom apartment, second floor, walking distance to campus and the downtown bus line. Available starting November 1.\n\nFeatures: hardwood floors, updated kitchen with dishwasher, in-unit washer and dryer, and a small balcony overlooking a quiet courtyard. Rent is $950 per month, utilities not included; a one-year lease is required, and a security deposit equal to one month's rent is due at signing.\n\nThis unit is on the top floor of a three-story building with no elevator, so please note the two flights of stairs. Small pets are allowed with an additional $25 monthly pet fee and landlord approval.\n\nTo schedule a viewing, contact the property manager at (555) 483-1092 between 9 a.m. and 6 p.m. on weekdays. Applications require proof of income and a background check, which typically takes three to five business days to process.",
           "questions": [
             {
-              "question": "How many gallons of interior paint were purchased?",
+              "question": "What is the main purpose of this advertisement?",
               "options": [
-                "One",
-                "Two",
-                "Three",
-                "Four"
+                "To sell an apartment building",
+                "To advertise an apartment for rent",
+                "To announce a rent increase",
+                "To recruit a new property manager"
               ],
               "answer": 1
             },
             {
-              "question": "What is the store's return policy?",
+              "question": "What should a potential renter with a pet be aware of?",
               "options": [
-                "No returns accepted",
-                "Returns accepted within 30 days with receipt",
-                "Returns accepted within a week",
-                "Store credit only, no time limit"
+                "Pets are not allowed under any circumstances",
+                "There is an additional monthly fee and approval is required",
+                "Only cats are permitted",
+                "Pets require a separate lease"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "What does the advertisement note about the building?",
+              "options": [
+                "It has an elevator for easy access",
+                "It requires climbing two flights of stairs",
+                "It is a newly constructed building",
+                "It is located far from public transportation"
               ],
               "answer": 1
             }
-          ],
-          "id": 95
+          ]
         }
       ],
       "ap": []

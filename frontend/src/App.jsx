@@ -796,6 +796,14 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
     if (questionIdx + 1 < totalQ) {
       setQuestionIdx(i => i + 1)
     } else {
+      // Mirror to the parent synchronously here too, not just via the onAnswersChange effect
+      // above -- in mockMode, finish() below calls onComplete() which (via
+      // handleReadingListening) advances the parent's slot index in the SAME click, and that
+      // key-based remount unmounts this component before a scheduled effect from setAnswers()
+      // ever gets to run. Without this, a just-finished passage's answers never reach
+      // sessionRef.current.slotAnswers, so it silently shows up unanswered if the student
+      // Back-navigates into it again later. See goBack() below for the same fix in reverse.
+      if (mockMode && onAnswersChange) onAnswersChange(finalAnswers)
       finish(finalAnswers)
     }
   }
@@ -804,7 +812,16 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
   // previously chosen there (or a blank selection if it hadn't been answered yet).
   const goBack = () => {
     if (questionIdx === 0) {
-      if (onPrevSlot) onPrevSlot()
+      if (onPrevSlot) {
+        // Same fix as the mockMode branch in goNext(): persist this question's current
+        // selection synchronously before leaving the passage, since onPrevSlot() changes the
+        // parent's slot index in this same click and the resulting remount would otherwise
+        // discard the pending setAnswers() update before its effect could mirror it up.
+        const finalAnswers = withAnswer(questionIdx, selected)
+        setAnswers(finalAnswers)
+        if (onAnswersChange) onAnswersChange(finalAnswers)
+        onPrevSlot()
+      }
       return
     }
     setAnswers(withAnswer(questionIdx, selected))
@@ -2047,6 +2064,16 @@ function useIntroNarration(introFilename, resetKey) {
       clearTimeout(hardGiveUpTimer)
       if (fallbackTimer) clearTimeout(fallbackTimer)
       cleanupListeners()
+      // Root cause of "audio keeps playing after leaving a Listening exercise" (reported live,
+      // intermittent): AudioPlayer below is only mounted once `announced` flips true (`{announced
+      // && <AudioPlayer .../>}`), so its own pause-on-unmount cleanup never runs if the student
+      // exits WHILE the "Listen to a conversation." narration line is still playing -- this hook's
+      // cleanup fired instead, but it only cleared timers/listeners, never actually silencing the
+      // shared element. That left the narration clip audibly playing in the background with no
+      // component left mounted to stop it. Explicitly pausing here (mirrors AudioPlayer's own
+      // unmount cleanup) closes that gap; it's a no-op if narration already finished/AudioPlayer
+      // already took over, since re-pausing an already-paused/reassigned element is harmless.
+      audio.pause()
     }
   }, [url, resetKey])
   return announced
@@ -2111,6 +2138,15 @@ function SafeAudio({ src, onEnded, onError, timeoutMs = 15000 }) {
         el.removeEventListener('timeupdate', markProgress)
         el.removeEventListener('playing', markProgress)
         el.removeEventListener('canplay', markProgress)
+        // Removing this <audio> node from the DOM (what React does on unmount) does NOT
+        // reliably stop playback by itself in every browser -- Safari in particular has been
+        // seen to keep a detached autoPlay element's sound playing for a moment (sometimes
+        // until the whole clip finishes) until it's garbage-collected. Explicitly pausing here
+        // is what actually silences it immediately. Root cause of "audio keeps playing in the
+        // background after leaving a Listening exercise" -- SafeAudio backs every narration
+        // clip (hwcheck intro, "Listen to a conversation" etc.), and none of those call sites
+        // were pausing it themselves on exit. Fixed in the 45th audit round.
+        el.pause()
       }
     }
   }, [src, timeoutMs])
@@ -6680,7 +6716,13 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   if (micState !== 'ready') return <MicPermissionGate micState={micState} onRetry={checkMic} onBack={onBack} />
 
   const score = answers.reduce((s, a) => s + a.score, 0)
-  const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
+  // Rounded to the nearest 0.5 (same pattern used everywhere else a raw score becomes a shown
+  // band -- e.g. FullMockTest's writing/speaking weighted-score math and pctToBand), not left as
+  // a raw arithmetic mean -- a plain average of five 1-6 integer item scores can land on any
+  // tenth (e.g. 21/5 = 4.2), which doesn't match the TOEFL 2026 half-point band scale students see
+  // everywhere else in the app. Reported live by the user (a real "3.4" on a Listen & Repeat set)
+  // and fixed in the 44th audit round.
+  const avgLabel = answers.length ? (Math.round((score / answers.length) * 2) / 2).toFixed(1) : '0.0'
   const progressPct = phase === 'summary' ? 100 : (sentenceIdx / totalQ) * 100
 
   return (
@@ -6998,7 +7040,13 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, 
   if (micState !== 'ready') return <MicPermissionGate micState={micState} onRetry={checkMic} onBack={onBack} />
 
   const score = answers.reduce((s, a) => s + a.score, 0)
-  const avgLabel = answers.length ? (score / answers.length).toFixed(1) : '0.0'
+  // Rounded to the nearest 0.5 (same pattern used everywhere else a raw score becomes a shown
+  // band -- e.g. FullMockTest's writing/speaking weighted-score math and pctToBand), not left as
+  // a raw arithmetic mean -- a plain average of five 1-6 integer item scores can land on any
+  // tenth (e.g. 21/5 = 4.2), which doesn't match the TOEFL 2026 half-point band scale students see
+  // everywhere else in the app. Reported live by the user (a real "3.4" on a Listen & Repeat set)
+  // and fixed in the 44th audit round.
+  const avgLabel = answers.length ? (Math.round((score / answers.length) * 2) / 2).toFixed(1) : '0.0'
   const progressPct = phase === 'summary' ? 100 : (qIdx / totalQ) * 100
 
   return (
@@ -8359,6 +8407,39 @@ function WritingScoreBreakdown({ basResult, emailResult, discResult, reviewEntri
   )
 }
 
+// Full Mock Test's own exit confirmation. Unlike ConfirmModal's plain confirm/cancel, leaving a
+// mock test in progress has THREE real outcomes, not two: save whatever sections have already
+// been fully completed to the student's Progress record and leave, discard the whole attempt and
+// leave, or stay and keep testing -- so this is a bespoke 3-button modal (same visual language as
+// ConfirmModal) rather than stretching ConfirmModal's two-button API to fit a third action.
+// Brought back per user request in the 44th audit round: exiting mid-mock-test previously always
+// discarded everything with no way to keep the sections already finished. Note this saves the
+// SCORES already earned (same as a normal completed practice exercise) -- it does not resume the
+// exact in-progress question/timer later; that would need persisting the live queue/timer state
+// too, a much larger feature deliberately left out here to avoid destabilizing the mock test
+// state machine right before launch.
+function MockExitConfirmModal({ onSaveExit, onDiscardExit, onCancel }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') onCancel() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onCancel])
+  const trapRef = useFocusTrap()
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Exit the mock test?" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '400px', width: '100%', textAlign: 'center' }}>
+        <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Exit the mock test?</div>
+        <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>You can save the section(s) you've already finished to your Progress, or discard this whole attempt.</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <button autoFocus onClick={onSaveExit} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save & Exit</button>
+          <button onClick={onDiscardExit} style={{ background: '#fff', color: '#d92d20', border: '1.5px solid #d92d20', borderRadius: '8px', padding: '10px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Exit without saving</button>
+          <button onClick={onCancel} style={{ background: 'none', border: 'none', color: '#6b7280', fontSize: '12px', padding: '6px', cursor: 'pointer' }}>Keep testing</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function FullMockTest({ onBack, hasPremium = false }) {
   const isMobile = useIsMobile()
   const [phase, setPhase] = useState('loading') // loading | intro | notice | running | results
@@ -8764,6 +8845,28 @@ function FullMockTest({ onBack, hasPremium = false }) {
     setShowExitConfirm(true)
   }
 
+  // Persists whatever section(s) have already been FULLY completed (i.e. have a nonzero total/max
+  // in computeMockResultBands) when the student chooses "Save & Exit" mid-attempt, using the exact
+  // same saveResult() calls and testLabel/testItemId convention as the normal results-phase effect
+  // below -- so a partial mock attempt shows up on Progress/Dashboard identically to a completed
+  // one for whichever sections were actually finished. Deliberately does NOT try to resume the
+  // exact in-progress question/timer on a later visit (that would need persisting the live
+  // queue/idx/remaining-pool-time state too, a much larger and riskier feature) -- it only makes
+  // sure finished work is never silently thrown away. mock_overall is intentionally skipped since
+  // the full test wasn't completed. Brought back per user request in the 44th audit round.
+  const saveAndExit = () => {
+    const s = sessionRef.current
+    const { readingRaw, listeningRaw, writingPts, writingMax, writingTaskPct, speakingPts, speakingMax, speakingTaskPct } = computeMockResultBands(s)
+    const testLabel = fixedTestId ? `Mock Test ${fixedTestId}` : 'Full Mock Test'
+    const testItemId = fixedTestId ? String(fixedTestId) : 'practice'
+    if ((mode === 'full' || mode === 'reading') && readingRaw.total) saveResult('mock_reading', testItemId, readingRaw.correct, readingRaw.total, `${testLabel} · Reading (saved early)`)
+    if ((mode === 'full' || mode === 'listening') && listeningRaw.total) saveResult('mock_listening', testItemId, listeningRaw.correct, listeningRaw.total, `${testLabel} · Listening (saved early)`)
+    if ((mode === 'full' || mode === 'writing') && writingMax) saveResult('mock_writing', testItemId, writingPts, writingMax, `${testLabel} · Writing (saved early)`, JSON.stringify({ taskPct: writingTaskPct }))
+    if ((mode === 'full' || mode === 'speaking') && speakingMax) saveResult('mock_speaking', testItemId, speakingPts, speakingMax, `${testLabel} · Speaking (saved early)`, JSON.stringify({ taskPct: speakingTaskPct }))
+    setShowExitConfirm(false)
+    onBack()
+  }
+
   // Keeps a ref to the latest idx/queue/stage so the pooled Reading clock's interval (below),
   // which is only recreated when stage/phase change, can still read up-to-date progress when
   // the module time runs out mid-question.
@@ -8883,13 +8986,9 @@ function FullMockTest({ onBack, hasPremium = false }) {
       <>
         <TestNoticeScreen title={n.title} paragraphs={n.paragraphs} rows={n.rows} onContinue={continueNotice} onCancel={exitMockTest} />
         {showExitConfirm && (
-          <ConfirmModal
-            title="Exit the mock test?"
-            message="Your progress in this session will be lost."
-            confirmLabel="Exit"
-            cancelLabel="Keep testing"
-            danger
-            onConfirm={() => { setShowExitConfirm(false); onBack() }}
+          <MockExitConfirmModal
+            onSaveExit={saveAndExit}
+            onDiscardExit={() => { setShowExitConfirm(false); onBack() }}
             onCancel={() => setShowExitConfirm(false)}
           />
         )}
@@ -9022,13 +9121,9 @@ function FullMockTest({ onBack, hasPremium = false }) {
           <button onClick={exitMockTest} style={{ background: 'none', border: '1px solid #c7c9d9', borderRadius: '999px', padding: '8px 18px', fontSize: '13px', fontWeight: '600', color: '#44475a', cursor: 'pointer' }}>← Exit</button>
         </div>
         {showExitConfirm && (
-          <ConfirmModal
-            title="Exit the mock test?"
-            message="Your progress in this session will be lost."
-            confirmLabel="Exit"
-            cancelLabel="Keep testing"
-            danger
-            onConfirm={() => { setShowExitConfirm(false); onBack() }}
+          <MockExitConfirmModal
+            onSaveExit={saveAndExit}
+            onDiscardExit={() => { setShowExitConfirm(false); onBack() }}
             onCancel={() => setShowExitConfirm(false)}
           />
         )}
@@ -9048,13 +9143,9 @@ function FullMockTest({ onBack, hasPremium = false }) {
       {child}
       {progressBadge}
       {showExitConfirm && (
-        <ConfirmModal
-          title="Exit the mock test?"
-          message="Your progress in this session will be lost."
-          confirmLabel="Exit"
-          cancelLabel="Keep testing"
-          danger
-          onConfirm={() => { setShowExitConfirm(false); onBack() }}
+        <MockExitConfirmModal
+          onSaveExit={saveAndExit}
+          onDiscardExit={() => { setShowExitConfirm(false); onBack() }}
           onCancel={() => setShowExitConfirm(false)}
         />
       )}

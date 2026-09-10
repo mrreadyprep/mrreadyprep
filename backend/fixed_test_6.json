@@ -453,32 +453,42 @@
           ]
         },
         {
-          "id": 30,
-          "type": "schedule",
-          "instruction": "Read a schedule.",
-          "title": "Community Garden Workshop Series",
+          "id": 133,
+          "type": "message",
+          "instruction": "Read a message exchange.",
+          "title": "Changing the Study Group Time",
           "subtitle": "",
-          "text": "10:00 a.m. — Soil Testing Basics\n10:45 a.m. — Choosing Plants for Your Climate Zone\n11:30 a.m. — Composting Demonstration\n12:15 p.m. — Break for Snacks\n12:45 p.m. — Hands-On Planting Session\n2:00 p.m. — Q&A with Master Gardeners",
+          "text": "Layla (4:02 p.m.)\nHi, is it okay if we move tomorrow's study group from 5 p.m. to 6:30 p.m.? I have a work shift that got extended.\n\nOmar (4:05 p.m.)\nThat works for me. Same room in the library?\n\nLayla (4:06 p.m.)\nActually, that room is booked after 6, so I reserved the small conference room on the second floor instead.\n\nOmar (4:08 p.m.)\nGot it. Should I still bring the practice questions I printed?\n\nLayla (4:09 p.m.)\nYes, please, and maybe make a few extra copies in case anyone else joins.",
           "questions": [
             {
-              "question": "What happens right before the break for snacks?",
+              "question": "Why does Layla want to change the meeting time?",
               "options": [
-                "Soil testing basics",
-                "Choosing plants for your climate zone",
-                "A composting demonstration",
-                "The hands-on planting session"
+                "The library is closing early",
+                "Her work shift was extended",
+                "Omar requested a later time",
+                "The conference room was unavailable earlier"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Where will the study group now meet?",
+              "options": [
+                "The original library room",
+                "A cafe near campus",
+                "The small conference room on the second floor",
+                "Omar's apartment"
               ],
               "answer": 2
             },
             {
-              "question": "When does the Q&A with master gardeners take place?",
+              "question": "What does Layla ask Omar to do?",
               "options": [
-                "10:45 a.m.",
-                "11:30 a.m.",
-                "12:45 p.m.",
-                "2:00 p.m."
+                "Reserve a new room",
+                "Bring extra copies of practice questions",
+                "Invite more classmates",
+                "Reschedule again"
               ],
-              "answer": 3
+              "answer": 1
             }
           ]
         }

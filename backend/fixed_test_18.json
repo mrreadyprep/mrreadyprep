@@ -453,34 +453,44 @@
           "id": 89
         },
         {
-          "type": "schedule",
-          "instruction": "Read a schedule.",
-          "title": "Local Theater Showtimes - Friday",
+          "id": 397,
+          "type": "article",
+          "instruction": "Read an article.",
+          "title": "Riverside Park Renovation Nears Completion",
           "subtitle": "",
-          "text": "Screen 1: \"Ocean's Horizon\" — 4:00, 7:00, 9:45 p.m.\nScreen 2: \"The Last Orchard\" — 5:15, 8:00 p.m.\nScreen 3: \"Midnight Runner\" — 6:30, 9:15 p.m.",
+          "text": "After eight months of construction, the renovation of Riverside Park is expected to be complete by the end of the month, according to city parks officials. The project replaced aging playground equipment, added a splash pad for young children, and widened the walking path that circles the park's central pond.\n\nThe renovation was funded largely through a combination of city budget allocations and a community fundraising campaign that exceeded its original goal by nearly $20,000. Local residents who donated more than $100 will have their names listed on a plaque near the park's main entrance.\n\nParks officials note that the wider walking path was the most requested improvement in a public survey conducted two years ago, as many residents complained that the old path was too narrow for wheelchairs and strollers to pass each other comfortably. A ribbon-cutting ceremony is planned for the park's reopening, with details to be announced in the coming weeks.",
           "questions": [
             {
-              "question": "How many showtimes does \"Ocean's Horizon\" have?",
+              "question": "What is the article mainly about?",
               "options": [
-                "One",
-                "Two",
-                "Three",
-                "Four"
+                "A proposal to build a new park",
+                "The near-completion of a park renovation",
+                "A dispute over park funding",
+                "The closing of Riverside Park"
               ],
-              "answer": 2
+              "answer": 1
             },
             {
-              "question": "Which movie has a showtime at 5:15?",
+              "question": "How was the renovation project primarily funded?",
               "options": [
-                "Ocean's Horizon",
-                "The Last Orchard",
-                "Midnight Runner",
-                "None of them"
+                "Entirely through private donations",
+                "Through city budget funds and community fundraising",
+                "Through a state government grant",
+                "Through ticket sales at the park"
+              ],
+              "answer": 1
+            },
+            {
+              "question": "Why was the walking path widened?",
+              "options": [
+                "To allow more foot traffic during festivals",
+                "It was the most requested improvement in a survey",
+                "To match paths in other city parks",
+                "Because the old path was damaged"
               ],
               "answer": 1
             }
-          ],
-          "id": 90
+          ]
         }
       ],
       "ap": []
