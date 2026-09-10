@@ -10729,14 +10729,19 @@ function App() {
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
           <>
-            <div style={{ display: 'flex', gap: '12px', flexShrink: 0, ...(isMobile ? { flexDirection: 'column' } : {}) }}>
-              <div style={{ background: '#11162d', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '16px', flex: 1 }}>
-                <div style={{ fontSize: '26px' }}>🔥</div>
+            {/* flexWrap so this row degrades gracefully on a narrow-but-not-mobile desktop window
+                (below the streak card's + mock-test card's combined minimum width but still above
+                the isMobile breakpoint) instead of clipping -- MAIN's overflowX:'hidden' means
+                anything that doesn't fit here has nowhere to go otherwise. Found via user
+                screenshot in the 44th audit round. */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', flexShrink: 0, ...(isMobile ? { flexDirection: 'column' } : {}) }}>
+              <div style={{ background: '#11162d', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: isMobile ? '0' : '280px' }}>
+                <div style={{ fontSize: '26px' }} aria-hidden="true">🔥</div>
                 <div>
                   <div style={{ fontSize: '10px', color: '#7b809a', marginBottom: '2px' }}>Daily streak</div>
-                  <div style={{ fontSize: '20px', fontWeight: '700', color: '#f5a623' }}>{userData.current_streak} days</div>
+                  <div style={{ fontSize: '20px', fontWeight: '700', color: '#f5a623' }}>{userData.current_streak} day{userData.current_streak === 1 ? '' : 's'}</div>
                 </div>
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end' }}>
+                <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
                   {streakDays.map((done, i) => (
                     <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px' }}>
                       <div style={{ width: '22px', height: '22px', borderRadius: '50%', backgroundColor: done ? '#2ac56c' : '#252a44', border: done ? 'none' : '0.5px solid #3a3f5c', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -10835,7 +10840,7 @@ function App() {
                   onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setExpandedFormat(!expandedFormat) } }}
                   style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '16px', cursor: 'pointer' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-                    <div style={{ fontSize: '13px', fontWeight: '700' }}>📋 TOEFL 2026 Format</div>
+                    <div style={{ fontSize: '13px', fontWeight: '700' }}><span aria-hidden="true">📋</span> TOEFL 2026 Format</div>
                     <span style={{ fontSize: '11px', color: '#701fa1', fontWeight: '600' }}>{expandedFormat ? '▲ Less' : '▼ Details'}</span>
                   </div>
                   {!expandedFormat ? (
@@ -10870,7 +10875,7 @@ function App() {
                 </div>
 
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '12px' }}>
-                  <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}>🎯 Keep Going</div>
+                  <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}><span aria-hidden="true">🎯</span> Keep Going</div>
                   <div style={{ fontSize: '12px', lineHeight: '1.6', color: '#616473' }}>
                     {examDaysLeft === null && examDate ? "Your exam date has passed — update it above to keep tracking your countdown and daily goals."
                       : examDaysLeft === null ? "Set your exam date and start your journey. Every day of practice counts!"
@@ -10887,7 +10892,7 @@ function App() {
                 </div>
 
                 <div style={{ background: 'linear-gradient(135deg, #701fa1 0%, #2563eb 100%)', borderRadius: '12px', padding: '16px', marginTop: '16px' }}>
-                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>💡 Today's Strategy</div>
+                  <div style={{ fontSize: '11px', fontWeight: '700', color: 'rgba(255,255,255,0.7)', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}><span aria-hidden="true">💡</span> Today's Strategy</div>
                   <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff', lineHeight: '1.5' }}>
                     {["In Reading, look for transition words (however, therefore, moreover) — they signal the author's main point.",
                       "For Listening, focus on the first and last sentences of each speaker's turn — key info is usually there.",
