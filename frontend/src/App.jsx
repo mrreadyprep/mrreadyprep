@@ -9771,11 +9771,37 @@ function AuthScreen({ onAuthSuccess }) {
   }
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#11162d', boxSizing: 'border-box', padding: '20px' }}>
+    // overflowY: auto (not the app shell's usual overflow: hidden) + minHeight instead of a fixed
+    // height -- this screen is the one place in the whole app that must stay usable with real,
+    // visible page content even when nothing else has run yet (no JS, no auth). The marketing
+    // block below makes this screen taller than one viewport on narrow phones, so it needs to be
+    // able to scroll instead of getting clipped by index.html's global `body { overflow: hidden }`.
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#11162d', boxSizing: 'border-box', padding: '20px', overflowY: 'auto' }}>
       <div style={{ width: '100%', maxWidth: '380px' }}>
         <div style={{ textAlign: 'center', marginBottom: '22px' }}>
           <div style={{ color: '#b67bfb', fontSize: '24px', fontWeight: '700' }}>mrreadyprep</div>
           <div style={{ fontSize: '10px', color: '#7b809a', letterSpacing: '1.5px', marginTop: '2px' }}>TOEFL® iBT PREP</div>
+        </div>
+
+        {/* Real, visible product content ABOVE the login form -- previously this screen (the site's
+            own root URL) was nothing but a bare login/signup card with no description of what
+            mrreadyprep actually is, which is exactly what an automated payment-provider review
+            (Paddle) flags as a "restricted by a login wall" site: a crawler landing on "/" saw only
+            credential fields, no product info, no pricing, no proof this is a real, live business.
+            This block gives every visitor -- logged in or not, JS-crawler or not -- the same
+            substance already on /pricing.html, right on the homepage itself. */}
+        <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+          <h1 style={{ color: '#fff', fontSize: '19px', fontWeight: '800', lineHeight: '1.35', margin: '0 0 8px' }}>
+            Practice for the TOEFL® iBT with realistic exercises and full mock tests
+          </h1>
+          <p style={{ color: '#9ca3af', fontSize: '12.5px', lineHeight: '1.6', margin: '0 0 12px' }}>
+            Reading, Listening, Writing and Speaking practice with instant, AI-powered feedback — plus 20 full-length mock tests that mirror the real exam.
+          </p>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap', fontSize: '10.5px', color: '#b67bfb', fontWeight: '700' }}>
+            <span>✓ Realistic exam format</span>
+            <span>✓ Instant scoring</span>
+            <span>✓ Free to start</span>
+          </div>
         </div>
 
         <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '26px', boxSizing: 'border-box' }}>
