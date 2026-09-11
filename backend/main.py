@@ -284,6 +284,15 @@ PRACTICE_REMINDER_CRON_SECRET = os.environ.get("PRACTICE_REMINDER_CRON_SECRET", 
 POLAR_ACCESS_TOKEN = os.environ.get("POLAR_ACCESS_TOKEN", "")
 POLAR_WEBHOOK_SECRET = os.environ.get("POLAR_WEBHOOK_SECRET", "")
 POLAR_PRODUCT_ID = os.environ.get("POLAR_PRODUCT_ID", "")
+# Separate, lower-priced ($45 vs the regular $50) product used only for the win-back offer shown
+# to students whose subscription previously lapsed (see is_lapsed_subscriber() below). Deliberately
+# a whole second Polar product rather than a discount on the regular one, because Polar discounts
+# apply to whatever product the checkout session was created for -- a student browsing the normal
+# $50 checkout must never be able to redeem the COMEBACK60 code meant for returning students, and a
+# separate Private-visibility product (only reachable via a server-created checkout, never listed
+# publicly) is what actually enforces that, not just UI copy. Optional: if unset, lapsed students
+# just see the regular product/price, same as before this feature existed.
+POLAR_COMEBACK_PRODUCT_ID = os.environ.get("POLAR_COMEBACK_PRODUCT_ID", "")
 POLAR_ENVIRONMENT = os.environ.get("POLAR_ENVIRONMENT", "sandbox")
 POLAR_API_BASE_URL = (
     "https://sandbox-api.polar.sh" if POLAR_ENVIRONMENT != "production" else "https://api.polar.sh"
@@ -387,6 +396,16 @@ def has_active_subscription(user) -> bool:
     if period_end.tzinfo is None:
         period_end = period_end.replace(tzinfo=timezone.utc)
     return (datetime.now(timezone.utc) - period_end) < timedelta(days=2)
+
+def is_lapsed_subscriber(user) -> bool:
+    """True for a student who has billed through Polar before (so a real polar_subscription_id
+    is on file) but does not currently have active access -- i.e. a previously-paying student
+    whose subscription ended, as opposed to someone who has never subscribed at all. Used to
+    route create_checkout() to the cheaper win-back product (POLAR_COMEBACK_PRODUCT_ID) and to
+    show the comeback-offer banner/messaging in the frontend. Deliberately excludes admins (who
+    have has_active_subscription() == True unconditionally, so this is already False for them)
+    and never-subscribed users (no polar_subscription_id on file)."""
+    return bool(user["polar_subscription_id"]) and not has_active_subscription(user)
 
 # Comma-separated list of email addresses that get admin rights (full premium content access +
 # the /api/admin/* management endpoints), e.g. ADMIN_EMAILS=owner@mrreadyprep.com,helper@x.com.
@@ -2812,8 +2831,14 @@ def create_checkout(user=Depends(get_current_user)):
             # the student has no self-service way to cancel it since Settings only offers to cancel
             # the one on file.
             raise HTTPException(status_code=400, detail="You already have an active subscription.")
+        # A previously-subscribed student whose access lapsed sees the cheaper win-back product
+        # (see is_lapsed_subscriber()/POLAR_COMEBACK_PRODUCT_ID above) instead of the regular one --
+        # falls back to the regular product if the comeback product isn't configured, so this never
+        # breaks checkout if that env var is left unset.
+        use_comeback_product = bool(POLAR_COMEBACK_PRODUCT_ID) and fresh_user is not None and is_lapsed_subscriber(fresh_user)
+        product_id = POLAR_COMEBACK_PRODUCT_ID if use_comeback_product else POLAR_PRODUCT_ID
         body = {
-            "products": [POLAR_PRODUCT_ID],
+            "products": [product_id],
             "customer_email": user["email"],
             # external_customer_id is Polar's first-class linking field -- it's mirrored onto the
             # Customer object Polar creates/matches, and comes back in every subsequent webhook

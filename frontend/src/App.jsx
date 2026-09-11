@@ -1360,15 +1360,25 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
     )
   }
 
+  // A student who has billed through Polar before (hasBilledSubscription) but isn't currently
+  // premium (guaranteed in this branch -- the hasPremium===true case already returned above) is
+  // by definition lapsed: mirrors is_lapsed_subscriber() in backend/main.py, which is what
+  // create_checkout() actually uses server-side to decide whether to charge $45 (comeback
+  // product) or $50 (regular product). This is UI messaging only, not the enforcement -- the
+  // real product/price selection always happens server-side regardless of what's shown here.
+  const isLapsed = !!hasBilledSubscription
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px' }}>
       <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '36px' }}>
         <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '38px', marginBottom: '10px' }}>⭐</div>
-          <h2 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>Upgrade to mrreadyprep Premium</h2>
+          <div style={{ fontSize: '38px', marginBottom: '10px' }}>{isLapsed ? '👋' : '⭐'}</div>
+          <h2 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>
+            {isLapsed ? 'Come back to mrreadyprep Premium' : 'Upgrade to mrreadyprep Premium'}
+          </h2>
           <p style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '14px' }}>
-            You've hit the free-plan limit. Subscribe for unlimited access to every Reading, Listening,
-            Writing and Speaking practice exercise, plus all 20 Full Mock Tests.
+            {isLapsed
+              ? 'We miss having you! Resubscribe now and use code COMEBACK60 at checkout for a special returning-student rate.'
+              : "You've hit the free-plan limit. Subscribe for unlimited access to every Reading, Listening, Writing and Speaking practice exercise, plus all 20 Full Mock Tests."}
           </p>
           {/* Shows the list price before the student ever reaches Polar's own checkout overlay --
               without this, "Continue to payment" was the first place any number appeared anywhere
@@ -1377,11 +1387,15 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
               overlay itself always shows the price too, so this doesn't skip that -- it just isn't
               the *only* place it's shown). Any active discount code is applied inside the Polar
               overlay itself, so it isn't hardcoded here -- this always reflects the undiscounted
-              list price. */}
+              list price for whichever product (regular vs. comeback) this student will see. */}
           <div style={{ marginBottom: '20px' }}>
-            <span style={{ fontSize: '30px', fontWeight: '800', color: '#701fa1' }}>$50</span>
+            <span style={{ fontSize: '30px', fontWeight: '800', color: '#701fa1' }}>{isLapsed ? '$45' : '$50'}</span>
             <span style={{ fontSize: '14px', color: '#6b7280', fontWeight: '500' }}> / month</span>
-            <div style={{ fontSize: '11.5px', color: '#9ca3af', marginTop: '4px' }}>Any active discount code is applied automatically at checkout.</div>
+            {isLapsed ? (
+              <div style={{ fontSize: '11.5px', color: '#701fa1', marginTop: '4px', fontWeight: '600' }}>Use code COMEBACK60 at checkout for $20 your first month.</div>
+            ) : (
+              <div style={{ fontSize: '11.5px', color: '#9ca3af', marginTop: '4px' }}>Any active discount code is applied automatically at checkout.</div>
+            )}
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', textAlign: 'left', background: '#f9fafb', borderRadius: '10px', padding: '18px', marginBottom: '24px' }}>
@@ -11077,6 +11091,21 @@ function App() {
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
           <>
+            {/* Win-back banner for a student who has billed through Polar before but doesn't
+                currently have premium (mirrors is_lapsed_subscriber() in backend/main.py -- see
+                SubscribeScreen's isLapsed for the same derivation). Placed above the streak/mock-
+                test row so it's the first thing a returning student sees on login, not buried
+                below the fold. */}
+            {!userData.has_premium && userData.has_billed_subscription && (
+              <div style={{ background: 'linear-gradient(90deg, #701fa1, #9333ea)', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0, flexWrap: 'wrap', ...(isMobile ? { flexDirection: 'column', alignItems: 'flex-start' } : {}) }}>
+                <div style={{ fontSize: '22px' }} aria-hidden="true">👋</div>
+                <div style={{ flex: 1, minWidth: '200px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>We miss having you!</div>
+                  <div style={{ fontSize: '11.5px', color: '#e9d5ff', marginTop: '2px' }}>Come back to Premium for $45/month -- use code COMEBACK60 at checkout for $20 your first month.</div>
+                </div>
+                <button onClick={() => setCurrentTab('subscribe')} style={{ background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>View offer</button>
+              </div>
+            )}
             {/* flexWrap so this row degrades gracefully on a narrow-but-not-mobile desktop window
                 (below the streak card's + mock-test card's combined minimum width but still above
                 the isMobile breakpoint) instead of clipping -- MAIN's overflowX:'hidden' means
