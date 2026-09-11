@@ -1394,7 +1394,12 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             {isLapsed ? (
               <div style={{ fontSize: '11.5px', color: '#701fa1', marginTop: '4px', fontWeight: '600' }}>Use code COMEBACK60 at checkout for $20 your first month.</div>
             ) : (
-              <div style={{ fontSize: '11.5px', color: '#9ca3af', marginTop: '4px' }}>Any active discount code is applied automatically at checkout.</div>
+              // WELCOME50 is shown here (not just on the marketing landing page) specifically so a
+              // student sees it before they ever reach Polar's checkout overlay -- the whole point
+              // of leading with the discounted price is to make the cheap entry price the thing
+              // that converts a hesitant free-tier user, and that only works if it's visible before
+              // they click "Continue to payment", not buried inside the payment form itself.
+              <div style={{ fontSize: '11.5px', color: '#701fa1', marginTop: '4px', fontWeight: '600' }}>Use code WELCOME50 at checkout for 50% off your first month.</div>
             )}
           </div>
         </div>
@@ -9670,6 +9675,18 @@ function LandingPage({ onGetStarted, onLogIn }) {
           <span>✓ Instant AI scoring</span>
           <span>✓ No credit card required</span>
         </div>
+        {/* Leads with the discounted price, not just the feature list, because for a student
+            comparing prep options the cheap entry price is itself the hook -- shown right in the
+            hero so it's the first thing a visitor sees, not something they discover only after
+            digging into Subscribe. Mirrors the same WELCOME50 messaging shown again in the pricing
+            section below and on the in-app Subscribe screen (before checkout, not just at Polar's
+            payment form) so the offer is consistent everywhere it appears. */}
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '22px', backgroundColor: 'rgba(182, 123, 251, 0.14)', border: '1px solid rgba(182, 123, 251, 0.4)', borderRadius: '999px', padding: isMobile ? '8px 14px' : '9px 18px' }}>
+          <span style={{ fontSize: '15px' }} aria-hidden="true">🎉</span>
+          <span style={{ fontSize: isMobile ? '12px' : '13px', color: '#e9d5ff', fontWeight: '700' }}>
+            Use code <span style={{ color: '#fff' }}>WELCOME50</span> at checkout for 50% off your first month
+          </span>
+        </div>
       </div>
 
       {/* Skills grid */}
@@ -9724,7 +9741,8 @@ function LandingPage({ onGetStarted, onLogIn }) {
           </div>
           <div style={{ border: `2px solid ${purple}`, borderRadius: '14px', padding: '28px', backgroundColor: '#f9f8fc' }}>
             <div style={{ fontSize: '14px', fontWeight: '700', color: purple, marginBottom: '6px' }}>Premium</div>
-            <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginBottom: '14px' }}>$50<span style={{ fontSize: '14px', fontWeight: '500', color: '#6b7280' }}> / month</span></div>
+            <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginBottom: '6px' }}>$50<span style={{ fontSize: '14px', fontWeight: '500', color: '#6b7280' }}> / month</span></div>
+            <div style={{ fontSize: '12px', fontWeight: '700', color: purple, marginBottom: '14px' }}>🎉 Use code WELCOME50 for 50% off your first month</div>
             <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7' }}>Full question bank, all full-length mock tests, and AI-based scoring for Writing and Speaking. Cancel anytime.</div>
           </div>
         </div>
