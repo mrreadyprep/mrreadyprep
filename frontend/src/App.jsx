@@ -9084,7 +9084,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
     // silently drift apart if a future scoring tweak only touched one copy.
     const {
       readingRaw, listeningRaw, writingPts, writingMax,
-      speakingPts, speakingMax,
+      speakingPts, speakingMax, basResult, emailResult, discResult,
       readingBand, listeningBand, writingBand, speakingBand, overallBand: overall,
     } = computeMockResultBands(s)
 

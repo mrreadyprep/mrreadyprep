@@ -2786,13 +2786,29 @@ def create_checkout(user=Depends(get_current_user)):
             raise HTTPException(status_code=400, detail=detail)
         return {"transaction_id": txn["id"]}
 
+CANCEL_SUBSCRIPTION_WINDOW_SECONDS = 10 * 60
+CANCEL_SUBSCRIPTION_MAX = 8
+_cancel_subscription_attempts: dict = collections.defaultdict(list)
+_ALL_RATE_LIMIT_STORES.append(_cancel_subscription_attempts)
+
 @app.post("/api/subscription/cancel")
 def cancel_subscription(user=Depends(get_current_user)):
     """Paddle has a hosted Customer Portal, but a direct API call from a confirm button in
     Settings keeps the cancel flow consistent with the rest of this site's UI (and matches what
     the old iyzico integration did). effective_from: 'immediately' matches the copy already shown
-    on the Cancel confirmation modal ("You will lose access to locked content immediately")."""
+    on the Cancel confirmation modal ("You will lose access to locked content immediately").
+
+    Rate-limited the same way create_checkout() is, and for the same reason: this makes a real,
+    server-to-server Paddle API call, and paddle_subscription_id is never cleared anywhere in this
+    file (see admin_set_subscription's own comment) -- so once an account has EVER had a Paddle
+    subscription, this endpoint stays callable indefinitely, long after that subscription is
+    canceled/expired, up to the general per-user throttle (_check_api_throttle, ~120 req/min).
+    Without a dedicated limit here, that's the exact same abuse path create_checkout's own limit
+    was added to close (burning Paddle's API rate limit / racking up load against the merchant
+    account), just on the cancel endpoint instead of the create one. Found in the 51st audit round.
+    """
     _require_paddle()
+    _check_and_consume_rate_limit(_cancel_subscription_attempts, str(user["id"]), CANCEL_SUBSCRIPTION_WINDOW_SECONDS, CANCEL_SUBSCRIPTION_MAX, "cancel")
     if not user["paddle_subscription_id"]:
         raise HTTPException(status_code=400, detail="No active subscription on file")
     result = _paddle_request(
