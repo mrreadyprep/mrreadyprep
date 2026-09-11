@@ -8,6 +8,7 @@ from typing import List, Optional
 import asyncio
 import base64
 import hashlib
+import traceback
 import html as _html
 import hmac
 import json
@@ -2821,18 +2822,33 @@ def create_checkout(user=Depends(get_current_user)):
             # load. See task #478 (Polar account setup).
             "embed_origin": FRONTEND_PUBLIC_URL,
         }
-        result = _polar_request("POST", "/v1/checkouts/", body)
-        # Polar's own backend is itself built on FastAPI, so its error responses use the same
-        # {"detail": ...} shape FastAPI's own HTTPException produces -- checking for that key is a
-        # more reliable success/error discriminator than checking for any particular success field,
-        # since a successful Checkout object never has a "detail" key.
-        if isinstance(result, dict) and "detail" in result:
-            detail = result["detail"]
-            raise HTTPException(status_code=400, detail=detail if isinstance(detail, str) else "Could not start checkout. Please try again.")
-        checkout_url = (result or {}).get("url")
-        if not checkout_url:
-            raise HTTPException(status_code=400, detail="Could not start checkout. Please try again.")
-        return {"checkout_url": checkout_url}
+        # Diagnostic try/except added while investigating a reproducible 502 with no corresponding
+        # "[polar] request failed" log line -- meaning the failure was happening somewhere other
+        # than _polar_request's own known error paths (urllib.error.URLError / a non-JSON response
+        # body), and was silently escaping as a bare unhandled exception (a genuine 500, which some
+        # intermediary was surfacing to the browser as an opaque 502/CORS failure). This wrapper
+        # guarantees any such exception is logged with a full traceback server-side instead of
+        # vanishing, while still returning a clean HTTPException to the caller either way.
+        try:
+            result = _polar_request("POST", "/v1/checkouts/", body)
+            # Polar's own backend is itself built on FastAPI, so its error responses use the same
+            # {"detail": ...} shape FastAPI's own HTTPException produces -- checking for that key is
+            # a more reliable success/error discriminator than checking for any particular success
+            # field, since a successful Checkout object never has a "detail" key.
+            if isinstance(result, dict) and "detail" in result:
+                detail = result["detail"]
+                print(f"[create_checkout] Polar rejected checkout for user_id={user['id']}: {detail}", flush=True)
+                raise HTTPException(status_code=400, detail=detail if isinstance(detail, str) else "Could not start checkout. Please try again.")
+            checkout_url = (result or {}).get("url")
+            if not checkout_url:
+                print(f"[create_checkout] Polar response had no url for user_id={user['id']}: {result}", flush=True)
+                raise HTTPException(status_code=400, detail="Could not start checkout. Please try again.")
+            return {"checkout_url": checkout_url}
+        except HTTPException:
+            raise
+        except Exception:
+            print(f"[create_checkout] UNEXPECTED exception for user_id={user['id']}:\n{traceback.format_exc()}", flush=True)
+            raise HTTPException(status_code=502, detail="Could not start checkout. Please try again.")
 
 CANCEL_SUBSCRIPTION_WINDOW_SECONDS = 10 * 60
 CANCEL_SUBSCRIPTION_MAX = 8
