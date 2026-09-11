@@ -65,7 +65,7 @@ app = FastAPI(title="mrreadyprep API", version="2026")
 # body, e.g. email) -- so a large enough request body gets buffered into memory by Starlette/
 # Pydantic before anything gets a chance to reject it on frequency grounds. Real bodies for these
 # endpoints are tiny (an email + a password, some KB at most), so a generous ceiling here can never
-# affect a real student. This only inspects Content-Length -- unlike paddle_webhook's own
+# affect a real student. This only inspects Content-Length -- unlike polar_webhook's own
 # body-size guard, it can't intercept and abort a chunked-transfer-encoding body mid-stream (these
 # six endpoints get their body parsed internally by FastAPI's own Pydantic binding, not read
 # manually the way the webhook handler reads it), so a request that omits Content-Length
@@ -105,7 +105,7 @@ _GENERAL_BODY_LIMIT_BYTES = 200_000
 # Known, deliberate limitation (not an oversight): this check -- like the pre-auth one above --
 # only inspects the Content-Length header, so a request sent with Transfer-Encoding: chunked and
 # no Content-Length sails past it and gets buffered in full by Starlette/Pydantic before any
-# handler-level validation runs. paddle_webhook() closes this exact gap for itself by reading its
+# handler-level validation runs. polar_webhook() closes this exact gap for itself by reading its
 # body incrementally off request.stream() instead of trusting the header (see its own comment) --
 # that was worth doing there because it's a single, narrow, pre-auth endpoint. Generalizing the
 # same incremental-read approach to EVERY authenticated POST/PUT here was evaluated in the 44th
@@ -115,18 +115,18 @@ _GENERAL_BODY_LIMIT_BYTES = 200_000
 # it doesn't regress every write endpoint in the app isn't something to gamble on right before a
 # commercial launch. Cloudflare/Render's own platform-level body-size limits remain the real
 # backstop for the chunked-encoding case, same reasoning as the pre-auth check's own comment above.
-# paddle_webhook() below already enforces its own 1MB Content-Length ceiling (see its own comment
-# a few hundred lines down), sized for Paddle's actual notification payloads. That endpoint isn't
-# in _PRE_AUTH_BODY_LIMIT_PATHS (it's pre-auth but not a user-submitted form), so before this fix it
+# polar_webhook() below already enforces its own 1MB Content-Length ceiling (see its own comment a
+# few hundred lines down), sized for Polar's actual notification payloads. That endpoint isn't in
+# _PRE_AUTH_BODY_LIMIT_PATHS (it's pre-auth but not a user-submitted form), so before this fix it
 # fell through to the 200KB general limit above -- silently shadowing the webhook's own 1MB check
 # with a stricter one nobody intended for it, since the general limit was written with authenticated
-# JSON request bodies in mind, not Paddle's payloads. Carved out here so paddle_webhook() is the only
-# place that decides its own limit. Found in the 43rd audit round.
-_PADDLE_WEBHOOK_PATH = "/api/subscription/webhook"
+# JSON request bodies in mind, not the webhook's payloads. Carved out here so polar_webhook() is the
+# only place that decides its own limit. Found in the 43rd audit round (originally for paddle_webhook).
+_SUBSCRIPTION_WEBHOOK_PATH = "/api/subscription/webhook"
 
 @app.middleware("http")
 async def _pre_auth_body_size_limit(request: Request, call_next):
-    if request.method in ("POST", "PUT") and request.url.path != _PADDLE_WEBHOOK_PATH:
+    if request.method in ("POST", "PUT") and request.url.path != _SUBSCRIPTION_WEBHOOK_PATH:
         in_pre_auth_set = request.url.path in _PRE_AUTH_BODY_LIMIT_PATHS
         limit = _PRE_AUTH_BODY_LIMIT_BYTES if in_pre_auth_set else _GENERAL_BODY_LIMIT_BYTES
         content_length = request.headers.get("content-length")
@@ -255,47 +255,55 @@ RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "mrreadyprep <onboarding
 PRACTICE_REMINDER_CRON_SECRET = os.environ.get("PRACTICE_REMINDER_CRON_SECRET", "")
 
 # ============================================================
-# PADDLE (abonelik / ödeme) CONFIG
+# POLAR (abonelik / ödeme) CONFIG
 # ============================================================
-# Paddle is a Merchant of Record -- unlike iyzico, it does NOT need buyer identity numbers, and it
-# handles global VAT/sales-tax compliance itself, which is why this replaced the iyzico integration.
-# Four separate credentials, all from the Paddle dashboard (Developer Tools > Authentication):
-#   PADDLE_API_KEY               server-side secret, used to call the Paddle API (create a
-#                                 transaction, cancel a subscription). NEVER expose to the frontend.
-#   PADDLE_WEBHOOK_SECRET         per-notification-destination secret, used to verify that incoming
-#                                 /api/subscription/webhook calls really came from Paddle.
-#   PADDLE_PRICE_ID               the recurring price (e.g. "pri_...") created under Catalog >
-#                                 Products for the premium plan -- reused for every checkout.
-#   PADDLE_ENVIRONMENT            "sandbox" while testing with a Paddle Sandbox account, "production"
-#                                 once the real (live) Paddle account is approved and in use.
-# The frontend also needs its own PUBLIC client-side token (VITE_PADDLE_CLIENT_TOKEN, set at build
-# time -- see App.jsx) to open the Paddle.js checkout overlay; that one is not a secret and is not
-# read here. All blank-safe: if unset, the subscription endpoints raise a clear 500 instead of
-# silently misbehaving, so local dev without Paddle configured doesn't crash the whole app at
-# import time.
-PADDLE_API_KEY = os.environ.get("PADDLE_API_KEY", "")
-PADDLE_WEBHOOK_SECRET = os.environ.get("PADDLE_WEBHOOK_SECRET", "")
-PADDLE_PRICE_ID = os.environ.get("PADDLE_PRICE_ID", "")
-PADDLE_ENVIRONMENT = os.environ.get("PADDLE_ENVIRONMENT", "sandbox")
-PADDLE_API_BASE_URL = (
-    "https://sandbox-api.paddle.com" if PADDLE_ENVIRONMENT != "production" else "https://api.paddle.com"
+# Polar is a Merchant of Record, same as Paddle was before it -- it does NOT need buyer identity
+# numbers, and it handles global VAT/sales-tax compliance itself. Switched from Paddle after
+# Paddle's own automated website-verification review rejected mrreadyprep.com outright with no path
+# to appeal (see task #263/#464); Polar has no equivalent pre-launch domain-review gate. Found in
+# the 52nd audit round's follow-up.
+# Credentials, all generated in the Polar dashboard (Settings > Developers):
+#   POLAR_ACCESS_TOKEN           server-side secret (an Organization Access Token), used to call
+#                                 the Polar API (create a checkout session, cancel a subscription).
+#                                 NEVER expose to the frontend.
+#   POLAR_WEBHOOK_SECRET          per-endpoint secret (starts with "whsec_"), used to verify that
+#                                 incoming /api/subscription/webhook calls really came from Polar.
+#   POLAR_PRODUCT_ID              the product id (e.g. "prod_...") created under Products for the
+#                                 premium plan -- reused for every checkout.
+#   POLAR_ENVIRONMENT             "sandbox" while testing with a Polar Sandbox account, "production"
+#                                 once the real (live) Polar account is approved and in use. Unlike
+#                                 Paddle's one account with a sandbox/live toggle, Polar's sandbox is
+#                                 a fully separate account/dataset -- sandbox and production
+#                                 credentials are never interchangeable.
+# The frontend needs no separate public client-side token (unlike Paddle.js's
+# VITE_PADDLE_CLIENT_TOKEN) -- Polar's checkout is opened by URL (create_checkout below returns a
+# hosted checkout URL for the embedded overlay), not by a client-side SDK token. All blank-safe: if
+# unset, the subscription endpoints raise a clear 500 instead of silently misbehaving, so local dev
+# without Polar configured doesn't crash the whole app at import time.
+POLAR_ACCESS_TOKEN = os.environ.get("POLAR_ACCESS_TOKEN", "")
+POLAR_WEBHOOK_SECRET = os.environ.get("POLAR_WEBHOOK_SECRET", "")
+POLAR_PRODUCT_ID = os.environ.get("POLAR_PRODUCT_ID", "")
+POLAR_ENVIRONMENT = os.environ.get("POLAR_ENVIRONMENT", "sandbox")
+POLAR_API_BASE_URL = (
+    "https://sandbox-api.polar.sh" if POLAR_ENVIRONMENT != "production" else "https://api.polar.sh"
 )
 
 
-def _paddle_request(method: str, path: str, body: dict = None):
-    """Low-level authenticated call to the Paddle Billing REST API (used instead of a heavier SDK
-    dependency -- mirrors the urllib.request style already used elsewhere in this file for Resend/
-    formerly iyzico). `path` is the URL path only (e.g. '/transactions'). Raises HTTPException(502)
+def _polar_request(method: str, path: str, body: dict = None):
+    """Low-level authenticated call to the Polar REST API (used instead of a heavier SDK dependency
+    -- mirrors the urllib.request style already used elsewhere in this file for Resend/formerly
+    Paddle/iyzico). `path` is the URL path only (e.g. '/v1/checkouts/'). Raises HTTPException(502)
     on any transport failure, and returns the parsed JSON body on any HTTP response (including
-    error responses, which Paddle returns as JSON too) so Paddle's own error payloads reach the
-    caller intact."""
+    error responses, which Polar returns as JSON too, in the same {"detail": ...} shape FastAPI's
+    own HTTPException produces -- Polar's own backend is itself built on FastAPI) so Polar's own
+    error payloads reach the caller intact."""
     body_str = json.dumps(body if body is not None else {}, separators=(",", ":"), ensure_ascii=False)
     req = urllib.request.Request(
-        PADDLE_API_BASE_URL + path,
+        POLAR_API_BASE_URL + path,
         data=body_str.encode("utf-8") if body is not None else None,
         method=method,
         headers={
-            "Authorization": f"Bearer {PADDLE_API_KEY}",
+            "Authorization": f"Bearer {POLAR_ACCESS_TOKEN}",
             "Content-Type": "application/json",
         },
     )
@@ -305,48 +313,43 @@ def _paddle_request(method: str, path: str, body: dict = None):
         try:
             return json.loads(raw)
         except ValueError:
-            # Found in the 27th audit round: only the error branch below was guarded against a
-            # non-JSON body -- a 200 response that somehow isn't valid JSON (a CDN/WAF
-            # interstitial in front of Paddle, a truncated response, any transport-level anomaly)
-            # used to let json.JSONDecodeError propagate straight out of this function and become
-            # an unhandled 500 in create_checkout/cancel_subscription, right when Paddle's own
-            # infrastructure is already having problems -- exactly when graceful degradation to a
-            # clean "please try again" error matters most.
-            raise HTTPException(status_code=502, detail="Paddle returned an unexpected response. Please try again.")
+            # Mirrors the guard the old _paddle_request had (27th audit round): a 200 response that
+            # somehow isn't valid JSON (a CDN/WAF interstitial in front of Polar, a truncated
+            # response, any transport-level anomaly) must not let json.JSONDecodeError propagate
+            # straight out of this function and become an unhandled 500 in create_checkout/
+            # cancel_subscription, right when Polar's own infrastructure is already having problems.
+            raise HTTPException(status_code=502, detail="Polar returned an unexpected response. Please try again.")
     except urllib.error.HTTPError as e:
         try:
             return json.loads(e.read().decode("utf-8"))
         except Exception:
-            raise HTTPException(status_code=502, detail=f"Paddle request failed: HTTP {e.code}")
+            raise HTTPException(status_code=502, detail=f"Polar request failed: HTTP {e.code}")
     except urllib.error.URLError as e:
-        # str(e) on a URLError can include low-level socket/DNS/OS error text -- unlike the
-        # HTTPError branch just above (which returns Paddle's own parsed JSON error), this used to
-        # echo that raw exception text straight into the 502 `detail` an authenticated caller
-        # (create_checkout/cancel_subscription) sees. Not a secrets leak, but inconsistent with
-        # this file's general practice of not exposing internal error internals. Logged server-side
-        # instead. Found in the 34th audit round.
-        print(f"[paddle] request failed: {e}", flush=True)
-        raise HTTPException(status_code=502, detail="Could not reach Paddle. Please try again.")
+        # str(e) on a URLError can include low-level socket/DNS/OS error text -- logged server-side
+        # instead of echoed to the caller, same reasoning as the old _paddle_request (34th audit round).
+        print(f"[polar] request failed: {e}", flush=True)
+        raise HTTPException(status_code=502, detail="Could not reach Polar. Please try again.")
 
 
-def _require_paddle():
-    if not PADDLE_API_KEY:
-        raise HTTPException(status_code=500, detail="Paddle is not configured yet (PADDLE_API_KEY missing)")
-    if not PADDLE_PRICE_ID:
-        raise HTTPException(status_code=500, detail="Paddle is not configured yet (PADDLE_PRICE_ID missing)")
+def _require_polar():
+    if not POLAR_ACCESS_TOKEN:
+        raise HTTPException(status_code=500, detail="Polar is not configured yet (POLAR_ACCESS_TOKEN missing)")
+    if not POLAR_PRODUCT_ID:
+        raise HTTPException(status_code=500, detail="Polar is not configured yet (POLAR_PRODUCT_ID missing)")
 
 
-# Which subscription_status values count as "has active premium access". Paddle subscription
+# Which subscription_status values count as "has active premium access". Polar subscription
 # statuses (mirrored into our own DB, uppercased for consistency with the rest of this file):
-# ACTIVE, TRIALING, PAST_DUE, PAUSED, CANCELED -- only ACTIVE/TRIALING count as paid access.
+# INCOMPLETE, INCOMPLETE_EXPIRED, TRIALING, ACTIVE, PAST_DUE, CANCELED, UNPAID, PAUSED -- only
+# ACTIVE/TRIALING count as paid access.
 ACTIVE_SUBSCRIPTION_STATUSES = {"ACTIVE", "TRIALING"}
-# Statuses under which Paddle can still, on its own, send a future webhook event that flips the
+# Statuses under which Polar can still, on its own, send a future webhook event that flips the
 # same subscription_id's status back to ACTIVE/TRIALING (a retried payment recovers a PAST_DUE
-# subscription; a resumed subscription leaves PAUSED) -- as opposed to CANCELED, which Paddle
+# subscription; a resumed subscription leaves PAUSED) -- as opposed to CANCELED, which Polar
 # never resurrects for the same subscription_id. Used by admin_set_subscription()'s revoke guard:
 # revoking access on an account in one of these states only hides it in this app, it does not stop
-# Paddle from billing, and a later webhook can silently un-revoke it with no trace of the admin's
-# decision. Found in the 40th audit round.
+# Polar from billing, and a later webhook can silently un-revoke it with no trace of the admin's
+# decision. Found in the 40th audit round (originally written for Paddle; same statuses apply here).
 REVOKE_UNSAFE_SUBSCRIPTION_STATUSES = ACTIVE_SUBSCRIPTION_STATUSES | {"PAST_DUE", "PAUSED"}
 
 def has_active_subscription(user) -> bool:
@@ -354,11 +357,11 @@ def has_active_subscription(user) -> bool:
         return True
     if (user["subscription_status"] or "") not in ACTIVE_SUBSCRIPTION_STATUSES:
         return False
-    # Defense in depth, not the primary gate: subscription_status only ever changes when a Paddle
+    # Defense in depth, not the primary gate: subscription_status only ever changes when a Polar
     # webhook lands and is successfully processed. If a webhook is ever missed for an extended
-    # period (webhook URL misconfigured after an infra change, PADDLE_WEBHOOK_SECRET rotated out
-    # of sync between Paddle and here, a dropped cancellation event during a Paddle-side outage),
-    # subscription_status can stay ACTIVE/TRIALING indefinitely even though Paddle has stopped
+    # period (webhook URL misconfigured after an infra change, POLAR_WEBHOOK_SECRET rotated out
+    # of sync between Polar and here, a dropped cancellation event during a Polar-side outage),
+    # subscription_status can stay ACTIVE/TRIALING indefinitely even though Polar has stopped
     # billing and access should have lapsed -- there's no periodic reconciliation job elsewhere in
     # this file. As a backstop, also treat access as lapsed once
     # subscription_current_period_end is more than a couple of days in the past (a small grace
@@ -1231,11 +1234,13 @@ def init_db():
         conn.execute("ALTER TABLE users ADD COLUMN writing_target REAL NOT NULL DEFAULT 6.0")
     if not _has_column(conn, "users", "speaking_target"):
         conn.execute("ALTER TABLE users ADD COLUMN speaking_target REAL NOT NULL DEFAULT 6.0")
-    # Paddle abonelik alanları -- subscription_status 'ACTIVE'/'TRIALING' olan kullanıcılar premium
+    # Abonelik alanları -- subscription_status 'ACTIVE'/'TRIALING' olan kullanıcılar premium
     # içeriğe tam erişime sahip olur (bkz. has_active_subscription()). Diğer her şey (None,
-    # 'CANCELED', 'PAST_DUE', 'PAUSED' vb.) erişimsiz sayılır. iyzico_* kolonları eski entegrasyondan
-    # kalma, artık hiçbir kod yolu tarafından okunmuyor/yazılmıyor -- gerçek/canlı iyzico müşterisi
-    # hiç olmadığı için (bkz. görev #145) veri kaybı riski yok, kolonlar sadece dokunulmadan duruyor.
+    # 'CANCELED', 'PAST_DUE', 'PAUSED' vb.) erişimsiz sayılır. iyzico_*/paddle_* kolonları eski
+    # entegrasyonlardan kalma, artık hiçbir kod yolu tarafından okunmuyor/yazılmıyor -- gerçek/canlı
+    # iyzico ya da Paddle müşterisi hiç olmadığı için (bkz. görev #145, #263) veri kaybı riski yok,
+    # kolonlar sadece dokunulmadan duruyor. polar_customer_id/polar_subscription_id bunların yerini
+    # alan güncel kolonlar (52nd audit round follow-up: Paddle -> Polar geçişi).
     if not _has_column(conn, "users", "iyzico_customer_reference_code"):
         conn.execute("ALTER TABLE users ADD COLUMN iyzico_customer_reference_code TEXT")
     if not _has_column(conn, "users", "iyzico_subscription_reference_code"):
@@ -1244,15 +1249,20 @@ def init_db():
         conn.execute("ALTER TABLE users ADD COLUMN paddle_customer_id TEXT")
     if not _has_column(conn, "users", "paddle_subscription_id"):
         conn.execute("ALTER TABLE users ADD COLUMN paddle_subscription_id TEXT")
+    if not _has_column(conn, "users", "polar_customer_id"):
+        conn.execute("ALTER TABLE users ADD COLUMN polar_customer_id TEXT")
+    if not _has_column(conn, "users", "polar_subscription_id"):
+        conn.execute("ALTER TABLE users ADD COLUMN polar_subscription_id TEXT")
     if not _has_column(conn, "users", "subscription_status"):
         conn.execute("ALTER TABLE users ADD COLUMN subscription_status TEXT")
     if not _has_column(conn, "users", "subscription_current_period_end"):
         conn.execute("ALTER TABLE users ADD COLUMN subscription_current_period_end TIMESTAMP")
-    # Paddle does not guarantee webhooks are delivered in the order the underlying events actually
-    # occurred (retries/queueing can reorder them) -- without tracking which event was last applied,
-    # a delayed-but-stale "still active" delivery arriving after a newer "canceled" one would
-    # silently resurrect access it shouldn't, or vice versa. paddle_webhook() only ever applies an
-    # event whose own occurred_at is newer than what's stored here. Found in the 38th audit round.
+    # Polar (like Paddle before it) does not guarantee webhooks are delivered in the order the
+    # underlying events actually occurred (retries/queueing can reorder them) -- without tracking
+    # which event was last applied, a delayed-but-stale "still active" delivery arriving after a
+    # newer "canceled" one would silently resurrect access it shouldn't, or vice versa.
+    # polar_webhook() only ever applies an event whose own webhook-timestamp is newer than what's
+    # stored here. Found in the 38th audit round (originally for Paddle's occurred_at).
     if not _has_column(conn, "users", "subscription_last_event_at"):
         conn.execute("ALTER TABLE users ADD COLUMN subscription_last_event_at TIMESTAMP")
     # Tracks the last time this student was sent a "you haven't practiced" nudge email (see
@@ -1271,20 +1281,21 @@ def init_db():
     # at low user counts, but with no index they'd become full table scans as the user base grows.
     conn.execute("CREATE INDEX IF NOT EXISTS idx_users_password_reset_token ON users(password_reset_token)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_users_verification_token ON users(verification_token)")
-    # paddle_webhook()'ün her subscription.* event'i (creation dışında) WHERE paddle_subscription_id
+    # polar_webhook()'ün her subscription.* event'i (creation dışında) WHERE polar_subscription_id
     # = ? ile eşleştirdiği kolon -- index'siz her webhook UPDATE'i tam tablo taraması yapıyordu.
     # UNIQUE olarak da tanımlandı: şema seviyesinde hiçbir şey iki farklı hesabın aynı
-    # paddle_subscription_id'yi taşımasını engellemiyordu -- öyle bir durum oluşsaydı (kod hatası,
-    # elle DB müdahalesi), tek bir Paddle event'i sessizce iki hesabı birden güncelleyebilirdi.
-    # UNIQUE + NULL: hem SQLite hem Postgres birden fazla NULL'a izin verir, bu yüzden henüz Paddle
-    # aboneliği olmayan (paddle_subscription_id NULL) satırlar arasında çakışma olmaz. try/except ile
-    # sarılı -- gerçek üretimde bugüne kadar hiç canlı Paddle aboneliği işlenmediği için (bkz. görev
-    # #263) bunun başarısız olması beklenmiyor, ama var olan bir çakışma yüzünden tüm backend'in
-    # başlangıçta çökmesindense bunu loglayıp devam etmek daha güvenli. Found in the 39th audit round.
+    # polar_subscription_id'yi taşımasını engellemiyordu -- öyle bir durum oluşsaydı (kod hatası,
+    # elle DB müdahalesi), tek bir Polar event'i sessizce iki hesabı birden güncelleyebilirdi.
+    # UNIQUE + NULL: hem SQLite hem Postgres birden fazla NULL'a izin verir, bu yüzden henüz Polar
+    # aboneliği olmayan (polar_subscription_id NULL) satırlar arasında çakışma olmaz. try/except ile
+    # sarılı -- gerçek üretimde bugüne kadar hiç canlı abonelik işlenmediği için (bkz. görev #263,
+    # Paddle -> Polar geçişi) bunun başarısız olması beklenmiyor, ama var olan bir çakışma yüzünden
+    # tüm backend'in başlangıçta çökmesindense bunu loglayıp devam etmek daha güvenli. Found in the
+    # 39th audit round (originally for paddle_subscription_id).
     try:
-        conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_paddle_subscription_id ON users(paddle_subscription_id)")
+        conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_users_polar_subscription_id ON users(polar_subscription_id)")
     except Exception as e:
-        print(f"[startup] Could not create unique index on users.paddle_subscription_id (likely pre-existing duplicate data): {e}", flush=True)
+        print(f"[startup] Could not create unique index on users.polar_subscription_id (likely pre-existing duplicate data): {e}", flush=True)
     # admin_list_users() sorts the whole table by created_at DESC before applying its LIMIT 2000,
     # and admin_stats() filters WHERE created_at >= ? -- both were doing a full table scan/sort on
     # an unindexed column, cheap today at low user counts but a real cost once the user base grows
@@ -1810,13 +1821,13 @@ def user_profile_dict(user) -> dict:
         "subscription_status": user["subscription_status"],
         "has_premium": has_active_subscription(user),
         "is_admin": is_admin_user(user),
-        # Whether there's an actual Paddle subscription behind this account's premium access, as
+        # Whether there's an actual Polar subscription behind this account's premium access, as
         # opposed to access granted for free (an admin's own account via is_admin, or another
         # account manually comped through the admin panel's Grant button). The Subscribe screen
         # uses this to decide whether "Cancel subscription" makes sense to show at all -- calling
-        # /api/subscription/cancel with no paddle_subscription_id on file just 400s, since there's
-        # nothing on Paddle's end to actually cancel.
-        "has_billed_subscription": bool(user["paddle_subscription_id"]),
+        # /api/subscription/cancel with no polar_subscription_id on file just 400s, since there's
+        # nothing on Polar's end to actually cancel.
+        "has_billed_subscription": bool(user["polar_subscription_id"]),
         "subscription_current_period_end": (
             user["subscription_current_period_end"].isoformat()
             if isinstance(user["subscription_current_period_end"], datetime)
@@ -2553,7 +2564,7 @@ def admin_list_users(admin=Depends(require_admin)):
         # right fix once the user base is large enough for that to matter.
         rows = conn.execute(
             "SELECT id, email, username, email_verified, subscription_status, "
-            "subscription_current_period_end, paddle_subscription_id, created_at, current_streak "
+            "subscription_current_period_end, polar_subscription_id, created_at, current_streak "
             "FROM users ORDER BY created_at DESC LIMIT 2000"
         ).fetchall()
         def row_is_admin(row):
@@ -2571,14 +2582,14 @@ def admin_list_users(admin=Depends(require_admin)):
                 # actually gated (not a separately hand-rolled status check) so this can never show
                 # "Premium: yes" for an account whose real access has already lapsed under the
                 # subscription_current_period_end staleness backstop -- e.g. right after a missed
-                # Paddle webhook, which is exactly when support staff would be looking at this panel
+                # Polar webhook, which is exactly when support staff would be looking at this panel
                 # and need it to be accurate.
                 "has_premium": has_active_subscription(row),
-                # A real, Paddle-billed subscription -- the admin panel's Revoke button is disabled
+                # A real, Polar-billed subscription -- the admin panel's Revoke button is disabled
                 # for these (see admin_set_subscription below) since silently flipping subscription_status
-                # here would desync from what Paddle is actually still charging the card for. A paying
+                # here would desync from what Polar is actually still charging the card for. A paying
                 # customer's access should only ever be ended through the real cancel flow.
-                "has_billed_subscription": bool(row["paddle_subscription_id"]),
+                "has_billed_subscription": bool(row["polar_subscription_id"]),
                 "is_admin": row_is_admin(row),
                 "created_at": row["created_at"].isoformat() if isinstance(row["created_at"], datetime) else row["created_at"],
                 "current_streak": row["current_streak"],
@@ -2597,7 +2608,7 @@ def admin_stats(admin=Depends(require_admin)):
         # has_premium field uses (see the fix there) -- rather than a separately hand-rolled status
         # filter, so this count can never silently disagree with the per-row values shown just below
         # it in the admin panel. A raw "status IN (...)" filter would both miss the staleness
-        # backstop (a lapsed Paddle webhook leaves subscription_status stuck at ACTIVE/TRIALING
+        # backstop (a lapsed Polar webhook leaves subscription_status stuck at ACTIVE/TRIALING
         # indefinitely, see has_active_subscription()'s own comment) and undercount comped admin
         # accounts that have full access without ever having a real subscription row.
         # email_verified is included here even though this query is only about subscription
@@ -2648,47 +2659,47 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
         if not target:
             raise HTTPException(status_code=404, detail="User not found")
         # Gated on the subscription actually being CURRENTLY billed (ACTIVE/TRIALING), not merely on
-        # paddle_subscription_id ever having been set -- found in the 30th audit round.
-        # paddle_subscription_id is never cleared anywhere in this file (not by cancel_subscription,
+        # polar_subscription_id ever having been set -- found in the 30th audit round.
+        # polar_subscription_id is never cleared anywhere in this file (not by cancel_subscription,
         # not by the webhook handler), so it stays populated forever on any account that has ever
-        # had a real Paddle subscription, even one canceled months ago and no longer billing. The
+        # had a real Polar subscription, even one canceled months ago and no longer billing. The
         # original guard here checked only that column's presence, which meant a very plausible
         # support flow -- student subscribes, later cancels, support comps them free access, support
         # later needs to revoke that comp -- became permanently impossible through this panel the
         # instant that student's subscription_status stopped being ACTIVE/TRIALING, since the id
         # column outlives the actual subscription. Checking subscription_status directly (the same
-        # set has_active_subscription() itself trusts) is what actually distinguishes "Paddle is
-        # still charging this card" from "this account merely used to have a Paddle subscription".
+        # set has_active_subscription() itself trusts) is what actually distinguishes "Polar is
+        # still charging this card" from "this account merely used to have a Polar subscription".
         # Guards on REVOKE_UNSAFE_SUBSCRIPTION_STATUSES (ACTIVE/TRIALING/PAST_DUE/PAUSED), not just
-        # ACTIVE_SUBSCRIPTION_STATUSES -- a PAST_DUE or PAUSED subscription is still a live Paddle
-        # subscription_id that Paddle can flip back to ACTIVE on its own (a retried card charge, a
+        # ACTIVE_SUBSCRIPTION_STATUSES -- a PAST_DUE or PAUSED subscription is still a live Polar
+        # subscription_id that Polar can flip back to ACTIVE on its own (a retried card charge, a
         # resume) with no further admin action. Revoking here only clears subscription_status locally;
-        # it never touches paddle_subscription_id or Paddle itself, so that next webhook would silently
+        # it never touches polar_subscription_id or Polar itself, so that next webhook would silently
         # re-grant access with no record the admin ever revoked it. Widened in the 40th audit round --
         # originally only checked ACTIVE_SUBSCRIPTION_STATUSES, which meant a PAST_DUE/PAUSED account
-        # could be "revoked" here and then quietly resurrected by Paddle's own retry/resume webhook.
-        if data.action == "revoke" and target["paddle_subscription_id"] and (target["subscription_status"] or "") in REVOKE_UNSAFE_SUBSCRIPTION_STATUSES:
+        # could be "revoked" here and then quietly resurrected by Polar's own retry/resume webhook.
+        if data.action == "revoke" and target["polar_subscription_id"] and (target["subscription_status"] or "") in REVOKE_UNSAFE_SUBSCRIPTION_STATUSES:
             raise HTTPException(
                 status_code=400,
-                detail="This account has a real Paddle subscription that is still active, past-due, or "
-                       "paused -- revoking here would only hide their access while Paddle can still bill "
+                detail="This account has a real Polar subscription that is still active, past-due, or "
+                       "paused -- revoking here would only hide their access while Polar can still bill "
                        "or resume it, and a later webhook could silently restore access with no record of "
                        "this decision. Cancel the subscription itself (from their account's Settings, or "
                        "via /api/subscription/cancel) instead.",
             )
         new_status = "ACTIVE" if data.action == "grant" else None
-        # Mirrors the revoke guard above -- a real, currently-billing Paddle subscription (not just
-        # a stale paddle_subscription_id) means this account's subscription_current_period_end is
+        # Mirrors the revoke guard above -- a real, currently-billing Polar subscription (not just
+        # a stale polar_subscription_id) means this account's subscription_current_period_end is
         # meaningful data, not staleness to clear. Unconditionally nulling it on every grant (e.g. an
         # admin double-clicking Grant, or comping someone believed to be unsubscribed who actually
         # still has a live subscription) used to wipe that real date -- access wasn't lost (NULL
         # reads as "still active"), but the account's true renewal/expiry date became invisible in
-        # both the admin panel and the student's own Settings screen until the next Paddle webhook
-        # happened to carry a fresh ends_at. Found in the 33rd audit round.
-        target_has_real_active_sub = bool(target["paddle_subscription_id"]) and (target["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES
+        # both the admin panel and the student's own Settings screen until the next Polar webhook
+        # happened to carry a fresh current_period_end. Found in the 33rd audit round.
+        target_has_real_active_sub = bool(target["polar_subscription_id"]) and (target["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES
         if data.action == "grant" and not target_has_real_active_sub:
             # Also clear any stale subscription_current_period_end. Without this, comping access to
-            # an account that had a real Paddle subscription before (now lapsed, with a
+            # an account that had a real Polar subscription before (now lapsed, with a
             # current_period_end sitting in the past) was silently ineffective: has_active_subscription()'s
             # staleness backstop would immediately treat the grant as lapsed again the moment it was
             # checked, since it only looks at subscription_status AFTER first checking whether
@@ -2711,15 +2722,15 @@ def admin_set_subscription(user_id: int, data: AdminSetSubscriptionRequest, admi
         conn.close()
 
 # ============================================================
-# SUBSCRIPTION (Paddle) -- see PADDLE CONFIG block near the top of this file for env vars,
-# _paddle_request() for the authenticated HTTP call helper, and has_active_subscription()/
+# SUBSCRIPTION (Polar) -- see POLAR CONFIG block near the top of this file for env vars,
+# _polar_request() for the authenticated HTTP call helper, and has_active_subscription()/
 # gate_pool() for how this gates the actual content endpoints below.
 #
-# Flow: frontend calls create-checkout (below) to get a transaction id, opens Paddle's own
-# Checkout.js overlay with that transaction id (student never leaves mrreadyprep.com, and never
-# has to hand over a TC Kimlik No / identity number the way iyzico required), then Paddle POSTs
-# to the webhook (below) once the payment actually clears -- that webhook is the only thing that
-# ever flips subscription_status to ACTIVE. The overlay closing successfully is a UI hint only,
+# Flow: frontend calls create-checkout (below) to get a hosted checkout URL, opens it in Polar's
+# own embedded overlay (window.Polar.EmbedCheckout.create -- student never leaves mrreadyprep.com,
+# and never has to hand over a TC Kimlik No / identity number the way iyzico required), then Polar
+# POSTs to the webhook (below) once the payment actually clears -- that webhook is the only thing
+# that ever flips subscription_status to ACTIVE. The overlay reporting success is a UI hint only,
 # never trusted on its own.
 # ============================================================
 
@@ -2739,8 +2750,8 @@ def get_subscription_status(user=Depends(get_current_user)):
 # that function reads the `user` row handed in by the get_current_user dependency, which was
 # fetched once at request start -- two concurrent create_checkout calls for the same user (a
 # stale tab plus a fresh one, a double-click before the UI's own re-fetch lands, a retried client
-# request) can both read "not subscribed" before either one finishes creating its Paddle
-# transaction, producing two real transactions for one student. Serializing per user_id (not a
+# request) can both read "not subscribed" before either one finishes creating its Polar checkout
+# session, producing two real sessions for one student. Serializing per user_id (not a
 # single global lock, which would make one user's checkout block every other user's) and
 # re-reading the row from the DB after acquiring the lock closes that window; the dict itself
 # is small and never cleaned up, but at most one Lock per user account ever exists.
@@ -2757,9 +2768,9 @@ def _checkout_lock_for(user_id: int) -> threading.Lock:
 
 # The lock above only serializes *concurrent* create_checkout calls for one user -- it does nothing
 # to stop a script from calling this endpoint many times in a row, sequentially, each call passing
-# the "not already subscribed" check (since no transaction from a prior call was ever completed)
-# and making a real server-to-server call to Paddle's API. That racks up abandoned transaction
-# records against the merchant account and burns Paddle's own API rate limit, which could degrade
+# the "not already subscribed" check (since no checkout from a prior call was ever completed) and
+# making a real server-to-server call to Polar's API. That racks up abandoned checkout-session
+# records against the merchant account and burns Polar's own API rate limit, which could degrade
 # checkout for real, paying customers. A generous per-user ceiling closes this without affecting
 # any real student, who only ever calls this once per genuine subscribe attempt.
 CREATE_CHECKOUT_WINDOW_SECONDS = 10 * 60
@@ -2769,14 +2780,14 @@ _ALL_RATE_LIMIT_STORES.append(_create_checkout_attempts)
 
 @app.post("/api/subscription/create-checkout")
 def create_checkout(user=Depends(get_current_user)):
-    """Creates a Paddle transaction server-side (authenticated) and hands the frontend back just
-    the transaction id to open in Paddle's Checkout.js overlay (Paddle.Checkout.open({
-    transactionId })). Doing this server-side -- rather than letting the frontend pass
-    price/customData straight to Checkout.js -- means custom_data.user_id is set by code that has
-    already verified who the logged-in user is, not by anything the browser could tamper with; a
-    forged user_id in a client-side customData would otherwise let someone grant premium to an
-    account they don't own just by paying for a different one."""
-    _require_paddle()
+    """Creates a Polar checkout session server-side (authenticated) and hands the frontend back
+    just the hosted checkout URL to open in Polar's embedded overlay (window.Polar.EmbedCheckout.
+    create(url) -- see loadPolarCheckout in App.jsx). Doing this server-side -- rather than letting
+    the frontend build the checkout request itself -- means external_customer_id/metadata.user_id
+    are set by code that has already verified who the logged-in user is, not by anything the
+    browser could tamper with; a forged user_id in a client-built checkout request would otherwise
+    let someone grant premium to an account they don't own just by paying for a different one."""
+    _require_polar()
     _check_and_consume_rate_limit(_create_checkout_attempts, str(user["id"]), CREATE_CHECKOUT_WINDOW_SECONDS, CREATE_CHECKOUT_MAX, "checkout")
     with _checkout_lock_for(user["id"]):
         # Re-check against a fresh row (not the possibly-stale `user` the dependency fetched at
@@ -2788,22 +2799,40 @@ def create_checkout(user=Depends(get_current_user)):
             conn.close()
         if fresh_user is not None and has_active_subscription(fresh_user):
             # Without this, a stale tab / double-click before the UI re-fetches status / a retried
-            # client request can create a second real Paddle transaction for someone who's already
-            # subscribed. The webhook below just overwrites paddle_subscription_id with whichever one
-            # fires last, silently orphaning the other -- Paddle keeps billing it, and the student has
-            # no self-service way to cancel it since Settings only offers to cancel the one on file.
+            # client request can create a second real Polar checkout session for someone who's
+            # already subscribed. The webhook below just overwrites polar_subscription_id with
+            # whichever one fires last, silently orphaning the other -- Polar keeps billing it, and
+            # the student has no self-service way to cancel it since Settings only offers to cancel
+            # the one on file.
             raise HTTPException(status_code=400, detail="You already have an active subscription.")
         body = {
-            "items": [{"price_id": PADDLE_PRICE_ID, "quantity": 1}],
-            "customer": {"email": user["email"]},
-            "custom_data": {"user_id": str(user["id"])},
+            "products": [POLAR_PRODUCT_ID],
+            "customer_email": user["email"],
+            # external_customer_id is Polar's first-class linking field -- it's mirrored onto the
+            # Customer object Polar creates/matches, and comes back in every subsequent webhook
+            # nested at data.customer.external_id. metadata.user_id is a redundant copy set directly
+            # on the resulting checkout/subscription/order object, so the webhook handler can read
+            # it without an extra nested-object lookup. Both point at the same value on purpose.
+            "external_customer_id": str(user["id"]),
+            "metadata": {"user_id": str(user["id"])},
+            "success_url": f"{FRONTEND_PUBLIC_URL}/?checkout_id={{CHECKOUT_ID}}",
+            # Required for the embedded/overlay checkout flow -- must match a host allow-listed in
+            # the Polar dashboard under Settings > Preferences > Embedding, or the iframe refuses to
+            # load. See task #478 (Polar account setup).
+            "embed_origin": FRONTEND_PUBLIC_URL,
         }
-        result = _paddle_request("POST", "/transactions", body)
-        txn = (result or {}).get("data")
-        if not txn or not txn.get("id"):
-            detail = ((result or {}).get("error") or {}).get("detail", "Could not start checkout. Please try again.")
-            raise HTTPException(status_code=400, detail=detail)
-        return {"transaction_id": txn["id"]}
+        result = _polar_request("POST", "/v1/checkouts/", body)
+        # Polar's own backend is itself built on FastAPI, so its error responses use the same
+        # {"detail": ...} shape FastAPI's own HTTPException produces -- checking for that key is a
+        # more reliable success/error discriminator than checking for any particular success field,
+        # since a successful Checkout object never has a "detail" key.
+        if isinstance(result, dict) and "detail" in result:
+            detail = result["detail"]
+            raise HTTPException(status_code=400, detail=detail if isinstance(detail, str) else "Could not start checkout. Please try again.")
+        checkout_url = (result or {}).get("url")
+        if not checkout_url:
+            raise HTTPException(status_code=400, detail="Could not start checkout. Please try again.")
+        return {"checkout_url": checkout_url}
 
 CANCEL_SUBSCRIPTION_WINDOW_SECONDS = 10 * 60
 CANCEL_SUBSCRIPTION_MAX = 8
@@ -2812,64 +2841,66 @@ _ALL_RATE_LIMIT_STORES.append(_cancel_subscription_attempts)
 
 @app.post("/api/subscription/cancel")
 def cancel_subscription(user=Depends(get_current_user)):
-    """Paddle has a hosted Customer Portal, but a direct API call from a confirm button in
-    Settings keeps the cancel flow consistent with the rest of this site's UI (and matches what
-    the old iyzico integration did). effective_from: 'immediately' matches the copy already shown
-    on the Cancel confirmation modal ("You will lose access to locked content immediately").
+    """A direct API call from a confirm button in Settings keeps the cancel flow consistent with
+    the rest of this site's UI (and matches what the old Paddle/iyzico integrations did) rather
+    than sending the student to a separate hosted portal page. DELETE (Polar's immediate-revoke
+    endpoint, as opposed to PATCH cancel_at_period_end for a gentler end-of-period cancellation)
+    matches the copy already shown on the Cancel confirmation modal ("You will lose access to
+    locked content immediately").
 
     Rate-limited the same way create_checkout() is, and for the same reason: this makes a real,
-    server-to-server Paddle API call, and paddle_subscription_id is never cleared anywhere in this
-    file (see admin_set_subscription's own comment) -- so once an account has EVER had a Paddle
+    server-to-server Polar API call, and polar_subscription_id is never cleared anywhere in this
+    file (see admin_set_subscription's own comment) -- so once an account has EVER had a Polar
     subscription, this endpoint stays callable indefinitely, long after that subscription is
     canceled/expired, up to the general per-user throttle (_check_api_throttle, ~120 req/min).
     Without a dedicated limit here, that's the exact same abuse path create_checkout's own limit
-    was added to close (burning Paddle's API rate limit / racking up load against the merchant
-    account), just on the cancel endpoint instead of the create one. Found in the 51st audit round.
+    was added to close (burning Polar's API rate limit / racking up load against the merchant
+    account), just on the cancel endpoint instead of the create one. Found in the 51st audit round
+    (originally for Paddle).
     """
-    _require_paddle()
+    _require_polar()
     _check_and_consume_rate_limit(_cancel_subscription_attempts, str(user["id"]), CANCEL_SUBSCRIPTION_WINDOW_SECONDS, CANCEL_SUBSCRIPTION_MAX, "cancel")
-    if not user["paddle_subscription_id"]:
+    if not user["polar_subscription_id"]:
         raise HTTPException(status_code=400, detail="No active subscription on file")
-    result = _paddle_request(
-        "POST",
-        f"/subscriptions/{user['paddle_subscription_id']}/cancel",
-        {"effective_from": "immediately"},
-    )
-    if not (result or {}).get("data"):
-        detail = ((result or {}).get("error") or {}).get("detail", "Could not cancel subscription")
-        raise HTTPException(status_code=400, detail=detail)
-    # Paddle has already canceled the subscription by this point (the check above already
-    # confirmed a successful `data` response) -- a transient failure in this local write must not
-    # surface as an error to the student, who would otherwise see a confusing failure for an
-    # action that actually succeeded, and could reasonably re-click and hit Paddle's own "already
-    # canceled" error on the retry. The subscription.canceled webhook (paddle_webhook() below) is
-    # the actual source of truth for subscription_status and will reconcile this row the moment it
-    # lands regardless of whether this local UPDATE below succeeds -- so log and swallow rather
-    # than raise. Found in the 34th audit round.
+    result = _polar_request("DELETE", f"/v1/subscriptions/{user['polar_subscription_id']}")
+    # Same {"detail": ...}-shape error discriminator create_checkout() uses above -- see its comment.
+    if isinstance(result, dict) and "detail" in result:
+        detail = result["detail"]
+        raise HTTPException(status_code=400, detail=detail if isinstance(detail, str) else "Could not cancel subscription")
+    # Polar has already canceled the subscription by this point (the check above already ruled out
+    # an error response) -- a transient failure in this local write must not surface as an error to
+    # the student, who would otherwise see a confusing failure for an action that actually
+    # succeeded, and could reasonably re-click and hit Polar's own "already canceled" error on the
+    # retry. The subscription.updated webhook (polar_webhook() below) is the actual source of truth
+    # for subscription_status and will reconcile this row the moment it lands regardless of whether
+    # this local UPDATE below succeeds -- so log and swallow rather than raise. Found in the 34th
+    # audit round (originally for Paddle).
     conn = get_db()
     try:
         conn.execute("UPDATE users SET subscription_status = 'CANCELED' WHERE id = ?", (user["id"],))
         conn.commit()
     except Exception as e:
-        print(f"[cancel_subscription] Paddle cancel succeeded but local DB update failed for user_id={user['id']}: {e}", flush=True)
+        print(f"[cancel_subscription] Polar cancel succeeded but local DB update failed for user_id={user['id']}: {e}", flush=True)
     finally:
         conn.close()
     return {"status": "success"}
 
-# Paddle subscription statuses come back lowercase (active, trialing, past_due, paused, canceled)
-# -- uppercased on the way into our own DB so they line up with the rest of this file's
-# ACTIVE_SUBSCRIPTION_STATUSES / admin-panel / dashboard checks, which have always used uppercase.
-_PADDLE_STATUS_MAP = {
-    "active": "ACTIVE", "trialing": "TRIALING", "past_due": "PAST_DUE",
-    "paused": "PAUSED", "canceled": "CANCELED",
+# Polar subscription statuses come back lowercase (incomplete, incomplete_expired, trialing,
+# active, past_due, canceled, unpaid, paused) -- uppercased on the way into our own DB so they line
+# up with the rest of this file's ACTIVE_SUBSCRIPTION_STATUSES / admin-panel / dashboard checks,
+# which have always used uppercase.
+_POLAR_STATUS_MAP = {
+    "incomplete": "INCOMPLETE", "incomplete_expired": "INCOMPLETE_EXPIRED",
+    "trialing": "TRIALING", "active": "ACTIVE", "past_due": "PAST_DUE",
+    "canceled": "CANCELED", "unpaid": "UNPAID", "paused": "PAUSED",
 }
 
-def _parse_paddle_ts(value):
-    """Parses a Paddle event's occurred_at (or a subscription_last_event_at value read back from
-    the DB, which comes back as a datetime from Postgres but a plain string from SQLite) into an
-    aware UTC datetime. Returns None for anything missing or unparseable, rather than raising --
-    callers treat None as "can't compare, don't block the update" so a webhook payload that's
-    missing/malformed in this one field never gets stuck unable to apply at all."""
+def _parse_polar_ts(value):
+    """Parses a subscription_last_event_at value read back from the DB (a datetime from Postgres,
+    or a plain ISO string from SQLite) into an aware UTC datetime. Returns None for anything
+    missing or unparseable, rather than raising -- callers treat None as "can't compare, don't
+    block the update" so a row that's missing/malformed in this one field never gets stuck unable
+    to apply a new webhook update at all."""
     if value is None:
         return None
     if isinstance(value, datetime):
@@ -2882,17 +2913,45 @@ def _parse_paddle_ts(value):
         return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
     return None
 
+def _verify_polar_webhook_signature(msg_id: str, timestamp: str, raw_body_text: str, sig_header: str) -> bool:
+    """Standard Webhooks (Svix-compatible) signature check -- see docs.polar.sh/integrate/webhooks.
+    Our POLAR_WEBHOOK_SECRET was generated well after Polar's 8 Sep 2026 cutover to the pure
+    Standard Webhooks spec, so only that scheme is implemented here (not the older "Polar HMAC"
+    variant some pre-cutover secrets need). HMAC-SHA256 over '{msg_id}.{timestamp}.{body}', keyed
+    with the base64-decoded bytes of the secret (after stripping its 'whsec_' prefix), compared
+    against the base64-encoded digest. webhook-signature can carry multiple space-separated
+    'v{version},{sig}' entries (for secret rotation) -- matching any one of them is a valid signature."""
+    if not POLAR_WEBHOOK_SECRET.startswith("whsec_"):
+        return False
+    try:
+        key = base64.b64decode(POLAR_WEBHOOK_SECRET[len("whsec_"):])
+    except Exception:
+        return False
+    signed_content = f"{msg_id}.{timestamp}.{raw_body_text}"
+    expected = base64.b64encode(hmac.new(key, signed_content.encode("utf-8"), hashlib.sha256).digest()).decode("utf-8")
+    for part in sig_header.split(" "):
+        if "," not in part:
+            continue
+        _, _, sig = part.partition(",")
+        if hmac.compare_digest(sig, expected):
+            return True
+    return False
+
 @app.post("/api/subscription/webhook")
-async def paddle_webhook(request: Request):
-    """Paddle POSTs here (no Authorization header -- verified via the Paddle-Signature header
-    instead, HMAC-SHA256 over 'ts:rawbody' keyed with PADDLE_WEBHOOK_SECRET) on every
-    subscription/transaction lifecycle event, including renewals -- this is what keeps
-    subscription_status in sync automatically without anyone needing to poll Paddle. Must be
-    registered as a Notification destination (pointing at this URL) in the Paddle dashboard under
-    Developer Tools > Notifications, subscribed to at least the subscription.* events."""
-    if not PADDLE_WEBHOOK_SECRET:
-        raise HTTPException(status_code=500, detail="Paddle webhook not configured (PADDLE_WEBHOOK_SECRET missing)")
-    # Defense in depth: real Paddle payloads are a few KB at most. Reject anything absurd before
+async def polar_webhook(request: Request):
+    """Polar POSTs here (no Authorization header -- verified via the Standard Webhooks/Svix-style
+    webhook-id/webhook-timestamp/webhook-signature headers instead, see
+    _verify_polar_webhook_signature) on every subscription/checkout/order lifecycle event -- this
+    is what keeps subscription_status in sync automatically without anyone needing to poll Polar.
+    Must be registered as a Webhook endpoint (pointing at this URL) in the Polar dashboard,
+    subscribed to at least the subscription.* events. subscription.updated fires alongside every
+    other subscription.* event (created, active, canceled, uncanceled, past_due, paused, resumed,
+    revoked, cycled) and always carries the full, current subscription object, so this only needs
+    to act on subscription.updated/subscription.created rather than branching on each individual
+    event name the way the old Paddle integration had to."""
+    if not POLAR_WEBHOOK_SECRET:
+        raise HTTPException(status_code=500, detail="Polar webhook not configured (POLAR_WEBHOOK_SECRET missing)")
+    # Defense in depth: real Polar payloads are a few KB at most. Reject anything absurd before
     # buffering it into memory, rather than trusting Cloudflare/Render's own body-size limits to
     # be the only thing standing between this public, pre-auth endpoint and a memory-exhaustion
     # attempt via a huge POST.
@@ -2922,35 +2981,31 @@ async def paddle_webhook(request: Request):
             raise HTTPException(status_code=413, detail="Payload too large")
         body_chunks.append(chunk)
     raw_body = b"".join(body_chunks)
-    sig_header = request.headers.get("paddle-signature", "")
-    ts, h1 = "", ""
-    for part in sig_header.split(";"):
-        if part.startswith("ts="):
-            ts = part[3:]
-        elif part.startswith("h1="):
-            h1 = part[3:]
-    if not ts or not h1:
-        raise HTTPException(status_code=400, detail="Missing or malformed Paddle-Signature header")
-    # Reject stale/replayed deliveries -- a generous 5 minute window (rather than Paddle's own
-    # SDK default of 5 seconds) since this is a defense-in-depth check on top of the HMAC compare
-    # below, not the primary protection, and a tight window is easy to blow past under real
-    # network/queueing delay with no actual security benefit.
-    try:
-        if abs(datetime.now(timezone.utc).timestamp() - int(ts)) > 300:
-            raise HTTPException(status_code=400, detail="Webhook timestamp outside allowed window")
-    except ValueError:
-        raise HTTPException(status_code=400, detail="Invalid Paddle-Signature timestamp")
     # A malformed (non-UTF-8) body reaches here before the signature check -- this endpoint is
     # public and pre-auth, so a bare .decode('utf-8') that could raise UnicodeDecodeError on
     # attacker-controlled bytes would surface as an unhandled 500 instead of a clean 400. Found in
-    # the 31st audit round.
+    # the 31st audit round (originally for paddle_webhook).
     try:
         raw_body_text = raw_body.decode("utf-8")
     except UnicodeDecodeError:
         raise HTTPException(status_code=400, detail="Request body is not valid UTF-8")
-    signed_payload = f"{ts}:{raw_body_text}"
-    expected_sig = hmac.new(PADDLE_WEBHOOK_SECRET.encode("utf-8"), signed_payload.encode("utf-8"), hashlib.sha256).hexdigest()
-    if not hmac.compare_digest(h1, expected_sig):
+
+    msg_id = request.headers.get("webhook-id", "")
+    timestamp = request.headers.get("webhook-timestamp", "")
+    sig_header = request.headers.get("webhook-signature", "")
+    if not msg_id or not timestamp or not sig_header:
+        raise HTTPException(status_code=400, detail="Missing Standard Webhooks signature headers")
+    # Reject stale/replayed deliveries -- a generous 5 minute window since this is a
+    # defense-in-depth check on top of the HMAC compare below, not the primary protection, and a
+    # tight window is easy to blow past under real network/queueing delay with no actual security
+    # benefit. Also doubles as this event's own ordering timestamp -- see event_dt below.
+    try:
+        ts_epoch = int(timestamp)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid webhook-timestamp header")
+    if abs(datetime.now(timezone.utc).timestamp() - ts_epoch) > 300:
+        raise HTTPException(status_code=400, detail="Webhook timestamp outside allowed window")
+    if not _verify_polar_webhook_signature(msg_id, timestamp, raw_body_text, sig_header):
         raise HTTPException(status_code=400, detail="Invalid webhook signature")
 
     try:
@@ -2958,122 +3013,109 @@ async def paddle_webhook(request: Request):
     except ValueError:
         raise HTTPException(status_code=400, detail="Invalid webhook payload")
 
-    event_type = event.get("event_type", "")
-    if not event_type.startswith("subscription."):
+    event_type = event.get("type", "")
+    if event_type not in ("subscription.updated", "subscription.created"):
         return {"status": "ignored"}
 
     data = event.get("data") or {}
     subscription_id = data.get("id")
-    customer_id = data.get("customer_id")
     raw_status = data.get("status", "")
-    status = _PADDLE_STATUS_MAP.get(raw_status, None)
+    status = _POLAR_STATUS_MAP.get(raw_status, None)
     if not subscription_id or not status:
-        # Previously silent -- if Paddle ever adds/renames a subscription status (their docs list
-        # more values than _PADDLE_STATUS_MAP covers, e.g. any future addition), every webhook
-        # delivery for it would 200 as "ignored" with no trace anywhere that anything was skipped.
-        # That's fine for event_types we deliberately don't act on, but a subscription.* event with
-        # an unrecognized `status` is a real gap worth a log line to notice from Render's logs,
-        # rather than only ever surfacing as a confused "why didn't my subscription update" report.
+        # Previously silent for Paddle -- if Polar ever adds/renames a subscription status (their
+        # docs list more values than _POLAR_STATUS_MAP covers, e.g. any future addition), every
+        # webhook delivery for it would 200 as "ignored" with no trace anywhere that anything was
+        # skipped. That's fine for event_types we deliberately don't act on, but a subscription.*
+        # event with an unrecognized `status` is a real gap worth a log line to notice from Render's
+        # logs, rather than only ever surfacing as a confused "why didn't my subscription update"
+        # report. Found in the 39th audit round (originally for Paddle).
         if subscription_id and not status:
-            print(f"[paddle webhook] ignoring subscription {subscription_id}: unrecognized status {raw_status!r} (event_type={event_type!r})", flush=True)
+            print(f"[polar webhook] ignoring subscription {subscription_id}: unrecognized status {raw_status!r} (event_type={event_type!r})", flush=True)
         return {"status": "ignored"}
-    period_end = ((data.get("current_billing_period") or {}).get("ends_at"))
-    custom_data = data.get("custom_data") or {}
-    user_id = custom_data.get("user_id")
-    # Paddle does not guarantee in-order delivery -- retries/queueing on their end can mean a
-    # stale event for this subscription arrives AFTER a newer one already landed (e.g. a delayed
-    # "still active" delivery showing up after a "canceled" one already processed). occurred_at is
-    # each event's own timestamp of when it actually happened (not when it was delivered), used
-    # below to detect and skip exactly that case. Found in the 38th audit round.
-    occurred_at = event.get("occurred_at")
+    period_end = data.get("current_period_end")
+    customer = data.get("customer") or {}
+    metadata = data.get("metadata") or {}
+    # external_customer_id (set at checkout time, see create_checkout) is mirrored onto the
+    # Customer object and comes back here nested under data.customer.external_id; metadata.user_id
+    # is the same value set redundantly at checkout time directly on the subscription/order object
+    # -- either is enough to link back to our own user row, metadata checked first since it needs
+    # no nested-object traversal.
+    user_id = metadata.get("user_id") or customer.get("external_id")
+    customer_id = data.get("customer_id") or customer.get("id")
+    # Polar's own event timestamp -- doubles as the ordering key _parse_polar_ts compares against
+    # subscription_last_event_at, same role Paddle's occurred_at used to play. Stored as an ISO
+    # string (not the raw epoch-seconds header value) so it's a value both SQLite (stores it as
+    # plain text) and Postgres (parses it as a real timestamp literal) can accept identically.
+    event_dt = datetime.fromtimestamp(ts_epoch, tz=timezone.utc)
+    event_time_iso = event_dt.isoformat()
 
     # The DB work below is synchronous (sqlite3, or a real network round-trip to Postgres in
     # production via psycopg2) and was previously run directly inside this `async def` coroutine --
     # the same event-loop-blocking bug already fixed for get_academic_passage, but worse here since
-    # Paddle can deliver a webhook for every subscription lifecycle event (creation, renewal,
+    # Polar can deliver a webhook for every subscription lifecycle event (creation, renewal,
     # cancellation, past-due, ...) and each one would stall every other concurrent async request on
     # this worker for the duration of the DB round-trip. Running it via asyncio.to_thread keeps the
     # event loop free while this executes on a worker thread.
     def _apply_webhook():
         conn = get_db()
         try:
-            # subscription.created is the only event where this subscription_id hasn't been linked to
-            # a user yet -- custom_data.user_id (set server-side in create_checkout above) is what
-            # binds it. Every later event (updated/canceled/past_due) is matched by subscription_id
-            # alone, same as the iyzico webhook matched on subscriptionReferenceCode before it.
-            if event_type == "subscription.created" and user_id:
+            existing = conn.execute(
+                "SELECT id, subscription_last_event_at FROM users WHERE polar_subscription_id = ?",
+                (subscription_id,),
+            ).fetchone()
+            if existing is None:
+                # First time we've seen this subscription_id -- link it to a user via
+                # external_customer_id/metadata.user_id, the same one-time linking role
+                # subscription.created's custom_data.user_id used to play for Paddle. Applied
+                # unconditionally (no staleness check): there's no earlier state on this row to be
+                # stale relative to.
+                if not user_id:
+                    print(f"[polar webhook] {event_type} with no external_customer_id/metadata.user_id -- subscription_id={subscription_id} customer_id={customer_id}. Cannot link to a user; premium was NOT granted.", flush=True)
+                    raise HTTPException(status_code=400, detail="Missing external_customer_id/metadata.user_id")
                 try:
                     user_id_int = int(user_id)
                 except (TypeError, ValueError):
-                    print(f"[paddle webhook] subscription.created with non-numeric custom_data.user_id={user_id!r} -- subscription_id={subscription_id}. Cannot link to a user; premium was NOT granted.", flush=True)
-                    raise HTTPException(status_code=400, detail="Invalid custom_data.user_id on subscription.created")
-                # subscription.created is, by definition, the first event Paddle can ever send for
-                # this subscription_id -- there's no earlier state on this row to be stale relative
-                # to, so it's applied unconditionally (no _parse_paddle_ts staleness check here,
-                # unlike the `else` branch below).
+                    print(f"[polar webhook] {event_type} with non-numeric user_id={user_id!r} -- subscription_id={subscription_id}. Cannot link to a user; premium was NOT granted.", flush=True)
+                    raise HTTPException(status_code=400, detail="Invalid external_customer_id/metadata.user_id")
                 cur = conn.execute(
-                    "UPDATE users SET paddle_customer_id = ?, paddle_subscription_id = ?, "
+                    "UPDATE users SET polar_customer_id = ?, polar_subscription_id = ?, "
                     "subscription_status = ?, subscription_current_period_end = COALESCE(?, subscription_current_period_end), "
                     "subscription_last_event_at = COALESCE(?, subscription_last_event_at) WHERE id = ?",
-                    (customer_id, subscription_id, status, period_end, occurred_at, user_id_int),
+                    (customer_id, subscription_id, status, period_end, event_time_iso, user_id_int),
                 )
                 if cur.rowcount == 0:
                     # user_id was present and numeric but didn't match any real account (stale/deleted
-                    # user, bad data). Same failure mode the "missing custom_data" branch below already
-                    # guards against -- the student was charged but premium was never actually granted,
-                    # so this needs the same loud, logged failure instead of a silent 200 to Paddle.
-                    print(f"[paddle webhook] subscription.created: custom_data.user_id={user_id_int} matched no user -- subscription_id={subscription_id} customer_id={customer_id}. Premium was NOT granted.", flush=True)
-                    raise HTTPException(status_code=400, detail="custom_data.user_id did not match any user")
-            elif event_type == "subscription.created":
-                # custom_data.user_id was missing on the very first event for this subscription --
-                # e.g. a subscription created outside our own checkout flow. There's no row with this
-                # paddle_subscription_id yet (nothing to have set it before now), so falling through
-                # to the WHERE-paddle_subscription_id branch below would silently match zero rows: the
-                # student would have paid with no way to ever get premium access, and no error trail
-                # for support to find. Surface it loudly instead and ask Paddle to retry, in case the
-                # missing custom_data was a transient issue on Paddle's end.
-                print(f"[paddle webhook] subscription.created with no custom_data.user_id -- subscription_id={subscription_id} customer_id={customer_id}. Cannot link to a user; premium was NOT granted.", flush=True)
-                raise HTTPException(status_code=400, detail="Missing custom_data.user_id on subscription.created")
+                    # user, bad data). The student was charged but premium was never actually granted,
+                    # so this needs a loud, logged failure instead of a silent 200 to Polar.
+                    print(f"[polar webhook] {event_type}: user_id={user_id_int} matched no user -- subscription_id={subscription_id} customer_id={customer_id}. Premium was NOT granted.", flush=True)
+                    raise HTTPException(status_code=400, detail="external_customer_id/metadata.user_id did not match any user")
             else:
-                # Paddle doesn't guarantee delivery order -- a delayed, now-stale event for this
-                # subscription could otherwise land AFTER a newer one already applied (e.g. a
-                # slow-to-arrive "still active" showing up after a "canceled" already processed),
-                # silently resurrecting or clobbering the correct state. Compare against the
-                # occurred_at of whatever event was last actually applied to this row and skip if
-                # this one isn't newer; a missing/unparseable timestamp on either side (None from
-                # _parse_paddle_ts) is treated as "can't prove staleness" and applied anyway, same
-                # as before this check existed. Found in the 38th audit round.
-                existing = conn.execute(
-                    "SELECT subscription_last_event_at FROM users WHERE paddle_subscription_id = ?",
-                    (subscription_id,),
-                ).fetchone()
-                new_dt = _parse_paddle_ts(occurred_at)
-                existing_dt = _parse_paddle_ts(existing["subscription_last_event_at"]) if existing else None
-                # Strictly greater-than, not >= -- two genuinely different events can legitimately
-                # share the same occurred_at (Paddle's timestamps aren't guaranteed sub-second-unique
-                # across separate notifications). >= would silently drop a second, real event that
-                # happens to tie on timestamp with the first; a same-event retry landing here also
-                # ties, but re-applying identical status/period_end values is a harmless no-op
-                # (this UPDATE was already idempotent for exact retries before this check existed).
-                # Found in the 39th audit round.
-                if existing and new_dt is not None and existing_dt is not None and existing_dt > new_dt:
-                    print(f"[paddle webhook] ignoring stale {event_type} for subscription_id={subscription_id}: occurred_at={occurred_at} is not newer than last applied event at {existing['subscription_last_event_at']}", flush=True)
+                # Already linked -- match by subscription_id from here on (same as Paddle's own
+                # webhook did), with the same delivery-reordering staleness guard: Standard Webhooks
+                # doesn't guarantee in-order delivery any more than Paddle's notifications did, so a
+                # delayed-but-stale delivery must not resurrect/clobber a newer state. Strictly
+                # greater-than, not >= -- two genuinely different events can legitimately share the
+                # same webhook-timestamp; >= would silently drop a second, real event that happens to
+                # tie, while re-applying identical values for a same-event retry is a harmless no-op.
+                # Found in the 38th/39th audit rounds (originally for Paddle's occurred_at).
+                existing_dt = _parse_polar_ts(existing["subscription_last_event_at"])
+                if existing_dt is not None and existing_dt > event_dt:
+                    print(f"[polar webhook] ignoring stale {event_type} for subscription_id={subscription_id}: webhook-timestamp={timestamp} is not newer than last applied event at {existing['subscription_last_event_at']}", flush=True)
                 else:
                     # COALESCE(?, subscription_current_period_end) -- not a plain overwrite -- because
-                    # some subscription.* event payloads omit current_billing_period.ends_at entirely,
-                    # which would otherwise null out a previously-correct future period end. That value
-                    # feeds has_active_subscription()'s own staleness backstop (a grace period past the
-                    # last known period end, for when a cancellation webhook is ever missed) -- nulling
-                    # it out here would quietly disarm that backstop for this user until some later
-                    # event happens to carry a real ends_at. Found in the 32nd audit round.
-                    cur = conn.execute(
+                    # some subscription.* event payloads omit current_period_end entirely, which would
+                    # otherwise null out a previously-correct future period end. That value feeds
+                    # has_active_subscription()'s own staleness backstop (a grace period past the last
+                    # known period end, for when a cancellation webhook is ever missed) -- nulling it
+                    # out here would quietly disarm that backstop for this user until some later event
+                    # happens to carry a real current_period_end. Found in the 32nd audit round
+                    # (originally for Paddle's ends_at).
+                    conn.execute(
                         "UPDATE users SET subscription_status = ?, subscription_current_period_end = COALESCE(?, subscription_current_period_end), "
                         "subscription_last_event_at = COALESCE(?, subscription_last_event_at) "
-                        "WHERE paddle_subscription_id = ?",
-                        (status, period_end, occurred_at, subscription_id),
+                        "WHERE polar_subscription_id = ?",
+                        (status, period_end, event_time_iso, subscription_id),
                     )
-                    if cur.rowcount == 0:
-                        print(f"[paddle webhook] {event_type} matched no user for subscription_id={subscription_id} -- no row has this paddle_subscription_id yet.", flush=True)
             conn.commit()
         finally:
             conn.close()

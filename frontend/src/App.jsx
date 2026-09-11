@@ -1127,7 +1127,7 @@ function extractErrorMessage(data, fallback) {
   return fallback
 }
 
-// ─── Subscription / paywall (Paddle) ─────────────────────────────────────────────────────────
+// ─── Subscription / paywall (Polar) ──────────────────────────────────────────────────────────
 // A list item whose full content was stripped server-side (see gate_pool in main.py) comes back
 // as just { id, ...a couple of title-ish fields, locked: true } instead of the real exercise.
 function isLocked(item) {
@@ -1189,51 +1189,38 @@ function LockedBadge() {
   )
 }
 
-// Set at build time once real Paddle credentials exist (Paddle dashboard > Developer Tools >
-// Authentication). VITE_PADDLE_CLIENT_TOKEN is the PUBLIC client-side token Paddle.js needs to
-// open the checkout overlay -- not a secret, safe to ship in the frontend bundle, same as Stripe's
-// publishable key. Until this is set, the Subscribe screen shows a "not available yet" message
-// instead of a broken checkout button (same fallback pattern as GOOGLE_CLIENT_ID below).
-const PADDLE_CLIENT_TOKEN = import.meta.env.VITE_PADDLE_CLIENT_TOKEN || ''
-const PADDLE_ENVIRONMENT = import.meta.env.VITE_PADDLE_ENVIRONMENT || 'sandbox'
+// Set at build time once real Polar credentials exist on the backend. VITE_POLAR_ENABLED is a
+// plain boolean flag (not a secret -- Polar needs no separate public client-side token the way
+// Paddle.js's VITE_PADDLE_CLIENT_TOKEN did, since the checkout is opened by URL, not an SDK token).
+// Until this is set to 'true', the Subscribe screen shows a "not available yet" message instead of
+// a broken checkout button (same fallback pattern as GOOGLE_CLIENT_ID below).
+const POLAR_CHECKOUT_ENABLED = (import.meta.env.VITE_POLAR_ENABLED || '') === 'true'
 
-// Lazily loads Paddle.js (https://cdn.paddle.com/paddle/v2/paddle.js) and initializes it at most
-// once no matter how many times it's called -- returns a promise that resolves once
-// window.Paddle is ready to open a checkout.
-//
-// `onEvent` is stored in this module-level ref and updated on EVERY call, not just the first --
-// window.Paddle.Initialize's eventCallback is only ever wired up once (inside `init`, which only
-// runs the first time), so without this indirection every call after the first would silently
-// keep firing the *first* caller's handler forever, discarding whatever handler a later
-// loadPaddle(newHandler) call passed in. Harmless today since SubscribeScreen's handler closes
-// over no per-instance state, but would silently break the moment it needed to (e.g. if
-// SubscribeScreen ever remounts before checkout finishes).
-let _paddleLoadPromise = null
-let _paddleOnEventRef = null
-function loadPaddle(onEvent) {
-  _paddleOnEventRef = onEvent
-  if (!_paddleLoadPromise) {
-    _paddleLoadPromise = new Promise((resolve, reject) => {
-      const init = () => {
-        if (PADDLE_ENVIRONMENT === 'sandbox') window.Paddle.Environment.set('sandbox')
-        window.Paddle.Initialize({ token: PADDLE_CLIENT_TOKEN, eventCallback: (e) => _paddleOnEventRef && _paddleOnEventRef(e) })
-        resolve(window.Paddle)
-      }
-      if (window.Paddle) { init(); return }
+// Lazily loads Polar's embedded-checkout script (https://cdn.jsdelivr.net/npm/@polar-sh/checkout)
+// and resolves once window.Polar.EmbedCheckout is ready to open a checkout overlay -- at most once
+// no matter how many times it's called. No public client-side token needed: the checkout URL
+// itself, returned by our own backend's /api/subscription/create-checkout, is what the overlay
+// opens; Polar's checkout page reads everything it needs (product, price, prefilled customer) from
+// that URL server-side.
+let _polarLoadPromise = null
+function loadPolarCheckout() {
+  if (!_polarLoadPromise) {
+    _polarLoadPromise = new Promise((resolve, reject) => {
+      if (window.Polar && window.Polar.EmbedCheckout) { resolve(window.Polar.EmbedCheckout); return }
       const script = document.createElement('script')
-      script.src = 'https://cdn.paddle.com/paddle/v2/paddle.js'
+      script.src = 'https://cdn.jsdelivr.net/npm/@polar-sh/checkout@latest/dist/embed.global.js'
       script.async = true
-      script.onload = init
-      script.onerror = () => reject(new Error('Failed to load Paddle.js'))
+      script.onload = () => resolve(window.Polar.EmbedCheckout)
+      script.onerror = () => reject(new Error('Failed to load Polar checkout script'))
       document.head.appendChild(script)
     })
   }
-  return _paddleLoadPromise
+  return _polarLoadPromise
 }
 
-// Asks our backend to create a Paddle transaction for the logged-in user (server-side, so the
-// custom_data linking it back to this account can't be tampered with -- see create_checkout in
-// main.py) and returns { transaction_id } to open in the Paddle.Checkout.open overlay.
+// Asks our backend to create a Polar checkout session for the logged-in user (server-side, so the
+// external_customer_id/metadata linking it back to this account can't be tampered with -- see
+// create_checkout in main.py) and returns { checkout_url } to open in the embedded overlay.
 function startCheckout() {
   return apiFetch(`${BACKEND_URL}/api/subscription/create-checkout`, { method: 'POST' }).then(res => res.json())
 }
@@ -1252,65 +1239,67 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
   const mountedRef = useRef(true)
   useEffect(() => () => { mountedRef.current = false }, [])
 
-  // Fires when the Paddle overlay reports the checkout finished. This is a UI hint only -- the
-  // real subscription activation happens server-side via the /api/subscription/webhook Paddle
-  // calls once the payment actually clears, which typically lands within a few seconds. Poll
-  // /api/subscription/status a few times to pick that up without asking the student to refresh.
-  const handlePaddleEvent = (e) => {
-    if (e && e.name === 'checkout.completed') {
-      showToast('Payment received! Activating your Premium access…', 'info')
-      let attempts = 0
-      const poll = () => {
-        // mountedRef check first thing in both branches below -- without this, a student who
-        // closes the Paddle overlay right after paying and immediately navigates elsewhere in
-        // the app (Dashboard, an exercise) could have this background poll chain fire
-        // window.location.reload() or a toast from a completely different screen moments later,
-        // out of nowhere -- the poll has no cleanup tied to SubscribeScreen's own lifecycle, so it
-        // kept running (and could still act on the page) long after the component that started it
-        // was gone. Found in the 41st audit round.
+  // Fires when the Polar embedded overlay reports the checkout finished successfully. This is a UI
+  // hint only -- the real subscription activation happens server-side via the
+  // /api/subscription/webhook Polar calls once the payment actually clears, which typically lands
+  // within a few seconds. Poll /api/subscription/status a few times to pick that up without asking
+  // the student to refresh.
+  const pollForPremium = () => {
+    showToast('Payment received! Activating your Premium access…', 'info')
+    let attempts = 0
+    const poll = () => {
+      // mountedRef check first thing in both branches below -- without this, a student who closes
+      // the Polar overlay right after paying and immediately navigates elsewhere in the app
+      // (Dashboard, an exercise) could have this background poll chain fire
+      // window.location.reload() or a toast from a completely different screen moments later, out
+      // of nowhere -- the poll has no cleanup tied to SubscribeScreen's own lifecycle, so it kept
+      // running (and could still act on the page) long after the component that started it was
+      // gone. Found in the 41st audit round (originally for Paddle).
+      if (!mountedRef.current) return
+      attempts += 1
+      apiFetch(`${BACKEND_URL}/api/subscription/status`).then(res => res.json()).then(data => {
         if (!mountedRef.current) return
-        attempts += 1
-        apiFetch(`${BACKEND_URL}/api/subscription/status`).then(res => res.json()).then(data => {
-          if (!mountedRef.current) return
-          if (data.has_premium) { showToast('Subscription successful! You now have full Premium access.'); window.location.reload() }
-          else if (attempts < 8) setTimeout(poll, 1500)
-          // Found in the 29th audit round: after the 8th attempt (12s) with no has_premium yet,
-          // this used to just stop silently -- the student, having just paid, was left staring at
-          // the paywall with zero indication of whether it worked, failed, or is still pending.
-          // The webhook usually lands within a few seconds, so 12s without it is unusual but not
-          // necessarily a failure (queue backlog, a slow retry) -- tell the student plainly and
-          // point them at the one thing that actually resolves it (a refresh re-fetches
-          // /api/subscription/status fresh) instead of leaving them guessing.
-          else showToast("Still activating your Premium access -- this can take a minute. Refresh the page in a moment, or contact support if it doesn't unlock.", 'error')
-        }).catch(() => {
-          if (!mountedRef.current) return
-          if (attempts < 8) setTimeout(poll, 1500)
-          else showToast("Still activating your Premium access -- this can take a minute. Refresh the page in a moment, or contact support if it doesn't unlock.", 'error')
-        })
-      }
-      setTimeout(poll, 1500)
+        if (data.has_premium) { showToast('Subscription successful! You now have full Premium access.'); window.location.reload() }
+        else if (attempts < 8) setTimeout(poll, 1500)
+        // Found in the 29th audit round: after the 8th attempt (12s) with no has_premium yet, this
+        // used to just stop silently -- the student, having just paid, was left staring at the
+        // paywall with zero indication of whether it worked, failed, or is still pending. The
+        // webhook usually lands within a few seconds, so 12s without it is unusual but not
+        // necessarily a failure (queue backlog, a slow retry) -- tell the student plainly and point
+        // them at the one thing that actually resolves it (a refresh re-fetches
+        // /api/subscription/status fresh) instead of leaving them guessing.
+        else showToast("Still activating your Premium access -- this can take a minute. Refresh the page in a moment, or contact support if it doesn't unlock.", 'error')
+      }).catch(() => {
+        if (!mountedRef.current) return
+        if (attempts < 8) setTimeout(poll, 1500)
+        else showToast("Still activating your Premium access -- this can take a minute. Refresh the page in a moment, or contact support if it doesn't unlock.", 'error')
+      })
     }
+    setTimeout(poll, 1500)
   }
 
   const handleSubscribe = (e) => {
     e.preventDefault()
     setError('')
     setBusy(true)
-    Promise.all([loadPaddle(handlePaddleEvent), startCheckout()])
-      .then(([Paddle, data]) => {
-        if (!data.transaction_id) {
+    Promise.all([loadPolarCheckout(), startCheckout()])
+      .then(([EmbedCheckout, data]) => {
+        if (!data.checkout_url) {
           setBusy(false)
           setError(extractErrorMessage(data, 'Could not start checkout. Please try again.'))
           return
         }
-        // setBusy(false) intentionally happens AFTER Paddle.Checkout.open() is called, not before
-        // (as it used to). The button stays disabled for the entire loadPaddle+startCheckout
-        // round-trip, so a student who double-clicks "Continue to payment" used to be able to
-        // re-trigger handleSubscribe in the brief window between this .then() resolving and the
-        // Paddle overlay actually opening -- each click creates a brand new
-        // /api/subscription/create-checkout transaction server-side, so a fast double-click could
-        // fire off two separate Paddle transactions. Found in the 40th audit round.
-        Paddle.Checkout.open({ transactionId: data.transaction_id })
+        // setBusy(false) intentionally happens AFTER EmbedCheckout.create() is called, not before
+        // (as it used to for Paddle). The button stays disabled for the entire
+        // loadPolarCheckout+startCheckout round-trip, so a student who double-clicks "Continue to
+        // payment" used to be able to re-trigger handleSubscribe in the brief window between this
+        // .then() resolving and the overlay actually opening -- each click creates a brand new
+        // /api/subscription/create-checkout session server-side, so a fast double-click could fire
+        // off two separate Polar checkout sessions. Found in the 40th audit round (originally for
+        // Paddle).
+        EmbedCheckout.create(data.checkout_url, { theme: 'light' }).then(instance => {
+          instance.addEventListener('success', pollForPremium)
+        })
         setBusy(false)
       })
       .catch(() => { setError('Could not reach the server. Please try again.'); setBusy(false) })
@@ -1381,12 +1370,12 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             You've hit the free-plan limit. Subscribe for unlimited access to every Reading, Listening,
             Writing and Speaking practice exercise, plus all 20 Full Mock Tests.
           </p>
-          {/* Shows the list price before the student ever reaches Paddle's own checkout overlay --
+          {/* Shows the list price before the student ever reaches Polar's own checkout overlay --
               without this, "Continue to payment" was the first place any number appeared anywhere
               in the flow, which is both a bad look for a subscription product and, in some
-              jurisdictions, expected to be disclosed before a payment flow is even started (Paddle's
+              jurisdictions, expected to be disclosed before a payment flow is even started (Polar's
               overlay itself always shows the price too, so this doesn't skip that -- it just isn't
-              the *only* place it's shown). Any active discount code is applied inside the Paddle
+              the *only* place it's shown). Any active discount code is applied inside the Polar
               overlay itself, so it isn't hardcoded here -- this always reflects the undiscounted
               list price. */}
           <div style={{ marginBottom: '20px' }}>
@@ -1407,7 +1396,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             </div>
           ))}
         </div>
-        {PADDLE_CLIENT_TOKEN ? (
+        {POLAR_CHECKOUT_ENABLED ? (
           <>
             {error && <p style={{ color: '#d92d20', fontSize: '12px', margin: '0 0 10px' }}>{error}</p>}
             <button onClick={handleSubscribe} disabled={busy} style={{ background: '#701fa1', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
@@ -10223,7 +10212,7 @@ function AdminPanel() {
                     {u.is_admin ? (
                       <span style={{ color: '#9ca3af', fontSize: '11px' }}>—</span>
                     ) : u.has_billed_subscription ? (
-                      <span style={{ color: '#9ca3af', fontSize: '11px' }} title="Real Paddle subscription -- cancel via the customer's own Settings, not here">Paid, not revocable here</span>
+                      <span style={{ color: '#9ca3af', fontSize: '11px' }} title="Real Polar subscription -- cancel via the customer's own Settings, not here">Paid, not revocable here</span>
                     ) : u.has_premium ? (
                       <button onClick={() => setRevokeTarget(u)} disabled={busyId === u.id} style={{ background: '#fff', color: '#dc2626', border: '1px solid #fecaca', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Revoke</button>
                     ) : (
@@ -10804,10 +10793,11 @@ function App() {
     return () => window.removeEventListener('mrreadyprep:paywall', openPaywall)
   }, [])
 
-  // Paddle's Checkout.js opens as an in-page overlay rather than redirecting away to a hosted
-  // payment page, so there's no return-URL/query-param handoff to pick up here the way iyzico's
-  // embedded widget needed -- SubscribeScreen listens for the checkout.completed event directly
-  // and polls /api/subscription/status itself (see handlePaddleEvent above it).
+  // Polar's embedded overlay (window.Polar.EmbedCheckout) opens as an in-page iframe rather than
+  // redirecting away to a hosted payment page, so there's no return-URL/query-param handoff to
+  // pick up here the way iyzico's embedded widget needed -- SubscribeScreen listens for the
+  // overlay's 'success' event directly and polls /api/subscription/status itself (see
+  // pollForPremium above it).
 
   // The <input type="number" min="1" max="6"> constraints on the target fields are only enforced
   // by the browser on a real <form> submit event -- the Dashboard's inline "Edit targets" panel
