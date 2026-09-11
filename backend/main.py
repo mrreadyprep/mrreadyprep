@@ -58,30 +58,6 @@ import weakref
 
 app = FastAPI(title="mrreadyprep API", version="2026")
 
-# Standard defense-in-depth response headers -- none of these were set anywhere before, so every
-# response (API JSON, streamed audio, everything) went out with browser defaults. Applied via a
-# plain middleware function (not a dedicated package) so there's no new dependency to pin/audit.
-@app.middleware("http")
-async def _security_headers(request: Request, call_next):
-    response = await call_next(request)
-    # Stop this API from ever being framed (clickjacking) -- nothing here is meant to be embedded.
-    response.headers["X-Frame-Options"] = "DENY"
-    # Stop browsers from MIME-sniffing a response into a different content type than declared.
-    response.headers["X-Content-Type-Options"] = "nosniff"
-    # Don't leak the full referring URL (which can contain auth/reset tokens in query strings) to
-    # other origins; same-origin requests still get the full path.
-    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-    # This API is never rendered as a document, so a restrictive CSP costs nothing and closes off
-    # any future accidental HTML-reflection endpoint from being useful for injection.
-    response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'"
-    # Force HTTPS on every subsequent request for a year, including subdomains -- Render always
-    # terminates TLS at its edge, so this is safe to send unconditionally in production. Only add
-    # it once we can tell we're actually behind that HTTPS edge (RENDER env var), so plain local
-    # dev over http://localhost is never redirected/upgraded.
-    if os.environ.get("RENDER"):
-        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
-    return response
-
 # Small, generic JSON body-size ceiling applied to the handful of pre-auth POST endpoints below
 # (register/login/google-login/forgot-password/reset-password/verify-email). Unlike every other
 # POST endpoint that takes user input, these six require no credentials AND have no rate limit in
@@ -99,6 +75,14 @@ async def _security_headers(request: Request, call_next):
 _PRE_AUTH_BODY_LIMIT_PATHS = {
     "/api/auth/register", "/api/auth/login", "/api/auth/google",
     "/api/auth/forgot-password", "/api/auth/reset-password", "/api/auth/verify-email",
+    # get_intro_audio_urls() below is also unauthenticated with its rate limit only kicked in
+    # AFTER Pydantic has fully parsed the body (same shape as the six auth endpoints above), so it
+    # belongs in this tight 20KB set rather than falling through to the 200KB general limit meant
+    # for authenticated write endpoints. Its real payload (up to 300 filenames, each already capped
+    # at 200 chars by IntroAudioUrlsRequest) never comes close to either ceiling, but there's no
+    # reason to let an anonymous caller buffer 10x more than every other pre-auth endpoint allows.
+    # Found in the 52nd audit round.
+    "/api/audio/intro-urls",
 }
 _PRE_AUTH_BODY_LIMIT_BYTES = 20_000
 
@@ -154,6 +138,41 @@ async def _pre_auth_body_size_limit(request: Request, call_next):
             if too_large:
                 return JSONResponse(status_code=413, content={"detail": "Payload too large"})
     return await call_next(request)
+
+# Standard defense-in-depth response headers -- none of these were set anywhere before, so every
+# response (API JSON, streamed audio, everything) went out with browser defaults. Applied via a
+# plain middleware function (not a dedicated package) so there's no new dependency to pin/audit.
+#
+# Registered AFTER _pre_auth_body_size_limit (making it OUTER, i.e. the response side runs
+# LAST -- see the CORS comment below for the exact wrapping-order mechanics), not before. It used
+# to be registered first/innermost, which meant a 413 "Payload too large" short-circuit from
+# _pre_auth_body_size_limit (that middleware returns directly instead of calling call_next when a
+# body is too large) never reached this function at all -- those 413 responses went out with none
+# of the headers below, silently defeating the "every response gets these" guarantee the comment
+# right below describes. Being outer means this function's own `response = await call_next(...)`
+# line still runs and still gets a response object to attach headers to, whether that response
+# came from the real route or from an inner middleware's early return. Found in the 52nd audit
+# round -- same root cause class as the CORS-ordering bug found in the 39th.
+@app.middleware("http")
+async def _security_headers(request: Request, call_next):
+    response = await call_next(request)
+    # Stop this API from ever being framed (clickjacking) -- nothing here is meant to be embedded.
+    response.headers["X-Frame-Options"] = "DENY"
+    # Stop browsers from MIME-sniffing a response into a different content type than declared.
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    # Don't leak the full referring URL (which can contain auth/reset tokens in query strings) to
+    # other origins; same-origin requests still get the full path.
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    # This API is never rendered as a document, so a restrictive CSP costs nothing and closes off
+    # any future accidental HTML-reflection endpoint from being useful for injection.
+    response.headers["Content-Security-Policy"] = "default-src 'none'; frame-ancestors 'none'"
+    # Force HTTPS on every subsequent request for a year, including subdomains -- Render always
+    # terminates TLS at its edge, so this is safe to send unconditionally in production. Only add
+    # it once we can tell we're actually behind that HTTPS edge (RENDER env var), so plain local
+    # dev over http://localhost is never redirected/upgraded.
+    if os.environ.get("RENDER"):
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    return response
 
 # CORS ayarları -- CORS_ALLOWED_ORIGINS can be a comma-separated list of extra origins (e.g. the
 # production frontend domain once deployed). localhost:5173 is always allowed for local dev.

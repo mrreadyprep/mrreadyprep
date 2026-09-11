@@ -6804,7 +6804,10 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
   // everywhere else in the app. Reported live by the user (a real "3.4" on a Listen & Repeat set)
   // and fixed in the 44th audit round.
   const avgLabel = answers.length ? (Math.round((score / answers.length) * 2) / 2).toFixed(1) : '0.0'
-  const progressPct = phase === 'summary' ? 100 : (sentenceIdx / totalQ) * 100
+  // (No progressPct/progress-bar here: ExamScreen (see its definition) has no progress-bar slot
+  // anywhere in this app -- a `sentenceIdx / totalQ` value was computed here but never rendered
+  // by any component, in this file or any other exam screen. Removed as dead code rather than
+  // wiring up a new, unreviewed UI element sight-unseen. Found in the 52nd audit round.)
 
   return (
     <>
@@ -7128,7 +7131,8 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, 
   // everywhere else in the app. Reported live by the user (a real "3.4" on a Listen & Repeat set)
   // and fixed in the 44th audit round.
   const avgLabel = answers.length ? (Math.round((score / answers.length) * 2) / 2).toFixed(1) : '0.0'
-  const progressPct = phase === 'summary' ? 100 : (qIdx / totalQ) * 100
+  // (No progressPct/progress-bar here -- same dead-code removal as ListenRepeatExercise above,
+  // see its comment. Found in the 52nd audit round.)
 
   return (
     <>
