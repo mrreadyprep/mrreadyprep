@@ -306,6 +306,12 @@ def _polar_request(method: str, path: str, body: dict = None):
         headers={
             "Authorization": f"Bearer {POLAR_ACCESS_TOKEN}",
             "Content-Type": "application/json",
+            # Without an explicit User-Agent, urllib sends "Python-urllib/3.x", which Cloudflare (in
+            # front of api.polar.sh) flags as a bot signature and blocks with a 403 (Cloudflare error
+            # 1010) before the request ever reaches Polar's own application -- confirmed by
+            # replicating the exact same request with curl's default User-Agent (works) vs this one
+            # (403) from the same host. A normal-looking UA avoids that WAF rule.
+            "User-Agent": "mrreadyprep-backend/1.0 (+https://mrreadyprep.com)",
         },
     )
     try:
