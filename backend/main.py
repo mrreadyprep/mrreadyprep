@@ -2382,6 +2382,11 @@ def google_login(data: GoogleLoginRequest, request: Request):
 
     conn = get_db()
     try:
+        # Tracked separately from "user already existed" below purely for ad-platform conversion
+        # tracking (see loadMetaPixel()/trackPixelEvent() in App.jsx) -- the frontend fires a
+        # CompleteRegistration event only when this is True, so a returning student signing back
+        # in via Google isn't miscounted as a brand-new signup.
+        is_new_user = False
         user = conn.execute("SELECT * FROM users WHERE google_id = ?", (google_id,)).fetchone()
         if not user:
             user = conn.execute("SELECT * FROM users WHERE email = ?", (email,)).fetchone()
@@ -2440,9 +2445,10 @@ def google_login(data: GoogleLoginRequest, request: Request):
                 if is_first_user:
                     migrate_legacy_data_to_user(conn, user_id)
                 user = get_user_by_id(conn, user_id)
+                is_new_user = True
 
         token = create_access_token(user["id"], user["token_version"])
-        return {"status": "success", "access_token": token, "user": user_profile_dict(user)}
+        return {"status": "success", "access_token": token, "user": user_profile_dict(user), "is_new_user": is_new_user}
     finally:
         conn.close()
 

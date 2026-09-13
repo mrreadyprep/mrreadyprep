@@ -1282,6 +1282,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
     e.preventDefault()
     setError('')
     setBusy(true)
+    trackPixelEvent('InitiateCheckout')
     Promise.all([loadPolarCheckout(), startCheckout()])
       .then(([EmbedCheckout, data]) => {
         if (!data.checkout_url) {
@@ -9534,6 +9535,12 @@ const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || ''
 // in the tracking script tag regardless), so unlike GA_MEASUREMENT_ID above this is hardcoded
 // rather than routed through a build-time env var -- one less thing to configure per deploy.
 const CLARITY_PROJECT_ID = 'y60gpwz1rb'
+// Meta (Facebook/Instagram) Pixel, same consent gate as GA4/Clarity below -- without it, ad
+// campaigns can only see click counts, not which clicks actually became a signup or a checkout,
+// so Meta's delivery system can't optimize toward people likely to convert. Set at build time
+// once a Pixel exists (Render env var VITE_META_PIXEL_ID); until then this stays empty and
+// loadMetaPixel()/trackPixelEvent() below are no-ops, same pattern as GA_MEASUREMENT_ID.
+const META_PIXEL_ID = import.meta.env.VITE_META_PIXEL_ID || ''
 const COOKIE_CONSENT_KEY = 'cookie_consent' // 'accepted' | 'rejected'
 
 let _gaLoaded = false
@@ -9566,6 +9573,33 @@ function loadClarity() {
   document.head.appendChild(script)
 }
 
+// Meta Pixel base code, translated out of Meta's inline <script> snippet the same way Clarity's
+// was above (this app has no static HTML shell to paste either into). fbq('track', 'PageView')
+// fires once here on load; CompleteRegistration and InitiateCheckout fire later via
+// trackPixelEvent() at the actual signup-success and checkout-start call sites below.
+let _metaPixelLoaded = false
+function loadMetaPixel() {
+  if (_metaPixelLoaded || !META_PIXEL_ID) return
+  _metaPixelLoaded = true
+  /* eslint-disable */
+  !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+  n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+  document,'script','https://connect.facebook.net/en_US/fbevents.js')
+  /* eslint-enable */
+  window.fbq('init', META_PIXEL_ID)
+  window.fbq('track', 'PageView')
+}
+
+// Fires a Meta Pixel conversion event if (and only if) the Pixel is configured and the visitor
+// has actually consented (loadMetaPixel only ever runs from the 'accepted' branch below) --
+// calling this before/without consent is always a harmless no-op since window.fbq won't exist
+// yet, rather than something callers need to guard against individually at each call site.
+function trackPixelEvent(eventName, params) {
+  if (typeof window !== 'undefined' && window.fbq) window.fbq('track', eventName, params)
+}
+
 // Small bottom banner asking for consent before any analytics cookies are set. Only appears
 // once (until the user clears site data) and only if a GA4 property is actually configured --
 // on deployments without VITE_GA_MEASUREMENT_ID it renders nothing, since there's nothing to
@@ -9576,10 +9610,10 @@ function CookieConsentBanner() {
   const [choice, setChoice] = useState(() => { try { return localStorage.getItem(COOKIE_CONSENT_KEY) } catch { return null } })
 
   useEffect(() => {
-    if (choice === 'accepted') { loadGoogleAnalytics(); loadClarity() }
+    if (choice === 'accepted') { loadGoogleAnalytics(); loadClarity(); loadMetaPixel() }
   }, [choice])
 
-  if ((!GA_MEASUREMENT_ID && !CLARITY_PROJECT_ID) || choice) return null
+  if ((!GA_MEASUREMENT_ID && !CLARITY_PROJECT_ID && !META_PIXEL_ID) || choice) return null
 
   const respond = (value) => {
     // If localStorage throws (private browsing / storage disabled), still update state so the
@@ -9601,7 +9635,7 @@ function CookieConsentBanner() {
         <span style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}>We value your privacy</span>
       </div>
       <div style={{ fontSize: '12.5px', color: '#616473', lineHeight: '1.6', marginBottom: '14px' }}>
-        We use Google Analytics and Microsoft Clarity to understand how mrreadyprep is used. This only sets a cookie if you accept. See our{' '}
+        We use Google Analytics, Microsoft Clarity, and the Meta Pixel to understand how mrreadyprep is used and to measure our advertising. This only sets a cookie if you accept. See our{' '}
         <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ color: '#701fa1', fontWeight: '600' }}>Privacy Policy</a>.
       </div>
       <div style={{ display: 'flex', gap: '8px' }}>
@@ -9828,6 +9862,11 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
     }).then(data => {
       clearAllDrafts()
       setAuthToken(data.access_token)
+      // Google can either create a brand-new account or log an existing one back in from the
+      // exact same button -- is_new_user (set server-side in google_login()) is what actually
+      // distinguishes the two, so a returning student signing in isn't miscounted as a new
+      // CompleteRegistration for ad-platform reporting.
+      if (data.is_new_user) trackPixelEvent('CompleteRegistration')
       onAuthSuccess(data.user)
     }).catch(err => setError(err.message)).finally(() => setLoading(false))
   }
@@ -9943,6 +9982,10 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
     }).then(data => {
       clearAllDrafts()
       setAuthToken(data.access_token)
+      // Only fires for an actual new-account signup, not every successful login -- `mode` here is
+      // the same value that picked '/api/auth/register' vs '/api/auth/login' above, so this can't
+      // drift out of sync with which endpoint was actually called.
+      if (mode === 'signup') trackPixelEvent('CompleteRegistration')
       onAuthSuccess(data.user)
     }).catch(err => setError(err.message)).finally(() => setLoading(false))
   }
