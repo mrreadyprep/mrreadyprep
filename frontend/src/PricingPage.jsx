@@ -4,83 +4,84 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
   const [selectedPlan, setSelectedPlan] = useState('annual')
 
   const plans = {
-    free: {
-      name: 'Free',
-      monthlyPrice: 0,
-      annualPrice: 0,
+    oneMonth: {
+      name: '1 Month',
+      monthlyPrice: 50,
+      annualPrice: 50,
       discount: null,
       features: [
-        '5 practice questions per day',
-        '1 full mock test (read-only)',
-        'Basic progress tracking',
-        'Mobile app access'
-      ],
-      cta: 'Current Plan',
-      ctaDisabled: true,
-      popular: false,
-      description: 'Get started with TOEFL prep'
-    },
-    pro: {
-      name: 'Pro',
-      monthlyPrice: 12.99,
-      annualPrice: 99.99,
-      discount: 33,
-      features: [
-        'Reading Practice (3 modes: Complete Words, Read in Daily Life, Academic Passage)',
-        'Listening Practice (4 modes: Choose Response, Conversation, Announcement, Academic Talk)',
-        'Writing Practice (3 modes: Build Sentence, Write Email, Academic Discussion)',
-        'Speaking Practice (2 modes: Listen & Repeat, Take Interview)',
-        'All 20 Full Mock Tests',
+        'Unlimited access to all Reading Practice (Complete Words, Read in Daily Life, Academic Passage)',
+        'Unlimited access to all Listening Practice (Choose Response, Conversation, Announcement, Academic Talk)',
+        'Unlimited access to all Writing Practice (Build Sentence, Write Email, Academic Discussion)',
+        'Unlimited access to all Speaking Practice (Listen & Repeat, Take Interview)',
+        'All 20 Full Mock Tests (instead of just Test 1)',
+        'Unlimited "practice one section" random mock drills',
         'Detailed progress analytics & score tracking',
-        '900 Vocabulary words (4 difficulty levels)',
-        '16 TOEFL Guides (Reading, Listening, Writing, Speaking)',
-        'Ad-free experience',
-        '5-point score guarantee'
+        'AI feedback on all reading, listening, writing & speaking answers',
+        'Score history & detailed mistake review',
+        'Cancel anytime'
       ],
-      cta: 'Upgrade to Pro',
-      popular: true,
-      description: 'Most popular choice'
-    },
-    proplus: {
-      name: 'Pro Plus',
-      monthlyPrice: 19.99,
-      annualPrice: 149.99,
-      discount: 38,
-      features: [
-        'Everything in Pro, plus:',
-        'Priority email support (24hr response)',
-        'Weekly 1-on-1 coaching call',
-        'Personalized study plan based on your weak areas',
-        'Access to community forum',
-        'Advanced practice insights & detailed mistake analysis',
-        'Early access to new features'
-      ],
-      cta: 'Upgrade to Pro Plus',
+      cta: 'Choose Plan',
+      ctaDisabled: false,
       popular: false,
-      description: 'Premium support & coaching'
+      description: 'One month of full access'
+    },
+    threeMonths: {
+      name: '3 Months',
+      monthlyPrice: 70,
+      annualPrice: 70,
+      discount: null,
+      features: [
+        'Unlimited access to all Reading Practice (Complete Words, Read in Daily Life, Academic Passage)',
+        'Unlimited access to all Listening Practice (Choose Response, Conversation, Announcement, Academic Talk)',
+        'Unlimited access to all Writing Practice (Build Sentence, Write Email, Academic Discussion)',
+        'Unlimited access to all Speaking Practice (Listen & Repeat, Take Interview)',
+        'All 20 Full Mock Tests (instead of just Test 1)',
+        'Unlimited "practice one section" random mock drills',
+        'Detailed progress analytics & score tracking',
+        'AI feedback on all reading, listening, writing & speaking answers',
+        'Score history & detailed mistake review',
+        'Cancel anytime'
+      ],
+      cta: 'Choose Plan',
+      ctaDisabled: false,
+      popular: true,
+      description: 'Best value plan'
+    },
+    sixMonths: {
+      name: '6 Months',
+      monthlyPrice: 120,
+      annualPrice: 120,
+      discount: null,
+      features: [
+        'Unlimited access to all Reading Practice (Complete Words, Read in Daily Life, Academic Passage)',
+        'Unlimited access to all Listening Practice (Choose Response, Conversation, Announcement, Academic Talk)',
+        'Unlimited access to all Writing Practice (Build Sentence, Write Email, Academic Discussion)',
+        'Unlimited access to all Speaking Practice (Listen & Repeat, Take Interview)',
+        'All 20 Full Mock Tests (instead of just Test 1)',
+        'Unlimited "practice one section" random mock drills',
+        'Detailed progress analytics & score tracking',
+        'AI feedback on all reading, listening, writing & speaking answers',
+        'Score history & detailed mistake review',
+        'Cancel anytime'
+      ],
+      cta: 'Choose Plan',
+      ctaDisabled: false,
+      popular: false,
+      description: 'Extended access for serious prep'
     }
   }
 
   const getPriceDisplay = (plan) => {
-    if (selectedPlan === 'monthly') {
-      return `$${plan.monthlyPrice}/month`
-    }
-    const monthlyEquivalent = (plan.annualPrice / 12).toFixed(2)
     return (
-      <>
-        <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>
-          ${plan.annualPrice}
-        </div>
-        <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
-          ${monthlyEquivalent}/month billed annually
-        </div>
-      </>
+      <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>
+        ${plan.monthlyPrice}
+      </div>
     )
   }
 
   const handleUpgrade = (planName) => {
-    if (planName === 'free') return
-    onUpgrade(planName, selectedPlan === 'monthly' ? 'monthly' : 'annual')
+    onUpgrade(planName, 'monthly')
   }
 
   return (
@@ -116,7 +117,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           color: '#1a1a1a',
           margin: '0 0 16px'
         }}>
-          Upgrade to Premium
+          Unlock Premium
         </h1>
 
         <p style={{
@@ -127,7 +128,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           marginLeft: 'auto',
           marginRight: 'auto'
         }}>
-          Get unlimited access to all TOEFL practice materials, personalized coaching, and guaranteed score improvement.
+          Get unlimited access to all TOEFL practice materials, AI feedback on every answer, and comprehensive progress tracking.
         </p>
 
         {/* Score Guarantee Banner */}
@@ -142,40 +143,6 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           <div style={{ fontSize: '14px', fontWeight: '600', color: '#856404' }}>
             🎯 <strong>5-Point Score Guarantee:</strong> Improve 5+ points or get 100% refund
           </div>
-        </div>
-
-        {/* Billing Toggle */}
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '40px' }}>
-          <button
-            onClick={() => setSelectedPlan('monthly')}
-            style={{
-              padding: '10px 24px',
-              borderRadius: '8px',
-              border: selectedPlan === 'monthly' ? '2px solid #701fa1' : '1px solid #ddd',
-              background: selectedPlan === 'monthly' ? '#f3e8ff' : 'white',
-              color: selectedPlan === 'monthly' ? '#701fa1' : '#666',
-              cursor: 'pointer',
-              fontWeight: '600',
-              fontSize: '14px'
-            }}
-          >
-            Monthly Billing
-          </button>
-          <button
-            onClick={() => setSelectedPlan('annual')}
-            style={{
-              padding: '10px 24px',
-              borderRadius: '8px',
-              border: selectedPlan === 'annual' ? '2px solid #701fa1' : '1px solid #ddd',
-              background: selectedPlan === 'annual' ? '#f3e8ff' : 'white',
-              color: selectedPlan === 'annual' ? '#701fa1' : '#666',
-              cursor: 'pointer',
-              fontWeight: '600',
-              fontSize: '14px'
-            }}
-          >
-            Annual Billing (Save 33%)
-          </button>
         </div>
       </div>
 
@@ -220,7 +187,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px'
               }}>
-                Most Popular
+                MOST POPULAR
               </div>
             )}
 
@@ -245,30 +212,8 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
 
             {/* Price */}
             <div style={{ marginBottom: '24px' }}>
-              {typeof getPriceDisplay(plan) === 'string' ? (
-                <div style={{ fontSize: '24px', fontWeight: '800', color: '#701fa1' }}>
-                  {getPriceDisplay(plan)}
-                </div>
-              ) : (
-                getPriceDisplay(plan)
-              )}
+              {getPriceDisplay(plan)}
             </div>
-
-            {/* Discount Badge */}
-            {plan.discount && selectedPlan === 'annual' && (
-              <div style={{
-                background: '#e8f5e9',
-                color: '#2e7d32',
-                padding: '8px 12px',
-                borderRadius: '6px',
-                fontSize: '13px',
-                fontWeight: '600',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                Save {plan.discount}% with annual billing
-              </div>
-            )}
 
             {/* CTA Button */}
             <button
@@ -319,6 +264,69 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         ))}
       </div>
 
+      {/* Free Plan Comparison */}
+      <div style={{
+        maxWidth: '1100px',
+        margin: '0 auto 50px',
+        background: 'white',
+        borderRadius: '12px',
+        padding: '40px 30px',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+      }}>
+        <h2 style={{
+          fontSize: '24px',
+          fontWeight: '700',
+          marginBottom: '30px',
+          textAlign: 'center',
+          color: '#1a1a1a'
+        }}>
+          What's Included Free
+        </h2>
+
+        <p style={{
+          fontSize: '16px',
+          color: '#666',
+          marginBottom: '20px',
+          lineHeight: '1.6'
+        }}>
+          Start your TOEFL prep for free with access to:
+        </p>
+
+        <ul style={{
+          listStyle: 'none',
+          padding: 0,
+          margin: 0,
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+          gap: '20px'
+        }}>
+          <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <span style={{ color: '#701fa1', fontSize: '18px', marginTop: '2px', flexShrink: 0 }}>✓</span>
+            <span style={{ fontSize: '14px', color: '#333' }}>5 practice questions per day</span>
+          </li>
+          <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <span style={{ color: '#701fa1', fontSize: '18px', marginTop: '2px', flexShrink: 0 }}>✓</span>
+            <span style={{ fontSize: '14px', color: '#333' }}>1 full mock test (read-only)</span>
+          </li>
+          <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <span style={{ color: '#701fa1', fontSize: '18px', marginTop: '2px', flexShrink: 0 }}>✓</span>
+            <span style={{ fontSize: '14px', color: '#333' }}>Basic progress tracking</span>
+          </li>
+          <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <span style={{ color: '#701fa1', fontSize: '18px', marginTop: '2px', flexShrink: 0 }}>✓</span>
+            <span style={{ fontSize: '14px', color: '#333' }}>900 vocabulary words with flashcards</span>
+          </li>
+          <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <span style={{ color: '#701fa1', fontSize: '18px', marginTop: '2px', flexShrink: 0 }}>✓</span>
+            <span style={{ fontSize: '14px', color: '#333' }}>16 TOEFL guides & tips</span>
+          </li>
+          <li style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+            <span style={{ color: '#701fa1', fontSize: '18px', marginTop: '2px', flexShrink: 0 }}>✓</span>
+            <span style={{ fontSize: '14px', color: '#333' }}>Mobile app access</span>
+          </li>
+        </ul>
+      </div>
+
       {/* FAQ Section */}
       <div style={{
         maxWidth: '700px',
@@ -349,12 +357,12 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         />
 
         <FAQ
-          question="Can I switch plans?"
-          answer="Yes, you can upgrade or downgrade your plan anytime. Changes take effect immediately."
+          question="Which plan should I choose?"
+          answer="Choose 3 Months if you're seriously preparing. Most students need 6-12 weeks to see significant improvement. Choose 6 Months if you want extended access to practice and refine your skills."
         />
 
         <FAQ
-          question="Do you offer student discounts?"
+          question="Do you offer discounts?"
           answer="Yes! Email us at support@mrreadyprep.com with your student ID for an exclusive discount."
         />
 
@@ -373,7 +381,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         paddingTop: '40px'
       }}>
         <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
-          Need help? Contact us at <strong>support@mrreadyprep.com</strong> or check our <a href="#" style={{ color: '#701fa1', textDecoration: 'none' }}>FAQ</a>
+          Need help? Contact us at <strong>support@mrreadyprep.com</strong>
         </p>
       </div>
     </div>
