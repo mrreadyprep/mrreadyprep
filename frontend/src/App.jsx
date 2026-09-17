@@ -1444,7 +1444,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
               transform: plan.isMostPopular ? 'scale(1.05)' : 'scale(1)',
               transition: 'all 0.3s'
             }}>
-              {plan.isBest && (
+              {plan.isMostPopular && (
                 <div style={{
                   position: 'absolute',
                   top: '-12px',
