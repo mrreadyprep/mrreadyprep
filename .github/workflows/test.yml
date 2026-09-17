@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_PASS }}
           subject: "mrreadyprep Test Failed - ${{ github.run_number }}"
-          to: mehmet.disbudak03@hotmail.com
+          to: mrreadyprep@gmail.com
           from: "GitHub Actions"
           body: |
             Test çalışması başarısız oldu.
