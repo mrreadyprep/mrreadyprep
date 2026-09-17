@@ -92,18 +92,18 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
 
         {/* WELCOME50 Promo Banner - BIG AND BOLD */}
         <div style={{
-          background: '#f5f5f5',
-          border: '2px solid #e0e0e0',
+          background: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)',
+          border: '3px solid #ff9800',
           borderRadius: '12px',
           padding: '24px 40px',
           marginBottom: '60px',
           display: 'inline-block',
           fontSize: '18px',
           fontWeight: '700',
-          color: '#333',
-          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)'
+          color: '#d84315',
+          boxShadow: '0 8px 24px rgba(255, 152, 0, 0.3)'
         }}>
-          🎉 Use code <span style={{ color: '#d32f2f', fontWeight: '800' }}>WELCOME50</span> at checkout for 50% off your first month!
+          🎉 Use code <strong>WELCOME50</strong> at checkout for 50% off your first month!
         </div>
       </div>
 
