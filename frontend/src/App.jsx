@@ -10176,12 +10176,12 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
         </div>
 
         {/* Pricing Table - 3 Columns */}
-        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '32px 20px', marginTop: '24px', boxSizing: 'border-box', maxWidth: '1000px', margin: '24px auto 0' }}>
+        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '32px 16px', marginTop: '24px', boxSizing: 'border-box', maxWidth: '100%', margin: '24px auto 0', width: '100%' }}>
           <div style={{ textAlign: 'center', marginBottom: '24px' }}>
             <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Choose Your Plan</div>
             <div style={{ fontSize: '14px', color: '#9ca3af' }}>Pay once, access everything. Cancel anytime.</div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '24px', maxWidth: '900px', margin: '0 auto' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '20px', width: '100%' }}>
             {/* 1 Month */}
             <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '20px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
               <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>1 Month</div>
