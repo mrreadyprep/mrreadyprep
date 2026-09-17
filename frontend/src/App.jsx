@@ -1387,7 +1387,8 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
           {[
             { 
               duration: '1 Month', 
-              price: 50, 
+              originalPrice: 50, 
+              price: 25, 
               savings: null,
               features: [
                 'Unlimited access to all Reading, Listening, Writing and Speaking practices',
@@ -1401,7 +1402,8 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             },
             { 
               duration: '3 Months', 
-              price: 70, 
+              originalPrice: 100, 
+              price: 50, 
               savings: null, 
               isMostPopular: true,
               features: [
@@ -1416,7 +1418,8 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             },
             { 
               duration: '6 Months', 
-              price: 120, 
+              originalPrice: 200, 
+              price: 100, 
               savings: null,
               features: [
                 'Unlimited access to all Reading, Listening, Writing and Speaking practices',
@@ -1461,20 +1464,23 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
               <div style={{ fontSize: '14px', fontWeight: '600', color: '#666', marginBottom: '8px' }}>
                 {plan.duration}
               </div>
-              <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>
-                ${plan.price}
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', justifyContent: 'center', marginBottom: '4px' }}>
+                {plan.originalPrice && (
+                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#9ca3af', textDecoration: 'line-through' }}>
+                    ${plan.originalPrice}
+                  </div>
+                )}
+                <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>
+                  ${plan.price}
+                </div>
               </div>
-              {plan.savings && (
+              {plan.duration !== '1 Month' && (
                 <div style={{
-                  background: '#e8f5e9',
-                  color: '#2e7d32',
-                  padding: '6px 10px',
-                  borderRadius: '6px',
+                  color: '#666',
                   fontSize: '12px',
-                  fontWeight: '600',
                   marginBottom: '12px'
                 }}>
-                  {plan.savings}
+                  ${(plan.price / parseInt(plan.duration)).toFixed(2)}/ay
                 </div>
               )}
               
