@@ -1390,46 +1390,64 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
               price: 50, 
               savings: null,
               features: [
-                'Unlimited Reading, Listening, Writing & Speaking practice',
-                'All 20 Full Mock Tests (not just Test 1)',
+                'Unlimited access to all Reading Practice (Complete Words, Read in Daily Life, Academic Passage)',
+                'Unlimited access to all Listening Practice (Choose Response, Conversation, Announcement, Academic Talk)',
+                'Unlimited access to all Writing Practice (Build Sentence, Write Email, Academic Discussion)',
+                'Unlimited access to all Speaking Practice (Listen & Repeat, Take Interview)',
+                'All 20 Full Mock Tests (instead of just Test 1)',
                 'Unlimited "practice one section" random mock drills',
+                'Detailed progress analytics & score tracking',
+                'AI feedback on all reading, listening, writing & speaking answers',
+                'Score history & detailed mistake review',
                 'Cancel anytime'
               ]
             },
             { 
               duration: '3 Months', 
               price: 70, 
-              savings: 'Save $80', 
-              isBest: true,
+              savings: null, 
+              isMostPopular: true,
               features: [
-                'Unlimited Reading, Listening, Writing & Speaking practice',
-                'All 20 Full Mock Tests (not just Test 1)',
+                'Unlimited access to all Reading Practice (Complete Words, Read in Daily Life, Academic Passage)',
+                'Unlimited access to all Listening Practice (Choose Response, Conversation, Announcement, Academic Talk)',
+                'Unlimited access to all Writing Practice (Build Sentence, Write Email, Academic Discussion)',
+                'Unlimited access to all Speaking Practice (Listen & Repeat, Take Interview)',
+                'All 20 Full Mock Tests (instead of just Test 1)',
                 'Unlimited "practice one section" random mock drills',
+                'Detailed progress analytics & score tracking',
+                'AI feedback on all reading, listening, writing & speaking answers',
+                'Score history & detailed mistake review',
                 'Cancel anytime'
               ]
             },
             { 
               duration: '6 Months', 
               price: 120, 
-              savings: 'Save $180',
+              savings: null,
               features: [
-                'Unlimited Reading, Listening, Writing & Speaking practice',
-                'All 20 Full Mock Tests (not just Test 1)',
+                'Unlimited access to all Reading Practice (Complete Words, Read in Daily Life, Academic Passage)',
+                'Unlimited access to all Listening Practice (Choose Response, Conversation, Announcement, Academic Talk)',
+                'Unlimited access to all Writing Practice (Build Sentence, Write Email, Academic Discussion)',
+                'Unlimited access to all Speaking Practice (Listen & Repeat, Take Interview)',
+                'All 20 Full Mock Tests (instead of just Test 1)',
                 'Unlimited "practice one section" random mock drills',
+                'Detailed progress analytics & score tracking',
+                'AI feedback on all reading, listening, writing & speaking answers',
+                'Score history & detailed mistake review',
                 'Cancel anytime'
               ]
             }
           ].map((plan, idx) => (
             <div key={idx} style={{
               position: 'relative',
-              background: plan.isBest ? '#f9f3fd' : '#fff',
-              border: plan.isBest ? '2px solid #701fa1' : '1px solid #e1e4ed',
+              background: plan.isMostPopular ? '#f9f3fd' : '#fff',
+              border: plan.isMostPopular ? '2px solid #701fa1' : '1px solid #e1e4ed',
               borderRadius: '12px',
               padding: '20px 16px',
               textAlign: 'center',
               display: 'flex',
               flexDirection: 'column',
-              transform: plan.isBest ? 'scale(1.05)' : 'scale(1)',
+              transform: plan.isMostPopular ? 'scale(1.05)' : 'scale(1)',
               transition: 'all 0.3s'
             }}>
               {plan.isBest && (
@@ -1446,7 +1464,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                   fontWeight: '700',
                   textTransform: 'uppercase'
                 }}>
-                  BEST VALUE
+                  MOST POPULAR
                 </div>
               )}
               <div style={{ fontSize: '14px', fontWeight: '600', color: '#666', marginBottom: '8px' }}>
@@ -10267,9 +10285,9 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
               <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Choose Plan</button>
             </div>
 
-            {/* 3 Months - BEST VALUE */}
+            {/* 3 Months - MOST POPULAR */}
             <div style={{ border: '2px solid #701fa1', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#f9f3fd', position: 'relative', transform: 'scale(1.05)' }}>
-              <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#701fa1', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 12px', borderRadius: '12px' }}>BEST VALUE</div>
+              <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#701fa1', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 12px', borderRadius: '12px' }}>MOST POPULAR</div>
               <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>3 Months</div>
               <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Most popular</div>
               <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$70</div>
