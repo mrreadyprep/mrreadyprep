@@ -5,18 +5,23 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
   const [promoCode, setPromoCode] = useState('')
   const [appliedPromo, setAppliedPromo] = useState(null)
 
-  const validPromoCodes = ['SAVE50', 'HALF2024', 'EARLYBIRD']
+  const validPromoCodes = ['SAVE50', 'HALF2024', 'EARLYBIRD', 'WELCOME50']
   const promoDiscount = 0.5 // 50% off
 
   const plans = {
     free: {
       name: 'Free',
       price: 0,
-      period: '',
       cta: 'Current Plan',
       ctaDisabled: true,
       popular: false,
-      description: 'Get started with TOEFL prep'
+      description: 'Get started with TOEFL prep',
+      features: [
+        'Limited practice items from every category',
+        'Reading, Listening, Writing, Speaking practice',
+        'Basic progress tracking',
+        'No credit card required'
+      ]
     },
     premium: {
       name: 'Premium',
@@ -27,7 +32,15 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
       },
       cta: 'Upgrade to Premium',
       popular: true,
-      description: 'Unlimited access to all features'
+      description: 'Unlimited access',
+      features: [
+        'Full access to all practice content',
+        'All 20 full-length mock tests',
+        'AI-powered scoring & feedback (Writing & Speaking)',
+        'Progress tracking & score history',
+        'Detailed mistake review',
+        'Cancel anytime'
+      ]
     }
   }
 
@@ -64,8 +77,8 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           <div style={{ fontSize: '13px', color: '#999', marginTop: '4px', textDecoration: 'line-through' }}>
             ${originalPrice}{periodLabel}
           </div>
-          <div style={{ fontSize: '13px', color: '#2ac56c', marginTop: '6px', fontWeight: '600' }}>
-            50% OFF with promo code
+          <div style={{ fontSize: '12px', color: '#2ac56c', marginTop: '6px', fontWeight: '600' }}>
+            50% OFF
           </div>
         </div>
       )
@@ -91,7 +104,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
       {/* Header */}
-      <div style={{ maxWidth: '1000px', margin: '0 auto 50px', textAlign: 'center' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto 50px', textAlign: 'center' }}>
         <button
           onClick={onBack}
           style={{
@@ -122,12 +135,12 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         <p style={{
           fontSize: '16px',
           color: '#666',
-          margin: '0 0 30px',
+          margin: '0 0 40px',
           maxWidth: '600px',
           marginLeft: 'auto',
           marginRight: 'auto'
         }}>
-          Get unlimited access to all TOEFL practice materials and guaranteed score improvement.
+          Get unlimited access to all TOEFL practice materials and 20 full-length mock tests.
         </p>
 
         {/* Promo Code Section */}
@@ -146,7 +159,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           <div style={{ display: 'flex', gap: '8px' }}>
             <input
               type="text"
-              placeholder="Enter code (e.g. SAVE50)"
+              placeholder="e.g. WELCOME50"
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && handleApplyPromo()}
@@ -177,7 +190,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           </div>
           {appliedPromo && (
             <div style={{ fontSize: '12px', color: '#2ac56c', marginTop: '8px', fontWeight: '600' }}>
-              ✓ Code applied: {appliedPromo}
+              ✓ Applied: {appliedPromo}
             </div>
           )}
         </div>
@@ -232,13 +245,13 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         </div>
       </div>
 
-      {/* Pricing Cards */}
+      {/* Pricing Cards - Side by Side */}
       <div style={{
-        maxWidth: '900px',
+        maxWidth: '1100px',
         margin: '0 auto',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        gap: '24px',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gap: '30px',
         marginBottom: '50px'
       }}>
         {/* Free Plan */}
@@ -247,30 +260,32 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
             background: 'white',
             borderRadius: '12px',
             border: '1px solid #e0e0e0',
-            padding: '32px 24px',
+            padding: '40px 28px',
             boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            flexDirection: 'column'
           }}
         >
           <h3 style={{
-            fontSize: '20px',
+            fontSize: '22px',
             fontWeight: '700',
-            margin: '0 0 8px',
+            margin: '0 0 12px',
             color: '#1a1a1a'
           }}>
-            Free
+            {plans.free.name}
           </h3>
 
           <p style={{
-            fontSize: '13px',
+            fontSize: '14px',
             color: '#666',
-            margin: '0 0 20px'
+            margin: '0 0 24px'
           }}>
-            Get started with TOEFL prep
+            {plans.free.description}
           </p>
 
           <div style={{ marginBottom: '24px' }}>
-            <div style={{ fontSize: '24px', fontWeight: '800', color: '#701fa1' }}>
+            <div style={{ fontSize: '32px', fontWeight: '800', color: '#701fa1' }}>
               $0
             </div>
           </div>
@@ -279,7 +294,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
             disabled={true}
             style={{
               width: '100%',
-              padding: '12px 16px',
+              padding: '14px 16px',
               borderRadius: '8px',
               border: 'none',
               background: '#f0f0f0',
@@ -287,11 +302,36 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
               fontSize: '14px',
               fontWeight: '600',
               cursor: 'not-allowed',
-              marginBottom: '24px'
+              marginBottom: '28px'
             }}
           >
             Current Plan
           </button>
+
+          <ul style={{
+            listStyle: 'none',
+            padding: 0,
+            margin: 0,
+            flex: 1
+          }}>
+            {plans.free.features.map((feature, idx) => (
+              <li
+                key={idx}
+                style={{
+                  padding: '12px 0',
+                  fontSize: '14px',
+                  color: '#333',
+                  borderTop: idx === 0 ? '1px solid #f0f0f0' : 'none',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '10px'
+                }}
+              >
+                <span style={{ color: '#701fa1', fontSize: '18px', flexShrink: 0 }}>✓</span>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         {/* Premium Plan */}
@@ -300,21 +340,22 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
             background: 'white',
             borderRadius: '12px',
             border: '2px solid #701fa1',
-            padding: '32px 24px',
+            padding: '40px 28px',
             position: 'relative',
-            transform: 'scale(1.05)',
             boxShadow: '0 10px 40px rgba(112, 31, 161, 0.15)',
-            transition: 'all 0.3s ease'
+            transition: 'all 0.3s ease',
+            display: 'flex',
+            flexDirection: 'column'
           }}
         >
           <div style={{
             position: 'absolute',
-            top: '-12px',
+            top: '-14px',
             left: '50%',
             transform: 'translateX(-50%)',
             background: '#701fa1',
             color: 'white',
-            padding: '4px 16px',
+            padding: '6px 18px',
             borderRadius: '20px',
             fontSize: '12px',
             fontWeight: '700',
@@ -325,20 +366,20 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           </div>
 
           <h3 style={{
-            fontSize: '20px',
+            fontSize: '22px',
             fontWeight: '700',
-            margin: '0 0 8px',
+            margin: '0 0 12px',
             color: '#1a1a1a'
           }}>
-            Premium
+            {plans.premium.name}
           </h3>
 
           <p style={{
-            fontSize: '13px',
+            fontSize: '14px',
             color: '#666',
-            margin: '0 0 20px'
+            margin: '0 0 24px'
           }}>
-            Unlimited access to all features
+            {plans.premium.description}
           </p>
 
           <div style={{ marginBottom: '24px' }}>
@@ -349,7 +390,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
             onClick={() => handleUpgrade('premium')}
             style={{
               width: '100%',
-              padding: '12px 16px',
+              padding: '14px 16px',
               borderRadius: '8px',
               border: 'none',
               background: '#701fa1',
@@ -357,14 +398,39 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
               fontSize: '14px',
               fontWeight: '600',
               cursor: 'pointer',
-              marginBottom: '24px',
+              marginBottom: '28px',
               transition: 'all 0.2s'
             }}
             onMouseEnter={(e) => e.target.style.background = '#5a1680'}
             onMouseLeave={(e) => e.target.style.background = '#701fa1'}
           >
-            Upgrade to Premium
+            {plans.premium.cta}
           </button>
+
+          <ul style={{
+            listStyle: 'none',
+            padding: 0,
+            margin: 0,
+            flex: 1
+          }}>
+            {plans.premium.features.map((feature, idx) => (
+              <li
+                key={idx}
+                style={{
+                  padding: '12px 0',
+                  fontSize: '14px',
+                  color: '#333',
+                  borderTop: idx === 0 ? '1px solid #f0f0f0' : 'none',
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '10px'
+                }}
+              >
+                <span style={{ color: '#701fa1', fontSize: '18px', flexShrink: 0 }}>✓</span>
+                <span>{feature}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
@@ -377,7 +443,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         paddingTop: '40px'
       }}>
         <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
-          Need help? Contact us at <strong>support@mrreadyprep.com</strong>
+          Questions? Email <strong>support@mrreadyprep.com</strong>
         </p>
       </div>
     </div>
