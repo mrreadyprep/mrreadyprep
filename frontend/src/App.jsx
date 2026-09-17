@@ -1,4 +1,8 @@
 import { useEffect, useState, useRef, useMemo, Component } from 'react'
+import { PricingPage } from './PricingPage'
+import { TestimonialsCarousel } from './TestimonialsCarousel'
+import { GuaranteeBanner } from './GuaranteeBanner'
+
 
 // ─── Full-screen exam shell (matches the official TOEFL iBT test-day UI) ─────
 const EXAM_NAVY = '#2ac56c'
@@ -10879,6 +10883,10 @@ function App() {
     if (exitGuardActive) { setPendingTab('subtab-back'); return }
     clearSubTabs()
   }
+  const handleUpgrade = (planName, billingCycle) => {
+    setCurrentTab('subscribe')
+    console.log(`Upgrade: ${planName} (${billingCycle})`)
+  }
   const [profileName, setProfileName] = useState('')
   // Shared by both save paths that hit /api/profile/update (the Settings form's "Save Changes"
   // and the Dashboard's inline "Edit targets" panel's "Save targets") -- neither previously
@@ -11160,6 +11168,7 @@ function App() {
             <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
               📝 TOEFL Guides
             </a>
+            {sb('pricing', '💎', 'Pricing Plans')}
             {sb('subscribe', userData.has_premium ? '⭐' : '💎', userData.has_premium ? 'Premium Active' : 'Upgrade to Premium')}
             {userData.is_admin && sb('admin', '🛠️', 'Admin')}
           </div>
@@ -11245,6 +11254,7 @@ function App() {
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
           <>
+            <GuaranteeBanner />
             {/* Win-back banner for a student who has billed through Polar before but doesn't
                 currently have premium (mirrors is_lapsed_subscriber() in backend/main.py -- see
                 SubscribeScreen's isLapsed for the same derivation). Placed above the streak/mock-
@@ -11486,6 +11496,7 @@ function App() {
                 </div>
               </div>
             </div>
+            {!userData.has_premium && <TestimonialsCarousel />}
           </>
         )}
 
@@ -11567,6 +11578,7 @@ function App() {
 
         {/* FULL MOCK TEST */}
         {currentTab === 'mocktest' && <FullMockTest onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} />}
+        {currentTab === 'pricing' && <PricingPage onBack={() => setCurrentTab('dashboard')} onUpgrade={handleUpgrade} hasPremium={!!userData.has_premium} userEmail={userData.email} />}
 
         {currentTab === 'progress' && (
           <ProgressScreen onBack={() => setCurrentTab('dashboard')} onPractice={(nav) => {
