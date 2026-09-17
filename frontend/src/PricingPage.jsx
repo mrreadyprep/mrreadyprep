@@ -19,7 +19,6 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
       features: [
         'Limited practice items from every category',
         'Reading, Listening, Writing, Speaking practice',
-        'Basic progress tracking',
         'No credit card required'
       ]
     },
@@ -34,11 +33,12 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
       popular: true,
       description: 'Unlimited access',
       features: [
+        'Instant feedback on Writing and Speaking',
+        'Unlimited part exams & full mock tests',
         'Full access to all practice content',
-        'All 20 full-length mock tests',
-        'AI-powered scoring & feedback (Writing & Speaking)',
-        'Progress tracking & score history',
-        'Detailed mistake review',
+        'AI scoring for Writing & Speaking (detailed analysis)',
+        'My Progress: track improvement over time',
+        'Detailed score history & mistake review',
         'Cancel anytime'
       ]
     }
