@@ -1497,19 +1497,6 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
           ))}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left', background: '#f9fafb', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>
-          {[
-            'Unlimited Reading, Listening, Writing & Speaking practice',
-            'All 20 Full Mock Tests (not just Test 1)',
-            'Unlimited "practice one section" random mock drills',
-            'Cancel anytime from this same screen',
-          ].map((line, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', fontSize: '13px', color: '#374151' }}>
-              <span style={{ color: '#2ac56c', fontWeight: '700' }}>✓</span> {line}
-            </div>
-          ))}
-        </div>
-
         {!POLAR_CHECKOUT_ENABLED && (
           <p style={{ color: '#9ca3af', fontSize: '12px', textAlign: 'center', margin: '0 0 16px' }}>Payments aren't set up on this site yet -- check back soon.</p>
         )}
