@@ -1373,8 +1373,8 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
   // real product/price selection always happens server-side regardless of what's shown here.
   const isLapsed = !!hasBilledSubscription
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px' }}>
-      <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '36px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px', width: '100%' }}>
+      <div style={{ width: '100%', maxWidth: 'none', background: '#fff', borderRadius: '0px', border: 'none', padding: '40px 60px' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '38px', marginBottom: '10px' }}>{isLapsed ? '👋' : '⭐'}</div>
           <h2 style={{ margin: '0 0 16px', fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>
