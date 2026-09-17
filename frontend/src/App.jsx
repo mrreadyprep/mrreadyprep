@@ -11253,7 +11253,6 @@ function App() {
         {/* DASHBOARD */}
         {currentTab === 'dashboard' && (
           <>
-            <GuaranteeBanner />
             {/* Win-back banner for a student who has billed through Polar before but doesn't
                 currently have premium (mirrors is_lapsed_subscriber() in backend/main.py -- see
                 SubscribeScreen's isLapsed for the same derivation). Placed above the streak/mock-
@@ -11495,7 +11494,6 @@ function App() {
                 </div>
               </div>
             </div>
-            {!userData.has_premium && <TestimonialsCarousel />}
           </>
         )}
 
