@@ -1385,9 +1385,40 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
         {/* 3-Column Pricing Grid */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
           {[
-            { duration: '1 Month', price: 50, savings: null },
-            { duration: '3 Months', price: 70, savings: 'Save $80', isBest: true },
-            { duration: '6 Months', price: 120, savings: 'Save $180' }
+            { 
+              duration: '1 Month', 
+              price: 50, 
+              savings: null,
+              features: [
+                'Unlimited Reading, Listening, Writing & Speaking practice',
+                'All 20 Full Mock Tests (not just Test 1)',
+                'Unlimited "practice one section" random mock drills',
+                'Cancel anytime'
+              ]
+            },
+            { 
+              duration: '3 Months', 
+              price: 70, 
+              savings: 'Save $80', 
+              isBest: true,
+              features: [
+                'Unlimited Reading, Listening, Writing & Speaking practice',
+                'All 20 Full Mock Tests (not just Test 1)',
+                'Unlimited "practice one section" random mock drills',
+                'Cancel anytime'
+              ]
+            },
+            { 
+              duration: '6 Months', 
+              price: 120, 
+              savings: 'Save $180',
+              features: [
+                'Unlimited Reading, Listening, Writing & Speaking practice',
+                'All 20 Full Mock Tests (not just Test 1)',
+                'Unlimited "practice one section" random mock drills',
+                'Cancel anytime'
+              ]
+            }
           ].map((plan, idx) => (
             <div key={idx} style={{
               position: 'relative',
@@ -1396,6 +1427,8 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
               borderRadius: '12px',
               padding: '20px 16px',
               textAlign: 'center',
+              display: 'flex',
+              flexDirection: 'column',
               transform: plan.isBest ? 'scale(1.05)' : 'scale(1)',
               transition: 'all 0.3s'
             }}>
@@ -1435,6 +1468,16 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                   {plan.savings}
                 </div>
               )}
+              
+              <div style={{ flex: 1, textAlign: 'left', marginBottom: '12px' }}>
+                {plan.features.map((feature, i) => (
+                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '12px', color: '#374151', marginBottom: '8px', lineHeight: '1.3' }}>
+                    <span style={{ color: '#2ac56c', fontWeight: '700', flexShrink: 0 }}>✓</span>
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+              
               <button onClick={handleSubscribe} disabled={busy} style={{
                 width: '100%',
                 background: '#701fa1',
@@ -1445,7 +1488,8 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                 fontSize: '13px',
                 fontWeight: '600',
                 cursor: busy ? 'default' : 'pointer',
-                opacity: busy ? 0.6 : 1
+                opacity: busy ? 0.6 : 1,
+                marginTop: 'auto'
               }}>
                 Choose Plan
               </button>
