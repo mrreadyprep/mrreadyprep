@@ -10175,40 +10175,61 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
           )}
         </div>
 
-        {/* Pricing Table */}
-        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '24px', marginTop: '18px', boxSizing: 'border-box' }}>
-          <div style={{ textAlign: 'center', marginBottom: '18px' }}>
-            <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Choose your plan</div>
-            <div style={{ fontSize: '12px', color: '#9ca3af' }}>Start free, upgrade anytime</div>
+        {/* Pricing Table - 3 Columns */}
+        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '32px 24px', marginTop: '24px', boxSizing: 'border-box' }}>
+          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
+            <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Choose Your Plan</div>
+            <div style={{ fontSize: '14px', color: '#9ca3af' }}>Pay once, access everything. Cancel anytime.</div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '12px' }}>
-            {/* Free Plan */}
-            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
-              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Free</div>
-              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Perfect to try</div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '12px' }}>$0<span style={{ fontSize: '11px', fontWeight: '600', color: '#9ca3af' }}>/month</span></div>
-              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '1.8', paddingLeft: '18px', marginBottom: '12px', listStyle: 'none', paddingLeft: 0 }}>
-                <li style={{ marginBottom: '6px' }}>✓ 100+ practice questions</li>
-                <li style={{ marginBottom: '6px' }}>✓ 4 Full mock tests</li>
-                <li style={{ marginBottom: '6px' }}>✓ All 4 sections</li>
-                <li>⊘ Detailed feedback</li>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '16px' }}>
+            {/* 1 Month */}
+            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '20px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>1 Month</div>
+              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Get started</div>
+              <div style={{ fontSize: '32px', fontWeight: '800', color: '#701fa1', marginBottom: '16px' }}>$50</div>
+              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
+                <li>✓ Unlimited practice</li>
+                <li>✓ 20 mock tests</li>
+                <li>✓ AI feedback</li>
+                <li>✓ Progress tracking</li>
               </ul>
-              <button style={{ width: '100%', backgroundColor: '#f4f6fa', color: '#616473', border: '1px solid #e1e4ed', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'default', opacity: 0.6 }}>You're using Free</button>
+              <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Choose Plan</button>
             </div>
-            {/* Premium Plan */}
-            <div style={{ border: '2px solid #701fa1', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#f9f3fd', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: '-10px', right: '14px', backgroundColor: '#701fa1', color: '#fff', fontSize: '10px', fontWeight: '700', padding: '3px 10px', borderRadius: '12px' }}>POPULAR</div>
-              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Premium</div>
-              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Full access</div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '12px' }}>$50<span style={{ fontSize: '11px', fontWeight: '600', color: '#9ca3af' }}>/month</span></div>
-              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '1.8', paddingLeft: 0, marginBottom: '12px', listStyle: 'none' }}>
-                <li style={{ marginBottom: '6px' }}>✓ 500+ practice questions</li>
-                <li style={{ marginBottom: '6px' }}>✓ 20 Full mock tests</li>
-                <li style={{ marginBottom: '6px' }}>✓ All 4 sections + Vocabulary</li>
-                <li>✓ Detailed feedback & scores</li>
+
+            {/* 3 Months - BEST VALUE */}
+            <div style={{ border: '2px solid #701fa1', borderRadius: '10px', padding: '20px', boxSizing: 'border-box', backgroundColor: '#f9f3fd', position: 'relative', transform: 'scale(1.05)' }}>
+              <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#701fa1', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 12px', borderRadius: '12px' }}>BEST VALUE</div>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>3 Months</div>
+              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Most popular</div>
+              <div style={{ fontSize: '32px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$70</div>
+              <div style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600', marginBottom: '16px' }}>Save $80</div>
+              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
+                <li>✓ Unlimited practice</li>
+                <li>✓ 20 mock tests</li>
+                <li>✓ AI feedback</li>
+                <li>✓ Progress tracking</li>
               </ul>
-              <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Upgrade Now</button>
+              <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Choose Plan</button>
             </div>
+
+            {/* 6 Months */}
+            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '20px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>6 Months</div>
+              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Best savings</div>
+              <div style={{ fontSize: '32px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$120</div>
+              <div style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600', marginBottom: '16px' }}>Save $180</div>
+              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
+                <li>✓ Unlimited practice</li>
+                <li>✓ 20 mock tests</li>
+                <li>✓ AI feedback</li>
+                <li>✓ Progress tracking</li>
+              </ul>
+              <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Choose Plan</button>
+            </div>
+          </div>
+
+          <div style={{ marginTop: '24px', backgroundColor: '#f0e8ff', border: '1px solid #d4c5e2', borderRadius: '8px', padding: '16px', textAlign: 'center' }}>
+            <div style={{ fontSize: '13px', color: '#6b5b95' }}>🎉 Use code <strong style={{ color: '#701fa1', fontSize: '14px' }}>WELCOME50</strong> at checkout for 50% off your first month!</div>
           </div>
         </div>
 
