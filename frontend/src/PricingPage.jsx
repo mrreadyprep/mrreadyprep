@@ -7,21 +7,24 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
       price: 50,
       monthlyPrice: 50,
       period: '/month',
-      popular: false
+      popular: false,
+      savings: null
     },
     '3months': {
       duration: '3 Months',
       price: 70,
       monthlyPrice: 23.33,
-      period: '/month (billed $70 for 3 months)',
-      popular: true
+      period: '/month',
+      popular: true,
+      savings: 'Save $80'
     },
     '6months': {
       duration: '6 Months',
       price: 120,
       monthlyPrice: 20,
-      period: '/month (billed $120 for 6 months)',
-      popular: false
+      period: '/month',
+      popular: false,
+      savings: 'Save $180'
     }
   }
 
@@ -47,7 +50,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
       fontFamily: 'system-ui, -apple-system, sans-serif'
     }}>
       {/* Header */}
-      <div style={{ maxWidth: '1200px', margin: '0 auto 50px', textAlign: 'center' }}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto 60px', textAlign: 'center' }}>
         <button
           onClick={onBack}
           style={{
@@ -67,63 +70,65 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         </button>
 
         <h1 style={{
-          fontSize: '42px',
-          fontWeight: '700',
+          fontSize: '48px',
+          fontWeight: '800',
           color: '#1a1a1a',
-          margin: '0 0 16px'
+          margin: '0 0 20px'
         }}>
-          Upgrade to Premium
+          Simple, Transparent Pricing
         </h1>
 
         <p style={{
-          fontSize: '16px',
+          fontSize: '18px',
           color: '#666',
-          margin: '0 0 30px',
+          margin: '0 0 40px',
           maxWidth: '600px',
           marginLeft: 'auto',
-          marginRight: 'auto'
+          marginRight: 'auto',
+          lineHeight: '1.6'
         }}>
-          Get unlimited access to all TOEFL practice materials and 20 full-length mock tests.
+          Get unlimited access to all TOEFL practice materials, AI-powered feedback, and 20 full-length mock tests.
         </p>
 
-        {/* WELCOME50 Promo Banner */}
+        {/* WELCOME50 Promo Banner - BIG AND BOLD */}
         <div style={{
-          background: '#fff3cd',
-          border: '1px solid #ffc107',
-          borderRadius: '8px',
-          padding: '14px 20px',
-          marginBottom: '40px',
+          background: 'linear-gradient(135deg, #ffd700 0%, #ffed4e 100%)',
+          border: '3px solid #ff9800',
+          borderRadius: '12px',
+          padding: '24px 40px',
+          marginBottom: '60px',
           display: 'inline-block',
-          fontSize: '14px',
-          fontWeight: '600',
-          color: '#856404'
+          fontSize: '18px',
+          fontWeight: '700',
+          color: '#d84315',
+          boxShadow: '0 8px 24px rgba(255, 152, 0, 0.3)'
         }}>
-          🎉 Use code <strong>WELCOME50</strong> at checkout for 50% off
+          🎉 Use code <strong>WELCOME50</strong> at checkout for 50% off your first month!
         </div>
       </div>
 
-      {/* Billing Options - 3 Columns */}
+      {/* Billing Options - 3 Columns BIG */}
       <div style={{
-        maxWidth: '1200px',
+        maxWidth: '1300px',
         margin: '0 auto',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-        gap: '30px',
-        marginBottom: '50px'
+        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gap: '40px',
+        marginBottom: '70px'
       }}>
         {Object.entries(billingOptions).map(([key, option]) => (
           <div
             key={key}
             style={{
               background: 'white',
-              borderRadius: '12px',
-              border: option.popular ? '2px solid #701fa1' : '1px solid #e0e0e0',
-              padding: '40px 28px',
+              borderRadius: '16px',
+              border: option.popular ? '3px solid #701fa1' : '2px solid #e0e0e0',
+              padding: '50px 36px',
               boxShadow: option.popular
-                ? '0 8px 24px rgba(112, 31, 161, 0.15)'
-                : '0 2px 8px rgba(0,0,0,0.05)',
+                ? '0 20px 60px rgba(112, 31, 161, 0.25)'
+                : '0 4px 12px rgba(0,0,0,0.08)',
               position: 'relative',
-              transform: option.popular ? 'scale(1.05)' : 'scale(1)',
+              transform: option.popular ? 'scale(1.08)' : 'scale(1)',
               transition: 'all 0.3s ease'
             }}
           >
@@ -131,74 +136,99 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
             {option.popular && (
               <div style={{
                 position: 'absolute',
-                top: '-12px',
+                top: '-18px',
                 left: '50%',
                 transform: 'translateX(-50%)',
-                background: '#701fa1',
+                background: 'linear-gradient(135deg, #701fa1 0%, #9c27b0 100%)',
                 color: 'white',
-                padding: '4px 16px',
-                borderRadius: '20px',
-                fontSize: '11px',
-                fontWeight: '700',
+                padding: '8px 24px',
+                borderRadius: '25px',
+                fontSize: '13px',
+                fontWeight: '800',
                 textTransform: 'uppercase',
-                letterSpacing: '0.5px'
+                letterSpacing: '1px',
+                boxShadow: '0 4px 15px rgba(112, 31, 161, 0.4)'
               }}>
-                Best Value
+                ⭐ Best Value
               </div>
             )}
 
             {/* Duration */}
             <h3 style={{
-              fontSize: '22px',
-              fontWeight: '700',
-              margin: '0 0 16px',
+              fontSize: '28px',
+              fontWeight: '800',
+              margin: '0 0 20px',
               color: '#1a1a1a'
             }}>
               {option.duration}
             </h3>
 
-            {/* Price */}
-            <div style={{ marginBottom: '24px' }}>
+            {/* Price - HUGE */}
+            <div style={{ marginBottom: '32px' }}>
               <div style={{
-                fontSize: '42px',
-                fontWeight: '800',
+                fontSize: '72px',
+                fontWeight: '900',
                 color: '#701fa1',
-                marginBottom: '4px'
+                lineHeight: '1',
+                marginBottom: '8px'
               }}>
                 ${option.price}
               </div>
               <div style={{
-                fontSize: '13px',
+                fontSize: '16px',
                 color: '#666',
-                marginBottom: '8px'
+                marginBottom: '12px',
+                fontWeight: '600'
               }}>
                 ${option.monthlyPrice.toFixed(2)}{option.period}
               </div>
+              
+              {/* Savings Badge */}
+              {option.savings && (
+                <div style={{
+                  background: '#e8f5e9',
+                  color: '#2e7d32',
+                  padding: '10px 16px',
+                  borderRadius: '8px',
+                  fontSize: '15px',
+                  fontWeight: '700',
+                  textAlign: 'center'
+                }}>
+                  {option.savings}
+                </div>
+              )}
             </div>
 
-            {/* CTA Button */}
+            {/* CTA Button - BIGGER */}
             <button
               onClick={() => handleUpgrade(key)}
               style={{
                 width: '100%',
-                padding: '14px 16px',
-                borderRadius: '8px',
+                padding: '18px 20px',
+                borderRadius: '10px',
                 border: 'none',
-                background: '#701fa1',
+                background: option.popular 
+                  ? 'linear-gradient(135deg, #701fa1 0%, #9c27b0 100%)'
+                  : '#701fa1',
                 color: 'white',
-                fontSize: '15px',
-                fontWeight: '600',
+                fontSize: '17px',
+                fontWeight: '700',
                 cursor: 'pointer',
-                marginBottom: '28px',
-                transition: 'all 0.2s'
+                marginBottom: '32px',
+                transition: 'all 0.3s',
+                boxShadow: option.popular 
+                  ? '0 8px 20px rgba(112, 31, 161, 0.3)'
+                  : 'none'
               }}
               onMouseEnter={(e) => {
-                e.target.style.background = '#5a1a7f'
-                e.target.style.transform = 'translateY(-2px)'
+                e.target.style.transform = 'translateY(-4px)'
+                e.target.style.boxShadow = '0 12px 30px rgba(112, 31, 161, 0.4)'
               }}
               onMouseLeave={(e) => {
-                e.target.style.background = '#701fa1'
                 e.target.style.transform = 'translateY(0)'
+                e.target.style.boxShadow = option.popular 
+                  ? '0 8px 20px rgba(112, 31, 161, 0.3)'
+                  : 'none'
               }}
             >
               Upgrade to Premium
@@ -214,24 +244,25 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
                 <li
                   key={idx}
                   style={{
-                    padding: '12px 0',
-                    fontSize: '14px',
+                    padding: '14px 0',
+                    fontSize: '15px',
                     color: '#333',
-                    borderTop: idx === 0 ? '1px solid #f0f0f0' : 'none',
+                    borderTop: idx === 0 ? '2px solid #f0f0f0' : 'none',
                     display: 'flex',
                     alignItems: 'flex-start',
                     gap: '12px'
                   }}
                 >
                   <span style={{
-                    color: '#701fa1',
-                    fontSize: '18px',
+                    color: '#4caf50',
+                    fontSize: '20px',
                     marginTop: '-2px',
-                    flexShrink: 0
+                    flexShrink: 0,
+                    fontWeight: 'bold'
                   }}>
                     ✓
                   </span>
-                  <span>{feature}</span>
+                  <span style={{ fontWeight: '500' }}>{feature}</span>
                 </li>
               ))}
             </ul>
@@ -244,14 +275,14 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         maxWidth: '700px',
         margin: '0 auto',
         background: 'white',
-        borderRadius: '12px',
-        padding: '40px 30px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+        borderRadius: '16px',
+        padding: '50px 40px',
+        boxShadow: '0 4px 12px rgba(0,0,0,0.08)'
       }}>
         <h2 style={{
-          fontSize: '24px',
-          fontWeight: '700',
-          marginBottom: '30px',
+          fontSize: '28px',
+          fontWeight: '800',
+          marginBottom: '40px',
           textAlign: 'center',
           color: '#1a1a1a'
         }}>
@@ -287,12 +318,12 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
       {/* Footer Info */}
       <div style={{
         maxWidth: '1000px',
-        margin: '60px auto 0',
+        margin: '70px auto 0',
         textAlign: 'center',
-        borderTop: '1px solid #eee',
-        paddingTop: '40px'
+        borderTop: '2px solid #eee',
+        paddingTop: '50px'
       }}>
-        <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
+        <p style={{ fontSize: '16px', color: '#666', margin: 0 }}>
           Need help? Contact us at <strong>support@mrreadyprep.com</strong>
         </p>
       </div>
@@ -304,7 +335,7 @@ function FAQ({ question, answer }) {
   const [open, setOpen] = useState(false)
 
   return (
-    <div style={{ marginBottom: '20px', borderBottom: '1px solid #f0f0f0', paddingBottom: '20px' }}>
+    <div style={{ marginBottom: '24px', borderBottom: '2px solid #f0f0f0', paddingBottom: '24px' }}>
       <button
         onClick={() => setOpen(!open)}
         style={{
@@ -319,19 +350,20 @@ function FAQ({ question, answer }) {
           alignItems: 'center'
         }}
       >
-        <span style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>
+        <span style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>
           {question}
         </span>
-        <span style={{ fontSize: '20px', color: '#701fa1' }}>
+        <span style={{ fontSize: '24px', color: '#701fa1', fontWeight: 'bold' }}>
           {open ? '−' : '+'}
         </span>
       </button>
       {open && (
         <p style={{
-          fontSize: '14px',
+          fontSize: '15px',
           color: '#666',
-          marginTop: '12px',
-          marginBottom: 0
+          marginTop: '16px',
+          marginBottom: 0,
+          lineHeight: '1.6'
         }}>
           {answer}
         </p>
