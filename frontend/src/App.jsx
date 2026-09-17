@@ -2588,6 +2588,15 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
   // for an already-graded, already-saved attempt.
   const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p1', itemId: exercise.id, onBack, mockMode, canSave: false, graded: done })
 
+  // Stop audio playback when exiting the listening exercise (fixes: audio continues playing after exiting)
+  useEffect(() => {
+    return () => {
+      if (sharedAudioEl) {
+        sharedAudioEl.pause()
+        sharedAudioEl.currentTime = 0
+      }
+    }
+  }, [])
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
   // regardless of which code path advanced currentQ.
@@ -2940,6 +2949,16 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
   // "Leave site?" warning from staying armed after the student is already on the score screen).
   const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p2', itemId: conversation.id, onBack, mockMode, canSave: false, graded: done })
 
+  // Stop audio playback when exiting the listening exercise (fixes: audio continues playing after exiting)
+  useEffect(() => {
+    return () => {
+      if (sharedAudioEl) {
+        sharedAudioEl.pause()
+        sharedAudioEl.currentTime = 0
+      }
+    }
+  }, [])
+
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
   // regardless of which code path advanced qIdx.
@@ -3258,6 +3277,16 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
   // graded: done -- see the matching comment in ListeningP1Exercise (stops the beforeunload
   // "Leave site?" warning from staying armed after the student is already on the score screen).
   const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p3', itemId: announcement.id, onBack, mockMode, canSave: false, graded: done })
+
+  // Stop audio playback when exiting the listening exercise (fixes: audio continues playing after exiting)
+  useEffect(() => {
+    return () => {
+      if (sharedAudioEl) {
+        sharedAudioEl.pause()
+        sharedAudioEl.currentTime = 0
+      }
+    }
+  }, [])
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
@@ -3581,6 +3610,16 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
   // graded: done -- see the matching comment in ListeningP1Exercise (stops the beforeunload
   // "Leave site?" warning from staying armed after the student is already on the score screen).
   const { requestExit, modal: exitModal } = useExitDraft({ category: 'listening_p4', itemId: talk.id, onBack, mockMode, canSave: false, graded: done })
+
+  // Stop audio playback when exiting the listening exercise (fixes: audio continues playing after exiting)
+  useEffect(() => {
+    return () => {
+      if (sharedAudioEl) {
+        sharedAudioEl.pause()
+        sharedAudioEl.currentTime = 0
+      }
+    }
+  }, [])
 
   useEffect(() => { selectedRef.current = selected }, [selected])
   // Defensive reset: guarantees no option looks pre-selected when a new question appears,
