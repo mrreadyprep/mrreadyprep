@@ -1480,7 +1480,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                   fontSize: '12px',
                   marginBottom: '12px'
                 }}>
-                  ${(plan.price / parseInt(plan.duration)).toFixed(2)}/ay
+                  ${(plan.price / parseInt(plan.duration)).toFixed(2)}/month
                 </div>
               )}
               
