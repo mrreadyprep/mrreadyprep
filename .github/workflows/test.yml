@@ -5,6 +5,8 @@ on:
     branches: [ main, develop ]
   pull_request:
     branches: [ main, develop ]
+  schedule:
+    - cron: '0 */8 * * *'
 
 jobs:
   frontend:
@@ -26,3 +28,32 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m py_compile backend/main.py
+
+  report:
+    runs-on: ubuntu-latest
+    needs: [frontend, backend]
+    if: always()
+    steps:
+      - run: |
+          echo "Test Report - $(date)" > report.txt
+          echo "Frontend: ${{ needs.frontend.result }}" >> report.txt
+          echo "Backend: ${{ needs.backend.result }}" >> report.txt
+      - uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: report.txt
+      - uses: dawidd6/action-send-mail@v3
+        if: failure()
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.GMAIL_USER }}
+          password: ${{ secrets.GMAIL_PASS }}
+          subject: "mrreadyprep Test Failed - ${{ github.run_number }}"
+          to: mehmet.disbudak03@hotmail.com
+          from: "GitHub Actions"
+          body: |
+            Test çalışması başarısız oldu.
+            Frontend: ${{ needs.frontend.result }}
+            Backend: ${{ needs.backend.result }}
+            Detaylar: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
