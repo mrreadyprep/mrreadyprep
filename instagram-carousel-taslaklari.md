@@ -13,7 +13,7 @@
 
 ---
 
-## 1. "What Changed in TOEFL 2026?" (format explainer — highest interest potential) ✅ Görselleri hazır
+## 1. "What Changed in TOEFL 2026?" (format explainer — highest interest potential) ✅ YAYINLANDI (Instagram, ilk gönderi)
 
 **Slide 1 (Cover):** TOEFL 2026 quietly made a major change. → Most prep resources still haven't caught up.
 

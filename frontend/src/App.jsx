@@ -10132,6 +10132,60 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
           )}
         </div>
 
+        {/* Pricing Table */}
+        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '24px', marginTop: '18px', boxSizing: 'border-box' }}>
+          <div style={{ textAlign: 'center', marginBottom: '18px' }}>
+            <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Choose your plan</div>
+            <div style={{ fontSize: '12px', color: '#9ca3af' }}>Start free, upgrade anytime</div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '12px' }}>
+            {/* Free Plan */}
+            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Free</div>
+              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Perfect to try</div>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '12px' }}>$0<span style={{ fontSize: '11px', fontWeight: '600', color: '#9ca3af' }}>/month</span></div>
+              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '1.8', paddingLeft: '18px', marginBottom: '12px', listStyle: 'none', paddingLeft: 0 }}>
+                <li style={{ marginBottom: '6px' }}>✓ 100+ practice questions</li>
+                <li style={{ marginBottom: '6px' }}>✓ 4 Full mock tests</li>
+                <li style={{ marginBottom: '6px' }}>✓ All 4 sections</li>
+                <li>⊘ Detailed feedback</li>
+              </ul>
+              <button style={{ width: '100%', backgroundColor: '#f4f6fa', color: '#616473', border: '1px solid #e1e4ed', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'default', opacity: 0.6 }}>You're using Free</button>
+            </div>
+            {/* Premium Plan */}
+            <div style={{ border: '2px solid #701fa1', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#f9f3fd', position: 'relative' }}>
+              <div style={{ position: 'absolute', top: '-10px', right: '14px', backgroundColor: '#701fa1', color: '#fff', fontSize: '10px', fontWeight: '700', padding: '3px 10px', borderRadius: '12px' }}>POPULAR</div>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Premium</div>
+              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Full access</div>
+              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '12px' }}>$50<span style={{ fontSize: '11px', fontWeight: '600', color: '#9ca3af' }}>/month</span></div>
+              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '1.8', paddingLeft: 0, marginBottom: '12px', listStyle: 'none' }}>
+                <li style={{ marginBottom: '6px' }}>✓ 500+ practice questions</li>
+                <li style={{ marginBottom: '6px' }}>✓ 20 Full mock tests</li>
+                <li style={{ marginBottom: '6px' }}>✓ All 4 sections + Vocabulary</li>
+                <li>✓ Detailed feedback & scores</li>
+              </ul>
+              <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Upgrade Now</button>
+            </div>
+          </div>
+        </div>
+
+        {/* Sample Question Demo (Quick Flavor) */}
+        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '24px', marginTop: '14px', boxSizing: 'border-box' }}>
+          <div style={{ textAlign: 'center', marginBottom: '16px' }}>
+            <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Try a sample question</div>
+            <div style={{ fontSize: '12px', color: '#9ca3af' }}>No login required</div>
+          </div>
+          <div style={{ backgroundColor: '#f9fafb', border: '1px solid #e1e4ed', borderRadius: '10px', padding: '12px', marginBottom: '12px' }}>
+            <div style={{ fontSize: '12px', color: '#616473', lineHeight: '1.6', marginBottom: '8px' }}>
+              <strong>Reading:</strong> Which word is closest in meaning to <em>"expedite"</em>?
+            </div>
+            <div style={{ fontSize: '12px', color: '#616473', marginBottom: '6px', paddingLeft: '12px', borderLeft: '3px solid #701fa1' }}>
+              A) Slow down &nbsp; B) <strong style={{ color: '#2ac56c' }}>Speed up</strong> &nbsp; C) Explore &nbsp; D) Verify
+            </div>
+          </div>
+          <button onClick={() => { alert('Explore the full app with dozens more practice questions ready to solve!') }} style={{ width: '100%', backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>See More Samples</button>
+        </div>
+
         <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
           {[{ href: '/blog/', label: 'Blog' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }, { href: '/terms.html#refund-policy', label: 'Refund Policy' }].map(link => (
             <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer"
