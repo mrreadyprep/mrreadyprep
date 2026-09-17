@@ -1225,8 +1225,8 @@ function loadPolarCheckout() {
 // Asks our backend to create a Polar checkout session for the logged-in user (server-side, so the
 // external_customer_id/metadata linking it back to this account can't be tampered with -- see
 // create_checkout in main.py) and returns { checkout_url } to open in the embedded overlay.
-function startCheckout() {
-  return apiFetch(`${BACKEND_URL}/api/subscription/create-checkout`, { method: 'POST' }).then(res => res.json())
+function startCheckout(duration) {
+  return apiFetch(`${BACKEND_URL}/api/subscription/create-checkout`, { method: 'POST', body: JSON.stringify({ duration }) }).then(res => res.json())
 }
 
 function cancelSubscription() {
@@ -1282,12 +1282,12 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
     setTimeout(poll, 1500)
   }
 
-  const handleSubscribe = (e) => {
-    e.preventDefault()
+  const handleSubscribe = (duration) => {
+    // e.preventDefault() not needed for button onClick in React
     setError('')
     setBusy(true)
     trackPixelEvent('InitiateCheckout')
-    Promise.all([loadPolarCheckout(), startCheckout()])
+    Promise.all([loadPolarCheckout(), startCheckout(duration)])
       .then(([EmbedCheckout, data]) => {
         if (!data.checkout_url) {
           setBusy(false)
@@ -1493,7 +1493,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                 ))}
               </div>
               
-              <button onClick={handleSubscribe} disabled={busy} style={{
+              <button onClick={() => handleSubscribe(plan.duration)} disabled={busy} style={{
                 width: '100%',
                 background: '#701fa1',
                 color: '#fff',

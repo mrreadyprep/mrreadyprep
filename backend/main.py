@@ -304,6 +304,10 @@ POLAR_PRODUCT_ID = os.environ.get("POLAR_PRODUCT_ID", "")
 # publicly) is what actually enforces that, not just UI copy. Optional: if unset, lapsed students
 # just see the regular product/price, same as before this feature existed.
 POLAR_COMEBACK_PRODUCT_ID = os.environ.get("POLAR_COMEBACK_PRODUCT_ID", "")
+# Product IDs for different plan durations
+POLAR_PRODUCT_ID_1MONTH = os.environ.get("POLAR_PRODUCT_ID_1MONTH", "")
+POLAR_PRODUCT_ID_3MONTH = os.environ.get("POLAR_PRODUCT_ID_3MONTH", "")
+POLAR_PRODUCT_ID_6MONTH = os.environ.get("POLAR_PRODUCT_ID_6MONTH", "")
 POLAR_ENVIRONMENT = os.environ.get("POLAR_ENVIRONMENT", "sandbox")
 POLAR_API_BASE_URL = (
     "https://sandbox-api.polar.sh" if POLAR_ENVIRONMENT != "production" else "https://api.polar.sh"
@@ -2821,8 +2825,11 @@ CREATE_CHECKOUT_MAX = 8
 _create_checkout_attempts: dict = collections.defaultdict(list)
 _ALL_RATE_LIMIT_STORES.append(_create_checkout_attempts)
 
+class CreateCheckoutRequest(BaseModel):
+    duration: str = Field(default="3 Months")  # "1 Month", "3 Months", or "6 Months"
+
 @app.post("/api/subscription/create-checkout")
-def create_checkout(user=Depends(get_current_user)):
+def create_checkout(request: CreateCheckoutRequest, user=Depends(get_current_user)):
     """Creates a Polar checkout session server-side (authenticated) and hands the frontend back
     just the hosted checkout URL to open in Polar's embedded overlay (window.Polar.EmbedCheckout.
     create(url) -- see loadPolarCheckout in App.jsx). Doing this server-side -- rather than letting
@@ -2853,7 +2860,21 @@ def create_checkout(user=Depends(get_current_user)):
         # falls back to the regular product if the comeback product isn't configured, so this never
         # breaks checkout if that env var is left unset.
         use_comeback_product = bool(POLAR_COMEBACK_PRODUCT_ID) and fresh_user is not None and is_lapsed_subscriber(fresh_user)
-        product_id = POLAR_COMEBACK_PRODUCT_ID if use_comeback_product else POLAR_PRODUCT_ID
+        
+        # Map duration to product ID
+        if request.duration == "1 Month" and POLAR_PRODUCT_ID_1MONTH:
+            product_id = POLAR_PRODUCT_ID_1MONTH
+        elif request.duration == "3 Months" and POLAR_PRODUCT_ID_3MONTH:
+            product_id = POLAR_PRODUCT_ID_3MONTH
+        elif request.duration == "6 Months" and POLAR_PRODUCT_ID_6MONTH:
+            product_id = POLAR_PRODUCT_ID_6MONTH
+        else:
+            # Fallback to POLAR_PRODUCT_ID if duration-specific ones not configured
+            product_id = POLAR_PRODUCT_ID
+        
+        # Use comeback product if applicable
+        if use_comeback_product:
+            product_id = POLAR_COMEBACK_PRODUCT_ID
         body = {
             "products": [product_id],
             "customer_email": user["email"],
