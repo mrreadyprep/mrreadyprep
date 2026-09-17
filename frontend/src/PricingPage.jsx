@@ -11,16 +11,16 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
     },
     '3months': {
       duration: '3 Months',
-      price: 120,
-      monthlyPrice: 40,
-      period: '/month (billed $120 for 3 months)',
+      price: 70,
+      monthlyPrice: 23.33,
+      period: '/month (billed $70 for 3 months)',
       popular: true
     },
     '6months': {
       duration: '6 Months',
-      price: 200,
-      monthlyPrice: 33.33,
-      period: '/month (billed $200 for 6 months)',
+      price: 120,
+      monthlyPrice: 20,
+      period: '/month (billed $120 for 6 months)',
       popular: false
     }
   }
