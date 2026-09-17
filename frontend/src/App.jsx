@@ -1402,8 +1402,8 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             },
             { 
               duration: '3 Months', 
-              originalPrice: 100, 
-              price: 50, 
+              originalPrice: 120, 
+              price: 60, 
               savings: null, 
               isMostPopular: true,
               features: [
