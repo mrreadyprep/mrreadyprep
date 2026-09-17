@@ -1377,38 +1377,83 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
       <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '36px' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '38px', marginBottom: '10px' }}>{isLapsed ? '👋' : '⭐'}</div>
-          <h2 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>
-            {isLapsed ? 'Come back to mrreadyprep Premium' : 'Upgrade to mrreadyprep Premium'}
+          <h2 style={{ margin: '0 0 16px', fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>
+            Choose Your Plan
           </h2>
-          <p style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '14px' }}>
-            {isLapsed
-              ? 'We miss having you! Resubscribe now and use code COMEBACK60 at checkout for a special returning-student rate.'
-              : "You've hit the free-plan limit. Subscribe for unlimited access to every Reading, Listening, Writing and Speaking practice exercise, plus all 20 Full Mock Tests."}
-          </p>
-          {/* Shows the list price before the student ever reaches Polar's own checkout overlay --
-              without this, "Continue to payment" was the first place any number appeared anywhere
-              in the flow, which is both a bad look for a subscription product and, in some
-              jurisdictions, expected to be disclosed before a payment flow is even started (Polar's
-              overlay itself always shows the price too, so this doesn't skip that -- it just isn't
-              the *only* place it's shown). Any active discount code is applied inside the Polar
-              overlay itself, so it isn't hardcoded here -- this always reflects the undiscounted
-              list price for whichever product (regular vs. comeback) this student will see. */}
-          <div style={{ marginBottom: '20px' }}>
-            <span style={{ fontSize: '30px', fontWeight: '800', color: '#701fa1' }}>{isLapsed ? '$45' : '$50'}</span>
-            <span style={{ fontSize: '14px', color: '#6b7280', fontWeight: '500' }}> / month</span>
-            {isLapsed ? (
-              <div style={{ fontSize: '11.5px', color: '#701fa1', marginTop: '4px', fontWeight: '600' }}>Use code COMEBACK60 at checkout for $20 your first month.</div>
-            ) : (
-              // WELCOME50 is shown here (not just on the marketing landing page) specifically so a
-              // student sees it before they ever reach Polar's checkout overlay -- the whole point
-              // of leading with the discounted price is to make the cheap entry price the thing
-              // that converts a hesitant free-tier user, and that only works if it's visible before
-              // they click "Continue to payment", not buried inside the payment form itself.
-              <div style={{ fontSize: '11.5px', color: '#701fa1', marginTop: '4px', fontWeight: '600' }}>Use code WELCOME50 at checkout for 50% off your first month.</div>
-            )}
-          </div>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', textAlign: 'left', background: '#f9fafb', borderRadius: '10px', padding: '18px', marginBottom: '24px' }}>
+
+        {/* 3-Column Pricing Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
+          {[
+            { duration: '1 Month', price: 50, savings: null },
+            { duration: '3 Months', price: 70, savings: 'Save $80', isBest: true },
+            { duration: '6 Months', price: 120, savings: 'Save $180' }
+          ].map((plan, idx) => (
+            <div key={idx} style={{
+              position: 'relative',
+              background: plan.isBest ? '#f9f3fd' : '#fff',
+              border: plan.isBest ? '2px solid #701fa1' : '1px solid #e1e4ed',
+              borderRadius: '12px',
+              padding: '20px 16px',
+              textAlign: 'center',
+              transform: plan.isBest ? 'scale(1.05)' : 'scale(1)',
+              transition: 'all 0.3s'
+            }}>
+              {plan.isBest && (
+                <div style={{
+                  position: 'absolute',
+                  top: '-12px',
+                  left: '50%',
+                  transform: 'translateX(-50%)',
+                  background: '#701fa1',
+                  color: '#fff',
+                  padding: '4px 12px',
+                  borderRadius: '16px',
+                  fontSize: '11px',
+                  fontWeight: '700',
+                  textTransform: 'uppercase'
+                }}>
+                  BEST VALUE
+                </div>
+              )}
+              <div style={{ fontSize: '14px', fontWeight: '600', color: '#666', marginBottom: '8px' }}>
+                {plan.duration}
+              </div>
+              <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>
+                ${plan.price}
+              </div>
+              {plan.savings && (
+                <div style={{
+                  background: '#e8f5e9',
+                  color: '#2e7d32',
+                  padding: '6px 10px',
+                  borderRadius: '6px',
+                  fontSize: '12px',
+                  fontWeight: '600',
+                  marginBottom: '12px'
+                }}>
+                  {plan.savings}
+                </div>
+              )}
+              <button onClick={handleSubscribe} disabled={busy} style={{
+                width: '100%',
+                background: '#701fa1',
+                color: '#fff',
+                border: 'none',
+                padding: '10px 12px',
+                borderRadius: '8px',
+                fontSize: '13px',
+                fontWeight: '600',
+                cursor: busy ? 'default' : 'pointer',
+                opacity: busy ? 0.6 : 1
+              }}>
+                Choose Plan
+              </button>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', textAlign: 'left', background: '#f9fafb', borderRadius: '10px', padding: '16px', marginBottom: '20px' }}>
           {[
             'Unlimited Reading, Listening, Writing & Speaking practice',
             'All 20 Full Mock Tests (not just Test 1)',
@@ -1420,16 +1465,11 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             </div>
           ))}
         </div>
-        {POLAR_CHECKOUT_ENABLED ? (
-          <>
-            {error && <p style={{ color: '#d92d20', fontSize: '12px', margin: '0 0 10px' }}>{error}</p>}
-            <button onClick={handleSubscribe} disabled={busy} style={{ background: '#701fa1', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
-              {busy ? 'Please wait…' : 'Continue to payment'}
-            </button>
-          </>
-        ) : (
-          <p style={{ color: '#9ca3af', fontSize: '12px', textAlign: 'center', margin: 0 }}>Payments aren't set up on this site yet -- check back soon.</p>
+
+        {!POLAR_CHECKOUT_ENABLED && (
+          <p style={{ color: '#9ca3af', fontSize: '12px', textAlign: 'center', margin: '0 0 16px' }}>Payments aren't set up on this site yet -- check back soon.</p>
         )}
+        {error && <p style={{ color: '#d92d20', fontSize: '12px', margin: '0 0 16px' }}>{error}</p>}
         {onBack && (
           <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer', width: '100%', textAlign: 'center' }}>← Back</button>
         )}
