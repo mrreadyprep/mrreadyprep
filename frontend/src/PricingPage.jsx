@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
-  const [selectedPlan, setSelectedPlan] = useState('annual')
+  const [billingPeriod, setBillingPeriod] = useState('1month')
   const [promoCode, setPromoCode] = useState('')
   const [appliedPromo, setAppliedPromo] = useState(null)
 
@@ -11,56 +11,23 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
   const plans = {
     free: {
       name: 'Free',
-      monthlyPrice: 0,
-      annualPrice: 0,
-      discount: null,
-      features: [
-        '5 practice questions per day',
-        '1 full mock test (read-only)',
-        'Basic progress tracking',
-        'Mobile app access'
-      ],
+      price: 0,
+      period: '',
       cta: 'Current Plan',
       ctaDisabled: true,
       popular: false,
       description: 'Get started with TOEFL prep'
     },
-    pro: {
-      name: 'Pro',
-      monthlyPrice: 40,
-      annualPrice: 480,
-      discount: 50,
-      features: [
-        'Unlimited practice questions',
-        '20 full mock tests',
-        'Detailed score analytics',
-        'Video lesson library',
-        'AI-powered explanations',
-        'Speaking/Writing feedback',
-        'Ad-free experience',
-        '5-point score guarantee'
-      ],
-      cta: 'Upgrade to Pro',
+    premium: {
+      name: 'Premium',
+      prices: {
+        '1month': 50,
+        '3months': 120,
+        '6months': 200
+      },
+      cta: 'Upgrade to Premium',
       popular: true,
-      description: 'Most popular choice'
-    },
-    proplus: {
-      name: 'Pro Plus',
-      monthlyPrice: 50,
-      annualPrice: 600,
-      discount: 50,
-      features: [
-        'Everything in Pro, plus:',
-        'Priority email support (24hr response)',
-        'Weekly 1-on-1 coaching call',
-        'Personalized study plan',
-        'Access to community forum',
-        'Advanced practice insights',
-        'Early access to new features'
-      ],
-      cta: 'Upgrade to Pro Plus',
-      popular: false,
-      description: 'Premium support & coaching'
+      description: 'Unlimited access to all features'
     }
   }
 
@@ -79,59 +46,41 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
     return (originalPrice * (1 - promoDiscount)).toFixed(2)
   }
 
-  const getPriceDisplay = (plan) => {
-    if (plan.monthlyPrice === 0) return '$0'
+  const getPremiumPrice = () => {
+    const originalPrice = plans.premium.prices[billingPeriod]
+    const discountedPrice = getDiscountedPrice(originalPrice)
+    
+    let periodLabel = ''
+    if (billingPeriod === '1month') periodLabel = '/month'
+    else if (billingPeriod === '3months') periodLabel = ' for 3 months'
+    else if (billingPeriod === '6months') periodLabel = ' for 6 months'
 
-    if (selectedPlan === 'monthly') {
-      const originalPrice = plan.monthlyPrice
-      const discountedPrice = getDiscountedPrice(originalPrice)
-      
-      if (appliedPromo && discountedPrice != originalPrice) {
-        return (
-          <div>
-            <div style={{ fontSize: '24px', fontWeight: '800', color: '#701fa1' }}>
-              ${discountedPrice}/month
-            </div>
-            <div style={{ fontSize: '12px', color: '#999', marginTop: '4px', textDecoration: 'line-through' }}>
-              ${originalPrice}/month
-            </div>
+    if (appliedPromo && discountedPrice != originalPrice) {
+      return (
+        <div>
+          <div style={{ fontSize: '36px', fontWeight: '800', color: '#701fa1' }}>
+            ${discountedPrice}
           </div>
-        )
-      }
-      return `$${originalPrice}/month`
+          <div style={{ fontSize: '13px', color: '#999', marginTop: '4px', textDecoration: 'line-through' }}>
+            ${originalPrice}{periodLabel}
+          </div>
+          <div style={{ fontSize: '13px', color: '#2ac56c', marginTop: '6px', fontWeight: '600' }}>
+            50% OFF with promo code
+          </div>
+        </div>
+      )
     }
 
-    const originalAnnual = plan.annualPrice
-    const discountedAnnual = getDiscountedPrice(originalAnnual)
-    const monthlyEquivalent = (discountedAnnual / 12).toFixed(2)
-    const originalMonthly = (originalAnnual / 12).toFixed(2)
-
     return (
-      <>
-        <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>
-          ${discountedAnnual}
-        </div>
-        {appliedPromo && discountedAnnual != originalAnnual ? (
-          <>
-            <div style={{ fontSize: '12px', color: '#999', marginTop: '4px', textDecoration: 'line-through' }}>
-              ${originalAnnual} (${originalMonthly}/month)
-            </div>
-            <div style={{ fontSize: '13px', color: '#2ac56c', marginTop: '2px', fontWeight: '600' }}>
-              ${monthlyEquivalent}/month billed annually
-            </div>
-          </>
-        ) : (
-          <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
-            ${monthlyEquivalent}/month billed annually
-          </div>
-        )}
-      </>
+      <div style={{ fontSize: '36px', fontWeight: '800', color: '#701fa1' }}>
+        ${originalPrice}{periodLabel}
+      </div>
     )
   }
 
   const handleUpgrade = (planName) => {
     if (planName === 'free') return
-    onUpgrade(planName, selectedPlan === 'monthly' ? 'monthly' : 'annual')
+    onUpgrade(planName, billingPeriod)
   }
 
   return (
@@ -178,22 +127,8 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           marginLeft: 'auto',
           marginRight: 'auto'
         }}>
-          Get unlimited access to all TOEFL practice materials, personalized coaching, and guaranteed score improvement.
+          Get unlimited access to all TOEFL practice materials and guaranteed score improvement.
         </p>
-
-        {/* Score Guarantee Banner */}
-        <div style={{
-          background: '#fff3cd',
-          border: '1px solid #ffc107',
-          borderRadius: '8px',
-          padding: '16px 20px',
-          marginBottom: '30px',
-          display: 'inline-block'
-        }}>
-          <div style={{ fontSize: '14px', fontWeight: '600', color: '#856404' }}>
-            🎯 <strong>5-Point Score Guarantee:</strong> Improve 5+ points or get 100% refund
-          </div>
-        </div>
 
         {/* Promo Code Section */}
         <div style={{
@@ -242,229 +177,195 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           </div>
           {appliedPromo && (
             <div style={{ fontSize: '12px', color: '#2ac56c', marginTop: '8px', fontWeight: '600' }}>
-              ✓ Code applied: {appliedPromo} (50% off)
+              ✓ Code applied: {appliedPromo}
             </div>
           )}
         </div>
 
-        {/* Billing Toggle */}
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '40px' }}>
+        {/* Billing Period Toggle */}
+        <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', marginBottom: '40px', flexWrap: 'wrap' }}>
           <button
-            onClick={() => setSelectedPlan('monthly')}
+            onClick={() => setBillingPeriod('1month')}
             style={{
-              padding: '10px 24px',
+              padding: '10px 20px',
               borderRadius: '8px',
-              border: selectedPlan === 'monthly' ? '2px solid #701fa1' : '1px solid #ddd',
-              background: selectedPlan === 'monthly' ? '#f3e8ff' : 'white',
-              color: selectedPlan === 'monthly' ? '#701fa1' : '#666',
+              border: billingPeriod === '1month' ? '2px solid #701fa1' : '1px solid #ddd',
+              background: billingPeriod === '1month' ? '#f3e8ff' : 'white',
+              color: billingPeriod === '1month' ? '#701fa1' : '#666',
               cursor: 'pointer',
               fontWeight: '600',
               fontSize: '14px'
             }}
           >
-            Monthly Billing
+            1 Month
           </button>
           <button
-            onClick={() => setSelectedPlan('annual')}
+            onClick={() => setBillingPeriod('3months')}
             style={{
-              padding: '10px 24px',
+              padding: '10px 20px',
               borderRadius: '8px',
-              border: selectedPlan === 'annual' ? '2px solid #701fa1' : '1px solid #ddd',
-              background: selectedPlan === 'annual' ? '#f3e8ff' : 'white',
-              color: selectedPlan === 'annual' ? '#701fa1' : '#666',
+              border: billingPeriod === '3months' ? '2px solid #701fa1' : '1px solid #ddd',
+              background: billingPeriod === '3months' ? '#f3e8ff' : 'white',
+              color: billingPeriod === '3months' ? '#701fa1' : '#666',
               cursor: 'pointer',
               fontWeight: '600',
               fontSize: '14px'
             }}
           >
-            Annual Billing (Save 50%)
+            3 Months
+          </button>
+          <button
+            onClick={() => setBillingPeriod('6months')}
+            style={{
+              padding: '10px 20px',
+              borderRadius: '8px',
+              border: billingPeriod === '6months' ? '2px solid #701fa1' : '1px solid #ddd',
+              background: billingPeriod === '6months' ? '#f3e8ff' : 'white',
+              color: billingPeriod === '6months' ? '#701fa1' : '#666',
+              cursor: 'pointer',
+              fontWeight: '600',
+              fontSize: '14px'
+            }}
+          >
+            6 Months
           </button>
         </div>
       </div>
 
       {/* Pricing Cards */}
       <div style={{
-        maxWidth: '1100px',
+        maxWidth: '900px',
         margin: '0 auto',
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
         gap: '24px',
         marginBottom: '50px'
       }}>
-        {Object.entries(plans).map(([key, plan]) => (
-          <div
-            key={key}
+        {/* Free Plan */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: '12px',
+            border: '1px solid #e0e0e0',
+            padding: '32px 24px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+            transition: 'all 0.3s ease'
+          }}
+        >
+          <h3 style={{
+            fontSize: '20px',
+            fontWeight: '700',
+            margin: '0 0 8px',
+            color: '#1a1a1a'
+          }}>
+            Free
+          </h3>
+
+          <p style={{
+            fontSize: '13px',
+            color: '#666',
+            margin: '0 0 20px'
+          }}>
+            Get started with TOEFL prep
+          </p>
+
+          <div style={{ marginBottom: '24px' }}>
+            <div style={{ fontSize: '24px', fontWeight: '800', color: '#701fa1' }}>
+              $0
+            </div>
+          </div>
+
+          <button
+            disabled={true}
             style={{
-              background: 'white',
-              borderRadius: '12px',
-              border: plan.popular ? '2px solid #701fa1' : '1px solid #e0e0e0',
-              padding: '32px 24px',
-              position: 'relative',
-              transform: plan.popular ? 'scale(1.05)' : 'scale(1)',
-              boxShadow: plan.popular
-                ? '0 10px 40px rgba(112, 31, 161, 0.15)'
-                : '0 2px 8px rgba(0,0,0,0.05)',
-              transition: 'all 0.3s ease'
+              width: '100%',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              background: '#f0f0f0',
+              color: '#999',
+              fontSize: '14px',
+              fontWeight: '600',
+              cursor: 'not-allowed',
+              marginBottom: '24px'
             }}
           >
-            {/* Popular Badge */}
-            {plan.popular && (
-              <div style={{
-                position: 'absolute',
-                top: '-12px',
-                left: '50%',
-                transform: 'translateX(-50%)',
-                background: '#701fa1',
-                color: 'white',
-                padding: '4px 16px',
-                borderRadius: '20px',
-                fontSize: '12px',
-                fontWeight: '700',
-                textTransform: 'uppercase',
-                letterSpacing: '0.5px'
-              }}>
-                Most Popular
-              </div>
-            )}
+            Current Plan
+          </button>
+        </div>
 
-            {/* Plan Name */}
-            <h3 style={{
-              fontSize: '20px',
-              fontWeight: '700',
-              margin: '0 0 8px',
-              color: '#1a1a1a'
-            }}>
-              {plan.name}
-            </h3>
-
-            {/* Description */}
-            <p style={{
-              fontSize: '13px',
-              color: '#666',
-              margin: '0 0 20px'
-            }}>
-              {plan.description}
-            </p>
-
-            {/* Price */}
-            <div style={{ marginBottom: '24px' }}>
-              {typeof getPriceDisplay(plan) === 'string' ? (
-                <div style={{ fontSize: '24px', fontWeight: '800', color: '#701fa1' }}>
-                  {getPriceDisplay(plan)}
-                </div>
-              ) : (
-                getPriceDisplay(plan)
-              )}
-            </div>
-
-            {/* Discount Badge */}
-            {plan.discount && selectedPlan === 'annual' && (
-              <div style={{
-                background: '#e8f5e9',
-                color: '#2e7d32',
-                padding: '8px 12px',
-                borderRadius: '6px',
-                fontSize: '13px',
-                fontWeight: '600',
-                marginBottom: '20px',
-                textAlign: 'center'
-              }}>
-                Save {plan.discount}% with annual billing
-              </div>
-            )}
-
-            {/* CTA Button */}
-            <button
-              onClick={() => handleUpgrade(key)}
-              disabled={plan.ctaDisabled}
-              style={{
-                width: '100%',
-                padding: '12px 16px',
-                borderRadius: '8px',
-                border: 'none',
-                background: plan.ctaDisabled ? '#f0f0f0' : '#701fa1',
-                color: plan.ctaDisabled ? '#999' : 'white',
-                fontSize: '14px',
-                fontWeight: '600',
-                cursor: plan.ctaDisabled ? 'not-allowed' : 'pointer',
-                marginBottom: '24px',
-                transition: 'all 0.2s'
-              }}
-            >
-              {plan.cta}
-            </button>
-
-            {/* Features List */}
-            <ul style={{
-              listStyle: 'none',
-              padding: 0,
-              margin: 0
-            }}>
-              {plan.features.map((feature, idx) => (
-                <li
-                  key={idx}
-                  style={{
-                    padding: '10px 0',
-                    fontSize: '14px',
-                    color: '#333',
-                    borderTop: idx === 0 ? '1px solid #f0f0f0' : 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '10px'
-                  }}
-                >
-                  <span style={{ color: '#701fa1', fontSize: '18px' }}>✓</span>
-                  {feature}
-                </li>
-              ))}
-            </ul>
+        {/* Premium Plan */}
+        <div
+          style={{
+            background: 'white',
+            borderRadius: '12px',
+            border: '2px solid #701fa1',
+            padding: '32px 24px',
+            position: 'relative',
+            transform: 'scale(1.05)',
+            boxShadow: '0 10px 40px rgba(112, 31, 161, 0.15)',
+            transition: 'all 0.3s ease'
+          }}
+        >
+          <div style={{
+            position: 'absolute',
+            top: '-12px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            background: '#701fa1',
+            color: 'white',
+            padding: '4px 16px',
+            borderRadius: '20px',
+            fontSize: '12px',
+            fontWeight: '700',
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px'
+          }}>
+            Most Popular
           </div>
-        ))}
-      </div>
 
-      {/* FAQ Section */}
-      <div style={{
-        maxWidth: '700px',
-        margin: '0 auto',
-        background: 'white',
-        borderRadius: '12px',
-        padding: '40px 30px',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
-      }}>
-        <h2 style={{
-          fontSize: '24px',
-          fontWeight: '700',
-          marginBottom: '30px',
-          textAlign: 'center',
-          color: '#1a1a1a'
-        }}>
-          Frequently Asked Questions
-        </h2>
+          <h3 style={{
+            fontSize: '20px',
+            fontWeight: '700',
+            margin: '0 0 8px',
+            color: '#1a1a1a'
+          }}>
+            Premium
+          </h3>
 
-        <FAQ
-          question="Can I cancel anytime?"
-          answer="Yes! Cancel your subscription anytime from your account settings. No questions asked."
-        />
+          <p style={{
+            fontSize: '13px',
+            color: '#666',
+            margin: '0 0 20px'
+          }}>
+            Unlimited access to all features
+          </p>
 
-        <FAQ
-          question="What about the 5-point guarantee?"
-          answer="Study with MRReadyPrep for 60+ days. If you don't improve 5+ points on the actual TOEFL exam, we'll refund 100% of your subscription cost."
-        />
+          <div style={{ marginBottom: '24px' }}>
+            {getPremiumPrice()}
+          </div>
 
-        <FAQ
-          question="Can I switch plans?"
-          answer="Yes, you can upgrade or downgrade your plan anytime. Changes take effect immediately."
-        />
-
-        <FAQ
-          question="Do you offer student discounts?"
-          answer="Yes! Email us at support@mrreadyprep.com with your student ID for an exclusive discount."
-        />
-
-        <FAQ
-          question="What payment methods do you accept?"
-          answer="We accept all major credit cards (Visa, Mastercard, American Express). We use Polar for secure payment processing."
-        />
+          <button
+            onClick={() => handleUpgrade('premium')}
+            style={{
+              width: '100%',
+              padding: '12px 16px',
+              borderRadius: '8px',
+              border: 'none',
+              background: '#701fa1',
+              color: 'white',
+              fontSize: '14px',
+              fontWeight: '600',
+              cursor: 'pointer',
+              marginBottom: '24px',
+              transition: 'all 0.2s'
+            }}
+            onMouseEnter={(e) => e.target.style.background = '#5a1680'}
+            onMouseLeave={(e) => e.target.style.background = '#701fa1'}
+          >
+            Upgrade to Premium
+          </button>
+        </div>
       </div>
 
       {/* Footer Info */}
@@ -476,49 +377,9 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         paddingTop: '40px'
       }}>
         <p style={{ fontSize: '14px', color: '#666', margin: 0 }}>
-          Need help? Contact us at <strong>support@mrreadyprep.com</strong> or check our <a href="#" style={{ color: '#701fa1', textDecoration: 'none' }}>FAQ</a>
+          Need help? Contact us at <strong>support@mrreadyprep.com</strong>
         </p>
       </div>
-    </div>
-  )
-}
-
-function FAQ({ question, answer }) {
-  const [open, setOpen] = useState(false)
-
-  return (
-    <div style={{ marginBottom: '20px', borderBottom: '1px solid #f0f0f0', paddingBottom: '20px' }}>
-      <button
-        onClick={() => setOpen(!open)}
-        style={{
-          width: '100%',
-          textAlign: 'left',
-          background: 'none',
-          border: 'none',
-          padding: 0,
-          cursor: 'pointer',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}
-      >
-        <span style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>
-          {question}
-        </span>
-        <span style={{ fontSize: '20px', color: '#701fa1' }}>
-          {open ? '−' : '+'}
-        </span>
-      </button>
-      {open && (
-        <p style={{
-          fontSize: '14px',
-          color: '#666',
-          marginTop: '12px',
-          marginBottom: 0
-        }}>
-          {answer}
-        </p>
-      )}
     </div>
   )
 }
