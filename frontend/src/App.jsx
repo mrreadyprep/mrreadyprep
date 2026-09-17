@@ -10176,7 +10176,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
         </div>
 
         {/* Pricing Table - 3 Columns */}
-        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '32px 24px', marginTop: '24px', boxSizing: 'border-box' }}>
+        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '32px 20px', marginTop: '24px', boxSizing: 'border-box', maxWidth: '1000px', margin: '24px auto 0' }}>
           <div style={{ textAlign: 'center', marginBottom: '24px' }}>
             <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Choose Your Plan</div>
             <div style={{ fontSize: '14px', color: '#9ca3af' }}>Pay once, access everything. Cancel anytime.</div>
