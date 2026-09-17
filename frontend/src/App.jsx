@@ -1226,7 +1226,11 @@ function loadPolarCheckout() {
 // external_customer_id/metadata linking it back to this account can't be tampered with -- see
 // create_checkout in main.py) and returns { checkout_url } to open in the embedded overlay.
 function startCheckout(duration) {
-  return apiFetch(`${BACKEND_URL}/api/subscription/create-checkout`, { method: 'POST', body: JSON.stringify({ duration }) }).then(res => res.json())
+  return apiFetch(`${BACKEND_URL}/api/subscription/create-checkout`, { 
+    method: 'POST', 
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ duration }) 
+  }).then(res => res.json())
 }
 
 function cancelSubscription() {
