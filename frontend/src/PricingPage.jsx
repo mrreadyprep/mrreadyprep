@@ -2,6 +2,11 @@ import { useState } from 'react'
 
 export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
   const [selectedPlan, setSelectedPlan] = useState('annual')
+  const [promoCode, setPromoCode] = useState('')
+  const [appliedPromo, setAppliedPromo] = useState(null)
+
+  const validPromoCodes = ['SAVE50', 'HALF2024', 'EARLYBIRD']
+  const promoDiscount = 0.5 // 50% off
 
   const plans = {
     free: {
@@ -22,9 +27,9 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
     },
     pro: {
       name: 'Pro',
-      monthlyPrice: 12.99,
-      annualPrice: 99.99,
-      discount: 33,
+      monthlyPrice: 40,
+      annualPrice: 480,
+      discount: 50,
       features: [
         'Unlimited practice questions',
         '20 full mock tests',
@@ -41,9 +46,9 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
     },
     proplus: {
       name: 'Pro Plus',
-      monthlyPrice: 19.99,
-      annualPrice: 149.99,
-      discount: 38,
+      monthlyPrice: 50,
+      annualPrice: 600,
+      discount: 50,
       features: [
         'Everything in Pro, plus:',
         'Priority email support (24hr response)',
@@ -59,19 +64,67 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
     }
   }
 
-  const getPriceDisplay = (plan) => {
-    if (selectedPlan === 'monthly') {
-      return `$${plan.monthlyPrice}/month`
+  const handleApplyPromo = () => {
+    const code = promoCode.toUpperCase().trim()
+    if (validPromoCodes.includes(code)) {
+      setAppliedPromo(code)
+    } else {
+      setAppliedPromo(null)
+      alert('Invalid promo code')
     }
-    const monthlyEquivalent = (plan.annualPrice / 12).toFixed(2)
+  }
+
+  const getDiscountedPrice = (originalPrice) => {
+    if (!appliedPromo) return originalPrice
+    return (originalPrice * (1 - promoDiscount)).toFixed(2)
+  }
+
+  const getPriceDisplay = (plan) => {
+    if (plan.monthlyPrice === 0) return '$0'
+
+    if (selectedPlan === 'monthly') {
+      const originalPrice = plan.monthlyPrice
+      const discountedPrice = getDiscountedPrice(originalPrice)
+      
+      if (appliedPromo && discountedPrice != originalPrice) {
+        return (
+          <div>
+            <div style={{ fontSize: '24px', fontWeight: '800', color: '#701fa1' }}>
+              ${discountedPrice}/month
+            </div>
+            <div style={{ fontSize: '12px', color: '#999', marginTop: '4px', textDecoration: 'line-through' }}>
+              ${originalPrice}/month
+            </div>
+          </div>
+        )
+      }
+      return `$${originalPrice}/month`
+    }
+
+    const originalAnnual = plan.annualPrice
+    const discountedAnnual = getDiscountedPrice(originalAnnual)
+    const monthlyEquivalent = (discountedAnnual / 12).toFixed(2)
+    const originalMonthly = (originalAnnual / 12).toFixed(2)
+
     return (
       <>
         <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>
-          ${plan.annualPrice}
+          ${discountedAnnual}
         </div>
-        <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
-          ${monthlyEquivalent}/month billed annually
-        </div>
+        {appliedPromo && discountedAnnual != originalAnnual ? (
+          <>
+            <div style={{ fontSize: '12px', color: '#999', marginTop: '4px', textDecoration: 'line-through' }}>
+              ${originalAnnual} (${originalMonthly}/month)
+            </div>
+            <div style={{ fontSize: '13px', color: '#2ac56c', marginTop: '2px', fontWeight: '600' }}>
+              ${monthlyEquivalent}/month billed annually
+            </div>
+          </>
+        ) : (
+          <div style={{ fontSize: '13px', color: '#666', marginTop: '4px' }}>
+            ${monthlyEquivalent}/month billed annually
+          </div>
+        )}
       </>
     )
   }
@@ -142,6 +195,58 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
           </div>
         </div>
 
+        {/* Promo Code Section */}
+        <div style={{
+          background: '#f0e8ff',
+          border: '2px solid #701fa1',
+          borderRadius: '8px',
+          padding: '20px',
+          marginBottom: '30px',
+          maxWidth: '400px',
+          margin: '0 auto 30px'
+        }}>
+          <div style={{ fontSize: '13px', fontWeight: '600', color: '#701fa1', marginBottom: '12px' }}>
+            Have a promo code? 🎉
+          </div>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <input
+              type="text"
+              placeholder="Enter code (e.g. SAVE50)"
+              value={promoCode}
+              onChange={(e) => setPromoCode(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleApplyPromo()}
+              style={{
+                flex: 1,
+                padding: '10px 12px',
+                border: '1px solid #ddd',
+                borderRadius: '6px',
+                fontSize: '13px',
+                boxSizing: 'border-box'
+              }}
+            />
+            <button
+              onClick={handleApplyPromo}
+              style={{
+                padding: '10px 16px',
+                background: '#701fa1',
+                color: 'white',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '13px',
+                fontWeight: '600'
+              }}
+            >
+              Apply
+            </button>
+          </div>
+          {appliedPromo && (
+            <div style={{ fontSize: '12px', color: '#2ac56c', marginTop: '8px', fontWeight: '600' }}>
+              ✓ Code applied: {appliedPromo} (50% off)
+            </div>
+          )}
+        </div>
+
         {/* Billing Toggle */}
         <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', marginBottom: '40px' }}>
           <button
@@ -172,7 +277,7 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
               fontSize: '14px'
             }}
           >
-            Annual Billing (Save 33%)
+            Annual Billing (Save 50%)
           </button>
         </div>
       </div>
