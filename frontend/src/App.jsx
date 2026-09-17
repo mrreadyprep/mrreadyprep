@@ -180,7 +180,7 @@ function ExitConfirmModal({ onSave, onDiscard, onCancel, canSave = true }) {
   }, [onCancel])
   const trapRef = useFocusTrap()
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
       <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Exit this exercise?" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Exit this exercise?</div>
         <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>
@@ -214,7 +214,7 @@ function ConfirmModal({ title, message, confirmLabel = 'Confirm', cancelLabel = 
   }, [onCancel])
   const trapRef = useFocusTrap()
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
       <div ref={trapRef} role="dialog" aria-modal="true" aria-label={title} style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>{title}</div>
         <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>{message}</div>
@@ -890,7 +890,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
                 <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{renderPassageWithHighlight(passage.text, extractVocabWord(q.question))}</div>
               </div>
             </div>
-            <div style={{ width: isMobile ? '100%' : '400px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '20px' }}>
+            <div style={{ width: isMobile ? '100%' : '400px', flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a', lineHeight: '1.55' }}>{q.question}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {q.options.map((opt, oi) => {
@@ -8563,7 +8563,7 @@ function MockExitConfirmModal({ onSaveExit, onDiscardExit, onCancel }) {
   }, [onCancel])
   const trapRef = useFocusTrap()
   return (
-    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '20px' }}>
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
       <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Exit the mock test?" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '400px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Exit the mock test?</div>
         <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>You can save the section(s) you've already finished to your Progress, or discard this whole attempt.</div>
@@ -9393,7 +9393,7 @@ function ProgressScreen({ onBack, onPractice }) {
 
   if (loadError && !summary) return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', gap: '14px', padding: '24px', textAlign: 'center' }}>
-      <div style={{ fontSize: '32px' }}>⚠️</div>
+      <div style={{ fontSize: '28px' }}>⚠️</div>
       <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>Couldn't load your progress</div>
       <div style={{ fontSize: '13px', color: '#616473', maxWidth: '360px' }}>Check your internet connection and try again. If this keeps happening, our servers may be temporarily unavailable.</div>
       <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
@@ -10053,7 +10053,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
     // cost is that on a viewport taller than the content, it now sits near the top instead of being
     // perfectly vertically centered -- a minor cosmetic tradeoff against a genuinely unusable/
     // unclickable element. Found live-testing the landing-page work, same session it was added in.
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#11162d', boxSizing: 'border-box', padding: '20px', overflowY: 'auto' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', minHeight: '100vh', width: '100%', fontFamily: 'sans-serif', backgroundColor: '#11162d', boxSizing: 'border-box', padding: '16px', overflowY: 'auto' }}>
       <div style={{ width: '100%', maxWidth: '380px' }}>
         {/* Reached by clicking "Log In"/"Get Started" on LandingPage (the site's actual root view
             now -- see LandingPage above), so this link takes the visitor back there instead of
@@ -10181,12 +10181,12 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
             <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Choose Your Plan</div>
             <div style={{ fontSize: '14px', color: '#9ca3af' }}>Pay once, access everything. Cancel anytime.</div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '20px', width: '100%' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '12px', width: '100%' }}>
             {/* 1 Month */}
-            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '20px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>1 Month</div>
+            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>1 Month</div>
               <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Get started</div>
-              <div style={{ fontSize: '32px', fontWeight: '800', color: '#701fa1', marginBottom: '16px' }}>$50</div>
+              <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '16px' }}>$50</div>
               <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
                 <li>✓ Unlimited practice</li>
                 <li>✓ 20 mock tests</li>
@@ -10197,11 +10197,11 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
             </div>
 
             {/* 3 Months - BEST VALUE */}
-            <div style={{ border: '2px solid #701fa1', borderRadius: '10px', padding: '20px', boxSizing: 'border-box', backgroundColor: '#f9f3fd', position: 'relative', transform: 'scale(1.05)' }}>
+            <div style={{ border: '2px solid #701fa1', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#f9f3fd', position: 'relative', transform: 'scale(1.05)' }}>
               <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#701fa1', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 12px', borderRadius: '12px' }}>BEST VALUE</div>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>3 Months</div>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>3 Months</div>
               <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Most popular</div>
-              <div style={{ fontSize: '32px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$70</div>
+              <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$70</div>
               <div style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600', marginBottom: '16px' }}>Save $80</div>
               <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
                 <li>✓ Unlimited practice</li>
@@ -10213,10 +10213,10 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
             </div>
 
             {/* 6 Months */}
-            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '20px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
-              <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>6 Months</div>
+            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>6 Months</div>
               <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Best savings</div>
-              <div style={{ fontSize: '32px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$120</div>
+              <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$120</div>
               <div style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600', marginBottom: '16px' }}>Save $180</div>
               <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
                 <li>✓ Unlimited practice</li>
@@ -10236,7 +10236,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
         {/* Sample Question Demo (Quick Flavor) */}
         <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '24px', marginTop: '14px', boxSizing: 'border-box' }}>
           <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-            <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Try a sample question</div>
+            <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Try a sample question</div>
             <div style={{ fontSize: '12px', color: '#9ca3af' }}>No login required</div>
           </div>
           <div style={{ backgroundColor: '#f9fafb', border: '1px solid #e1e4ed', borderRadius: '10px', padding: '12px', marginBottom: '12px' }}>
@@ -10351,8 +10351,8 @@ function AdminPanel() {
     </div>
   )
 
-  if (error) return <div style={{ padding: '20px', color: '#dc2626', fontSize: '13px' }}>{error}</div>
-  if (!stats || !users) return <div style={{ padding: '20px', color: '#616473', fontSize: '13px' }}>Loading admin data...</div>
+  if (error) return <div style={{ padding: '16px', color: '#dc2626', fontSize: '13px' }}>{error}</div>
+  if (!stats || !users) return <div style={{ padding: '16px', color: '#616473', fontSize: '13px' }}>Loading admin data...</div>
 
   const filterQuery = userFilter.trim().toLowerCase()
   const filteredUsers = filterQuery
@@ -11117,7 +11117,7 @@ function App() {
 
   if (!userData && dashboardLoadError) return (
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', gap: '14px', padding: '24px', textAlign: 'center' }}>
-      <div style={{ fontSize: '32px' }}>⚠️</div>
+      <div style={{ fontSize: '28px' }}>⚠️</div>
       <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>Couldn't load your account</div>
       <div style={{ fontSize: '13px', color: '#616473', maxWidth: '360px' }}>Check your internet connection and try again. If this keeps happening, our servers may be temporarily unavailable.</div>
       <button onClick={fetchDashboardData} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
@@ -11623,7 +11623,7 @@ function App() {
 
         {/* SETTINGS */}
         {currentTab === 'settings' && (
-          <div style={{ display: 'flex', gap: '20px', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
+          <div style={{ display: 'flex', gap: '12px', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
             <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: isMobile ? '18px' : '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🎯 Target & Profile</h3>
               <form onSubmit={handleProfileSave} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
