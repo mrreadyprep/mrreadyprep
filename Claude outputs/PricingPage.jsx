@@ -26,12 +26,14 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
       annualPrice: 99.99,
       discount: 33,
       features: [
-        'Unlimited practice questions',
-        '20 full mock tests',
-        'Detailed score analytics',
-        'Video lesson library',
-        'AI-powered explanations',
-        'Speaking/Writing feedback',
+        'Reading Practice (3 modes: Complete Words, Read in Daily Life, Academic Passage)',
+        'Listening Practice (4 modes: Choose Response, Conversation, Announcement, Academic Talk)',
+        'Writing Practice (3 modes: Build Sentence, Write Email, Academic Discussion)',
+        'Speaking Practice (2 modes: Listen & Repeat, Take Interview)',
+        'All 20 Full Mock Tests',
+        'Detailed progress analytics & score tracking',
+        '900 Vocabulary words (4 difficulty levels)',
+        '16 TOEFL Guides (Reading, Listening, Writing, Speaking)',
         'Ad-free experience',
         '5-point score guarantee'
       ],
@@ -48,9 +50,9 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
         'Everything in Pro, plus:',
         'Priority email support (24hr response)',
         'Weekly 1-on-1 coaching call',
-        'Personalized study plan',
+        'Personalized study plan based on your weak areas',
         'Access to community forum',
-        'Advanced practice insights',
+        'Advanced practice insights & detailed mistake analysis',
         'Early access to new features'
       ],
       cta: 'Upgrade to Pro Plus',
@@ -304,12 +306,12 @@ export function PricingPage({ onUpgrade, onBack, hasPremium, userEmail }) {
                     color: '#333',
                     borderTop: idx === 0 ? '1px solid #f0f0f0' : 'none',
                     display: 'flex',
-                    alignItems: 'center',
+                    alignItems: 'flex-start',
                     gap: '10px'
                   }}
                 >
-                  <span style={{ color: '#701fa1', fontSize: '18px' }}>✓</span>
-                  {feature}
+                  <span style={{ color: '#701fa1', fontSize: '18px', marginTop: '2px', flexShrink: 0 }}>✓</span>
+                  <span>{feature}</span>
                 </li>
               ))}
             </ul>
