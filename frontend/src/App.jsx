@@ -11588,14 +11588,12 @@ function App() {
         )}
 
         {currentTab === 'subscribe' && (
-          <PricingPage 
-            onBack={() => setCurrentTab('dashboard')} 
-            onUpgrade={(planName, billingCycle) => {
-              setCurrentTab('subscribe')
-              console.log(`Upgrade: ${planName} (${billingCycle})`)
-            }}
-            hasPremium={!!userData.has_premium} 
-            userEmail={userData.email} 
+          <SubscribeScreen
+            onBack={() => setCurrentTab('dashboard')}
+            hasPremium={!!userData.has_premium}
+            subscriptionStatus={userData.subscription_status}
+            hasBilledSubscription={!!userData.has_billed_subscription}
+            isAdmin={!!userData.is_admin}
           />
         )}
 
