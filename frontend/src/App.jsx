@@ -11168,7 +11168,6 @@ function App() {
             <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
               📝 TOEFL Guides
             </a>
-            {sb('pricing', '💎', 'Pricing Plans')}
             {sb('subscribe', userData.has_premium ? '⭐' : '💎', userData.has_premium ? 'Premium Active' : 'Upgrade to Premium')}
             {userData.is_admin && sb('admin', '🛠️', 'Admin')}
           </div>
@@ -11578,7 +11577,6 @@ function App() {
 
         {/* FULL MOCK TEST */}
         {currentTab === 'mocktest' && <FullMockTest onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} />}
-        {currentTab === 'pricing' && <PricingPage onBack={() => setCurrentTab('dashboard')} onUpgrade={handleUpgrade} hasPremium={!!userData.has_premium} userEmail={userData.email} />}
 
         {currentTab === 'progress' && (
           <ProgressScreen onBack={() => setCurrentTab('dashboard')} onPractice={(nav) => {
@@ -11592,7 +11590,15 @@ function App() {
         )}
 
         {currentTab === 'subscribe' && (
-          <SubscribeScreen onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} subscriptionStatus={userData.subscription_status} hasBilledSubscription={!!userData.has_billed_subscription} isAdmin={!!userData.is_admin} />
+          <PricingPage 
+            onBack={() => setCurrentTab('dashboard')} 
+            onUpgrade={(planName, billingCycle) => {
+              setCurrentTab('subscribe')
+              console.log(`Upgrade: ${planName} (${billingCycle})`)
+            }}
+            hasPremium={!!userData.has_premium} 
+            userEmail={userData.email} 
+          />
         )}
 
         {/* VOCABULARY */}
