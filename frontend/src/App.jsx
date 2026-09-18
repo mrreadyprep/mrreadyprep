@@ -9411,6 +9411,162 @@ function FullMockTest({ onBack, hasPremium = false }) {
   return null
 }
 
+// ─── AI Tutor Chat ──────────────────────────────────────────────────────────
+// Sidebar-style chat backed by the Anthropic Messages API (see /api/ai-tutor/chat in main.py),
+// given each student's own weak-areas context server-side so its answers are grounded in their
+// actual practice history. Entirely hidden from the nav (see aiTutorAvailable in App()) when the
+// backend has no ANTHROPIC_API_KEY configured, so a misconfigured server never shows a dead chat.
+const AI_TUTOR_STARTER_PROMPTS = [
+  'How should I structure my Writing for an Academic Discussion response?',
+  "What's the best way to manage my time in the Listening section?",
+  'Give me 3 tips for the Take an Interview speaking task.',
+  'How can I sound more natural when I speak under time pressure?',
+]
+
+function AITutorChat() {
+  const isMobile = useIsMobile()
+  const [messages, setMessages] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
+  const [input, setInput] = useState('')
+  const [sending, setSending] = useState(false)
+  const [clearing, setClearing] = useState(false)
+  const messagesEndRef = useRef(null)
+  const textareaRef = useRef(null)
+
+  const load = () => {
+    setLoading(true); setLoadError(false)
+    apiFetch(`${BACKEND_URL}/api/ai-tutor/history`).then(r => { if (!r.ok) throw new Error('history fetch failed'); return r.json() })
+      .then(data => { setMessages(Array.isArray(data.messages) ? data.messages : []); setLoading(false) })
+      .catch(() => { setLoading(false); setLoadError(true) })
+  }
+  useEffect(load, [])
+
+  // Autoscroll to the newest message -- 'auto' (not 'smooth') on the very first load so a long
+  // existing history doesn't visibly scroll-animate past the student on mount, only on messages
+  // added after that.
+  const firstLoadRef = useRef(true)
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: firstLoadRef.current ? 'auto' : 'smooth' })
+    firstLoadRef.current = false
+  }, [messages])
+
+  const send = (text) => {
+    const trimmed = (text ?? input).trim()
+    if (!trimmed || sending) return
+    setSending(true)
+    setMessages(m => [...m, { role: 'user', content: trimmed, created_at: null }])
+    setInput('')
+    apiFetch(`${BACKEND_URL}/api/ai-tutor/chat`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: trimmed }),
+    }).then(res => res.json().then(data => ({ ok: res.ok, status: res.status, data })))
+      .then(({ ok, status, data }) => {
+        if (!ok) {
+          const msg = status === 429
+            ? "You've reached today's message limit for the AI Tutor -- come back tomorrow, or keep practicing in the meantime!"
+            : extractErrorMessage(data, "Couldn't get a response -- please try again.")
+          showToast(msg, 'error')
+          // Roll back the optimistically-added user bubble on failure -- otherwise it sits there
+          // permanently with no reply underneath, looking like the tutor silently ignored it.
+          setMessages(m => m.slice(0, -1))
+          return
+        }
+        setMessages(m => [...m, { role: 'assistant', content: data.reply, created_at: null }])
+      })
+      .catch(() => { showToast("Couldn't reach the AI Tutor -- check your connection and try again.", 'error'); setMessages(m => m.slice(0, -1)) })
+      .finally(() => setSending(false))
+  }
+
+  const clearHistory = () => {
+    if (clearing || !messages.length) return
+    setClearing(true)
+    apiFetch(`${BACKEND_URL}/api/ai-tutor/history`, { method: 'DELETE' })
+      .then(r => { if (!r.ok) throw new Error(); setMessages([]) })
+      .catch(() => showToast("Couldn't clear the conversation -- please try again.", 'error'))
+      .finally(() => setClearing(false))
+  }
+
+  if (loading) return <LoadingState label="Loading your AI Tutor..." />
+
+  if (loadError) return (
+    <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', gap: '14px', padding: '24px', textAlign: 'center' }}>
+      <div style={{ fontSize: '28px' }}>⚠️</div>
+      <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>Couldn't load the AI Tutor</div>
+      <div style={{ fontSize: '13px', color: '#616473', maxWidth: '360px' }}>Check your internet connection and try again.</div>
+      <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
+    </div>
+  )
+
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%', maxHeight: 'calc(100vh - 100px)', padding: '0 8px' }}>
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px', flexShrink: 0, gap: '10px' }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a' }}>🤖 AI Tutor</h1>
+          <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Ask anything about TOEFL strategy, grammar, or your own weak areas -- answers are tailored to your practice history.</div>
+        </div>
+        {messages.length > 0 && (
+          <button onClick={clearHistory} disabled={clearing} style={{ flexShrink: 0, background: 'none', border: '1px solid #e1e4ed', borderRadius: '7px', padding: '7px 12px', fontSize: '12px', fontWeight: '600', color: '#616473', cursor: clearing ? 'default' : 'pointer', opacity: clearing ? 0.6 : 1, whiteSpace: 'nowrap' }}>{clearing ? 'Clearing…' : '🗑️ Clear chat'}</button>
+        )}
+      </div>
+
+      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        {messages.length === 0 ? (
+          <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '16px', textAlign: 'center', padding: '20px' }}>
+            <div style={{ fontSize: '36px' }}>🤖</div>
+            <div>
+              <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>Hi! I'm your AI TOEFL Tutor.</div>
+              <div style={{ fontSize: '13px', color: '#616473', marginTop: '4px', maxWidth: '360px' }}>Ask me about exam strategy, grammar rules, or how to improve on your weakest sections. Try one of these:</div>
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%', maxWidth: '420px' }}>
+              {AI_TUTOR_STARTER_PROMPTS.map((p, i) => (
+                <button key={i} onClick={() => send(p)} style={{ textAlign: 'left', background: '#f8f7fb', border: '1px solid #e1e4ed', borderRadius: '9px', padding: '10px 14px', fontSize: '12.5px', color: '#374151', cursor: 'pointer' }}>{p}</button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <>
+            {messages.map((m, i) => (
+              <div key={i} style={{ display: 'flex', justifyContent: m.role === 'user' ? 'flex-end' : 'flex-start' }}>
+                <div style={{
+                  maxWidth: isMobile ? '85%' : '70%', padding: '10px 14px', borderRadius: '14px', fontSize: '13.5px', lineHeight: '1.5', whiteSpace: 'pre-wrap',
+                  background: m.role === 'user' ? '#701fa1' : '#f4f0fb',
+                  color: m.role === 'user' ? '#fff' : '#1a1a1a',
+                  borderBottomRightRadius: m.role === 'user' ? '4px' : '14px',
+                  borderBottomLeftRadius: m.role === 'user' ? '14px' : '4px',
+                }}>
+                  {m.content}
+                </div>
+              </div>
+            ))}
+            {sending && (
+              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <div style={{ background: '#f4f0fb', borderRadius: '14px', borderBottomLeftRadius: '4px', padding: '10px 14px', fontSize: '13px', color: '#9ca3af' }}>Thinking…</div>
+              </div>
+            )}
+            <div ref={messagesEndRef} />
+          </>
+        )}
+      </div>
+
+      <div style={{ display: 'flex', gap: '8px', alignItems: 'flex-end', marginTop: '12px', flexShrink: 0, paddingBottom: '4px' }}>
+        <textarea
+          ref={textareaRef}
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send() } }}
+          placeholder="Ask your AI Tutor anything about TOEFL..."
+          rows={1}
+          maxLength={2000}
+          style={{ flex: 1, resize: 'none', border: '1px solid #cbd5e1', borderRadius: '10px', padding: '11px 14px', fontSize: '13.5px', fontFamily: 'inherit', minHeight: '42px', maxHeight: '120px', boxSizing: 'border-box' }}
+        />
+        <button onClick={() => send()} disabled={sending || !input.trim()} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '12px 20px', fontSize: '13px', fontWeight: '700', cursor: sending || !input.trim() ? 'default' : 'pointer', opacity: sending || !input.trim() ? 0.6 : 1, flexShrink: 0, height: '42px' }}>Send</button>
+      </div>
+    </div>
+  )
+}
+
 // ─── My Progress ────────────────────────────────────────────────────────────
 // Reads back everything saveResult() has ever written (every practice exercise + every mock
 // test section), so the student can see how they're improving over time in one place.
@@ -11116,6 +11272,15 @@ function App() {
   // (panel stays hidden), [] once loaded with nothing to recommend (every category already
   // above the accuracy threshold -- shown as a congratulatory message instead of an empty box).
   const [recommendations, setRecommendations] = useState(null)
+  // Hides the AI Tutor nav item entirely when the backend has no ANTHROPIC_API_KEY configured
+  // (see get_ai_tutor_status in main.py) -- false until the check resolves true, so the item
+  // never flashes in then out on a page load where the feature turns out to be off.
+  const [aiTutorAvailable, setAiTutorAvailable] = useState(false)
+  useEffect(() => {
+    apiFetch(`${BACKEND_URL}/api/ai-tutor/status`).then(r => r.ok ? r.json() : null)
+      .then(data => { if (data?.available) setAiTutorAvailable(true) })
+      .catch(() => {})
+  }, [])
   const [resendingVerification, setResendingVerification] = useState(false)
   const [currentTab, setCurrentTab] = useState('dashboard')
   // Guards every sidebar/Settings/Log-Out tab switch against silently discarding in-progress work
@@ -11440,6 +11605,7 @@ function App() {
             {sb('mocktest', '🧪', 'Full Mock Test')}
             {sb('progress', '📈', 'My Progress')}
             {sb('vocab', '📚', 'Vocabulary')}
+            {aiTutorAvailable && sb('aitutor', '🤖', 'AI Tutor')}
             <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
               📝 TOEFL Guides
             </a>
@@ -11518,6 +11684,7 @@ function App() {
               {currentTab === 'mocktest' && '🧪 Full Mock Test'}
               {currentTab === 'progress' && '📈 My Progress'}
               {currentTab === 'vocab' && '📚 Vocabulary'}
+              {currentTab === 'aitutor' && '🤖 AI Tutor'}
               {currentTab === 'settings' && '⚙️ Settings'}
               {currentTab === 'subscribe' && '💎 Premium'}
               {currentTab === 'admin' && '🛠️ Admin'}
@@ -11891,6 +12058,8 @@ function App() {
 
         {/* FULL MOCK TEST */}
         {currentTab === 'mocktest' && <FullMockTest onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} />}
+
+        {currentTab === 'aitutor' && aiTutorAvailable && <AITutorChat />}
 
         {currentTab === 'progress' && (
           <ProgressScreen onBack={() => setCurrentTab('dashboard')} onPractice={(nav) => {

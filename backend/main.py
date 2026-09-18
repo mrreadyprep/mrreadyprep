@@ -266,6 +266,14 @@ RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "mrreadyprep <onboarding
 # X-Cron-Secret header instead. Leave unset to keep the endpoint disabled (returns 503).
 PRACTICE_REMINDER_CRON_SECRET = os.environ.get("PRACTICE_REMINDER_CRON_SECRET", "")
 
+# From console.anthropic.com. Powers the AI Tutor Chat sidebar (see /api/ai-tutor/chat below).
+# Leave blank to disable the feature entirely -- the endpoint then returns 503 rather than
+# silently failing per-request, and the frontend hides the AI Tutor nav item when a 503 comes
+# back from a lightweight availability check, so a site with no key configured never shows a
+# chat box that can't actually respond.
+ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5")
+
 # ============================================================
 # POLAR (abonelik / ödeme) CONFIG
 # ============================================================
@@ -1012,6 +1020,20 @@ class SuccessStoryCreate(BaseModel):
             raise ValueError("Links aren't allowed in success stories")
         return v
 
+class AITutorChatRequest(BaseModel):
+    # 2000 chars is generous for a genuine question but bounds both the abuse surface (a giant
+    # paste padding out the Anthropic API call this triggers) and the DB row size -- no exercise
+    # question or student message realistically needs more.
+    message: str = Field(min_length=1, max_length=2000)
+
+    @field_validator("message")
+    @classmethod
+    def _strip(cls, v):
+        v = v.strip()
+        if not v:
+            raise ValueError("Message can't be empty")
+        return v
+
 class ExamDateUpdate(BaseModel):
     # Nothing parses this as a date today (confirmed: no fromisoformat/strptime call on it
     # anywhere), so a garbage value can't crash *this* request -- but it's echoed back verbatim
@@ -1520,6 +1542,22 @@ def init_db():
             "UPDATE success_stories SET score = ?, comment = ? WHERE name = ? AND score = ? AND comment = ?",
             (new_score, new_comment, name, old_score, old_comment),
         )
+
+    # AI Tutor Chat's message history -- see /api/ai-tutor/chat below. role is either 'user' or
+    # 'assistant', mirroring the Anthropic Messages API's own role field so a row can be replayed
+    # straight back into the API's `messages` array with no translation. No FK to attempt_results
+    # or any other table -- this is a plain, independent conversation log, scoped to user_id like
+    # every other per-student table in this file.
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS ai_chat_messages (
+            id {pk},
+            user_id INTEGER NOT NULL,
+            role TEXT NOT NULL,
+            content TEXT NOT NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_ai_chat_messages_user_id ON ai_chat_messages(user_id)")
 
     conn.commit()
     conn.close()
@@ -2277,6 +2315,15 @@ SUCCESS_STORY_ATTEMPT_WINDOW_SECONDS = 24 * 60 * 60
 SUCCESS_STORY_ATTEMPT_MAX = 3
 _success_story_attempts: dict = collections.defaultdict(list)
 
+# Per-user (not per-IP, unlike most other stores here -- this endpoint is always authenticated,
+# so the user's own id is a cleaner, un-spoofable key than their IP) daily cap on AI Tutor Chat
+# messages. Real cost control: each message is a paid Anthropic API call, unlike the free-to-serve
+# static content most other endpoints return. 30/day is generous for genuine study use (a student
+# asking a handful of questions per practice session) while bounding worst-case spend per account.
+AI_CHAT_ATTEMPT_WINDOW_SECONDS = 24 * 60 * 60
+AI_CHAT_ATTEMPT_MAX = 30
+_ai_chat_attempts: dict = collections.defaultdict(list)
+
 # get_intro_audio_urls (below) is deliberately public and does no DB/file work, but was the one
 # unauthenticated write-adjacent-cost endpoint in this file with no rate limit at all -- found in
 # the 26th audit round. Generous limit since it's a legitimate, frequent call (every Listening list
@@ -2360,7 +2407,7 @@ def _check_api_throttle(user_id: int):
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts, _audio_proxy_fetch_attempts, _success_story_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts, _audio_proxy_fetch_attempts, _success_story_attempts, _ai_chat_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -3828,13 +3875,15 @@ def get_mistakes(user=Depends(get_current_user)):
 # anything worth more reps, not just outright failures.
 RECOMMENDATION_WEAK_THRESHOLD_PCT = 70
 
-@app.get("/api/recommendations")
-def get_recommendations(limit: int = Query(4, ge=1, le=12), user=Depends(get_current_user)):
-    """Adaptive practice suggestions for the Dashboard's "Recommended for You" panel. Reuses the
-    same attempt_results data that already drives Dashboard section scores and Review Mistakes
-    (see _fetch_category_sums/compute_section_band above and get_mistakes below) rather than a
-    new table -- a student's "weak areas" are just a read of data we already have, computed fresh
-    on every call so it always reflects their latest attempts.
+def _compute_recommendations(conn, user_id, limit=4):
+    """Adaptive practice suggestions, shared by the Dashboard's "Recommended for You" panel
+    (get_recommendations below) and the AI Tutor Chat's weak-areas context injection
+    (ai_tutor_chat below) -- both want the exact same "what should this student work on" answer,
+    just presented differently (a clickable card list vs. a sentence in a system prompt). Reuses
+    the same attempt_results data that already drives Dashboard section scores and Review
+    Mistakes (see _fetch_category_sums/compute_section_band above and get_mistakes below) rather
+    than a new table -- a student's "weak areas" are just a read of data we already have, computed
+    fresh on every call so it always reflects their latest attempts.
 
     Every one of the 12 practice categories in CATEGORY_NAV is bucketed as either:
       - "not_started": zero attempts ever -- surfaced first, since an untouched category can't
@@ -3842,16 +3891,14 @@ def get_recommendations(limit: int = Query(4, ge=1, le=12), user=Depends(get_cur
       - "needs_practice": at least one attempt, average accuracy below
         RECOMMENDATION_WEAK_THRESHOLD_PCT -- surfaced next, worst accuracy first.
     Categories the student is already doing well in (>= threshold) are never recommended -- this
-    endpoint only ever points at genuine gaps, not busywork. Returns at most `limit` entries,
-    not-started categories first (there's no accuracy to rank them by), then needs_practice
-    sorted by ascending avg_pct so the single weakest area leads the list.
+    only ever surfaces genuine gaps, not busywork. Returns at most `limit` entries, not-started
+    categories first (there's no accuracy to rank them by), then needs_practice sorted by
+    ascending avg_pct so the single weakest area leads the list. Takes the caller's own `conn`
+    (not a user_id alone) so it can be called from within an already-open connection without
+    opening a second one on the same thread -- see load_legacy_profile_settings()'s comment for
+    why that matters with the Postgres pool.
     """
-    conn = get_db()
-    try:
-        category_sums = _fetch_category_sums(conn, user["id"])
-    finally:
-        conn.close()
-
+    category_sums = _fetch_category_sums(conn, user_id)
     not_started, needs_practice = [], []
     for cat in CATEGORY_NAV.keys():
         total_score, total_possible, n = category_sums.get(cat, (None, None, 0))
@@ -3867,9 +3914,141 @@ def get_recommendations(limit: int = Query(4, ge=1, le=12), user=Depends(get_cur
             avg_pct = math.floor((total_score / total_possible) * 100 + 0.5)
             if avg_pct < RECOMMENDATION_WEAK_THRESHOLD_PCT:
                 needs_practice.append({**entry, "reason": "needs_practice", "avg_pct": avg_pct})
-
     needs_practice.sort(key=lambda e: e["avg_pct"])
-    return {"recommendations": (not_started + needs_practice)[:limit]}
+    return (not_started + needs_practice)[:limit]
+
+@app.get("/api/recommendations")
+def get_recommendations(limit: int = Query(4, ge=1, le=12), user=Depends(get_current_user)):
+    conn = get_db()
+    try:
+        return {"recommendations": _compute_recommendations(conn, user["id"], limit)}
+    finally:
+        conn.close()
+
+# ============================================================
+# AI TUTOR CHAT
+# ============================================================
+# A sidebar-style chat backed by the Anthropic Messages API, given each student's own weak-areas
+# context (via _compute_recommendations above) so its answers are grounded in that specific
+# student's actual practice history rather than generic TOEFL advice. Entirely optional: with no
+# ANTHROPIC_API_KEY configured, every endpoint below returns 503 and the frontend hides the AI
+# Tutor nav item rather than showing a chat box that can't respond.
+
+AI_TUTOR_SYSTEM_PROMPT_TEMPLATE = """You are a friendly, encouraging TOEFL iBT tutor for mrreadyprep, an online TOEFL prep platform. You're chatting with a student inside the app.
+
+Guidelines:
+- Keep answers concise and practical -- 2-5 sentences unless the student explicitly asks for a longer explanation or a written example (like a sample email or essay paragraph).
+- Focus on actionable TOEFL exam strategy: pacing, structure, common mistakes, vocabulary, grammar, and test-taking technique for Reading, Listening, Writing, and Speaking.
+- Be warm and encouraging, never condescending. Many students are anxious about this exam.
+- If asked something with no connection to English learning, TOEFL prep, or using mrreadyprep itself, gently redirect back to TOEFL topics.
+- Never claim to officially represent ETS or the real TOEFL test -- you're a study aid, not the exam itself.
+{weak_areas_context}"""
+
+# Only the most recent messages are replayed back into the API as conversation context -- bounds
+# both the Anthropic API cost per message (input tokens grow with history) and this student's own
+# context window, while still giving the model enough of the actual conversation to follow up
+# coherently. The full history is still stored in ai_chat_messages and served in full by
+# GET /api/ai-tutor/history for the sidebar's own scrollback.
+AI_TUTOR_CONTEXT_MESSAGES = 12
+AI_TUTOR_MAX_TOKENS = 600
+
+def _require_ai_tutor_configured():
+    if not ANTHROPIC_API_KEY:
+        raise HTTPException(status_code=503, detail="AI Tutor Chat isn't configured on this server yet.")
+
+@app.get("/api/ai-tutor/status")
+def get_ai_tutor_status():
+    """Cheap, unauthenticated availability check -- lets the frontend decide whether to show the
+    AI Tutor nav item at all, without needing a logged-in user just to find out the feature is
+    off. Deliberately returns no user-specific data."""
+    return {"available": bool(ANTHROPIC_API_KEY)}
+
+@app.get("/api/ai-tutor/history")
+def get_ai_tutor_history(limit: int = Query(50, ge=1, le=200), user=Depends(get_current_user)):
+    _require_ai_tutor_configured()
+    conn = get_db()
+    try:
+        rows = conn.execute(
+            "SELECT role, content, created_at FROM ai_chat_messages WHERE user_id = ? ORDER BY id DESC LIMIT ?",
+            (user["id"], limit),
+        ).fetchall()
+        return {"messages": [dict(r) for r in reversed(rows)]}
+    finally:
+        conn.close()
+
+@app.post("/api/ai-tutor/chat")
+async def ai_tutor_chat(data: AITutorChatRequest, request: Request, user=Depends(get_current_user)):
+    _require_ai_tutor_configured()
+    _check_and_consume_rate_limit(
+        _ai_chat_attempts, str(user["id"]),
+        AI_CHAT_ATTEMPT_WINDOW_SECONDS, AI_CHAT_ATTEMPT_MAX, "AI Tutor Chat message",
+    )
+
+    conn = get_db()
+    try:
+        recs = _compute_recommendations(conn, user["id"], limit=3)
+        if recs:
+            weak_areas_context = (
+                "\n\nThis student's own practice data shows they could use more work on: "
+                + ", ".join(f"{r['label']} ({r['section']})" for r in recs)
+                + ". Weave this in naturally if it's relevant to what they ask -- don't force it into every reply."
+            )
+        else:
+            weak_areas_context = "\n\nThis student is currently performing well (70%+ accuracy) across every practice category they've tried."
+
+        history_rows = conn.execute(
+            "SELECT role, content FROM ai_chat_messages WHERE user_id = ? ORDER BY id DESC LIMIT ?",
+            (user["id"], AI_TUTOR_CONTEXT_MESSAGES),
+        ).fetchall()
+        api_messages = [{"role": r["role"], "content": r["content"]} for r in reversed(history_rows)]
+        api_messages.append({"role": "user", "content": data.message})
+
+        try:
+            async with httpx.AsyncClient(timeout=httpx.Timeout(connect=10.0, read=30.0, write=10.0, pool=10.0)) as client:
+                resp = await client.post(
+                    "https://api.anthropic.com/v1/messages",
+                    headers={
+                        "x-api-key": ANTHROPIC_API_KEY,
+                        "anthropic-version": "2023-06-01",
+                        "content-type": "application/json",
+                    },
+                    json={
+                        "model": ANTHROPIC_MODEL,
+                        "max_tokens": AI_TUTOR_MAX_TOKENS,
+                        "system": AI_TUTOR_SYSTEM_PROMPT_TEMPLATE.format(weak_areas_context=weak_areas_context),
+                        "messages": api_messages,
+                    },
+                )
+        except httpx.HTTPError:
+            raise HTTPException(status_code=502, detail="Couldn't reach the AI Tutor right now -- please try again in a moment.")
+
+        if resp.status_code != 200:
+            # Surfaced as a generic 502 rather than forwarding Anthropic's own status/body straight
+            # through -- a 401 here means OUR api key is misconfigured, not anything the student did
+            # wrong, and a raw upstream error body could leak implementation details.
+            raise HTTPException(status_code=502, detail="The AI Tutor is temporarily unavailable -- please try again in a moment.")
+
+        reply_data = resp.json()
+        reply_text = "".join(block.get("text", "") for block in reply_data.get("content", []) if block.get("type") == "text").strip()
+        if not reply_text:
+            raise HTTPException(status_code=502, detail="The AI Tutor didn't return a response -- please try again.")
+
+        conn.execute("INSERT INTO ai_chat_messages (user_id, role, content) VALUES (?, ?, ?)", (user["id"], "user", data.message))
+        conn.execute("INSERT INTO ai_chat_messages (user_id, role, content) VALUES (?, ?, ?)", (user["id"], "assistant", reply_text))
+        conn.commit()
+        return {"reply": reply_text}
+    finally:
+        conn.close()
+
+@app.delete("/api/ai-tutor/history")
+def clear_ai_tutor_history(user=Depends(get_current_user)):
+    conn = get_db()
+    try:
+        conn.execute("DELETE FROM ai_chat_messages WHERE user_id = ?", (user["id"],))
+        conn.commit()
+        return {"status": "success"}
+    finally:
+        conn.close()
 
 # --- Reading: Academic Passage ---
 @app.get("/api/reading/academic-passage")
