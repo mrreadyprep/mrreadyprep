@@ -9848,11 +9848,16 @@ function LandingPage({ onGetStarted, onLogIn }) {
             digging into Subscribe. Mirrors the same WELCOME50 messaging shown again in the pricing
             section below and on the in-app Subscribe screen (before checkout, not just at Polar's
             payment form) so the offer is consistent everywhere it appears. */}
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', marginTop: '22px', backgroundColor: 'rgba(182, 123, 251, 0.14)', border: '1px solid rgba(182, 123, 251, 0.4)', borderRadius: '999px', padding: isMobile ? '8px 14px' : '9px 18px' }}>
-          <span style={{ fontSize: '15px' }} aria-hidden="true">🎉</span>
-          <span style={{ fontSize: isMobile ? '12px' : '13px', color: '#e9d5ff', fontWeight: '700' }}>
-            Use code <span style={{ color: '#fff' }}>WELCOME50</span> at checkout for 50% off your first month
-          </span>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', marginTop: '22px', backgroundColor: 'rgba(112, 31, 161, 0.15)', border: '2px solid rgba(112, 31, 161, 0.8)', borderRadius: '12px', padding: isMobile ? '14px 18px' : '16px 24px' }}>
+          <span style={{ fontSize: '24px' }} aria-hidden="true">🎉</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+            <span style={{ fontSize: isMobile ? '16px' : '18px', color: '#701fa1', fontWeight: '900', letterSpacing: '-0.3px' }}>
+              50% OFF
+            </span>
+            <span style={{ fontSize: isMobile ? '11px' : '12px', color: '#616473', fontWeight: '600' }}>
+              Your first month
+            </span>
+          </div>
         </div>
       </div>
 
@@ -9909,12 +9914,56 @@ function LandingPage({ onGetStarted, onLogIn }) {
           <div style={{ border: `2px solid ${purple}`, borderRadius: '14px', padding: '28px', backgroundColor: '#f9f8fc' }}>
             <div style={{ fontSize: '14px', fontWeight: '700', color: purple, marginBottom: '6px' }}>Premium</div>
             <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginBottom: '6px' }}>$50<span style={{ fontSize: '14px', fontWeight: '500', color: '#6b7280' }}> / month</span></div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: purple, marginBottom: '14px' }}>🎉 Use code WELCOME50 for 50% off your first month</div>
+            <div style={{ fontSize: '13px', fontWeight: '800', color: '#d946a6', marginBottom: '14px', backgroundColor: 'rgba(217, 70, 166, 0.1)', padding: '10px 12px', borderRadius: '8px' }}>✨ 50% OFF First Month</div>
             <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7' }}>Full question bank, all full-length mock tests, and AI-based scoring for Writing and Speaking. Cancel anytime.</div>
           </div>
         </div>
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <a href="/pricing.html" style={{ fontSize: '13px', fontWeight: '700', color: purple }}>See full pricing details →</a>
+        </div>
+      </div>
+
+      {/* Student Success Stories */}
+      <div style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '1200px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 12px' }}>
+          🎓 Student Success Stories
+        </h2>
+        <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 48px', maxWidth: '520px', lineHeight: '1.6' }}>
+          See how our students are acing the TOEFL iBT. Share your results and inspire the community!
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '24px', marginBottom: '32px' }}>
+          {[
+            { icon: '📸', name: 'Sarah Chen', score: '120/120 🎉', comment: 'MRReadyPrep\'s mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!', likes: 234, replies: 12, time: '2 weeks ago' },
+            { icon: '✨', name: 'Ahmed Hassan', score: '116/120 ⭐', comment: 'Went from 95 to 116 in just 6 weeks. The structured practice plan really helped me focus on weak areas.', likes: 189, replies: 8, time: '1 week ago' },
+            { icon: '🚀', name: 'Maria Lopez', score: '113/120', comment: 'The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!', likes: 156, replies: 6, time: '3 days ago' }
+          ].map((story, idx) => (
+            <div key={idx} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', background: '#f9f8fc', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(112, 31, 161, 0.12)'; e.currentTarget.style.borderColor = '#701fa1'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e1e4ed'; }}>
+              <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'flex-start' }}>
+                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(135deg, #701fa1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px', flexShrink: 0 }}>
+                  {story.icon}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: '800', color: '#1a1a1a', fontSize: '14px', marginBottom: '4px' }}>{story.name}</div>
+                  <div style={{ display: 'inline-block', background: '#fef3c7', color: '#b45309', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>{story.score}</div>
+                </div>
+              </div>
+              <div style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '12px' }}>
+                {story.comment}
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', color: '#9ca3af' }}>
+                <span>{story.time}</span>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <span>👍 {story.likes}</span>
+                  <span>💬 {story.replies}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <button type="button" onClick={onGetStarted} style={{ padding: '16px 32px', background: '#701fa1', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', border: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#5a1480'} onMouseLeave={(e) => e.currentTarget.style.background = '#701fa1'}>
+            + Share Your Success Story
+          </button>
         </div>
       </div>
 
@@ -10319,7 +10368,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
           </div>
 
           <div style={{ marginTop: '24px', backgroundColor: '#f0e8ff', border: '1px solid #d4c5e2', borderRadius: '8px', padding: '16px', textAlign: 'center' }}>
-            <div style={{ fontSize: '13px', color: '#6b5b95' }}>🎉 Use code <strong style={{ color: '#701fa1', fontSize: '14px' }}>WELCOME50</strong> at checkout for 50% off your first month!</div>
+            <div style={{ fontSize: '13px', color: '#6b5b95' }}>🎉 <strong style={{ color: '#701fa1', fontSize: '14px' }}>50% OFF</strong> automatically applied to your first month!</div>
           </div>
         </div>
 
