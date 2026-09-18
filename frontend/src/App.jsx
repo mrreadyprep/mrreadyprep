@@ -11111,6 +11111,11 @@ function App() {
 
   const [userData, setUserData] = useState(null)
   const [dashboardLoadError, setDashboardLoadError] = useState(false)
+  // Dashboard's "Recommended for You" panel -- adaptive practice suggestions from
+  // /api/recommendations (see get_recommendations in main.py). null while loading/unfetched
+  // (panel stays hidden), [] once loaded with nothing to recommend (every category already
+  // above the accuracy threshold -- shown as a congratulatory message instead of an empty box).
+  const [recommendations, setRecommendations] = useState(null)
   const [resendingVerification, setResendingVerification] = useState(false)
   const [currentTab, setCurrentTab] = useState('dashboard')
   // Guards every sidebar/Settings/Log-Out tab switch against silently discarding in-progress work
@@ -11211,6 +11216,14 @@ function App() {
         setWritingTarget(data.writing_target ?? 6.0)
         setSpeakingTarget(data.speaking_target ?? 6.0)
       }).catch(err => { console.error(err); setDashboardLoadError(true) })
+    // Independent fetch, deliberately not chained onto the main dashboard fetch above: a
+    // recommendations failure (or slow response) should never block the core dashboard numbers
+    // from rendering, and vice versa. Left as null (panel hidden) on error rather than showing a
+    // second error state on top of dashboardLoadError -- this panel is a nice-to-have, not core
+    // data the student depends on.
+    apiFetch(`${BACKEND_URL}/api/recommendations`).then(res => res.ok ? res.json() : null)
+      .then(data => { if (data) setRecommendations(data.recommendations) })
+      .catch(() => {})
   }
 
   // Section scores/exam date only change as a side effect of finishing practice elsewhere in the
@@ -11562,6 +11575,47 @@ function App() {
                 <button onClick={() => setCurrentTab('mocktest')} style={{ marginLeft: 'auto', background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Start test</button>
               </div>
             </div>
+
+            {/* Adaptive Learning Paths: "Recommended for You" -- see get_recommendations() in
+                main.py. Reuses the exact same attempt_results data as the section-score bars
+                below, just re-sliced by individual practice category instead of by section, so
+                it always agrees with what those bars already show. null (not yet fetched, or the
+                fetch failed) hides the whole panel rather than showing a skeleton/error state --
+                this is a bonus panel, not core dashboard data. An empty array (fetched fine, zero
+                categories below the threshold) gets its own congratulatory row instead of just
+                vanishing, so "no recommendations" reads as an achievement, not a broken widget. */}
+            {recommendations !== null && (
+              <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', flexShrink: 0 }}>
+                <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}><span aria-hidden="true">🎯</span> Recommended for You</div>
+                {recommendations.length === 0 ? (
+                  <div style={{ fontSize: '12px', color: '#616473' }}>🎉 You're above 70% accuracy in every practiced category — keep it up! Try the Full Mock Test to check your overall readiness.</div>
+                ) : (
+                  <div style={{ display: 'flex', gap: '10px', overflowX: isMobile ? 'auto' : 'visible', flexWrap: isMobile ? 'nowrap' : 'wrap', paddingBottom: isMobile ? '4px' : 0 }}>
+                    {recommendations.map(rec => {
+                      const sectionColor = { reading: '#2563eb', listening: '#16a34a', writing: '#ea580c', speaking: '#9333ea' }[rec.section] || '#701fa1'
+                      return (
+                        <div key={rec.category} style={{ flex: isMobile ? '0 0 200px' : '1 1 200px', minWidth: '180px', background: '#f8f7fb', borderRadius: '10px', padding: '12px', borderLeft: `3px solid ${sectionColor}`, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                          <div>
+                            <div style={{ fontSize: '9px', fontWeight: '700', color: sectionColor, textTransform: 'uppercase', letterSpacing: '0.4px' }}>{rec.section}</div>
+                            <div style={{ fontSize: '12px', fontWeight: '700', color: '#1a1a1a', marginTop: '2px' }}>{rec.label}</div>
+                            <div style={{ fontSize: '10.5px', color: '#888', marginTop: '3px' }}>{rec.reason === 'not_started' ? "You haven't tried this yet" : `${rec.avg_pct}% avg accuracy`}</div>
+                          </div>
+                          <button onClick={() => {
+                            const nav = rec.nav
+                            if (!nav || !nav.tab) return
+                            setCurrentTab(nav.tab)
+                            if (nav.tab === 'reading') setReadingSubTab(nav.subTab)
+                            else if (nav.tab === 'listening') setListeningSubTab(nav.subTab)
+                            else if (nav.tab === 'writing') setWritingSubTab(nav.subTab)
+                            else if (nav.tab === 'speaking') setSpeakingSubTab(nav.subTab)
+                          }} style={{ background: sectionColor, color: '#fff', border: 'none', padding: '7px 10px', borderRadius: '7px', fontSize: '11px', fontWeight: '700', cursor: 'pointer', alignSelf: 'flex-start' }}>Practice Now</button>
+                        </div>
+                      )
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
 
             <div style={{ display: 'flex', gap: '12px', flex: 1, minHeight: 0, overflow: isMobile ? 'visible' : 'hidden', ...(isMobile ? { flexDirection: 'column', overflowY: 'auto' } : {}) }}>
               <div style={{ flex: 1, minWidth: 0, background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', display: 'flex', flexDirection: 'column', boxSizing: 'border-box' }}>

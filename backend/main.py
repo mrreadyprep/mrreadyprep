@@ -3823,6 +3823,54 @@ def get_mistakes(user=Depends(get_current_user)):
     finally:
         conn.close()
 
+# Below this accuracy, a practiced category is considered "needs work" for recommendation
+# purposes -- deliberately looser than a passing grade, since the goal here is to surface
+# anything worth more reps, not just outright failures.
+RECOMMENDATION_WEAK_THRESHOLD_PCT = 70
+
+@app.get("/api/recommendations")
+def get_recommendations(limit: int = Query(4, ge=1, le=12), user=Depends(get_current_user)):
+    """Adaptive practice suggestions for the Dashboard's "Recommended for You" panel. Reuses the
+    same attempt_results data that already drives Dashboard section scores and Review Mistakes
+    (see _fetch_category_sums/compute_section_band above and get_mistakes below) rather than a
+    new table -- a student's "weak areas" are just a read of data we already have, computed fresh
+    on every call so it always reflects their latest attempts.
+
+    Every one of the 12 practice categories in CATEGORY_NAV is bucketed as either:
+      - "not_started": zero attempts ever -- surfaced first, since an untouched category can't
+        get a meaningful accuracy score and starting it is the highest-value next step.
+      - "needs_practice": at least one attempt, average accuracy below
+        RECOMMENDATION_WEAK_THRESHOLD_PCT -- surfaced next, worst accuracy first.
+    Categories the student is already doing well in (>= threshold) are never recommended -- this
+    endpoint only ever points at genuine gaps, not busywork. Returns at most `limit` entries,
+    not-started categories first (there's no accuracy to rank them by), then needs_practice
+    sorted by ascending avg_pct so the single weakest area leads the list.
+    """
+    conn = get_db()
+    try:
+        category_sums = _fetch_category_sums(conn, user["id"])
+    finally:
+        conn.close()
+
+    not_started, needs_practice = [], []
+    for cat in CATEGORY_NAV.keys():
+        total_score, total_possible, n = category_sums.get(cat, (None, None, 0))
+        entry = {
+            "category": cat,
+            "label": CATEGORY_LABELS.get(cat, cat),
+            "section": CATEGORY_SECTION.get(cat, ""),
+            "nav": CATEGORY_NAV.get(cat, {}),
+        }
+        if not n or not total_possible:
+            not_started.append({**entry, "reason": "not_started", "avg_pct": None})
+        else:
+            avg_pct = math.floor((total_score / total_possible) * 100 + 0.5)
+            if avg_pct < RECOMMENDATION_WEAK_THRESHOLD_PCT:
+                needs_practice.append({**entry, "reason": "needs_practice", "avg_pct": avg_pct})
+
+    needs_practice.sort(key=lambda e: e["avg_pct"])
+    return {"recommendations": (not_started + needs_practice)[:limit]}
+
 # --- Reading: Academic Passage ---
 @app.get("/api/reading/academic-passage")
 def get_academic_passage(user=Depends(get_current_user_optional)):
