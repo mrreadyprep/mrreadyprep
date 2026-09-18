@@ -9725,10 +9725,12 @@ function BadgesScreen() {
     apiFetch(`${BACKEND_URL}/api/badges`).then(r => { if (!r.ok) throw new Error('fetch failed'); return r.json() })
       .then(data => {
         setBadges(Array.isArray(data.badges) ? data.badges : [])
-        setLoading(false)
+        setLoading(false);
         // Celebrate a badge earned since the last visit -- one toast per newly-unlocked badge,
         // named individually so the student knows exactly what they just earned rather than a
-        // generic "you got a badge!" notice.
+        // generic "you got a badge!" notice. (Leading semicolon above is required: without it,
+        // ASI treats this line as a call `setLoading(false)(data.newly_unlocked...)`, throwing
+        // and landing in the .catch() below even though the fetch succeeded -- found live.)
         (data.newly_unlocked || []).forEach(id => {
           const badge = (data.badges || []).find(b => b.id === id)
           if (badge) showToast(`🎉 New badge unlocked: ${badge.name}!`)
