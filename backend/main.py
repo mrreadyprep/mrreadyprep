@@ -989,6 +989,29 @@ class ResetPasswordRequest(BaseModel):
 class VerifyEmailRequest(BaseModel):
     token: str = Field(max_length=128)
 
+class SuccessStoryCreate(BaseModel):
+    name: str = Field(min_length=2, max_length=40)
+    score: str = Field(default="", max_length=20)
+    comment: str = Field(min_length=15, max_length=300)
+
+    @field_validator("name", "score", "comment")
+    @classmethod
+    def _strip(cls, v):
+        return v.strip()
+
+    @field_validator("comment")
+    @classmethod
+    def _no_links(cls, v):
+        # This is a publicly-writable, no-login-required endpoint (the landing page it backs only
+        # ever renders for signed-out visitors) posting straight onto the public marketing page, so
+        # the one thing worth blocking server-side -- beyond the length limits above -- is spam
+        # trying to plant an outbound link. Not a full profanity/spam filter; that's a job for a
+        # human moderator, not this endpoint.
+        lowered = v.lower()
+        if "http://" in lowered or "https://" in lowered or "www." in lowered:
+            raise ValueError("Links aren't allowed in success stories")
+        return v
+
 class ExamDateUpdate(BaseModel):
     # Nothing parses this as a date today (confirmed: no fromisoformat/strptime call on it
     # anywhere), so a garbage value can't crash *this* request -- but it's echoed back verbatim
@@ -1453,6 +1476,31 @@ def init_db():
             value TEXT
         )
     """)
+
+    # Landing-page "Student Success Stories" -- publicly readable, publicly writable (no login
+    # required: this table backs the marketing landing page, which by definition only ever renders
+    # for signed-out visitors, see LandingPage in App.jsx). Anti-abuse lives entirely in the
+    # /api/success-stories POST handler (length limits + a URL/spam filter + a per-IP rate limit),
+    # not here.
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS success_stories (
+            id {pk},
+            name TEXT NOT NULL,
+            score TEXT,
+            comment TEXT NOT NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    # One-time seed so the 3 stories that used to be hardcoded in App.jsx become real rows instead
+    # -- keeps the landing page non-empty for the very first visitors before any student has
+    # submitted their own story yet.
+    if conn.execute("SELECT COUNT(*) AS n FROM success_stories").fetchone()["n"] == 0:
+        for name, score, comment in [
+            ("Sarah Chen", "120/120", "MRReadyPrep's mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!"),
+            ("Ahmed Hassan", "116/120", "Went from 95 to 116 in just 6 weeks. The structured practice plan really helped me focus on weak areas."),
+            ("Maria Lopez", "113/120", "The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!"),
+        ]:
+            conn.execute("INSERT INTO success_stories (name, score, comment) VALUES (?, ?, ?)", (name, score, comment))
 
     conn.commit()
     conn.close()
@@ -2203,6 +2251,13 @@ REGISTER_ATTEMPT_WINDOW_SECONDS = 60 * 60
 REGISTER_ATTEMPT_MAX = 8
 _register_attempts: dict = collections.defaultdict(list)
 
+# Landing-page success-story submissions: no login required (see success_stories table comment in
+# init_db), so IP is the only identity available -- keeps one visitor from flooding the public
+# marketing page with junk rows.
+SUCCESS_STORY_ATTEMPT_WINDOW_SECONDS = 24 * 60 * 60
+SUCCESS_STORY_ATTEMPT_MAX = 3
+_success_story_attempts: dict = collections.defaultdict(list)
+
 # get_intro_audio_urls (below) is deliberately public and does no DB/file work, but was the one
 # unauthenticated write-adjacent-cost endpoint in this file with no rate limit at all -- found in
 # the 26th audit round. Generous limit since it's a legitimate, frequent call (every Listening list
@@ -2286,7 +2341,7 @@ def _check_api_throttle(user_id: int):
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts, _audio_proxy_fetch_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts, _audio_proxy_fetch_attempts, _success_story_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -4089,4 +4144,44 @@ def _build_speaking_interview():
 def get_speaking_interview(user=Depends(get_current_user_optional)):
     data = _cached_pool("speaking_interview", _build_speaking_interview)
     return gate_pool(data, user)
+
+# --- Landing page: Student Success Stories ---
+# Public in both directions -- the landing page these back (LandingPage in App.jsx) only ever
+# renders for signed-out visitors (see App()'s authState === 'out' branch), so there's no logged-in
+# user to attach a submission to. Anti-abuse is the length/link validation on SuccessStoryCreate
+# above plus the per-IP rate limit below, not a login requirement.
+@app.get("/api/success-stories")
+def get_success_stories():
+    conn = get_db()
+    try:
+        rows = conn.execute(
+            "SELECT id, name, score, comment, created_at FROM success_stories ORDER BY id DESC LIMIT 30"
+        ).fetchall()
+        return {"stories": [dict(r) for r in rows]}
+    finally:
+        conn.close()
+
+@app.post("/api/success-stories")
+def create_success_story(data: SuccessStoryCreate, request: Request):
+    _check_and_consume_rate_limit(
+        _success_story_attempts, _client_ip(request),
+        SUCCESS_STORY_ATTEMPT_WINDOW_SECONDS, SUCCESS_STORY_ATTEMPT_MAX, "success story submission",
+    )
+    if not data.name:
+        raise HTTPException(status_code=400, detail="Name is required")
+    if not data.comment:
+        raise HTTPException(status_code=400, detail="Please share a bit about your experience")
+    conn = get_db()
+    try:
+        insert_sql = "INSERT INTO success_stories (name, score, comment) VALUES (?, ?, ?)"
+        if DATABASE_URL:
+            cursor = conn.execute(insert_sql + " RETURNING id, name, score, comment, created_at", (data.name, data.score, data.comment))
+            row = cursor.fetchone()
+        else:
+            cursor = conn.execute(insert_sql, (data.name, data.score, data.comment))
+            row = conn.execute("SELECT id, name, score, comment, created_at FROM success_stories WHERE id = ?", (cursor.lastrowid,)).fetchone()
+        conn.commit()
+        return dict(row)
+    finally:
+        conn.close()
 

@@ -9787,6 +9787,75 @@ function CookieConsentBanner() {
 // homepages (Magoosh, BestMyTest, TestGlider): hero pitch, skill-by-skill feature breakdown,
 // how-it-works, pricing teaser, footer -- all real static content, visible with no login and no
 // client-side data fetch (everything here is hard-coded copy, not an API call).
+// Small icon set the "Student Success Stories" cards cycle through -- backend rows don't carry an
+// icon of their own (nothing meaningful for a visitor to pick), so this just varies the avatar a
+// little instead of every card looking identical.
+const SUCCESS_STORY_ICONS = ['📸', '✨', '🚀', '🎯', '⭐', '🌟']
+
+// Modal behind the landing page's "+ Share Your Success Story" button. No login required -- see
+// the success_stories table/endpoint comments in backend/main.py: this whole page only ever
+// renders for signed-out visitors, so there's no account to attach a submission to. Posts
+// immediately (no moderation queue); anti-abuse is server-side (length limits, a link filter, and
+// a per-IP rate limit -- SUCCESS_STORY_ATTEMPT_MAX in main.py).
+function ShareSuccessStoryModal({ onClose, onSubmitted }) {
+  const [name, setName] = useState('')
+  const [score, setScore] = useState('')
+  const [comment, setComment] = useState('')
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape' && !submitting) onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose, submitting])
+  const trapRef = useFocusTrap()
+
+  const inputStyle = { width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '14px', color: '#1a1a1a' }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const trimmedName = name.trim()
+    const trimmedComment = comment.trim()
+    if (trimmedName.length < 2) { setError('Please enter your name.'); return }
+    if (trimmedComment.length < 15) { setError('Tell us a bit more about your experience (at least 15 characters).'); return }
+    setError('')
+    setSubmitting(true)
+    apiFetch(`${BACKEND_URL}/api/success-stories`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: trimmedName, score: score.trim(), comment: trimmedComment }),
+    }).then(res => res.json().then(data => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if (!ok) { setError(extractErrorMessage(data, 'Could not submit your story. Please try again.')); setSubmitting(false); return }
+        onSubmitted(data)
+      })
+      .catch(() => { setError('Network error -- please check your connection and try again.'); setSubmitting(false) })
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Share your success story" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '440px', width: '100%' }}>
+        <div style={{ fontSize: '17px', fontWeight: '800', color: '#1a1a1a', marginBottom: '4px' }}>Share your success story</div>
+        <div style={{ fontSize: '13px', color: '#616473', marginBottom: '18px', lineHeight: '1.5' }}>Posted to this page right away -- no account needed.</div>
+        <form onSubmit={handleSubmit}>
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', marginBottom: '4px' }}>Your name</label>
+          <input autoFocus value={name} onChange={(e) => setName(e.target.value)} maxLength={40} placeholder="e.g. Sarah Chen" style={inputStyle} disabled={submitting} />
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', margin: '14px 0 4px' }}>Your score (optional)</label>
+          <input value={score} onChange={(e) => setScore(e.target.value)} maxLength={20} placeholder="e.g. 116/120" style={inputStyle} disabled={submitting} />
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', margin: '14px 0 4px' }}>Your experience</label>
+          <textarea value={comment} onChange={(e) => setComment(e.target.value)} maxLength={300} rows={4} placeholder="Tell other students how MRReadyPrep helped you..." style={{ ...inputStyle, resize: 'vertical', fontFamily: 'inherit' }} disabled={submitting} />
+          {error && <div style={{ color: '#dc2626', fontSize: '12px', marginTop: '10px' }}>{error}</div>}
+          <div style={{ display: 'flex', gap: '8px', marginTop: '20px' }}>
+            <button type="button" onClick={onClose} disabled={submitting} style={{ flex: 1, background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', color: '#616473', cursor: 'pointer' }}>Cancel</button>
+            <button type="submit" disabled={submitting} style={{ flex: 1, background: '#701fa1', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', color: '#fff', cursor: 'pointer', opacity: submitting ? 0.7 : 1 }}>{submitting ? 'Posting...' : 'Post my story'}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
 function LandingPage({ onGetStarted, onLogIn }) {
   const isMobile = useIsMobile()
   const purple = '#701fa1'
@@ -9805,6 +9874,26 @@ function LandingPage({ onGetStarted, onLogIn }) {
   ]
 
   const navLinkStyle = { fontSize: '13px', fontWeight: '700', color: '#fff', textDecoration: 'none', cursor: 'pointer', background: 'none', border: 'none' }
+
+  // Student Success Stories -- fetched from the backend (real, publicly-submitted rows) instead of
+  // being hardcoded here, so a story a visitor submits through the modal below shows up for the
+  // next visitor too. Falls back to a small static set if the fetch fails, so the section never
+  // renders empty/broken for a first-time visitor on a network hiccup.
+  const [stories, setStories] = useState([
+    { id: 'fallback-1', name: 'Sarah Chen', score: '120/120', comment: 'MRReadyPrep\'s mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!' },
+    { id: 'fallback-2', name: 'Ahmed Hassan', score: '116/120', comment: 'Went from 95 to 116 in just 6 weeks. The structured practice plan really helped me focus on weak areas.' },
+    { id: 'fallback-3', name: 'Maria Lopez', score: '113/120', comment: 'The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!' },
+  ])
+  const [showShareModal, setShowShareModal] = useState(false)
+
+  useEffect(() => {
+    let cancelled = false
+    fetch(`${BACKEND_URL}/api/success-stories`)
+      .then(res => res.ok ? res.json() : Promise.reject())
+      .then(data => { if (!cancelled && Array.isArray(data.stories) && data.stories.length > 0) setStories(data.stories) })
+      .catch(() => { /* keep the fallback stories above */ })
+    return () => { cancelled = true }
+  }, [])
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', overflowY: 'auto', fontFamily: 'sans-serif', backgroundColor: '#fff' }}>
@@ -9947,39 +10036,43 @@ function LandingPage({ onGetStarted, onLogIn }) {
           See how our students are acing the TOEFL iBT. Share your results and inspire the community!
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '24px', marginBottom: '32px' }}>
-          {[
-            { icon: '📸', name: 'Sarah Chen', score: '120/120 🎉', comment: 'MRReadyPrep\'s mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!', likes: 234, replies: 12, time: '2 weeks ago' },
-            { icon: '✨', name: 'Ahmed Hassan', score: '116/120 ⭐', comment: 'Went from 95 to 116 in just 6 weeks. The structured practice plan really helped me focus on weak areas.', likes: 189, replies: 8, time: '1 week ago' },
-            { icon: '🚀', name: 'Maria Lopez', score: '113/120', comment: 'The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!', likes: 156, replies: 6, time: '3 days ago' }
-          ].map((story, idx) => (
-            <div key={idx} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', background: '#f9f8fc', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(112, 31, 161, 0.12)'; e.currentTarget.style.borderColor = '#701fa1'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e1e4ed'; }}>
+          {stories.slice(0, 3).map((story, idx) => (
+            <div key={story.id ?? idx} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', background: '#f9f8fc', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(112, 31, 161, 0.12)'; e.currentTarget.style.borderColor = '#701fa1'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e1e4ed'; }}>
               <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'flex-start' }}>
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(135deg, #701fa1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px', flexShrink: 0 }}>
-                  {story.icon}
+                  {SUCCESS_STORY_ICONS[idx % SUCCESS_STORY_ICONS.length]}
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontWeight: '800', color: '#1a1a1a', fontSize: '14px', marginBottom: '4px' }}>{story.name}</div>
-                  <div style={{ display: 'inline-block', background: '#fef3c7', color: '#b45309', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>{story.score}</div>
+                  {story.score && (
+                    <div style={{ display: 'inline-block', background: '#fef3c7', color: '#b45309', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>{story.score}</div>
+                  )}
                 </div>
               </div>
               <div style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '12px' }}>
                 {story.comment}
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '11px', color: '#9ca3af' }}>
-                <span>{story.time}</span>
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <span>👍 {story.likes}</span>
-                  <span>💬 {story.replies}</span>
-                </div>
-              </div>
+              {story.created_at && (
+                <div style={{ fontSize: '11px', color: '#9ca3af' }}>{timeAgo(story.created_at)}</div>
+              )}
             </div>
           ))}
         </div>
         <div style={{ textAlign: 'center' }}>
-          <button type="button" onClick={onGetStarted} style={{ padding: '16px 32px', background: '#701fa1', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', border: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#5a1480'} onMouseLeave={(e) => e.currentTarget.style.background = '#701fa1'}>
+          <button type="button" onClick={() => setShowShareModal(true)} style={{ padding: '16px 32px', background: '#701fa1', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', border: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#5a1480'} onMouseLeave={(e) => e.currentTarget.style.background = '#701fa1'}>
             + Share Your Success Story
           </button>
         </div>
+        {showShareModal && (
+          <ShareSuccessStoryModal
+            onClose={() => setShowShareModal(false)}
+            onSubmitted={(newStory) => {
+              setStories(prev => [newStory, ...prev])
+              setShowShareModal(false)
+              showToast('Thanks for sharing your story!', 'success')
+            }}
+          />
+        )}
       </div>
 
       {/* Final CTA */}
