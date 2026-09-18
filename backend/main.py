@@ -1020,6 +1020,61 @@ class SuccessStoryCreate(BaseModel):
             raise ValueError("Links aren't allowed in success stories")
         return v
 
+FORUM_SECTIONS = {"reading", "listening", "writing", "speaking", "general"}
+
+def _forum_no_links(v):
+    # Same spam-link guard as SuccessStoryCreate above, reused here: both are public(-ish),
+    # freeform-text, no-moderation-before-publish endpoints, so an outbound link is the one thing
+    # worth blocking server-side before an admin ever sees it.
+    lowered = v.lower()
+    if "http://" in lowered or "https://" in lowered or "www." in lowered:
+        raise ValueError("Links aren't allowed in forum posts")
+    return v
+
+class ForumQuestionCreate(BaseModel):
+    title: str = Field(min_length=8, max_length=150)
+    body: str = Field(min_length=15, max_length=2000)
+    section: str = Field(max_length=20)
+
+    @field_validator("title", "body")
+    @classmethod
+    def _strip(cls, v):
+        return v.strip()
+
+    @field_validator("body")
+    @classmethod
+    def _no_links(cls, v):
+        return _forum_no_links(v)
+
+    @field_validator("section")
+    @classmethod
+    def _valid_section(cls, v):
+        if v not in FORUM_SECTIONS:
+            raise ValueError("Unknown section")
+        return v
+
+class ForumAnswerCreate(BaseModel):
+    body: str = Field(min_length=5, max_length=2000)
+
+    @field_validator("body")
+    @classmethod
+    def _strip_and_check(cls, v):
+        v = v.strip()
+        if not v:
+            raise ValueError("Answer can't be empty")
+        return _forum_no_links(v)
+
+class ForumVoteRequest(BaseModel):
+    target_type: str = Field(max_length=10)
+    target_id: int = Field(ge=1)
+
+    @field_validator("target_type")
+    @classmethod
+    def _valid_target_type(cls, v):
+        if v not in ("question", "answer"):
+            raise ValueError("target_type must be 'question' or 'answer'")
+        return v
+
 class AITutorChatRequest(BaseModel):
     # 2000 chars is generous for a genuine question but bounds both the abuse surface (a giant
     # paste padding out the Anthropic API call this triggers) and the DB row size -- no exercise
@@ -1559,6 +1614,57 @@ def init_db():
     """)
     conn.execute("CREATE INDEX IF NOT EXISTS idx_ai_chat_messages_user_id ON ai_chat_messages(user_id)")
 
+    # Community Forum / Q&A -- see the /api/forum/* endpoints below. username is denormalized
+    # (copied at post time, not JOINed from users on every read) so a student's display name in
+    # an old post doesn't retroactively change if they rename later, matching the same snapshot
+    # pattern success_stories already uses for `name`. is_hidden is moderation-only (an admin
+    # hiding a post), separate from is_accepted (the question's OWN author marking an answer as
+    # the accepted one) -- both plain 0/1 INTEGER, not BOOLEAN, for the same SQLite/Postgres
+    # portability reason every other flag column in this file uses that pattern.
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS forum_questions (
+            id {pk},
+            user_id INTEGER NOT NULL,
+            username TEXT NOT NULL,
+            title TEXT NOT NULL,
+            body TEXT NOT NULL,
+            section TEXT NOT NULL,
+            answer_count INTEGER NOT NULL DEFAULT 0,
+            upvotes INTEGER NOT NULL DEFAULT 0,
+            is_hidden INTEGER NOT NULL DEFAULT 0,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS forum_answers (
+            id {pk},
+            question_id INTEGER NOT NULL,
+            user_id INTEGER NOT NULL,
+            username TEXT NOT NULL,
+            body TEXT NOT NULL,
+            upvotes INTEGER NOT NULL DEFAULT 0,
+            is_accepted INTEGER NOT NULL DEFAULT 0,
+            is_hidden INTEGER NOT NULL DEFAULT 0,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+    # One row per (user, target) -- the UNIQUE constraint is what makes voting idempotent
+    # (a second click toggles the SAME row rather than creating a duplicate) and is enforced by
+    # the DB itself, not just app-level logic, so it holds even under a race between two
+    # concurrent requests from the same student (e.g. a double-click).
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS forum_votes (
+            id {pk},
+            user_id INTEGER NOT NULL,
+            target_type TEXT NOT NULL,
+            target_id INTEGER NOT NULL,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(user_id, target_type, target_id)
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_forum_questions_section ON forum_questions(section, is_hidden)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_forum_answers_question_id ON forum_answers(question_id)")
+
     conn.commit()
     conn.close()
 
@@ -1949,6 +2055,7 @@ def user_profile_dict(user) -> dict:
     """Shapes a users-table row into the same profile dict shape the frontend has always
     consumed (dashboard, profile screen, etc.)."""
     return {
+        "id": user["id"],
         "username": user["username"],
         "email": user["email"],
         "target_score": user["target_score"],
@@ -2324,6 +2431,17 @@ AI_CHAT_ATTEMPT_WINDOW_SECONDS = 24 * 60 * 60
 AI_CHAT_ATTEMPT_MAX = 30
 _ai_chat_attempts: dict = collections.defaultdict(list)
 
+# Per-user daily caps on Community Forum posting -- generous enough for genuine participation
+# (a student asking a couple of real questions, or answering several others', per day) while
+# bounding how much unmoderated-at-post-time content one account can flood the forum with before
+# an admin ever reviews it.
+FORUM_QUESTION_ATTEMPT_WINDOW_SECONDS = 24 * 60 * 60
+FORUM_QUESTION_ATTEMPT_MAX = 5
+_forum_question_attempts: dict = collections.defaultdict(list)
+FORUM_ANSWER_ATTEMPT_WINDOW_SECONDS = 24 * 60 * 60
+FORUM_ANSWER_ATTEMPT_MAX = 20
+_forum_answer_attempts: dict = collections.defaultdict(list)
+
 # get_intro_audio_urls (below) is deliberately public and does no DB/file work, but was the one
 # unauthenticated write-adjacent-cost endpoint in this file with no rate limit at all -- found in
 # the 26th audit round. Generous limit since it's a legitimate, frequent call (every Listening list
@@ -2407,7 +2525,7 @@ def _check_api_throttle(user_id: int):
 # again -- an IP that fails once and never comes back would otherwise sit in the dict forever,
 # so every rate-limited store is swept here too, not just the one being touched right now. Swept
 # at most once a minute (module-level timestamp) so this stays cheap even under heavy traffic.
-_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts, _audio_proxy_fetch_attempts, _success_story_attempts, _ai_chat_attempts]
+_ALL_RATE_LIMIT_STORES = [_login_attempts, _login_attempts_by_ip, _login_attempts_by_email, _register_attempts, _google_login_attempts, _forgot_password_attempts, _forgot_password_attempts_by_email, _resend_verification_attempts, _api_throttle_attempts, _intro_audio_attempts, _reset_password_attempts, _verify_email_attempts, _audio_proxy_fetch_attempts, _success_story_attempts, _ai_chat_attempts, _forum_question_attempts, _forum_answer_attempts]
 _last_rate_limit_sweep = 0.0
 
 def _sweep_stale_rate_limit_entries():
@@ -4045,6 +4163,192 @@ def clear_ai_tutor_history(user=Depends(get_current_user)):
     conn = get_db()
     try:
         conn.execute("DELETE FROM ai_chat_messages WHERE user_id = ?", (user["id"],))
+        conn.commit()
+        return {"status": "success"}
+    finally:
+        conn.close()
+
+# ============================================================
+# COMMUNITY FORUM / Q&A
+# ============================================================
+# A BestMyTest-style "ask a question, other students (and anyone) answer" board. Deliberately
+# simple: no threaded replies, no downvotes, no karma/reputation system -- just questions, answers,
+# a single upvote per person per post, and an accepted-answer marker the question's own author can
+# set. Every post is live immediately (no pre-moderation queue); an admin can hide a question or
+# answer after the fact via the is_hidden flag (see admin_forum_hide below), matching the same
+# publish-then-moderate approach as Success Stories.
+
+@app.get("/api/forum/questions")
+def list_forum_questions(section: str = Query(None, max_length=20), sort: str = Query("recent", max_length=10),
+                          limit: int = Query(30, ge=1, le=100), offset: int = Query(0, ge=0),
+                          user=Depends(get_current_user_optional)):
+    if section is not None and section not in FORUM_SECTIONS:
+        raise HTTPException(status_code=400, detail="Unknown section")
+    order_by = "upvotes DESC, id DESC" if sort == "top" else "id DESC"
+    conn = get_db()
+    try:
+        where = "WHERE is_hidden = 0" + (" AND section = ?" if section else "")
+        params = [section] if section else []
+        rows = conn.execute(
+            f"SELECT id, user_id, username, title, section, answer_count, upvotes, created_at "
+            f"FROM forum_questions {where} ORDER BY {order_by} LIMIT ? OFFSET ?",
+            (*params, limit, offset),
+        ).fetchall()
+        return {"questions": [dict(r) for r in rows]}
+    finally:
+        conn.close()
+
+@app.post("/api/forum/questions")
+def create_forum_question(data: ForumQuestionCreate, request: Request, user=Depends(get_current_user)):
+    _check_and_consume_rate_limit(
+        _forum_question_attempts, str(user["id"]),
+        FORUM_QUESTION_ATTEMPT_WINDOW_SECONDS, FORUM_QUESTION_ATTEMPT_MAX, "forum question",
+    )
+    conn = get_db()
+    try:
+        insert_sql = "INSERT INTO forum_questions (user_id, username, title, body, section) VALUES (?, ?, ?, ?, ?)"
+        if DATABASE_URL:
+            row = conn.execute(insert_sql + " RETURNING id, user_id, username, title, body, section, answer_count, upvotes, created_at",
+                                (user["id"], user["username"], data.title, data.body, data.section)).fetchone()
+        else:
+            cursor = conn.execute(insert_sql, (user["id"], user["username"], data.title, data.body, data.section))
+            row = conn.execute("SELECT id, user_id, username, title, body, section, answer_count, upvotes, created_at FROM forum_questions WHERE id = ?", (cursor.lastrowid,)).fetchone()
+        conn.commit()
+        return dict(row)
+    finally:
+        conn.close()
+
+@app.get("/api/forum/questions/{question_id}")
+def get_forum_question(question_id: int, user=Depends(get_current_user_optional)):
+    conn = get_db()
+    try:
+        q = conn.execute("SELECT * FROM forum_questions WHERE id = ? AND is_hidden = 0", (question_id,)).fetchone()
+        if not q:
+            raise HTTPException(status_code=404, detail="Question not found")
+        answers = conn.execute(
+            "SELECT * FROM forum_answers WHERE question_id = ? AND is_hidden = 0 ORDER BY is_accepted DESC, upvotes DESC, id ASC",
+            (question_id,),
+        ).fetchall()
+        my_votes = set()
+        if user:
+            vote_rows = conn.execute(
+                "SELECT target_type, target_id FROM forum_votes WHERE user_id = ? AND ((target_type = 'question' AND target_id = ?) OR (target_type = 'answer' AND target_id IN ({})))".format(
+                    ",".join("?" for _ in answers) or "NULL"
+                ),
+                (user["id"], question_id, *[a["id"] for a in answers]),
+            ).fetchall()
+            my_votes = {f"{r['target_type']}:{r['target_id']}" for r in vote_rows}
+        return {
+            "question": dict(q),
+            "answers": [dict(a) for a in answers],
+            "my_votes": list(my_votes),
+        }
+    finally:
+        conn.close()
+
+@app.post("/api/forum/questions/{question_id}/answers")
+def create_forum_answer(question_id: int, data: ForumAnswerCreate, user=Depends(get_current_user)):
+    _check_and_consume_rate_limit(
+        _forum_answer_attempts, str(user["id"]),
+        FORUM_ANSWER_ATTEMPT_WINDOW_SECONDS, FORUM_ANSWER_ATTEMPT_MAX, "forum answer",
+    )
+    conn = get_db()
+    try:
+        q = conn.execute("SELECT id FROM forum_questions WHERE id = ? AND is_hidden = 0", (question_id,)).fetchone()
+        if not q:
+            raise HTTPException(status_code=404, detail="Question not found")
+        insert_sql = "INSERT INTO forum_answers (question_id, user_id, username, body) VALUES (?, ?, ?, ?)"
+        if DATABASE_URL:
+            row = conn.execute(insert_sql + " RETURNING id, question_id, user_id, username, body, upvotes, is_accepted, created_at",
+                                (question_id, user["id"], user["username"], data.body)).fetchone()
+        else:
+            cursor = conn.execute(insert_sql, (question_id, user["id"], user["username"], data.body))
+            row = conn.execute("SELECT id, question_id, user_id, username, body, upvotes, is_accepted, created_at FROM forum_answers WHERE id = ?", (cursor.lastrowid,)).fetchone()
+        conn.execute("UPDATE forum_questions SET answer_count = answer_count + 1 WHERE id = ?", (question_id,))
+        conn.commit()
+        return dict(row)
+    finally:
+        conn.close()
+
+@app.post("/api/forum/vote")
+def toggle_forum_vote(data: ForumVoteRequest, user=Depends(get_current_user)):
+    """Toggle semantics: voting on something you've already voted on removes the vote instead of
+    erroring or double-counting -- the frontend doesn't need to track vote state itself beyond
+    what GET /api/forum/questions/{id} already returns in my_votes."""
+    table = "forum_questions" if data.target_type == "question" else "forum_answers"
+    conn = get_db()
+    try:
+        target = conn.execute(f"SELECT id FROM {table} WHERE id = ? AND is_hidden = 0", (data.target_id,)).fetchone()
+        if not target:
+            raise HTTPException(status_code=404, detail="Not found")
+        existing = conn.execute(
+            "SELECT id FROM forum_votes WHERE user_id = ? AND target_type = ? AND target_id = ?",
+            (user["id"], data.target_type, data.target_id),
+        ).fetchone()
+        if existing:
+            conn.execute("DELETE FROM forum_votes WHERE id = ?", (existing["id"],))
+            conn.execute(f"UPDATE {table} SET upvotes = upvotes - 1 WHERE id = ?", (data.target_id,))
+            voted = False
+        else:
+            try:
+                conn.execute(
+                    "INSERT INTO forum_votes (user_id, target_type, target_id) VALUES (?, ?, ?)",
+                    (user["id"], data.target_type, data.target_id),
+                )
+            except _INTEGRITY_ERRORS:
+                # Lost a race with a concurrent duplicate click from the same user -- the UNIQUE
+                # constraint already stopped the double-insert, so just treat this as "already
+                # voted" rather than surfacing a 500 for what's really a harmless double-submit.
+                conn.rollback()
+                return {"voted": True}
+            conn.execute(f"UPDATE {table} SET upvotes = upvotes + 1 WHERE id = ?", (data.target_id,))
+            voted = True
+        conn.commit()
+        return {"voted": voted}
+    finally:
+        conn.close()
+
+@app.post("/api/forum/questions/{question_id}/accept/{answer_id}")
+def accept_forum_answer(question_id: int, answer_id: int, user=Depends(get_current_user)):
+    """Only the question's own author can mark an answer accepted -- mirrors how Stack Overflow-
+    style Q&A boards work, and prevents a student from marking their OWN answer to someone else's
+    question as "the" answer."""
+    conn = get_db()
+    try:
+        q = conn.execute("SELECT user_id FROM forum_questions WHERE id = ? AND is_hidden = 0", (question_id,)).fetchone()
+        if not q:
+            raise HTTPException(status_code=404, detail="Question not found")
+        if q["user_id"] != user["id"]:
+            raise HTTPException(status_code=403, detail="Only the question's author can accept an answer")
+        answer = conn.execute("SELECT id FROM forum_answers WHERE id = ? AND question_id = ? AND is_hidden = 0", (answer_id, question_id)).fetchone()
+        if not answer:
+            raise HTTPException(status_code=404, detail="Answer not found")
+        # Only one accepted answer per question -- clear any previous acceptance first.
+        conn.execute("UPDATE forum_answers SET is_accepted = 0 WHERE question_id = ?", (question_id,))
+        conn.execute("UPDATE forum_answers SET is_accepted = 1 WHERE id = ?", (answer_id,))
+        conn.commit()
+        return {"status": "success"}
+    finally:
+        conn.close()
+
+class ForumModerateRequest(BaseModel):
+    target_type: str = Field(max_length=10)
+    target_id: int = Field(ge=1)
+    hidden: bool
+
+    @field_validator("target_type")
+    @classmethod
+    def _valid_target_type(cls, v):
+        if v not in ("question", "answer"):
+            raise ValueError("target_type must be 'question' or 'answer'")
+        return v
+
+@app.post("/api/admin/forum/moderate")
+def admin_moderate_forum(data: ForumModerateRequest, admin=Depends(require_admin)):
+    table = "forum_questions" if data.target_type == "question" else "forum_answers"
+    conn = get_db()
+    try:
+        conn.execute(f"UPDATE {table} SET is_hidden = ? WHERE id = ?", (1 if data.hidden else 0, data.target_id))
         conn.commit()
         return {"status": "success"}
     finally:

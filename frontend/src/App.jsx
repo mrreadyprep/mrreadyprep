@@ -9411,6 +9411,301 @@ function FullMockTest({ onBack, hasPremium = false }) {
   return null
 }
 
+// ─── Community Forum / Q&A ──────────────────────────────────────────────────
+// A simple "ask a question, other students answer" board -- no threaded replies, no downvotes,
+// just questions, answers, a single upvote per person per post, and an accepted-answer marker
+// the question's own author can set. See /api/forum/* in main.py.
+const FORUM_SECTIONS = [
+  { key: 'general', label: 'General', color: '#701fa1' },
+  { key: 'reading', label: 'Reading', color: '#2563eb' },
+  { key: 'listening', label: 'Listening', color: '#16a34a' },
+  { key: 'writing', label: 'Writing', color: '#ea580c' },
+  { key: 'speaking', label: 'Speaking', color: '#9333ea' },
+]
+const forumSectionMeta = (key) => FORUM_SECTIONS.find(s => s.key === key) || FORUM_SECTIONS[0]
+
+function CreateForumQuestionModal({ onClose, onCreated }) {
+  const [title, setTitle] = useState('')
+  const [body, setBody] = useState('')
+  const [section, setSection] = useState('general')
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape' && !submitting) onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose, submitting])
+  const trapRef = useFocusTrap()
+
+  const inputStyle = { width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '14px', color: '#1a1a1a', fontFamily: 'inherit' }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const trimmedTitle = title.trim()
+    const trimmedBody = body.trim()
+    if (trimmedTitle.length < 8) { setError('Give your question a title of at least 8 characters.'); return }
+    if (trimmedBody.length < 15) { setError('Add a bit more detail (at least 15 characters).'); return }
+    setError('')
+    setSubmitting(true)
+    apiFetch(`${BACKEND_URL}/api/forum/questions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title: trimmedTitle, body: trimmedBody, section }),
+    }).then(res => res.json().then(data => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if (!ok) { setError(extractErrorMessage(data, 'Could not post your question. Please try again.')); setSubmitting(false); return }
+        onCreated(data)
+      })
+      .catch(() => { setError('Network error -- please check your connection and try again.'); setSubmitting(false) })
+  }
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
+      <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Ask a question" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '480px', width: '100%' }}>
+        <div style={{ fontSize: '17px', fontWeight: '800', color: '#1a1a1a', marginBottom: '4px' }}>Ask the community</div>
+        <div style={{ fontSize: '13px', color: '#616473', marginBottom: '18px', lineHeight: '1.5' }}>Posted right away -- other students (and you) can answer.</div>
+        <form onSubmit={handleSubmit}>
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', marginBottom: '4px' }}>Section</label>
+          <select value={section} onChange={e => setSection(e.target.value)} disabled={submitting} style={{ ...inputStyle, marginBottom: '14px' }}>
+            {FORUM_SECTIONS.map(s => <option key={s.key} value={s.key}>{s.label}</option>)}
+          </select>
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', marginBottom: '4px' }}>Title</label>
+          <input autoFocus value={title} onChange={e => setTitle(e.target.value)} maxLength={150} placeholder="e.g. How do I improve my Speaking fluency?" style={inputStyle} disabled={submitting} />
+          <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', margin: '14px 0 4px' }}>Details</label>
+          <textarea value={body} onChange={e => setBody(e.target.value)} maxLength={2000} rows={5} placeholder="Add any details that would help someone answer..." style={{ ...inputStyle, resize: 'vertical' }} disabled={submitting} />
+          {error && <div style={{ color: '#dc2626', fontSize: '12px', marginTop: '10px' }}>{error}</div>}
+          <div style={{ display: 'flex', gap: '8px', marginTop: '20px' }}>
+            <button type="button" onClick={onClose} disabled={submitting} style={{ flex: 1, background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', color: '#616473', cursor: 'pointer' }}>Cancel</button>
+            <button type="submit" disabled={submitting} style={{ flex: 1, background: '#701fa1', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', color: '#fff', cursor: 'pointer', opacity: submitting ? 0.7 : 1 }}>{submitting ? 'Posting...' : 'Post question'}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+function ForumHome({ onOpenQuestion }) {
+  const isMobile = useIsMobile()
+  const [questions, setQuestions] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
+  const [sectionFilter, setSectionFilter] = useState('')
+  const [sort, setSort] = useState('recent')
+  const [showCreate, setShowCreate] = useState(false)
+
+  const load = () => {
+    setLoading(true); setLoadError(false)
+    const params = new URLSearchParams({ sort })
+    if (sectionFilter) params.set('section', sectionFilter)
+    apiFetch(`${BACKEND_URL}/api/forum/questions?${params.toString()}`).then(r => { if (!r.ok) throw new Error('fetch failed'); return r.json() })
+      .then(data => { setQuestions(Array.isArray(data.questions) ? data.questions : []); setLoading(false) })
+      .catch(() => { setLoading(false); setLoadError(true) })
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(load, [sectionFilter, sort])
+
+  const filterBtnStyle = (active) => ({ padding: '7px 14px', borderRadius: '999px', border: active ? 'none' : '1px solid #e1e4ed', background: active ? '#701fa1' : '#fff', color: active ? '#fff' : '#616473', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' })
+
+  return (
+    <div style={{ padding: '0 8px 40px' }}>
+      {showCreate && (
+        <CreateForumQuestionModal onClose={() => setShowCreate(false)} onCreated={(q) => { setShowCreate(false); onOpenQuestion(q.id) }} />
+      )}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
+        <div>
+          <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>💬 Community</h1>
+          <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Ask a question, get help from other students preparing for the same exam.</div>
+        </div>
+        <button onClick={() => setShowCreate(true)} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 18px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', flexShrink: 0 }}>+ Ask a question</button>
+      </div>
+
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '10px' }}>
+        <button onClick={() => setSectionFilter('')} style={filterBtnStyle(!sectionFilter)}>All</button>
+        {FORUM_SECTIONS.map(s => (
+          <button key={s.key} onClick={() => setSectionFilter(s.key)} style={filterBtnStyle(sectionFilter === s.key)}>{s.label}</button>
+        ))}
+        <div style={{ flex: 1 }} />
+        <select value={sort} onChange={e => setSort(e.target.value)} style={{ padding: '7px 10px', borderRadius: '8px', border: '1px solid #e1e4ed', fontSize: '12px', color: '#374151' }}>
+          <option value="recent">Most recent</option>
+          <option value="top">Top voted</option>
+        </select>
+      </div>
+
+      {loading ? (
+        <LoadingState label="Loading questions..." />
+      ) : loadError ? (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '40px 20px', textAlign: 'center' }}>
+          <div style={{ fontSize: '13px', color: '#616473' }}>Couldn't load the community forum -- check your connection.</div>
+          <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
+        </div>
+      ) : questions.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '48px 20px' }}>
+          <div style={{ fontSize: '32px', marginBottom: '10px' }}>💬</div>
+          <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>No questions yet</div>
+          <div style={{ fontSize: '13px', color: '#616473', marginTop: '4px' }}>Be the first to ask something -- other students will see it here.</div>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+          {questions.map(q => {
+            const meta = forumSectionMeta(q.section)
+            return (
+              <div key={q.id} onClick={() => onOpenQuestion(q.id)} role="button" tabIndex={0}
+                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenQuestion(q.id) } }}
+                style={{ background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', padding: '16px', cursor: 'pointer', display: 'flex', gap: '14px', alignItems: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', minWidth: '46px', flexShrink: 0 }}>
+                  <div style={{ fontSize: '17px', fontWeight: '800', color: '#701fa1' }}>{q.upvotes}</div>
+                  <div style={{ fontSize: '9px', color: '#9ca3af', textTransform: 'uppercase' }}>votes</div>
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '9px', fontWeight: '700', color: meta.color, textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px' }}>{meta.label}</div>
+                  <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.title}</div>
+                  <div style={{ fontSize: '11.5px', color: '#9ca3af', marginTop: '3px' }}>{q.username} · {timeAgo(q.created_at)}</div>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', minWidth: isMobile ? 'auto' : '60px', flexShrink: 0 }}>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: q.answer_count > 0 ? '#2ac56c' : '#9ca3af' }}>{q.answer_count}</div>
+                  <div style={{ fontSize: '9px', color: '#9ca3af', textTransform: 'uppercase' }}>answers</div>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ForumQuestionDetail({ questionId, onBack, currentUserId, isAdmin }) {
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
+  const [answerBody, setAnswerBody] = useState('')
+  const [submittingAnswer, setSubmittingAnswer] = useState(false)
+  const [answerError, setAnswerError] = useState('')
+
+  const load = () => {
+    setLoading(true); setLoadError(false)
+    apiFetch(`${BACKEND_URL}/api/forum/questions/${questionId}`).then(r => { if (!r.ok) throw new Error('fetch failed'); return r.json() })
+      .then(d => { setData(d); setLoading(false) })
+      .catch(() => { setLoading(false); setLoadError(true) })
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(load, [questionId])
+
+  const vote = (targetType, targetId) => {
+    // Optimistic UI: flip the local vote/count immediately, then reconcile with the server's
+    // response. On failure, just reload from the server rather than trying to hand-compute a
+    // rollback -- simpler and this endpoint is cheap.
+    apiFetch(`${BACKEND_URL}/api/forum/vote`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ target_type: targetType, target_id: targetId }),
+    }).then(r => { if (!r.ok) throw new Error(); return r.json() })
+      .then(() => load())
+      .catch(() => showToast("Couldn't register your vote -- please try again.", 'error'))
+  }
+
+  const acceptAnswer = (answerId) => {
+    apiFetch(`${BACKEND_URL}/api/forum/questions/${questionId}/accept/${answerId}`, { method: 'POST' })
+      .then(r => { if (!r.ok) throw new Error(); load() })
+      .catch(() => showToast("Couldn't mark this answer as accepted -- please try again.", 'error'))
+  }
+
+  const moderate = (targetType, targetId, hidden) => {
+    apiFetch(`${BACKEND_URL}/api/admin/forum/moderate`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ target_type: targetType, target_id: targetId, hidden }),
+    }).then(r => { if (!r.ok) throw new Error(); if (targetType === 'question') onBack(); else load() })
+      .catch(() => showToast("Couldn't update this post -- please try again.", 'error'))
+  }
+
+  const submitAnswer = (e) => {
+    e.preventDefault()
+    const trimmed = answerBody.trim()
+    if (trimmed.length < 5) { setAnswerError('Your answer is too short.'); return }
+    setAnswerError('')
+    setSubmittingAnswer(true)
+    apiFetch(`${BACKEND_URL}/api/forum/questions/${questionId}/answers`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ body: trimmed }),
+    }).then(res => res.json().then(d => ({ ok: res.ok, d })))
+      .then(({ ok, d }) => {
+        if (!ok) { setAnswerError(extractErrorMessage(d, 'Could not post your answer. Please try again.')); setSubmittingAnswer(false); return }
+        setAnswerBody(''); setSubmittingAnswer(false); load()
+      })
+      .catch(() => { setAnswerError('Network error -- please check your connection and try again.'); setSubmittingAnswer(false) })
+  }
+
+  if (loading) return <LoadingState label="Loading question..." />
+  if (loadError || !data) return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '48px 20px', textAlign: 'center' }}>
+      <div style={{ fontSize: '13px', color: '#616473' }}>Couldn't load this question -- it may have been removed.</div>
+      <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>← Back to Community</button>
+    </div>
+  )
+
+  const { question: q, answers, my_votes: myVotes } = data
+  const meta = forumSectionMeta(q.section)
+  const isOwner = currentUserId === q.user_id
+  const votedOn = (type, id) => myVotes.includes(`${type}:${id}`)
+
+  const voteBtn = (type, id, count) => (
+    <button onClick={() => vote(type, id)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', background: votedOn(type, id) ? '#f4f0fb' : '#fff', border: `1px solid ${votedOn(type, id) ? '#701fa1' : '#e1e4ed'}`, borderRadius: '10px', padding: '8px 12px', cursor: 'pointer', minWidth: '48px' }}>
+      <span style={{ fontSize: '13px' }} aria-hidden="true">▲</span>
+      <span style={{ fontSize: '13px', fontWeight: '800', color: votedOn(type, id) ? '#701fa1' : '#374151' }}>{count}</span>
+    </button>
+  )
+
+  return (
+    <div style={{ padding: '0 8px 40px', maxWidth: '760px' }}>
+      <button onClick={onBack} style={{ background: 'none', border: 'none', color: '#701fa1', fontSize: '13px', fontWeight: '700', cursor: 'pointer', padding: 0, marginBottom: '16px' }}>← Back to Community</button>
+
+      <div style={{ background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', padding: '20px', display: 'flex', gap: '16px' }}>
+        {voteBtn('question', q.id, q.upvotes)}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ fontSize: '9px', fontWeight: '700', color: meta.color, textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '6px' }}>{meta.label}</div>
+          <h1 style={{ margin: 0, fontSize: '19px', fontWeight: '800', color: '#1a1a1a' }}>{q.title}</h1>
+          <div style={{ fontSize: '11.5px', color: '#9ca3af', margin: '6px 0 12px' }}>Asked by {q.username} · {timeAgo(q.created_at)}</div>
+          <div style={{ fontSize: '13.5px', color: '#374151', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{q.body}</div>
+          {isAdmin && (
+            <button onClick={() => moderate('question', q.id, true)} style={{ marginTop: '12px', background: 'none', border: '1px solid #fca5a5', color: '#dc2626', borderRadius: '7px', padding: '5px 10px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>🚫 Hide (admin)</button>
+          )}
+        </div>
+      </div>
+
+      <div style={{ marginTop: '22px', fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>{answers.length} Answer{answers.length === 1 ? '' : 's'}</div>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '10px' }}>
+        {answers.map(a => (
+          <div key={a.id} style={{ background: '#fff', borderRadius: '12px', border: a.is_accepted ? '1.5px solid #2ac56c' : '0.5px solid #e1e4ed', padding: '16px', display: 'flex', gap: '14px' }}>
+            {voteBtn('answer', a.id, a.upvotes)}
+            <div style={{ flex: 1, minWidth: 0 }}>
+              {a.is_accepted && <div style={{ fontSize: '10.5px', fontWeight: '700', color: '#2ac56c', marginBottom: '6px' }}>✓ Accepted answer</div>}
+              <div style={{ fontSize: '13.5px', color: '#374151', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{a.body}</div>
+              <div style={{ fontSize: '11.5px', color: '#9ca3af', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+                <span>{a.username} · {timeAgo(a.created_at)}</span>
+                {isOwner && !a.is_accepted && (
+                  <button onClick={() => acceptAnswer(a.id)} style={{ background: 'none', border: '1px solid #2ac56c', color: '#2ac56c', borderRadius: '6px', padding: '3px 9px', fontSize: '10.5px', fontWeight: '700', cursor: 'pointer' }}>Mark as accepted</button>
+                )}
+                {isAdmin && (
+                  <button onClick={() => moderate('answer', a.id, true)} style={{ background: 'none', border: '1px solid #fca5a5', color: '#dc2626', borderRadius: '6px', padding: '3px 9px', fontSize: '10.5px', fontWeight: '700', cursor: 'pointer' }}>🚫 Hide</button>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <form onSubmit={submitAnswer} style={{ marginTop: '20px', background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', padding: '16px' }}>
+        <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', marginBottom: '6px' }}>Your answer</label>
+        <textarea value={answerBody} onChange={e => setAnswerBody(e.target.value)} maxLength={2000} rows={4} placeholder="Share what worked for you..." disabled={submittingAnswer}
+          style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: '8px', border: '1px solid #d1d5db', fontSize: '13.5px', fontFamily: 'inherit', resize: 'vertical' }} />
+        {answerError && <div style={{ color: '#dc2626', fontSize: '12px', marginTop: '8px' }}>{answerError}</div>}
+        <button type="submit" disabled={submittingAnswer} style={{ marginTop: '10px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 20px', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer', opacity: submittingAnswer ? 0.7 : 1 }}>{submittingAnswer ? 'Posting...' : 'Post answer'}</button>
+      </form>
+    </div>
+  )
+}
+
 // ─── AI Tutor Chat ──────────────────────────────────────────────────────────
 // Sidebar-style chat backed by the Anthropic Messages API (see /api/ai-tutor/chat in main.py),
 // given each student's own weak-areas context server-side so its answers are grounded in their
@@ -11276,6 +11571,15 @@ function App() {
   // (see get_ai_tutor_status in main.py) -- false until the check resolves true, so the item
   // never flashes in then out on a page load where the feature turns out to be off.
   const [aiTutorAvailable, setAiTutorAvailable] = useState(false)
+  // null = the Community forum's question list; an id = that question's detail view. Reset to
+  // null whenever the student navigates away from the 'forum' tab and back, so returning to
+  // Community always lands on the list rather than wherever they last were.
+  const [forumQuestionId, setForumQuestionId] = useState(null)
+  // Landing on the Community tab (from any other tab) always shows the question list, never
+  // wherever the student last drilled into -- only fires on an actual tab switch INTO 'forum',
+  // not on the list->detail->list navigation that happens while already on this tab (that
+  // navigation is currentTab-stable, so it doesn't re-trigger this effect).
+  useEffect(() => { if (currentTab === 'forum') setForumQuestionId(null) }, [currentTab])
   useEffect(() => {
     apiFetch(`${BACKEND_URL}/api/ai-tutor/status`).then(r => r.ok ? r.json() : null)
       .then(data => { if (data?.available) setAiTutorAvailable(true) })
@@ -11606,6 +11910,7 @@ function App() {
             {sb('progress', '📈', 'My Progress')}
             {sb('vocab', '📚', 'Vocabulary')}
             {aiTutorAvailable && sb('aitutor', '🤖', 'AI Tutor')}
+            {sb('forum', '💬', 'Community')}
             <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
               📝 TOEFL Guides
             </a>
@@ -11685,6 +11990,7 @@ function App() {
               {currentTab === 'progress' && '📈 My Progress'}
               {currentTab === 'vocab' && '📚 Vocabulary'}
               {currentTab === 'aitutor' && '🤖 AI Tutor'}
+              {currentTab === 'forum' && '💬 Community'}
               {currentTab === 'settings' && '⚙️ Settings'}
               {currentTab === 'subscribe' && '💎 Premium'}
               {currentTab === 'admin' && '🛠️ Admin'}
@@ -12060,6 +12366,12 @@ function App() {
         {currentTab === 'mocktest' && <FullMockTest onBack={() => setCurrentTab('dashboard')} hasPremium={!!userData.has_premium} />}
 
         {currentTab === 'aitutor' && aiTutorAvailable && <AITutorChat />}
+
+        {currentTab === 'forum' && (
+          forumQuestionId
+            ? <ForumQuestionDetail questionId={forumQuestionId} onBack={() => setForumQuestionId(null)} currentUserId={userData.id} isAdmin={!!userData.is_admin} />
+            : <ForumHome onOpenQuestion={setForumQuestionId} />
+        )}
 
         {currentTab === 'progress' && (
           <ProgressScreen onBack={() => setCurrentTab('dashboard')} onPractice={(nav) => {
