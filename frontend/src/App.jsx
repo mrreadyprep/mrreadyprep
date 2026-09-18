@@ -9842,7 +9842,7 @@ function ShareSuccessStoryModal({ onClose, onSubmitted }) {
           <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', marginBottom: '4px' }}>Your name</label>
           <input autoFocus value={name} onChange={(e) => setName(e.target.value)} maxLength={40} placeholder="e.g. Sarah Chen" style={inputStyle} disabled={submitting} />
           <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', margin: '14px 0 4px' }}>Your score (optional)</label>
-          <input value={score} onChange={(e) => setScore(e.target.value)} maxLength={20} placeholder="e.g. 116/120" style={inputStyle} disabled={submitting} />
+          <input value={score} onChange={(e) => setScore(e.target.value)} maxLength={20} placeholder="e.g. 5.5/6" style={inputStyle} disabled={submitting} />
           <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', margin: '14px 0 4px' }}>Your experience</label>
           <textarea value={comment} onChange={(e) => setComment(e.target.value)} maxLength={300} rows={4} placeholder="Tell other students how MRReadyPrep helped you..." style={{ ...inputStyle, resize: 'vertical', fontFamily: 'inherit' }} disabled={submitting} />
           {error && <div style={{ color: '#dc2626', fontSize: '12px', marginTop: '10px' }}>{error}</div>}
@@ -9880,9 +9880,9 @@ function LandingPage({ onGetStarted, onLogIn }) {
   // next visitor too. Falls back to a small static set if the fetch fails, so the section never
   // renders empty/broken for a first-time visitor on a network hiccup.
   const [stories, setStories] = useState([
-    { id: 'fallback-1', name: 'Sarah Chen', score: '120/120', comment: 'MRReadyPrep\'s mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!' },
-    { id: 'fallback-2', name: 'Ahmed Hassan', score: '116/120', comment: 'Went from 95 to 116 in just 6 weeks. The structured practice plan really helped me focus on weak areas.' },
-    { id: 'fallback-3', name: 'Maria Lopez', score: '113/120', comment: 'The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!' },
+    { id: 'fallback-1', name: 'Sarah Chen', score: '6.0/6', comment: 'MRReadyPrep\'s mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!' },
+    { id: 'fallback-2', name: 'Ahmed Hassan', score: '5.5/6', comment: 'Went from a 3.5 to a 5.5 in just 6 weeks. The structured practice plan really helped me focus on weak areas.' },
+    { id: 'fallback-3', name: 'Maria Lopez', score: '5.0/6', comment: 'The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!' },
   ])
   const [showShareModal, setShowShareModal] = useState(false)
 

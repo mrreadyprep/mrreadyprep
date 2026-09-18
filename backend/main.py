@@ -1493,14 +1493,33 @@ def init_db():
     """)
     # One-time seed so the 3 stories that used to be hardcoded in App.jsx become real rows instead
     # -- keeps the landing page non-empty for the very first visitors before any student has
-    # submitted their own story yet.
+    # submitted their own story yet. Scores use the site's actual 1-6 band-average scale (see
+    # mock_overall / "X.X/6" display throughout App.jsx), not TOEFL's old /120 total.
     if conn.execute("SELECT COUNT(*) AS n FROM success_stories").fetchone()["n"] == 0:
         for name, score, comment in [
-            ("Sarah Chen", "120/120", "MRReadyPrep's mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!"),
-            ("Ahmed Hassan", "116/120", "Went from 95 to 116 in just 6 weeks. The structured practice plan really helped me focus on weak areas."),
-            ("Maria Lopez", "113/120", "The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!"),
+            ("Sarah Chen", "6.0/6", "MRReadyPrep's mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!"),
+            ("Ahmed Hassan", "5.5/6", "Went from a 3.5 to a 5.5 in just 6 weeks. The structured practice plan really helped me focus on weak areas."),
+            ("Maria Lopez", "5.0/6", "The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!"),
         ]:
             conn.execute("INSERT INTO success_stories (name, score, comment) VALUES (?, ?, ?)", (name, score, comment))
+
+    # The site briefly seeded these 3 rows with TOEFL's old /120-total score format before the
+    # scoring system was switched to a 1-6 band average (task #294) -- corrects any row that still
+    # shows the old format on deploys that already seeded the table before this fix. Matched by
+    # name AND the exact old score/comment, so a real visitor's own submission (even one that
+    # happens to share a seeded name) is never touched; a no-op once the row's already fixed.
+    for name, old_score, old_comment, new_score, new_comment in [
+        ("Sarah Chen", "120/120", "MRReadyPrep's mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!",
+         "6.0/6", "MRReadyPrep's mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!"),
+        ("Ahmed Hassan", "116/120", "Went from 95 to 116 in just 6 weeks. The structured practice plan really helped me focus on weak areas.",
+         "5.5/6", "Went from a 3.5 to a 5.5 in just 6 weeks. The structured practice plan really helped me focus on weak areas."),
+        ("Maria Lopez", "113/120", "The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!",
+         "5.0/6", "The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!"),
+    ]:
+        conn.execute(
+            "UPDATE success_stories SET score = ?, comment = ? WHERE name = ? AND score = ? AND comment = ?",
+            (new_score, new_comment, name, old_score, old_comment),
+        )
 
     conn.commit()
     conn.close()
