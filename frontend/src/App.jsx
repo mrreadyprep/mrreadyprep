@@ -9900,23 +9900,38 @@ function LandingPage({ onGetStarted, onLogIn }) {
         </div>
       </div>
 
-      {/* Pricing teaser */}
-      <div style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '820px', margin: '0 auto' }}>
+      {/* Pricing teaser -- Free plus the same 3 paid plans (1/3/6 month) sold on the actual
+          Subscribe screen (SubscribeScreen above), not a made-up single "$50/mo" summary that
+          didn't match what a visitor would see after signing up. Prices/features mirrored from
+          that screen's plan list so the two never drift out of sync. */}
+      <div style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '1180px', margin: '0 auto' }}>
         <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 36px' }}>
           Simple pricing
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '18px' }}>
-          <div style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '28px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)', gap: '16px', alignItems: 'stretch' }}>
+          <div style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', display: 'flex', flexDirection: 'column' }}>
             <div style={{ fontSize: '14px', fontWeight: '700', color: '#616473', marginBottom: '6px' }}>Free</div>
-            <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginBottom: '14px' }}>$0</div>
-            <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7' }}>A limited number of items from every practice category, across all four skills. No credit card required.</div>
+            <div style={{ fontSize: '28px', fontWeight: '800', color: '#1a1a1a', marginBottom: '14px' }}>$0</div>
+            <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7', flex: 1 }}>A limited number of items from every practice category, across all four skills. No credit card required.</div>
           </div>
-          <div style={{ border: `2px solid ${purple}`, borderRadius: '14px', padding: '28px', backgroundColor: '#f9f8fc' }}>
-            <div style={{ fontSize: '14px', fontWeight: '700', color: purple, marginBottom: '6px' }}>Premium</div>
-            <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginBottom: '6px' }}>$50<span style={{ fontSize: '14px', fontWeight: '500', color: '#6b7280' }}> / month</span></div>
-            <div style={{ fontSize: '13px', fontWeight: '800', color: '#d946a6', marginBottom: '14px', backgroundColor: 'rgba(217, 70, 166, 0.1)', padding: '10px 12px', borderRadius: '8px' }}>✨ 50% OFF First Month</div>
-            <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7' }}>Full question bank, all full-length mock tests, and AI-based scoring for Writing and Speaking. Cancel anytime.</div>
-          </div>
+          {[
+            { duration: '1 Month', originalPrice: 50, price: 25 },
+            { duration: '3 Months', originalPrice: 120, price: 60, isMostPopular: true },
+            { duration: '6 Months', originalPrice: 200, price: 100 },
+          ].map(plan => (
+            <div key={plan.duration} style={{ position: 'relative', border: plan.isMostPopular ? `2px solid ${purple}` : '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', backgroundColor: plan.isMostPopular ? '#f9f8fc' : '#fff', display: 'flex', flexDirection: 'column' }}>
+              {plan.isMostPopular && (
+                <div style={{ position: 'absolute', top: '-11px', left: '50%', transform: 'translateX(-50%)', backgroundColor: purple, color: '#fff', fontSize: '10px', fontWeight: '700', padding: '3px 10px', borderRadius: '999px', textTransform: 'uppercase', letterSpacing: '0.3px' }}>Most Popular</div>
+              )}
+              <div style={{ fontSize: '14px', fontWeight: '700', color: plan.isMostPopular ? purple : '#616473', marginBottom: '6px' }}>{plan.duration}</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '7px', marginBottom: '4px' }}>
+                <span style={{ fontSize: '14px', fontWeight: '600', color: '#9ca3af', textDecoration: 'line-through' }}>${plan.originalPrice}</span>
+                <span style={{ fontSize: '28px', fontWeight: '800', color: '#1a1a1a' }}>${plan.price}</span>
+              </div>
+              <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '14px' }}>${(plan.price / parseInt(plan.duration)).toFixed(2)}/month</div>
+              <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7', flex: 1 }}>Full question bank, all 20 full-length mock tests, and AI-based scoring for Writing and Speaking. Cancel anytime.</div>
+            </div>
+          ))}
         </div>
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <a href="/pricing.html" style={{ fontSize: '13px', fontWeight: '700', color: purple }}>See full pricing details →</a>
