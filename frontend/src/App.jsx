@@ -10432,57 +10432,41 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
           )}
         </div>
 
-        {/* Pricing Table - 3 Columns */}
+        {/* Pricing Table - 3 Columns. Purely informational (the account doesn't exist yet at this
+            point, so there's nothing to "choose" here -- real plan selection happens on the
+            Subscribe screen, SubscribeScreen above, right after signup). Numbers/features mirrored
+            exactly from that screen's plan list -- and from the landing page's own pricing teaser
+            -- so all three never drift out of sync again the way this panel silently did before
+            (it had shown a flat-out different, stale $50/$70/$120 set of numbers). */}
         <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '32px 16px', marginTop: '24px', boxSizing: 'border-box', maxWidth: '100%', margin: '24px auto 0', width: '100%' }}>
           <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-            <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Choose Your Plan</div>
-            <div style={{ fontSize: '14px', color: '#9ca3af' }}>Pay once, access everything. Cancel anytime.</div>
+            <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Plans after you sign up</div>
+            <div style={{ fontSize: '14px', color: '#9ca3af' }}>Create your free account above, then pick a plan. Cancel anytime.</div>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '12px', width: '100%' }}>
-            {/* 1 Month */}
-            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
-              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>1 Month</div>
-              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Get started</div>
-              <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '16px' }}>$50</div>
-              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
-                <li>✓ Unlimited practice</li>
-                <li>✓ 20 mock tests</li>
-                <li>✓ AI feedback</li>
-                <li>✓ Progress tracking</li>
-              </ul>
-              <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Choose Plan</button>
-            </div>
-
-            {/* 3 Months - MOST POPULAR */}
-            <div style={{ border: '2px solid #701fa1', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#f9f3fd', position: 'relative', transform: 'scale(1.05)' }}>
-              <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#701fa1', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 12px', borderRadius: '12px' }}>MOST POPULAR</div>
-              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>3 Months</div>
-              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Most popular</div>
-              <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$70</div>
-              <div style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600', marginBottom: '16px' }}>Save $80</div>
-              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
-                <li>✓ Unlimited practice</li>
-                <li>✓ 20 mock tests</li>
-                <li>✓ AI feedback</li>
-                <li>✓ Progress tracking</li>
-              </ul>
-              <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Choose Plan</button>
-            </div>
-
-            {/* 6 Months */}
-            <div style={{ border: '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: '#fafbfc' }}>
-              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>6 Months</div>
-              <div style={{ fontSize: '12px', color: '#9ca3af', marginBottom: '12px' }}>Best savings</div>
-              <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>$120</div>
-              <div style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600', marginBottom: '16px' }}>Save $180</div>
-              <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, marginBottom: '16px', listStyle: 'none' }}>
-                <li>✓ Unlimited practice</li>
-                <li>✓ 20 mock tests</li>
-                <li>✓ AI feedback</li>
-                <li>✓ Progress tracking</li>
-              </ul>
-              <button style={{ width: '100%', backgroundColor: '#701fa1', color: '#fff', border: 'none', padding: '10px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Choose Plan</button>
-            </div>
+            {[
+              { duration: '1 Month', originalPrice: 50, price: 25 },
+              { duration: '3 Months', originalPrice: 120, price: 60, isMostPopular: true },
+              { duration: '6 Months', originalPrice: 200, price: 100 },
+            ].map(plan => (
+              <div key={plan.duration} style={{ position: 'relative', border: plan.isMostPopular ? '2px solid #701fa1' : '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: plan.isMostPopular ? '#f9f3fd' : '#fafbfc', transform: plan.isMostPopular && !isMobile ? 'scale(1.05)' : 'none' }}>
+                {plan.isMostPopular && (
+                  <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#701fa1', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 12px', borderRadius: '12px' }}>MOST POPULAR</div>
+                )}
+                <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '12px' }}>{plan.duration}</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '7px', marginBottom: '4px' }}>
+                  <span style={{ fontSize: '14px', fontWeight: '600', color: '#9ca3af', textDecoration: 'line-through' }}>${plan.originalPrice}</span>
+                  <span style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>${plan.price}</span>
+                </div>
+                <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '14px' }}>${(plan.price / parseInt(plan.duration)).toFixed(2)}/month</div>
+                <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, listStyle: 'none' }}>
+                  <li>✓ Unlimited practice</li>
+                  <li>✓ 20 mock tests</li>
+                  <li>✓ AI feedback</li>
+                  <li>✓ Progress tracking</li>
+                </ul>
+              </div>
+            ))}
           </div>
 
           <div style={{ marginTop: '24px', backgroundColor: '#f0e8ff', border: '1px solid #d4c5e2', borderRadius: '8px', padding: '16px', textAlign: 'center' }}>
