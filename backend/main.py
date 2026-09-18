@@ -1418,6 +1418,19 @@ def init_db():
     # attacker out, instead of silently remaining valid for the rest of its normal 30-day life.
     if not _has_column(conn, "users", "token_version"):
         conn.execute("ALTER TABLE users ADD COLUMN token_version INTEGER NOT NULL DEFAULT 0")
+    # Gamification: longest_streak is the all-time high-water mark of current_streak (see
+    # compute_streak_and_week_activity/get_dashboard, which updates it), used for both the
+    # Dashboard's "Personal best" display and streak-based badge unlocks (see _compute_badges).
+    # Separate from current_streak, which can and does drop back to 0 -- this one never decreases.
+    if not _has_column(conn, "users", "longest_streak"):
+        conn.execute("ALTER TABLE users ADD COLUMN longest_streak INTEGER NOT NULL DEFAULT 0")
+    # Opt-out (not opt-in): a student appears on the Leaderboard by default once they've done any
+    # practice, and can hide themselves from it in Settings -- matches how the Dashboard/My
+    # Progress/every other score view already works with no separate visibility toggle. Purely a
+    # display filter on GET /api/leaderboard; doesn't affect points calculation for the student's
+    # own view of their own rank.
+    if not _has_column(conn, "users", "leaderboard_opt_out"):
+        conn.execute("ALTER TABLE users ADD COLUMN leaderboard_opt_out INTEGER NOT NULL DEFAULT 0")
     # reset_password()/verify_email() both look a token up by scanning these columns -- cheap today
     # at low user counts, but with no index they'd become full table scans as the user base grows.
     conn.execute("CREATE INDEX IF NOT EXISTS idx_users_password_reset_token ON users(password_reset_token)")
@@ -1664,6 +1677,22 @@ def init_db():
     """)
     conn.execute("CREATE INDEX IF NOT EXISTS idx_forum_questions_section ON forum_questions(section, is_hidden)")
     conn.execute("CREATE INDEX IF NOT EXISTS idx_forum_answers_question_id ON forum_answers(question_id)")
+
+    # Gamification: which badges (see BADGE_DEFINITIONS below) each student has ever unlocked, and
+    # when. Badge *eligibility* is always recomputed fresh from the student's current stats (see
+    # _compute_user_stats) -- this table only exists to remember the FIRST moment a badge was
+    # earned, so "unlocked_at" can be shown and a newly-earned badge can be detected/celebrated,
+    # rather than re-deriving an arbitrary unlock timestamp from data that doesn't carry one.
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS user_badges (
+            id {pk},
+            user_id INTEGER NOT NULL,
+            badge_id TEXT NOT NULL,
+            unlocked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(user_id, badge_id)
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_user_badges_user_id ON user_badges(user_id)")
 
     conn.commit()
     conn.close()
@@ -2064,6 +2093,8 @@ def user_profile_dict(user) -> dict:
         "writing_target": user["writing_target"],
         "speaking_target": user["speaking_target"],
         "current_streak": user["current_streak"],
+        "longest_streak": user["longest_streak"],
+        "leaderboard_opt_out": bool(user["leaderboard_opt_out"]),
         "vocab_level": user["vocab_level"],
         "reading_score": user["reading_score"],
         "listening_score": user["listening_score"],
@@ -3461,6 +3492,9 @@ def get_dashboard(user=Depends(get_current_user)):
             updates[f"{section}_score"] = compute_section_band(category_sums, section)
         streak, week_activity = compute_streak_and_week_activity(conn, user["id"])
         updates["current_streak"] = streak
+        # All-time high-water mark, never decreases even as current_streak resets to 0 after a
+        # missed day -- see the longest_streak column comment in init_db() for what this feeds.
+        updates["longest_streak"] = max(streak, user["longest_streak"] or 0)
         set_clause = ", ".join(f"{k} = ?" for k in updates)
         conn.execute(f"UPDATE users SET {set_clause} WHERE id = ?", (*updates.values(), user["id"]))
         conn.commit()
@@ -4349,6 +4383,181 @@ def admin_moderate_forum(data: ForumModerateRequest, admin=Depends(require_admin
     conn = get_db()
     try:
         conn.execute(f"UPDATE {table} SET is_hidden = ? WHERE id = ?", (1 if data.hidden else 0, data.target_id))
+        conn.commit()
+        return {"status": "success"}
+    finally:
+        conn.close()
+
+# ============================================================
+# GAMIFICATION: badges + leaderboard
+# ============================================================
+# Streaks themselves aren't a separate feature here -- current_streak/longest_streak and the
+# Dashboard's weekly dot row already existed (see compute_streak_and_week_activity above) well
+# before this section. What's new is turning that existing streak data, plus the practice-volume
+# data every category already tracks, into badges and a competitive leaderboard.
+
+def _compute_user_stats(conn, user_id, user_row):
+    """One place that gathers every number a badge's unlock rule or the leaderboard might need,
+    so BADGE_DEFINITIONS' check functions and the leaderboard's points formula both read from the
+    same consistent snapshot rather than each running their own ad-hoc queries."""
+    totals = conn.execute(
+        "SELECT COALESCE(SUM(total), 0) AS total_questions, COALESCE(SUM(score), 0) AS total_correct "
+        "FROM attempt_results WHERE user_id = ?", (user_id,)
+    ).fetchone()
+    mock_tests = conn.execute(
+        "SELECT COUNT(*) AS n FROM attempt_results WHERE user_id = ? AND category = 'mock_overall'", (user_id,)
+    ).fetchone()
+    vocab = conn.execute(
+        "SELECT COALESCE(SUM(total), 0) AS n FROM attempt_results WHERE user_id = ? AND category = 'vocab'", (user_id,)
+    ).fetchone()
+    accepted_answers = conn.execute(
+        "SELECT COUNT(*) AS n FROM forum_answers WHERE user_id = ? AND is_accepted = 1 AND is_hidden = 0", (user_id,)
+    ).fetchone()
+    _, week_activity = compute_streak_and_week_activity(conn, user_id)
+    return {
+        "total_questions": totals["total_questions"],
+        "total_correct": totals["total_correct"],
+        "mock_tests_completed": mock_tests["n"],
+        "vocab_questions": vocab["n"],
+        "accepted_answers": accepted_answers["n"],
+        "longest_streak": user_row["longest_streak"] or 0,
+        "perfect_week": all(week_activity),
+        "section_scores": [user_row["reading_score"], user_row["listening_score"], user_row["writing_score"], user_row["speaking_score"]],
+    }
+
+# Each badge is (id, name, description, icon, tier, check(stats) -> bool, progress(stats) -> (current, target)).
+# progress is purely cosmetic (drives a progress bar for a not-yet-unlocked badge in the UI) and
+# is allowed to be an approximation -- check() is always the actual source of truth for whether a
+# badge is unlocked.
+BADGE_DEFINITIONS = [
+    {"id": "first_steps", "name": "First Steps", "description": "Complete your first practice exercise.", "icon": "🌱", "tier": "bronze",
+     "check": lambda s: s["total_questions"] >= 1, "progress": lambda s: (min(s["total_questions"], 1), 1)},
+    {"id": "streak_10", "name": "10-Day Streak", "description": "Practice 10 days in a row.", "icon": "🔥", "tier": "bronze",
+     "check": lambda s: s["longest_streak"] >= 10, "progress": lambda s: (min(s["longest_streak"], 10), 10)},
+    {"id": "century_club", "name": "Century Club", "description": "Answer 100 practice questions.", "icon": "💯", "tier": "bronze",
+     "check": lambda s: s["total_questions"] >= 100, "progress": lambda s: (min(s["total_questions"], 100), 100)},
+    {"id": "streak_30", "name": "30-Day Streak", "description": "Practice 30 days in a row.", "icon": "🔥", "tier": "silver",
+     "check": lambda s: s["longest_streak"] >= 30, "progress": lambda s: (min(s["longest_streak"], 30), 30)},
+    {"id": "vocab_hero", "name": "Vocabulary Hero", "description": "Answer 200 vocabulary questions.", "icon": "📚", "tier": "silver",
+     "check": lambda s: s["vocab_questions"] >= 200, "progress": lambda s: (min(s["vocab_questions"], 200), 200)},
+    {"id": "perfect_week", "name": "Perfect Week", "description": "Practice every day this week.", "icon": "📅", "tier": "silver",
+     "check": lambda s: s["perfect_week"], "progress": lambda s: (7 if s["perfect_week"] else 0, 7)},
+    {"id": "streak_100", "name": "100-Day Streak", "description": "Practice 100 days in a row.", "icon": "🏆", "tier": "gold",
+     "check": lambda s: s["longest_streak"] >= 100, "progress": lambda s: (min(s["longest_streak"], 100), 100)},
+    {"id": "marathon", "name": "Marathon Runner", "description": "Answer 1,000 practice questions.", "icon": "🏃", "tier": "gold",
+     "check": lambda s: s["total_questions"] >= 1000, "progress": lambda s: (min(s["total_questions"], 1000), 1000)},
+    {"id": "mock_master", "name": "Mock Test Master", "description": "Complete 10 full mock tests.", "icon": "🧪", "tier": "gold",
+     "check": lambda s: s["mock_tests_completed"] >= 10, "progress": lambda s: (min(s["mock_tests_completed"], 10), 10)},
+    {"id": "score_climber", "name": "Score Climber", "description": "Reach 5.0+ in any section.", "icon": "📈", "tier": "gold",
+     "check": lambda s: max(s["section_scores"]) >= 5.0, "progress": lambda s: (round(max(s["section_scores"]), 1), 5.0)},
+    {"id": "all_rounder", "name": "All-Rounder", "description": "Reach 5.0+ in all four sections.", "icon": "⭐", "tier": "platinum",
+     "check": lambda s: min(s["section_scores"]) >= 5.0, "progress": lambda s: (round(min(s["section_scores"]), 1), 5.0)},
+    {"id": "community_helper", "name": "Community Helper", "description": "Get 3 of your forum answers marked as accepted.", "icon": "🤝", "tier": "platinum",
+     "check": lambda s: s["accepted_answers"] >= 3, "progress": lambda s: (min(s["accepted_answers"], 3), 3)},
+]
+BADGE_TIER_ORDER = {"bronze": 0, "silver": 1, "gold": 2, "platinum": 3}
+
+@app.get("/api/badges")
+def get_badges(user=Depends(get_current_user)):
+    conn = get_db()
+    try:
+        stats = _compute_user_stats(conn, user["id"], user)
+        already_unlocked = {row["badge_id"] for row in conn.execute("SELECT badge_id FROM user_badges WHERE user_id = ?", (user["id"],)).fetchall()}
+
+        newly_unlocked = []
+        for badge in BADGE_DEFINITIONS:
+            if badge["id"] not in already_unlocked and badge["check"](stats):
+                try:
+                    conn.execute("INSERT INTO user_badges (user_id, badge_id) VALUES (?, ?)", (user["id"], badge["id"]))
+                    newly_unlocked.append(badge["id"])
+                except _INTEGRITY_ERRORS:
+                    # Lost a race with a concurrent request for this same user computing the same
+                    # newly-eligible badge -- harmless, the UNIQUE constraint already prevented the
+                    # duplicate row.
+                    conn.rollback()
+        if newly_unlocked:
+            conn.commit()
+            already_unlocked |= set(newly_unlocked)
+
+        unlocked_at = {row["badge_id"]: row["unlocked_at"] for row in conn.execute("SELECT badge_id, unlocked_at FROM user_badges WHERE user_id = ?", (user["id"],)).fetchall()}
+
+        badges = []
+        for badge in BADGE_DEFINITIONS:
+            is_unlocked = badge["id"] in already_unlocked
+            current, target = badge["progress"](stats)
+            badges.append({
+                "id": badge["id"], "name": badge["name"], "description": badge["description"],
+                "icon": badge["icon"], "tier": badge["tier"], "unlocked": is_unlocked,
+                "unlocked_at": unlocked_at.get(badge["id"]),
+                "progress_current": current, "progress_target": target,
+                "is_new": badge["id"] in newly_unlocked,
+            })
+        badges.sort(key=lambda b: (not b["unlocked"], BADGE_TIER_ORDER.get(b["tier"], 9)))
+        return {"badges": badges, "newly_unlocked": newly_unlocked}
+    finally:
+        conn.close()
+
+@app.get("/api/leaderboard")
+def get_leaderboard(period: str = Query("weekly", max_length=10), limit: int = Query(50, ge=1, le=100), user=Depends(get_current_user)):
+    """Points = total questions answered correctly (SUM(score) across attempt_results) -- a
+    simple, hard-to-game effort/mastery metric that's already computed identically everywhere
+    else in this file, rather than inventing a separate scoring formula just for this. 'weekly'
+    resets every Monday UTC (matches compute_streak_and_week_activity's own week boundary);
+    'alltime' is unfiltered. Students who've opted out (leaderboard_opt_out) are excluded from the
+    list but the current user can still see their OWN rank even while opted out, both because it
+    doesn't leak anyone else's data and because "what would my rank be" is a fair thing to show
+    even to someone who doesn't want to be *shown* to others."""
+    if period not in ("weekly", "alltime"):
+        raise HTTPException(status_code=400, detail="period must be 'weekly' or 'alltime'")
+    conn = get_db()
+    try:
+        since_clause = ""
+        params = []
+        if period == "weekly":
+            today = datetime.now(timezone.utc).date()
+            monday = today - timedelta(days=today.weekday())
+            since_clause = "AND ar.saved_at >= ?"
+            params.append(monday.isoformat())
+
+        rows = conn.execute(f"""
+            SELECT ar.user_id, u.username, SUM(ar.score) AS points
+            FROM attempt_results ar
+            JOIN users u ON u.id = ar.user_id
+            WHERE u.leaderboard_opt_out = 0 {since_clause}
+            GROUP BY ar.user_id, u.username
+            HAVING SUM(ar.score) > 0
+            ORDER BY points DESC
+            LIMIT ?
+        """, (*params, limit)).fetchall()
+        leaderboard = [{"rank": i + 1, "user_id": r["user_id"], "username": r["username"], "points": r["points"], "is_you": r["user_id"] == user["id"]} for i, r in enumerate(rows)]
+
+        my_rank = next((e["rank"] for e in leaderboard if e["is_you"]), None)
+        if my_rank is None:
+            my_points_row = conn.execute(f"SELECT COALESCE(SUM(ar.score), 0) AS points FROM attempt_results ar WHERE ar.user_id = ? {since_clause}", (user["id"], *params)).fetchone()
+            my_points = my_points_row["points"]
+            if my_points > 0:
+                better_count = conn.execute(f"""
+                    SELECT COUNT(*) AS n FROM (
+                        SELECT ar.user_id, SUM(ar.score) AS points FROM attempt_results ar
+                        JOIN users u ON u.id = ar.user_id
+                        WHERE u.leaderboard_opt_out = 0 {since_clause}
+                        GROUP BY ar.user_id HAVING SUM(ar.score) > ?
+                    ) t
+                """, (*params, my_points)).fetchone()
+                my_rank = better_count["n"] + 1
+
+        return {"leaderboard": leaderboard, "my_rank": my_rank, "period": period}
+    finally:
+        conn.close()
+
+class LeaderboardPrivacyRequest(BaseModel):
+    opt_out: bool
+
+@app.post("/api/leaderboard/privacy")
+def set_leaderboard_privacy(data: LeaderboardPrivacyRequest, user=Depends(get_current_user)):
+    conn = get_db()
+    try:
+        conn.execute("UPDATE users SET leaderboard_opt_out = ? WHERE id = ?", (1 if data.opt_out else 0, user["id"]))
         conn.commit()
         return {"status": "success"}
     finally:

@@ -9706,6 +9706,166 @@ function ForumQuestionDetail({ questionId, onBack, currentUserId, isAdmin }) {
   )
 }
 
+// ─── Gamification: Badges + Leaderboard ────────────────────────────────────
+const BADGE_TIER_META = {
+  bronze: { label: 'Bronze', color: '#a05a2c', bg: '#fdf2e9' },
+  silver: { label: 'Silver', color: '#6b7280', bg: '#f3f4f6' },
+  gold: { label: 'Gold', color: '#b45309', bg: '#fef9e7' },
+  platinum: { label: 'Platinum', color: '#701fa1', bg: '#f4f0fb' },
+}
+
+function BadgesScreen() {
+  const isMobile = useIsMobile()
+  const [badges, setBadges] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
+
+  const load = () => {
+    setLoading(true); setLoadError(false)
+    apiFetch(`${BACKEND_URL}/api/badges`).then(r => { if (!r.ok) throw new Error('fetch failed'); return r.json() })
+      .then(data => {
+        setBadges(Array.isArray(data.badges) ? data.badges : [])
+        setLoading(false)
+        // Celebrate a badge earned since the last visit -- one toast per newly-unlocked badge,
+        // named individually so the student knows exactly what they just earned rather than a
+        // generic "you got a badge!" notice.
+        (data.newly_unlocked || []).forEach(id => {
+          const badge = (data.badges || []).find(b => b.id === id)
+          if (badge) showToast(`🎉 New badge unlocked: ${badge.name}!`)
+        })
+      })
+      .catch(() => { setLoading(false); setLoadError(true) })
+  }
+  useEffect(load, [])
+
+  if (loading) return <LoadingState label="Loading your badges..." />
+  if (loadError) return (
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '48px 20px', textAlign: 'center' }}>
+      <div style={{ fontSize: '13px', color: '#616473' }}>Couldn't load your badges -- check your connection.</div>
+      <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
+    </div>
+  )
+
+  const unlockedCount = badges.filter(b => b.unlocked).length
+
+  return (
+    <div style={{ padding: '0 8px 40px' }}>
+      <div style={{ marginBottom: '20px' }}>
+        <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>🏅 Badges</h1>
+        <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{unlockedCount} of {badges.length} earned -- keep practicing to unlock the rest.</div>
+      </div>
+      <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(260px, 1fr))', gap: '12px' }}>
+        {badges.map(b => {
+          const tier = BADGE_TIER_META[b.tier] || BADGE_TIER_META.bronze
+          const pct = b.progress_target > 0 ? Math.min(100, Math.round((b.progress_current / b.progress_target) * 100)) : 0
+          return (
+            <div key={b.id} style={{ background: b.unlocked ? tier.bg : '#fff', border: `1px solid ${b.unlocked ? tier.color + '55' : '#e1e4ed'}`, borderRadius: '12px', padding: '16px', opacity: b.unlocked ? 1 : 0.75 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ fontSize: '26px', filter: b.unlocked ? 'none' : 'grayscale(1)' }} aria-hidden="true">{b.icon}</div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ fontSize: '13.5px', fontWeight: '700', color: '#1a1a1a' }}>{b.name}</div>
+                  <div style={{ fontSize: '9px', fontWeight: '700', color: tier.color, textTransform: 'uppercase', letterSpacing: '0.4px' }}>{tier.label}</div>
+                </div>
+                {b.unlocked && <div style={{ fontSize: '16px' }} aria-label="Unlocked">✅</div>}
+              </div>
+              <div style={{ fontSize: '11.5px', color: '#616473', marginTop: '8px', lineHeight: '1.4' }}>{b.description}</div>
+              {!b.unlocked && (
+                <div style={{ marginTop: '10px' }}>
+                  <div style={{ height: '6px', background: '#f0f2f5', borderRadius: '3px', overflow: 'hidden' }}>
+                    <div style={{ width: `${pct}%`, height: '100%', background: '#701fa1', borderRadius: '3px' }} />
+                  </div>
+                  <div style={{ fontSize: '10px', color: '#9ca3af', marginTop: '4px' }}>{b.progress_current} / {b.progress_target}</div>
+                </div>
+              )}
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function LeaderboardScreen({ isLeaderboardOptedOut, onPrivacyChange }) {
+  const [period, setPeriod] = useState('weekly')
+  const [data, setData] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
+  const [togglingPrivacy, setTogglingPrivacy] = useState(false)
+
+  const load = () => {
+    setLoading(true); setLoadError(false)
+    apiFetch(`${BACKEND_URL}/api/leaderboard?period=${period}`).then(r => { if (!r.ok) throw new Error('fetch failed'); return r.json() })
+      .then(d => { setData(d); setLoading(false) })
+      .catch(() => { setLoading(false); setLoadError(true) })
+  }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(load, [period])
+
+  const togglePrivacy = () => {
+    setTogglingPrivacy(true)
+    const newValue = !isLeaderboardOptedOut
+    apiFetch(`${BACKEND_URL}/api/leaderboard/privacy`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ opt_out: newValue }),
+    }).then(r => { if (!r.ok) throw new Error(); onPrivacyChange(newValue); load() })
+      .catch(() => showToast("Couldn't update your privacy setting -- please try again.", 'error'))
+      .finally(() => setTogglingPrivacy(false))
+  }
+
+  const periodBtnStyle = (active) => ({ padding: '8px 16px', borderRadius: '999px', border: active ? 'none' : '1px solid #e1e4ed', background: active ? '#701fa1' : '#fff', color: active ? '#fff' : '#616473', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer' })
+  const medalFor = (rank) => rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : null
+
+  return (
+    <div style={{ padding: '0 8px 40px', maxWidth: '620px' }}>
+      <div style={{ marginBottom: '18px' }}>
+        <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>🏆 Leaderboard</h1>
+        <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Ranked by total correct answers across every practice exercise.</div>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
+        <div style={{ display: 'flex', gap: '8px' }}>
+          <button onClick={() => setPeriod('weekly')} style={periodBtnStyle(period === 'weekly')}>This Week</button>
+          <button onClick={() => setPeriod('alltime')} style={periodBtnStyle(period === 'alltime')}>All Time</button>
+        </div>
+        <button onClick={togglePrivacy} disabled={togglingPrivacy} style={{ background: 'none', border: '1px solid #e1e4ed', borderRadius: '7px', padding: '7px 12px', fontSize: '11.5px', fontWeight: '600', color: '#616473', cursor: togglingPrivacy ? 'default' : 'pointer' }}>
+          {isLeaderboardOptedOut ? '🙈 Hidden from leaderboard' : '👁️ Visible on leaderboard'} · {togglingPrivacy ? '...' : (isLeaderboardOptedOut ? 'Show me' : 'Hide me')}
+        </button>
+      </div>
+
+      {loading ? (
+        <LoadingState label="Loading leaderboard..." />
+      ) : loadError ? (
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '40px 20px', textAlign: 'center' }}>
+          <div style={{ fontSize: '13px', color: '#616473' }}>Couldn't load the leaderboard -- check your connection.</div>
+          <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
+        </div>
+      ) : data.leaderboard.length === 0 ? (
+        <div style={{ textAlign: 'center', padding: '48px 20px' }}>
+          <div style={{ fontSize: '32px', marginBottom: '10px' }}>🏆</div>
+          <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>No scores yet {period === 'weekly' ? 'this week' : ''}</div>
+          <div style={{ fontSize: '13px', color: '#616473', marginTop: '4px' }}>Complete a practice exercise to be the first on the board.</div>
+        </div>
+      ) : (
+        <>
+          {data.my_rank && !data.leaderboard.some(e => e.is_you) && (
+            <div style={{ background: '#f4f0fb', border: '1px solid #701fa1', borderRadius: '10px', padding: '10px 16px', marginBottom: '12px', fontSize: '12.5px', color: '#701fa1', fontWeight: '600' }}>
+              You're ranked #{data.my_rank} {isLeaderboardOptedOut && '(hidden from others -- only you can see this)'}
+            </div>
+          )}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {data.leaderboard.map(entry => (
+              <div key={entry.user_id} style={{ display: 'flex', alignItems: 'center', gap: '14px', background: entry.is_you ? '#f4f0fb' : '#fff', border: `1px solid ${entry.is_you ? '#701fa1' : '#e1e4ed'}`, borderRadius: '10px', padding: '12px 16px' }}>
+                <div style={{ width: '30px', textAlign: 'center', fontSize: medalFor(entry.rank) ? '18px' : '13px', fontWeight: '800', color: '#616473', flexShrink: 0 }}>{medalFor(entry.rank) || `#${entry.rank}`}</div>
+                <div style={{ flex: 1, minWidth: 0, fontSize: '13.5px', fontWeight: entry.is_you ? '800' : '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{entry.username}{entry.is_you && ' (you)'}</div>
+                <div style={{ fontSize: '14px', fontWeight: '800', color: '#701fa1', flexShrink: 0 }}>{entry.points}</div>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
 // ─── AI Tutor Chat ──────────────────────────────────────────────────────────
 // Sidebar-style chat backed by the Anthropic Messages API (see /api/ai-tutor/chat in main.py),
 // given each student's own weak-areas context server-side so its answers are grounded in their
@@ -11911,6 +12071,8 @@ function App() {
             {sb('vocab', '📚', 'Vocabulary')}
             {aiTutorAvailable && sb('aitutor', '🤖', 'AI Tutor')}
             {sb('forum', '💬', 'Community')}
+            {sb('badges', '🏅', 'Badges')}
+            {sb('leaderboard', '🏆', 'Leaderboard')}
             <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
               📝 TOEFL Guides
             </a>
@@ -11991,6 +12153,8 @@ function App() {
               {currentTab === 'vocab' && '📚 Vocabulary'}
               {currentTab === 'aitutor' && '🤖 AI Tutor'}
               {currentTab === 'forum' && '💬 Community'}
+              {currentTab === 'badges' && '🏅 Badges'}
+              {currentTab === 'leaderboard' && '🏆 Leaderboard'}
               {currentTab === 'settings' && '⚙️ Settings'}
               {currentTab === 'subscribe' && '💎 Premium'}
               {currentTab === 'admin' && '🛠️ Admin'}
@@ -12027,6 +12191,7 @@ function App() {
                 <div>
                   <div style={{ fontSize: '10px', color: '#7b809a', marginBottom: '2px' }}>Daily streak</div>
                   <div style={{ fontSize: '20px', fontWeight: '700', color: '#f5a623' }}>{userData.current_streak} day{userData.current_streak === 1 ? '' : 's'}</div>
+                  {userData.longest_streak > 0 && <div style={{ fontSize: '9px', color: '#7b809a', marginTop: '1px' }}>🏆 Best: {userData.longest_streak} day{userData.longest_streak === 1 ? '' : 's'}</div>}
                 </div>
                 <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
                   {streakDays.map((done, i) => (
@@ -12373,6 +12538,15 @@ function App() {
             : <ForumHome onOpenQuestion={setForumQuestionId} />
         )}
 
+        {currentTab === 'badges' && <BadgesScreen />}
+
+        {currentTab === 'leaderboard' && (
+          <LeaderboardScreen
+            isLeaderboardOptedOut={!!userData.leaderboard_opt_out}
+            onPrivacyChange={(v) => setUserData(u => ({ ...u, leaderboard_opt_out: v }))}
+          />
+        )}
+
         {currentTab === 'progress' && (
           <ProgressScreen onBack={() => setCurrentTab('dashboard')} onPractice={(nav) => {
             if (!nav || !nav.tab) return
@@ -12432,6 +12606,26 @@ function App() {
                 </div>
                 <button type="submit" disabled={savingProfile} style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: savingProfile ? 'default' : 'pointer', opacity: savingProfile ? 0.7 : 1 }}>{savingProfile ? 'Saving…' : 'Save Changes'}</button>
               </form>
+              <div style={{ marginTop: '18px', paddingTop: '16px', borderTop: '1px solid #f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
+                <div style={{ minWidth: 0 }}>
+                  <div style={{ fontWeight: '600', color: '#374151', fontSize: '12.5px' }}>🏆 Show me on the Leaderboard</div>
+                  <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>Other students see your username and rank when this is on.</div>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={!userData.leaderboard_opt_out}
+                  onClick={() => {
+                    const newOptOut = !userData.leaderboard_opt_out
+                    apiFetch(`${BACKEND_URL}/api/leaderboard/privacy`, {
+                      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ opt_out: newOptOut }),
+                    }).then(r => { if (!r.ok) throw new Error(); setUserData(u => ({ ...u, leaderboard_opt_out: newOptOut })) })
+                      .catch(() => showToast("Couldn't update your privacy setting -- please try again.", 'error'))
+                  }}
+                  style={{ flexShrink: 0, width: '42px', height: '24px', borderRadius: '999px', border: 'none', cursor: 'pointer', background: userData.leaderboard_opt_out ? '#d1d5db' : '#2ac56c', position: 'relative', transition: 'background 0.15s' }}>
+                  <div style={{ position: 'absolute', top: '3px', left: userData.leaderboard_opt_out ? '3px' : '21px', width: '18px', height: '18px', borderRadius: '50%', background: '#fff', transition: 'left 0.15s' }} />
+                </button>
+              </div>
             </div>
             <div style={{ flex: 1, minWidth: 0, backgroundColor: '#fff', padding: isMobile ? '18px' : '24px', borderRadius: '14px', border: '0.5px solid #e1e4ed' }}>
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🔒 Account Security</h3>
