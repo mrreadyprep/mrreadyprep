@@ -11735,11 +11735,6 @@ function App() {
   // null whenever the student navigates away from the 'forum' tab and back, so returning to
   // Community always lands on the list rather than wherever they last were.
   const [forumQuestionId, setForumQuestionId] = useState(null)
-  // Landing on the Community tab (from any other tab) always shows the question list, never
-  // wherever the student last drilled into -- only fires on an actual tab switch INTO 'forum',
-  // not on the list->detail->list navigation that happens while already on this tab (that
-  // navigation is currentTab-stable, so it doesn't re-trigger this effect).
-  useEffect(() => { if (currentTab === 'forum') setForumQuestionId(null) }, [currentTab])
   useEffect(() => {
     apiFetch(`${BACKEND_URL}/api/ai-tutor/status`).then(r => r.ok ? r.json() : null)
       .then(data => { if (data?.available) setAiTutorAvailable(true) })
@@ -11747,6 +11742,11 @@ function App() {
   }, [])
   const [resendingVerification, setResendingVerification] = useState(false)
   const [currentTab, setCurrentTab] = useState('dashboard')
+  // Landing on the Community tab (from any other tab) always shows the question list, never
+  // wherever the student last drilled into -- only fires on an actual tab switch INTO 'forum',
+  // not on the list->detail->list navigation that happens while already on this tab (that
+  // navigation is currentTab-stable, so it doesn't re-trigger this effect).
+  useEffect(() => { if (currentTab === 'forum') setForumQuestionId(null) }, [currentTab])
   // Guards every sidebar/Settings/Log-Out tab switch against silently discarding in-progress work
   // (a running mock test, or a solo practice exercise mid-attempt) -- see _pushExitGuard's
   // definition for the full story on why this exists (beforeunload alone doesn't cover same-page
