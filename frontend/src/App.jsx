@@ -9885,6 +9885,9 @@ function LandingPage({ onGetStarted, onLogIn }) {
     { id: 'fallback-3', name: 'Maria Lopez', score: '5.0/6', comment: 'The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!' },
   ])
   const [showShareModal, setShowShareModal] = useState(false)
+  // Shows the newest 6 stories to start; "Show more" reveals the rest 6 at a time instead of
+  // dumping potentially dozens of cards on the page at once.
+  const [visibleStoryCount, setVisibleStoryCount] = useState(6)
 
   useEffect(() => {
     let cancelled = false
@@ -10036,7 +10039,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
           See how our students are acing the TOEFL iBT. Share your results and inspire the community!
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '24px', marginBottom: '32px' }}>
-          {stories.slice(0, 3).map((story, idx) => (
+          {stories.slice(0, visibleStoryCount).map((story, idx) => (
             <div key={story.id ?? idx} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', background: '#f9f8fc', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(112, 31, 161, 0.12)'; e.currentTarget.style.borderColor = '#701fa1'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e1e4ed'; }}>
               <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'flex-start' }}>
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(135deg, #701fa1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px', flexShrink: 0 }}>
@@ -10059,9 +10062,16 @@ function LandingPage({ onGetStarted, onLogIn }) {
           ))}
         </div>
         <div style={{ textAlign: 'center' }}>
-          <button type="button" onClick={() => setShowShareModal(true)} style={{ padding: '16px 32px', background: '#701fa1', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', border: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#5a1480'} onMouseLeave={(e) => e.currentTarget.style.background = '#701fa1'}>
-            + Share Your Success Story
-          </button>
+          {stories.length > visibleStoryCount && (
+            <button type="button" onClick={() => setVisibleStoryCount(c => c + 6)} style={{ padding: '12px 28px', background: '#fff', color: '#701fa1', border: '1.5px solid #701fa1', borderRadius: '10px', fontWeight: '700', fontSize: '13px', cursor: 'pointer', marginBottom: '16px' }}>
+              Show more stories
+            </button>
+          )}
+          <div>
+            <button type="button" onClick={() => setShowShareModal(true)} style={{ padding: '16px 32px', background: '#701fa1', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', border: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#5a1480'} onMouseLeave={(e) => e.currentTarget.style.background = '#701fa1'}>
+              + Share Your Success Story
+            </button>
+          </div>
         </div>
         {showShareModal && (
           <ShareSuccessStoryModal
