@@ -1381,9 +1381,16 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
       <div style={{ width: '100%', maxWidth: 'none', background: '#fff', borderRadius: '0px', border: 'none', padding: '40px 60px' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '38px', marginBottom: '10px' }}>{isLapsed ? '👋' : '⭐'}</div>
-          <h2 style={{ margin: '0 0 16px', fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>
+          <h2 style={{ margin: '0 0 8px', fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>
             Choose Your Plan
           </h2>
+          {/* AI Tutor, Community, Adaptive Learning ("Recommended for You"), and Gamification
+              (streaks/badges/leaderboard) are free for every registered account -- not gated
+              behind Premium -- so this is called out here rather than folded into the paid
+              feature lists below, which would misleadingly imply a visitor has to pay for them. */}
+          <p style={{ margin: '0 0 16px', fontSize: '13px', color: '#616473' }}>
+            🎯 Adaptive Learning, 🤖 AI Tutor Chat, 💬 Community Forum, and 🏆 Badges &amp; Leaderboard are free on every account. Premium unlocks the full practice library below.
+          </p>
         </div>
 
         {/* 3-Column Pricing Grid */}
