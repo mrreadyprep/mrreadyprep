@@ -11056,23 +11056,34 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
             <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Plans after you sign up</div>
             <div style={{ fontSize: '14px', color: '#9ca3af' }}>Create your free account above, then pick a plan. Cancel anytime.</div>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '12px', width: '100%' }}>
+          {/* Always a single stacked column, regardless of viewport width -- this whole screen lives
+              inside a fixed 380px-wide card (see the wrapper div a few dozen lines up, used for the
+              login form itself), never the full page width. A 3-column `repeat(3, 1fr)` grid here
+              squeezed each plan into ~100px, leaving ~70px of actual text room per card -- nowhere
+              near enough for "Unlimited practice" / "20 mock tests" to fit on one line, so the list
+              text wrapped badly and the cards looked cramped/overflowing even on a wide desktop
+              browser window. Found live from a user screenshot. Stacking removes the need for that
+              math entirely: every card gets the full ~316px of content width the card padding leaves
+              inside a 380px container, which is plenty for every line here to render on one row. */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '100%' }}>
             {[
               { duration: '1 Month', originalPrice: 50, price: 25 },
               { duration: '3 Months', originalPrice: 120, price: 60, isMostPopular: true },
               { duration: '6 Months', originalPrice: 200, price: 100 },
             ].map(plan => (
-              <div key={plan.duration} style={{ position: 'relative', border: plan.isMostPopular ? '2px solid #701fa1' : '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px', boxSizing: 'border-box', backgroundColor: plan.isMostPopular ? '#f9f3fd' : '#fafbfc', transform: plan.isMostPopular && !isMobile ? 'scale(1.05)' : 'none' }}>
+              <div key={plan.duration} style={{ position: 'relative', border: plan.isMostPopular ? '2px solid #701fa1' : '1.5px solid #e1e4ed', borderRadius: '10px', padding: '16px 18px', boxSizing: 'border-box', backgroundColor: plan.isMostPopular ? '#f9f3fd' : '#fafbfc', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '14px', flexWrap: 'wrap' }}>
                 {plan.isMostPopular && (
-                  <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', backgroundColor: '#701fa1', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '4px 12px', borderRadius: '12px' }}>MOST POPULAR</div>
+                  <div style={{ position: 'absolute', top: '-10px', left: '18px', backgroundColor: '#701fa1', color: '#fff', fontSize: '11px', fontWeight: '700', padding: '3px 10px', borderRadius: '12px' }}>MOST POPULAR</div>
                 )}
-                <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '12px' }}>{plan.duration}</div>
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '7px', marginBottom: '4px' }}>
-                  <span style={{ fontSize: '14px', fontWeight: '600', color: '#9ca3af', textDecoration: 'line-through' }}>${plan.originalPrice}</span>
-                  <span style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>${plan.price}</span>
+                <div style={{ minWidth: '120px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>{plan.duration}</div>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '7px', marginBottom: '2px' }}>
+                    <span style={{ fontSize: '13px', fontWeight: '600', color: '#9ca3af', textDecoration: 'line-through' }}>${plan.originalPrice}</span>
+                    <span style={{ fontSize: '24px', fontWeight: '800', color: '#701fa1' }}>${plan.price}</span>
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#9ca3af' }}>${(plan.price / parseInt(plan.duration)).toFixed(2)}/month</div>
                 </div>
-                <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '14px' }}>${(plan.price / parseInt(plan.duration)).toFixed(2)}/month</div>
-                <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '2', paddingLeft: 0, listStyle: 'none' }}>
+                <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '1.8', paddingLeft: 0, listStyle: 'none', margin: 0 }}>
                   <li>✓ Unlimited practice</li>
                   <li>✓ 20 mock tests</li>
                   <li>✓ AI feedback</li>
