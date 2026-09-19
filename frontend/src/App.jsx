@@ -10486,6 +10486,18 @@ function LandingPage({ onGetStarted, onLogIn }) {
     { n: '3', title: 'Get instant, AI-powered feedback', desc: 'See your score, mistakes, and personalized feedback the moment you finish.' },
   ]
 
+  // Platform features beyond the four skills themselves -- kept in sync (icon + name) with the
+  // actual in-app nav items so a visitor sees the exact same labels here and after signing up:
+  // 'Recommended for You' (Adaptive Learning), 'AI Tutor', 'Community', and Badges/Leaderboard
+  // (Gamification). Added once these shipped, so the landing page actually advertises them
+  // instead of only listing the original four skill areas.
+  const platformFeatures = [
+    { icon: '🎯', title: 'Adaptive Learning Paths', desc: 'A "Recommended for You" plan built from your real results, so you always know exactly which section to practice next.' },
+    { icon: '🤖', title: 'AI Tutor Chat', desc: 'Ask about grammar, strategy, or your weak spots anytime and get instant, expert answers from your personal AI Tutor.' },
+    { icon: '💬', title: 'Community Forum', desc: 'Ask questions, share tips, and learn alongside other students preparing for the same exam.' },
+    { icon: '🏆', title: 'Streaks, Badges & Leaderboard', desc: 'Keep your daily practice streak alive, earn badges as you hit milestones, and see how you rank against other students.' },
+  ]
+
   const navLinkStyle = { fontSize: '13px', fontWeight: '700', color: '#fff', textDecoration: 'none', cursor: 'pointer', background: 'none', border: 'none' }
 
   // Student Success Stories -- fetched from the backend (real, publicly-submitted rows) instead of
@@ -10582,6 +10594,30 @@ function LandingPage({ onGetStarted, onLogIn }) {
               <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6' }}>{s.desc}</div>
             </div>
           ))}
+        </div>
+      </div>
+
+      {/* Platform features (Adaptive Learning, AI Tutor, Community, Gamification) -- a separate
+          section from the four skills above, since these are cross-cutting platform capabilities
+          rather than exam content areas. Purple-tinted cards (vs. the plain grey skill cards)
+          so this reads as "extra tools on top of practice" rather than a fifth skill. */}
+      <div style={{ backgroundColor: '#f4f6fa', padding: isMobile ? '48px 20px' : '64px 40px' }}>
+        <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+          <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>
+            More than just practice questions
+          </h2>
+          <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 36px', maxWidth: '560px', lineHeight: '1.6' }}>
+            Tools built to keep your prep personalized, motivated, and never lonely.
+          </p>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '18px' }}>
+            {platformFeatures.map(f => (
+              <div key={f.title} style={{ border: `1px solid ${purple}33`, borderRadius: '14px', padding: '24px', backgroundColor: '#fff' }}>
+                <div style={{ fontSize: '28px', marginBottom: '10px' }}>{f.icon}</div>
+                <div style={{ fontSize: '16px', fontWeight: '800', color: '#1a1a1a', marginBottom: '6px' }}>{f.title}</div>
+                <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6' }}>{f.desc}</div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
