@@ -10477,10 +10477,10 @@ function LandingPage({ onGetStarted, onLogIn }) {
   const purple = '#701fa1'
 
   const skills = [
-    { icon: '📖', title: 'Reading', desc: 'Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback.' },
-    { icon: '🎧', title: 'Listening', desc: 'Conversations, announcements, and academic talks with note-taking practice, just like the real exam.' },
-    { icon: '✍️', title: 'Writing', desc: 'Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI against the real TOEFL rubric.' },
-    { icon: '🎤', title: 'Speaking', desc: 'Interview, Listen & Repeat, and full speaking tasks with AI feedback on delivery, language use, and content.' },
+    { icon: '📖', title: 'Reading', desc: 'Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback.', pill: 'Instant Right/Wrong Explanations' },
+    { icon: '🎧', title: 'Listening', desc: 'Conversations, announcements, and academic talks with note-taking practice, just like the real exam.', pill: 'Official Audio Pacing' },
+    { icon: '✍️', title: 'Writing', desc: 'Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI against the real TOEFL rubric.', pill: 'Scored in Seconds' },
+    { icon: '🎤', title: 'Speaking', desc: 'Interview, Listen & Repeat, and full speaking tasks with AI feedback on delivery, language use, and content.', pill: '0–6.0 Fluency & Delivery Score' },
   ]
 
   const steps = [
@@ -10501,6 +10501,16 @@ function LandingPage({ onGetStarted, onLogIn }) {
     { icon: '🏆', title: 'Streaks, Badges & Leaderboard', desc: 'Keep your daily practice streak alive, earn badges as you hit milestones, and see how you rank against other students.' },
   ]
 
+  // Answers checked against what the product actually does (not just plausible-sounding copy):
+  // the 0-6.0/0.5-step scale, the 20 mock tests mirroring real timing, and one-click cancellation
+  // from Settings are all real, existing behavior, not aspirational claims.
+  const faqs = [
+    { q: 'Are the questions aligned with the latest 2026 TOEFL® iBT blueprint?', a: 'Yes. mrreadyprep is built around the current test specifications, including Read in Daily Life, Complete the Words, Academic Discussion, and the updated Speaking task formats.' },
+    { q: 'How does the AI scoring work, and what rubric does it use?', a: 'Responses are graded on a 0 to 6.0 scale in 0.5 increments (e.g. 4.5, 5.0, 5.5, 6.0). Beyond the overall band, you get itemized feedback broken down by criteria like grammar, vocabulary, and topic development.' },
+    { q: 'What is included in the 20 Full-Length Mock Tests?', a: 'Each of the 20 mock exams mirrors real test timing and section transitions across Reading, Listening, Writing, and Speaking, and ends with a full band report plus a mistake review.' },
+    { q: 'How do I cancel my subscription?', a: 'From your account settings, in one click -- no email or support ticket needed. You keep full access until the end of your current billing period.' },
+  ]
+
   const navLinkStyle = { fontSize: '13px', fontWeight: '700', color: '#fff', textDecoration: 'none', cursor: 'pointer', background: 'none', border: 'none' }
 
   // Student Success Stories -- fetched from the backend (real, publicly-submitted rows) instead of
@@ -10513,6 +10523,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
     { id: 'fallback-3', name: 'Maria Lopez', score: '5.0/6', comment: 'The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!' },
   ])
   const [showShareModal, setShowShareModal] = useState(false)
+  const [openFaq, setOpenFaq] = useState(null)
   // Shows the newest 6 stories to start; "Show more" reveals the rest 6 at a time instead of
   // dumping potentially dozens of cards on the page at once.
   const [visibleStoryCount, setVisibleStoryCount] = useState(6)
@@ -10528,9 +10539,20 @@ function LandingPage({ onGetStarted, onLogIn }) {
 
   return (
     <div style={{ width: '100%', minHeight: '100vh', overflowY: 'auto', fontFamily: 'sans-serif', backgroundColor: '#fff' }}>
-      {/* Top nav */}
-      <div style={{ backgroundColor: '#11162d', padding: isMobile ? '14px 18px' : '16px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      {/* Top nav. The Skills/Pricing/FAQ links are plain same-page anchors (#skills etc. --
+          scrollMarginTop on each target section keeps it from landing flush under this fixed-
+          looking nav bar). Deliberately no "Mock Tests" or "AI Scoring" link here yet -- unlike
+          Skills/Pricing/FAQ, neither has its own dedicated section on this page to scroll to, so
+          linking to them would just misfire; add a link once (if) those sections exist. */}
+      <div style={{ backgroundColor: '#11162d', padding: isMobile ? '14px 18px' : '16px 40px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px' }}>
         <div style={{ color: '#b67bfb', fontSize: '19px', fontWeight: '800' }}>mrreadyprep</div>
+        {!isMobile && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
+            {[{ href: '#skills', label: 'Skills' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQ' }].map(link => (
+              <a key={link.href} href={link.href} style={{ fontSize: '13px', fontWeight: '600', color: '#c7c9d9', textDecoration: 'none' }}>{link.label}</a>
+            ))}
+          </div>
+        )}
         <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? '10px' : '18px' }}>
           <button type="button" onClick={onLogIn} style={navLinkStyle}>Log In</button>
           <button type="button" onClick={onGetStarted} style={{ backgroundColor: '#b67bfb', color: '#11162d', border: 'none', borderRadius: '8px', padding: '9px 16px', fontSize: '13px', fontWeight: '800', cursor: 'pointer' }}>
@@ -10582,7 +10604,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
       </div>
 
       {/* Skills grid */}
-      <div style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '1000px', margin: '0 auto' }}>
+      <div id="skills" style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '1000px', margin: '0 auto', scrollMarginTop: '70px' }}>
         <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>
           Every section of the TOEFL iBT, covered
         </h2>
@@ -10594,7 +10616,10 @@ function LandingPage({ onGetStarted, onLogIn }) {
             <div key={s.title} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', backgroundColor: '#f9f8fc' }}>
               <div style={{ fontSize: '28px', marginBottom: '10px' }}>{s.icon}</div>
               <div style={{ fontSize: '16px', fontWeight: '800', color: '#1a1a1a', marginBottom: '6px' }}>{s.title}</div>
-              <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6' }}>{s.desc}</div>
+              <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '12px' }}>{s.desc}</div>
+              <div style={{ display: 'inline-block', fontSize: '11px', fontWeight: '700', color: purple, backgroundColor: `${purple}14`, border: `1px solid ${purple}33`, borderRadius: '999px', padding: '4px 10px' }}>
+                {s.pill}
+              </div>
             </div>
           ))}
         </div>
@@ -10648,7 +10673,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
           Subscribe screen (SubscribeScreen above), not a made-up single "$50/mo" summary that
           didn't match what a visitor would see after signing up. Prices/features mirrored from
           that screen's plan list so the two never drift out of sync. */}
-      <div style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '1180px', margin: '0 auto' }}>
+      <div id="pricing" style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '1180px', margin: '0 auto', scrollMarginTop: '70px' }}>
         <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 36px' }}>
           Simple pricing
         </h2>
@@ -10679,6 +10704,35 @@ function LandingPage({ onGetStarted, onLogIn }) {
         </div>
         <div style={{ textAlign: 'center', marginTop: '20px' }}>
           <a href="/pricing.html" style={{ fontSize: '13px', fontWeight: '700', color: purple }}>See full pricing details →</a>
+        </div>
+      </div>
+
+      {/* FAQ -- addresses the purchase hesitations most likely to stop someone right after they've
+          seen the price, so it sits directly below Pricing rather than further down the page. */}
+      <div id="faq" style={{ backgroundColor: '#f4f6fa', padding: isMobile ? '48px 20px' : '64px 40px', scrollMarginTop: '70px' }}>
+        <div style={{ maxWidth: '760px', margin: '0 auto' }}>
+          <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 36px' }}>
+            Frequently asked questions
+          </h2>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {faqs.map((item, idx) => {
+              const isOpen = openFaq === idx
+              return (
+                <div key={item.q} style={{ border: '1px solid #e1e4ed', borderRadius: '12px', backgroundColor: '#fff', overflow: 'hidden' }}>
+                  <button type="button" onClick={() => setOpenFaq(isOpen ? null : idx)} aria-expanded={isOpen}
+                    style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: '16px 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px', fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>
+                    <span>{item.q}</span>
+                    <span aria-hidden="true" style={{ flexShrink: 0, color: purple, fontSize: '18px', transform: isOpen ? 'rotate(45deg)' : 'none', transition: 'transform 0.15s' }}>+</span>
+                  </button>
+                  {isOpen && (
+                    <div style={{ padding: '0 20px 18px', fontSize: '13px', color: '#616473', lineHeight: '1.7' }}>
+                      {item.a}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
 
