@@ -10561,45 +10561,96 @@ function LandingPage({ onGetStarted, onLogIn }) {
         </div>
       </div>
 
-      {/* Hero */}
-      <div style={{ backgroundColor: '#11162d', padding: isMobile ? '44px 20px 56px' : '64px 40px 80px', textAlign: 'center' }}>
-        <div style={{ fontSize: '10.5px', color: '#b67bfb', letterSpacing: '2px', fontWeight: '700', marginBottom: '14px' }}>TOEFL® iBT EXAM PREPARATION</div>
-        <h1 style={{ color: '#fff', fontSize: isMobile ? '28px' : '42px', fontWeight: '800', lineHeight: '1.25', margin: '0 auto 16px', maxWidth: '760px' }}>
-          Practice for the TOEFL® iBT with realistic exercises and full mock tests
-        </h1>
-        <p style={{ color: '#9ca3af', fontSize: isMobile ? '14px' : '16px', lineHeight: '1.7', margin: '0 auto 30px', maxWidth: '560px' }}>
-          Reading, Listening, Writing, and Speaking practice with instant, AI-powered feedback — plus full-length mock tests that mirror the real exam's format, timing, and scoring.
-        </p>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '12px', flexWrap: 'wrap' }}>
-          <button type="button" onClick={onGetStarted} style={{ backgroundColor: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '14px 28px', fontSize: '15px', fontWeight: '800', cursor: 'pointer' }}>
-            Get Started Free
-          </button>
-          <button type="button" onClick={onLogIn} style={{ backgroundColor: 'transparent', color: '#fff', border: '1px solid #3a3f5c', borderRadius: '10px', padding: '14px 28px', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }}>
-            Log In
-          </button>
-        </div>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: isMobile ? '14px' : '26px', flexWrap: 'wrap', marginTop: '36px', fontSize: '12.5px', color: '#b67bfb', fontWeight: '700' }}>
-          <span>✓ Free to start</span>
-          <span>✓ Full-length mock tests</span>
-          <span>✓ Instant AI scoring</span>
-          <span>✓ No credit card required</span>
-        </div>
-        {/* Leads with the discounted price, not just the feature list, because for a student
-            comparing prep options the cheap entry price is itself the hook -- shown right in the
-            hero so it's the first thing a visitor sees, not something they discover only after
-            digging into Subscribe. Mirrors the same WELCOME50 messaging shown again in the pricing
-            section below and on the in-app Subscribe screen (before checkout, not just at Polar's
-            payment form) so the offer is consistent everywhere it appears. */}
-        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', marginTop: '22px', backgroundColor: 'rgba(112, 31, 161, 0.15)', border: '2px solid rgba(112, 31, 161, 0.8)', borderRadius: '12px', padding: isMobile ? '14px 18px' : '16px 24px' }}>
-          <span style={{ fontSize: '24px' }} aria-hidden="true">🎉</span>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-            <span style={{ fontSize: isMobile ? '16px' : '18px', color: '#701fa1', fontWeight: '900', letterSpacing: '-0.3px' }}>
-              50% OFF
-            </span>
-            <span style={{ fontSize: isMobile ? '11px' : '12px', color: '#616473', fontWeight: '600' }}>
-              Your first month
-            </span>
+      {/* Hero -- split grid on desktop (text + CTA left, live product mockup right) so a visitor
+          sees the actual AI scoring UI instead of just a text claim about it; collapses to a
+          single centered column on mobile, where the mockup is hidden to keep the page light. */}
+      <div style={{ backgroundColor: '#11162d', padding: isMobile ? '44px 20px 56px' : '64px 40px 80px' }}>
+        <div style={{ maxWidth: '1140px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '40px' : '56px', alignItems: 'center' }}>
+          {/* Left column: copy + CTA */}
+          <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
+            <div style={{ fontSize: '10.5px', color: '#b67bfb', letterSpacing: '2px', fontWeight: '700', marginBottom: '14px' }}>ALIGNED WITH THE 2026 TOEFL® iBT FORMAT</div>
+            <h1 style={{ color: '#fff', fontSize: isMobile ? '28px' : '38px', fontWeight: '800', lineHeight: '1.25', margin: '0 0 16px' }}>
+              Master the TOEFL® iBT with Real Exam Simulations and Instant AI Scoring
+            </h1>
+            <p style={{ color: '#9ca3af', fontSize: isMobile ? '14px' : '16px', lineHeight: '1.7', margin: '0 0 30px' }}>
+              Experience Reading, Listening, Writing, and Speaking with the real exam interface and timing. Get instant scores on a 0–6.0 scale, in 0.5-point increments, graded against official rubric criteria, with detailed feedback to help you reach your target.
+            </p>
+            <div style={{ display: 'flex', justifyContent: isMobile ? 'center' : 'flex-start', gap: '12px', flexWrap: 'wrap' }}>
+              <button type="button" onClick={onGetStarted} style={{ backgroundColor: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', padding: '14px 28px', fontSize: '15px', fontWeight: '800', cursor: 'pointer' }}>
+                Start Practicing Free
+              </button>
+              <button type="button" onClick={onLogIn} style={{ backgroundColor: 'transparent', color: '#fff', border: '1px solid #3a3f5c', borderRadius: '10px', padding: '14px 28px', fontSize: '15px', fontWeight: '700', cursor: 'pointer' }}>
+                Log In
+              </button>
+            </div>
+            <div style={{ fontSize: '11.5px', color: '#6b7280', marginTop: '10px' }}>No credit card required</div>
+            <div style={{ display: 'flex', justifyContent: isMobile ? 'center' : 'flex-start', gap: isMobile ? '14px' : '22px', flexWrap: 'wrap', marginTop: '28px', fontSize: '12.5px', color: '#b67bfb', fontWeight: '700' }}>
+              <span>✓ 20 Full-Length Mock Tests</span>
+              <span>✓ Official 0–6.0 Band Scoring</span>
+              <span>✓ 100% Free to Start</span>
+            </div>
+            {/* Leads with the discounted price, not just the feature list, because for a student
+                comparing prep options the cheap entry price is itself the hook -- shown right in the
+                hero so it's the first thing a visitor sees, not something they discover only after
+                digging into Subscribe. Mirrors the same WELCOME50 messaging shown again in the pricing
+                section below and on the in-app Subscribe screen (before checkout, not just at Polar's
+                payment form) so the offer is consistent everywhere it appears. */}
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '12px', marginTop: '22px', backgroundColor: 'rgba(112, 31, 161, 0.15)', border: '2px solid rgba(112, 31, 161, 0.8)', borderRadius: '12px', padding: isMobile ? '14px 18px' : '16px 24px' }}>
+              <span style={{ fontSize: '24px' }} aria-hidden="true">🎉</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
+                <span style={{ fontSize: isMobile ? '16px' : '18px', color: '#701fa1', fontWeight: '900', letterSpacing: '-0.3px' }}>
+                  50% OFF
+                </span>
+                <span style={{ fontSize: isMobile ? '11px' : '12px', color: '#616473', fontWeight: '600' }}>
+                  Your first month
+                </span>
+              </div>
+            </div>
           </div>
+
+          {/* Right column: laptop-framed mockup of the real Writing AI score card -- values match
+              the actual 0-6.0 / 0.5-step scale and sub-criteria the product really returns, so this
+              is a representative screenshot-style mockup, not an invented UI. Hidden on mobile since
+              a static mockup adds weight without much value on a narrow screen where it'd just stack
+              below the CTA. */}
+          {!isMobile && (
+            <div>
+              <div style={{ backgroundColor: '#1c2340', borderRadius: '16px', padding: '14px 14px 20px', border: '1px solid #2e355a', boxShadow: '0 20px 60px rgba(0,0,0,0.35)' }}>
+                <div style={{ display: 'flex', gap: '6px', marginBottom: '12px', paddingLeft: '4px' }}>
+                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#ff5f56', display: 'inline-block' }} />
+                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#ffbd2e', display: 'inline-block' }} />
+                  <span style={{ width: '9px', height: '9px', borderRadius: '50%', backgroundColor: '#27c93f', display: 'inline-block' }} />
+                </div>
+                <div style={{ backgroundColor: '#fff', borderRadius: '10px', padding: '16px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+                  <div>
+                    <div style={{ fontSize: '10px', fontWeight: '800', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Academic Discussion</div>
+                    <div style={{ fontSize: '10.5px', color: '#4b5563', lineHeight: '1.6' }}>
+                      In my opinion, remote work increases productivity because employees avoid long commutes and can better manage their personal schedules. Although some argue that in-person collaboration is more effective, most tasks today can be...
+                    </div>
+                  </div>
+                  <div style={{ backgroundColor: '#f9f8fc', border: '1px solid #e1e4ed', borderRadius: '10px', padding: '12px' }}>
+                    <div style={{ fontSize: '9.5px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '4px' }}>Total Task Score</div>
+                    <div style={{ fontSize: '22px', fontWeight: '900', color: '#701fa1', marginBottom: '10px' }}>5.5 <span style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '700' }}>/ 6.0</span></div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginBottom: '10px' }}>
+                      {[
+                        { label: 'Development & Coherence', score: '5.5' },
+                        { label: 'Grammatical Accuracy', score: '5.0' },
+                        { label: 'Academic Vocabulary', score: '6.0' },
+                      ].map(row => (
+                        <div key={row.label} style={{ display: 'flex', justifyContent: 'space-between', gap: '8px', fontSize: '9.5px', color: '#4b5563' }}>
+                          <span>{row.label}</span>
+                          <span style={{ fontWeight: '800', color: '#1a1a1a', whiteSpace: 'nowrap' }}>{row.score}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <div style={{ fontSize: '9px', color: '#616473', lineHeight: '1.5', backgroundColor: '#fff', border: '1px solid #e1e4ed', borderRadius: '6px', padding: '8px' }}>
+                      "Strong, fluent academic language. Fix 2 preposition errors to reach a full 6.0."
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
