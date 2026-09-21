@@ -11934,7 +11934,7 @@ function Vocabulary() {
 // is "not started" so this naturally shows a sensible first-practice list. onDone just unmounts
 // this screen; the same recommendations panel (with working "Practice Now" buttons) is already
 // waiting on the normal Dashboard underneath.
-function OnboardingFlow({ onDone, initialUsername, recommendations }) {
+function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSaved }) {
   const [step, setStep] = useState('target')
   const [saving, setSaving] = useState(false)
   const bands = [
@@ -11951,7 +11951,7 @@ function OnboardingFlow({ onDone, initialUsername, recommendations }) {
         username: initialUsername, target_score: target,
         reading_target: target, listening_target: target, writing_target: target, speaking_target: target,
       }),
-    }).catch(() => {}).finally(() => { setSaving(false); setStep('plan') })
+    }).then(() => { if (onTargetSaved) onTargetSaved() }).catch(() => {}).finally(() => { setSaving(false); setStep('plan') })
   }
 
   return (
@@ -12343,7 +12343,12 @@ function App({ justSignedUp }) {
   if (!userData) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}><LoadingState label="Loading mrreadyprep..." /></div>
 
   if (showOnboarding) {
-    return <OnboardingFlow onDone={() => setShowOnboarding(false)} initialUsername={userData.username} recommendations={recommendations} />
+    return <OnboardingFlow
+      onDone={() => setShowOnboarding(false)}
+      initialUsername={userData.username}
+      recommendations={recommendations}
+      onTargetSaved={fetchDashboardData}
+    />
   }
 
   const examDaysLeft = getExamDaysLeft()
