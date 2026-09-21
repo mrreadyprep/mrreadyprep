@@ -10598,10 +10598,10 @@ function LandingPage({ onGetStarted, onLogIn }) {
   const purple = '#701fa1'
 
   const skills = [
-    { icon: '📖', title: 'Reading', desc: 'Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback.', pill: 'Instant Right/Wrong Explanations' },
-    { icon: '🎧', title: 'Listening', desc: 'Conversations, announcements, and academic talks with note-taking practice, just like the real exam.', pill: 'Official Audio Pacing' },
-    { icon: '✍️', title: 'Writing', desc: 'Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI against official rubric criteria.', pill: 'Scored in Seconds' },
-    { icon: '🎤', title: 'Speaking', desc: 'Interview, Listen & Repeat, and full speaking tasks with AI feedback on delivery, language use, and content.', pill: '0–6.0 Fluency & Delivery Score' },
+    { icon: '📖', title: 'Reading', desc: 'Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback.', pill: 'Instant Right/Wrong Explanations', href: '/toefl-reading-practice/' },
+    { icon: '🎧', title: 'Listening', desc: 'Conversations, announcements, and academic talks with note-taking practice, just like the real exam.', pill: 'Official Audio Pacing', href: '/toefl-listening-practice/' },
+    { icon: '✍️', title: 'Writing', desc: 'Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI against official rubric criteria.', pill: 'Scored in Seconds', href: '/toefl-writing-practice/' },
+    { icon: '🎤', title: 'Speaking', desc: 'Interview, Listen & Repeat, and full speaking tasks with AI feedback on delivery, language use, and content.', pill: '0–6.0 Fluency & Delivery Score', href: '/toefl-speaking-practice/' },
   ]
 
   const steps = [
@@ -10665,7 +10665,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
         <div style={{ color: '#b67bfb', fontSize: '19px', fontWeight: '800' }}>mrreadyprep</div>
         {!isMobile && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '28px' }}>
-            {[{ href: '#skills', label: 'Skills' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQ' }].map(link => (
+            {[{ href: '#skills', label: 'Skills' }, { href: '/toefl-mock-tests/', label: 'Mock Tests' }, { href: '#pricing', label: 'Pricing' }, { href: '#faq', label: 'FAQ' }].map(link => (
               <a key={link.href} href={link.href} style={{ fontSize: '13px', fontWeight: '600', color: '#c7c9d9', textDecoration: 'none' }}>{link.label}</a>
             ))}
           </div>
@@ -10785,8 +10785,13 @@ function LandingPage({ onGetStarted, onLogIn }) {
               <div style={{ fontSize: '28px', marginBottom: '10px' }}>{s.icon}</div>
               <div style={{ fontSize: '16px', fontWeight: '800', color: '#1a1a1a', marginBottom: '6px' }}>{s.title}</div>
               <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '12px' }}>{s.desc}</div>
-              <div style={{ display: 'inline-block', fontSize: '11px', fontWeight: '700', color: purple, backgroundColor: `${purple}14`, border: `1px solid ${purple}33`, borderRadius: '999px', padding: '4px 10px' }}>
+              <div style={{ display: 'inline-block', fontSize: '11px', fontWeight: '700', color: purple, backgroundColor: `${purple}14`, border: `1px solid ${purple}33`, borderRadius: '999px', padding: '4px 10px', marginBottom: '10px' }}>
                 {s.pill}
+              </div>
+              <div>
+                <a href={s.href} style={{ fontSize: '12.5px', fontWeight: '700', color: purple, textDecoration: 'none' }}>
+                  {s.title} practice details →
+                </a>
               </div>
             </div>
           ))}
@@ -10988,7 +10993,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
       {/* Footer */}
       <div style={{ padding: isMobile ? '28px 20px' : '28px 40px', backgroundColor: '#fff', textAlign: 'center' }}>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '12px' }}>
-          {[{ href: '/blog/', label: 'Blog' }, { href: '/pricing.html', label: 'Pricing' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }, { href: '/terms.html#refund-policy', label: 'Refund Policy' }].map(link => (
+          {[{ href: '/toefl-practice-tests/', label: 'Practice Tests' }, { href: '/toefl-mock-tests/', label: 'Mock Tests' }, { href: '/blog/', label: 'Blog' }, { href: '/pricing.html', label: 'Pricing' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }, { href: '/terms.html#refund-policy', label: 'Refund Policy' }].map(link => (
             <a key={link.href} href={link.href} style={{ fontSize: '12px', fontWeight: '700', color: '#616473', textDecoration: 'none' }}>{link.label}</a>
           ))}
         </div>

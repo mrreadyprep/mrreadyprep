@@ -21,6 +21,36 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://mrreadyprep.com/toefl-practice-tests/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrreadyprep.com/toefl-reading-practice/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrreadyprep.com/toefl-listening-practice/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrreadyprep.com/toefl-writing-practice/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrreadyprep.com/toefl-speaking-practice/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://mrreadyprep.com/toefl-mock-tests/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mrreadyprep.com/blog/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

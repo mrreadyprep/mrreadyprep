@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TOEFL Writing Practice with AI Feedback | mrreadyprep</title>
+    <meta name="description" content="Practice TOEFL-style Writing tasks and receive instant AI feedback to understand what to improve next." />
+    <link rel="canonical" href="https://mrreadyprep.com/toefl-writing-practice/" />
+    <meta name="robots" content="index, follow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="mrreadyprep" />
+    <meta property="og:title" content="TOEFL Writing Practice with AI Feedback | mrreadyprep" />
+    <meta property="og:description" content="Practice TOEFL-style Writing tasks and receive instant AI feedback to understand what to improve next." />
+    <meta property="og:url" content="https://mrreadyprep.com/toefl-writing-practice/" />
+    <meta property="og:image" content="https://mrreadyprep.com/og-image.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TOEFL Writing Practice with AI Feedback | mrreadyprep" />
+    <meta name="twitter:description" content="Practice TOEFL-style Writing tasks and receive instant AI feedback to understand what to improve next." />
+    <meta name="twitter:image" content="https://mrreadyprep.com/og-image.png" />
+
+    <script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What Writing tasks does mrreadyprep cover?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Build a Sentence, Write an Email, and Academic Discussion \u2014 the current TOEFL-style Writing task formats."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How fast is the AI feedback?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Scoring is instant \u2014 you see your band score and a criteria breakdown (grammar, vocabulary, organization, elaboration) as soon as you submit."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What scale is Writing scored on?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Responses are scored from 0 to 6.0 in 0.5-point increments, matching the current TOEFL iBT Writing band scale."
+      }
+    }
+  ]
+}
+    </script>
+
+    <style>
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        color: #1a1a1a;
+        background: #fff;
+        line-height: 1.7;
+      }
+      a { color: #701fa1; }
+      .topbar {
+        background: #11162d;
+        padding: 16px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .topbar .brand {
+        color: #b67bfb;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 18px;
+      }
+      .topbar .cta {
+        background: #701fa1;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 13px;
+        padding: 9px 16px;
+        border-radius: 8px;
+      }
+      .hero {
+        background: #11162d;
+        padding: 56px 24px 64px;
+        text-align: center;
+      }
+      .hero .eyebrow {
+        color: #b67bfb;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        margin-bottom: 14px;
+      }
+      .hero h1 {
+        color: #fff;
+        font-size: 32px;
+        font-weight: 800;
+        max-width: 720px;
+        margin: 0 auto 18px;
+        line-height: 1.3;
+      }
+      .hero p {
+        color: #9ca3af;
+        font-size: 15.5px;
+        max-width: 620px;
+        margin: 0 auto 28px;
+      }
+      .hero .cta {
+        display: inline-block;
+        background: #701fa1;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 15px;
+        padding: 14px 30px;
+        border-radius: 10px;
+      }
+      .hero .subnote {
+        color: #6b7280;
+        font-size: 11.5px;
+        margin-top: 10px;
+      }
+      .wrap {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 48px 24px;
+      }
+      h2 {
+        font-size: 20px;
+        color: #701fa1;
+        margin: 0 0 14px;
+      }
+      .section {
+        margin-bottom: 40px;
+      }
+      .card {
+        background: #1c2340;
+        border-radius: 16px;
+        padding: 14px 14px 20px;
+        border: 1px solid #2e355a;
+        max-width: 420px;
+        margin: 0 auto;
+      }
+      .card .dots span {
+        display: inline-block;
+        width: 9px; height: 9px;
+        border-radius: 50%;
+        margin-right: 6px;
+      }
+      .card-inner {
+        background: #fff;
+        border-radius: 10px;
+        padding: 16px;
+      }
+      .card-inner .label {
+        font-size: 10px;
+        font-weight: 800;
+        color: #701fa1;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 8px;
+      }
+      .card-inner .body {
+        font-size: 11.5px;
+        color: #4b5563;
+        margin-bottom: 14px;
+      }
+      .score-box {
+        background: #f9f8fc;
+        border: 1px solid #e1e4ed;
+        border-radius: 10px;
+        padding: 12px;
+      }
+      .score-box .slabel {
+        font-size: 9.5px;
+        font-weight: 700;
+        color: #6b7280;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+        margin-bottom: 4px;
+      }
+      .score-box .sval {
+        font-size: 22px;
+        font-weight: 900;
+        color: #701fa1;
+        margin-bottom: 10px;
+      }
+      .score-box .sval .max {
+        font-size: 13px;
+        color: #9ca3af;
+        font-weight: 700;
+      }
+      .score-box .row {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        font-size: 10.5px;
+        color: #4b5563;
+        margin-bottom: 5px;
+      }
+      .score-box .row b {
+        color: #1a1a1a;
+        white-space: nowrap;
+      }
+      .tip {
+        border: 1px solid #e1e4ed;
+        border-radius: 12px;
+        padding: 16px 18px;
+        margin-bottom: 12px;
+        background: #f9f8fc;
+      }
+      .tip .t {
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 4px;
+      }
+      .tip .d {
+        font-size: 13px;
+        color: #4b5563;
+      }
+      .faq {
+        border-bottom: 1px solid #e1e4ed;
+        padding: 16px 0;
+      }
+      .faq .q {
+        font-weight: 700;
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+      .faq .a {
+        font-size: 13px;
+        color: #4b5563;
+      }
+      .hub-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 10px;
+      }
+      .hub-links a {
+        display: inline-block;
+        border: 1px solid #701fa1;
+        border-radius: 999px;
+        padding: 8px 16px;
+        font-size: 12.5px;
+        font-weight: 700;
+        text-decoration: none;
+      }
+      .bottom-cta {
+        background: #f6f4fa;
+        text-align: center;
+        padding: 48px 24px;
+      }
+      .bottom-cta a.primary {
+        display: inline-block;
+        background: #701fa1;
+        color: #fff;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 15px;
+        padding: 14px 30px;
+        border-radius: 10px;
+        margin: 14px 8px 0;
+      }
+      .bottom-cta a.secondary {
+        display: inline-block;
+        color: #701fa1;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        margin: 14px 8px 0;
+      }
+      footer {
+        font-size: 11px;
+        color: #9ca3af;
+        text-align: center;
+        padding: 28px 24px 40px;
+        line-height: 1.6;
+      }
+      footer a { color: #616473; text-decoration: none; font-weight: 600; }
+    </style>
+  </head>
+  <body>
+    <div class="topbar">
+      <a class="brand" href="/">mrreadyprep</a>
+      <a class="cta" href="/">Get Started Free</a>
+    </div>
+
+    <div class="hero">
+      <div class="eyebrow">ALIGNED WITH THE 2026 TOEFL&reg; iBT FORMAT</div>
+      <h1>TOEFL Writing Practice with Instant AI Feedback</h1>
+      <p>TOEFL Writing measures how clearly and accurately you can build an argument in academic and everyday English, under a strict time limit. Getting fast, specific feedback on grammar and organization is what makes practice actually improve your score, rather than just repeating the same mistakes.</p>
+      <a class="cta" href="/">Try Writing Feedback</a>
+      <div class="subnote">No credit card required</div>
+    </div>
+
+    <div class="wrap">
+      <div class="section">
+        <h2>How mrreadyprep helps</h2>
+        <p>mrreadyprep covers all three TOEFL-style Writing tasks &mdash; Build a Sentence, Write an Email, and Academic Discussion &mdash; and scores each response in seconds. Feedback is broken down by criteria such as grammar, vocabulary, organization, and elaboration, not just a single overall number.</p>
+      </div>
+
+      <div class="section">
+        <div class="card">
+          <div class="dots">
+            <span style="background:#ff5f56"></span><span style="background:#ffbd2e"></span><span style="background:#27c93f"></span>
+          </div>
+          <div class="card-inner">
+            <div class="label">ACADEMIC DISCUSSION</div>
+            <div class="body">In my opinion, remote work increases productivity because employees avoid long commutes and can better manage their personal schedules...</div>
+            <div class="score-box">
+              <div class="slabel">TOTAL TASK SCORE</div>
+              <div class="sval">5.5 <span class="max">/ 6.0</span></div>
+              <div class="row"><span>Development & Coherence</span><b>5.5</b></div>
+<div class="row"><span>Grammatical Accuracy</span><b>5.0</b></div>
+<div class="row"><span>Academic Vocabulary</span><b>6.0</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+
+      <div class="section">
+        <h2>Preparation tips</h2>
+        <div class="tip"><div class="t">Answer the exact question asked</div><div class="d">Academic Discussion and Email tasks are graded partly on whether you actually address every part of the prompt, not just on general fluency.</div></div>
+<div class="tip"><div class="t">Plan for 30 seconds before you write</div><div class="d">A one-sentence outline of your main point and 1&ndash;2 supporting reasons prevents responses that wander or run out of ideas halfway through.</div></div>
+<div class="tip"><div class="t">Elaborate, don't just list</div><div class="d">A short list of reasons scores lower than one or two reasons explained with a specific example or consequence.</div></div>
+<div class="tip"><div class="t">Leave time to proofread</div><div class="d">Most scoring loss on Writing tasks comes from avoidable grammar slips, not weak ideas &mdash; reserve the last minute to reread your response.</div></div>
+      </div>
+
+      <div class="section">
+        <h2>Frequently asked questions</h2>
+        <div class="faq"><div class="q">What Writing tasks does mrreadyprep cover?</div><div class="a">Build a Sentence, Write an Email, and Academic Discussion &mdash; the current TOEFL-style Writing task formats.</div></div>
+<div class="faq"><div class="q">How fast is the AI feedback?</div><div class="a">Scoring is instant &mdash; you see your band score and a criteria breakdown (grammar, vocabulary, organization, elaboration) as soon as you submit.</div></div>
+<div class="faq"><div class="q">What scale is Writing scored on?</div><div class="a">Responses are scored from 0 to 6.0 in 0.5-point increments, matching the current TOEFL iBT Writing band scale.</div></div>
+      </div>
+    </div>
+
+    <div class="bottom-cta">
+      <h2 style="margin-bottom:6px;">Ready to practice?</h2>
+      <div>
+        <a class="primary" href="/">Try Writing Feedback</a>
+        <br />
+        <a class="secondary" href="https://mrreadyprep.com/toefl-speaking-practice/">Explore TOEFL Speaking Practice &rarr;</a>
+      </div>
+    </div>
+
+    <footer>
+      TOEFL&reg; and TOEFL iBT&reg; are registered trademarks of Educational Testing Service (ETS). This site is not endorsed or approved by ETS.<br />
+      &copy; 2026 mrreadyprep. All rights reserved. &middot; <a href="/pricing.html">Pricing</a> &middot; <a href="/blog/">TOEFL Guides</a> &middot; <a href="/terms.html">Terms of Service</a> &middot; <a href="/privacy.html">Privacy Policy</a>
+    </footer>
+  </body>
+</html>
