@@ -11978,7 +11978,7 @@ function Vocabulary() {
 // is "not started" so this naturally shows a sensible first-practice list. onDone just unmounts
 // this screen; the same recommendations panel (with working "Practice Now" buttons) is already
 // waiting on the normal Dashboard underneath.
-function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSaved }) {
+function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSaved, onTakeDiagnostic }) {
   const [step, setStep] = useState('target')
   const [saving, setSaving] = useState(false)
   const bands = [
@@ -12046,9 +12046,158 @@ function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSave
             <button type="button" onClick={onDone} style={{ width: '100%', padding: '13px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '14px', fontWeight: '800', cursor: 'pointer' }}>
               Start Practicing
             </button>
+            {onTakeDiagnostic && (
+              <button type="button" onClick={onTakeDiagnostic} style={{ width: '100%', padding: '10px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer', marginTop: '4px' }}>
+                Not sure? Take a 5-minute skills check first
+              </button>
+            )}
           </>
         )}
       </div>
+    </div>
+  )
+}
+
+// ─── Quick Skills Check (lightweight diagnostic) ────────────────────────────
+// Reuses the exact same practice components, real question pools, and scoring the rest of the
+// app already uses -- one real item each from Reading (Complete the Words), Listening (Choose a
+// Response), Writing (Build a Sentence), and Speaking (Listen & Repeat). Every answer is graded
+// and saved through the same saveResult() path those components already call in normal practice
+// mode, under their real categories -- so a "Quick Skills Check" attempt is a genuine practice
+// attempt (it counts toward Dashboard/My Progress/Recommended for You), not a separate, parallel
+// "diagnostic" data model with made-up content. Deliberately skips Write an Email/Academic
+// Discussion and Take an Interview -- those are multi-minute AI-graded tasks that don't fit a
+// short check, and the CTA below is honest about the ~5-minute length rather than overclaiming
+// the product brief's "10-minute" figure.
+const DIAGNOSTIC_SECTION_COLOR = { reading: '#2563eb', listening: '#16a34a', writing: '#ea580c', speaking: '#9333ea' }
+const DIAGNOSTIC_SECTIONS = [
+  { key: 'reading', label: 'Reading', nav: { tab: 'reading', subTab: 'ctw' } },
+  { key: 'listening', label: 'Listening', nav: { tab: 'listening', subTab: 'p1' } },
+  { key: 'writing', label: 'Writing', nav: { tab: 'writing', subTab: 'p1' } },
+  { key: 'speaking', label: 'Speaking', nav: { tab: 'speaking', subTab: 'p1' } },
+]
+
+function DiagnosticFlow({ onDone }) {
+  const isMobile = useIsMobile()
+  const [step, setStep] = useState('intro') // intro -> reading -> listening -> writing -> speaking -> results
+  const [pools, setPools] = useState(null)
+  const [loadError, setLoadError] = useState(false)
+  const [scores, setScores] = useState({}) // { reading: pct, listening: pct, writing: pct, speaking: pct }
+
+  useEffect(() => {
+    let cancelled = false
+    Promise.all([
+      apiFetch(`${BACKEND_URL}/api/reading/complete-the-words`).then(r => r.json()),
+      apiFetch(`${BACKEND_URL}/api/listening/choose-response`).then(r => r.json()),
+      apiFetch(`${BACKEND_URL}/api/writing/build-a-sentence`).then(r => r.json()),
+      apiFetch(`${BACKEND_URL}/api/speaking/listen-and-repeat`).then(r => r.json()),
+    ]).then(([ctw, lp1, bas, lr]) => {
+      if (cancelled) return
+      const ok = Array.isArray(ctw) && ctw.length && Array.isArray(lp1) && lp1.length && Array.isArray(bas) && bas.length && Array.isArray(lr) && lr.length
+      if (!ok) { setLoadError(true); return }
+      // Always item #1 of each pool -- the one item every account (free or premium) has access
+      // to, per gate_pool() in main.py, so the check works identically regardless of plan.
+      setPools({ ctw: ctw[0], lp1: lp1[0], bas: [bas[0]], lr: lr[0] })
+    }).catch(() => { if (!cancelled) setLoadError(true) })
+    return () => { cancelled = true }
+  }, [])
+
+  const sectionResult = (pct) => pct >= 70 ? { label: 'On track', color: '#16a34a' } : pct >= 40 ? { label: 'Needs attention', color: '#e07b00' } : { label: 'Practice needed', color: '#c0392b' }
+
+  const advance = (key, pct) => {
+    setScores(prev => ({ ...prev, [key]: pct }))
+    const nextIdx = DIAGNOSTIC_SECTIONS.findIndex(s => s.key === key) + 1
+    setStep(nextIdx < DIAGNOSTIC_SECTIONS.length ? DIAGNOSTIC_SECTIONS[nextIdx].key : 'results')
+  }
+
+  const overlayWrap = (children) => (
+    <div style={{ position: 'fixed', inset: 0, background: '#11162d', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', zIndex: 2000, overflowY: 'auto', boxSizing: 'border-box' }}>
+      {children}
+    </div>
+  )
+
+  if (loadError) return overlayWrap(
+    <div style={{ background: '#fff', borderRadius: '16px', padding: '32px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
+      <div style={{ fontSize: '28px', marginBottom: '10px' }}>⚠️</div>
+      <div style={{ color: '#1a1a1a', fontSize: '15px', fontWeight: '700', marginBottom: '18px' }}>Couldn't load the skills check</div>
+      <button onClick={() => onDone()} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Back</button>
+    </div>
+  )
+
+  if (step === 'intro') return overlayWrap(
+    <div style={{ background: '#fff', borderRadius: '16px', padding: isMobile ? '28px 22px' : '40px 44px', maxWidth: '440px', width: '100%', textAlign: 'center', boxSizing: 'border-box' }}>
+      <div style={{ fontSize: '32px', marginBottom: '10px' }} aria-hidden="true">🧭</div>
+      <h2 style={{ margin: '0 0 8px', fontSize: '20px', color: '#1a1a1a' }}>Quick Skills Check</h2>
+      <p style={{ color: '#616473', fontSize: '13.5px', lineHeight: '1.6', margin: '0 0 22px' }}>
+        4 real questions -- one from each section (Reading, Listening, Writing, Speaking) -- about 5 minutes. We'll use your results to recommend where to start.
+      </p>
+      <button type="button" disabled={!pools} onClick={() => setStep('reading')} style={{ width: '100%', background: pools ? '#701fa1' : '#c9b3e6', color: '#fff', border: 'none', borderRadius: '9px', padding: '13px', fontSize: '14px', fontWeight: '700', cursor: pools ? 'pointer' : 'default', marginBottom: '10px' }}>
+        {pools ? 'Start' : 'Loading…'}
+      </button>
+      <button type="button" onClick={() => onDone()} style={{ background: 'none', border: 'none', color: '#701fa1', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>Skip for now</button>
+    </div>
+  )
+
+  // pools is guaranteed non-null past this point (the intro step's Start button is disabled
+  // until it loads), so the four exercise steps below can read it directly.
+
+  if (step === 'reading') return (
+    <CTWSingle exercise={pools.ctw} exerciseNum={1} onBack={() => onDone()}
+      onComplete={(correct, total) => advance('reading', Math.round((correct / total) * 100))} />
+  )
+
+  if (step === 'listening') return (
+    <ListeningP1Exercise exercise={pools.lp1} exerciseNum={1} onBack={() => onDone()}
+      onComplete={(correct, total) => advance('listening', Math.round((correct / total) * 100))} />
+  )
+
+  if (step === 'writing') return (
+    <BuildSentenceExercise items={pools.bas} setIndex="diagnostic" onBack={() => onDone()}
+      onComplete={(correct, total) => advance('writing', Math.round((correct / total) * 100))} />
+  )
+
+  if (step === 'speaking') return (
+    <ListenRepeatExercise item={pools.lr} index={0} onBack={() => onDone()}
+      onComplete={(answers) => {
+        // Mirrors ListenRepeat's own onComplete handler exactly (see that component) --
+        // ListenRepeatExercise doesn't save its own result internally the way the Reading/
+        // Listening/Writing components do, so the parent has to compute and save it here too.
+        const avg = answers.reduce((s, a) => s + a.score, 0) / answers.length
+        const rounded = Math.round(avg * 2) / 2
+        saveResult('speaking_lr', pools.lr.id ?? 'diagnostic', rounded, 6, 'Listen and Repeat (Skills Check)')
+        advance('speaking', Math.round((rounded / 6) * 100))
+      }} />
+  )
+
+  // step === 'results'
+  const weakest = DIAGNOSTIC_SECTIONS.reduce((min, s) => (scores[s.key] ?? 100) < (scores[min.key] ?? 100) ? s : min, DIAGNOSTIC_SECTIONS[0])
+
+  return overlayWrap(
+    <div style={{ background: '#fff', borderRadius: '16px', padding: isMobile ? '28px 22px' : '36px 40px', maxWidth: '460px', width: '100%', boxSizing: 'border-box' }}>
+      <div style={{ textAlign: 'center', marginBottom: '20px' }}>
+        <div style={{ fontSize: '28px', marginBottom: '6px' }} aria-hidden="true">📍</div>
+        <h2 style={{ margin: 0, fontSize: '19px', color: '#1a1a1a' }}>Your starting point</h2>
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '22px' }}>
+        {DIAGNOSTIC_SECTIONS.map(s => {
+          const pct = scores[s.key]
+          const info = pct === undefined ? { label: 'Skipped', color: '#9ca3af' } : sectionResult(pct)
+          const color = DIAGNOSTIC_SECTION_COLOR[s.key]
+          return (
+            <div key={s.key} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '11px 14px', background: '#f8f7fb', borderRadius: '9px', borderLeft: `3px solid ${color}` }}>
+              <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}>{s.label}</div>
+              <div style={{ fontSize: '12px', fontWeight: '700', color: info.color }}>{info.label}</div>
+            </div>
+          )
+        })}
+      </div>
+      <div style={{ background: '#f4f0fb', borderRadius: '10px', padding: '14px 16px', marginBottom: '18px' }}>
+        <div style={{ fontSize: '12px', color: '#616473', marginBottom: '4px' }}>Recommended next step</div>
+        <div style={{ fontSize: '13.5px', fontWeight: '700', color: '#1a1a1a' }}>Start with {weakest.label}</div>
+      </div>
+      <button type="button" onClick={() => onDone(weakest.nav)} style={{ width: '100%', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '9px', padding: '13px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>
+        Start recommended practice →
+      </button>
     </div>
   )
 }
@@ -12111,6 +12260,11 @@ function App({ justSignedUp }) {
   // -- true only when App mounts right after a fresh registration (see AuthGate's justSignedUp),
   // never on a normal login or a page refresh, so a returning student never sees it again.
   const [showOnboarding, setShowOnboarding] = useState(!!justSignedUp)
+  // Drives the optional "Quick Skills Check" (see DiagnosticFlow) -- reachable from onboarding's
+  // plan step and from the Dashboard's Recommended-for-You panel, for both brand-new and
+  // returning students. Not tied to justSignedUp: unlike onboarding this can be taken more than
+  // once, so it's just a plain toggle rather than a one-time flag.
+  const [showDiagnostic, setShowDiagnostic] = useState(false)
   // Hides the AI Tutor nav item entirely when the backend has no ANTHROPIC_API_KEY configured
   // (see get_ai_tutor_status in main.py) -- false until the check resolves true, so the item
   // never flashes in then out on a page load where the feature turns out to be off.
@@ -12392,12 +12546,35 @@ function App({ justSignedUp }) {
   )
   if (!userData) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}><LoadingState label="Loading mrreadyprep..." /></div>
 
+  // Shared by both the onboarding "skills check" offer and the Dashboard's own entry point --
+  // applies a nav = {tab, subTab} (same shape /api/recommendations returns) the same way the
+  // Recommended-for-You panel and My Progress's Focus-this-week card already do.
+  const navigateToSection = (nav) => {
+    if (!nav || !nav.tab) return
+    setCurrentTab(nav.tab)
+    if (nav.tab === 'reading') setReadingSubTab(nav.subTab)
+    else if (nav.tab === 'listening') setListeningSubTab(nav.subTab)
+    else if (nav.tab === 'writing') setWritingSubTab(nav.subTab)
+    else if (nav.tab === 'speaking') setSpeakingSubTab(nav.subTab)
+  }
+
   if (showOnboarding) {
     return <OnboardingFlow
       onDone={() => setShowOnboarding(false)}
       initialUsername={userData.username}
       recommendations={recommendations}
       onTargetSaved={fetchDashboardData}
+      onTakeDiagnostic={() => { setShowOnboarding(false); setShowDiagnostic(true) }}
+    />
+  }
+
+  if (showDiagnostic) {
+    return <DiagnosticFlow
+      onDone={(nav) => {
+        setShowDiagnostic(false)
+        fetchDashboardData() // refreshes recommendations/scores with the attempts just saved
+        if (nav) navigateToSection(nav)
+      }}
     />
   }
 
@@ -12639,7 +12816,10 @@ function App({ justSignedUp }) {
                 vanishing, so "no recommendations" reads as an achievement, not a broken widget. */}
             {recommendations !== null && (
               <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', flexShrink: 0 }}>
-                <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}><span aria-hidden="true">🎯</span> Recommended for You</div>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px', flexWrap: 'wrap', gap: '6px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '700' }}><span aria-hidden="true">🎯</span> Recommended for You</div>
+                  <button onClick={() => setShowDiagnostic(true)} style={{ background: 'none', border: 'none', color: '#701fa1', fontSize: '11.5px', fontWeight: '700', cursor: 'pointer', padding: 0 }}>🧭 Quick skills check</button>
+                </div>
                 {recommendations.length === 0 ? (
                   <div style={{ fontSize: '12px', color: '#616473' }}>🎉 You're above 70% accuracy in every practiced category — keep it up! Try the Full Mock Test to check your overall readiness.</div>
                 ) : (
