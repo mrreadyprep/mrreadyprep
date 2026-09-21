@@ -10472,6 +10472,88 @@ function ShareSuccessStoryModal({ onClose, onSubmitted }) {
   )
 }
 
+// A single real Complete the Words question a visitor can answer with no account, right on the
+// landing page -- same format as the in-app exercise (fill a blank from 4 options, instant
+// right/wrong feedback + explanation). Entirely self-contained: no backend call, no saved state.
+// The countdown is atmospheric only -- it does not lock the visitor out at 0, since the point here
+// is "try the format," not a real timed assessment.
+function LiveDemoSection({ isMobile, purple, onGetStarted }) {
+  const DEMO_SECONDS = 25
+  const sentence = "Despite the committee's initial ___, they eventually approved the proposal after a lengthy discussion."
+  const options = [
+    { key: 'A', text: 'skepticism', correct: true },
+    { key: 'B', text: 'enthusiasm', correct: false },
+    { key: 'C', text: 'obligation', correct: false },
+    { key: 'D', text: 'permission', correct: false },
+  ]
+  const explanation = '"Skepticism" is correct: "despite" signals a contrast between the committee\'s initial doubtful attitude and their eventual approval. The other options don\'t create that contrast.'
+
+  const [selected, setSelected] = useState(null)
+  const [timeLeft, setTimeLeft] = useState(DEMO_SECONDS)
+
+  useEffect(() => {
+    if (selected) return
+    if (timeLeft <= 0) return
+    const t = setTimeout(() => setTimeLeft(s => s - 1), 1000)
+    return () => clearTimeout(t)
+  }, [timeLeft, selected])
+
+  const pick = (opt) => { if (!selected) setSelected(opt) }
+
+  return (
+    <div style={{ backgroundColor: '#fff', padding: isMobile ? '48px 20px' : '64px 40px' }}>
+      <div style={{ maxWidth: '620px', margin: '0 auto' }}>
+        <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>
+          Try a real question -- no signup needed
+        </h2>
+        <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 30px', maxWidth: '480px', lineHeight: '1.6' }}>
+          This is an actual Complete the Words format question from our Reading practice.
+        </p>
+        <div style={{ border: `1px solid ${purple}33`, borderRadius: '16px', padding: isMobile ? '20px' : '28px', backgroundColor: '#f9f8fc' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+            <div style={{ fontSize: '11px', fontWeight: '800', color: purple, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Complete the Words</div>
+            <div style={{ fontSize: '12px', fontWeight: '700', color: timeLeft <= 5 && !selected ? '#d94040' : '#616473' }}>
+              ⏱ 0:{String(Math.max(timeLeft, 0)).padStart(2, '0')}
+            </div>
+          </div>
+          <div style={{ fontSize: isMobile ? '14.5px' : '16px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px', fontWeight: '600' }}>
+            {sentence}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '10px', marginBottom: selected ? '18px' : '0' }}>
+            {options.map(opt => {
+              const isPicked = selected?.key === opt.key
+              let bg = '#fff', border = '#e1e4ed', color = '#1a1a1a'
+              if (selected) {
+                if (opt.correct) { bg = '#eafaf0'; border = '#2ac56c'; color = '#1a7a3f' }
+                else if (isPicked) { bg = '#fdecec'; border = '#d94040'; color = '#a32f2f' }
+              }
+              return (
+                <button key={opt.key} type="button" onClick={() => pick(opt)} disabled={!!selected} style={{ textAlign: 'left', display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '10px', border: `1.5px solid ${border}`, backgroundColor: bg, color, fontSize: '13.5px', fontWeight: '700', cursor: selected ? 'default' : 'pointer' }}>
+                  <span style={{ width: '22px', height: '22px', borderRadius: '50%', border: `1.5px solid ${border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', flexShrink: 0 }}>{opt.key}</span>
+                  {opt.text}
+                  {selected && opt.correct && <span style={{ marginLeft: 'auto' }} aria-hidden="true">✓</span>}
+                  {selected && isPicked && !opt.correct && <span style={{ marginLeft: 'auto' }} aria-hidden="true">✕</span>}
+                </button>
+              )
+            })}
+          </div>
+          {selected && (
+            <div style={{ borderTop: '1px solid #e1e4ed', paddingTop: '18px' }}>
+              <div style={{ fontSize: '13px', fontWeight: '800', color: selected.correct ? '#1a7a3f' : '#a32f2f', marginBottom: '6px' }}>
+                {selected.correct ? '✓ Correct!' : '✕ Not quite'}
+              </div>
+              <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '18px' }}>{explanation}</div>
+              <button type="button" onClick={onGetStarted} style={{ width: '100%', backgroundColor: purple, color: '#fff', border: 'none', borderRadius: '10px', padding: '13px', fontSize: '14px', fontWeight: '800', cursor: 'pointer' }}>
+                Get more questions free →
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function LandingPage({ onGetStarted, onLogIn }) {
   const isMobile = useIsMobile()
   const purple = '#701fa1'
@@ -10675,6 +10757,13 @@ function LandingPage({ onGetStarted, onLogIn }) {
           ))}
         </div>
       </div>
+
+      {/* Interactive no-login demo -- a single real Complete the Words question a visitor can try
+          right on the landing page, no account needed. Self-contained (no backend call): the
+          question, correct answer and explanation are hardcoded here, matching the real in-app
+          Complete the Words format (fill a blank from 4 options, instant right/wrong feedback).
+          A lightweight countdown just for realism -- it doesn't lock the visitor out at 0. */}
+      <LiveDemoSection isMobile={isMobile} purple={purple} onGetStarted={onGetStarted} />
 
       {/* Platform features (Adaptive Learning, AI Tutor, Community, Gamification) -- a separate
           section from the four skills above, since these are cross-cutting platform capabilities
@@ -10924,7 +11013,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
       // distinguishes the two, so a returning student signing in isn't miscounted as a new
       // CompleteRegistration for ad-platform reporting.
       if (data.is_new_user) trackPixelEvent('CompleteRegistration')
-      onAuthSuccess(data.user)
+      onAuthSuccess(data.user, !!data.is_new_user)
     }).catch(err => setError(err.message)).finally(() => setLoading(false))
   }
 
@@ -11043,7 +11132,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
       // the same value that picked '/api/auth/register' vs '/api/auth/login' above, so this can't
       // drift out of sync with which endpoint was actually called.
       if (mode === 'signup') trackPixelEvent('CompleteRegistration')
-      onAuthSuccess(data.user)
+      onAuthSuccess(data.user, mode === 'signup')
     }).catch(err => setError(err.message)).finally(() => setLoading(false))
   }
 
@@ -11836,7 +11925,91 @@ function Vocabulary() {
   )
 }
 
-function App() {
+// Shown once, right after a brand-new signup (never on a returning login -- see AuthGate's
+// justSignedUp flag). Step 1 asks for a rough target score and saves it via the same
+// /api/profile/update endpoint the Settings/Dashboard target editors already use (see saveTargets
+// above), so it's a real save, not a cosmetic step. Step 2 previews the real Adaptive Learning
+// "Recommended for You" data (recommendations prop, same /api/recommendations used on the
+// Dashboard) instead of inventing a separate diagnostic test -- for a fresh account every category
+// is "not started" so this naturally shows a sensible first-practice list. onDone just unmounts
+// this screen; the same recommendations panel (with working "Practice Now" buttons) is already
+// waiting on the normal Dashboard underneath.
+function OnboardingFlow({ onDone, initialUsername, recommendations }) {
+  const [step, setStep] = useState('target')
+  const [saving, setSaving] = useState(false)
+  const bands = [
+    { key: '90', label: 'Aiming for TOEFL 90+', target: 4.5 },
+    { key: '100', label: 'Aiming for TOEFL 100+', target: 5.0 },
+    { key: '110', label: 'Aiming for TOEFL 110+', target: 5.5 },
+  ]
+
+  const chooseBand = (target) => {
+    setSaving(true)
+    apiFetch(`${BACKEND_URL}/api/profile/update`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        username: initialUsername, target_score: target,
+        reading_target: target, listening_target: target, writing_target: target, speaking_target: target,
+      }),
+    }).catch(() => {}).finally(() => { setSaving(false); setStep('plan') })
+  }
+
+  return (
+    <div style={{ minHeight: '100vh', width: '100%', backgroundColor: '#11162d', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px', fontFamily: 'sans-serif', boxSizing: 'border-box' }}>
+      <div style={{ backgroundColor: '#fff', borderRadius: '18px', padding: '34px 30px', maxWidth: '440px', width: '100%', boxShadow: '0 24px 70px rgba(0,0,0,0.35)', boxSizing: 'border-box' }}>
+        {step === 'target' ? (
+          <>
+            <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#701fa1', letterSpacing: '0.4px', marginBottom: '8px' }}>WELCOME TO MRREADYPREP 🎉</div>
+            <h2 style={{ fontSize: '21px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>What's your target score?</h2>
+            <p style={{ fontSize: '13.5px', color: '#616473', lineHeight: '1.6', margin: '0 0 22px' }}>
+              We'll use this to set your starting goals across Reading, Listening, Writing, and Speaking. You can change it anytime in Settings.
+            </p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '14px' }}>
+              {bands.map(b => (
+                <button key={b.key} type="button" disabled={saving} onClick={() => chooseBand(b.target)} style={{ textAlign: 'left', padding: '14px 16px', borderRadius: '10px', border: '1px solid #e1e4ed', backgroundColor: '#f9f8fc', cursor: saving ? 'default' : 'pointer', fontSize: '14px', fontWeight: '700', color: '#1a1a1a', opacity: saving ? 0.7 : 1 }}>
+                  {b.label}
+                </button>
+              ))}
+            </div>
+            <button type="button" disabled={saving} onClick={() => setStep('plan')} style={{ width: '100%', padding: '10px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12.5px', fontWeight: '700', cursor: saving ? 'default' : 'pointer' }}>
+              I'm not sure yet — skip for now
+            </button>
+          </>
+        ) : (
+          <>
+            <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#701fa1', letterSpacing: '0.4px', marginBottom: '8px' }}>YOU'RE ALL SET</div>
+            <h2 style={{ fontSize: '21px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>Here's where to start</h2>
+            <p style={{ fontSize: '13.5px', color: '#616473', lineHeight: '1.6', margin: '0 0 18px' }}>
+              Your personalized plan, based on your account. This updates automatically as you practice.
+            </p>
+            {recommendations === null ? (
+              <div style={{ fontSize: '13px', color: '#9ca3af', padding: '24px 0', textAlign: 'center' }}>Loading your plan…</div>
+            ) : recommendations.length === 0 ? (
+              <div style={{ fontSize: '13px', color: '#616473', marginBottom: '18px', lineHeight: '1.6' }}>🎉 You're ready to dive in — try any section from your dashboard, or take the Full Mock Test to check your overall readiness.</div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px' }}>
+                {recommendations.slice(0, 4).map(rec => {
+                  const sectionColor = { reading: '#2563eb', listening: '#16a34a', writing: '#ea580c', speaking: '#9333ea' }[rec.section] || '#701fa1'
+                  return (
+                    <div key={rec.category} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '11px 12px', borderRadius: '8px', backgroundColor: '#f9f8fc', border: '1px solid #e1e4ed' }}>
+                      <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: sectionColor, flexShrink: 0 }} aria-hidden="true" />
+                      <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}>{rec.label}</div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+            <button type="button" onClick={onDone} style={{ width: '100%', padding: '13px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '14px', fontWeight: '800', cursor: 'pointer' }}>
+              Start Practicing
+            </button>
+          </>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function App({ justSignedUp }) {
   const isMobile = useIsMobile()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
   // The mobile off-canvas sidebar's backdrop is otherwise mouse/touch-only to dismiss; add
@@ -11884,6 +12057,10 @@ function App() {
   // (panel stays hidden), [] once loaded with nothing to recommend (every category already
   // above the accuracy threshold -- shown as a congratulatory message instead of an empty box).
   const [recommendations, setRecommendations] = useState(null)
+  // Drives the one-time post-signup onboarding screen (target score + personalized plan preview)
+  // -- true only when App mounts right after a fresh registration (see AuthGate's justSignedUp),
+  // never on a normal login or a page refresh, so a returning student never sees it again.
+  const [showOnboarding, setShowOnboarding] = useState(!!justSignedUp)
   // Hides the AI Tutor nav item entirely when the backend has no ANTHROPIC_API_KEY configured
   // (see get_ai_tutor_status in main.py) -- false until the check resolves true, so the item
   // never flashes in then out on a page load where the feature turns out to be off.
@@ -12164,6 +12341,10 @@ function App() {
     </div>
   )
   if (!userData) return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif' }}><LoadingState label="Loading mrreadyprep..." /></div>
+
+  if (showOnboarding) {
+    return <OnboardingFlow onDone={() => setShowOnboarding(false)} initialUsername={userData.username} recommendations={recommendations} />
+  }
 
   const examDaysLeft = getExamDaysLeft()
   const streakDays = userData.week_activity || [false, false, false, false, false, false, false]
@@ -12915,6 +13096,10 @@ function AuthGate() {
   // LandingPage with no obvious way to reach the reset form.
   const [showAuth, setShowAuth] = useState(() => new URLSearchParams(window.location.search).has('reset_token'))
   const [authMode, setAuthMode] = useState('login')
+  // Set true only when AuthScreen/Google sign-in reports this was a brand-new account (not a
+  // returning login) -- passed down to App so it can show the one-time onboarding screen. Stays
+  // false (and onboarding never shows) on every ordinary login or page refresh.
+  const [justSignedUp, setJustSignedUp] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -12957,13 +13142,13 @@ function AuthGate() {
       {authState === 'checking' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />}
       {authState === 'out' && (
         showAuth
-          ? <AuthScreen initialMode={authMode} onBack={() => setShowAuth(false)} onAuthSuccess={() => setAuthState('in')} />
+          ? <AuthScreen initialMode={authMode} onBack={() => setShowAuth(false)} onAuthSuccess={(user, isSignup) => { if (isSignup) setJustSignedUp(true); setAuthState('in') }} />
           : <LandingPage
               onGetStarted={() => { setAuthMode('signup'); setShowAuth(true) }}
               onLogIn={() => { setAuthMode('login'); setShowAuth(true) }}
             />
       )}
-      {authState === 'in' && <App />}
+      {authState === 'in' && <App justSignedUp={justSignedUp} />}
     </>
   )
 }
