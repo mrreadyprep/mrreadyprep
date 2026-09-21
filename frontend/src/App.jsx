@@ -10064,6 +10064,20 @@ function ProgressScreen({ onBack, onPractice }) {
   // a genuinely new user, but actually meaning "we couldn't reach the server". Found in the 30th
   // audit round.
   const [loadError, setLoadError] = useState(false)
+  // Powers the "Focus this week" card below -- same /api/recommendations data as the Dashboard's
+  // "Recommended for You" panel, but that panel only ever renders on the Dashboard tab, so a
+  // student who comes straight to My Progress never saw a next step. Fetched independently (not
+  // added to the Promise.all above) so a slow or failed recommendations call never blocks or
+  // errors out the rest of this screen -- it just leaves the card hidden.
+  const [recommendations, setRecommendations] = useState(null)
+
+  useEffect(() => {
+    let cancelled = false
+    apiFetch(`${BACKEND_URL}/api/recommendations`).then(res => res.ok ? res.json() : null)
+      .then(data => { if (!cancelled && Array.isArray(data?.recommendations)) setRecommendations(data.recommendations) })
+      .catch(() => {})
+    return () => { cancelled = true }
+  }, [])
 
   const load = () => {
     setLoading(true)
@@ -10106,6 +10120,31 @@ function ProgressScreen({ onBack, onPractice }) {
   const byCategory = summary?.by_category || {}
   const overall = summary?.overall || { attempts: 0, avg_pct: 0, last_attempt: null }
 
+  // "Focus this week" -- reuses the same first (weakest) entry from /api/recommendations that
+  // Dashboard's "Recommended for You" panel shows, so My Progress always agrees with Dashboard
+  // about what to practice next instead of running its own separate logic. Rendered above the
+  // stats in both the empty-state (brand-new user) and normal returns below, so every visitor to
+  // this screen gets one concrete next action rather than just a stats readout.
+  const topRec = recommendations && recommendations.length > 0 ? recommendations[0] : null
+  const focusCard = topRec ? (() => {
+    const sectionColor = { reading: '#2563eb', listening: '#16a34a', writing: '#ea580c', speaking: '#9333ea' }[topRec.section] || '#701fa1'
+    return (
+      <div style={{ marginBottom: '24px', background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', borderLeft: `4px solid ${sectionColor}`, padding: '18px 20px', display: 'flex', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between', flexDirection: isMobile ? 'column' : 'row', gap: '14px' }}>
+        <div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}><span aria-hidden="true">🎯</span> Focus this week</div>
+          <div style={{ fontSize: '13px', color: '#1a1a1a', marginTop: '6px' }}>
+            Your lowest-performing skill is <strong>{topRec.label}</strong> <span style={{ color: sectionColor, fontWeight: '700', textTransform: 'uppercase', fontSize: '11px' }}>({topRec.section})</span>.
+          </div>
+          <div style={{ fontSize: '12px', color: '#616473', marginTop: '3px' }}>
+            {topRec.reason === 'not_started' ? "You haven't tried this yet." : `${topRec.avg_pct}% average accuracy so far.`}
+            {mistakes && mistakes.total_items > 0 ? ` Review ${mistakes.total_items} mistake${mistakes.total_items === 1 ? '' : 's'} to improve your accuracy.` : ''}
+          </div>
+        </div>
+        <button onClick={() => onPractice && onPractice(topRec.nav)} style={{ background: sectionColor, color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 18px', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Start recommended practice →</button>
+      </div>
+    )
+  })() : null
+
   const fmtDate = (iso) => {
     if (!iso) return '—'
     const d = new Date(iso.replace(' ', 'T') + 'Z')
@@ -10123,6 +10162,7 @@ function ProgressScreen({ onBack, onPractice }) {
         <div style={{ fontSize: '40px', marginBottom: '12px' }}>📈</div>
         <h2 style={{ margin: '0 0 8px', color: '#1a1a1a', fontSize: '20px' }}>No activity yet</h2>
         <p style={{ color: '#616473', fontSize: '14px', maxWidth: '420px', margin: '0 auto 20px' }}>Complete a practice exercise or a mock test and your results will start showing up here.</p>
+        {focusCard && <div style={{ maxWidth: '480px', margin: '0 auto 20px', textAlign: 'left' }}>{focusCard}</div>}
         <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
       </div>
     )
@@ -10146,6 +10186,8 @@ function ProgressScreen({ onBack, onPractice }) {
         <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Every exercise and mock test you've completed, all in one place.</div>
       </div>
 
+      {focusCard}
+
       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '14px', marginBottom: '28px' }}>
         <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
           <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Total Attempts</div>
@@ -10166,7 +10208,7 @@ function ProgressScreen({ onBack, onPractice }) {
           <div style={{ padding: '16px 20px', background: '#fff8ec', borderBottom: '0.5px solid #f3d9a8', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
               <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>🎯 Review Mistakes</div>
-              <div style={{ fontSize: '12px', color: '#616473', marginTop: '2px' }}>{mistakes.total_items} item{mistakes.total_items === 1 ? '' : 's'} you haven't gotten 100% on yet</div>
+              <div style={{ fontSize: '12px', color: '#616473', marginTop: '2px' }}>{mistakes.total_items} question{mistakes.total_items === 1 ? '' : 's'} to review</div>
             </div>
           </div>
           <div>
@@ -10558,7 +10600,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
   const skills = [
     { icon: '📖', title: 'Reading', desc: 'Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback.', pill: 'Instant Right/Wrong Explanations' },
     { icon: '🎧', title: 'Listening', desc: 'Conversations, announcements, and academic talks with note-taking practice, just like the real exam.', pill: 'Official Audio Pacing' },
-    { icon: '✍️', title: 'Writing', desc: 'Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI against the real TOEFL rubric.', pill: 'Scored in Seconds' },
+    { icon: '✍️', title: 'Writing', desc: 'Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI against official rubric criteria.', pill: 'Scored in Seconds' },
     { icon: '🎤', title: 'Speaking', desc: 'Interview, Listen & Repeat, and full speaking tasks with AI feedback on delivery, language use, and content.', pill: '0–6.0 Fluency & Delivery Score' },
   ]
 
@@ -10592,15 +10634,11 @@ function LandingPage({ onGetStarted, onLogIn }) {
 
   const navLinkStyle = { fontSize: '13px', fontWeight: '700', color: '#fff', textDecoration: 'none', cursor: 'pointer', background: 'none', border: 'none' }
 
-  // Student Success Stories -- fetched from the backend (real, publicly-submitted rows) instead of
-  // being hardcoded here, so a story a visitor submits through the modal below shows up for the
-  // next visitor too. Falls back to a small static set if the fetch fails, so the section never
-  // renders empty/broken for a first-time visitor on a network hiccup.
-  const [stories, setStories] = useState([
-    { id: 'fallback-1', name: 'Sarah Chen', score: '6.0/6', comment: 'MRReadyPrep\'s mock tests are incredibly realistic. The AI feedback on my Writing section made all the difference!' },
-    { id: 'fallback-2', name: 'Ahmed Hassan', score: '5.5/6', comment: 'Went from a 3.5 to a 5.5 in just 6 weeks. The structured practice plan really helped me focus on weak areas.' },
-    { id: 'fallback-3', name: 'Maria Lopez', score: '5.0/6', comment: 'The Speaking practice with instant feedback helped me overcome my fear. Worth every penny!' },
-  ])
+  // Student Success Stories -- fetched from the backend (real, publicly-submitted rows). Starts
+  // empty rather than with invented placeholder names/scores: a visitor can't tell a fabricated
+  // testimonial from a real one, so on a fetch failure or before any student has submitted yet,
+  // the section below shows an honest "be the first to share" empty state instead of fake results.
+  const [stories, setStories] = useState([])
   const [showShareModal, setShowShareModal] = useState(false)
   const [openFaq, setOpenFaq] = useState(null)
   // Shows the newest 6 stories to start; "Show more" reveals the rest 6 at a time instead of
@@ -10881,29 +10919,38 @@ function LandingPage({ onGetStarted, onLogIn }) {
         <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 48px', maxWidth: '520px', lineHeight: '1.6' }}>
           See how our students are acing the TOEFL iBT. Share your results and inspire the community!
         </p>
-        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '24px', marginBottom: '32px' }}>
-          {stories.slice(0, visibleStoryCount).map((story, idx) => (
-            <div key={story.id ?? idx} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', background: '#f9f8fc', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(112, 31, 161, 0.12)'; e.currentTarget.style.borderColor = '#701fa1'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e1e4ed'; }}>
-              <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'flex-start' }}>
-                <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(135deg, #701fa1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px', flexShrink: 0 }}>
-                  {SUCCESS_STORY_ICONS[idx % SUCCESS_STORY_ICONS.length]}
+        {stories.length === 0 ? (
+          // Honest empty state -- no fabricated names/scores standing in for real students.
+          <div style={{ textAlign: 'center', border: '1px dashed #d1d5db', borderRadius: '14px', padding: isMobile ? '32px 20px' : '48px 24px', marginBottom: '32px', background: '#f9f8fc' }}>
+            <div style={{ fontSize: '32px', marginBottom: '10px' }} aria-hidden="true">🎓</div>
+            <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Be the first to share your results</div>
+            <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px', margin: '0 auto' }}>Real student stories will appear here as they're submitted.</div>
+          </div>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '24px', marginBottom: '32px' }}>
+            {stories.slice(0, visibleStoryCount).map((story, idx) => (
+              <div key={story.id ?? idx} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', background: '#f9f8fc', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(112, 31, 161, 0.12)'; e.currentTarget.style.borderColor = '#701fa1'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e1e4ed'; }}>
+                <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'flex-start' }}>
+                  <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(135deg, #701fa1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px', flexShrink: 0 }}>
+                    {SUCCESS_STORY_ICONS[idx % SUCCESS_STORY_ICONS.length]}
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: '800', color: '#1a1a1a', fontSize: '14px', marginBottom: '4px' }}>{story.name}</div>
+                    {story.score && (
+                      <div style={{ display: 'inline-block', background: '#fef3c7', color: '#b45309', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>{story.score}</div>
+                    )}
+                  </div>
                 </div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ fontWeight: '800', color: '#1a1a1a', fontSize: '14px', marginBottom: '4px' }}>{story.name}</div>
-                  {story.score && (
-                    <div style={{ display: 'inline-block', background: '#fef3c7', color: '#b45309', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>{story.score}</div>
-                  )}
+                <div style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '12px' }}>
+                  {story.comment}
                 </div>
+                {story.created_at && (
+                  <div style={{ fontSize: '11px', color: '#9ca3af' }}>{timeAgo(story.created_at)}</div>
+                )}
               </div>
-              <div style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '12px' }}>
-                {story.comment}
-              </div>
-              {story.created_at && (
-                <div style={{ fontSize: '11px', color: '#9ca3af' }}>{timeAgo(story.created_at)}</div>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
         <div style={{ textAlign: 'center' }}>
           {stories.length > visibleStoryCount && (
             <button type="button" onClick={() => setVisibleStoryCount(c => c + 6)} style={{ padding: '12px 28px', background: '#fff', color: '#701fa1', border: '1.5px solid #701fa1', borderRadius: '10px', fontWeight: '700', fontSize: '13px', cursor: 'pointer', marginBottom: '16px' }}>
