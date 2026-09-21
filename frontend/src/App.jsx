@@ -11398,7 +11398,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
-          {[{ href: '/blog/', label: 'Blog' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }, { href: '/terms.html#refund-policy', label: 'Refund Policy' }].map(link => (
+          {[{ href: '/toefl-practice-tests/', label: 'Practice Tests' }, { href: '/toefl-mock-tests/', label: 'Mock Tests' }, { href: '/blog/', label: 'Blog' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }, { href: '/terms.html#refund-policy', label: 'Refund Policy' }].map(link => (
             <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer"
               style={{ fontSize: '11px', fontWeight: '700', color: '#1a1a1a', textDecoration: 'none', backgroundColor: '#fff', padding: '7px 14px', borderRadius: '999px' }}>
               {link.label}
