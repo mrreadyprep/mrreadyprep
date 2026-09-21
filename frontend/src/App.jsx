@@ -12056,6 +12056,12 @@ function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSave
 function App({ justSignedUp }) {
   const isMobile = useIsMobile()
   const [mobileNavOpen, setMobileNavOpen] = useState(false)
+  // Sidebar "More" group (Community/Badges/Leaderboard/TOEFL Guides) -- these are lower-priority,
+  // secondary nav items per the product brief's simplified-navigation request. Collapsed by default
+  // so the primary items (Dashboard through Upgrade) are the only things competing for attention;
+  // expands on demand, or automatically whenever the current tab is one of the grouped items so a
+  // student who navigated straight to e.g. Leaderboard doesn't lose track of where they are.
+  const [moreNavOpen, setMoreNavOpen] = useState(false)
   // The mobile off-canvas sidebar's backdrop is otherwise mouse/touch-only to dismiss; add
   // Escape-to-close so keyboard users have a way out too, matching ConfirmModal/ExitConfirmModal's
   // existing Escape support. Only listens while the drawer is actually open. Found in the 39th
@@ -12457,14 +12463,36 @@ function App({ justSignedUp }) {
             {sb('progress', '📈', 'My Progress')}
             {sb('vocab', '📚', 'Vocabulary')}
             {aiTutorAvailable && sb('aitutor', '🤖', 'AI Tutor')}
-            {sb('forum', '💬', 'Community')}
-            {sb('badges', '🏅', 'Badges')}
-            {sb('leaderboard', '🏆', 'Leaderboard')}
-            <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
-              📝 TOEFL Guides
-            </a>
             {sb('subscribe', userData.has_premium ? '⭐' : '💎', userData.has_premium ? 'Premium Active' : 'Upgrade to Premium')}
             {userData.is_admin && sb('admin', '🛠️', 'Admin')}
+
+            {/* "More" group -- Community/Badges/Leaderboard/TOEFL Guides. These are secondary,
+                community/gamification features rather than core practice tools, so they're folded
+                here instead of sitting above-the-fold alongside Dashboard/Practice/Progress. Forced
+                open (via the isGroupTabActive OR below) whenever the student is already on one of
+                these tabs, so returning here after e.g. tapping a Leaderboard link never hides the
+                highlighted item inside a collapsed group. */}
+            {(() => {
+              const isGroupTabActive = currentTab === 'forum' || currentTab === 'badges' || currentTab === 'leaderboard'
+              const expanded = moreNavOpen || isGroupTabActive
+              return (
+                <>
+                  <button onClick={() => setMoreNavOpen(o => !o)} aria-expanded={expanded} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ display: 'inline-block', transition: 'transform 0.15s ease', transform: expanded ? 'rotate(90deg)' : 'none' }}>▸</span> More
+                  </button>
+                  {expanded && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '3px', paddingLeft: '10px' }}>
+                      {sb('forum', '💬', 'Community')}
+                      {sb('badges', '🏅', 'Badges')}
+                      {sb('leaderboard', '🏆', 'Leaderboard')}
+                      <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
+                        📝 TOEFL Guides
+                      </a>
+                    </div>
+                  )}
+                </>
+              )
+            })()}
           </div>
         </div>
         {/* Wrapped together (profile row + disclaimer) so the parent's justify-content:'space-
