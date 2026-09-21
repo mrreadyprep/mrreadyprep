@@ -1,7 +1,4 @@
 import { useEffect, useState, useRef, useMemo, Component } from 'react'
-import { PricingPage } from './PricingPage'
-import { TestimonialsCarousel } from './TestimonialsCarousel'
-import { GuaranteeBanner } from './GuaranteeBanner'
 
 
 // ─── Full-screen exam shell (matches the official TOEFL iBT test-day UI) ─────
