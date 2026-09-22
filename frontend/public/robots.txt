@@ -1,4 +1,20 @@
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api
+Disallow: /private
 
 Sitemap: https://mrreadyprep.com/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 2
+
+# Googlebot can crawl faster
+User-agent: Googlebot
+Crawl-delay: 1
+
+# Block aggressive bots
+User-agent: MJ12bot
+User-agent: AhrefsBot
+User-agent: SemrushBot
+Disallow: /
