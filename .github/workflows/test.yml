@@ -43,17 +43,17 @@ jobs:
           name: test-report
           path: report.txt
       - uses: dawidd6/action-send-mail@v3
-        if: failure()
+        if: always()
         with:
           server_address: smtp.gmail.com
           server_port: 465
           username: ${{ secrets.GMAIL_USER }}
           password: ${{ secrets.GMAIL_PASS }}
-          subject: "mrreadyprep Test Failed - ${{ github.run_number }}"
+          subject: "mrreadyprep Test Report - ${{ github.run_number }} - ${{ needs.frontend.result }}"
           to: mrreadyprep@gmail.com
           from: "GitHub Actions"
           body: |
-            Test çalışması başarısız oldu.
+            Test Raporu:
             Frontend: ${{ needs.frontend.result }}
             Backend: ${{ needs.backend.result }}
             Detaylar: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
