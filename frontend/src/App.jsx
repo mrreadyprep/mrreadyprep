@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useMemo, Component } from 'react'
-
+import { getUserGeo, getCurrencySymbol, getPricingTierForRegion } from './utils/geoDetect'
 
 // ─── Full-screen exam shell (matches the official TOEFL iBT test-day UI) ─────
 const EXAM_NAVY = '#2ac56c'
