@@ -8522,9 +8522,11 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPre
         estimated because ETS doesn't publish its exact scoring formula.
       </p>
       {onStart && (
-        <button onClick={() => onStart()} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '13px 32px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', marginBottom: onStartFixed ? '28px' : '18px' }}>
-          Start Full Mock Test
-        </button>
+        <div style={{ position: 'relative', display: 'inline-block', marginBottom: onStartFixed ? '28px' : '18px' }}>
+          <button onClick={() => onStart()} disabled={!hasPremium} style={{ background: hasPremium ? '#701fa1' : '#d1c4e0', color: '#fff', border: 'none', borderRadius: '8px', padding: '13px 32px', fontSize: '14px', fontWeight: '700', cursor: hasPremium ? 'pointer' : 'default', opacity: hasPremium ? 1 : 0.6 }}>
+            {hasPremium ? 'Start Full Mock Test' : '🔒 Premium Only'}
+          </button>
+        </div>
       )}
       {onStartFixed && (
         <>
@@ -12801,13 +12803,13 @@ function App({ justSignedUp }) {
                   ))}
                 </div>
               </div>
-              <div style={{ background: '#701fa1', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', minWidth: isMobile ? '0' : '240px', flexShrink: 0 }}>
+              <div style={{ background: userData.has_premium ? '#701fa1' : '#d1c4e0', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', minWidth: isMobile ? '0' : '240px', flexShrink: 0 }}>
                 <div>
-                  <div style={{ fontSize: '10px', color: '#d4a0f5', marginBottom: '2px' }}>Full mock test</div>
+                  <div style={{ fontSize: '10px', color: userData.has_premium ? '#d4a0f5' : '#c8b5d8', marginBottom: '2px' }}>Full mock test</div>
                   <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff' }}>All 4 sections · ~90 min</div>
-                  <div style={{ fontSize: '10px', color: '#c084fc', marginTop: '3px' }}>{userData.last_mock_test_at ? `Last taken: ${timeAgo(userData.last_mock_test_at)}` : 'Not taken yet'}</div>
+                  <div style={{ fontSize: '10px', color: userData.has_premium ? '#c084fc' : '#b8a0d4', marginTop: '3px' }}>{userData.last_mock_test_at ? `Last taken: ${timeAgo(userData.last_mock_test_at)}` : !userData.has_premium ? 'Premium required' : 'Not taken yet'}</div>
                 </div>
-                <button onClick={() => setCurrentTab('mocktest')} style={{ marginLeft: 'auto', background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>Start test</button>
+                <button onClick={() => userData.has_premium ? setCurrentTab('mocktest') : null} disabled={!userData.has_premium} style={{ marginLeft: 'auto', background: userData.has_premium ? '#fff' : '#e8ddf7', color: userData.has_premium ? '#701fa1' : '#b8a0d4', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: userData.has_premium ? 'pointer' : 'default', whiteSpace: 'nowrap', flexShrink: 0, opacity: userData.has_premium ? 1 : 0.6 }}>{userData.has_premium ? 'Start test' : '🔒 Premium'}</button>
               </div>
             </div>
 
