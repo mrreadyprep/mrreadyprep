@@ -38,7 +38,7 @@ jobs:
           echo "Test Report - $(date)" > report.txt
           echo "Frontend: ${{ needs.frontend.result }}" >> report.txt
           echo "Backend: ${{ needs.backend.result }}" >> report.txt
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: test-report
           path: report.txt
