@@ -3757,6 +3757,7 @@ CATEGORY_LABELS = {
     "disc": "Academic Discussion",
     "speaking_lr": "Listen and Repeat",
     "speaking_interview": "Take an Interview",
+    "vocab": "Vocabulary Quiz",
     "mock_reading": "Mock Test · Reading",
     "mock_listening": "Mock Test · Listening",
     "mock_writing": "Mock Test · Writing",
