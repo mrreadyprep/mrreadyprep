@@ -1694,6 +1694,32 @@ def init_db():
     """)
     conn.execute("CREATE INDEX IF NOT EXISTS idx_user_badges_user_id ON user_badges(user_id)")
 
+    # Student reviews/ratings -- social proof shown on the pricing/landing page (see
+    # /api/reviews/* below). Distinct from success_stories above: reviews require a logged-in
+    # student (Authorization required) and are scoped to a specific course ("all_sections",
+    # "reading", "listening", "writing", "speaking", "mocks"). UNIQUE(user_id, course) plus the
+    # ON CONFLICT upsert in submit_review() means resubmitting for the same course updates the
+    # student's existing review instead of creating a duplicate. username is denormalized at
+    # submit time, same pattern as forum_questions/forum_answers, so a later display-name change
+    # doesn't retroactively rewrite older reviews. is_hidden mirrors the forum tables' moderation
+    # flag (no admin endpoint to set it yet -- reserved for when one's needed).
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS user_reviews (
+            id {pk},
+            user_id INTEGER NOT NULL,
+            username TEXT NOT NULL,
+            rating INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            review_text TEXT NOT NULL,
+            course TEXT NOT NULL DEFAULT 'all_sections',
+            is_hidden INTEGER NOT NULL DEFAULT 0,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(user_id, course)
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_user_reviews_course ON user_reviews(course, is_hidden)")
+
     conn.commit()
     conn.close()
 
@@ -4945,3 +4971,119 @@ def create_success_story(data: SuccessStoryCreate, request: Request):
     finally:
         conn.close()
 
+# --- Student Reviews (ratings + written testimonial, shown as social proof on the pricing page) ---
+REVIEW_COURSES = {"all_sections", "reading", "listening", "writing", "speaking", "mocks"}
+
+class ReviewSubmit(BaseModel):
+    # No default on `rating` (the original sketch defaulted it to 1, which meant an omitted
+    # rating silently saved as a 1-star review instead of failing validation) -- a rating is
+    # required input, not something safe to guess a value for.
+    rating: int = Field(ge=1, le=5)
+    title: str = Field(min_length=3, max_length=100)
+    review_text: str = Field(min_length=10, max_length=2000)
+    course: str = Field(default="all_sections", max_length=20)
+
+    @field_validator("title", "review_text")
+    @classmethod
+    def _strip(cls, v):
+        v = v.strip()
+        if not v:
+            raise ValueError("This field can't be empty")
+        return v
+
+    @field_validator("review_text")
+    @classmethod
+    def _no_links(cls, v):
+        # Same spam-link guard as SuccessStoryCreate/ForumQuestionCreate -- reviews are displayed
+        # publicly on the pricing page with no moderation-before-publish step.
+        lowered = v.lower()
+        if "http://" in lowered or "https://" in lowered or "www." in lowered:
+            raise ValueError("Links aren't allowed in reviews")
+        return v
+
+    @field_validator("course")
+    @classmethod
+    def _valid_course(cls, v):
+        if v not in REVIEW_COURSES:
+            raise ValueError("Unknown course")
+        return v
+
+@app.post("/api/reviews/submit")
+def submit_review(data: ReviewSubmit, user=Depends(get_current_user)):
+    """Submit or update the current student's review for a course. One review per (user, course)
+    -- a second submission for the same course overwrites the first rather than adding a new row."""
+    conn = get_db()
+    try:
+        conn.execute("""
+            INSERT INTO user_reviews (user_id, username, rating, title, review_text, course, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            ON CONFLICT(user_id, course) DO UPDATE SET
+                rating = excluded.rating,
+                title = excluded.title,
+                review_text = excluded.review_text,
+                username = excluded.username,
+                updated_at = CURRENT_TIMESTAMP
+        """, (user["id"], user["username"], data.rating, data.title, data.review_text, data.course))
+        conn.commit()
+        row = conn.execute(
+            "SELECT id, rating, title, review_text, course, created_at, updated_at "
+            "FROM user_reviews WHERE user_id = ? AND course = ?",
+            (user["id"], data.course),
+        ).fetchone()
+        return dict(row)
+    finally:
+        conn.close()
+
+@app.get("/api/reviews/list")
+def list_reviews(course: str = "all_sections", limit: int = 20):
+    """Public (no login required) -- 4-5 star reviews for one course, for the pricing/testimonials
+    page, plus that course's aggregate rating."""
+    if course not in REVIEW_COURSES:
+        raise HTTPException(status_code=400, detail="Unknown course")
+    limit = max(1, min(limit, 50))
+    conn = get_db()
+    try:
+        rows = conn.execute(
+            "SELECT username, rating, title, review_text, created_at FROM user_reviews "
+            "WHERE course = ? AND is_hidden = 0 AND rating >= 4 "
+            "ORDER BY created_at DESC LIMIT ?",
+            (course, limit),
+        ).fetchall()
+        agg = conn.execute(
+            "SELECT AVG(rating) AS avg_rating, COUNT(*) AS n FROM user_reviews "
+            "WHERE course = ? AND is_hidden = 0",
+            (course,),
+        ).fetchone()
+        return {
+            "reviews": [dict(r) for r in rows],
+            "average_rating": round(agg["avg_rating"], 1) if agg["avg_rating"] else 0,
+            "total_reviews": agg["n"] or 0,
+        }
+    finally:
+        conn.close()
+
+@app.get("/api/reviews/stats")
+def get_review_stats():
+    """Public (no login required) -- site-wide review stats across all courses, for a landing-page
+    summary badge (e.g. "4.8/5 from 120+ students")."""
+    conn = get_db()
+    try:
+        row = conn.execute("""
+            SELECT
+                ROUND(AVG(rating), 1) AS avg_rating,
+                COUNT(*) AS total,
+                SUM(CASE WHEN rating = 5 THEN 1 ELSE 0 END) AS five_star,
+                SUM(CASE WHEN rating = 4 THEN 1 ELSE 0 END) AS four_star
+            FROM user_reviews WHERE is_hidden = 0
+        """).fetchone()
+        avg_rating = row["avg_rating"] or 0
+        total = row["total"] or 0
+        return {
+            "average_rating": avg_rating,
+            "total_reviews": total,
+            "five_star_count": row["five_star"] or 0,
+            "four_star_count": row["four_star"] or 0,
+            "display_text": f"⭐ {avg_rating}/5 from {total}+ students" if total else "",
+        }
+    finally:
+        conn.close()
