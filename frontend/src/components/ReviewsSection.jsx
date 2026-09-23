@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import PostTestReview from './PostTestReview';
 
 // Same pattern as App.jsx's BACKEND_URL: a bare '/api/...' fetch resolves against
 // mrreadyprep.com (this frontend's own Vercel domain), not the backend, since there's no
 // rewrite proxying /api/* to api.mrreadyprep.com. Without this prefix the requests below
 // silently fail (caught and swallowed) and the section is stuck showing zeros forever.
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+// Must match App.jsx's AUTH_TOKEN_KEY -- used to tell a logged-in student from a visitor before
+// deciding what "+ Share Your Success Story" should do.
+const AUTH_TOKEN_KEY = 'mrreadyprep_token';
 
 export default function ReviewsSection() {
   const [stats, setStats] = useState({
@@ -16,9 +21,12 @@ export default function ReviewsSection() {
   });
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showReviewModal, setShowReviewModal] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  // Pulled out of useEffect so the "+ Share Your Success Story" flow can call it again after the
+  // review modal closes, to pick up a review the student just submitted without needing a full
+  // page reload.
+  const fetchData = async () => {
       try {
         // Fetch aggregate stats
         const statsRes = await fetch(`${BACKEND_URL}/api/reviews/stats`);
@@ -38,8 +46,9 @@ export default function ReviewsSection() {
       } finally {
         setLoading(false);
       }
-    };
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -265,16 +274,38 @@ export default function ReviewsSection() {
           onMouseEnter={() => setHoveredBtn(true)}
           onMouseLeave={() => setHoveredBtn(false)}
           onClick={() => {
-            // Scroll to pricing or redirect to dashboard
-            const pricingSection = document.getElementById('pricing');
-            if (pricingSection) {
-              pricingSection.scrollIntoView({ behavior: 'smooth' });
+            // Submitting a review requires a logged-in account (the backend's /api/reviews/submit
+            // needs a Bearer token). A logged-in student goes straight to the review form; a
+            // visitor who isn't logged in yet goes to pricing/signup instead, since they need an
+            // account before they can leave a review at all -- this previously always scrolled to
+            // pricing for EVERYONE, including already-logged-in students, so no one could actually
+            // submit a review from this button.
+            let hasToken = false;
+            try { hasToken = !!localStorage.getItem(AUTH_TOKEN_KEY); } catch { /* ignore */ }
+
+            if (hasToken) {
+              setShowReviewModal(true);
+            } else {
+              const pricingSection = document.getElementById('pricing');
+              if (pricingSection) {
+                pricingSection.scrollIntoView({ behavior: 'smooth' });
+              }
             }
           }}
         >
           + Share Your Success Story
         </button>
       </div>
+
+      <PostTestReview
+        isOpen={showReviewModal}
+        onClose={() => {
+          setShowReviewModal(false);
+          // Pick up a review the student just submitted without needing a full page reload.
+          fetchData();
+        }}
+        courseType="all_sections"
+      />
     </div>
   );
 }
