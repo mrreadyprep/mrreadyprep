@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
+// Same pattern as App.jsx's BACKEND_URL: a bare '/api/...' fetch resolves against
+// mrreadyprep.com (this frontend's own Vercel domain), not the backend, since there's no
+// rewrite proxying /api/* to api.mrreadyprep.com. Without this prefix the requests below
+// silently fail (caught and swallowed) and the section is stuck showing zeros forever.
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
 export default function ReviewsSection() {
   const [stats, setStats] = useState({
     average_rating: 0,
@@ -15,14 +21,14 @@ export default function ReviewsSection() {
     const fetchData = async () => {
       try {
         // Fetch aggregate stats
-        const statsRes = await fetch('/api/reviews/stats');
+        const statsRes = await fetch(`${BACKEND_URL}/api/reviews/stats`);
         if (statsRes.ok) {
           const statsData = await statsRes.json();
           setStats(statsData);
         }
 
         // Fetch top reviews (4-5 stars for landing page)
-        const reviewsRes = await fetch('/api/reviews/list?course=all_sections&limit=3');
+        const reviewsRes = await fetch(`${BACKEND_URL}/api/reviews/list?course=all_sections&limit=3`);
         if (reviewsRes.ok) {
           const reviewsData = await reviewsRes.json();
           setReviews(reviewsData.reviews || []);
