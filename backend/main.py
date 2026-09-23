@@ -5044,7 +5044,7 @@ def list_reviews(course: str = "all_sections", limit: int = 20):
     conn = get_db()
     try:
         rows = conn.execute(
-            "SELECT username, rating, title, review_text, created_at FROM user_reviews "
+            "SELECT username, rating, title, review_text, course, created_at FROM user_reviews "
             "WHERE course = ? AND is_hidden = 0 AND rating >= 4 "
             "ORDER BY created_at DESC LIMIT ?",
             (course, limit),
