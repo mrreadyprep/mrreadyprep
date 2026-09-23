@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
+// Same pattern as App.jsx's BACKEND_URL -- a bare '/api/...' fetch resolves against this
+// frontend's own Vercel domain (mrreadyprep.com), not the backend, since there's no rewrite
+// proxying /api/* to api.mrreadyprep.com.
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
+
+// Must match App.jsx's AUTH_TOKEN_KEY -- the backend's /api/reviews/submit requires a logged-in
+// user (get_current_user), so the request needs the same Bearer token App.jsx attaches via its
+// own apiFetch() wrapper. That wrapper lives in App.jsx and isn't exported, so this component
+// reads the token itself under the exact same localStorage key.
+const AUTH_TOKEN_KEY = 'mrreadyprep_token';
+
 export default function PostTestReview({ isOpen, onClose, courseType = 'all_sections' }) {
   const [rating, setRating] = useState(5);
   const [title, setTitle] = useState('');
@@ -38,10 +49,20 @@ export default function PostTestReview({ isOpen, onClose, courseType = 'all_sect
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/reviews/submit', {
+      let authToken = '';
+      try { authToken = localStorage.getItem(AUTH_TOKEN_KEY) || ''; } catch { /* ignore */ }
+
+      if (!authToken) {
+        setError('Please log in to submit a review.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      const response = await fetch(`${BACKEND_URL}/api/reviews/submit`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`,
         },
         body: JSON.stringify({
           rating: parseInt(rating),
