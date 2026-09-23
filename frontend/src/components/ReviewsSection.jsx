@@ -250,7 +250,7 @@ export default function ReviewsSection() {
                   <div style={reviewRatingStyle}>{renderStars(review.rating)}</div>
                 </div>
                 <div style={reviewCourseStyle}>
-                  {courseNameMap[review.course] || review.course.toUpperCase()}
+                  {courseNameMap[review.course] || (review.course || 'all_sections').toUpperCase()}
                 </div>
                 <div style={reviewTitleStyle}>{review.title}</div>
                 <div style={reviewTextStyle}>{review.review_text}</div>
