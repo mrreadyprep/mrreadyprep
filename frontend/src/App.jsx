@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useMemo, Component } from 'react'
 import { getUserGeo, getCurrencySymbol, getPricingTierForRegion } from './utils/geoDetect'
+import ReviewsSection from './components/ReviewsSection'
 
 // ─── Full-screen exam shell (matches the official TOEFL iBT test-day UI) ─────
 const EXAM_NAVY = '#2ac56c'
@@ -10918,69 +10919,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
         </div>
       </div>
 
-      {/* Student Success Stories */}
-      <div style={{ padding: isMobile ? '48px 20px' : '64px 40px', maxWidth: '1200px', margin: '0 auto' }}>
-        <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 12px' }}>
-          🎓 Student Success Stories
-        </h2>
-        <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 48px', maxWidth: '520px', lineHeight: '1.6' }}>
-          See how our students are acing the TOEFL iBT. Share your results and inspire the community!
-        </p>
-        {stories.length === 0 ? (
-          // Honest empty state -- no fabricated names/scores standing in for real students.
-          <div style={{ textAlign: 'center', border: '1px dashed #d1d5db', borderRadius: '14px', padding: isMobile ? '32px 20px' : '48px 24px', marginBottom: '32px', background: '#f9f8fc' }}>
-            <div style={{ fontSize: '32px', marginBottom: '10px' }} aria-hidden="true">🎓</div>
-            <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Be the first to share your results</div>
-            <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px', margin: '0 auto' }}>Real student stories will appear here as they're submitted.</div>
-          </div>
-        ) : (
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '24px', marginBottom: '32px' }}>
-            {stories.slice(0, visibleStoryCount).map((story, idx) => (
-              <div key={story.id ?? idx} style={{ border: '1px solid #e1e4ed', borderRadius: '14px', padding: '24px', background: '#f9f8fc', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-4px)'; e.currentTarget.style.boxShadow = '0 8px 24px rgba(112, 31, 161, 0.12)'; e.currentTarget.style.borderColor = '#701fa1'; }} onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = '#e1e4ed'; }}>
-                <div style={{ display: 'flex', gap: '12px', marginBottom: '16px', alignItems: 'flex-start' }}>
-                  <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: 'linear-gradient(135deg, #701fa1, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '24px', flexShrink: 0 }}>
-                    {SUCCESS_STORY_ICONS[idx % SUCCESS_STORY_ICONS.length]}
-                  </div>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: '800', color: '#1a1a1a', fontSize: '14px', marginBottom: '4px' }}>{story.name}</div>
-                    {story.score && (
-                      <div style={{ display: 'inline-block', background: '#fef3c7', color: '#b45309', padding: '4px 8px', borderRadius: '6px', fontSize: '12px', fontWeight: '700' }}>{story.score}</div>
-                    )}
-                  </div>
-                </div>
-                <div style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '12px' }}>
-                  {story.comment}
-                </div>
-                {story.created_at && (
-                  <div style={{ fontSize: '11px', color: '#9ca3af' }}>{timeAgo(story.created_at)}</div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-        <div style={{ textAlign: 'center' }}>
-          {stories.length > visibleStoryCount && (
-            <button type="button" onClick={() => setVisibleStoryCount(c => c + 6)} style={{ padding: '12px 28px', background: '#fff', color: '#701fa1', border: '1.5px solid #701fa1', borderRadius: '10px', fontWeight: '700', fontSize: '13px', cursor: 'pointer', marginBottom: '16px' }}>
-              Show more stories
-            </button>
-          )}
-          <div>
-            <button type="button" onClick={() => setShowShareModal(true)} style={{ padding: '16px 32px', background: '#701fa1', color: '#fff', textDecoration: 'none', borderRadius: '10px', fontWeight: '700', fontSize: '14px', cursor: 'pointer', border: 'none', transition: 'background 0.2s' }} onMouseEnter={(e) => e.currentTarget.style.background = '#5a1480'} onMouseLeave={(e) => e.currentTarget.style.background = '#701fa1'}>
-              + Share Your Success Story
-            </button>
-          </div>
-        </div>
-        {showShareModal && (
-          <ShareSuccessStoryModal
-            onClose={() => setShowShareModal(false)}
-            onSubmitted={(newStory) => {
-              setStories(prev => [newStory, ...prev])
-              setShowShareModal(false)
-              showToast('Thanks for sharing your story!', 'success')
-            }}
-          />
-        )}
-      </div>
+      <ReviewsSection />
 
       {/* Final CTA */}
       <div style={{ backgroundColor: '#11162d', padding: isMobile ? '44px 20px' : '56px 40px', textAlign: 'center' }}>
