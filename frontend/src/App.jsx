@@ -10514,21 +10514,23 @@ function ShareSuccessStoryModal({ onClose, onSubmitted }) {
   )
 }
 
-// A single real Complete the Words question a visitor can answer with no account, right on the
-// landing page -- same format as the in-app exercise (fill a blank from 4 options, instant
-// right/wrong feedback + explanation). Entirely self-contained: no backend call, no saved state.
-// The countdown is atmospheric only -- it does not lock the visitor out at 0, since the point here
-// is "try the format," not a real timed assessment.
+// A single real Read in Daily Life question a visitor can answer with no account, right on the
+// landing page -- a real notice/sign from our Reading question bank plus its actual comprehension
+// question (4 options, instant right/wrong feedback + explanation). Entirely self-contained: no
+// backend call, no saved state. The countdown is atmospheric only -- it does not lock the visitor
+// out at 0, since the point here is "try the format," not a real timed assessment.
 function LiveDemoSection({ isMobile, purple, onGetStarted }) {
   const DEMO_SECONDS = 25
-  const sentence = "Despite the committee's initial ___, they eventually approved the proposal after a lengthy discussion."
+  const noticeTitle = 'NOTICE: Swimming Pool Closure'
+  const noticeText = 'The outdoor swimming pool at Riverside Sports Centre will be closed for maintenance from Monday, July 7 to Wednesday, July 9.\n\nDuring this period, members are welcome to use the indoor pool on the lower ground floor.\n\nWe apologize for any inconvenience.'
+  const question = 'What is the purpose of the sign?'
   const options = [
-    { key: 'A', text: 'skepticism', correct: true },
-    { key: 'B', text: 'enthusiasm', correct: false },
-    { key: 'C', text: 'obligation', correct: false },
-    { key: 'D', text: 'permission', correct: false },
+    { key: 'A', text: 'To announce a new sports centre opening', correct: false },
+    { key: 'B', text: 'To inform members of a temporary pool closure', correct: true },
+    { key: 'C', text: 'To advertise swimming lessons', correct: false },
+    { key: 'D', text: 'To notify members of a fee change', correct: false },
   ]
-  const explanation = '"Skepticism" is correct: "despite" signals a contrast between the committee\'s initial doubtful attitude and their eventual approval. The other options don\'t create that contrast.'
+  const explanation = '"To inform members of a temporary pool closure" is correct: the sign\'s purpose is to let members know the outdoor pool is closed for maintenance from July 7-9 and to point them to the indoor pool as an alternative -- it isn\'t announcing a new facility, promoting lessons, or changing fees.'
 
   const [selected, setSelected] = useState(null)
   const [timeLeft, setTimeLeft] = useState(DEMO_SECONDS)
@@ -10549,17 +10551,25 @@ function LiveDemoSection({ isMobile, purple, onGetStarted }) {
           Try a real question -- no signup needed
         </h2>
         <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 30px', maxWidth: '480px', lineHeight: '1.6' }}>
-          This is an actual Complete the Words format question from our Reading practice.
+          This is an actual Read in Daily Life question from our Reading practice.
         </p>
         <div style={{ border: `1px solid ${purple}33`, borderRadius: '16px', padding: isMobile ? '20px' : '28px', backgroundColor: '#f9f8fc' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <div style={{ fontSize: '11px', fontWeight: '800', color: purple, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Complete the Words</div>
+            <div style={{ fontSize: '11px', fontWeight: '800', color: purple, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Read in Daily Life</div>
             <div style={{ fontSize: '12px', fontWeight: '700', color: timeLeft <= 5 && !selected ? '#d94040' : '#616473' }}>
               ⏱ 0:{String(Math.max(timeLeft, 0)).padStart(2, '0')}
             </div>
           </div>
+          <div style={{ border: '1px solid #e1e4ed', borderRadius: '10px', padding: isMobile ? '14px' : '18px', backgroundColor: '#fff', marginBottom: '20px' }}>
+            <div style={{ fontSize: isMobile ? '13px' : '13.5px', fontWeight: '800', color: '#1a1a1a', marginBottom: '10px', letterSpacing: '0.2px' }}>
+              {noticeTitle}
+            </div>
+            <div style={{ fontSize: isMobile ? '13px' : '13.5px', color: '#374151', lineHeight: '1.7', whiteSpace: 'pre-line' }}>
+              {noticeText}
+            </div>
+          </div>
           <div style={{ fontSize: isMobile ? '14.5px' : '16px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px', fontWeight: '600' }}>
-            {sentence}
+            {question}
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '10px', marginBottom: selected ? '18px' : '0' }}>
             {options.map(opt => {
