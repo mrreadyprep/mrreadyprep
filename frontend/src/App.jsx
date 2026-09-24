@@ -10519,6 +10519,11 @@ function ShareSuccessStoryModal({ onClose, onSubmitted }) {
 // question (4 options, instant right/wrong feedback + explanation). Entirely self-contained: no
 // backend call, no saved state. The countdown is atmospheric only -- it does not lock the visitor
 // out at 0, since the point here is "try the format," not a real timed assessment.
+//
+// Styled to mirror the actual in-app exam screen (see RIDLQuestion/TestTopBar/TestSubHeader
+// above) rather than a generic marketing card: same green top bar + white sub-header, same
+// colored-border notice box, same circular radio options -- so what a visitor tries here looks
+// exactly like what they'll get after signing up, not a simplified mockup of it.
 function LiveDemoSection({ isMobile, purple, onGetStarted }) {
   const DEMO_SECONDS = 25
   const noticeTitle = 'NOTICE: Swimming Pool Closure'
@@ -10531,6 +10536,9 @@ function LiveDemoSection({ isMobile, purple, onGetStarted }) {
     { key: 'D', text: 'To notify members of a fee change', correct: false },
   ]
   const explanation = '"To inform members of a temporary pool closure" is correct: the sign\'s purpose is to let members know the outdoor pool is closed for maintenance from July 7-9 and to point them to the indoor pool as an alternative -- it isn\'t announcing a new facility, promoting lessons, or changing fees.'
+  // Same teal used for the very first entry in RIDL_BOX_COLORS -- keeps the demo's notice box
+  // the same color a real student would see on this same passage inside the app.
+  const boxColor = '#127c84'
 
   const [selected, setSelected] = useState(null)
   const [timeLeft, setTimeLeft] = useState(DEMO_SECONDS)
@@ -10543,64 +10551,101 @@ function LiveDemoSection({ isMobile, purple, onGetStarted }) {
   }, [timeLeft, selected])
 
   const pick = (opt) => { if (!selected) setSelected(opt) }
+  const formatTime = (s) => '0:' + String(Math.max(s, 0)).padStart(2, '0')
 
   return (
     <div style={{ backgroundColor: '#fff', padding: isMobile ? '48px 20px' : '64px 40px' }}>
-      <div style={{ maxWidth: '620px', margin: '0 auto' }}>
+      <div style={{ maxWidth: '900px', margin: '0 auto' }}>
         <h2 style={{ textAlign: 'center', fontSize: isMobile ? '22px' : '28px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>
           Try a real question -- no signup needed
         </h2>
-        <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 30px', maxWidth: '480px', lineHeight: '1.6' }}>
-          This is an actual Read in Daily Life question from our Reading practice.
+        <p style={{ textAlign: 'center', color: '#6b7280', fontSize: '14px', margin: '0 auto 30px', maxWidth: '520px', lineHeight: '1.6' }}>
+          This is an actual Read in Daily Life question from our Reading practice, shown exactly as it appears in the real exam interface.
         </p>
-        <div style={{ border: `1px solid ${purple}33`, borderRadius: '16px', padding: isMobile ? '20px' : '28px', backgroundColor: '#f9f8fc' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <div style={{ fontSize: '11px', fontWeight: '800', color: purple, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Read in Daily Life</div>
-            <div style={{ fontSize: '12px', fontWeight: '700', color: timeLeft <= 5 && !selected ? '#d94040' : '#616473' }}>
-              ⏱ 0:{String(Math.max(timeLeft, 0)).padStart(2, '0')}
+
+        <div style={{ border: '1px solid #e1e4ed', borderRadius: '14px', overflow: 'hidden', boxShadow: '0 12px 32px rgba(0,0,0,0.08)' }}>
+          {/* Top bar -- same green used by the real in-app exam screen's TestTopBar */}
+          <div style={{ background: '#2ac56c', padding: isMobile ? '10px 16px' : '14px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+            <span style={{ background: '#fff', color: '#333333', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', fontFamily: 'sans-serif' }}>Exit</span>
+            <span style={{ background: '#11162d', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', fontFamily: 'sans-serif' }}>
+              {selected ? 'Finish' : 'Next'}
+            </span>
+          </div>
+          {/* Sub-header -- same layout as the real exam's TestSubHeader (section + timer) */}
+          <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: isMobile ? '10px 16px' : '12px 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px' }}>
+            <div style={{ fontSize: isMobile ? '11px' : '13px', color: '#1a1a1a' }}>
+              <span style={{ fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Reading</span>
+              <span style={{ color: '#9ca3af', margin: '0 8px' }}>|</span>
+              <span>Read in Daily Life</span>
             </div>
+            <span style={{ fontSize: isMobile ? '12px' : '14px', fontWeight: '700', color: timeLeft <= 5 && !selected ? '#d94040' : '#1a1a1a' }}>
+              ⏱ {formatTime(timeLeft)}
+            </span>
           </div>
-          <div style={{ border: '1px solid #e1e4ed', borderRadius: '10px', padding: isMobile ? '14px' : '18px', backgroundColor: '#fff', marginBottom: '20px' }}>
-            <div style={{ fontSize: isMobile ? '13px' : '13.5px', fontWeight: '800', color: '#1a1a1a', marginBottom: '10px', letterSpacing: '0.2px' }}>
-              {noticeTitle}
-            </div>
-            <div style={{ fontSize: isMobile ? '13px' : '13.5px', color: '#374151', lineHeight: '1.7', whiteSpace: 'pre-line' }}>
-              {noticeText}
-            </div>
-          </div>
-          <div style={{ fontSize: isMobile ? '14.5px' : '16px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px', fontWeight: '600' }}>
-            {question}
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '10px', marginBottom: selected ? '18px' : '0' }}>
-            {options.map(opt => {
-              const isPicked = selected?.key === opt.key
-              let bg = '#fff', border = '#e1e4ed', color = '#1a1a1a'
-              if (selected) {
-                if (opt.correct) { bg = '#eafaf0'; border = '#2ac56c'; color = '#1a7a3f' }
-                else if (isPicked) { bg = '#fdecec'; border = '#d94040'; color = '#a32f2f' }
-              }
-              return (
-                <button key={opt.key} type="button" onClick={() => pick(opt)} disabled={!!selected} style={{ textAlign: 'left', display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderRadius: '10px', border: `1.5px solid ${border}`, backgroundColor: bg, color, fontSize: '13.5px', fontWeight: '700', cursor: selected ? 'default' : 'pointer' }}>
-                  <span style={{ width: '22px', height: '22px', borderRadius: '50%', border: `1.5px solid ${border}`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', flexShrink: 0 }}>{opt.key}</span>
-                  {opt.text}
-                  {selected && opt.correct && <span style={{ marginLeft: 'auto' }} aria-hidden="true">✓</span>}
-                  {selected && isPicked && !opt.correct && <span style={{ marginLeft: 'auto' }} aria-hidden="true">✕</span>}
-                </button>
-              )
-            })}
-          </div>
-          {selected && (
-            <div style={{ borderTop: '1px solid #e1e4ed', paddingTop: '18px' }}>
-              <div style={{ fontSize: '13px', fontWeight: '800', color: selected.correct ? '#1a7a3f' : '#a32f2f', marginBottom: '6px' }}>
-                {selected.correct ? '✓ Correct!' : '✕ Not quite'}
+
+          {/* Body -- same two-column layout as the real RIDLQuestion screen: bordered notice box
+              on the left, question + circular radio options on the right. */}
+          <div style={{ padding: isMobile ? '20px 16px 28px' : '32px 40px 40px', backgroundColor: '#fff' }}>
+            <div style={{ display: 'flex', gap: isMobile ? '20px' : '40px', alignItems: 'flex-start', ...(isMobile ? { flexDirection: 'column' } : {}) }}>
+              <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '360px', width: '100%' }}>
+                <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '16px 18px', boxSizing: 'border-box' }}>
+                  <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '10px', color: '#1a1a1a' }}>
+                    {noticeTitle}
+                  </div>
+                  <div style={{ fontSize: '14px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-line' }}>
+                    {noticeText}
+                  </div>
+                </div>
               </div>
-              <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '18px' }}>{explanation}</div>
-              <button type="button" onClick={onGetStarted} style={{ width: '100%', backgroundColor: purple, color: '#fff', border: 'none', borderRadius: '10px', padding: '13px', fontSize: '14px', fontWeight: '800', cursor: 'pointer' }}>
-                Get more questions free →
-              </button>
+              <div style={{ flex: 1, minWidth: 0, width: '100%', display: 'flex', flexDirection: 'column', gap: '18px' }}>
+                <div style={{ fontSize: isMobile ? '15px' : '17px', fontWeight: '700', color: '#1a1a1a', lineHeight: '1.5' }}>
+                  {question}
+                </div>
+                <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                  {options.map(opt => {
+                    const isPicked = selected?.key === opt.key
+                    const showResult = !!selected
+                    const isCorrectOpt = opt.correct
+                    let dotBorder = isPicked ? '#2ac56c' : '#c0c0c0'
+                    let textColor = '#1a1a1a'
+                    if (showResult) {
+                      if (isCorrectOpt) { dotBorder = '#2ac56c'; textColor = '#1a7a3f' }
+                      else if (isPicked) { dotBorder = '#d94040'; textColor = '#a32f2f' }
+                    }
+                    return (
+                      <div key={opt.key} role="radio" aria-checked={isPicked} tabIndex={0}
+                        onClick={() => pick(opt)}
+                        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(opt) } }}
+                        style={{ display: 'flex', alignItems: 'center', gap: '14px', cursor: selected ? 'default' : 'pointer', padding: '2px 0' }}>
+                        <span style={{ width: '20px', height: '20px', borderRadius: '50%', flexShrink: 0, border: isPicked ? `6px solid ${dotBorder}` : `1.5px solid ${dotBorder}`, background: '#fff', transition: 'all 0.1s' }} />
+                        <span style={{ fontSize: isMobile ? '14px' : '16px', lineHeight: '1.5', color: textColor, fontWeight: showResult && (isCorrectOpt || isPicked) ? '600' : '400' }}>
+                          {opt.text}
+                          {showResult && isCorrectOpt && <span style={{ fontSize: '11px', color: '#2ac56c', marginLeft: '8px', fontWeight: '700' }}>✓ correct</span>}
+                          {showResult && isPicked && !isCorrectOpt && <span style={{ fontSize: '11px', color: '#d94040', marginLeft: '8px', fontWeight: '700' }}>✗ your answer</span>}
+                        </span>
+                      </div>
+                    )
+                  })}
+                </div>
+
+                {selected && (
+                  <div style={{ borderTop: '1px solid #e1e4ed', paddingTop: '16px', marginTop: '2px' }}>
+                    <div style={{ fontSize: '13px', fontWeight: '800', color: selected.correct ? '#1a7a3f' : '#a32f2f', marginBottom: '6px' }}>
+                      {selected.correct ? '✓ Correct!' : '✕ Not quite'}
+                    </div>
+                    <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6' }}>{explanation}</div>
+                  </div>
+                )}
+              </div>
             </div>
-          )}
+          </div>
         </div>
+
+        {selected && (
+          <button type="button" onClick={onGetStarted} style={{ display: 'block', width: '100%', maxWidth: '420px', margin: '24px auto 0', backgroundColor: purple, color: '#fff', border: 'none', borderRadius: '10px', padding: '14px', fontSize: '14px', fontWeight: '800', cursor: 'pointer' }}>
+            Get more questions free →
+          </button>
+        )}
       </div>
     </div>
   )
