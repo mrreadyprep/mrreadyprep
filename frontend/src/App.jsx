@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef, useMemo, Component } from 'react'
-import { getUserGeo, getCurrencySymbol, getPricingTierForRegion } from './utils/geoDetect'
+import { useGeoPriceEstimate } from './utils/geoDetect'
 import ReviewsSection from './components/ReviewsSection'
 
 // ─── Full-screen exam shell (matches the official TOEFL iBT test-day UI) ─────
@@ -1239,6 +1239,12 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [showCancelConfirm, setShowCancelConfirm] = useState(false)
+  // "≈ local currency" line next to each USD price below, for visitors outside the US -- purely
+  // informational, since Polar's checkout (triggered by the Subscribe button further down) is
+  // always what actually charges the card, always in USD. See geoDetect.js for how this is
+  // derived and why it safely resolves to null (no extra line at all) rather than ever showing
+  // a wrong number.
+  const priceEstimate = useGeoPriceEstimate()
   // Guards the checkout.completed poll below against firing after this screen has unmounted --
   // see its own comment for why that matters. A plain ref (not state) since it's read inside
   // setTimeout callbacks that outlive any single render.
@@ -1483,12 +1489,17 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                 <div style={{
                   color: '#666',
                   fontSize: '12px',
-                  marginBottom: '12px'
+                  marginBottom: '4px'
                 }}>
                   ${(plan.price / parseInt(plan.duration)).toFixed(2)}/month
                 </div>
               )}
-              
+              {priceEstimate(plan.price) && (
+                <div style={{ color: '#9ca3af', fontSize: '11px', marginBottom: '12px' }}>
+                  {priceEstimate(plan.price)} · billed in USD
+                </div>
+              )}
+
               <div style={{ flex: 1, textAlign: 'left', marginBottom: '12px' }}>
                 {plan.features.map((feature, i) => (
                   <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '12px', color: '#374151', marginBottom: '8px', lineHeight: '1.3' }}>
@@ -10654,6 +10665,10 @@ function LiveDemoSection({ isMobile, purple, onGetStarted }) {
 function LandingPage({ onGetStarted, onLogIn }) {
   const isMobile = useIsMobile()
   const purple = '#701fa1'
+  // "≈ local currency" line next to the USD prices in the pricing teaser below, for visitors
+  // outside the US -- see geoDetect.js; resolves to null (no extra line) for US visitors or
+  // whenever geo/FX detection fails, never a wrong number.
+  const priceEstimate = useGeoPriceEstimate()
 
   const skills = [
     { icon: '📖', title: 'Reading', desc: 'Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback.', pill: 'Instant Right/Wrong Explanations', href: '/toefl-reading-practice/' },
@@ -10935,7 +10950,10 @@ function LandingPage({ onGetStarted, onLogIn }) {
                 <span style={{ fontSize: '14px', fontWeight: '600', color: '#9ca3af', textDecoration: 'line-through' }}>${plan.originalPrice}</span>
                 <span style={{ fontSize: '28px', fontWeight: '800', color: '#1a1a1a' }}>${plan.price}</span>
               </div>
-              <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '14px' }}>${(plan.price / parseInt(plan.duration)).toFixed(2)}/month</div>
+              <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: priceEstimate(plan.price) ? '2px' : '14px' }}>${(plan.price / parseInt(plan.duration)).toFixed(2)}/month</div>
+              {priceEstimate(plan.price) && (
+                <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '14px' }}>{priceEstimate(plan.price)} · billed in USD</div>
+              )}
               <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7', flex: 1 }}>Full question bank, all 20 full-length mock tests, and AI-based scoring for Writing and Speaking. Cancel anytime.</div>
             </div>
           ))}
@@ -11004,6 +11022,10 @@ function LandingPage({ onGetStarted, onLogIn }) {
 
 function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
   const isMobile = useIsMobile()
+  // "≈ local currency" line next to the USD prices in the "Plans after you sign up" table below
+  // -- see geoDetect.js; resolves to null (no extra line) for US visitors or whenever geo/FX
+  // detection fails, never a wrong number.
+  const priceEstimate = useGeoPriceEstimate()
   // 'login' | 'signup' | 'forgot' (request a reset link) | 'reset' (set a new password, reached
   // via the emailed link's ?reset_token=... query param)
   const [mode, setMode] = useState(initialMode || 'login')
@@ -11360,6 +11382,9 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
                     <span style={{ fontSize: '24px', fontWeight: '800', color: '#701fa1' }}>${plan.price}</span>
                   </div>
                   <div style={{ fontSize: '11px', color: '#9ca3af' }}>${(plan.price / parseInt(plan.duration)).toFixed(2)}/month</div>
+                  {priceEstimate(plan.price) && (
+                    <div style={{ fontSize: '11px', color: '#9ca3af' }}>{priceEstimate(plan.price)} · billed in USD</div>
+                  )}
                 </div>
                 <ul style={{ fontSize: '12px', color: '#616473', lineHeight: '1.8', paddingLeft: 0, listStyle: 'none', margin: 0 }}>
                   <li>✓ Unlimited practice</li>
