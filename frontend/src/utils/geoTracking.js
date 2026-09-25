@@ -10,7 +10,7 @@ export async function trackGeoEvent(eventType, userId, additionalData = {}) {
     const countryCode = geo.country;
 
     // Send to backend
-    const response = await fetch('https://mrreadyprep-api.onrender.com/api/events/track', {
+    const response = await fetch('https://api.mrreadyprep.com/api/events/track', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

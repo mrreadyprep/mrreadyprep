@@ -110,7 +110,7 @@
     (function() {
       var token = localStorage.getItem('mrreadyprep_token');
       if (!token) return;
-      fetch('https://mrreadyprep.onrender.com/api/subscription/status', {
+      fetch('https://api.mrreadyprep.com/api/subscription/status', {
         headers: { 'Authorization': 'Bearer ' + token }
       }).then(function(r) { return r.ok ? r.json() : null; })
         .then(function(data) {
