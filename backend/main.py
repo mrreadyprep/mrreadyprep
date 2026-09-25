@@ -266,6 +266,12 @@ RESEND_FROM_EMAIL = os.environ.get("RESEND_FROM_EMAIL", "mrreadyprep <onboarding
 # X-Cron-Secret header instead. Leave unset to keep the endpoint disabled (returns 503).
 PRACTICE_REMINDER_CRON_SECRET = os.environ.get("PRACTICE_REMINDER_CRON_SECRET", "")
 
+# Same pattern as PRACTICE_REMINDER_CRON_SECRET above, for the separate onboarding "nurture"
+# sequence (see /api/cron/nurture-emails below) -- a distinct secret rather than reusing the
+# practice-reminder one so either cron can be rotated or disabled independently. Leave unset to
+# keep the endpoint disabled (returns 503).
+NURTURE_EMAIL_CRON_SECRET = os.environ.get("NURTURE_EMAIL_CRON_SECRET", "")
+
 # From console.anthropic.com. Powers the AI Tutor Chat sidebar (see /api/ai-tutor/chat below).
 # Leave blank to disable the feature entirely -- the endpoint then returns 503 rather than
 # silently failing per-request, and the frontend hides the AI Tutor nav item when a 503 comes
@@ -1411,6 +1417,18 @@ def init_db():
     # ~24h window even if it's triggered more than once.
     if not _has_column(conn, "users", "last_reminder_sent_at"):
         conn.execute("ALTER TABLE users ADD COLUMN last_reminder_sent_at TIMESTAMP")
+    # Onboarding "nurture" email sequence (see /api/cron/nurture-emails and NURTURE_SEQUENCE):
+    # nurture_step_sent counts how many of the sequence's steps this student has already received
+    # (0 = none yet, len(NURTURE_SEQUENCE) = fully sent), last_nurture_sent_at gates a cron run
+    # from double-sending within the same day the same way last_reminder_sent_at does above, and
+    # nurture_unsubscribed lets a student opt out of just this marketing sequence without
+    # affecting transactional email (password reset, verification) or the practice-reminder cron.
+    if not _has_column(conn, "users", "nurture_step_sent"):
+        conn.execute("ALTER TABLE users ADD COLUMN nurture_step_sent INTEGER NOT NULL DEFAULT 0")
+    if not _has_column(conn, "users", "last_nurture_sent_at"):
+        conn.execute("ALTER TABLE users ADD COLUMN last_nurture_sent_at TIMESTAMP")
+    if not _has_column(conn, "users", "nurture_unsubscribed"):
+        conn.execute("ALTER TABLE users ADD COLUMN nurture_unsubscribed INTEGER NOT NULL DEFAULT 0")
     # Embedded in every JWT this backend issues (see create_access_token) and re-checked on every
     # authenticated request (see get_current_user). Bumped by reset_password() so a JWT issued
     # before a password reset -- e.g. one stolen via a compromised device, or a leaked token --
@@ -2105,6 +2123,226 @@ def send_practice_reminders(x_cron_secret: Optional[str] = Header(None, alias="X
             conn.close()
 
     return {"status": "ok", "reminders_sent": len(sent_ids), "reminders_failed": failed}
+
+# ─── Onboarding "nurture" email sequence (Resend) ──────────────────────────────
+# A short, fixed sequence of onboarding emails sent once per verified student, spaced out by
+# real elapsed days since signup (created_at) rather than by calendar-day cron ticks, so a
+# student who signs up mid-sequence-window still gets each step at roughly the right offset.
+# Deliberately NOT a generic campaign-builder / arbitrary-template system (see the retired
+# email_service.py/referral_system.py/extensions_routes.py for that abandoned, never-deployed,
+# wrong-framework attempt -- those used Flask Blueprints and SendGrid, neither of which this
+# FastAPI + Resend backend actually runs) -- just the four fixed steps below, each sent exactly
+# once, tracked by the nurture_step_sent counter migrated above.
+NURTURE_SEQUENCE_DAYS = [0, 2, 5, 10]  # days-since-signup each step becomes eligible
+
+def _nurture_unsubscribe_token(user_id: int) -> str:
+    """Deterministic, unforgeable-without-JWT_SECRET_KEY token -- no separate DB-stored token
+    needed (unlike verification_token/password_reset_token, which must be single-use and
+    revocable), since unsubscribing is idempotent and never expires. Same HMAC approach as
+    _hash_verification_token, different purpose string so the two token spaces can never collide."""
+    return hmac.new(
+        JWT_SECRET_KEY.encode("utf-8"),
+        f"nurture-unsub:{user_id}".encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
+
+def _nurture_unsubscribe_link(user_id: int) -> str:
+    token = _nurture_unsubscribe_token(user_id)
+    return f"{FRONTEND_PUBLIC_URL.rstrip('/')}/api/nurture/unsubscribe?user_id={user_id}&token={token}"
+
+def _nurture_footer(user_id: int) -> str:
+    return (
+        f"<p style=\"color:#9ca3af;font-size:12px;margin-top:24px;\">You're receiving this "
+        f"because you created an mrreadyprep account. "
+        f"<a href=\"{_nurture_unsubscribe_link(user_id)}\" style=\"color:#9ca3af;\">Unsubscribe from these emails</a> "
+        f"-- this won't affect password-reset or account-security emails.</p>"
+    )
+
+def send_nurture_welcome_email(to_email: str, username: str, user_id: int) -> bool:
+    name = _html.escape(username) if username else "there"
+    return _send_transactional_email(
+        to_email,
+        "Welcome to mrreadyprep — here's how to get started",
+        f"<p>Hi {name},</p>"
+        f"<p>Your mrreadyprep account is ready. You've got free access to Reading, Listening, "
+        f"Writing, and Speaking practice for the 2026 TOEFL iBT format, with instant AI feedback "
+        f"scored on the same 0&ndash;6.0 scale as your real score report.</p>"
+        f"<p><a href=\"{FRONTEND_PUBLIC_URL}\">Open mrreadyprep and try your first exercise</a></p>"
+        f"<p>Over the next couple of weeks we'll send a few short, practical tips -- nothing long, "
+        f"just the kind of thing that actually moves a score.</p>"
+        + _nurture_footer(user_id),
+        "nurture welcome",
+    )
+
+def send_nurture_reading_tip_email(to_email: str, username: str, user_id: int) -> bool:
+    name = _html.escape(username) if username else "there"
+    return _send_transactional_email(
+        to_email,
+        "A quick TOEFL Reading tip",
+        f"<p>Hi {name},</p>"
+        f"<p><strong>Vocabulary-in-context questions are the ones most students get wrong for an "
+        f"avoidable reason:</strong> picking the dictionary definition they already know, instead "
+        f"of the meaning that actually fits the sentence. Reread the sentence with each answer "
+        f"choice substituted in -- the one that keeps the sentence's meaning and tone intact is "
+        f"correct, even when it's not the definition you'd expect.</p>"
+        f"<p><a href=\"{FRONTEND_PUBLIC_URL}/blog/toefl-reading-strategy-guide.html\">Read the full Reading strategy guide</a> "
+        f"or <a href=\"{FRONTEND_PUBLIC_URL}/toefl-reading-practice/\">jump straight into Reading practice</a>.</p>"
+        + _nurture_footer(user_id),
+        "nurture reading tip",
+    )
+
+def send_nurture_writing_tip_email(to_email: str, username: str, user_id: int) -> bool:
+    name = _html.escape(username) if username else "there"
+    return _send_transactional_email(
+        to_email,
+        "The habit that raises TOEFL Writing scores fastest",
+        f"<p>Hi {name},</p>"
+        f"<p><strong>Plan for 20&ndash;30 seconds before you start typing.</strong> Knowing your "
+        f"2&ndash;3 main points before you begin keeps a response from wandering or running out of "
+        f"ideas halfway through -- and a shorter response where every point is actually developed "
+        f"scores better than a longer one that just lists ideas. One more: proofread your last two "
+        f"sentences specifically before submitting -- that's where rushed, careless errors usually "
+        f"show up.</p>"
+        f"<p><a href=\"{FRONTEND_PUBLIC_URL}/blog/toefl-writing-overview-guide.html\">Read the full Writing guide</a> "
+        f"or <a href=\"{FRONTEND_PUBLIC_URL}/toefl-writing-practice/\">try a Writing task now</a>.</p>"
+        + _nurture_footer(user_id),
+        "nurture writing tip",
+    )
+
+def send_nurture_upgrade_nudge_email(to_email: str, username: str, user_id: int) -> bool:
+    name = _html.escape(username) if username else "there"
+    return _send_transactional_email(
+        to_email,
+        "How premium plans work on mrreadyprep",
+        f"<p>Hi {name},</p>"
+        f"<p>You've had free access to practice by task type for a little while now -- premium adds "
+        f"the 20 full-length mock tests (each timed like the real exam) and the full itemized AI "
+        f"feedback breakdown by grammar, vocabulary, organization, and development, for every "
+        f"section.</p>"
+        f"<p>Plans start at $25/month, with 50% off automatically applied to your first month. "
+        f"Cancel anytime from your account settings, no support ticket needed.</p>"
+        f"<p><a href=\"{FRONTEND_PUBLIC_URL}/pricing.html\">See pricing</a></p>"
+        + _nurture_footer(user_id),
+        "nurture upgrade nudge",
+    )
+
+NURTURE_SEND_FUNCTIONS = [
+    send_nurture_welcome_email,
+    send_nurture_reading_tip_email,
+    send_nurture_writing_tip_email,
+    send_nurture_upgrade_nudge_email,
+]
+
+@app.get("/api/nurture/unsubscribe")
+def nurture_unsubscribe(user_id: int, token: str):
+    """One-click unsubscribe link, clicked directly from an email -- deliberately a GET with no
+    login required (a logged-out email client following a link has no session to present), and
+    deliberately returns a plain HTML page rather than JSON, since a person clicking it in their
+    email client expects a page, not raw JSON. Verified via the same HMAC scheme as
+    _nurture_unsubscribe_token rather than a login-gated endpoint, so the link keeps working even
+    if the student is signed out or the email is years old."""
+    expected = _nurture_unsubscribe_token(user_id)
+    if not hmac.compare_digest(token, expected):
+        return Response(content="<p>This unsubscribe link is invalid.</p>", media_type="text/html", status_code=400)
+    conn = get_db()
+    try:
+        conn.execute("UPDATE users SET nurture_unsubscribed = 1 WHERE id = ?", (user_id,))
+        conn.commit()
+    finally:
+        conn.close()
+    return Response(
+        content=(
+            "<html><body style=\"font-family:-apple-system,sans-serif;text-align:center;padding:60px 20px;\">"
+            "<h2>You've been unsubscribed</h2>"
+            "<p>You won't receive any more onboarding emails from mrreadyprep. "
+            "This doesn't affect password-reset or account-security emails.</p>"
+            f"<p><a href=\"{FRONTEND_PUBLIC_URL}\" style=\"color:#701fa1;\">Back to mrreadyprep</a></p>"
+            "</body></html>"
+        ),
+        media_type="text/html",
+    )
+
+@app.post("/api/cron/nurture-emails")
+def send_nurture_emails(x_cron_secret: Optional[str] = Header(None, alias="X-Cron-Secret")):
+    """Triggered by an external scheduler (e.g. a Render Cron Job running once a day), same
+    auth/disable pattern as /api/cron/practice-reminders above (see its docstring). Sends each
+    verified, non-unsubscribed student the next NURTURE_SEQUENCE_DAYS step they're due for, based
+    on real elapsed days since created_at -- not "N calendar cron-ticks since signup" -- so a
+    student who signs up between two cron runs still lands close to the intended day offset
+    rather than drifting by up to a full cron interval."""
+    if not NURTURE_EMAIL_CRON_SECRET:
+        raise HTTPException(status_code=503, detail="Nurture emails are not configured (NURTURE_EMAIL_CRON_SECRET unset)")
+    if not x_cron_secret or not hmac.compare_digest(x_cron_secret, NURTURE_EMAIL_CRON_SECRET):
+        raise HTTPException(status_code=403, detail="Invalid cron secret")
+
+    now = datetime.now(timezone.utc)
+
+    def _cutoff(days: int) -> str:
+        dt = now - timedelta(days=days)
+        return dt.isoformat() if DATABASE_URL else dt.strftime("%Y-%m-%d %H:%M:%S")
+
+    now_str = _cutoff(0)
+    # 24h gate on last_nurture_sent_at, same purpose as practice-reminders' identical gate:
+    # nurture_step_sent is the real, authoritative progress counter, but this is a belt-and-
+    # suspenders guard against a cron accidentally triggered twice in quick succession sending
+    # the same step twice before the first run's UPDATE has been read by the second.
+    gate_cutoff = (now - timedelta(hours=24)).isoformat() if DATABASE_URL else (now - timedelta(hours=24)).strftime("%Y-%m-%d %H:%M:%S")
+    step_cutoffs = [_cutoff(d) for d in NURTURE_SEQUENCE_DAYS]
+
+    conn = get_db()
+    try:
+        # Capped at 200/run for the same reason as practice-reminders above. nurture_step_sent
+        # selects which step (if any) each row is even eligible for; the matching days-offset
+        # cutoff for that specific step is applied via one OR-branch per fixed step (there are
+        # only four, so this is easier to read/debug than an equivalent CASE expression).
+        rows = conn.execute(f"""
+            SELECT id, email, username, nurture_step_sent FROM users u
+            WHERE u.email_verified = 1
+              AND u.nurture_unsubscribed = 0
+              AND u.nurture_step_sent < {len(NURTURE_SEQUENCE_DAYS)}
+              AND (u.last_nurture_sent_at IS NULL OR u.last_nurture_sent_at < ?)
+              AND (
+                (u.nurture_step_sent = 0 AND u.created_at <= ?) OR
+                (u.nurture_step_sent = 1 AND u.created_at <= ?) OR
+                (u.nurture_step_sent = 2 AND u.created_at <= ?) OR
+                (u.nurture_step_sent = 3 AND u.created_at <= ?)
+            )
+            ORDER BY u.id
+            LIMIT 200
+        """, (gate_cutoff, *step_cutoffs)).fetchall()
+        rows = [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+    # Connection closed before the send loop for the same reason as practice-reminders above --
+    # up to 200 sequential blocking Resend calls must not pin a pooled DB connection the whole
+    # time. Successful sends are batched back in one UPDATE per resulting step value afterward.
+    updates_by_new_step: dict = {}
+    failed = 0
+    for row in rows:
+        step_idx = row["nurture_step_sent"]
+        send_fn = NURTURE_SEND_FUNCTIONS[step_idx]
+        if send_fn(row["email"], row["username"], row["id"]):
+            updates_by_new_step.setdefault(step_idx + 1, []).append(row["id"])
+        else:
+            failed += 1
+
+    sent_count = sum(len(ids) for ids in updates_by_new_step.values())
+    if updates_by_new_step:
+        conn = get_db()
+        try:
+            for new_step, ids in updates_by_new_step.items():
+                placeholders = ", ".join(["?"] * len(ids))
+                conn.execute(
+                    f"UPDATE users SET nurture_step_sent = ?, last_nurture_sent_at = ? WHERE id IN ({placeholders})",
+                    [new_step, now_str, *ids],
+                )
+            conn.commit()
+        finally:
+            conn.close()
+
+    return {"status": "ok", "emails_sent": sent_count, "emails_failed": failed}
+
 
 def compute_streak_and_week_activity(conn, user_id: int):
     """Looks at every attempt_results/ridl_results row's saved_at date for this user to compute
