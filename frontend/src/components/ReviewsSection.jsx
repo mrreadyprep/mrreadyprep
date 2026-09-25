@@ -286,6 +286,10 @@ export default function ReviewsSection({ onOpenAuth }) {
             if (hasToken) {
               setShowReviewModal(true);
             } else {
+              // Remember that this visitor wanted to leave a review, so the dashboard can pick
+              // up right where they left off once they finish signing up / logging in -- without
+              // this, they land on the normal Dashboard after auth with no way back to this form.
+              try { localStorage.setItem('mrreadyprep_pending_review', 'all_sections'); } catch { /* ignore */ }
               if (onOpenAuth) {
                 onOpenAuth();
               }

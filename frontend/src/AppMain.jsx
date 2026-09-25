@@ -10,6 +10,7 @@
 // it to the `export { ... }` list near the bottom of App.jsx and import it below instead.
 import { useEffect, useState, useRef, useMemo } from 'react'
 import { useGeoPriceEstimate } from './utils/geoDetect'
+import PostTestReview from './components/PostTestReview'
 import { AUTH_TOKEN_KEY, BACKEND_URL, DRAFT_KEY_PREFIX, _exitGuardCount, _exitGuardListeners, _popExitGuard, _pushExitGuard, apiFetch, clearAllDrafts, clearAuthToken, extractErrorMessage, getAuthToken, sessionExpiredHandled, showToast, trackPixelEvent, useExitGuardActive, useIsMobile } from './App'
 
 
@@ -10941,6 +10942,23 @@ function App({ justSignedUp }) {
   // returning students. Not tied to justSignedUp: unlike onboarding this can be taken more than
   // once, so it's just a plain toggle rather than a one-time flag.
   const [showDiagnostic, setShowDiagnostic] = useState(false)
+  // Picks up the "Share Your Success Story" intent a logged-out visitor left on the landing
+  // page (see ReviewsSection.jsx) -- they clicked the button, got sent through signup/login,
+  // and would otherwise land on the ordinary Dashboard with no way back to the review form they
+  // actually came here for. Checked once on mount; the flag is a one-shot, consumed immediately
+  // whether or not the modal is actually shown, so it never re-fires on a later normal visit.
+  const [showPendingReview, setShowPendingReview] = useState(false)
+  const [pendingReviewCourse, setPendingReviewCourse] = useState('all_sections')
+  useEffect(() => {
+    try {
+      const pending = localStorage.getItem('mrreadyprep_pending_review')
+      if (pending) {
+        localStorage.removeItem('mrreadyprep_pending_review')
+        setPendingReviewCourse(pending)
+        setShowPendingReview(true)
+      }
+    } catch { /* ignore */ }
+  }, [])
   // Hides the AI Tutor nav item entirely when the backend has no ANTHROPIC_API_KEY configured
   // (see get_ai_tutor_status in main.py) -- false until the check resolves true, so the item
   // never flashes in then out on a page load where the feature turns out to be off.
@@ -11972,6 +11990,12 @@ function App({ justSignedUp }) {
           onCancel={() => setPendingTab(null)}
         />
       )}
+
+      <PostTestReview
+        isOpen={showPendingReview}
+        onClose={() => setShowPendingReview(false)}
+        courseType={pendingReviewCourse}
+      />
     </div>
   )
 }
