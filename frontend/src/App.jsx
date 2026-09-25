@@ -1323,23 +1323,6 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
           </div>
         </div>
 
-        {/* Sample Question Demo (Quick Flavor) */}
-        <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '24px', marginTop: '14px', boxSizing: 'border-box' }}>
-          <div style={{ textAlign: 'center', marginBottom: '16px' }}>
-            <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a', marginBottom: '4px' }}>Try a sample question</div>
-            <div style={{ fontSize: '12px', color: '#9ca3af' }}>No login required</div>
-          </div>
-          <div style={{ backgroundColor: '#f9fafb', border: '1px solid #e1e4ed', borderRadius: '10px', padding: '12px', marginBottom: '12px' }}>
-            <div style={{ fontSize: '12px', color: '#616473', lineHeight: '1.6', marginBottom: '8px' }}>
-              <strong>Reading:</strong> Which word is closest in meaning to <em>"expedite"</em>?
-            </div>
-            <div style={{ fontSize: '12px', color: '#616473', marginBottom: '6px', paddingLeft: '12px', borderLeft: '3px solid #701fa1' }}>
-              A) Slow down &nbsp; B) <strong style={{ color: '#2ac56c' }}>Speed up</strong> &nbsp; C) Explore &nbsp; D) Verify
-            </div>
-          </div>
-          <button onClick={() => { alert('Explore the full app with dozens more practice questions ready to solve!') }} style={{ width: '100%', backgroundColor: '#11162d', color: '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>See More Samples</button>
-        </div>
-
         <div style={{ textAlign: 'center', marginTop: '18px', display: 'flex', justifyContent: 'center', gap: '8px', flexWrap: 'wrap' }}>
           {[{ href: '/toefl-practice-tests/', label: 'Practice Tests' }, { href: '/toefl-mock-tests/', label: 'Mock Tests' }, { href: '/blog/', label: 'Blog' }, { href: '/terms.html', label: 'Terms of Service' }, { href: '/privacy.html', label: 'Privacy Policy' }, { href: '/terms.html#refund-policy', label: 'Refund Policy' }].map(link => (
             <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer"
