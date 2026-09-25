@@ -8,6 +8,15 @@
     <meta name="description" content="Practice for the TOEFL® iBT with realistic Reading, Listening, Speaking and Writing exercises and full-length mock tests. Free, instant feedback, track your progress." />
     <link rel="canonical" href="https://mrreadyprep.com/" />
 
+    <!-- Core Web Vitals: warm up the DNS/TLS connection to the API origin before the JS bundle
+         even starts fetching from it -- ReviewsSection (below the fold, but still one of the
+         first fetches the app makes) and the auth flow both hit api.mrreadyprep.com immediately
+         on mount. Without this the browser only discovers that origin once it parses/executes
+         the bundle and issues the first fetch(), paying DNS+TCP+TLS setup cost on the critical
+         path of that request instead of in parallel with page load. -->
+    <link rel="preconnect" href="https://api.mrreadyprep.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.mrreadyprep.com" />
+
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="mrreadyprep" />
     <meta property="og:title" content="mrreadyprep — TOEFL® iBT Practice & Full Mock Tests" />

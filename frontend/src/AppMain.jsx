@@ -2186,6 +2186,8 @@ function SpeakerAvatar({ gender, seed = 0, width = 340, height = 640 }) {
       <img
         src={localSrc}
         alt={isFemale ? 'Female speaker' : 'Male speaker'}
+        loading="lazy"
+        decoding="async"
         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%', display: 'block' }}
         onError={(e) => { e.target.onerror = null; e.target.src = fallbackSrc }}
       />
@@ -2363,6 +2365,8 @@ function RealPersonAvatar({ gender, seed = 0, width = 220, height = 220, mode = 
         <img
           src={src}
           alt=""
+          loading="lazy"
+          decoding="async"
           onError={() => setImgFailed(true)}
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />
@@ -2394,6 +2398,8 @@ function ConversationPhoto({ seed = 0, width = 640, height = 380 }) {
       <img
         src={src}
         alt="Two people having a conversation"
+        loading="lazy"
+        decoding="async"
         style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 30%', display: 'block' }}
       />
       {/* Fade the photo's edges into the page background so it doesn't look like a pasted-in rectangle */}
@@ -6544,6 +6550,8 @@ function TopicPhoto({ icon, label, photoSlug, photoUrl, width = 140, height = 14
         <img
           src={currentSrc}
           alt={label || 'topic'}
+          loading="lazy"
+          decoding="async"
           onError={() => setStage(prev => (prev === 'local' && photoUrl ? 'remote' : 'emoji'))}
           style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
         />

@@ -7,7 +7,11 @@ import { useEffect, useState, useRef, useMemo, Component, lazy, Suspense } from 
 const LazyApp = lazy(() => import('./AppMain'))
 import { useGeoPriceEstimate } from './utils/geoDetect'
 import { trackSignup, trackPremiumConversion, trackTestCompletion } from './utils/geoTracking'
-import ReviewsSection from './components/ReviewsSection'
+// Below-the-fold on the landing page and does two fetches (stats + reviews) the moment it
+// mounts -- lazy + gated on IntersectionObserver (see the `reviewsInView` logic in
+// LandingPage below) so neither its code chunk nor its network calls happen until a visitor
+// actually scrolls near it, instead of racing the hero/above-the-fold content for bandwidth.
+const ReviewsSection = lazy(() => import('./components/ReviewsSection'))
 
 // ─── In-progress answer drafts (solo practice only) ───────────────────────────
 // "Save & Exit" used to just exit immediately, discarding whatever the student had typed so
@@ -649,6 +653,30 @@ function LandingPage({ onGetStarted, onLogIn, onOpenAuth }) {
     return () => { cancelled = true }
   }, [])
 
+  // Core Web Vitals: ReviewsSection is entirely below the fold but, being an eager import
+  // before this change, its code + two network fetches (stats, list) used to load and fire the
+  // instant a logged-out visitor landed on this page -- competing with the hero/skills content
+  // above the fold for bandwidth and main-thread time on the very request that matters most for
+  // LCP (the first-time, organic-search visit). Deferred until the section is ~200px from
+  // entering the viewport instead, via IntersectionObserver on a placeholder div; falls open
+  // immediately in the (very rare) case IntersectionObserver isn't available at all.
+  const [reviewsInView, setReviewsInView] = useState(false)
+  const reviewsAnchorRef = useRef(null)
+  useEffect(() => {
+    if (typeof IntersectionObserver === 'undefined') { setReviewsInView(true); return }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setReviewsInView(true)
+          observer.disconnect()
+        }
+      },
+      { rootMargin: '200px' }
+    )
+    if (reviewsAnchorRef.current) observer.observe(reviewsAnchorRef.current)
+    return () => observer.disconnect()
+  }, [])
+
   return (
     <div style={{ width: '100%', minHeight: '100vh', overflowY: 'auto', fontFamily: 'sans-serif', backgroundColor: '#fff' }}>
       {/* Top nav. The Skills/Pricing/FAQ links are plain same-page anchors (#skills etc. --
@@ -914,7 +942,15 @@ function LandingPage({ onGetStarted, onLogIn, onOpenAuth }) {
         </div>
       </div>
 
-      <ReviewsSection onOpenAuth={onOpenAuth} />
+      <div ref={reviewsAnchorRef}>
+        {reviewsInView ? (
+          <Suspense fallback={<div style={{ minHeight: '420px', backgroundColor: '#f9fafb' }} />}>
+            <ReviewsSection onOpenAuth={onOpenAuth} />
+          </Suspense>
+        ) : (
+          <div style={{ minHeight: '420px', backgroundColor: '#f9fafb' }} />
+        )}
+      </div>
 
       {/* Final CTA */}
       <div style={{ backgroundColor: '#11162d', padding: isMobile ? '44px 20px' : '56px 40px', textAlign: 'center' }}>
