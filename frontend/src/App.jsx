@@ -4,7 +4,7 @@ import { useEffect, useState, useRef, useMemo, Component, lazy, Suspense } from 
 // visitor actually logs in. Before this split, an anonymous landing-page visitor downloaded and
 // parsed all of that too, just to see the marketing page -- this is what shrinks that initial
 // bundle. See AppMain.jsx's own header comment for the split boundary / how to keep it in sync.
-const App = lazy(() => import('./AppMain'))
+const LazyApp = lazy(() => import('./AppMain'))
 import { useGeoPriceEstimate } from './utils/geoDetect'
 import { trackSignup, trackPremiumConversion, trackTestCompletion } from './utils/geoTracking'
 import ReviewsSection from './components/ReviewsSection'
@@ -1478,14 +1478,20 @@ function AuthGate() {
       )}
       {authState === 'in' && (
         <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />}>
-          <App justSignedUp={justSignedUp} />
+          <LazyApp justSignedUp={justSignedUp} />
         </Suspense>
       )}
     </>
   )
 }
 
-function AppWithErrorBoundary() {
+// NOTE: declared directly as `export default function ...` (rather than a separate
+// `export default AppWithErrorBoundary` statement below) -- with App.jsx and AppMain.jsx
+// importing from each other (App.jsx lazy-loads AppMain.jsx; AppMain.jsx statically imports
+// shared helpers back from App.jsx), Rollup's bundler mis-compiled the indirect default-export
+// binding into a bogus double call (`AppWithErrorBoundary()()`) that crashed the app on load in
+// production. Exporting the function declaration directly sidesteps that.
+export default function AppWithErrorBoundary() {
   return (
     <ExamErrorBoundary>
       <AuthGate />
@@ -1498,8 +1504,6 @@ function AppWithErrorBoundary() {
 // the public landing/auth screens above and the logged-in app, so they stay here and get
 // imported by name rather than duplicated in both files.
 export { AUTH_TOKEN_KEY, BACKEND_URL, DRAFT_KEY_PREFIX, _exitGuardCount, _exitGuardListeners, _popExitGuard, _pushExitGuard, apiFetch, clearAllDrafts, clearAuthToken, extractErrorMessage, getAuthToken, sessionExpiredHandled, showToast, trackPixelEvent, useExitGuardActive, useIsMobile }
-
-export default AppWithErrorBoundary
 
 // ─────────────────────────────────────────────────────────────────────────────
 // 🌍 GA4 + GEO ANALYTICS TRACKING
