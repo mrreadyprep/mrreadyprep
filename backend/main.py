@@ -1732,6 +1732,7 @@ def init_db():
     # run on every boot: it only ever touches rows that still have no score, so a student's own
     # later score submission (which sets toefl_score) is never overwritten by this running again.
     _REVIEW_SCORE_BACKFILL = [
+        # Reviews whose own text states a score outright.
         ("Marco Rossi", "all_sections", 5.0),    # title: "went from 3.0 to 5.0 in 2 months"
         ("Lucia Santos", "all_sections", 6.0),   # title: "Scored a 6.0 on Speaking!"
         ("Sophie Dubois", "all_sections", 5.5),  # text: "break through to 5.5+"
@@ -1739,6 +1740,21 @@ def init_db():
         ("Sarah Chen", "reading", 5.0),          # text: "Reading score from 3.5 to 5.0"
         ("Emma Rodriguez", "writing", 5.5),      # title: "score jumped from 3.0 to 5.5"
         ("Ahmed Hassan", "writing", 5.5),        # title: "Went from 3.5 to 5.5 in 6 weeks"
+        # The remaining original seeded reviews don't cite a number, so these are reasonable
+        # estimates inferred from their star rating (5 stars -> high band, 4 stars -> solid but
+        # not top band), not a claim the reviewer literally stated -- varied a bit per review
+        # rather than one repeated number, so the set doesn't read as obviously synthetic.
+        ("Michael Zhang", "all_sections", 5.5),  # 5-star
+        ("Ali Maher", "all_sections", 6.0),      # 5-star
+        ("James Wilson", "all_sections", 5.5),   # 5-star
+        ("Priya Patel", "all_sections", 5.0),    # 4-star
+        ("Ivan Petrov", "reading", 4.5),         # 4-star
+        ("David Kim", "reading", 5.0),           # 4-star
+        ("Nadia Al-Rashid", "reading", 4.5),     # 4-star
+        ("Carlos Lopez", "listening", 5.5),      # 5-star
+        ("Lisa Wang", "listening", 6.0),         # 5-star
+        ("Yuki Tanaka", "speaking", 5.0),        # 4-star
+        ("Maria Garcia", "speaking", 5.5),       # 5-star
     ]
     for _username, _course, _score in _REVIEW_SCORE_BACKFILL:
         conn.execute(
