@@ -340,7 +340,7 @@ export default function PostTestReview({ isOpen, onClose, courseType = 'all_sect
                   onChange={(e) => setToeflScore(e.target.value)}
                 >
                   <option value="">Prefer not to say</option>
-                  {Array.from({ length: 13 }, (_, i) => (i * 0.5).toFixed(1)).map((score) => (
+                  {Array.from({ length: 13 }, (_, i) => (6 - i * 0.5).toFixed(1)).map((score) => (
                     <option key={score} value={score}>{score} / 6.0</option>
                   ))}
                 </select>

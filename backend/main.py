@@ -1725,6 +1725,27 @@ def init_db():
     if not _has_column(conn, "user_reviews", "toefl_score"):
         conn.execute("ALTER TABLE user_reviews ADD COLUMN toefl_score REAL")
 
+    # One-time backfill: a handful of the original seeded reviews (seed_reviews.py) explicitly
+    # state a score in their own text (e.g. Marco Rossi's title literally says "went from 3.0 to
+    # 5.0") but predate the toefl_score column above, so they'd otherwise show no score badge on
+    # the landing page despite clearly reporting one. WHERE toefl_score IS NULL makes this safe to
+    # run on every boot: it only ever touches rows that still have no score, so a student's own
+    # later score submission (which sets toefl_score) is never overwritten by this running again.
+    _REVIEW_SCORE_BACKFILL = [
+        ("Marco Rossi", "all_sections", 5.0),    # title: "went from 3.0 to 5.0 in 2 months"
+        ("Lucia Santos", "all_sections", 6.0),   # title: "Scored a 6.0 on Speaking!"
+        ("Sophie Dubois", "all_sections", 5.5),  # text: "break through to 5.5+"
+        ("Aisha Mohamed", "all_sections", 5.0),  # text: "Needed a 5.0+ ... delivered"
+        ("Sarah Chen", "reading", 5.0),          # text: "Reading score from 3.5 to 5.0"
+        ("Emma Rodriguez", "writing", 5.5),      # title: "score jumped from 3.0 to 5.5"
+        ("Ahmed Hassan", "writing", 5.5),        # title: "Went from 3.5 to 5.5 in 6 weeks"
+    ]
+    for _username, _course, _score in _REVIEW_SCORE_BACKFILL:
+        conn.execute(
+            "UPDATE user_reviews SET toefl_score = ? WHERE username = ? AND course = ? AND toefl_score IS NULL",
+            (_score, _username, _course),
+        )
+
     conn.commit()
     conn.close()
 
