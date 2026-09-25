@@ -1,0 +1,51 @@
+python3 << 'PYEOF'
+import os
+import psycopg2
+
+conn = psycopg2.connect(dsn=os.environ["DATABASE_URL"])
+cur = conn.cursor()
+
+updates = [
+    ("Sarah Chen", "reading",
+     "The daily practice drills and detailed feedback helped me improve my Reading score from 3.5 to 5.0 in just 3 weeks. The AI feedback on my answers was incredibly specific and actionable. Worth every penny!",
+     None),
+    ("Emma Rodriguez", "writing",
+     None,
+     "My Writing score jumped from 3.0 to 5.5"),
+    ("Marco Rossi", "all_sections",
+     None,
+     "My scores went from 3.0 to 5.0 in 2 months"),
+    ("Sophie Dubois", "all_sections",
+     "I was stuck around a 4.0 average for months. This platform's systematic approach helped me break through to 5.5+",
+     None),
+    ("Aisha Mohamed", "all_sections",
+     "Needed a 5.0+ average for grad school. This platform delivered. The vocabulary section alone is worth it.",
+     None),
+    ("Lucia Santos", "all_sections",
+     None,
+     "Scored a 6.0 on Speaking! Thank you!"),
+]
+
+updated = 0
+for username, course, review_text, title in updates:
+    sets = []
+    params = []
+    if review_text is not None:
+        sets.append("review_text = %s")
+        params.append(review_text)
+    if title is not None:
+        sets.append("title = %s")
+        params.append(title)
+    params.extend([username, course])
+    cur.execute(
+        f"UPDATE user_reviews SET {', '.join(sets)} WHERE username = %s AND course = %s",
+        params,
+    )
+    print(f"{username} ({course}): {cur.rowcount} row(s) updated")
+    updated += cur.rowcount
+
+conn.commit()
+cur.close()
+conn.close()
+print(f"Done -- {updated} reviews updated to the 0-6.0 scale.")
+PYEOF

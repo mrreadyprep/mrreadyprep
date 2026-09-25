@@ -1,0 +1,225 @@
+import os
+import pathlib
+import sqlite3
+from datetime import datetime, timedelta
+import random
+
+# Sample review data - 18 diverse reviews
+SAMPLE_REVIEWS = [
+    {
+        "username": "Sarah Chen",
+        "rating": 5,
+        "title": "Incredible help with Reading section!",
+        "review_text": "The daily practice drills and detailed feedback helped me improve from 22 to 28 in just 3 weeks. The AI feedback on my answers was incredibly specific and actionable. Worth every penny!",
+        "course": "reading"
+    },
+    {
+        "username": "Ali Maher",
+        "rating": 5,
+        "title": "Best TOEFL prep platform I've used",
+        "review_text": "Comprehensive, well-structured, and the AI feedback on Writing/Speaking is incredibly detailed and helpful. This platform is a game-changer for serious test takers.",
+        "course": "all_sections"
+    },
+    {
+        "username": "Emma Rodriguez",
+        "rating": 5,
+        "title": "My writing score jumped 5 points",
+        "review_text": "The AI feedback on my essays was so specific and actionable. Definitely worth the investment. I can see exactly where to improve.",
+        "course": "writing"
+    },
+    {
+        "username": "Yuki Tanaka",
+        "rating": 4,
+        "title": "Great speaking practice with instant feedback",
+        "review_text": "The speaking section has really helped me get more comfortable with test-day conditions. AI scoring is fair and detailed.",
+        "course": "speaking"
+    },
+    {
+        "username": "Marco Rossi",
+        "rating": 5,
+        "title": "From 85 to 102 in 2 months",
+        "review_text": "I was skeptical about online prep, but this platform exceeded my expectations. The structured approach and AI feedback made all the difference.",
+        "course": "all_sections"
+    },
+    {
+        "username": "Lisa Wang",
+        "rating": 5,
+        "title": "Outstanding listening practice materials",
+        "review_text": "The listening section practice is the best I've found. Real exam-like content with clear explanations for every answer.",
+        "course": "listening"
+    },
+    {
+        "username": "Ahmed Hassan",
+        "rating": 5,
+        "title": "Went from 3.5 to 5.5 in 6 weeks",
+        "review_text": "The structured practice plan really helped me focus on weak areas. The AI feedback on writing was super detailed.",
+        "course": "writing"
+    },
+    {
+        "username": "Priya Patel",
+        "rating": 4,
+        "title": "Great value for the price",
+        "review_text": "Affordable compared to other platforms but still very comprehensive. The mock tests are challenging and realistic.",
+        "course": "all_sections"
+    },
+    {
+        "username": "James Wilson",
+        "rating": 5,
+        "title": "Most realistic mock tests",
+        "review_text": "The full mock tests feel exactly like the real TOEFL. The score prediction is accurate too!",
+        "course": "all_sections"
+    },
+    {
+        "username": "Maria Garcia",
+        "rating": 5,
+        "title": "Speaking confidence builder",
+        "review_text": "I was terrified of the speaking section. This platform gave me 30+ practice prompts and instant feedback. Now I'm actually confident!",
+        "course": "speaking"
+    },
+    {
+        "username": "David Kim",
+        "rating": 4,
+        "title": "Solid platform, great support",
+        "review_text": "The platform is intuitive and the explanation for wrong answers is helpful. Customer support responds quickly too.",
+        "course": "reading"
+    },
+    {
+        "username": "Sophie Dubois",
+        "rating": 5,
+        "title": "Life-changing investment",
+        "review_text": "I was stuck at 95 for months. This platform's systematic approach helped me break through to 105+",
+        "course": "all_sections"
+    },
+    {
+        "username": "Carlos López",
+        "rating": 5,
+        "title": "The listening transcripts are gold",
+        "review_text": "Having the transcripts for listening practice is huge. I can see exactly what I missed and why.",
+        "course": "listening"
+    },
+    {
+        "username": "Aisha Mohamed",
+        "rating": 5,
+        "title": "Best investment for my future",
+        "review_text": "Needed 100+ for grad school. This platform delivered. The vocabulary section alone is worth it.",
+        "course": "all_sections"
+    },
+    {
+        "username": "Ivan Petrov",
+        "rating": 4,
+        "title": "Excellent reading comprehension practice",
+        "review_text": "The reading passages are challenging and the explanations help you understand the test strategy.",
+        "course": "reading"
+    },
+    {
+        "username": "Lucia Santos",
+        "rating": 5,
+        "title": "Scored 110! Thank you!",
+        "review_text": "I honestly didn't think I could score this high. The combination of practice and feedback was perfect.",
+        "course": "all_sections"
+    },
+    {
+        "username": "Michael Zhang",
+        "rating": 5,
+        "title": "Worth every dollar",
+        "review_text": "Compared to expensive tutoring, this platform is a bargain. The AI is smart and the practice is abundant.",
+        "course": "all_sections"
+    },
+    {
+        "username": "Nadia Al-Rashid",
+        "rating": 4,
+        "title": "Great for structured study",
+        "review_text": "I like how the platform guides your study plan. No guessing about what to practice next.",
+        "course": "reading"
+    },
+]
+
+
+def seed_reviews():
+    """Insert sample reviews into the database.
+
+    Mirrors main.py's own DB selection logic exactly: if DATABASE_URL is set (Render's managed
+    Postgres), seed Postgres -- that's what the running app actually reads from in production,
+    since Render's web service filesystem is ephemeral and a local sqlite file is wiped on every
+    redeploy. Only fall back to local sqlite (resolved relative to THIS file, not the process's
+    current working directory -- the previous version used a CWD-relative "./backend/results.db"
+    path, which broke when run from inside the backend/ directory itself, e.g. Render's Web
+    Shell, because it then looked for a nonexistent backend/backend/results.db) when DATABASE_URL
+    is unset.
+    """
+    database_url = os.environ.get("DATABASE_URL", "")
+
+    if database_url:
+        import psycopg2
+        conn = psycopg2.connect(dsn=database_url)
+        cursor = conn.cursor()
+        placeholder = "%s"
+        pk = "SERIAL PRIMARY KEY"
+        print(f"Using Postgres (DATABASE_URL set, host={database_url.split('@')[-1].split('/')[0]!r})")
+    else:
+        db_path = pathlib.Path(__file__).parent / "results.db"
+        conn = sqlite3.connect(str(db_path))
+        cursor = conn.cursor()
+        placeholder = "?"
+        pk = "INTEGER PRIMARY KEY AUTOINCREMENT"
+        print(f"Using local sqlite: {db_path}")
+
+    # Create table if it doesn't exist (same schema as main.py's init_db(), just written with the
+    # right primary-key syntax for whichever engine we're actually connected to)
+    cursor.execute(f"""
+        CREATE TABLE IF NOT EXISTS user_reviews (
+            id {pk},
+            user_id INTEGER NOT NULL,
+            username TEXT NOT NULL,
+            rating INTEGER NOT NULL,
+            title TEXT NOT NULL,
+            review_text TEXT NOT NULL,
+            course TEXT NOT NULL DEFAULT 'all_sections',
+            is_hidden INTEGER NOT NULL DEFAULT 0,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(user_id, course)
+        )
+    """)
+    cursor.execute("CREATE INDEX IF NOT EXISTS idx_user_reviews_course ON user_reviews(course, is_hidden)")
+
+    # Generate reviews with varied timestamps (last 30 days)
+    base_date = datetime.now()
+
+    insert_sql = f"""
+        INSERT INTO user_reviews
+        (user_id, username, rating, title, review_text, course, is_hidden, created_at, updated_at)
+        VALUES ({placeholder}, {placeholder}, {placeholder}, {placeholder}, {placeholder}, {placeholder}, 0, {placeholder}, {placeholder})
+        ON CONFLICT (user_id, course) DO NOTHING
+    """
+
+    inserted = 0
+    for i, review_data in enumerate(SAMPLE_REVIEWS):
+        user_id = i + 100  # Start from user_id 100
+        days_ago = random.randint(0, 30)
+        created_at = base_date - timedelta(days=days_ago)
+
+        cursor.execute(insert_sql, (
+            user_id,
+            review_data["username"],
+            review_data["rating"],
+            review_data["title"],
+            review_data["review_text"],
+            review_data["course"],
+            created_at.isoformat(),
+            created_at.isoformat(),
+        ))
+        if cursor.rowcount:
+            inserted += 1
+        else:
+            print(f"Skipped duplicate: {review_data['username']} for {review_data['course']}")
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    print(f"Successfully inserted {inserted} sample reviews!")
+
+
+if __name__ == "__main__":
+    seed_reviews()
