@@ -1506,16 +1506,19 @@ export default AppWithErrorBoundary
 // ─────────────────────────────────────────────────────────────────────────────
 // Auto-track user signup/login with location data
 
-useEffect(() => {
+// NOTE: this runs once at module load (not inside a React component), so it must be a plain
+// function call, not a useEffect -- calling a hook outside a component/render has no dispatcher
+// and crashes the whole app on load (this is what broke production after the GA4 rollout).
+(function trackSignupOnLoad() {
   const userId = localStorage.getItem('user_id');
   const isNewSignup = sessionStorage.getItem('is_new_signup');
-  
+
   if (userId && isNewSignup === 'true') {
     // Track signup on successful registration
     trackSignup(userId).catch(err => console.warn('[Track] Signup error:', err));
     sessionStorage.removeItem('is_new_signup');
   }
-}, []);
+})();
 // Premium subscription tracking
 const originalSetItem = Storage.prototype.setItem;
 Storage.prototype.setItem = function(key, value) {
