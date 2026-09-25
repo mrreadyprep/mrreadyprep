@@ -584,7 +584,7 @@ function LiveDemoSection({ isMobile, purple, onGetStarted }) {
   )
 }
 
-function LandingPage({ onGetStarted, onLogIn }) {
+function LandingPage({ onGetStarted, onLogIn, onOpenAuth }) {
   const isMobile = useIsMobile()
   const purple = '#701fa1'
   // "≈ local currency" line next to the USD prices in the pricing teaser below, for visitors
@@ -914,7 +914,7 @@ function LandingPage({ onGetStarted, onLogIn }) {
         </div>
       </div>
 
-      <ReviewsSection />
+      <ReviewsSection onOpenAuth={onOpenAuth} />
 
       {/* Final CTA */}
       <div style={{ backgroundColor: '#11162d', padding: isMobile ? '44px 20px' : '56px 40px', textAlign: 'center' }}>
@@ -1474,6 +1474,7 @@ function AuthGate() {
           : <LandingPage
               onGetStarted={() => { setAuthMode('signup'); setShowAuth(true) }}
               onLogIn={() => { setAuthMode('login'); setShowAuth(true) }}
+              onOpenAuth={() => { setAuthMode('signup'); setShowAuth(true) }}
             />
       )}
       {authState === 'in' && (

@@ -11,7 +11,7 @@ const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:8000';
 // deciding what "+ Share Your Success Story" should do.
 const AUTH_TOKEN_KEY = 'mrreadyprep_token';
 
-export default function ReviewsSection() {
+export default function ReviewsSection({ onOpenAuth }) {
   const [stats, setStats] = useState({
     average_rating: 0,
     total_reviews: 0,
@@ -286,9 +286,8 @@ export default function ReviewsSection() {
             if (hasToken) {
               setShowReviewModal(true);
             } else {
-              const pricingSection = document.getElementById('pricing');
-              if (pricingSection) {
-                pricingSection.scrollIntoView({ behavior: 'smooth' });
+              if (onOpenAuth) {
+                onOpenAuth();
               }
             }
           }}
