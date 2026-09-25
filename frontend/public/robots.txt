@@ -18,3 +18,27 @@ User-agent: MJ12bot
 User-agent: AhrefsBot
 User-agent: SemrushBot
 Disallow: /
+
+# GEO: explicitly welcome AI answer-engine crawlers (they'd already be allowed by the
+# User-agent: * block above, but naming them removes any ambiguity for engines that check for
+# an explicit rule before an AI-training/answer-generation crawl).
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /

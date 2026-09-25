@@ -74,6 +74,53 @@
       }
     }
     </script>
+    <!-- GEO: FAQPage schema mirrors the exact Q&A copy rendered in App.jsx's `faqs` array (the
+         accordion under "Frequently asked questions" on the landing page) -- this is the single
+         most valuable structured-data addition for AI answer engines (ChatGPT, Perplexity,
+         Google AI Overviews), since FAQPage is one of the few schema types they're documented to
+         pull direct answers/citations from. Keep this block in sync if App.jsx's faqs array
+         changes -- a mismatch between the schema and the visible page text is exactly what these
+         schemas are meant NOT to have. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are the questions aligned with the latest 2026 TOEFL® iBT blueprint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. mrreadyprep is built around the current test specifications, including Read in Daily Life, Complete the Words, Academic Discussion, and the updated Speaking task formats."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the AI scoring work, and what rubric does it use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Responses are graded on a 0 to 6.0 scale in 0.5 increments (e.g. 4.5, 5.0, 5.5, 6.0). Beyond the overall band, you get itemized feedback broken down by criteria like grammar, vocabulary, and topic development."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in the 20 Full-Length Mock Tests?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each of the 20 mock exams mirrors real test timing and section transitions across Reading, Listening, Writing, and Speaking, and ends with a full band report plus a mistake review."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I cancel my subscription?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From your account settings, in one click -- no email or support ticket needed. You keep full access until the end of your current billing period."
+          }
+        }
+      ]
+    }
+    </script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
