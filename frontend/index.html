@@ -29,10 +29,12 @@
     <meta name="twitter:description" content="Practice for the TOEFL® iBT with realistic Reading, Listening, Speaking and Writing exercises and full-length mock tests." />
     <meta name="twitter:image" content="https://mrreadyprep.com/og-image.png" />
 
-    <!-- Hreflang for international SEO (multi-language prep) -->
-    <link rel="alternate" hreflang="en" href="https://mrreadyprep.com/" />
-    <link rel="alternate" hreflang="tr" href="https://mrreadyprep.com/tr/" />
-    <link rel="alternate" hreflang="x-default" href="https://mrreadyprep.com/" />
+    <!-- Hreflang removed (2026-09-25): these claimed an "en"/"tr" alternate pair, but
+         https://mrreadyprep.com/tr/ was never built -- a live hreflang tag pointing at a 404 is
+         flagged by Search Console and can drag down how much Google trusts the rest of the
+         page's signals. Re-add a real hreflang block (en + tr, both resolving) once a Turkish
+         version of the site actually exists; a single-language site gets no benefit from
+         hreflang at all, so there's nothing to replace this with in the meantime. -->
 
     <!-- Geo-targeting meta tag -->
     <meta name="geo.placename" content="International" />
@@ -49,7 +51,7 @@
         "@type": "Worldwide",
         "name": "International"
       },
-      "availableLanguage": ["en", "tr"],
+      "availableLanguage": ["en"],
       "contactPoint": {
         "@type": "ContactPoint",
         "contactType": "Customer Service",
