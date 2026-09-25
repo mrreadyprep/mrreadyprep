@@ -1719,6 +1719,11 @@ def init_db():
         )
     """)
     conn.execute("CREATE INDEX IF NOT EXISTS idx_user_reviews_course ON user_reviews(course, is_hidden)")
+    # Optional TOEFL score the student reports alongside their review (0.0-6.0, 0.5 increments,
+    # matching the site-wide scoring scale) -- added after user_reviews already existed in
+    # production, hence the _has_column guard like the users-table migrations above.
+    if not _has_column(conn, "user_reviews", "toefl_score"):
+        conn.execute("ALTER TABLE user_reviews ADD COLUMN toefl_score REAL")
 
     conn.commit()
     conn.close()
@@ -4982,6 +4987,10 @@ class ReviewSubmit(BaseModel):
     title: str = Field(min_length=3, max_length=100)
     review_text: str = Field(min_length=10, max_length=2000)
     course: str = Field(default="all_sections", max_length=20)
+    # Optional -- a student can submit a review without reporting a score at all. When given, it
+    # must fall on the site's actual 0.0-6.0 / 0.5-increment scale (see App.jsx's own scoring
+    # copy), not an arbitrary float, so a typo like "5.3" doesn't get displayed as a real band score.
+    toefl_score: Optional[float] = Field(default=None, ge=0, le=6)
 
     @field_validator("title", "review_text")
     @classmethod
@@ -5008,6 +5017,16 @@ class ReviewSubmit(BaseModel):
             raise ValueError("Unknown course")
         return v
 
+    @field_validator("toefl_score")
+    @classmethod
+    def _score_half_step(cls, v):
+        if v is None:
+            return v
+        # round-trip check: reject anything not exactly on a 0.5 step (5.3, 4.25, etc.)
+        if round(v * 2) / 2 != v:
+            raise ValueError("Score must be in 0.5 increments (e.g. 4.5, 5.0, 5.5)")
+        return v
+
 @app.post("/api/reviews/submit")
 def submit_review(data: ReviewSubmit, user=Depends(get_current_user)):
     """Submit or update the current student's review for a course. One review per (user, course)
@@ -5015,18 +5034,19 @@ def submit_review(data: ReviewSubmit, user=Depends(get_current_user)):
     conn = get_db()
     try:
         conn.execute("""
-            INSERT INTO user_reviews (user_id, username, rating, title, review_text, course, updated_at)
-            VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            INSERT INTO user_reviews (user_id, username, rating, title, review_text, course, toefl_score, updated_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
             ON CONFLICT(user_id, course) DO UPDATE SET
                 rating = excluded.rating,
                 title = excluded.title,
                 review_text = excluded.review_text,
                 username = excluded.username,
+                toefl_score = excluded.toefl_score,
                 updated_at = CURRENT_TIMESTAMP
-        """, (user["id"], user["username"], data.rating, data.title, data.review_text, data.course))
+        """, (user["id"], user["username"], data.rating, data.title, data.review_text, data.course, data.toefl_score))
         conn.commit()
         row = conn.execute(
-            "SELECT id, rating, title, review_text, course, created_at, updated_at "
+            "SELECT id, rating, title, review_text, course, toefl_score, created_at, updated_at "
             "FROM user_reviews WHERE user_id = ? AND course = ?",
             (user["id"], data.course),
         ).fetchone()
@@ -5044,7 +5064,7 @@ def list_reviews(course: str = "all_sections", limit: int = 20):
     conn = get_db()
     try:
         rows = conn.execute(
-            "SELECT username, rating, title, review_text, course, created_at FROM user_reviews "
+            "SELECT username, rating, title, review_text, course, toefl_score, created_at FROM user_reviews "
             "WHERE course = ? AND is_hidden = 0 AND rating >= 4 "
             "ORDER BY created_at DESC LIMIT ?",
             (course, limit),

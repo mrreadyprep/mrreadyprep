@@ -16,6 +16,10 @@ export default function PostTestReview({ isOpen, onClose, courseType = 'all_sect
   const [title, setTitle] = useState('');
   const [reviewText, setReviewText] = useState('');
   const [course, setCourse] = useState(courseType);
+  // Optional -- lets a student report the actual band score they hit (0.0-6.0, matching the
+  // site's real 0.5-increment scoring scale, same as App.jsx's own scoring copy), so success
+  // stories can show a real "went from X to Y" number instead of just star ratings.
+  const [toeflScore, setToeflScore] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -69,6 +73,7 @@ export default function PostTestReview({ isOpen, onClose, courseType = 'all_sect
           title: title.trim(),
           review_text: reviewText.trim(),
           course: course,
+          toefl_score: toeflScore === '' ? null : parseFloat(toeflScore),
         }),
       });
 
@@ -78,6 +83,7 @@ export default function PostTestReview({ isOpen, onClose, courseType = 'all_sect
         setTitle('');
         setReviewText('');
         setRating(5);
+        setToeflScore('');
         // Auto-close after 3 seconds
         setTimeout(() => {
           onClose();
@@ -321,6 +327,22 @@ export default function PostTestReview({ isOpen, onClose, courseType = 'all_sect
                   <option value="listening">Listening</option>
                   <option value="writing">Writing</option>
                   <option value="speaking">Speaking</option>
+                </select>
+              </div>
+
+              {/* TOEFL Score (optional) -- 0.0-6.0 in 0.5 steps, matching the site's real scoring
+                  scale, so success stories can show a genuine band score, not a free-typed number. */}
+              <div style={formGroupStyle}>
+                <label style={labelStyle}>Your score out of 6.0 (optional)</label>
+                <select
+                  style={selectStyle}
+                  value={toeflScore}
+                  onChange={(e) => setToeflScore(e.target.value)}
+                >
+                  <option value="">Prefer not to say</option>
+                  {Array.from({ length: 13 }, (_, i) => (i * 0.5).toFixed(1)).map((score) => (
+                    <option key={score} value={score}>{score} / 6.0</option>
+                  ))}
                 </select>
               </div>
 

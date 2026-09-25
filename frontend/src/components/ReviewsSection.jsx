@@ -258,8 +258,18 @@ export default function ReviewsSection({ onOpenAuth }) {
                   <div style={reviewUserStyle}>{review.username}</div>
                   <div style={reviewRatingStyle}>{renderStars(review.rating)}</div>
                 </div>
-                <div style={reviewCourseStyle}>
-                  {courseNameMap[review.course] || (review.course || 'all_sections').toUpperCase()}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                  <div style={reviewCourseStyle}>
+                    {courseNameMap[review.course] || (review.course || 'all_sections').toUpperCase()}
+                  </div>
+                  {/* Only rendered when the student actually reported a score (optional field on
+                      the submit form) -- most rows won't have one, so this stays silent rather
+                      than showing "N/A" or a zero. */}
+                  {review.toefl_score != null && (
+                    <div style={{ fontSize: '11px', fontWeight: '700', color: '#701fa1', background: '#f3e8fd', padding: '2px 8px', borderRadius: '999px' }}>
+                      Scored {review.toefl_score.toFixed ? review.toefl_score.toFixed(1) : review.toefl_score} / 6.0
+                    </div>
+                  )}
                 </div>
                 <div style={reviewTitleStyle}>{review.title}</div>
                 <div style={reviewTextStyle}>{review.review_text}</div>
