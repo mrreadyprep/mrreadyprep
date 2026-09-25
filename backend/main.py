@@ -5087,3 +5087,103 @@ def get_review_stats():
         }
     finally:
         conn.close()
+
+# ─────────────────────────────────────────────────────────────────────────────
+# 🌍 GEO-BASED ANALYTICS & TRACKING
+# ─────────────────────────────────────────────────────────────────────────────
+
+def get_user_location_from_ip(ip_address: str):
+    """Geo-location detection from IP address using ip-api.com"""
+    try:
+        # Skip for localhost
+        if ip_address == '127.0.0.1' or ip_address.startswith('192.168'):
+            return {
+                'country': 'Turkey',
+                'country_code': 'TR',
+                'city': 'Istanbul',
+                'region': 'Marmara'
+            }
+        
+        # IP-API free tier (45 req/min)
+        response = http_requests.get(
+            f'https://ip-api.com/json/{ip_address}?fields=country,countryCode,city,region,status',
+            timeout=5
+        )
+        
+        if response.status_code == 200:
+            data = response.json()
+            if data.get('status') == 'success':
+                return {
+                    'country': data.get('country'),
+                    'country_code': data.get('countryCode'),
+                    'city': data.get('city'),
+                    'region': data.get('region')
+                }
+    except Exception as e:
+        print(f"[GEO] Location detection error: {e}")
+    
+    return {'country': 'Unknown', 'country_code': 'UN', 'city': 'Unknown'}
+
+@app.get("/api/geo/location")
+def get_location(request: Request):
+    """Get user's geolocation from IP address"""
+    user_ip = request.client.host if request.client else '127.0.0.1'
+    
+    # Check X-Forwarded-For header (proxy)
+    if 'x-forwarded-for' in request.headers:
+        user_ip = request.headers['x-forwarded-for'].split(',')[0].strip()
+    
+    location = get_user_location_from_ip(user_ip)
+    
+    return {
+        'success': True,
+        'ip': user_ip,
+        'location': location
+    }
+
+class GeoEvent(BaseModel):
+    event_type: str  # signup, conversion, test_complete, feature_usage
+    user_id: Optional[str] = None
+    country_code: str
+    additional_data: dict = {}
+
+@app.post("/api/events/track")
+def track_geo_event(event: GeoEvent, request: Request):
+    """Track geo-based events for GA4 + analytics"""
+    try:
+        timestamp = datetime.now(timezone.utc).isoformat()
+        
+        # Log event
+        event_log = {
+            'event_type': event.event_type,
+            'user_id': event.user_id,
+            'country_code': event.country_code,
+            'timestamp': timestamp,
+            'ip': request.client.host if request.client else 'unknown',
+            'additional_data': event.additional_data
+        }
+        
+        print(f"[GEO-EVENT] {event.event_type} | Country: {event.country_code} | User: {event.user_id}")
+        
+        return {
+            'success': True,
+            'message': 'Event tracked',
+            'event': event_log
+        }
+    
+    except Exception as e:
+        print(f"[GEO-EVENT-ERROR] {str(e)}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+@app.get("/api/geo/analytics/summary")
+def get_geo_analytics_summary():
+    """Get summary of signups/conversions by country (for dashboard)"""
+    try:
+        return {
+            'success': True,
+            'message': 'GA4 reports available at analytics.google.com',
+            'top_countries': [],
+            'total_users': 0
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))

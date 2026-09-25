@@ -6,6 +6,7 @@ import { useEffect, useState, useRef, useMemo, Component, lazy, Suspense } from 
 // bundle. See AppMain.jsx's own header comment for the split boundary / how to keep it in sync.
 const App = lazy(() => import('./AppMain'))
 import { useGeoPriceEstimate } from './utils/geoDetect'
+import { trackSignup, trackPremiumConversion, trackTestCompletion } from './utils/geoTracking'
 import ReviewsSection from './components/ReviewsSection'
 
 // ─── In-progress answer drafts (solo practice only) ───────────────────────────
@@ -1499,3 +1500,41 @@ function AppWithErrorBoundary() {
 export { AUTH_TOKEN_KEY, BACKEND_URL, DRAFT_KEY_PREFIX, _exitGuardCount, _exitGuardListeners, _popExitGuard, _pushExitGuard, apiFetch, clearAllDrafts, clearAuthToken, extractErrorMessage, getAuthToken, sessionExpiredHandled, showToast, trackPixelEvent, useExitGuardActive, useIsMobile }
 
 export default AppWithErrorBoundary
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 🌍 GA4 + GEO ANALYTICS TRACKING
+// ─────────────────────────────────────────────────────────────────────────────
+// Auto-track user signup/login with location data
+
+useEffect(() => {
+  const userId = localStorage.getItem('user_id');
+  const isNewSignup = sessionStorage.getItem('is_new_signup');
+  
+  if (userId && isNewSignup === 'true') {
+    // Track signup on successful registration
+    trackSignup(userId).catch(err => console.warn('[Track] Signup error:', err));
+    sessionStorage.removeItem('is_new_signup');
+  }
+}, []);
+// Premium subscription tracking
+const originalSetItem = Storage.prototype.setItem;
+Storage.prototype.setItem = function(key, value) {
+  originalSetItem.apply(this, arguments);
+  
+  if (key === 'premium_plan_purchased') {
+    const userId = localStorage.getItem('user_id');
+    const planType = value; // 'monthly', '3months', '6months'
+    const prices = { 'monthly': 50, '3months': 70, '6months': 120 };
+    if (userId) {
+      trackPremiumConversion(userId, planType, prices[planType] || 50);
+    }
+  }
+  
+  if (key === 'test_completed') {
+    const testData = JSON.parse(value);
+    const userId = localStorage.getItem('user_id');
+    if (userId && testData.score !== undefined) {
+      trackTestCompletion(userId, testData.type || 'unknown', testData.score);
+    }
+  }
+};
