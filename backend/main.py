@@ -48,6 +48,17 @@ try:
 except ImportError:
     psycopg2 = None
 
+# googleapiclient (google-api-python-client) is only actually needed once
+# GSC_SERVICE_ACCOUNT_JSON is configured (see the SEO monitoring section / /api/cron/seo-check
+# below). Imported defensively so an environment that hasn't run `pip install -r requirements.txt`
+# yet, or that simply never configures SEO monitoring, doesn't crash on import.
+try:
+    from google.oauth2.service_account import Credentials as _GSCServiceAccountCredentials
+    from googleapiclient.discovery import build as _gsc_build_service
+except ImportError:
+    _GSCServiceAccountCredentials = None
+    _gsc_build_service = None
+
 # The exception class(es) that mean "a UNIQUE constraint was violated" -- used by call sites that
 # do a SELECT-then-INSERT for uniqueness (e.g. register/google_login checking for an existing
 # email) to turn a race between two concurrent requests for the same email into a clean 409
@@ -278,6 +289,40 @@ NURTURE_EMAIL_CRON_SECRET = os.environ.get("NURTURE_EMAIL_CRON_SECRET", "")
 # back from a lightweight availability check, so a site with no key configured never shows a
 # chat box that can't actually respond.
 ANTHROPIC_API_KEY = os.environ.get("ANTHROPIC_API_KEY", "")
+
+# ─── SEO monitoring (Google Search Console + SerpAPI keyword ranking) ──────────────────────────
+# JSON *contents* (not a file path) of a Google Cloud service-account key with read access to this
+# site's Search Console property -- pasted as a single-line env var rather than a file on disk,
+# since Render's filesystem is wiped on every deploy and no real credential should ever be
+# committed to this repo. To create one: Google Cloud Console > IAM & Admin > Service Accounts >
+# Create, enable the "Google Search Console API" on that project, then add the service account's
+# own email as a restricted (read-only) user on https://search.google.com/search-console for
+# mrreadyprep.com. Leave blank to skip GSC metrics -- /api/cron/seo-check then just omits that
+# part of the run instead of failing the whole request.
+GSC_SERVICE_ACCOUNT_JSON = os.environ.get("GSC_SERVICE_ACCOUNT_JSON", "")
+GSC_SITE_URL = os.environ.get("GSC_SITE_URL", "https://mrreadyprep.com/")
+
+# From serpapi.com (free trial, then paid) -- powers keyword-rank tracking against real Google
+# search results for SEO_TRACKED_KEYWORDS below. Leave blank to skip rank tracking, same
+# skip-not-fail behavior as GSC_SERVICE_ACCOUNT_JSON above.
+SERPAPI_API_KEY = os.environ.get("SERPAPI_API_KEY", "")
+
+# Keywords tracked by /api/cron/seo-check's rank-tracking step. Edit this list directly to change
+# what's tracked -- it's content, not a secret, so no env var.
+SEO_TRACKED_KEYWORDS = [
+    "TOEFL prep",
+    "TOEFL practice test",
+    "TOEFL 2026 format",
+    "TOEFL vs Magoosh",
+    "TOEFL AI scoring",
+    "TOEFL reading practice",
+    "TOEFL speaking tips",
+]
+
+# Same X-Cron-Secret pattern as PRACTICE_REMINDER_CRON_SECRET / NURTURE_EMAIL_CRON_SECRET above --
+# a scheduler has no logged-in session to present, so it authenticates with this one fixed secret
+# via the X-Cron-Secret header instead. Leave unset to keep /api/cron/seo-check disabled (503).
+SEO_CRON_SECRET = os.environ.get("SEO_CRON_SECRET", "")
 ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5")
 
 # ============================================================
@@ -1780,6 +1825,49 @@ def init_db():
             (_score, _username, _course),
         )
 
+    # SEO monitoring tables (see /api/cron/seo-check and /api/admin/seo-stats below). All three
+    # stay empty until GSC_SERVICE_ACCOUNT_JSON/SERPAPI_API_KEY are set and the cron actually
+    # runs -- that's expected on a fresh deploy, not a bug.
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS seo_keyword_rankings (
+            id {pk},
+            keyword TEXT NOT NULL,
+            rank INTEGER,
+            check_date TEXT NOT NULL,
+            checked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(keyword, check_date)
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_seo_keyword_rankings_keyword ON seo_keyword_rankings(keyword, check_date)")
+
+    # Presence checks against a fixed list of known off-site sources -- NOT a real backlink count
+    # and NOT an Ahrefs/Moz integration (neither is configured). Each row just records that a cron
+    # run happened and which sources were checked; see _check_backlink_sources() below for exactly
+    # what "checked" means here. Never surface this as verified backlink data.
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS seo_backlink_checks (
+            id {pk},
+            source_domain TEXT NOT NULL,
+            source_name TEXT NOT NULL,
+            check_date TEXT NOT NULL,
+            checked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(source_domain, check_date)
+        )
+    """)
+
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS seo_metrics_daily (
+            id {pk},
+            check_date TEXT NOT NULL UNIQUE,
+            clicks INTEGER NOT NULL DEFAULT 0,
+            impressions INTEGER NOT NULL DEFAULT 0,
+            avg_ctr REAL NOT NULL DEFAULT 0,
+            avg_position REAL NOT NULL DEFAULT 0,
+            top_queries TEXT,
+            checked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
     conn.commit()
     conn.close()
 
@@ -2342,6 +2430,238 @@ def send_nurture_emails(x_cron_secret: Optional[str] = Header(None, alias="X-Cro
             conn.close()
 
     return {"status": "ok", "emails_sent": sent_count, "emails_failed": failed}
+
+
+# ─── SEO monitoring (Google Search Console + SerpAPI keyword ranking) ──────────────────────────
+# Rebuilt from a standalone seo_monitor.py module that was never actually wired into this FastAPI
+# app -- it opened its own psycopg2.connect() at import time, outside get_db()/the connection
+# pool, and main.py never imported it (same pattern as the retired referral/video modules). This
+# version reuses get_db() like every other endpoint in this file and only runs when triggered by
+# /api/cron/seo-check, same as the nurture/practice-reminder crons above.
+
+_gsc_service_cache = {"service": None, "tried": False}
+
+def _get_gsc_service():
+    """Lazily builds (and caches) the Google Search Console API client from
+    GSC_SERVICE_ACCOUNT_JSON. Returns None -- rather than raising -- when unconfigured or invalid,
+    so callers can just skip the GSC step instead of failing the whole cron run."""
+    if _gsc_service_cache["tried"]:
+        return _gsc_service_cache["service"]
+    _gsc_service_cache["tried"] = True
+    if not GSC_SERVICE_ACCOUNT_JSON or _GSCServiceAccountCredentials is None or _gsc_build_service is None:
+        return None
+    try:
+        info = json.loads(GSC_SERVICE_ACCOUNT_JSON)
+        credentials = _GSCServiceAccountCredentials.from_service_account_info(
+            info, scopes=["https://www.googleapis.com/auth/webmasters.readonly"]
+        )
+        _gsc_service_cache["service"] = _gsc_build_service(
+            "webmasters", "v3", credentials=credentials, cache_discovery=False
+        )
+    except Exception as e:
+        print(f"[seo] GSC init error: {e}", flush=True)
+        _gsc_service_cache["service"] = None
+    return _gsc_service_cache["service"]
+
+
+def _fetch_gsc_metrics():
+    """Last-28-days Search Console performance summary, or None if GSC isn't configured/reachable."""
+    service = _get_gsc_service()
+    if not service:
+        return None
+    try:
+        start_date = (datetime.now(timezone.utc) - timedelta(days=28)).strftime("%Y-%m-%d")
+        end_date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        result = service.searchanalytics().query(
+            siteUrl=GSC_SITE_URL,
+            body={
+                "startDate": start_date,
+                "endDate": end_date,
+                "dimensions": ["query", "page", "device"],
+                "rowLimit": 100,
+            },
+        ).execute()
+        rows = result.get("rows", [])
+        total_clicks = sum(r.get("clicks", 0) for r in rows)
+        total_impressions = sum(r.get("impressions", 0) for r in rows)
+        avg_ctr = (sum(r.get("ctr", 0) for r in rows) / len(rows)) if rows else 0
+        avg_position = (sum(r.get("position", 0) for r in rows) / len(rows)) if rows else 0
+        top_queries = sorted(rows, key=lambda r: r.get("clicks", 0), reverse=True)[:10]
+        return {
+            "total_clicks": total_clicks,
+            "total_impressions": total_impressions,
+            "avg_ctr": round(avg_ctr, 4),
+            "avg_position": round(avg_position, 1),
+            "top_queries": [
+                {
+                    "query": q.get("query"),
+                    "clicks": q.get("clicks", 0),
+                    "impressions": q.get("impressions", 0),
+                    "ctr": round(q.get("ctr", 0), 4),
+                    "position": round(q.get("position", 0), 1),
+                }
+                for q in top_queries
+            ],
+        }
+    except Exception as e:
+        print(f"[seo] GSC metrics error: {e}", flush=True)
+        return None
+
+
+def _store_gsc_metrics(conn, today: str) -> bool:
+    metrics = _fetch_gsc_metrics()
+    if not metrics:
+        return False
+    conn.execute(
+        """
+        INSERT INTO seo_metrics_daily (check_date, clicks, impressions, avg_ctr, avg_position, top_queries)
+        VALUES (?, ?, ?, ?, ?, ?)
+        ON CONFLICT(check_date) DO UPDATE SET
+            clicks = excluded.clicks,
+            impressions = excluded.impressions,
+            avg_ctr = excluded.avg_ctr,
+            avg_position = excluded.avg_position,
+            top_queries = excluded.top_queries,
+            checked_at = CURRENT_TIMESTAMP
+        """,
+        (today, metrics["total_clicks"], metrics["total_impressions"], metrics["avg_ctr"],
+         metrics["avg_position"], json.dumps(metrics["top_queries"])),
+    )
+    conn.commit()
+    return True
+
+
+def _track_keyword_rankings(conn, today: str) -> int:
+    """Looks up each SEO_TRACKED_KEYWORDS entry's current Google rank for mrreadyprep.com via
+    SerpAPI. Returns how many keywords were successfully checked (0 if SERPAPI_API_KEY unset)."""
+    if not SERPAPI_API_KEY:
+        return 0
+    checked = 0
+    for keyword in SEO_TRACKED_KEYWORDS:
+        try:
+            response = http_requests.get(
+                "https://serpapi.com/search",
+                params={"q": keyword, "location": "United States", "api_key": SERPAPI_API_KEY},
+                timeout=10,
+            )
+            if response.status_code != 200:
+                continue
+            data = response.json()
+            rank = None
+            for i, result in enumerate(data.get("organic_results", [])):
+                if "mrreadyprep.com" in result.get("link", ""):
+                    rank = i + 1
+                    break
+            conn.execute(
+                """
+                INSERT INTO seo_keyword_rankings (keyword, rank, check_date)
+                VALUES (?, ?, ?)
+                ON CONFLICT(keyword, check_date) DO UPDATE SET
+                    rank = excluded.rank,
+                    checked_at = CURRENT_TIMESTAMP
+                """,
+                (keyword, rank, today),
+            )
+            conn.commit()
+            checked += 1
+        except Exception as e:
+            print(f"[seo] SerpAPI error for '{keyword}': {e}", flush=True)
+    return checked
+
+
+# Fixed list of off-site sources this checks for presence of MRReadyPrep-related content/links.
+# NOT a real backlink-discovery integration (no Ahrefs/Moz/similar is configured) -- each run just
+# records "checked source X on date Y", nothing about whether a link actually exists there. Keep
+# this list small and named honestly; never present its output as verified backlink data.
+_SEO_KNOWN_SOURCES = {
+    "reddit.com": "Reddit",
+    "medium.com": "Medium",
+    "quora.com": "Quora",
+    "dev.to": "Dev.to",
+}
+
+def _check_backlink_sources(conn, today: str) -> int:
+    checked = 0
+    for source_domain, source_name in _SEO_KNOWN_SOURCES.items():
+        conn.execute(
+            """
+            INSERT INTO seo_backlink_checks (source_domain, source_name, check_date)
+            VALUES (?, ?, ?)
+            ON CONFLICT(source_domain, check_date) DO UPDATE SET checked_at = CURRENT_TIMESTAMP
+            """,
+            (source_domain, source_name, today),
+        )
+        conn.commit()
+        checked += 1
+    return checked
+
+
+@app.post("/api/cron/seo-check")
+def run_seo_check(x_cron_secret: Optional[str] = Header(None, alias="X-Cron-Secret")):
+    """Triggered by an external scheduler (e.g. a Render Cron Job running once a day), same
+    auth/disable pattern as /api/cron/practice-reminders and /api/cron/nurture-emails above. Runs
+    whichever of the three checks are actually configured -- an unconfigured one is skipped, not
+    treated as a failure, so this is safe to enable before GSC/SerpAPI credentials exist."""
+    if not SEO_CRON_SECRET:
+        raise HTTPException(status_code=503, detail="SEO monitoring is not configured (SEO_CRON_SECRET unset)")
+    if not x_cron_secret or not hmac.compare_digest(x_cron_secret, SEO_CRON_SECRET):
+        raise HTTPException(status_code=403, detail="Invalid cron secret")
+
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    conn = get_db()
+    try:
+        gsc_stored = _store_gsc_metrics(conn, today)
+        keywords_checked = _track_keyword_rankings(conn, today)
+        sources_checked = _check_backlink_sources(conn, today)
+    finally:
+        conn.close()
+
+    return {
+        "status": "ok",
+        "date": today,
+        "gsc_metrics_stored": gsc_stored,
+        "gsc_configured": bool(GSC_SERVICE_ACCOUNT_JSON),
+        "keywords_checked": keywords_checked,
+        "serpapi_configured": bool(SERPAPI_API_KEY),
+        "backlink_sources_checked": sources_checked,
+    }
+
+
+@app.get("/api/admin/seo-stats")
+def admin_seo_stats(admin=Depends(require_admin)):
+    """Admin-panel view of whatever /api/cron/seo-check has stored so far. Returns explicit
+    *_configured flags and a backlinks_note so the admin panel can show "not configured yet"
+    instead of an empty chart that looks like zero traffic, and never mislabels the backlink
+    presence checks as a real backlink count."""
+    conn = get_db()
+    try:
+        latest_metrics = conn.execute(
+            "SELECT * FROM seo_metrics_daily ORDER BY check_date DESC LIMIT 1"
+        ).fetchone()
+        recent_rankings = conn.execute(
+            "SELECT keyword, rank, check_date FROM seo_keyword_rankings ORDER BY check_date DESC, keyword ASC LIMIT 50"
+        ).fetchall()
+        recent_backlink_checks = conn.execute(
+            "SELECT source_domain, source_name, check_date FROM seo_backlink_checks ORDER BY check_date DESC LIMIT 20"
+        ).fetchall()
+    finally:
+        conn.close()
+
+    latest_metrics = dict(latest_metrics) if latest_metrics else None
+    if latest_metrics and latest_metrics.get("top_queries"):
+        try:
+            latest_metrics["top_queries"] = json.loads(latest_metrics["top_queries"])
+        except (TypeError, ValueError):
+            pass
+
+    return {
+        "gsc_configured": bool(GSC_SERVICE_ACCOUNT_JSON),
+        "serpapi_configured": bool(SERPAPI_API_KEY),
+        "latest_metrics": latest_metrics,
+        "recent_keyword_rankings": [dict(r) for r in recent_rankings],
+        "recent_backlink_checks": [dict(r) for r in recent_backlink_checks],
+        "backlinks_note": "Presence checks against a fixed source list only -- not a real backlink count. No Ahrefs/Moz integration is configured.",
+    }
 
 
 def compute_streak_and_week_activity(conn, user_id: int):
