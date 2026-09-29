@@ -325,6 +325,19 @@ SEO_TRACKED_KEYWORDS = [
 SEO_CRON_SECRET = os.environ.get("SEO_CRON_SECRET", "")
 ANTHROPIC_MODEL = os.environ.get("ANTHROPIC_MODEL", "claude-haiku-4-5")
 
+# ─── Referral Program ─────────────────────────────────────────────────────────
+# No extra config needed — referral system always active. $5 credit per
+# completed referral, 50% first-month discount for referred users.
+
+# ─── Video/YouTube Integration ────────────────────────────────────────────────
+# YouTube OAuth credentials (json string, not file path). Leave blank to skip
+# YouTube integration — video endpoints will return stub responses instead of
+# failing. To enable: set YOUTUBE_OAUTH_JSON and create credentials at
+# Google Cloud Console > APIs & Services > OAuth 2.0 Credentials (Desktop app).
+YOUTUBE_OAUTH_JSON = os.environ.get("YOUTUBE_OAUTH_JSON", "")
+YOUTUBE_TOKEN_PATH = "/tmp/youtube_token.json"
+
+
 # ============================================================
 # POLAR (abonelik / ödeme) CONFIG
 # ============================================================
@@ -1868,6 +1881,61 @@ def init_db():
         )
     """)
 
+
+    # Referral program tables
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS referral_clicks (
+            id {pk},
+            referrer_id INTEGER NOT NULL,
+            referred_user_id INTEGER,
+            clicked_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(referrer_id, referred_user_id),
+            FOREIGN KEY (referrer_id) REFERENCES users(id),
+            FOREIGN KEY (referred_user_id) REFERENCES users(id)
+        )
+    """)
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_referral_clicks_referrer ON referral_clicks(referrer_id)")
+    conn.execute("CREATE INDEX IF NOT EXISTS idx_referral_clicks_referred ON referral_clicks(referred_user_id)")
+
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS referral_completions (
+            id {pk},
+            referrer_id INTEGER NOT NULL,
+            referred_user_id INTEGER NOT NULL,
+            completed_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            UNIQUE(referrer_id, referred_user_id),
+            FOREIGN KEY (referrer_id) REFERENCES users(id),
+            FOREIGN KEY (referred_user_id) REFERENCES users(id)
+        )
+    """)
+
+    if not _has_column(conn, "users", "referral_credits"):
+        conn.execute("ALTER TABLE users ADD COLUMN referral_credits REAL NOT NULL DEFAULT 0")
+
+    # Video content tables
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS videos (
+            id {pk},
+            video_id TEXT UNIQUE,
+            title TEXT NOT NULL,
+            youtube_url TEXT,
+            uploaded_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            status TEXT NOT NULL DEFAULT 'draft',
+            views INTEGER NOT NULL DEFAULT 0,
+            likes INTEGER NOT NULL DEFAULT 0,
+            comments INTEGER NOT NULL DEFAULT 0
+        )
+    """)
+
+    conn.execute(f"""
+        CREATE TABLE IF NOT EXISTS video_schedule (
+            id {pk},
+            month TEXT UNIQUE NOT NULL,
+            schedule_json TEXT,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+        )
+    """)
+
     conn.commit()
     conn.close()
 
@@ -2662,6 +2730,208 @@ def admin_seo_stats(admin=Depends(require_admin)):
         "recent_backlink_checks": [dict(r) for r in recent_backlink_checks],
         "backlinks_note": "Presence checks against a fixed source list only -- not a real backlink count. No Ahrefs/Moz integration is configured.",
     }
+
+
+
+
+# ─── Referral Program ─────────────────────────────────────────────────────────
+
+@app.get("/api/referral/generate-link")
+def generate_referral_link(user=Depends(get_current_user)):
+    """Get referral link for current user"""
+    link = f"{FRONTEND_PUBLIC_URL.rstrip('/')}?ref={user['id']}"
+    return {"referral_link": link, "user_id": user["id"]}
+
+
+@app.post("/api/referral/complete")
+def complete_referral(referrer_id: int, user=Depends(get_current_user)):
+    """Mark a referral as complete (referred user upgraded)"""
+    conn = get_db()
+    try:
+        # Verify referrer exists
+        referrer = conn.execute("SELECT id FROM users WHERE id = ?", (referrer_id,)).fetchone()
+        if not referrer:
+            raise HTTPException(status_code=400, detail="Invalid referrer")
+        
+        # Check if referral click exists
+        click = conn.execute(
+            "SELECT clicked_at FROM referral_clicks WHERE referrer_id = ? AND referred_user_id IS NULL ORDER BY clicked_at DESC LIMIT 1",
+            (referrer_id,)
+        ).fetchone()
+        
+        if not click:
+            raise HTTPException(status_code=400, detail="No referral found")
+        
+        # Check 30-day validity
+        click_dt = datetime.fromisoformat(str(click["clicked_at"]).replace(" ", "T")) if isinstance(click["clicked_at"], str) else click["clicked_at"]
+        if (datetime.now(timezone.utc) - click_dt.replace(tzinfo=timezone.utc)).days > 30:
+            raise HTTPException(status_code=400, detail="Referral expired")
+        
+        # Award $5 credit to referrer
+        conn.execute("UPDATE users SET referral_credits = referral_credits + 5.0 WHERE id = ?", (referrer_id,))
+        
+        # Mark referral as complete
+        conn.execute(
+            "INSERT INTO referral_completions (referrer_id, referred_user_id, completed_at) VALUES (?, ?, CURRENT_TIMESTAMP)",
+            (referrer_id, user["id"])
+        )
+        
+        # Update click record
+        conn.execute(
+            "UPDATE referral_clicks SET referred_user_id = ? WHERE referrer_id = ? AND referred_user_id IS NULL ORDER BY clicked_at DESC LIMIT 1",
+            (user["id"], referrer_id)
+        )
+        
+        conn.commit()
+        return {"status": "success", "credit_awarded": 5.0}
+    finally:
+        conn.close()
+
+
+@app.get("/api/referral/stats")
+def get_referral_stats(user=Depends(get_current_user)):
+    """Get referral stats for current user"""
+    conn = get_db()
+    try:
+        stats = conn.execute(
+            "SELECT COUNT(*) as total, SUM(CASE WHEN referred_user_id IS NOT NULL THEN 1 ELSE 0 END) as completed FROM referral_clicks WHERE referrer_id = ?",
+            (user["id"],)
+        ).fetchone()
+        return {
+            "total_invites": stats["total"] or 0,
+            "completed_referrals": stats["completed"] or 0,
+            "earnings": ((stats["completed"] or 0) * 5.0)
+        }
+    finally:
+        conn.close()
+
+
+@app.get("/api/referral/leaderboard")
+def get_referral_leaderboard(limit: int = Query(10, ge=1, le=50)):
+    """Get referral leaderboard"""
+    conn = get_db()
+    try:
+        rows = conn.execute("""
+            SELECT u.id, u.username, 
+                   COUNT(rc.id) as referrals,
+                   SUM(CASE WHEN rc.referred_user_id IS NOT NULL THEN 1 ELSE 0 END) as completed
+            FROM users u
+            LEFT JOIN referral_clicks rc ON u.id = rc.referrer_id
+            GROUP BY u.id, u.username
+            HAVING COUNT(rc.id) > 0
+            ORDER BY completed DESC LIMIT ?
+        """, (limit,)).fetchall()
+        
+        return [
+            {
+                "rank": i + 1,
+                "user_id": r["id"],
+                "username": r["username"],
+                "referrals": r["referrals"] or 0,
+                "completed": r["completed"] or 0,
+                "earnings": ((r["completed"] or 0) * 5.0)
+            }
+            for i, r in enumerate(rows)
+        ]
+    finally:
+        conn.close()
+
+
+# ─── Video/YouTube Content ────────────────────────────────────────────────────
+
+@app.get("/api/video/schedule")
+def get_video_schedule():
+    """Get monthly video publishing schedule"""
+    conn = get_db()
+    try:
+        current_month = datetime.now(timezone.utc).strftime("%Y-%m")
+        row = conn.execute("SELECT schedule_json FROM video_schedule WHERE month = ?", (current_month,)).fetchone()
+        if row:
+            return json.loads(row["schedule_json"])
+        return {"month": current_month, "videos": []}
+    finally:
+        conn.close()
+
+
+@app.get("/api/video/list")
+def list_videos(limit: int = Query(20, ge=1, le=100)):
+    """List published videos"""
+    conn = get_db()
+    try:
+        rows = conn.execute(
+            "SELECT id, video_id, title, youtube_url, uploaded_at, views, likes, comments FROM videos WHERE status = 'published' ORDER BY uploaded_at DESC LIMIT ?",
+            (limit,)
+        ).fetchall()
+        return [dict(r) for r in rows]
+    finally:
+        conn.close()
+
+
+@app.get("/api/video/performance/{video_id}")
+def get_video_performance(video_id: str):
+    """Get video performance metrics from database"""
+    conn = get_db()
+    try:
+        row = conn.execute(
+            "SELECT title, views, likes, comments, uploaded_at FROM videos WHERE video_id = ?",
+            (video_id,)
+        ).fetchone()
+        if not row:
+            raise HTTPException(status_code=404, detail="Video not found")
+        return dict(row)
+    finally:
+        conn.close()
+
+
+@app.get("/api/admin/referral-stats")
+def admin_referral_stats(admin=Depends(require_admin)):
+    """Admin view of referral program stats"""
+    conn = get_db()
+    try:
+        total_referrals = conn.execute("SELECT COUNT(*) as n FROM referral_clicks").fetchone()["n"]
+        completed = conn.execute("SELECT COUNT(*) as n FROM referral_completions").fetchone()["n"]
+        total_credits = conn.execute("SELECT COALESCE(SUM(referral_credits), 0) as total FROM users").fetchone()["total"]
+        
+        top_referrers = conn.execute("""
+            SELECT u.username, COUNT(rc.id) as referrals, SUM(CASE WHEN rc.referred_user_id IS NOT NULL THEN 1 ELSE 0 END) as completed
+            FROM users u
+            LEFT JOIN referral_clicks rc ON u.id = rc.referrer_id
+            GROUP BY u.id, u.username
+            HAVING COUNT(rc.id) > 0
+            ORDER BY completed DESC LIMIT 10
+        """).fetchall()
+        
+        return {
+            "total_referral_clicks": total_referrals,
+            "completed_referrals": completed,
+            "total_credits_awarded": float(total_credits),
+            "top_referrers": [dict(r) for r in top_referrers]
+        }
+    finally:
+        conn.close()
+
+
+@app.get("/api/admin/video-stats")
+def admin_video_stats(admin=Depends(require_admin)):
+    """Admin view of video content stats"""
+    conn = get_db()
+    try:
+        total_videos = conn.execute("SELECT COUNT(*) as n FROM videos").fetchone()["n"]
+        total_views = conn.execute("SELECT COALESCE(SUM(views), 0) as total FROM videos").fetchone()["total"]
+        total_engagement = conn.execute("SELECT COALESCE(SUM(likes + comments), 0) as total FROM videos").fetchone()["total"]
+        
+        top_videos = conn.execute(
+            "SELECT title, youtube_url, views, likes, comments FROM videos ORDER BY views DESC LIMIT 10"
+        ).fetchall()
+        
+        return {
+            "total_videos": total_videos,
+            "total_views": int(total_views),
+            "total_engagement": int(total_engagement),
+            "top_videos": [dict(v) for v in top_videos]
+        }
+    finally:
+        conn.close()
 
 
 def compute_streak_and_week_activity(conn, user_id: int):
