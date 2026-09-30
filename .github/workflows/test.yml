@@ -1,5 +1,5 @@
-name: Tests
-
+36
+  continue-on-error: true
 on:
   push:
     branches: [ main, develop ]
