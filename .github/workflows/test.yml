@@ -44,6 +44,7 @@ jobs:
           path: report.txt
       - uses: dawidd6/action-send-mail@v3
         if: always()
+        continue-on-error: true
         with:
           server_address: smtp.gmail.com
           server_port: 465
