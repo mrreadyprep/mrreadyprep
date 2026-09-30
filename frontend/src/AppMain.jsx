@@ -1095,7 +1095,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
   // /api/subscription/webhook Polar calls once the payment actually clears, which typically lands
   // within a few seconds. Poll /api/subscription/status a few times to pick that up without asking
   // the student to refresh.
-  const pollForPremium = () => {
+  const pollForPremium = (duration) => {
     showToast('Payment received! Activating your Premium access…', 'info')
     let attempts = 0
     const poll = () => {
@@ -1110,7 +1110,20 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
       attempts += 1
       apiFetch(`${BACKEND_URL}/api/subscription/status`).then(res => res.json()).then(data => {
         if (!mountedRef.current) return
-        if (data.has_premium) { showToast('Subscription successful! You now have full Premium access.'); window.location.reload() }
+        if (data.has_premium) {
+          // The Polar overlay's success event only means checkout completed in the browser.
+          // Track Purchase after our webhook-backed status endpoint confirms Premium is active,
+          // so Meta never counts abandoned or failed payments as sales. sessionStorage prevents
+          // duplicate events if the status poll resolves more than once in the same page session.
+          try {
+            const purchaseKey = `meta_purchase_tracked:${duration}`
+            if (!sessionStorage.getItem(purchaseKey)) {
+              trackPixelEvent('Purchase', { currency: 'USD', content_name: duration })
+              sessionStorage.setItem(purchaseKey, '1')
+            }
+          } catch { /* storage may be unavailable; the conversion still completes */ }
+          showToast('Subscription successful! You now have full Premium access.'); window.location.reload()
+        }
         else if (attempts < 8) setTimeout(poll, 1500)
         // Found in the 29th audit round: after the 8th attempt (12s) with no has_premium yet, this
         // used to just stop silently -- the student, having just paid, was left staring at the
@@ -1150,7 +1163,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
         // off two separate Polar checkout sessions. Found in the 40th audit round (originally for
         // Paddle).
         EmbedCheckout.create(data.checkout_url, { theme: 'light' }).then(instance => {
-          instance.addEventListener('success', pollForPremium)
+          instance.addEventListener('success', () => pollForPremium(duration))
         })
         setBusy(false)
       })
@@ -10663,7 +10676,7 @@ function Vocabulary() {
 // is "not started" so this naturally shows a sensible first-practice list. onDone just unmounts
 // this screen; the same recommendations panel (with working "Practice Now" buttons) is already
 // waiting on the normal Dashboard underneath.
-function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSaved, onTakeDiagnostic }) {
+function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSaved, onTakeDiagnostic, onViewPremium }) {
   const [step, setStep] = useState('target')
   const [saving, setSaving] = useState(false)
   const bands = [
@@ -10731,6 +10744,11 @@ function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSave
             <button type="button" onClick={onDone} style={{ width: '100%', padding: '13px', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '10px', fontSize: '14px', fontWeight: '800', cursor: 'pointer' }}>
               Start Practicing
             </button>
+            {onViewPremium && (
+              <button type="button" onClick={onViewPremium} style={{ width: '100%', padding: '11px', background: '#f9f3fd', color: '#701fa1', border: '1px solid #d8b4f0', borderRadius: '10px', fontSize: '13px', fontWeight: '800', cursor: 'pointer', marginTop: '8px' }}>
+                See Premium plans →
+              </button>
+            )}
             {onTakeDiagnostic && (
               <button type="button" onClick={onTakeDiagnostic} style={{ width: '100%', padding: '10px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer', marginTop: '4px' }}>
                 Not sure? Take a 5-minute skills check first
@@ -11263,6 +11281,7 @@ function App({ justSignedUp }) {
   if (showOnboarding) {
     return <OnboardingFlow
       onDone={() => setShowOnboarding(false)}
+      onViewPremium={() => { setShowOnboarding(false); setCurrentTab('subscribe') }}
       initialUsername={userData.username}
       recommendations={recommendations}
       onTargetSaved={fetchDashboardData}
