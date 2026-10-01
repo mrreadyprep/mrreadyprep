@@ -3750,6 +3750,61 @@ def resend_verification_email(background_tasks: BackgroundTasks, user=Depends(ge
 def get_me(user=Depends(get_current_user)):
     return user_profile_dict(user)
 
+
+# ─── PASSWORD CHANGE & ONBOARDING ──────────────────────────────────────
+
+@app.post("/api/auth/change-password")
+def change_password(request_data, user=Depends(get_current_user)):
+    """Authenticated endpoint for users to change their password."""
+    current_password = request_data.get('current_password', '').strip() if isinstance(request_data, dict) else ''
+    new_password = request_data.get('new_password', '').strip() if isinstance(request_data, dict) else ''
+    
+    if not current_password:
+        raise HTTPException(status_code=400, detail="Current password is required")
+    if not new_password:
+        raise HTTPException(status_code=400, detail="New password is required")
+    if len(new_password) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
+    if current_password == new_password:
+        raise HTTPException(status_code=400, detail="New password must be different from current")
+    
+    conn = get_db()
+    try:
+        user_record = conn.execute("SELECT password_hash FROM users WHERE id = ?", (user["id"],)).fetchone()
+        if not user_record:
+            raise HTTPException(status_code=404, detail="User not found")
+        
+        if not verify_password(current_password, user_record["password_hash"]):
+            raise HTTPException(status_code=401, detail="Current password is incorrect")
+        
+        new_password_hash = hash_password(new_password)
+        conn.execute("UPDATE users SET password_hash = ? WHERE id = ?", (new_password_hash, user["id"]))
+        conn.commit()
+        print(f"[password change] Password changed for user {user['id']}", flush=True)
+        return {"status": "success", "message": "Password changed successfully"}
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"[password change] Error: {e}", flush=True)
+        raise HTTPException(status_code=500, detail="Failed to change password")
+    finally:
+        conn.close()
+
+
+@app.post("/api/user/onboarding-complete")
+def mark_onboarding_complete(user=Depends(get_current_user)):
+    """Mark onboarding as completed for the user."""
+    conn = get_db()
+    try:
+        conn.execute("UPDATE users SET onboarding_completed = 1 WHERE id = ?", (user["id"],))
+        conn.commit()
+        return {"status": "success", "message": "Onboarding marked as completed"}
+    except Exception as e:
+        print(f"[onboarding] Error: {e}", flush=True)
+        raise HTTPException(status_code=500, detail="Failed to update status")
+    finally:
+        conn.close()
+
 # ============================================================
 # ADMIN -- gated by require_admin (see ADMIN_EMAILS/is_admin_user near the top of this file).
 # Deliberately narrow in scope: view every registered account and manually grant/revoke premium

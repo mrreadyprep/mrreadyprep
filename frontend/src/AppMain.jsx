@@ -47,7 +47,7 @@ function TestSubHeader({ section, questionLabel, timeText, lowTime }) {
     <div style={{ background: '#fff', borderBottom: '1px solid #e5e7eb', padding: isMobile ? '10px 14px' : '14px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0, fontFamily: 'sans-serif', flexWrap: 'wrap', gap: '4px' }}>
       <div style={{ fontSize: isMobile ? '11px' : '13px', color: '#1a1a1a' }}>
         <span style={{ fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{section}</span>
-        {questionLabel && <><span style={{ color: '#9ca3af', margin: '0 8px' }}>|</span><span>{questionLabel}</span></>}
+        {questionLabel && <><span style={{ color: '#6b7280', margin: '0 8px' }}>|</span><span>{questionLabel}</span></>}
       </div>
       {timeText && <span style={{ fontSize: isMobile ? '12px' : '14px', fontWeight: '700', color: lowTime ? '#d94040' : '#1a1a1a' }}>{timeText}</span>}
     </div>
@@ -72,7 +72,7 @@ function ExamScreen({ topLeft, topRight, section, questionLabel, timeText, lowTi
 // different plain-text "Loading..." strings.
 function LoadingState({ label = 'Loading...', fullScreen = false }) {
   const content = (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '14px', color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '14px', color: '#4a4d5f', fontSize: '14px', fontFamily: 'sans-serif' }}>
       <div style={{ width: '30px', height: '30px', border: '3px solid #e1e4ed', borderTopColor: EXAM_NAVY, borderRadius: '50%', animation: 'mrpSpin 0.8s linear infinite' }} />
       <div>{label}</div>
     </div>
@@ -167,7 +167,7 @@ function ExitConfirmModal({ onSave, onDiscard, onCancel, canSave = true }) {
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
       <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Exit this exercise?" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Exit this exercise?</div>
-        <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>
+        <div style={{ fontSize: '13px', color: '#4a4d5f', lineHeight: '1.6', marginBottom: '22px' }}>
           {canSave
             ? "We can save your progress so you can pick up where you left off, or discard it and start fresh next time."
             : "This exercise isn't scored yet and there's nothing to save for this exercise type."}
@@ -176,7 +176,7 @@ function ExitConfirmModal({ onSave, onDiscard, onCancel, canSave = true }) {
           {canSave && (
             <button autoFocus onClick={onSave} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save & exit</button>
           )}
-          <button onClick={onDiscard} style={{ background: canSave ? '#fff' : '#2ac56c', color: canSave ? '#616473' : '#fff', border: canSave ? '1px solid #d1d5db' : 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>{canSave ? 'Discard & exit' : 'Exit'}</button>
+          <button onClick={onDiscard} style={{ background: canSave ? '#fff' : '#2ac56c', color: canSave ? '#4a4d5f' : '#fff', border: canSave ? '1px solid #d1d5db' : 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>{canSave ? 'Discard & exit' : 'Exit'}</button>
           {/* color: #6b7280 (was #9ca3af, ~2.5:1 contrast on white -- below WCAG AA's 4.5:1 for
               real text) -- this is a genuine clickable action ("Keep practicing"), not decorative
               text, so it needs to actually be readable. Found in the 41st audit round. */}
@@ -201,7 +201,7 @@ function ConfirmModal({ title, message, confirmLabel = 'Confirm', cancelLabel = 
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
       <div ref={trapRef} role="dialog" aria-modal="true" aria-label={title} style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '380px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>{title}</div>
-        <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>{message}</div>
+        <div style={{ fontSize: '13px', color: '#4a4d5f', lineHeight: '1.6', marginBottom: '22px' }}>{message}</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <button autoFocus onClick={onConfirm} style={{ background: danger ? '#d92d20' : '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>{confirmLabel}</button>
           {/* color: #6b7280, same WCAG AA contrast fix as ExitConfirmModal's "Keep practicing" above. */}
@@ -287,7 +287,7 @@ function CTWList({ exercises, scores, onSelect, onBack }) {
             {['All', ...categories].map(cat => (
               <button key={cat} onClick={() => setActiveCategory(cat)} style={{
                 background: activeCategory === cat ? '#2ac56c' : '#f2f3f5',
-                color: activeCategory === cat ? '#fff' : '#616473',
+                color: activeCategory === cat ? '#fff' : '#4a4d5f',
                 border: 'none', borderRadius: '999px', padding: '7px 16px', fontSize: '12px', fontWeight: '600', cursor: 'pointer',
               }}>
                 {cat}{cat !== 'All' ? ` (${exercises.filter(ex => ex.category === cat).length})` : ` (${exercises.length})`}
@@ -314,10 +314,10 @@ function CTWList({ exercises, scores, onSelect, onBack }) {
                       </span>
                     )}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.blanks.length} blank${ex.blanks.length !== 1 ? 's' : ''}`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.blanks.length} blank${ex.blanks.length !== 1 ? 's' : ''}`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => onSelect(idx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -559,7 +559,7 @@ function CompleteTheWords({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!exercises.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found.</div>
+  if (!exercises.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found.</div>
 
   if (selectedIdx !== null) return (
     <CTWSingle exercise={exercises[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
@@ -618,7 +618,7 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
             {['All', ...presentTypes].map(type => (
               <button key={type} onClick={() => setActiveType(type)} style={{
                 background: activeType === type ? '#2ac56c' : '#f2f3f5',
-                color: activeType === type ? '#fff' : '#616473',
+                color: activeType === type ? '#fff' : '#4a4d5f',
                 border: 'none', borderRadius: '999px', padding: '7px 16px', fontSize: '12px', fontWeight: '600', cursor: 'pointer',
               }}>
                 {type === 'All' ? `All (${passages.length})` : `${RIDL_TYPE_LABELS[type]} (${grouped[type].length})`}
@@ -628,7 +628,7 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
         )}
         {visibleTypes.map(type => (
           <div key={type} style={{ marginBottom: '28px' }}>
-            <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '10px' }}>{RIDL_TYPE_LABELS[type]}</div>
+            <div style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.8px', marginBottom: '10px' }}>{RIDL_TYPE_LABELS[type]}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {grouped[type].map((p) => {
                 const locked = isLocked(p)
@@ -640,10 +640,10 @@ function RIDLList({ passages, onSelect, onBack, scores, displayNums }) {
                         <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {displayNumByGlobalIdx.get(p.globalIdx)}</div>
                         {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.score}/{result.total} · {pct}%</span>}
                       </div>
-                      <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${p.title} · ${p.questions.length} questions`}</div>
+                      <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${p.title} · ${p.questions.length} questions`}</div>
                     </div>
                     {locked ? <LockedBadge /> : (
-                      <button onClick={() => onSelect(p.globalIdx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
+                      <button onClick={() => onSelect(p.globalIdx)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
                     )}
                   </div>
                 )
@@ -834,17 +834,17 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
             <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#701fa1', fontWeight: '600', cursor: 'pointer' }}>← Back to Review</button>
             <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
-              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#4a4d5f', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#4a4d5f', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
             </div>
           </div>
           <div style={{ height: '2.5px', background: '#2a9d5c', flexShrink: 0 }} />
           <div style={{ flex: 1, display: 'flex', padding: isMobile ? '16px' : '24px 32px', gap: isMobile ? '20px' : '40px', overflow: isMobile ? 'auto' : 'hidden', minHeight: 0, ...(isMobile ? { flexDirection: 'column' } : {}) }}>
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px', minWidth: 0, maxWidth: isMobile ? '100%' : '520px' }}>
-              <div style={{ fontSize: '12px', color: '#616473' }}>{passage.instruction}</div>
+              <div style={{ fontSize: '12px', color: '#4a4d5f' }}>{passage.instruction}</div>
               <div style={{ border: '2px solid #2a9d5c', borderRadius: '8px', padding: '16px 18px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 180px)' }}>
                 {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px' }}>{passage.title}</div>}
-                {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
+                {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#4a4d5f', marginBottom: '12px' }}>{passage.subtitle}</div>}
                 <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{renderPassageWithHighlight(passage.text, extractVocabWord(q.question))}</div>
               </div>
             </div>
@@ -889,7 +889,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
               <button onClick={() => { onComplete && onComplete(score, totalQ); onFinish() }} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Exit</button>
             </div>
           </div>
-          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see the passage</span></div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see the passage</span></div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {passage.questions.map((q, qi) => {
               const a = answers[qi]; if (!a) return null
@@ -937,7 +937,7 @@ function RIDLQuestion({ passage, practiceNum, totalPractices, onBack, onFinish, 
           <div style={{ flex: 1, minWidth: 0, maxWidth: isMobile ? '100%' : '520px', width: '100%' }}>
             <div style={{ border: `3px solid ${boxColor}`, borderRadius: '10px', padding: '18px 20px', overflowY: 'auto', boxSizing: 'border-box', maxHeight: isMobile ? 'none' : 'calc(100vh - 260px)' }}>
               {passage.title && <div style={{ fontWeight: '700', fontSize: '13px', textAlign: 'center', marginBottom: '2px', color: '#1a1a1a' }}>{passage.title}</div>}
-              {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#616473', marginBottom: '12px' }}>{passage.subtitle}</div>}
+              {passage.subtitle && <div style={{ fontSize: '11px', textAlign: 'center', color: '#4a4d5f', marginBottom: '12px' }}>{passage.subtitle}</div>}
               <div style={{ fontSize: '16px', lineHeight: '1.75', color: '#1a1a1a', whiteSpace: 'pre-wrap' }}>{renderPassageWithHighlight(passage.text, extractVocabWord(question.question))}</div>
             </div>
           </div>
@@ -1024,7 +1024,7 @@ function requestUpgrade() {
 // Small reusable "locked" badge shown next to/instead of the Start/Retry button on a locked row.
 function LockedBadge() {
   return (
-    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: '#f3f4f6', color: '#9ca3af', border: 'none', borderRadius: '6px', padding: '9px 16px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }} onClick={requestUpgrade}>
+    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '5px', background: '#f3f4f6', color: '#6b7280', border: 'none', borderRadius: '6px', padding: '9px 16px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }} onClick={requestUpgrade}>
       🔒 Premium
     </span>
   )
@@ -1179,7 +1179,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
         <div style={{ width: '100%', maxWidth: '520px', background: '#fff', borderRadius: '16px', border: '0.5px solid #e1e4ed', padding: '36px', textAlign: 'center' }}>
           <div style={{ fontSize: '38px', marginBottom: '10px' }}>🎉</div>
           <h2 style={{ margin: '0 0 8px', fontSize: '20px', fontWeight: '700', color: '#1a1a1a' }}>You're on mrreadyprep Premium</h2>
-          <p style={{ color: '#616473', fontSize: '13px', lineHeight: '1.6', marginBottom: '24px' }}>
+          <p style={{ color: '#4a4d5f', fontSize: '13px', lineHeight: '1.6', marginBottom: '24px' }}>
             Full access to every practice exercise and all 20 Full Mock Tests.
             {subscriptionStatus === 'PENDING' ? ' Your subscription is being activated.' : ''}
           </p>
@@ -1189,12 +1189,12 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
               {busy ? 'Canceling…' : 'Cancel subscription'}
             </button>
           ) : (
-            <p style={{ color: '#9ca3af', fontSize: '12px', margin: 0 }}>
+            <p style={{ color: '#6b7280', fontSize: '12px', margin: 0 }}>
               {isAdmin ? 'Admin accounts have permanent full access.' : 'This access was granted directly by an admin, not through a paid subscription -- there is nothing to cancel here.'}
             </p>
           )}
           {onBack && (
-            <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer' }}>← Back</button>
+            <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#6b7280', fontSize: '12px', cursor: 'pointer' }}>← Back</button>
           )}
         </div>
         {showCancelConfirm && (
@@ -1316,7 +1316,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
               </div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', justifyContent: 'center', marginBottom: '4px' }}>
                 {plan.originalPrice && (
-                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#9ca3af', textDecoration: 'line-through' }}>
+                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#6b7280', textDecoration: 'line-through' }}>
                     ${plan.originalPrice}
                   </div>
                 )}
@@ -1334,7 +1334,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                 </div>
               )}
               {priceEstimate(plan.price) && (
-                <div style={{ color: '#9ca3af', fontSize: '11px', marginBottom: '12px' }}>
+                <div style={{ color: '#6b7280', fontSize: '11px', marginBottom: '12px' }}>
                   {priceEstimate(plan.price)} · billed in USD
                 </div>
               )}
@@ -1368,11 +1368,11 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
         </div>
 
         {!POLAR_CHECKOUT_ENABLED && (
-          <p style={{ color: '#9ca3af', fontSize: '12px', textAlign: 'center', margin: '0 0 16px' }}>Payments aren't set up on this site yet -- check back soon.</p>
+          <p style={{ color: '#6b7280', fontSize: '12px', textAlign: 'center', margin: '0 0 16px' }}>Payments aren't set up on this site yet -- check back soon.</p>
         )}
         {error && <p style={{ color: '#d92d20', fontSize: '12px', margin: '0 0 16px' }}>{error}</p>}
         {onBack && (
-          <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12px', cursor: 'pointer', width: '100%', textAlign: 'center' }}>← Back</button>
+          <button onClick={onBack} style={{ marginTop: '14px', background: 'none', border: 'none', color: '#6b7280', fontSize: '12px', cursor: 'pointer', width: '100%', textAlign: 'center' }}>← Back</button>
         )}
       </div>
     </div>
@@ -1457,10 +1457,10 @@ function APList({ passages, scores, onSelect, onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Passage {idx + 1}</div>
                     {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.score}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${p.title} · ${p.questions.length} questions`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${p.title} · ${p.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => onSelect(p)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
+                  <button onClick={() => onSelect(p)} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>{result ? 'Retry' : 'Start'}</button>
                 )}
               </div>
             )
@@ -1594,7 +1594,7 @@ function APQuestion({ passage, onBack, onComplete, mockMode = false, poolTime, m
               <div style={{ fontSize: '36px', fontWeight: '700', color: '#2a9d5c' }}>{score}/{questions.length}</div>
               <div style={{ fontSize: '18px', color: '#666' }}>{pct}%</div>
             </div>
-            <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · tap a question to see details</div>
+            <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · tap a question to see details</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
               {questions.map((qq, i) => {
                 const isCorrect = answers[i] === qq.answer
@@ -1902,7 +1902,7 @@ function AudioPlayer({ url, autoPlayKey, onEnded, onError }) {
     return (
       <div style={{ background: '#f4f6fa', border: '2px dashed #d1d5db', borderRadius: '12px', padding: '28px 24px', textAlign: 'center' }}>
         <div style={{ fontSize: '28px', marginBottom: '8px' }}>🎵</div>
-        <div style={{ fontSize: '13px', fontWeight: '600', color: '#9ca3af' }}>Audio coming soon</div>
+        <div style={{ fontSize: '13px', fontWeight: '600', color: '#6b7280' }}>Audio coming soon</div>
         <div style={{ fontSize: '11px', color: '#c0c0c0', marginTop: '4px' }}>Transcript is shown below for practice</div>
       </div>
     )
@@ -2357,7 +2357,7 @@ function RealPersonAvatar({ gender, seed = 0, width = 220, height = 220, mode = 
       <div
         style={{
           width: '84%', height: '84%', borderRadius: '50%', overflow: 'hidden',
-          border: `3px solid ${mode === 'idle' ? '#e1e4ed' : ringColor}`,
+          border: `3px solid ${mode === 'idle' ? '#d1d5db' : ringColor}`,
           animation: mode !== 'idle' ? 'toeflRingPulse 1.6s ease-out infinite' : 'none',
           position: 'relative', flexShrink: 0,
         }}
@@ -2428,10 +2428,10 @@ function ListeningP1List({ exercises, scores, onSelect, onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Exercise {idx + 1}</div>
                     {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.questions.length} question${ex.questions.length === 1 ? '' : 's'}`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${ex.questions.length} question${ex.questions.length === 1 ? '' : 's'}`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(getIntroUrl('listen_choose_response.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(getIntroUrl('listen_choose_response.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2606,8 +2606,8 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
             <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
             <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
-              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#4a4d5f', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#4a4d5f', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
             </div>
           </div>
           <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
@@ -2616,7 +2616,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px', flexShrink: 0 }}>
                 <SpeakerAvatar gender={rq.speaker} seed={rq.id} />
                 <div style={{ width: '220px' }}><AudioPlayer url={rq.audio_url} /></div>
-                <div style={{ width: '220px', fontSize: '12px', color: '#9ca3af', textAlign: 'center' }}>{rq.context}</div>
+                <div style={{ width: '220px', fontSize: '12px', color: '#6b7280', textAlign: 'center' }}>{rq.context}</div>
               </div>
               <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: '18px' }}>
                 <div style={{ fontSize: '17px', fontWeight: '600', color: '#1a1a1a' }}>Choose the best response.</div>
@@ -2680,7 +2680,7 @@ function ListeningP1Exercise({ exercise, exerciseNum, onBack, onComplete, mockMo
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
-          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {questions.map((qq, qi) => {
               const a = answers[qi]
@@ -2777,7 +2777,7 @@ function ListeningP1({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!exercises.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!exercises.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (selectedIdx !== null) return (
     <ListeningP1Exercise exercise={exercises[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
@@ -2808,10 +2808,10 @@ function ListeningP2List({ conversations, scores, onSelect, onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Conversation {idx + 1}</div>
                     {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${c.questions.length} questions`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${c.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(getIntroUrl('listen_to_a_conversation.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(getIntroUrl('listen_to_a_conversation.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -2949,8 +2949,8 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
             <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
             <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
-              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#4a4d5f', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#4a4d5f', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
             </div>
           </div>
           <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
@@ -2996,7 +2996,7 @@ function ListeningP2Exercise({ conversation, exerciseNum, onBack, onComplete, mo
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
-          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {questions.map((qq, qi) => {
               const a = answers[qi]
@@ -3108,7 +3108,7 @@ function ListeningP2({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!conversations.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!conversations.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (selectedIdx !== null) return (
     <ListeningP2Exercise conversation={conversations[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
@@ -3139,10 +3139,10 @@ function ListeningP3List({ announcements, scores, onSelect, onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Announcement {idx + 1}</div>
                     {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${a.questions.length} questions`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${a.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(getIntroUrl('listen_to_an_announcement.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(getIntroUrl('listen_to_an_announcement.mp3')); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -3278,8 +3278,8 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
             <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
             <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
-              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#4a4d5f', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#4a4d5f', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
             </div>
           </div>
           <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
@@ -3325,7 +3325,7 @@ function ListeningP3Exercise({ announcement, exerciseNum, onBack, onComplete, mo
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
-          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {questions.map((qq, qi) => {
               const a = answers[qi]
@@ -3437,7 +3437,7 @@ function ListeningP3({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!announcements.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!announcements.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (selectedIdx !== null) return (
     <ListeningP3Exercise announcement={announcements[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
@@ -3471,10 +3471,10 @@ function ListeningP4List({ talks, scores, onSelect, onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Talk {idx + 1}</div>
                     {result && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {result.correct}/{result.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${t.questions.length} questions`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${t.questions.length} questions`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => { primeAudio(getIntroUrl(`academic_talk_practice_${t.id}.mp3`)); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => { primeAudio(getIntroUrl(`academic_talk_practice_${t.id}.mp3`)); onSelect(idx) }} style={{ background: result ? '#e5e7eb' : '#2ac56c', color: result ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {result ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -3611,8 +3611,8 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
             <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
             <span style={{ fontSize: '13px', color: '#888' }}>Q{reviewQ + 1} of {totalQ}</span>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
-              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#4a4d5f', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#4a4d5f', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
             </div>
           </div>
           <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
@@ -3658,7 +3658,7 @@ function ListeningP4Exercise({ talk, exerciseNum, onBack, onComplete, mockMode =
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
-          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap a question to see details</span></div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {questions.map((qq, qi) => {
               const a = answers[qi]
@@ -3772,7 +3772,7 @@ function ListeningP4({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!talks.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!talks.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (selectedIdx !== null) return (
     <ListeningP4Exercise talk={talks[selectedIdx]} exerciseNum={selectedIdx + 1} onBack={() => setSelectedIdx(null)}
@@ -4075,14 +4075,14 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
             <button onClick={() => setReviewQ(null)} style={{ background: 'none', border: 'none', fontSize: '13px', color: '#2ac56c', fontWeight: '700', cursor: 'pointer' }}>← Back to Review</button>
             <span style={{ fontSize: '13px', color: '#888' }}>Item {reviewQ + 1} of {totalQ}</span>
             <div style={{ display: 'flex', gap: '8px' }}>
-              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#616473', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
-              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#616473', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
+              <button onClick={() => setReviewQ(Math.max(0, reviewQ - 1))} disabled={reviewQ === 0} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === 0 ? '#ccc' : '#4a4d5f', cursor: reviewQ === 0 ? 'default' : 'pointer' }}>← Prev</button>
+              <button onClick={() => setReviewQ(Math.min(totalQ - 1, reviewQ + 1))} disabled={reviewQ === totalQ - 1} style={{ background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '5px 12px', fontSize: '12px', color: reviewQ === totalQ - 1 ? '#ccc' : '#4a4d5f', cursor: reviewQ === totalQ - 1 ? 'default' : 'pointer' }}>Next →</button>
             </div>
           </div>
           <div style={{ height: '2.5px', background: '#2ac56c', flexShrink: 0 }} />
           <div style={{ flex: 1, overflowY: 'auto', padding: '32px', display: 'flex', justifyContent: 'center' }}>
             <div style={{ maxWidth: '700px', width: '100%', display: 'flex', flexDirection: 'column', gap: '22px' }}>
-              <div style={{ fontSize: '15px', color: '#616473' }}>{rq.prompt}</div>
+              <div style={{ fontSize: '15px', color: '#4a4d5f' }}>{rq.prompt}</div>
               <div>
                 <div style={{ fontSize: '11px', fontWeight: '700', color: a.isCorrect ? '#2ac56c' : '#d94040', marginBottom: '6px', textTransform: 'uppercase', letterSpacing: '0.5px' }}>Your answer</div>
                 <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.6' }}>
@@ -4118,7 +4118,7 @@ function BuildSentenceExercise({ items, setIndex, onBack, onComplete, mockMode =
               <button onClick={() => onComplete(score, totalQ)} style={{ flex: 1, padding: '11px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '13px', cursor: 'pointer' }}>Back</button>
             </div>
           </div>
-          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap an item to see details</span></div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.6px', marginBottom: '12px' }}>Review · <span style={{ fontWeight: '400', textTransform: 'none', letterSpacing: 0 }}>tap an item to see details</span></div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
             {items.map((it, qi) => {
               const a = answers[qi]
@@ -4193,7 +4193,7 @@ function BuildASentence({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   // Split the full item pool into fixed-size practice sets (10 items · 7:00 each).
   const sets = []
@@ -4226,10 +4226,10 @@ function BuildASentence({ onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice Set {i + 1}</div>
                     {score && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: pct >= 70 ? '#2ac56c' : '#e07b00', background: pct >= 70 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score.correct}/{score.total} · {pct}%</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${setItems.length} items · ${totalLabel} total`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${setItems.length} items · ${totalLabel} total`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => setActiveSet(i)} style={{ background: score ? '#e5e7eb' : '#2ac56c', color: score ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => setActiveSet(i)} style={{ background: score ? '#e5e7eb' : '#2ac56c', color: score ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {score ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -4387,7 +4387,7 @@ function ScoreDimensionBar({ label, score, note }) {
       <div style={{ height: '6px', borderRadius: '3px', background: '#eef0f4', overflow: 'hidden' }}>
         <div style={{ height: '100%', width: `${(score / 6) * 100}%`, background: color, borderRadius: '3px' }} />
       </div>
-      {note && <div style={{ fontSize: '12px', color: '#616473', marginTop: '4px', lineHeight: '1.5' }}>{note}</div>}
+      {note && <div style={{ fontSize: '12px', color: '#4a4d5f', marginTop: '4px', lineHeight: '1.5' }}>{note}</div>}
     </div>
   )
 }
@@ -4716,12 +4716,12 @@ function EmailExercise({ item, index, onBack, onComplete, mockMode = false, paus
                 <button onClick={handlePaste} disabled={locked} style={toolbarBtnStyle(locked)}>Paste</button>
                 <button onClick={handleUndo} disabled={locked || historyState.idx === 0} style={toolbarBtnStyle(locked || historyState.idx === 0)}>Undo</button>
                 <button onClick={handleRedo} disabled={locked || historyState.idx >= historyState.list.length - 1} style={toolbarBtnStyle(locked || historyState.idx >= historyState.list.length - 1)}>Redo</button>
-                <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#9ca3af', fontWeight: '700' }}>{wordCount} words</span>
+                <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#6b7280', fontWeight: '700' }}>{wordCount} words</span>
               </div>
               <textarea ref={textareaRef} value={body} onChange={handleTextChange} disabled={locked}
                 placeholder={`Dear ${item.recipient},\n\n...`}
                 aria-labelledby="email-response-label"
-                style={{ width: '100%', minHeight: '260px', border: 'none', outline: 'none', resize: 'vertical', padding: '14px', fontSize: '14px', lineHeight: '1.6', fontFamily: 'sans-serif', color: locked ? '#9ca3af' : '#1a1a1a', boxSizing: 'border-box', background: locked ? '#fbfbfc' : '#fff' }} />
+                style={{ width: '100%', minHeight: '260px', border: 'none', outline: 'none', resize: 'vertical', padding: '14px', fontSize: '14px', lineHeight: '1.6', fontFamily: 'sans-serif', color: locked ? '#6b7280' : '#1a1a1a', boxSizing: 'border-box', background: locked ? '#fbfbfc' : '#fff' }} />
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
@@ -4802,7 +4802,7 @@ function WriteEmail({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (activeIdx !== null) return (
     <EmailExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
@@ -4828,10 +4828,10 @@ function WriteEmail({ onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {i + 1}</div>
                     {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 4.2 ? '#2ac56c' : '#e07b00', background: score >= 4.2 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/6</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `To: ${it.recipient} · ${timeLabel} time limit`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `To: ${it.recipient} · ${timeLabel} time limit`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {score != null ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -5170,12 +5170,12 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
                 <button onClick={handlePaste} disabled={locked} style={toolbarBtnStyle(locked)}>Paste</button>
                 <button onClick={handleUndo} disabled={locked || historyState.idx === 0} style={toolbarBtnStyle(locked || historyState.idx === 0)}>Undo</button>
                 <button onClick={handleRedo} disabled={locked || historyState.idx >= historyState.list.length - 1} style={toolbarBtnStyle(locked || historyState.idx >= historyState.list.length - 1)}>Redo</button>
-                <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#9ca3af', fontWeight: '700' }}>{wordCount} words</span>
+                <span style={{ marginLeft: 'auto', fontSize: '12px', color: '#6b7280', fontWeight: '700' }}>{wordCount} words</span>
               </div>
               <textarea ref={textareaRef} value={body} onChange={handleTextChange} disabled={locked}
                 placeholder="Share your opinion and respond to your classmates..."
                 aria-labelledby="discussion-response-label"
-                style={{ width: '100%', minHeight: '220px', border: 'none', outline: 'none', resize: 'vertical', padding: '14px', fontSize: '14px', lineHeight: '1.6', fontFamily: 'sans-serif', color: locked ? '#9ca3af' : '#1a1a1a', boxSizing: 'border-box', background: locked ? '#fbfbfc' : '#fff' }} />
+                style={{ width: '100%', minHeight: '220px', border: 'none', outline: 'none', resize: 'vertical', padding: '14px', fontSize: '14px', lineHeight: '1.6', fontFamily: 'sans-serif', color: locked ? '#6b7280' : '#1a1a1a', boxSizing: 'border-box', background: locked ? '#fbfbfc' : '#fff' }} />
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '12px' }}>
@@ -5256,7 +5256,7 @@ function AcademicDiscussion({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (activeIdx !== null) return (
     <AcademicDiscussionExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
@@ -5282,10 +5282,10 @@ function AcademicDiscussion({ onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>Practice {i + 1}</div>
                     {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 4.2 ? '#2ac56c' : '#e07b00', background: score >= 4.2 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/6</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `Topic: ${it.subject} · ${timeLabel} time limit`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `Topic: ${it.subject} · ${timeLabel} time limit`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {score != null ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -5488,28 +5488,28 @@ function MicPermissionGate({ micState, onRetry, onBack }) {
   return (
     <div ref={trapRef} style={micGateStyle()} role="dialog" aria-modal="true" aria-label="Microphone access">
       <div style={{ fontSize: '40px' }}>🎙️</div>
-      {micState === 'checking' && <div style={{ fontSize: '15px', color: '#616473' }}>Checking microphone access…</div>}
+      {micState === 'checking' && <div style={{ fontSize: '15px', color: '#4a4d5f' }}>Checking microphone access…</div>}
       {micState === 'unsupported' && (
         <>
           <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', maxWidth: '420px' }}>Your browser doesn't support live speech recognition.</div>
-          <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px' }}>Please try this exercise in Chrome or Edge on desktop.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f', maxWidth: '420px' }}>Please try this exercise in Chrome or Edge on desktop.</div>
         </>
       )}
       {micState === 'denied' && (
         <>
           <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', maxWidth: '420px' }}>Microphone access was denied.</div>
-          <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px' }}>Please allow microphone access for this site in your browser settings, then try again.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f', maxWidth: '420px' }}>Please allow microphone access for this site in your browser settings, then try again.</div>
           <button onClick={onRetry} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 20px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', marginTop: '8px' }}>Try Again</button>
         </>
       )}
       {micState === 'timeout' && (
         <>
           <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a', maxWidth: '420px' }}>This is taking longer than expected.</div>
-          <div style={{ fontSize: '13px', color: '#616473', maxWidth: '420px' }}>Check for a microphone permission prompt from your browser, or make sure a microphone is connected, then try again.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f', maxWidth: '420px' }}>Check for a microphone permission prompt from your browser, or make sure a microphone is connected, then try again.</div>
           <button onClick={onRetry} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '6px', padding: '9px 20px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', marginTop: '8px' }}>Try Again</button>
         </>
       )}
-      <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#616473', cursor: 'pointer', marginTop: '6px' }}>← Back</button>
+      <button onClick={onBack} style={{ background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '7px 16px', fontSize: '13px', color: '#4a4d5f', cursor: 'pointer', marginTop: '6px' }}>← Back</button>
     </div>
   )
 }
@@ -6780,7 +6780,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
         <div style={{ maxWidth: phase === 'summary' ? '760px' : '720px', width: '100%' }}>
           {phase === 'intro' && (
             <>
-              <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.location}</div>
+              <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.location}</div>
               <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
               {item.scene ? (
                 <SceneIllustration scene={item.scene} location={item.location} activeKeys={[]} width={520} height={420} />
@@ -6806,14 +6806,14 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
 
           {phase === 'playing' && (
             <>
-              <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '22px 0 8px' }}>{sentence.length} sentence</div>
+              <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '22px 0 8px' }}>{sentence.length} sentence</div>
               <SafeAudio src={sentence.audio_url} onEnded={startRecording} onError={() => { showToast("Audio didn't load — try recording from memory or go back and retry.", 'error'); startRecording() }} />
             </>
           )}
 
           {phase === 'recording' && (
             <>
-              <div style={{ fontSize: '14px', color: '#616473', fontWeight: '600', margin: '22px 0 16px' }}>Repeat the sentence now.</div>
+              <div style={{ fontSize: '14px', color: '#4a4d5f', fontWeight: '600', margin: '22px 0 16px' }}>Repeat the sentence now.</div>
               <div style={{ maxWidth: '300px', margin: '0 auto', borderRadius: '10px', overflow: 'hidden', border: '1px solid #d0d5dd' }}>
                 <div style={{ background: '#5b5f6b', color: '#fff', fontSize: '13px', fontWeight: '700', letterSpacing: '0.5px', padding: '10px', textTransform: 'uppercase' }}>Response Time</div>
                 <div style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '18px' }}>
@@ -6828,7 +6828,7 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
 
           {phase === 'summary' && (
             <>
-              <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>All sentences complete</div>
+              <div style={{ fontSize: '13px', color: '#6b7280', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>All sentences complete</div>
               <div style={{ margin: '4px 0 18px' }}>
                 <span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c', background: '#edfbf3', padding: '6px 16px', borderRadius: '999px' }}>Avg {avgLabel} / 6</span>
               </div>
@@ -6836,12 +6836,12 @@ function ListenRepeatExercise({ item, index, onBack, onComplete, mockMode = fals
                 {answers.map((a, i) => (
                   <div key={i} style={{ background: '#f4f6fa', borderRadius: '8px', padding: '14px 16px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase' }}>Sentence {i + 1}</span>
+                      <span style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase' }}>Sentence {i + 1}</span>
                       <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 6</span>
                     </div>
                     <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>Target:</b> {a.target}</div>
                     <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)')}</div>
-                    <div style={{ fontSize: '12px', color: '#616473' }}>{a.summary}</div>
+                    <div style={{ fontSize: '12px', color: '#4a4d5f' }}>{a.summary}</div>
                   </div>
                 ))}
               </div>
@@ -6882,7 +6882,7 @@ function ListenRepeat({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (activeIdx !== null) return (
     <ListenRepeatExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
@@ -6908,10 +6908,10 @@ function ListenRepeat({ onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>{it.location}</div>
                     {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 4.2 ? '#2ac56c' : '#e07b00', background: score >= 4.2 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/6 avg</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${it.sentences.length} sentences`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${it.sentences.length} sentences`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {score != null ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -7105,7 +7105,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, 
         <div style={{ maxWidth: phase === 'summary' ? '760px' : '720px', width: '100%' }}>
           {phase === 'intro' && (
             <>
-              <div style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.topic}</div>
+              <div style={{ fontSize: '14px', color: '#6b7280', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', margin: '0 0 8px' }}>{item.topic}</div>
               <div style={{ fontSize: '17px', color: '#1a1a1a', lineHeight: '1.7', marginBottom: '22px' }}>{item.introText}</div>
               <RealPersonAvatar gender={item.speaker} seed={item.id * 10} width={280} height={280} mode="playing" />
               <SafeAudio src={item.audio_url_intro} onEnded={beginPractice} onError={beginPractice} />
@@ -7127,7 +7127,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, 
 
           {phase === 'recording' && (
             <>
-              <div style={{ fontSize: '14px', color: '#616473', fontWeight: '600', margin: '22px 0 16px' }}>Answer the question now.</div>
+              <div style={{ fontSize: '14px', color: '#4a4d5f', fontWeight: '600', margin: '22px 0 16px' }}>Answer the question now.</div>
               <div style={{ maxWidth: '300px', margin: '0 auto', borderRadius: '10px', overflow: 'hidden', border: '1px solid #d0d5dd' }}>
                 <div style={{ background: '#5b5f6b', color: '#fff', fontSize: '13px', fontWeight: '700', letterSpacing: '0.5px', padding: '10px', textTransform: 'uppercase' }}>Response Time</div>
                 <div style={{ background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', padding: '18px' }}>
@@ -7142,7 +7142,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, 
 
           {phase === 'summary' && (
             <>
-              <div style={{ fontSize: '13px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>All questions complete</div>
+              <div style={{ fontSize: '13px', color: '#6b7280', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>All questions complete</div>
               <div style={{ margin: '4px 0 18px' }}>
                 <span style={{ fontSize: '13px', fontWeight: '700', color: '#2ac56c', background: '#edfbf3', padding: '6px 16px', borderRadius: '999px' }}>Avg {avgLabel} / 6</span>
               </div>
@@ -7150,7 +7150,7 @@ function InterviewExercise({ item, index, onBack, onComplete, mockMode = false, 
                 {answers.map((a, i) => (
                   <div key={i} style={{ background: '#f4f6fa', borderRadius: '8px', padding: '14px 16px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase' }}>Question {i + 1}</span>
+                      <span style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase' }}>Question {i + 1}</span>
                       <span style={{ fontSize: '12px', fontWeight: '700', color: '#2ac56c' }}>{a.score} / 6</span>
                     </div>
                     <div style={{ fontSize: '13px', color: '#1a1a1a', marginBottom: '6px' }}><b>You said:</b> {a.transcript || (a.micError ? '(voice recognition error -- check mic access and retry)' : '(nothing detected)')}</div>
@@ -7205,7 +7205,7 @@ function TakeInterview({ onBack }) {
   }, [])
 
   if (loading) return <LoadingState label="Loading exercises..." />
-  if (!items.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
+  if (!items.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No exercises found. Make sure the backend is running.</div>
 
   if (activeIdx !== null) return (
     <InterviewExercise item={items[activeIdx]} index={activeIdx} onBack={() => setActiveIdx(null)}
@@ -7231,10 +7231,10 @@ function TakeInterview({ onBack }) {
                     <div style={{ fontSize: '15px', fontWeight: '600', color: '#1a1a1a' }}>{it.topic}</div>
                     {score != null && !locked && <span style={{ fontSize: '11px', fontWeight: '700', color: score >= 4.2 ? '#2ac56c' : '#e07b00', background: score >= 4.2 ? '#edfbf3' : '#fff8ec', padding: '2px 8px', borderRadius: '999px' }}>✓ {score}/6 avg</span>}
                   </div>
-                  <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${it.questions.length} questions · 45s each`}</div>
+                  <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{locked ? 'Subscribe to unlock' : `${it.questions.length} questions · 45s each`}</div>
                 </div>
                 {locked ? <LockedBadge /> : (
-                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#616473' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
+                  <button onClick={() => setActiveIdx(i)} style={{ background: score != null ? '#e5e7eb' : '#2ac56c', color: score != null ? '#4a4d5f' : '#fff', border: 'none', borderRadius: '6px', padding: '9px 22px', fontSize: '13px', fontWeight: '600', cursor: 'pointer' }}>
                     {score != null ? 'Retry' : 'Start'}
                   </button>
                 )}
@@ -7260,10 +7260,10 @@ function ListeningHome({ onSelect, onBack }) {
         <div key={i} style={{ backgroundColor: '#fff', padding: isMobile ? '16px' : '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...(isMobile ? { flexDirection: 'column', alignItems: 'stretch', gap: '14px' } : {}) }}>
           <div style={{ maxWidth: '70%' }}>
             <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-            <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
-            <span style={{ fontSize: '11px', color: p.ready ? '#2ac56c' : '#9ca3af', fontWeight: '600' }}>{p.count}</span>
+            <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#4a4d5f' }}>{p.desc}</p>
+            <span style={{ fontSize: '11px', color: p.ready ? '#2ac56c' : '#6b7280', fontWeight: '600' }}>{p.count}</span>
           </div>
-          <button onClick={() => p.ready && onSelect(p.key)} style={{ backgroundColor: p.ready ? '#2ac56c' : '#e5e7eb', color: p.ready ? '#fff' : '#9ca3af', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: p.ready ? 'pointer' : 'not-allowed', fontSize: '13px', flexShrink: 0 }}>
+          <button onClick={() => p.ready && onSelect(p.key)} style={{ backgroundColor: p.ready ? '#2ac56c' : '#e5e7eb', color: p.ready ? '#fff' : '#6b7280', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: p.ready ? 'pointer' : 'not-allowed', fontSize: '13px', flexShrink: 0 }}>
             {p.ready ? 'Open Module' : 'Coming Soon'}
           </button>
         </div>
@@ -7715,7 +7715,7 @@ function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue, 
             {icons.map((ic, i) => (
               <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
                 <div style={{ width: '56px', height: '56px', borderRadius: '50%', background: '#edfbf3', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '26px' }}>{ic.emoji}</div>
-                <span style={{ fontSize: '12px', fontWeight: '700', color: '#616473' }}>{ic.label}</span>
+                <span style={{ fontSize: '12px', fontWeight: '700', color: '#4a4d5f' }}>{ic.label}</span>
               </div>
             ))}
           </div>
@@ -7728,13 +7728,13 @@ function TestNoticeScreen({ title, paragraphs, rows, icons, visual, onContinue, 
           <div style={{ marginTop: '8px', border: '1px solid #e5e7eb', borderRadius: '4px', overflow: 'hidden', maxWidth: '1400px' }}>
             {!isMobile && (
               <div style={{ display: 'flex', background: '#eef0f4', borderBottom: '1px solid #e5e7eb', padding: '12px 20px' }}>
-                <div style={{ flex: '0 0 320px', fontSize: '13px', fontWeight: '700', color: '#616473' }}>Type of Task</div>
-                <div style={{ flex: 1, fontSize: '13px', fontWeight: '700', color: '#616473' }}>Description</div>
+                <div style={{ flex: '0 0 320px', fontSize: '13px', fontWeight: '700', color: '#4a4d5f' }}>Type of Task</div>
+                <div style={{ flex: 1, fontSize: '13px', fontWeight: '700', color: '#4a4d5f' }}>Description</div>
               </div>
             )}
             {rows.map((r, i) => (
               <div key={i} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '4px' : '0', padding: isMobile ? '14px 16px' : '16px 20px', borderBottom: i < rows.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
-                <div style={{ flex: isMobile ? 'none' : '0 0 320px', fontSize: isMobile ? '13px' : '15px', fontWeight: isMobile ? '700' : '400', color: isMobile ? '#616473' : '#1a1a1a' }}>{r[0]}</div>
+                <div style={{ flex: isMobile ? 'none' : '0 0 320px', fontSize: isMobile ? '13px' : '15px', fontWeight: isMobile ? '700' : '400', color: isMobile ? '#4a4d5f' : '#1a1a1a' }}>{r[0]}</div>
                 <div style={{ flex: 1, fontSize: isMobile ? '14px' : '15px', color: '#1a1a1a' }}>{r[1]}</div>
               </div>
             ))}
@@ -7891,7 +7891,7 @@ function MicVolumeCheckModal({ onStart, onCancel }) {
           </div>
           <div style={{ marginTop: '16px', paddingTop: '14px', borderTop: '1px solid #f0f0f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', position: 'relative' }}>
             <div style={{ minWidth: 0 }}>
-              <div style={{ fontSize: '10px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px' }}>Connected Microphone</div>
+              <div style={{ fontSize: '10px', color: '#6b7280', fontWeight: '700', textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px' }}>Connected Microphone</div>
               <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{status === 'denied' ? 'Not available' : micLabel}</div>
             </div>
             {devices.length > 1 && status !== 'denied' && (
@@ -7927,7 +7927,7 @@ function MicVolumeCheckModal({ onStart, onCancel }) {
           Start
         </button>
         {onCancel && (
-          <button onClick={() => { teardown(); onCancel() }} style={{ width: '100%', marginTop: '10px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '13px', padding: '4px', cursor: 'pointer' }}>
+          <button onClick={() => { teardown(); onCancel() }} style={{ width: '100%', marginTop: '10px', background: 'none', border: 'none', color: '#6b7280', fontSize: '13px', padding: '4px', cursor: 'pointer' }}>
             ← Cancel
           </button>
         )}
@@ -7948,7 +7948,7 @@ function MicLevelExampleRow({ label, good }) {
           <div key={i} style={{ width: '14px', height: '28px', borderRadius: '2px', background: i < litCount ? color : '#eef0f4' }} />
         ))}
       </div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#9ca3af', maxWidth: '210px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#6b7280', maxWidth: '210px' }}>
         <span>Too Quiet</span><span>Good</span><span>Too Loud</span>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '14px', fontWeight: '700', color }}>
@@ -8172,7 +8172,7 @@ const AVAILABLE_FIXED_TEST_IDS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
 function MockTestList({ onSelect, hasPremium = false }) {
   return (
     <div style={{ width: '100%', maxWidth: '560px', marginBottom: '36px' }}>
-      <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px', textAlign: 'left' }}>
+      <div style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px', textAlign: 'left' }}>
         Fixed Mock Tests — same content every time
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -8191,10 +8191,10 @@ function MockTestList({ onSelect, hasPremium = false }) {
               }}>
               <span style={{ fontSize: '14px', fontWeight: '700', color: available ? '#1a1a1a' : '#b0b3bd' }}>Mock Test {id}</span>
               <span style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-                <span style={{ fontSize: '10px', fontWeight: '700', color: locked ? '#9ca3af' : (available ? '#2a9d5c' : '#c1c4cd'), textTransform: 'uppercase', letterSpacing: '0.3px' }}>
+                <span style={{ fontSize: '10px', fontWeight: '700', color: locked ? '#6b7280' : (available ? '#2a9d5c' : '#c1c4cd'), textTransform: 'uppercase', letterSpacing: '0.3px' }}>
                   {locked ? '🔒 Premium' : (available ? 'Ready' : 'Coming soon')}
                 </span>
-                <span style={{ fontSize: '12px', color: '#9ca3af' }}>›</span>
+                <span style={{ fontSize: '12px', color: '#6b7280' }}>›</span>
               </span>
             </button>
           )
@@ -8264,10 +8264,10 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
   // about.
   return (
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', textAlign: 'center' }}>
-      <button onClick={onBack} style={{ alignSelf: 'flex-start', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer', marginBottom: '20px' }}>← Back</button>
+      <button onClick={onBack} style={{ alignSelf: 'flex-start', background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '9px 18px', fontSize: '13px', color: '#4a4d5f', cursor: 'pointer', marginBottom: '20px' }}>← Back</button>
       <div style={{ fontSize: '13px', fontWeight: '700', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>Fixed Mock Test</div>
       <h1 style={{ margin: '0 0 14px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Mock Test {id}</h1>
-      <p style={{ maxWidth: '520px', color: '#616473', fontSize: '14px', lineHeight: '1.7', marginBottom: '10px' }}>
+      <p style={{ maxWidth: '520px', color: '#4a4d5f', fontSize: '14px', lineHeight: '1.7', marginBottom: '10px' }}>
         {available
           ? 'Same content every time you take it — Reading, Listening, Writing, and Speaking, back-to-back in the official order.'
           : "This test hasn't been built yet. Check back soon — new fixed mock tests are added regularly."}
@@ -8277,7 +8277,7 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
           <button onClick={() => onStartSection('full')} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '13px 32px', fontSize: '14px', fontWeight: '700', cursor: 'pointer', marginBottom: '14px' }}>
             Start Full Mock Test
           </button>
-          <p style={{ maxWidth: '520px', color: '#9ca3af', fontSize: '12px', lineHeight: '1.6', marginBottom: '18px' }}>
+          <p style={{ maxWidth: '520px', color: '#6b7280', fontSize: '12px', lineHeight: '1.6', marginBottom: '18px' }}>
             Want to practice just one part? Click a section below to jump straight into that part of this test.
           </p>
         </>
@@ -8301,7 +8301,7 @@ function MockTestDetailScreen({ id, onBack, onStartSection }) {
                   </span>
                 )}
               </span>
-              <span style={{ fontSize: '11px', color: '#9ca3af', lineHeight: '1.5' }}>{sec.desc}</span>
+              <span style={{ fontSize: '11px', color: '#6b7280', lineHeight: '1.5' }}>{sec.desc}</span>
             </button>
           )
         })}
@@ -8329,12 +8329,12 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPre
     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', textAlign: 'center' }}>
       <div style={{ fontSize: '13px', fontWeight: '700', color: '#701fa1', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '10px' }}>Full Mock Test</div>
       <h1 style={{ margin: '0 0 14px', fontSize: '26px', fontWeight: '700', color: '#1a1a1a' }}>Reading → Listening → Writing → Speaking</h1>
-      <p style={{ maxWidth: '520px', color: '#616473', fontSize: '14px', lineHeight: '1.7', marginBottom: '10px' }}>
+      <p style={{ maxWidth: '520px', color: '#4a4d5f', fontSize: '14px', lineHeight: '1.7', marginBottom: '10px' }}>
         This runs all four sections back-to-back in the official order, with no going back once you start.
         Reading and Listening are adaptive: your Module 2 content depends on how well you do in Module 1,
         just like the real TOEFL iBT 2026 test.
       </p>
-      <p style={{ maxWidth: '520px', color: '#9ca3af', fontSize: '12px', lineHeight: '1.6', marginBottom: '18px' }}>
+      <p style={{ maxWidth: '520px', color: '#6b7280', fontSize: '12px', lineHeight: '1.6', marginBottom: '18px' }}>
         At the end you'll get an estimated 1–6 band score for each section plus an overall average —
         estimated because ETS doesn't publish its exact scoring formula.
       </p>
@@ -8349,7 +8349,7 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPre
         <>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '18px' }}>
             <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
-            <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or take a fixed test (same content every time)</span>
+            <span style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or take a fixed test (same content every time)</span>
             <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
           </div>
           <MockTestList onSelect={setSelectedTestId} hasPremium={hasPremium} />
@@ -8357,7 +8357,7 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPre
       )}
       <div style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', maxWidth: '560px', marginBottom: '18px' }}>
         <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
-        <span style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or practice one section only</span>
+        <span style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.5px' }}>or practice one section only</span>
         <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '12px', width: '100%', maxWidth: '560px' }}>
@@ -8365,7 +8365,7 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPre
           <button key={sec.key} onClick={() => onStartSection(sec.key)}
             style={{ background: '#fff', border: '1px solid #e1e4ed', borderRadius: '12px', padding: '16px 18px', cursor: 'pointer', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '4px' }}>
             <span style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>{sec.emoji} {sec.label}</span>
-            <span style={{ fontSize: '11px', color: '#9ca3af', lineHeight: '1.5' }}>{sec.desc}</span>
+            <span style={{ fontSize: '11px', color: '#6b7280', lineHeight: '1.5' }}>{sec.desc}</span>
           </button>
         ))}
       </div>
@@ -8378,7 +8378,7 @@ function MockIntroScreen({ onStart, onStartSection, onBack, onStartFixed, hasPre
 // no per-question feedback is ever shown while the test itself is in progress.
 function MockReviewList({ reviewEntries }) {
   const items = reviewEntries.flatMap(entry => entry.detail || [])
-  if (!items.length) return <div style={{ fontSize: '12px', color: '#9ca3af', padding: '12px 0' }}>No answers recorded for this section.</div>
+  if (!items.length) return <div style={{ fontSize: '12px', color: '#6b7280', padding: '12px 0' }}>No answers recorded for this section.</div>
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
       {items.map((it, i) => {
@@ -8392,14 +8392,14 @@ function MockReviewList({ reviewEntries }) {
               <div style={{ fontSize: '12px', color: '#2a9d5c' }}>Correct answer: {it.correctAnswer}</div>
             )}
             {it.score !== undefined && (
-              <div style={{ fontSize: '11px', color: '#616473', marginTop: '4px' }}>Score: {it.score}/{it.maxScore}{it.feedback ? ' — ' + it.feedback : ''}</div>
+              <div style={{ fontSize: '11px', color: '#4a4d5f', marginTop: '4px' }}>Score: {it.score}/{it.maxScore}{it.feedback ? ' — ' + it.feedback : ''}</div>
             )}
             {it.criteria && it.criteria.length > 0 && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', marginTop: '8px', paddingTop: '8px', borderTop: '1px solid #f0f0f0' }}>
                 {it.criteria.map((c, ci) => (
                   <div key={ci} style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
                     <span style={{ fontSize: '11px', color: c.ok ? '#2ac56c' : '#d94040', flexShrink: 0, marginTop: '1px' }}>{c.ok ? '✓' : '✗'}</span>
-                    <span style={{ fontSize: '11px', color: '#616473', lineHeight: '1.5' }}><strong style={{ color: '#1a1a1a' }}>{c.label}:</strong> {c.detail}</span>
+                    <span style={{ fontSize: '11px', color: '#4a4d5f', lineHeight: '1.5' }}><strong style={{ color: '#1a1a1a' }}>{c.label}:</strong> {c.detail}</span>
                   </div>
                 ))}
               </div>
@@ -8410,7 +8410,7 @@ function MockReviewList({ reviewEntries }) {
                 {it.dimensions.map((d, di) => (
                   <div key={di} style={{ display: 'flex', gap: '6px', alignItems: 'flex-start' }}>
                     <span style={{ fontSize: '11px', fontWeight: '700', color: d.score >= 5 ? '#2ac56c' : d.score >= 4 ? '#e07b00' : '#d94040', flexShrink: 0, marginTop: '1px' }}>{d.score}/6</span>
-                    <span style={{ fontSize: '11px', color: '#616473', lineHeight: '1.5' }}><strong style={{ color: '#1a1a1a' }}>{d.label}:</strong> {d.note}</span>
+                    <span style={{ fontSize: '11px', color: '#4a4d5f', lineHeight: '1.5' }}><strong style={{ color: '#1a1a1a' }}>{d.label}:</strong> {d.note}</span>
                   </div>
                 ))}
               </div>
@@ -8443,7 +8443,7 @@ function WritingScoreBreakdown({ basResult, emailResult, discResult, reviewEntri
           <div key={it.key}>
             <button onClick={() => setOpen(prev => ({ ...prev, [it.key]: !prev[it.key] }))}
               style={{ width: '100%', background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '9px 12px', fontSize: '12px', fontWeight: '700', color: '#1a1a1a', cursor: 'pointer', textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span>{it.label} — {it.scoreText}</span><span style={{ color: '#9ca3af', fontWeight: '400' }}>{isOpen ? '▲' : '▼'}</span>
+              <span>{it.label} — {it.scoreText}</span><span style={{ color: '#6b7280', fontWeight: '400' }}>{isOpen ? '▲' : '▼'}</span>
             </button>
             {isOpen && <MockReviewList reviewEntries={entries} />}
           </div>
@@ -8475,7 +8475,7 @@ function MockExitConfirmModal({ onSaveExit, onDiscardExit, onCancel }) {
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
       <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Exit the mock test?" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '400px', width: '100%', textAlign: 'center' }}>
         <div style={{ fontSize: '17px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Exit the mock test?</div>
-        <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.6', marginBottom: '22px' }}>You can save the section(s) you've already finished to your Progress, or discard this whole attempt.</div>
+        <div style={{ fontSize: '13px', color: '#4a4d5f', lineHeight: '1.6', marginBottom: '22px' }}>You can save the section(s) you've already finished to your Progress, or discard this whole attempt.</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
           <button autoFocus onClick={onSaveExit} style={{ background: '#2ac56c', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Save & Exit</button>
           <button onClick={onDiscardExit} style={{ background: '#fff', color: '#d92d20', border: '1.5px solid #d92d20', borderRadius: '8px', padding: '10px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Exit without saving</button>
@@ -9090,9 +9090,9 @@ function FullMockTest({ onBack, hasPremium = false }) {
       const isOpen = openReview[sectionRow.key]
       return (
         <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: '48px 24px', overflowY: 'auto' }}>
-          <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>{sectionRow.label} Practice Complete</div>
+          <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>{sectionRow.label} Practice Complete</div>
           <div style={{ fontSize: '42px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>{sectionRow.band.toFixed(1)} / {SECTION_BAND_MAX[sectionRow.key]}</div>
-          <div style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '20px' }}>Estimated {sectionRow.label} band · {sectionRow.detail}</div>
+          <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '20px' }}>Estimated {sectionRow.label} band · {sectionRow.detail}</div>
           <div style={{ width: '100%', maxWidth: '640px', marginBottom: '20px' }}>
             {sectionRow.key === 'writing' ? (
               <WritingScoreBreakdown basResult={basResult} emailResult={emailResult} discResult={discResult} reviewEntries={s.review.writing} />
@@ -9106,7 +9106,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
               </>
             )}
           </div>
-          <div style={{ fontSize: '11px', color: '#9ca3af', maxWidth: '480px', textAlign: 'center', marginBottom: '20px', lineHeight: '1.6' }}>
+          <div style={{ fontSize: '11px', color: '#6b7280', maxWidth: '480px', textAlign: 'center', marginBottom: '20px', lineHeight: '1.6' }}>
             Band scores are estimates based on your raw performance — ETS does not publish its exact scoring formula, so treat this as a practice signal, not a guaranteed test-day result.
           </div>
           <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -9119,21 +9119,21 @@ function FullMockTest({ onBack, hasPremium = false }) {
 
     return (
       <div style={{ position: 'fixed', inset: 0, background: '#f2f3f5', display: 'flex', flexDirection: 'column', alignItems: 'center', fontFamily: 'sans-serif', zIndex: 10, padding: isMobile ? '28px 16px' : '48px 24px', overflowY: 'auto' }}>
-        <div style={{ fontSize: '13px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Full Mock Test Complete</div>
+        <div style={{ fontSize: '13px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>Full Mock Test Complete</div>
         <div style={{ fontSize: '42px', fontWeight: '800', color: '#701fa1', marginBottom: '4px' }}>{overall.toFixed(1)} / 6</div>
-        <div style={{ fontSize: '13px', color: '#9ca3af', marginBottom: '28px' }}>Estimated overall band (average of 4 sections)</div>
+        <div style={{ fontSize: '13px', color: '#6b7280', marginBottom: '28px' }}>Estimated overall band (average of 4 sections)</div>
         <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', gap: '14px', width: '100%', maxWidth: '560px', marginBottom: '20px' }}>
           {rows.map(r => (
             <div key={r.label} style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
-              <div style={{ fontSize: '12px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', marginBottom: '6px' }}>{r.label}</div>
-              <div style={{ fontSize: '26px', fontWeight: '800', color: '#1a1a1a' }}>{r.band.toFixed(1)} <span style={{ fontSize: '14px', color: '#9ca3af', fontWeight: '600' }}>/ {SECTION_BAND_MAX[r.key]}</span></div>
-              <div style={{ fontSize: '12px', color: '#616473', marginTop: '4px', marginBottom: '10px' }}>{r.detail}</div>
+              <div style={{ fontSize: '12px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', marginBottom: '6px' }}>{r.label}</div>
+              <div style={{ fontSize: '26px', fontWeight: '800', color: '#1a1a1a' }}>{r.band.toFixed(1)} <span style={{ fontSize: '14px', color: '#6b7280', fontWeight: '600' }}>/ {SECTION_BAND_MAX[r.key]}</span></div>
+              <div style={{ fontSize: '12px', color: '#4a4d5f', marginTop: '4px', marginBottom: '10px' }}>{r.detail}</div>
               {r.key === 'writing' ? (
                 <WritingScoreBreakdown basResult={basResult} emailResult={emailResult} discResult={discResult} reviewEntries={s.review.writing} />
               ) : (
                 <>
                   <button onClick={() => setOpenReview(prev => ({ ...prev, [r.key]: !prev[r.key] }))}
-                    style={{ width: '100%', background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '7px 10px', fontSize: '11px', fontWeight: '700', color: '#616473', cursor: 'pointer' }}>
+                    style={{ width: '100%', background: '#f4f6fa', border: '0.5px solid #e1e4ed', borderRadius: '6px', padding: '7px 10px', fontSize: '11px', fontWeight: '700', color: '#4a4d5f', cursor: 'pointer' }}>
                     Review answers {openReview[r.key] ? '▲' : '▼'}
                   </button>
                   {openReview[r.key] && <MockReviewList reviewEntries={s.review[r.key]} />}
@@ -9142,7 +9142,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
             </div>
           ))}
         </div>
-        <div style={{ fontSize: '11px', color: '#9ca3af', maxWidth: '480px', textAlign: 'center', marginBottom: '20px', lineHeight: '1.6' }}>
+        <div style={{ fontSize: '11px', color: '#6b7280', maxWidth: '480px', textAlign: 'center', marginBottom: '20px', lineHeight: '1.6' }}>
           Band scores are estimates based on your raw performance — ETS does not publish its exact scoring formula, so treat this as a practice signal, not a guaranteed test-day result.
         </div>
         <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -9162,7 +9162,7 @@ function FullMockTest({ onBack, hasPremium = false }) {
     // every other phase instead of a bare unactionable message.
     return (
       <>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center', alignItems: 'center', height: '100vh', color: '#616473' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', justifyContent: 'center', alignItems: 'center', height: '100vh', color: '#4a4d5f' }}>
           <div>Loading next section…</div>
           <button onClick={exitMockTest} style={{ background: 'none', border: '1px solid #c7c9d9', borderRadius: '999px', padding: '8px 18px', fontSize: '13px', fontWeight: '600', color: '#44475a', cursor: 'pointer' }}>← Exit</button>
         </div>
@@ -9283,7 +9283,7 @@ function CreateForumQuestionModal({ onClose, onCreated }) {
     <div style={{ position: 'fixed', inset: 0, background: 'rgba(17,22,45,0.55)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 50, fontFamily: 'sans-serif', padding: '16px' }}>
       <div ref={trapRef} role="dialog" aria-modal="true" aria-label="Ask a question" style={{ background: '#fff', borderRadius: '14px', padding: '28px', maxWidth: '480px', width: '100%' }}>
         <div style={{ fontSize: '17px', fontWeight: '800', color: '#1a1a1a', marginBottom: '4px' }}>Ask the community</div>
-        <div style={{ fontSize: '13px', color: '#616473', marginBottom: '18px', lineHeight: '1.5' }}>Posted right away -- other students (and you) can answer.</div>
+        <div style={{ fontSize: '13px', color: '#4a4d5f', marginBottom: '18px', lineHeight: '1.5' }}>Posted right away -- other students (and you) can answer.</div>
         <form onSubmit={handleSubmit}>
           <label style={{ display: 'block', fontSize: '12px', fontWeight: '700', color: '#374151', marginBottom: '4px' }}>Section</label>
           <select value={section} onChange={e => setSection(e.target.value)} disabled={submitting} style={{ ...inputStyle, marginBottom: '14px' }}>
@@ -9295,7 +9295,7 @@ function CreateForumQuestionModal({ onClose, onCreated }) {
           <textarea value={body} onChange={e => setBody(e.target.value)} maxLength={2000} rows={5} placeholder="Add any details that would help someone answer..." style={{ ...inputStyle, resize: 'vertical' }} disabled={submitting} />
           {error && <div style={{ color: '#dc2626', fontSize: '12px', marginTop: '10px' }}>{error}</div>}
           <div style={{ display: 'flex', gap: '8px', marginTop: '20px' }}>
-            <button type="button" onClick={onClose} disabled={submitting} style={{ flex: 1, background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', color: '#616473', cursor: 'pointer' }}>Cancel</button>
+            <button type="button" onClick={onClose} disabled={submitting} style={{ flex: 1, background: '#fff', border: '1px solid #d1d5db', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', color: '#4a4d5f', cursor: 'pointer' }}>Cancel</button>
             <button type="submit" disabled={submitting} style={{ flex: 1, background: '#701fa1', border: 'none', borderRadius: '8px', padding: '11px', fontSize: '13px', fontWeight: '700', color: '#fff', cursor: 'pointer', opacity: submitting ? 0.7 : 1 }}>{submitting ? 'Posting...' : 'Post question'}</button>
           </div>
         </form>
@@ -9324,7 +9324,7 @@ function ForumHome({ onOpenQuestion }) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(load, [sectionFilter, sort])
 
-  const filterBtnStyle = (active) => ({ padding: '7px 14px', borderRadius: '999px', border: active ? 'none' : '1px solid #e1e4ed', background: active ? '#701fa1' : '#fff', color: active ? '#fff' : '#616473', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' })
+  const filterBtnStyle = (active) => ({ padding: '7px 14px', borderRadius: '999px', border: active ? 'none' : '1px solid #e1e4ed', background: active ? '#701fa1' : '#fff', color: active ? '#fff' : '#4a4d5f', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' })
 
   return (
     <div style={{ padding: '0 8px 40px' }}>
@@ -9334,7 +9334,7 @@ function ForumHome({ onOpenQuestion }) {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '18px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>💬 Community</h1>
-          <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Ask a question, get help from other students preparing for the same exam.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>Ask a question, get help from other students preparing for the same exam.</div>
         </div>
         <button onClick={() => setShowCreate(true)} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '11px 18px', fontSize: '13px', fontWeight: '700', cursor: 'pointer', flexShrink: 0 }}>+ Ask a question</button>
       </div>
@@ -9355,14 +9355,14 @@ function ForumHome({ onOpenQuestion }) {
         <LoadingState label="Loading questions..." />
       ) : loadError ? (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '40px 20px', textAlign: 'center' }}>
-          <div style={{ fontSize: '13px', color: '#616473' }}>Couldn't load the community forum -- check your connection.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f' }}>Couldn't load the community forum -- check your connection.</div>
           <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
         </div>
       ) : questions.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '48px 20px' }}>
           <div style={{ fontSize: '32px', marginBottom: '10px' }}>💬</div>
           <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>No questions yet</div>
-          <div style={{ fontSize: '13px', color: '#616473', marginTop: '4px' }}>Be the first to ask something -- other students will see it here.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '4px' }}>Be the first to ask something -- other students will see it here.</div>
         </div>
       ) : (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -9374,16 +9374,16 @@ function ForumHome({ onOpenQuestion }) {
                 style={{ background: '#fff', borderRadius: '12px', border: '0.5px solid #e1e4ed', padding: '16px', cursor: 'pointer', display: 'flex', gap: '14px', alignItems: 'center' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', minWidth: '46px', flexShrink: 0 }}>
                   <div style={{ fontSize: '17px', fontWeight: '800', color: '#701fa1' }}>{q.upvotes}</div>
-                  <div style={{ fontSize: '9px', color: '#9ca3af', textTransform: 'uppercase' }}>votes</div>
+                  <div style={{ fontSize: '9px', color: '#6b7280', textTransform: 'uppercase' }}>votes</div>
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: '9px', fontWeight: '700', color: meta.color, textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '3px' }}>{meta.label}</div>
                   <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{q.title}</div>
-                  <div style={{ fontSize: '11.5px', color: '#9ca3af', marginTop: '3px' }}>{q.username} · {timeAgo(q.created_at)}</div>
+                  <div style={{ fontSize: '11.5px', color: '#6b7280', marginTop: '3px' }}>{q.username} · {timeAgo(q.created_at)}</div>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', minWidth: isMobile ? 'auto' : '60px', flexShrink: 0 }}>
-                  <div style={{ fontSize: '15px', fontWeight: '700', color: q.answer_count > 0 ? '#2ac56c' : '#9ca3af' }}>{q.answer_count}</div>
-                  <div style={{ fontSize: '9px', color: '#9ca3af', textTransform: 'uppercase' }}>answers</div>
+                  <div style={{ fontSize: '15px', fontWeight: '700', color: q.answer_count > 0 ? '#2ac56c' : '#6b7280' }}>{q.answer_count}</div>
+                  <div style={{ fontSize: '9px', color: '#6b7280', textTransform: 'uppercase' }}>answers</div>
                 </div>
               </div>
             )
@@ -9457,7 +9457,7 @@ function ForumQuestionDetail({ questionId, onBack, currentUserId, isAdmin }) {
   if (loading) return <LoadingState label="Loading question..." />
   if (loadError || !data) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '48px 20px', textAlign: 'center' }}>
-      <div style={{ fontSize: '13px', color: '#616473' }}>Couldn't load this question -- it may have been removed.</div>
+      <div style={{ fontSize: '13px', color: '#4a4d5f' }}>Couldn't load this question -- it may have been removed.</div>
       <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>← Back to Community</button>
     </div>
   )
@@ -9468,7 +9468,7 @@ function ForumQuestionDetail({ questionId, onBack, currentUserId, isAdmin }) {
   const votedOn = (type, id) => myVotes.includes(`${type}:${id}`)
 
   const voteBtn = (type, id, count) => (
-    <button onClick={() => vote(type, id)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', background: votedOn(type, id) ? '#f4f0fb' : '#fff', border: `1px solid ${votedOn(type, id) ? '#701fa1' : '#e1e4ed'}`, borderRadius: '10px', padding: '8px 12px', cursor: 'pointer', minWidth: '48px' }}>
+    <button onClick={() => vote(type, id)} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', background: votedOn(type, id) ? '#f4f0fb' : '#fff', border: `1px solid ${votedOn(type, id) ? '#701fa1' : '#d1d5db'}`, borderRadius: '10px', padding: '8px 12px', cursor: 'pointer', minWidth: '48px' }}>
       <span style={{ fontSize: '13px' }} aria-hidden="true">▲</span>
       <span style={{ fontSize: '13px', fontWeight: '800', color: votedOn(type, id) ? '#701fa1' : '#374151' }}>{count}</span>
     </button>
@@ -9483,7 +9483,7 @@ function ForumQuestionDetail({ questionId, onBack, currentUserId, isAdmin }) {
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ fontSize: '9px', fontWeight: '700', color: meta.color, textTransform: 'uppercase', letterSpacing: '0.4px', marginBottom: '6px' }}>{meta.label}</div>
           <h1 style={{ margin: 0, fontSize: '19px', fontWeight: '800', color: '#1a1a1a' }}>{q.title}</h1>
-          <div style={{ fontSize: '11.5px', color: '#9ca3af', margin: '6px 0 12px' }}>Asked by {q.username} · {timeAgo(q.created_at)}</div>
+          <div style={{ fontSize: '11.5px', color: '#6b7280', margin: '6px 0 12px' }}>Asked by {q.username} · {timeAgo(q.created_at)}</div>
           <div style={{ fontSize: '13.5px', color: '#374151', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{q.body}</div>
           {isAdmin && (
             <button onClick={() => moderate('question', q.id, true)} style={{ marginTop: '12px', background: 'none', border: '1px solid #fca5a5', color: '#dc2626', borderRadius: '7px', padding: '5px 10px', fontSize: '11px', fontWeight: '700', cursor: 'pointer' }}>🚫 Hide (admin)</button>
@@ -9500,7 +9500,7 @@ function ForumQuestionDetail({ questionId, onBack, currentUserId, isAdmin }) {
             <div style={{ flex: 1, minWidth: 0 }}>
               {a.is_accepted && <div style={{ fontSize: '10.5px', fontWeight: '700', color: '#2ac56c', marginBottom: '6px' }}>✓ Accepted answer</div>}
               <div style={{ fontSize: '13.5px', color: '#374151', lineHeight: '1.6', whiteSpace: 'pre-wrap' }}>{a.body}</div>
-              <div style={{ fontSize: '11.5px', color: '#9ca3af', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+              <div style={{ fontSize: '11.5px', color: '#6b7280', marginTop: '8px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
                 <span>{a.username} · {timeAgo(a.created_at)}</span>
                 {isOwner && !a.is_accepted && (
                   <button onClick={() => acceptAnswer(a.id)} style={{ background: 'none', border: '1px solid #2ac56c', color: '#2ac56c', borderRadius: '6px', padding: '3px 9px', fontSize: '10.5px', fontWeight: '700', cursor: 'pointer' }}>Mark as accepted</button>
@@ -9562,7 +9562,7 @@ function BadgesScreen() {
   if (loading) return <LoadingState label="Loading your badges..." />
   if (loadError) return (
     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '48px 20px', textAlign: 'center' }}>
-      <div style={{ fontSize: '13px', color: '#616473' }}>Couldn't load your badges -- check your connection.</div>
+      <div style={{ fontSize: '13px', color: '#4a4d5f' }}>Couldn't load your badges -- check your connection.</div>
       <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
     </div>
   )
@@ -9573,14 +9573,14 @@ function BadgesScreen() {
     <div style={{ padding: '0 8px 40px' }}>
       <div style={{ marginBottom: '20px' }}>
         <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>🏅 Badges</h1>
-        <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>{unlockedCount} of {badges.length} earned -- keep practicing to unlock the rest.</div>
+        <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>{unlockedCount} of {badges.length} earned -- keep practicing to unlock the rest.</div>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(260px, 1fr))', gap: '12px' }}>
         {badges.map(b => {
           const tier = BADGE_TIER_META[b.tier] || BADGE_TIER_META.bronze
           const pct = b.progress_target > 0 ? Math.min(100, Math.round((b.progress_current / b.progress_target) * 100)) : 0
           return (
-            <div key={b.id} style={{ background: b.unlocked ? tier.bg : '#fff', border: `1px solid ${b.unlocked ? tier.color + '55' : '#e1e4ed'}`, borderRadius: '12px', padding: '16px', opacity: b.unlocked ? 1 : 0.75 }}>
+            <div key={b.id} style={{ background: b.unlocked ? tier.bg : '#fff', border: `1px solid ${b.unlocked ? tier.color + '55' : '#d1d5db'}`, borderRadius: '12px', padding: '16px', opacity: b.unlocked ? 1 : 0.75 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <div style={{ fontSize: '26px', filter: b.unlocked ? 'none' : 'grayscale(1)' }} aria-hidden="true">{b.icon}</div>
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -9589,13 +9589,13 @@ function BadgesScreen() {
                 </div>
                 {b.unlocked && <div style={{ fontSize: '16px' }} aria-label="Unlocked">✅</div>}
               </div>
-              <div style={{ fontSize: '11.5px', color: '#616473', marginTop: '8px', lineHeight: '1.4' }}>{b.description}</div>
+              <div style={{ fontSize: '11.5px', color: '#4a4d5f', marginTop: '8px', lineHeight: '1.4' }}>{b.description}</div>
               {!b.unlocked && (
                 <div style={{ marginTop: '10px' }}>
                   <div style={{ height: '6px', background: '#f0f2f5', borderRadius: '3px', overflow: 'hidden' }}>
                     <div style={{ width: `${pct}%`, height: '100%', background: '#701fa1', borderRadius: '3px' }} />
                   </div>
-                  <div style={{ fontSize: '10px', color: '#9ca3af', marginTop: '4px' }}>{b.progress_current} / {b.progress_target}</div>
+                  <div style={{ fontSize: '10px', color: '#6b7280', marginTop: '4px' }}>{b.progress_current} / {b.progress_target}</div>
                 </div>
               )}
             </div>
@@ -9632,14 +9632,14 @@ function LeaderboardScreen({ isLeaderboardOptedOut, onPrivacyChange }) {
       .finally(() => setTogglingPrivacy(false))
   }
 
-  const periodBtnStyle = (active) => ({ padding: '8px 16px', borderRadius: '999px', border: active ? 'none' : '1px solid #e1e4ed', background: active ? '#701fa1' : '#fff', color: active ? '#fff' : '#616473', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer' })
+  const periodBtnStyle = (active) => ({ padding: '8px 16px', borderRadius: '999px', border: active ? 'none' : '1px solid #e1e4ed', background: active ? '#701fa1' : '#fff', color: active ? '#fff' : '#4a4d5f', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer' })
   const medalFor = (rank) => rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : null
 
   return (
     <div style={{ padding: '0 8px 40px', maxWidth: '620px' }}>
       <div style={{ marginBottom: '18px' }}>
         <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>🏆 Leaderboard</h1>
-        <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Ranked by total correct answers across every practice exercise.</div>
+        <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>Ranked by total correct answers across every practice exercise.</div>
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px', flexWrap: 'wrap', gap: '10px' }}>
@@ -9647,7 +9647,7 @@ function LeaderboardScreen({ isLeaderboardOptedOut, onPrivacyChange }) {
           <button onClick={() => setPeriod('weekly')} style={periodBtnStyle(period === 'weekly')}>This Week</button>
           <button onClick={() => setPeriod('alltime')} style={periodBtnStyle(period === 'alltime')}>All Time</button>
         </div>
-        <button onClick={togglePrivacy} disabled={togglingPrivacy} style={{ background: 'none', border: '1px solid #e1e4ed', borderRadius: '7px', padding: '7px 12px', fontSize: '11.5px', fontWeight: '600', color: '#616473', cursor: togglingPrivacy ? 'default' : 'pointer' }}>
+        <button onClick={togglePrivacy} disabled={togglingPrivacy} style={{ background: 'none', border: '1px solid #e1e4ed', borderRadius: '7px', padding: '7px 12px', fontSize: '11.5px', fontWeight: '600', color: '#4a4d5f', cursor: togglingPrivacy ? 'default' : 'pointer' }}>
           {isLeaderboardOptedOut ? '🙈 Hidden from leaderboard' : '👁️ Visible on leaderboard'} · {togglingPrivacy ? '...' : (isLeaderboardOptedOut ? 'Show me' : 'Hide me')}
         </button>
       </div>
@@ -9656,14 +9656,14 @@ function LeaderboardScreen({ isLeaderboardOptedOut, onPrivacyChange }) {
         <LoadingState label="Loading leaderboard..." />
       ) : loadError ? (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', padding: '40px 20px', textAlign: 'center' }}>
-          <div style={{ fontSize: '13px', color: '#616473' }}>Couldn't load the leaderboard -- check your connection.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f' }}>Couldn't load the leaderboard -- check your connection.</div>
           <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '9px 20px', fontSize: '12px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
         </div>
       ) : data.leaderboard.length === 0 ? (
         <div style={{ textAlign: 'center', padding: '48px 20px' }}>
           <div style={{ fontSize: '32px', marginBottom: '10px' }}>🏆</div>
           <div style={{ fontSize: '14px', fontWeight: '700', color: '#1a1a1a' }}>No scores yet {period === 'weekly' ? 'this week' : ''}</div>
-          <div style={{ fontSize: '13px', color: '#616473', marginTop: '4px' }}>Complete a practice exercise to be the first on the board.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '4px' }}>Complete a practice exercise to be the first on the board.</div>
         </div>
       ) : (
         <>
@@ -9674,8 +9674,8 @@ function LeaderboardScreen({ isLeaderboardOptedOut, onPrivacyChange }) {
           )}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {data.leaderboard.map(entry => (
-              <div key={entry.user_id} style={{ display: 'flex', alignItems: 'center', gap: '14px', background: entry.is_you ? '#f4f0fb' : '#fff', border: `1px solid ${entry.is_you ? '#701fa1' : '#e1e4ed'}`, borderRadius: '10px', padding: '12px 16px' }}>
-                <div style={{ width: '30px', textAlign: 'center', fontSize: medalFor(entry.rank) ? '18px' : '13px', fontWeight: '800', color: '#616473', flexShrink: 0 }}>{medalFor(entry.rank) || `#${entry.rank}`}</div>
+              <div key={entry.user_id} style={{ display: 'flex', alignItems: 'center', gap: '14px', background: entry.is_you ? '#f4f0fb' : '#fff', border: `1px solid ${entry.is_you ? '#701fa1' : '#d1d5db'}`, borderRadius: '10px', padding: '12px 16px' }}>
+                <div style={{ width: '30px', textAlign: 'center', fontSize: medalFor(entry.rank) ? '18px' : '13px', fontWeight: '800', color: '#4a4d5f', flexShrink: 0 }}>{medalFor(entry.rank) || `#${entry.rank}`}</div>
                 <div style={{ flex: 1, minWidth: 0, fontSize: '13.5px', fontWeight: entry.is_you ? '800' : '600', color: '#1a1a1a', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{entry.username}{entry.is_you && ' (you)'}</div>
                 <div style={{ fontSize: '14px', fontWeight: '800', color: '#701fa1', flexShrink: 0 }}>{entry.points}</div>
               </div>
@@ -9770,7 +9770,7 @@ function AITutorChat() {
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', gap: '14px', padding: '24px', textAlign: 'center' }}>
       <div style={{ fontSize: '28px' }}>⚠️</div>
       <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>Couldn't load the AI Tutor</div>
-      <div style={{ fontSize: '13px', color: '#616473', maxWidth: '360px' }}>Check your internet connection and try again.</div>
+      <div style={{ fontSize: '13px', color: '#4a4d5f', maxWidth: '360px' }}>Check your internet connection and try again.</div>
       <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
     </div>
   )
@@ -9780,10 +9780,10 @@ function AITutorChat() {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px', flexShrink: 0, gap: '10px' }}>
         <div>
           <h1 style={{ margin: 0, fontSize: '22px', fontWeight: '700', color: '#1a1a1a' }}>🤖 AI Tutor</h1>
-          <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Ask anything about TOEFL strategy, grammar, or your own weak areas -- answers are tailored to your practice history.</div>
+          <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>Ask anything about TOEFL strategy, grammar, or your own weak areas -- answers are tailored to your practice history.</div>
         </div>
         {messages.length > 0 && (
-          <button onClick={clearHistory} disabled={clearing} style={{ flexShrink: 0, background: 'none', border: '1px solid #e1e4ed', borderRadius: '7px', padding: '7px 12px', fontSize: '12px', fontWeight: '600', color: '#616473', cursor: clearing ? 'default' : 'pointer', opacity: clearing ? 0.6 : 1, whiteSpace: 'nowrap' }}>{clearing ? 'Clearing…' : '🗑️ Clear chat'}</button>
+          <button onClick={clearHistory} disabled={clearing} style={{ flexShrink: 0, background: 'none', border: '1px solid #e1e4ed', borderRadius: '7px', padding: '7px 12px', fontSize: '12px', fontWeight: '600', color: '#4a4d5f', cursor: clearing ? 'default' : 'pointer', opacity: clearing ? 0.6 : 1, whiteSpace: 'nowrap' }}>{clearing ? 'Clearing…' : '🗑️ Clear chat'}</button>
         )}
       </div>
 
@@ -9793,7 +9793,7 @@ function AITutorChat() {
             <div style={{ fontSize: '36px' }}>🤖</div>
             <div>
               <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>Hi! I'm your AI TOEFL Tutor.</div>
-              <div style={{ fontSize: '13px', color: '#616473', marginTop: '4px', maxWidth: '360px' }}>Ask me about exam strategy, grammar rules, or how to improve on your weakest sections. Try one of these:</div>
+              <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '4px', maxWidth: '360px' }}>Ask me about exam strategy, grammar rules, or how to improve on your weakest sections. Try one of these:</div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', width: '100%', maxWidth: '420px' }}>
               {AI_TUTOR_STARTER_PROMPTS.map((p, i) => (
@@ -9818,7 +9818,7 @@ function AITutorChat() {
             ))}
             {sending && (
               <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-                <div style={{ background: '#f4f0fb', borderRadius: '14px', borderBottomLeftRadius: '4px', padding: '10px 14px', fontSize: '13px', color: '#9ca3af' }}>Thinking…</div>
+                <div style={{ background: '#f4f0fb', borderRadius: '14px', borderBottomLeftRadius: '4px', padding: '10px 14px', fontSize: '13px', color: '#6b7280' }}>Thinking…</div>
               </div>
             )}
             <div ref={messagesEndRef} />
@@ -9931,7 +9931,7 @@ function ProgressScreen({ onBack, onPractice }) {
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', gap: '14px', padding: '24px', textAlign: 'center' }}>
       <div style={{ fontSize: '28px' }}>⚠️</div>
       <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>Couldn't load your progress</div>
-      <div style={{ fontSize: '13px', color: '#616473', maxWidth: '360px' }}>Check your internet connection and try again. If this keeps happening, our servers may be temporarily unavailable.</div>
+      <div style={{ fontSize: '13px', color: '#4a4d5f', maxWidth: '360px' }}>Check your internet connection and try again. If this keeps happening, our servers may be temporarily unavailable.</div>
       <button onClick={load} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
     </div>
   )
@@ -9954,7 +9954,7 @@ function ProgressScreen({ onBack, onPractice }) {
           <div style={{ fontSize: '13px', color: '#1a1a1a', marginTop: '6px' }}>
             Your lowest-performing skill is <strong>{topRec.label}</strong> <span style={{ color: sectionColor, fontWeight: '700', textTransform: 'uppercase', fontSize: '11px' }}>({topRec.section})</span>.
           </div>
-          <div style={{ fontSize: '12px', color: '#616473', marginTop: '3px' }}>
+          <div style={{ fontSize: '12px', color: '#4a4d5f', marginTop: '3px' }}>
             {topRec.reason === 'not_started' ? "You haven't tried this yet." : `${topRec.avg_pct}% average accuracy so far.`}
             {mistakes && mistakes.total_items > 0 ? ` Review ${mistakes.total_items} mistake${mistakes.total_items === 1 ? '' : 's'} to improve your accuracy.` : ''}
           </div>
@@ -9980,7 +9980,7 @@ function ProgressScreen({ onBack, onPractice }) {
       <div style={{ padding: '48px 24px', textAlign: 'center' }}>
         <div style={{ fontSize: '40px', marginBottom: '12px' }}>📈</div>
         <h2 style={{ margin: '0 0 8px', color: '#1a1a1a', fontSize: '20px' }}>No activity yet</h2>
-        <p style={{ color: '#616473', fontSize: '14px', maxWidth: '420px', margin: '0 auto 20px' }}>Complete a practice exercise or a mock test and your results will start showing up here.</p>
+        <p style={{ color: '#4a4d5f', fontSize: '14px', maxWidth: '420px', margin: '0 auto 20px' }}>Complete a practice exercise or a mock test and your results will start showing up here.</p>
         {focusCard && <div style={{ maxWidth: '480px', margin: '0 auto 20px', textAlign: 'left' }}>{focusCard}</div>}
         <button onClick={onBack} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 22px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Back to Dashboard</button>
       </div>
@@ -10002,22 +10002,22 @@ function ProgressScreen({ onBack, onPractice }) {
     <div style={{ padding: '0 8px 40px' }}>
       <div style={{ marginBottom: '22px' }}>
         <h1 style={{ margin: 0, fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>My Progress</h1>
-        <div style={{ fontSize: '13px', color: '#616473', marginTop: '2px' }}>Every exercise and mock test you've completed, all in one place.</div>
+        <div style={{ fontSize: '13px', color: '#4a4d5f', marginTop: '2px' }}>Every exercise and mock test you've completed, all in one place.</div>
       </div>
 
       {focusCard}
 
       <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '14px', marginBottom: '28px' }}>
         <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
-          <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Total Attempts</div>
+          <div style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Total Attempts</div>
           <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginTop: '4px' }}>{overall.attempts}</div>
         </div>
         <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
-          <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Average Score</div>
+          <div style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Average Score</div>
           <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginTop: '4px' }}>{overall.avg_pct}%</div>
         </div>
         <div style={{ background: '#fff', borderRadius: '12px', padding: '18px 20px', border: '0.5px solid #e1e4ed' }}>
-          <div style={{ fontSize: '11px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Last Activity</div>
+          <div style={{ fontSize: '11px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.4px' }}>Last Activity</div>
           <div style={{ fontSize: '30px', fontWeight: '800', color: '#1a1a1a', marginTop: '4px' }}>{fmtDate(overall.last_attempt)}</div>
         </div>
       </div>
@@ -10027,7 +10027,7 @@ function ProgressScreen({ onBack, onPractice }) {
           <div style={{ padding: '16px 20px', background: '#fff8ec', borderBottom: '0.5px solid #f3d9a8', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div>
               <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>🎯 Review Mistakes</div>
-              <div style={{ fontSize: '12px', color: '#616473', marginTop: '2px' }}>{mistakes.total_items} question{mistakes.total_items === 1 ? '' : 's'} to review</div>
+              <div style={{ fontSize: '12px', color: '#4a4d5f', marginTop: '2px' }}>{mistakes.total_items} question{mistakes.total_items === 1 ? '' : 's'} to review</div>
             </div>
           </div>
           <div>
@@ -10039,10 +10039,10 @@ function ProgressScreen({ onBack, onPractice }) {
                     <div key={entry.category} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '13px 20px', borderTop: '0.5px solid #f0f0f0', flexWrap: isMobile ? 'wrap' : 'nowrap', gap: '10px' }}>
                       <div>
                         <div style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a' }}>
-                          <span style={{ fontSize: '10px', fontWeight: '700', color: '#9ca3af', textTransform: 'uppercase', marginRight: '6px' }}>{PROGRESS_MISTAKES_SECTION_LABEL[sec]}</span>
+                          <span style={{ fontSize: '10px', fontWeight: '700', color: '#6b7280', textTransform: 'uppercase', marginRight: '6px' }}>{PROGRESS_MISTAKES_SECTION_LABEL[sec]}</span>
                           {entry.label}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>
+                        <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>
                           {entry.items.length} item{entry.items.length === 1 ? '' : 's'} to review · lowest {worst}%
                         </div>
                       </div>
@@ -10073,7 +10073,7 @@ function ProgressScreen({ onBack, onPractice }) {
                 <div key={it.cat} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '13px 18px', borderTop: i === 0 ? 'none' : '0.5px solid #f0f0f0' }}>
                   <div>
                     <div style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a' }}>{it.label}</div>
-                    <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>{it.attempts} attempt{it.attempts === 1 ? '' : 's'} · best {it.best_pct}% · last {fmtDate(it.last_attempt)}</div>
+                    <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>{it.attempts} attempt{it.attempts === 1 ? '' : 's'} · best {it.best_pct}% · last {fmtDate(it.last_attempt)}</div>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ width: '90px', height: '6px', background: '#efefef', borderRadius: '4px' }}>
@@ -10095,7 +10095,7 @@ function ProgressScreen({ onBack, onPractice }) {
             <div key={h.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 18px', borderTop: i === 0 ? 'none' : '0.5px solid #f0f0f0' }}>
               <div>
                 <div style={{ fontSize: '13px', fontWeight: '600', color: '#1a1a1a' }}>{h.label || (PROGRESS_CATEGORY_META[h.category]?.label ?? h.category)}</div>
-                <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>{fmtDate(h.saved_at)}</div>
+                <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>{fmtDate(h.saved_at)}</div>
               </div>
               <div style={{ fontSize: '13px', fontWeight: '700', color: h.pct >= 70 ? '#2ac56c' : h.pct >= 50 ? '#e07b00' : '#d94040' }}>{h.score}/{h.total} · {h.pct}%</div>
             </div>
@@ -10103,7 +10103,7 @@ function ProgressScreen({ onBack, onPractice }) {
         </div>
       </div>
 
-      <button onClick={onBack} style={{ marginTop: '24px', background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '9px 18px', fontSize: '13px', color: '#616473', cursor: 'pointer' }}>← Back to Dashboard</button>
+      <button onClick={onBack} style={{ marginTop: '24px', background: 'none', border: '1px solid #d1d5db', borderRadius: '6px', padding: '9px 18px', fontSize: '13px', color: '#4a4d5f', cursor: 'pointer' }}>← Back to Dashboard</button>
     </div>
   )
 }
@@ -10173,13 +10173,13 @@ function AdminPanel() {
 
   const statCard = (label, value) => (
     <div style={{ background: '#fff', borderRadius: '12px', padding: '16px 18px', border: '0.5px solid #e1e4ed', flex: 1, minWidth: '140px' }}>
-      <div style={{ fontSize: '11px', color: '#9ca3af', fontWeight: '700', textTransform: 'uppercase', marginBottom: '4px' }}>{label}</div>
+      <div style={{ fontSize: '11px', color: '#6b7280', fontWeight: '700', textTransform: 'uppercase', marginBottom: '4px' }}>{label}</div>
       <div style={{ fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>{value}</div>
     </div>
   )
 
   if (error) return <div style={{ padding: '16px', color: '#dc2626', fontSize: '13px' }}>{error}</div>
-  if (!stats || !users) return <div style={{ padding: '16px', color: '#616473', fontSize: '13px' }}>Loading admin data...</div>
+  if (!stats || !users) return <div style={{ padding: '16px', color: '#4a4d5f', fontSize: '13px' }}>Loading admin data...</div>
 
   const filterQuery = userFilter.trim().toLowerCase()
   const filteredUsers = filterQuery
@@ -10207,17 +10207,17 @@ function AdminPanel() {
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12.5px', minWidth: isMobile ? '640px' : 'auto' }}>
             <thead>
               <tr style={{ background: '#f9fafb', textAlign: 'left' }}>
-                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Email</th>
-                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Username</th>
-                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Verified</th>
-                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Premium</th>
-                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Joined</th>
-                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#616473' }}>Action</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#4a4d5f' }}>Email</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#4a4d5f' }}>Username</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#4a4d5f' }}>Verified</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#4a4d5f' }}>Premium</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#4a4d5f' }}>Joined</th>
+                <th style={{ padding: '10px 14px', fontWeight: '700', color: '#4a4d5f' }}>Action</th>
               </tr>
             </thead>
             <tbody>
               {filteredUsers.length === 0 && (
-                <tr><td colSpan={6} style={{ padding: '18px 14px', color: '#9ca3af', textAlign: 'center' }}>No users match "{userFilter}".</td></tr>
+                <tr><td colSpan={6} style={{ padding: '18px 14px', color: '#6b7280', textAlign: 'center' }}>No users match "{userFilter}".</td></tr>
               )}
               {filteredUsers.map(u => (
                 <tr key={u.id} style={{ borderTop: '0.5px solid #f0f1f5' }}>
@@ -10225,14 +10225,14 @@ function AdminPanel() {
                   <td style={{ padding: '10px 14px' }}>{u.username}</td>
                   <td style={{ padding: '10px 14px' }}>{u.email_verified ? '✓' : '—'}</td>
                   <td style={{ padding: '10px 14px' }}>
-                    {u.has_premium ? <span style={{ color: '#2ac56c', fontWeight: '700' }}>✓ Premium{u.has_billed_subscription ? ' (paid)' : ''}</span> : <span style={{ color: '#9ca3af' }}>Free</span>}
+                    {u.has_premium ? <span style={{ color: '#2ac56c', fontWeight: '700' }}>✓ Premium{u.has_billed_subscription ? ' (paid)' : ''}</span> : <span style={{ color: '#6b7280' }}>Free</span>}
                   </td>
-                  <td style={{ padding: '10px 14px', color: '#9ca3af' }}>{(u.created_at || '').slice(0, 10)}</td>
+                  <td style={{ padding: '10px 14px', color: '#6b7280' }}>{(u.created_at || '').slice(0, 10)}</td>
                   <td style={{ padding: '10px 14px' }}>
                     {u.is_admin ? (
-                      <span style={{ color: '#9ca3af', fontSize: '11px' }}>—</span>
+                      <span style={{ color: '#6b7280', fontSize: '11px' }}>—</span>
                     ) : u.has_billed_subscription ? (
-                      <span style={{ color: '#9ca3af', fontSize: '11px' }} title="Real Polar subscription -- cancel via the customer's own Settings, not here">Paid, not revocable here</span>
+                      <span style={{ color: '#6b7280', fontSize: '11px' }} title="Real Polar subscription -- cancel via the customer's own Settings, not here">Paid, not revocable here</span>
                     ) : u.has_premium ? (
                       <button onClick={() => setRevokeTarget(u)} disabled={busyId === u.id} style={{ background: '#fff', color: '#dc2626', border: '1px solid #fecaca', borderRadius: '6px', padding: '5px 12px', fontSize: '11.5px', fontWeight: '700', cursor: busyId === u.id ? 'default' : 'pointer', opacity: busyId === u.id ? 0.6 : 1 }}>Revoke</button>
                     ) : (
@@ -10296,7 +10296,7 @@ function VocabFlashcards({ deckLabel, words, onExit, onSetLearned }) {
   if (!words.length) {
     return (
       <ExamScreen topLeft={<TestPillButton onClick={onExit}>Exit</TestPillButton>} section="VOCABULARY" contentStyle={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center', color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>No words in this deck yet.</div>
+        <div style={{ textAlign: 'center', color: '#4a4d5f', fontSize: '14px', fontFamily: 'sans-serif' }}>No words in this deck yet.</div>
       </ExamScreen>
     )
   }
@@ -10326,7 +10326,7 @@ function VocabFlashcards({ deckLabel, words, onExit, onSetLearned }) {
           <div style={{ fontSize: '52px', marginBottom: '12px' }}>🎉</div>
           <div style={{ fontSize: '22px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>Deck complete!</div>
           <div style={{ fontSize: '13px', color: '#888', marginBottom: '24px' }}>{deckLabel} · {words.length} words</div>
-          <div style={{ fontSize: '15px', color: '#616473', marginBottom: '28px' }}>You marked <b style={{ color: '#2a9d5c' }}>{masteredCount}</b> of {words.length} words as known this session.</div>
+          <div style={{ fontSize: '15px', color: '#4a4d5f', marginBottom: '28px' }}>You marked <b style={{ color: '#2a9d5c' }}>{masteredCount}</b> of {words.length} words as known this session.</div>
           <div style={{ display: 'flex', gap: '10px' }}>
             <button onClick={restart} style={{ flex: 1, padding: '13px', background: '#2a9d5c', color: '#fff', border: 'none', borderRadius: '8px', fontWeight: '700', fontSize: '14px', cursor: 'pointer' }}>Study Again</button>
             <button onClick={onExit} style={{ flex: 1, padding: '13px', background: '#fff', color: '#333', border: '1px solid #d0d5dd', borderRadius: '8px', fontWeight: '600', fontSize: '14px', cursor: 'pointer' }}>Back</button>
@@ -10348,15 +10348,15 @@ function VocabFlashcards({ deckLabel, words, onExit, onSetLearned }) {
         style={{ width: '100%', maxWidth: '560px', minHeight: isMobile ? '240px' : '300px', background: flipped ? '#f4f6fa' : '#fff', border: '2px solid #e1e4ed', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: '36px', cursor: 'pointer', boxSizing: 'border-box', boxShadow: '0 4px 20px rgba(0,0,0,0.05)' }}>
         {!flipped ? (
           <>
-            <span style={{ background: (VOCAB_TYPE_COLORS[current.type] || '#616473') + '1a', color: VOCAB_TYPE_COLORS[current.type] || '#616473', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', marginBottom: '18px' }}>{current.type}</span>
+            <span style={{ background: (VOCAB_TYPE_COLORS[current.type] || '#4a4d5f') + '1a', color: VOCAB_TYPE_COLORS[current.type] || '#4a4d5f', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', marginBottom: '18px' }}>{current.type}</span>
             <div style={{ fontSize: isMobile ? '28px' : '36px', fontWeight: '800', color: '#1a1a1a' }}>{current.word}</div>
-            <div style={{ fontSize: '13px', color: '#9ca3af', marginTop: '24px' }}>Tap to reveal meaning</div>
+            <div style={{ fontSize: '13px', color: '#6b7280', marginTop: '24px' }}>Tap to reveal meaning</div>
           </>
         ) : (
           <>
             <div style={{ fontSize: isMobile ? '20px' : '24px', fontWeight: '700', color: '#1a1a1a', marginBottom: '14px' }}>{current.word}</div>
             <div style={{ fontSize: '16px', color: '#333', marginBottom: '14px' }}>{current.meaning}</div>
-            {current.example && <div style={{ fontSize: '14px', color: '#7b809a', fontStyle: 'italic' }}>&quot;{current.example}&quot;</div>}
+            {current.example && <div style={{ fontSize: '14px', color: '#a8adcc', fontStyle: 'italic' }}>&quot;{current.example}&quot;</div>}
           </>
         )}
       </div>
@@ -10398,7 +10398,7 @@ function VocabQuiz({ deckLabel, deckKey, words, allWords, onExit }) {
   if (!words.length) {
     return (
       <ExamScreen topLeft={<TestPillButton onClick={onExit}>Exit</TestPillButton>} section="VOCABULARY" contentStyle={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <div style={{ textAlign: 'center', color: '#616473', fontSize: '14px', fontFamily: 'sans-serif' }}>No words in this deck yet.</div>
+        <div style={{ textAlign: 'center', color: '#4a4d5f', fontSize: '14px', fontFamily: 'sans-serif' }}>No words in this deck yet.</div>
       </ExamScreen>
     )
   }
@@ -10453,7 +10453,7 @@ function VocabQuiz({ deckLabel, deckKey, words, allWords, onExit }) {
       questionLabel={`${deckLabel} Quiz · Question ${qIdx + 1} of ${totalQ}`}
       contentStyle={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
     >
-      <span style={{ background: (VOCAB_TYPE_COLORS[current.type] || '#616473') + '1a', color: VOCAB_TYPE_COLORS[current.type] || '#616473', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', marginBottom: '14px' }}>{current.type}</span>
+      <span style={{ background: (VOCAB_TYPE_COLORS[current.type] || '#4a4d5f') + '1a', color: VOCAB_TYPE_COLORS[current.type] || '#4a4d5f', padding: '4px 12px', borderRadius: '999px', fontSize: '11px', fontWeight: '700', marginBottom: '14px' }}>{current.type}</span>
       <h1 style={{ fontSize: '26px', fontWeight: '700', color: '#1a1a1a', textAlign: 'center', margin: '0 0 32px' }}>What does <span style={{ color: '#701fa1' }}>{current.word}</span> mean?</h1>
       <div role="radiogroup" style={{ display: 'flex', flexDirection: 'column', gap: '14px', maxWidth: '560px', width: '100%' }}>
         {options.map((opt, i) => {
@@ -10491,13 +10491,13 @@ function VocabList({ deckLabel, words, onBack, onSetLearned, onToggleStar }) {
       <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a' }}>{deckLabel}</div>
       <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
         {Object.keys(filterLabels).map(f => (
-          <button key={f} onClick={() => setFilter(f)} style={{ padding: '7px 14px', borderRadius: '8px', border: '1px solid #d1d5db', backgroundColor: filter === f ? '#701fa1' : '#fff', color: filter === f ? '#fff' : '#616473', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}>
+          <button key={f} onClick={() => setFilter(f)} style={{ padding: '7px 14px', borderRadius: '8px', border: '1px solid #d1d5db', backgroundColor: filter === f ? '#701fa1' : '#fff', color: filter === f ? '#fff' : '#4a4d5f', fontSize: '12px', fontWeight: '600', cursor: 'pointer' }}>
             {filterLabels[f]}
           </button>
         ))}
       </div>
       {filtered.length === 0 && (
-        <div style={{ textAlign: 'center', color: '#9ca3af', fontSize: '13px', padding: '32px 12px' }}>
+        <div style={{ textAlign: 'center', color: '#6b7280', fontSize: '13px', padding: '32px 12px' }}>
           {filter === 'learned' && "You haven't marked any words as learned yet."}
           {filter === 'starred' && "You haven't starred any words yet."}
           {filter === 'unlearned' && "You've marked every word in this deck as learned!"}
@@ -10527,16 +10527,16 @@ function VocabList({ deckLabel, words, onBack, onSetLearned, onToggleStar }) {
               <div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
                   <span style={{ width: '10px', height: '10px', background: wordColor, borderRadius: '4px', display: 'inline-block' }} />
-                  <span style={{ backgroundColor: '#f0f2f5', color: '#616473', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
+                  <span style={{ backgroundColor: '#f0f2f5', color: '#4a4d5f', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: '700' }}>{item.type}</span>
                 </div>
                 <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
-                <div style={{ fontSize: '13px', color: '#616473' }}>Tap to reveal meaning</div>
+                <div style={{ fontSize: '13px', color: '#4a4d5f' }}>Tap to reveal meaning</div>
               </div>
             ) : (
               <div>
                 <h4 style={{ margin: '0 0 8px 0', fontSize: '16px', fontWeight: '700' }}>{item.word}</h4>
-                <p style={{ margin: 0, fontSize: '13px', color: '#616473' }}>{item.meaning}</p>
-                {item.example && <p style={{ marginTop: '8px', fontSize: '12px', color: '#7b809a' }}>&quot;{item.example}&quot;</p>}
+                <p style={{ margin: 0, fontSize: '13px', color: '#4a4d5f' }}>{item.meaning}</p>
+                {item.example && <p style={{ marginTop: '8px', fontSize: '12px', color: '#a8adcc' }}>&quot;{item.example}&quot;</p>}
               </div>
             )}
             <button onClick={(e) => { e.stopPropagation(); onSetLearned(item.id, !item.learned) }}
@@ -10593,7 +10593,7 @@ function Vocabulary() {
   }
 
   if (loading) return <LoadingState label="Loading vocabulary..." />
-  if (!words.length) return <div style={{ padding: '40px', color: '#616473', fontSize: '13px' }}>No vocabulary found. Make sure the backend is running.</div>
+  if (!words.length) return <div style={{ padding: '40px', color: '#4a4d5f', fontSize: '13px' }}>No vocabulary found. Make sure the backend is running.</div>
 
   const decks = [
     ...VOCAB_DECKS.map(d => ({ ...d, words: words.filter(w => w.difficulty === d.key) })),
@@ -10618,7 +10618,7 @@ function Vocabulary() {
       <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '8px' }}>
           <span style={{ fontWeight: '600' }}>Overall Progress</span>
-          <span style={{ color: '#616473' }}>{totalLearned} / {words.length} learned</span>
+          <span style={{ color: '#4a4d5f' }}>{totalLearned} / {words.length} learned</span>
         </div>
         <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px' }}>
           <div style={{ width: (totalLearned / words.length * 100) + '%', height: '100%', background: '#2ac56c', borderRadius: '4px', transition: 'width 0.3s ease' }} />
@@ -10635,7 +10635,7 @@ function Vocabulary() {
                 {deck.key === 'starred' && <span>⭐</span>}
                 <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>{deck.label}</div>
               </div>
-              <div style={{ fontSize: '12px', color: '#616473', marginBottom: '10px' }}>
+              <div style={{ fontSize: '12px', color: '#4a4d5f', marginBottom: '10px' }}>
                 {empty ? (deck.key === 'starred' ? 'Star words to save them here' : 'No words') : `${deck.words.length} words · ${learnedInDeck} learned`}
               </div>
               <div style={{ height: '6px', background: '#f0f2f5', borderRadius: '3px', marginBottom: '16px' }}>
@@ -10644,7 +10644,7 @@ function Vocabulary() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <button disabled={empty} onClick={() => openDeck(deck.key, 'flashcards')} style={{ background: deck.color, color: '#fff', border: 'none', borderRadius: '8px', padding: '10px', fontWeight: '700', fontSize: '13px', cursor: empty ? 'default' : 'pointer', opacity: empty ? 0.5 : 1 }}>🗂 Flashcards</button>
                 <button disabled={empty} onClick={() => openDeck(deck.key, 'quiz')} style={{ background: '#fff', color: deck.color, border: `1.5px solid ${deck.color}`, borderRadius: '8px', padding: '10px', fontWeight: '700', fontSize: '13px', cursor: empty ? 'default' : 'pointer', opacity: empty ? 0.5 : 1 }}>📝 Quiz</button>
-                <button disabled={empty} onClick={() => openDeck(deck.key, 'list')} style={{ background: 'none', color: '#616473', border: '1px solid #d1d5db', borderRadius: '8px', padding: '10px', fontWeight: '600', fontSize: '13px', cursor: empty ? 'default' : 'pointer', opacity: empty ? 0.5 : 1 }}>📋 List</button>
+                <button disabled={empty} onClick={() => openDeck(deck.key, 'list')} style={{ background: 'none', color: '#4a4d5f', border: '1px solid #d1d5db', borderRadius: '8px', padding: '10px', fontWeight: '600', fontSize: '13px', cursor: empty ? 'default' : 'pointer', opacity: empty ? 0.5 : 1 }}>📋 List</button>
               </div>
             </div>
           )
@@ -10690,7 +10690,7 @@ function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSave
           <>
             <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#701fa1', letterSpacing: '0.4px', marginBottom: '8px' }}>WELCOME TO MRREADYPREP 🎉</div>
             <h2 style={{ fontSize: '21px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>What's your target score?</h2>
-            <p style={{ fontSize: '13.5px', color: '#616473', lineHeight: '1.6', margin: '0 0 22px' }}>
+            <p style={{ fontSize: '13.5px', color: '#4a4d5f', lineHeight: '1.6', margin: '0 0 22px' }}>
               We'll use this to set your starting goals across Reading, Listening, Writing, and Speaking. You can change it anytime in Settings.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '14px' }}>
@@ -10700,7 +10700,7 @@ function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSave
                 </button>
               ))}
             </div>
-            <button type="button" disabled={saving} onClick={() => setStep('plan')} style={{ width: '100%', padding: '10px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12.5px', fontWeight: '700', cursor: saving ? 'default' : 'pointer' }}>
+            <button type="button" disabled={saving} onClick={() => setStep('plan')} style={{ width: '100%', padding: '10px', background: 'none', border: 'none', color: '#6b7280', fontSize: '12.5px', fontWeight: '700', cursor: saving ? 'default' : 'pointer' }}>
               I'm not sure yet — skip for now
             </button>
           </>
@@ -10708,13 +10708,13 @@ function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSave
           <>
             <div style={{ fontSize: '12.5px', fontWeight: '800', color: '#701fa1', letterSpacing: '0.4px', marginBottom: '8px' }}>YOU'RE ALL SET</div>
             <h2 style={{ fontSize: '21px', fontWeight: '800', color: '#1a1a1a', margin: '0 0 10px' }}>Here's where to start</h2>
-            <p style={{ fontSize: '13.5px', color: '#616473', lineHeight: '1.6', margin: '0 0 18px' }}>
+            <p style={{ fontSize: '13.5px', color: '#4a4d5f', lineHeight: '1.6', margin: '0 0 18px' }}>
               Your personalized plan, based on your account. This updates automatically as you practice.
             </p>
             {recommendations === null ? (
-              <div style={{ fontSize: '13px', color: '#9ca3af', padding: '24px 0', textAlign: 'center' }}>Loading your plan…</div>
+              <div style={{ fontSize: '13px', color: '#6b7280', padding: '24px 0', textAlign: 'center' }}>Loading your plan…</div>
             ) : recommendations.length === 0 ? (
-              <div style={{ fontSize: '13px', color: '#616473', marginBottom: '18px', lineHeight: '1.6' }}>🎉 You're ready to dive in — try any section from your dashboard, or take the Full Mock Test to check your overall readiness.</div>
+              <div style={{ fontSize: '13px', color: '#4a4d5f', marginBottom: '18px', lineHeight: '1.6' }}>🎉 You're ready to dive in — try any section from your dashboard, or take the Full Mock Test to check your overall readiness.</div>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '18px' }}>
                 {recommendations.slice(0, 4).map(rec => {
@@ -10732,7 +10732,7 @@ function OnboardingFlow({ onDone, initialUsername, recommendations, onTargetSave
               Start Practicing
             </button>
             {onTakeDiagnostic && (
-              <button type="button" onClick={onTakeDiagnostic} style={{ width: '100%', padding: '10px', background: 'none', border: 'none', color: '#9ca3af', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer', marginTop: '4px' }}>
+              <button type="button" onClick={onTakeDiagnostic} style={{ width: '100%', padding: '10px', background: 'none', border: 'none', color: '#6b7280', fontSize: '12.5px', fontWeight: '700', cursor: 'pointer', marginTop: '4px' }}>
                 Not sure? Take a 5-minute skills check first
               </button>
             )}
@@ -10813,7 +10813,7 @@ function DiagnosticFlow({ onDone }) {
     <div style={{ background: '#fff', borderRadius: '16px', padding: isMobile ? '28px 22px' : '40px 44px', maxWidth: '440px', width: '100%', textAlign: 'center', boxSizing: 'border-box' }}>
       <div style={{ fontSize: '32px', marginBottom: '10px' }} aria-hidden="true">🧭</div>
       <h2 style={{ margin: '0 0 8px', fontSize: '20px', color: '#1a1a1a' }}>Quick Skills Check</h2>
-      <p style={{ color: '#616473', fontSize: '13.5px', lineHeight: '1.6', margin: '0 0 22px' }}>
+      <p style={{ color: '#4a4d5f', fontSize: '13.5px', lineHeight: '1.6', margin: '0 0 22px' }}>
         4 real questions -- one from each section (Reading, Listening, Writing, Speaking) -- about 5 minutes. We'll use your results to recommend where to start.
       </p>
       <button type="button" disabled={!pools} onClick={() => setStep('reading')} style={{ width: '100%', background: pools ? '#701fa1' : '#c9b3e6', color: '#fff', border: 'none', borderRadius: '9px', padding: '13px', fontSize: '14px', fontWeight: '700', cursor: pools ? 'pointer' : 'default', marginBottom: '10px' }}>
@@ -10866,7 +10866,7 @@ function DiagnosticFlow({ onDone }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '22px' }}>
         {DIAGNOSTIC_SECTIONS.map(s => {
           const pct = scores[s.key]
-          const info = pct === undefined ? { label: 'Skipped', color: '#9ca3af' } : sectionResult(pct)
+          const info = pct === undefined ? { label: 'Skipped', color: '#6b7280' } : sectionResult(pct)
           const color = DIAGNOSTIC_SECTION_COLOR[s.key]
           return (
             <div key={s.key} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '11px 14px', background: '#f8f7fb', borderRadius: '9px', borderLeft: `3px solid ${color}` }}>
@@ -10877,7 +10877,7 @@ function DiagnosticFlow({ onDone }) {
         })}
       </div>
       <div style={{ background: '#f4f0fb', borderRadius: '10px', padding: '14px 16px', marginBottom: '18px' }}>
-        <div style={{ fontSize: '12px', color: '#616473', marginBottom: '4px' }}>Recommended next step</div>
+        <div style={{ fontSize: '12px', color: '#4a4d5f', marginBottom: '4px' }}>Recommended next step</div>
         <div style={{ fontSize: '13.5px', fontWeight: '700', color: '#1a1a1a' }}>Start with {weakest.label}</div>
       </div>
       <button type="button" onClick={() => onDone(weakest.nav)} style={{ width: '100%', background: '#701fa1', color: '#fff', border: 'none', borderRadius: '9px', padding: '13px', fontSize: '14px', fontWeight: '700', cursor: 'pointer' }}>
@@ -11037,6 +11037,11 @@ function App({ justSignedUp }) {
   const [writingTarget, setWritingTarget] = useState(6.0)
   const [speakingTarget, setSpeakingTarget] = useState(6.0)
   const [examDate, setExamDate] = useState('')
+  const [newPassword, setNewPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [passwordError, setPasswordError] = useState('')
+  const [passwordSuccess, setPasswordSuccess] = useState('')
+  const [changingPassword, setChangingPassword] = useState(false)
   const [expandedFormat, setExpandedFormat] = useState(false)
   const [editingTargets, setEditingTargets] = useState(false)
   const [readingSubTab, setReadingSubTab] = useState(null)
@@ -11242,7 +11247,7 @@ function App({ justSignedUp }) {
     <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', fontFamily: 'sans-serif', gap: '14px', padding: '24px', textAlign: 'center' }}>
       <div style={{ fontSize: '28px' }}>⚠️</div>
       <div style={{ fontSize: '16px', fontWeight: '700', color: '#1a1a1a' }}>Couldn't load your account</div>
-      <div style={{ fontSize: '13px', color: '#616473', maxWidth: '360px' }}>Check your internet connection and try again. If this keeps happening, our servers may be temporarily unavailable.</div>
+      <div style={{ fontSize: '13px', color: '#4a4d5f', maxWidth: '360px' }}>Check your internet connection and try again. If this keeps happening, our servers may be temporarily unavailable.</div>
       <button onClick={fetchDashboardData} style={{ background: '#701fa1', color: '#fff', border: 'none', borderRadius: '8px', padding: '10px 24px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Retry</button>
     </div>
   )
@@ -11298,7 +11303,7 @@ function App({ justSignedUp }) {
   // the CURRENT section, since exercise components are gated on subTab alone) got silently
   // unmounted before the student ever saw the confirmation. See requestTabChange's comment.
   const sb = (tab, icon, label) => (
-    <button onClick={() => { requestTabChange(tab); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+    <button onClick={() => { requestTabChange(tab); if (isMobile) setMobileNavOpen(false) }} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: currentTab === tab ? '#701fa1' : 'transparent', color: currentTab === tab ? '#fff' : '#b5bac8', display: 'flex', alignItems: 'center', gap: '10px' }}>
       {icon} {label}
     </button>
   )
@@ -11330,7 +11335,7 @@ function App({ justSignedUp }) {
         <div>
           <div style={{ marginBottom: '24px', textAlign: 'center' }}>
             <div style={{ color: '#b67bfb', fontSize: '17px', fontWeight: '600' }}>mrreadyprep</div>
-            <div style={{ fontSize: '9px', color: '#7b809a', letterSpacing: '1px' }}>TOEFL® iBT PREP</div>
+            <div style={{ fontSize: '9px', color: '#a8adcc', letterSpacing: '1px' }}>TOEFL® iBT PREP</div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
             {sb('dashboard', '📊', 'Dashboard')}
@@ -11356,7 +11361,7 @@ function App({ justSignedUp }) {
               const expanded = moreNavOpen || isGroupTabActive
               return (
                 <>
-                  <button onClick={() => setMoreNavOpen(o => !o)} aria-expanded={expanded} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <button onClick={() => setMoreNavOpen(o => !o)} aria-expanded={expanded} style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#b5bac8', display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <span style={{ display: 'inline-block', transition: 'transform 0.15s ease', transform: expanded ? 'rotate(90deg)' : 'none' }}>▸</span> More
                   </button>
                   {expanded && (
@@ -11364,7 +11369,7 @@ function App({ justSignedUp }) {
                       {sb('forum', '💬', 'Community')}
                       {sb('badges', '🏅', 'Badges')}
                       {sb('leaderboard', '🏆', 'Leaderboard')}
-                      <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#a0a3b1', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
+                      <a href="/blog/" target="_blank" rel="noopener noreferrer" style={{ width: '100%', padding: '9px 12px', borderRadius: '8px', border: 'none', textAlign: 'left', cursor: 'pointer', fontSize: '13px', fontWeight: '500', backgroundColor: 'transparent', color: '#b5bac8', display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', boxSizing: 'border-box' }}>
                         📝 TOEFL Guides
                       </a>
                     </div>
@@ -11389,12 +11394,12 @@ function App({ justSignedUp }) {
               <div style={{ width: '30px', height: '30px', borderRadius: '50%', backgroundColor: '#2ac56c', display: 'flex', justifyContent: 'center', alignItems: 'center', fontWeight: '700', color: '#fff', fontSize: '12px', flexShrink: 0 }}>{(userData.username || '?').charAt(0).toUpperCase()}</div>
               <div style={{ minWidth: 0, overflow: 'hidden' }}>
                 <div style={{ fontSize: '12px', fontWeight: '500', color: '#fff', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{userData.username}</div>
-                <div style={{ fontSize: '10px', color: '#7b809a' }}>⚙️ Settings</div>
+                <div style={{ fontSize: '10px', color: '#a8adcc' }}>⚙️ Settings</div>
               </div>
             </div>
-            <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} title="Log out" aria-label="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#7b809a', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
+            <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} title="Log out" aria-label="Log out" style={{ flexShrink: 0, background: 'none', border: 'none', color: '#a8adcc', cursor: 'pointer', fontSize: '15px', padding: '6px' }}>⏻</button>
           </div>
-          <div style={{ fontSize: '8px', color: '#4b4f66', lineHeight: '1.4', textAlign: 'center', marginTop: '8px', padding: '0 2px' }}>
+          <div style={{ fontSize: '8px', color: '#8b8fa0', lineHeight: '1.4', textAlign: 'center', marginTop: '8px', padding: '0 2px' }}>
             TOEFL® and TOEFL iBT® are registered trademarks of ETS. Not endorsed or approved by ETS.
           </div>
         </div>
@@ -11483,9 +11488,9 @@ function App({ justSignedUp }) {
               <div style={{ background: '#11162d', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '16px', flex: 1, minWidth: isMobile ? '0' : '280px' }}>
                 <div style={{ fontSize: '26px' }} aria-hidden="true">🔥</div>
                 <div>
-                  <div style={{ fontSize: '10px', color: '#7b809a', marginBottom: '2px' }}>Daily streak</div>
+                  <div style={{ fontSize: '10px', color: '#a8adcc', marginBottom: '2px' }}>Daily streak</div>
                   <div style={{ fontSize: '20px', fontWeight: '700', color: '#f5a623' }}>{userData.current_streak} day{userData.current_streak === 1 ? '' : 's'}</div>
-                  {userData.longest_streak > 0 && <div style={{ fontSize: '9px', color: '#7b809a', marginTop: '1px' }}>🏆 Best: {userData.longest_streak} day{userData.longest_streak === 1 ? '' : 's'}</div>}
+                  {userData.longest_streak > 0 && <div style={{ fontSize: '9px', color: '#a8adcc', marginTop: '1px' }}>🏆 Best: {userData.longest_streak} day{userData.longest_streak === 1 ? '' : 's'}</div>}
                 </div>
                 <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: '6px', justifyContent: 'flex-end', flexWrap: 'wrap' }}>
                   {streakDays.map((done, i) => (
@@ -11493,7 +11498,7 @@ function App({ justSignedUp }) {
                       <div style={{ width: '22px', height: '22px', borderRadius: '50%', backgroundColor: done ? '#2ac56c' : '#252a44', border: done ? 'none' : '0.5px solid #3a3f5c', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         {done && <span style={{ color: '#fff', fontSize: '11px' }}>✓</span>}
                       </div>
-                      <div style={{ fontSize: '9px', color: '#7b809a' }}>{dayLabels[i]}</div>
+                      <div style={{ fontSize: '9px', color: '#a8adcc' }}>{dayLabels[i]}</div>
                     </div>
                   ))}
                 </div>
@@ -11523,7 +11528,7 @@ function App({ justSignedUp }) {
                   <button onClick={() => setShowDiagnostic(true)} style={{ background: 'none', border: 'none', color: '#701fa1', fontSize: '11.5px', fontWeight: '700', cursor: 'pointer', padding: 0 }}>🧭 Quick skills check</button>
                 </div>
                 {recommendations.length === 0 ? (
-                  <div style={{ fontSize: '12px', color: '#616473' }}>🎉 You're above 70% accuracy in every practiced category — keep it up! Try the Full Mock Test to check your overall readiness.</div>
+                  <div style={{ fontSize: '12px', color: '#4a4d5f' }}>🎉 You're above 70% accuracy in every practiced category — keep it up! Try the Full Mock Test to check your overall readiness.</div>
                 ) : (
                   <div style={{ display: 'flex', gap: '10px', overflowX: isMobile ? 'auto' : 'visible', flexWrap: isMobile ? 'nowrap' : 'wrap', paddingBottom: isMobile ? '4px' : 0 }}>
                     {recommendations.map(rec => {
@@ -11576,19 +11581,19 @@ function App({ justSignedUp }) {
                 {editingTargets && (
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', background: '#f8f7fb', borderRadius: '10px', padding: '12px', marginBottom: '14px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Reading (1.0–6.0)</label>
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#4a4d5f' }}>Reading (1.0–6.0)</label>
                       <input type="number" min="1" max="6" step="0.5" value={readingTarget} onChange={e => setReadingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Listening (1.0–6.0)</label>
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#4a4d5f' }}>Listening (1.0–6.0)</label>
                       <input type="number" min="1" max="6" step="0.5" value={listeningTarget} onChange={e => setListeningTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Writing (1.0–6.0)</label>
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#4a4d5f' }}>Writing (1.0–6.0)</label>
                       <input type="number" min="1" max="6" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#616473' }}>Speaking (1.0–6.0)</label>
+                      <label style={{ fontSize: '10px', fontWeight: '600', color: '#4a4d5f' }}>Speaking (1.0–6.0)</label>
                       <input type="number" min="1" max="6" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '6px 8px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '12px', width: '100%', boxSizing: 'border-box' }} />
                     </div>
                     <button onClick={saveTargets} disabled={savingProfile} style={{ gridColumn: '1 / -1', background: '#2ac56c', color: '#fff', border: 'none', padding: '8px', borderRadius: '7px', fontSize: '12px', fontWeight: '700', cursor: savingProfile ? 'default' : 'pointer', opacity: savingProfile ? 0.7 : 1, marginTop: '2px' }}>{savingProfile ? 'Saving…' : 'Save targets'}</button>
@@ -11610,7 +11615,7 @@ function App({ justSignedUp }) {
                     return (
                       <div key={s.name}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', marginBottom: '5px' }}>
-                          <span style={{ color: '#616473' }}>{s.name}</span>
+                          <span style={{ color: '#4a4d5f' }}>{s.name}</span>
                           <span style={{ fontWeight: '600' }}>{s.current} <span style={{ color: '#999', fontWeight: '400' }}>/ {s.target}</span></span>
                         </div>
                         <div style={{ height: '8px', background: '#f0f2f5', borderRadius: '4px', position: 'relative' }}>
@@ -11655,7 +11660,7 @@ function App({ justSignedUp }) {
                             <div style={{ width: '3px', height: '16px', background: item.color, borderRadius: '2px' }} />
                             <span style={{ fontSize: '12px', fontWeight: '600', color: '#374151' }}>{item.label}</span>
                           </div>
-                          <div style={{ marginLeft: '8px', fontSize: '11px', color: '#616473', display: 'flex', flexDirection: 'column', gap: '3px' }}>
+                          <div style={{ marginLeft: '8px', fontSize: '11px', color: '#4a4d5f', display: 'flex', flexDirection: 'column', gap: '3px' }}>
                             {item.tasks.map(task => <div key={task}>· {task}</div>)}
                           </div>
                         </div>
@@ -11666,7 +11671,7 @@ function App({ justSignedUp }) {
 
                 <div style={{ background: '#fff', borderRadius: '12px', padding: '16px', border: '0.5px solid #e1e4ed', marginTop: '12px' }}>
                   <div style={{ fontSize: '13px', fontWeight: '700', marginBottom: '12px' }}><span aria-hidden="true">🎯</span> Keep Going</div>
-                  <div style={{ fontSize: '12px', lineHeight: '1.6', color: '#616473' }}>
+                  <div style={{ fontSize: '12px', lineHeight: '1.6', color: '#4a4d5f' }}>
                     {examDaysLeft === null && examDate ? "Your exam date has passed — update it above to keep tracking your countdown and daily goals."
                       : examDaysLeft === null ? "Set your exam date and start your journey. Every day of practice counts!"
                       : examDaysLeft > 30 ? `You have ${examDaysLeft} days ahead — build strong habits now.`
@@ -11702,7 +11707,7 @@ function App({ justSignedUp }) {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                     <div style={{ background: examDaysLeft === null && examDate ? '#4a2020' : '#11162d', borderRadius: '8px', padding: '6px 10px', textAlign: 'center', flexShrink: 0 }}>
                       <div style={{ fontSize: examDaysLeft === null && examDate ? '10px' : '18px', fontWeight: '600', color: examDaysLeft === null && examDate ? '#f5a3a3' : '#b67bfb' }}>{examDaysLeft !== null ? examDaysLeft : examDate ? 'Past' : '—'}</div>
-                      <div style={{ fontSize: '8px', color: '#7b809a' }}>{examDaysLeft === null && examDate ? 'update date' : 'days left'}</div>
+                      <div style={{ fontSize: '8px', color: '#a8adcc' }}>{examDaysLeft === null && examDate ? 'update date' : 'days left'}</div>
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <div style={{ fontSize: '11px', fontWeight: '500', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{examDate ? new Date(examDate + 'T00:00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Select a date'}</div>
@@ -11724,7 +11729,7 @@ function App({ justSignedUp }) {
                     return { ...raw, note, color }
                   }).map(item => (
                     <div key={item.name} style={{ background: '#fff', borderRadius: '10px', padding: '10px 12px', border: '0.5px solid #e1e4ed' }}>
-                      <div style={{ fontSize: '10px', color: '#616473', marginBottom: '3px' }}>{item.name}</div>
+                      <div style={{ fontSize: '10px', color: '#4a4d5f', marginBottom: '3px' }}>{item.name}</div>
                       <div style={{ fontSize: '18px', fontWeight: '600' }}>{item.score}</div>
                       <div style={{ fontSize: '9px', color: item.color, marginTop: '2px' }}>{item.note}</div>
                     </div>
@@ -11759,7 +11764,7 @@ function App({ justSignedUp }) {
               <div key={i} style={{ backgroundColor: '#fff', padding: isMobile ? '16px' : '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...(isMobile ? { flexDirection: 'column', alignItems: 'stretch', gap: '14px' } : {}) }}>
                 <div style={{ maxWidth: isMobile ? '100%' : '70%' }}>
                   <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#4a4d5f' }}>{p.desc}</p>
                   <span style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600' }}>{p.count}</span>
                 </div>
                 <button onClick={() => setReadingSubTab(p.key)} style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
@@ -11789,10 +11794,10 @@ function App({ justSignedUp }) {
               <div key={i} style={{ backgroundColor: '#fff', padding: isMobile ? '16px' : '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...(isMobile ? { flexDirection: 'column', alignItems: 'stretch', gap: '14px' } : {}) }}>
                 <div style={{ maxWidth: isMobile ? '100%' : '70%' }}>
                   <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
-                  <span style={{ fontSize: '11px', color: p.ready ? '#2ac56c' : '#9ca3af', fontWeight: '600' }}>{p.count}</span>
+                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#4a4d5f' }}>{p.desc}</p>
+                  <span style={{ fontSize: '11px', color: p.ready ? '#2ac56c' : '#6b7280', fontWeight: '600' }}>{p.count}</span>
                 </div>
-                <button onClick={() => p.ready && setWritingSubTab(p.key)} style={{ backgroundColor: p.ready ? '#2ac56c' : '#e5e7eb', color: p.ready ? '#fff' : '#9ca3af', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: p.ready ? 'pointer' : 'not-allowed', fontSize: '13px', flexShrink: 0 }}>
+                <button onClick={() => p.ready && setWritingSubTab(p.key)} style={{ backgroundColor: p.ready ? '#2ac56c' : '#e5e7eb', color: p.ready ? '#fff' : '#6b7280', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: p.ready ? 'pointer' : 'not-allowed', fontSize: '13px', flexShrink: 0 }}>
                   {p.ready ? 'Open Module' : 'Coming Soon'}
                 </button>
               </div>
@@ -11813,7 +11818,7 @@ function App({ justSignedUp }) {
               <div key={i} style={{ backgroundColor: '#fff', padding: isMobile ? '16px' : '22px', borderRadius: '12px', border: '0.5px solid #e1e4ed', display: 'flex', justifyContent: 'space-between', alignItems: 'center', ...(isMobile ? { flexDirection: 'column', alignItems: 'stretch', gap: '14px' } : {}) }}>
                 <div style={{ maxWidth: isMobile ? '100%' : '70%' }}>
                   <h4 style={{ margin: '0 0 6px 0', fontSize: '14px', fontWeight: '700' }}>{p.title}</h4>
-                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#616473' }}>{p.desc}</p>
+                  <p style={{ margin: '0 0 6px 0', fontSize: '13px', color: '#4a4d5f' }}>{p.desc}</p>
                   <span style={{ fontSize: '11px', color: '#2ac56c', fontWeight: '600' }}>{p.count}</span>
                 </div>
                 <button onClick={() => setSpeakingSubTab(p.key)} style={{ backgroundColor: '#2ac56c', color: '#fff', border: 'none', padding: '10px 18px', borderRadius: '8px', fontWeight: '700', cursor: 'pointer', fontSize: '13px', flexShrink: 0 }}>Open Module</button>
@@ -11875,29 +11880,29 @@ function App({ justSignedUp }) {
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🎯 Target & Profile</h3>
               <form onSubmit={handleProfileSave} noValidate style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-username">Username</label>
+                  <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-username">Username</label>
                   <input id="settings-username" type="text" autoComplete="username" value={profileName} onChange={e => setProfileName(e.target.value)} maxLength={50} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-target-score">Target Score (0.0 - 6.0)</label>
+                  <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-target-score">Target Score (0.0 - 6.0)</label>
                   <input id="settings-target-score" type="number" min="0" max="6" step="0.5" value={targetScore} onChange={e => setTargetScore(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ fontWeight: '700', color: '#374151', fontSize: '12px', marginTop: '4px' }}>Section targets</div>
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-reading-target">Reading (1.0 - 6.0)</label>
+                    <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-reading-target">Reading (1.0 - 6.0)</label>
                     <input id="settings-reading-target" type="number" min="1" max="6" step="0.5" value={readingTarget} onChange={e => setReadingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-listening-target">Listening (1.0 - 6.0)</label>
+                    <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-listening-target">Listening (1.0 - 6.0)</label>
                     <input id="settings-listening-target" type="number" min="1" max="6" step="0.5" value={listeningTarget} onChange={e => setListeningTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-writing-target">Writing (1.0 - 6.0)</label>
+                    <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-writing-target">Writing (1.0 - 6.0)</label>
                     <input id="settings-writing-target" type="number" min="1" max="6" step="0.5" value={writingTarget} onChange={e => setWritingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-speaking-target">Speaking (1.0 - 6.0)</label>
+                    <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-speaking-target">Speaking (1.0 - 6.0)</label>
                     <input id="settings-speaking-target" type="number" min="1" max="6" step="0.5" value={speakingTarget} onChange={e => setSpeakingTarget(e.target.value)} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box' }} />
                   </div>
                 </div>
@@ -11906,7 +11911,7 @@ function App({ justSignedUp }) {
               <div style={{ marginTop: '18px', paddingTop: '16px', borderTop: '1px solid #f0f2f5', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px' }}>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ fontWeight: '600', color: '#374151', fontSize: '12.5px' }}>🏆 Show me on the Leaderboard</div>
-                  <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '2px' }}>Other students see your username and rank when this is on.</div>
+                  <div style={{ fontSize: '11px', color: '#6b7280', marginTop: '2px' }}>Other students see your username and rank when this is on.</div>
                 </div>
                 <button
                   type="button"
@@ -11928,7 +11933,7 @@ function App({ justSignedUp }) {
               <h3 style={{ margin: '0 0 18px 0', fontSize: '15px', fontWeight: '700' }}>🔒 Account Security</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-email">Email</label>
+                  <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-email">Email</label>
                   <input id="settings-email" type="text" autoComplete="email" value={userData.email || ''} readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
                   {userData.email_verified ? (
                     <span style={{ fontSize: '11px', fontWeight: '700', color: '#2ac56c', display: 'flex', alignItems: 'center', gap: '4px', marginTop: '2px' }}>✓ Verified</span>
@@ -11942,30 +11947,66 @@ function App({ justSignedUp }) {
                   )}
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-current-password">Current Password</label>
+                  <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-current-password">Current Password</label>
                   <input id="settings-current-password" type="password" autoComplete="current-password" value="••••••••" readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-new-password">New Password</label>
-                  <input id="settings-new-password" type="password" autoComplete="new-password" placeholder="Coming soon" disabled style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box', background: '#f4f4f6', color: '#aaa', cursor: 'not-allowed' }} />
+                  <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-new-password">New Password</label>
+                  <input id="settings-new-password" type="password" autoComplete="new-password" placeholder="At least 8 characters" onChange={(e) => setNewPassword(e.target.value)} value={newPassword} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box', background: '#ffffff', color: '#333333', cursor: 'text' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <label style={{ fontWeight: '600', color: '#616473', fontSize: '12px' }} htmlFor="settings-confirm-new-password">Confirm New Password</label>
-                  <input id="settings-confirm-new-password" type="password" autoComplete="new-password" placeholder="Coming soon" disabled style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box', background: '#f4f4f6', color: '#aaa', cursor: 'not-allowed' }} />
+                  <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-confirm-new-password">Confirm New Password</label>
+                  <input id="settings-confirm-new-password" type="password" autoComplete="new-password" placeholder="At least 8 characters" onChange={(e) => setConfirmPassword(e.target.value)} value={confirmPassword} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box', background: '#ffffff', color: '#333333', cursor: 'text' }} />
                 </div>
-                {/* This form isn't wired to a real change-password endpoint yet -- rather than leave
-                    it looking clickable-but-inert (a student fills it in, clicks Update, and nothing
-                    happens with zero feedback), it's disabled with an honest "coming soon" note.
-                    Use "Forgot password" from the login screen in the meantime to change a password. */}
-                <div style={{ fontSize: '12px', color: '#9ca3af', marginTop: '-8px' }}>Password changes aren't available here yet -- use "Forgot password" on the login screen to reset it.</div>
-                <button disabled style={{ backgroundColor: '#e5e7eb', color: '#9ca3af', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'not-allowed' }}>Update Password</button>
+                
+                
+                <button
+                  onClick={async () => {
+                    setPasswordError('')
+                    setPasswordSuccess('')
+                    
+                    // Validation
+                    if (!newPassword.trim()) { setPasswordError('New password is required'); return }
+                    if (newPassword.length < 8) { setPasswordError('Password must be at least 8 characters'); return }
+                    if (newPassword !== confirmPassword) { setPasswordError('Passwords do not match'); return }
+                    
+                    setChangingPassword(true)
+                    try {
+                      const res = await apiFetch(`${BACKEND_URL}/api/auth/change-password`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ current_password: '', new_password: newPassword })
+                      })
+                      
+                      if (!res.ok) {
+                        const err = await res.json()
+                        throw new Error(err.detail || 'Failed to change password')
+                      }
+                      
+                      setPasswordSuccess('Password changed successfully!')
+                      setNewPassword('')
+                      setConfirmPassword('')
+                      showToast('Password changed successfully', 'success')
+                    } catch (e) {
+                      setPasswordError(e.message)
+                      showToast(e.message, 'error')
+                    } finally {
+                      setChangingPassword(false)
+                    }
+                  }}
+                  disabled={changingPassword || !newPassword || !confirmPassword}
+                  style={{ backgroundColor: changingPassword || !newPassword || !confirmPassword ? '#e5e7eb' : '#2ac56c', color: changingPassword || !newPassword || !confirmPassword ? '#6b7280' : '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: changingPassword || !newPassword || !confirmPassword ? 'default' : 'pointer' }}>
+                  {changingPassword ? 'Updating…' : 'Update Password'}
+                </button>
+                {passwordError && <div style={{ fontSize: '12px', color: '#e85555', marginTop: '8px' }}>❌ {passwordError}</div>}
+                {passwordSuccess && <div style={{ fontSize: '12px', color: '#2ac56c', marginTop: '8px' }}>✓ {passwordSuccess}</div>}
                 <button onClick={() => { if (exitGuardActive) setPendingTab('logout'); else logout() }} style={{ backgroundColor: '#fff', color: '#dc2626', border: '1px solid #fecaca', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: 'pointer' }}>Log Out</button>
                 <div style={{ display: 'flex', justifyContent: 'center', gap: '10px' }}>
-                  <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Terms of Service</a>
+                  <a href="/terms.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#6b7280', textDecoration: 'none' }}>Terms of Service</a>
                   <span style={{ fontSize: '12px', color: '#cbd5e1' }}>·</span>
-                  <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Privacy Policy</a>
+                  <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#6b7280', textDecoration: 'none' }}>Privacy Policy</a>
                   <span style={{ fontSize: '12px', color: '#cbd5e1' }}>·</span>
-                  <a href="/terms.html#refund-policy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#9ca3af', textDecoration: 'none' }}>Refund Policy</a>
+                  <a href="/terms.html#refund-policy" target="_blank" rel="noopener noreferrer" style={{ fontSize: '12px', color: '#6b7280', textDecoration: 'none' }}>Refund Policy</a>
                 </div>
               </div>
             </div>
