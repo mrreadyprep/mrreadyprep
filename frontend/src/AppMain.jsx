@@ -9825,7 +9825,9 @@ function AITutorChat() {
                   borderBottomRightRadius: m.role === 'user' ? '4px' : '14px',
                   borderBottomLeftRadius: m.role === 'user' ? '14px' : '4px',
                 }}>
-                  {m.content}
+                  {m.role === 'user' ? m.content : String(m.content || '').split(/(\*\*[^*]+\*\*)/g).map((part, pi) => (
+                    /^\*\*[^*]+\*\*$/.test(part) ? <strong key={pi}>{part.slice(2, -2)}</strong> : <span key={pi}>{part}</span>
+                  ))}
                 </div>
               </div>
             ))}
