@@ -1,0 +1,35 @@
+name: Cron Jobs
+
+on:
+  schedule:
+    - cron: '0 */8 * * *'
+    - cron: '0 9 * * *'
+    - cron: '0 2 * * *'
+
+jobs:
+  practice-reminders:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send practice reminders
+        run: |
+          curl -fsS -X POST https://mrreadyprep.onrender.com/api/cron/practice-reminders \
+            -H "X-Cron-Secret: ${{ secrets.PRACTICE_REMINDER_CRON_SECRET }}" \
+            -H "Content-Type: application/json"
+
+  nurture-emails:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send nurture emails
+        run: |
+          curl -fsS -X POST https://mrreadyprep.onrender.com/api/cron/nurture-emails \
+            -H "X-Cron-Secret: ${{ secrets.NURTURE_EMAIL_CRON_SECRET }}" \
+            -H "Content-Type: application/json"
+
+  seo-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run SEO check
+        run: |
+          curl -fsS -X POST https://mrreadyprep.onrender.com/api/cron/seo-check \
+            -H "X-Cron-Secret: ${{ secrets.SEO_CRON_SECRET }}" \
+            -H "Content-Type: application/json"
