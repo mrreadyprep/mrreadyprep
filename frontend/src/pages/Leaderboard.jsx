@@ -8,7 +8,7 @@ export default function Leaderboard() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const res = await fetch(`/api/leaderboard?period=${period}&limit=100`);
+        const res = await fetch(`/api/leaderboard?period=${period}&limit=240`);
         const data = await res.json();
         setUsers(data.leaderboard || []);
       } catch (err) {
