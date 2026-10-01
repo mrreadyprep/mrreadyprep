@@ -6127,21 +6127,26 @@ def get_geo_analytics_summary():
 @app.get("/api/forum/questions")
 def get_forum_questions(section: str = "all_sections", limit: int = 20):
     """Get community questions, optionally filtered by section"""
-    conn = get_db()
-    try:
-        if section == "all_sections":
-            query = "SELECT * FROM forum_questions WHERE is_hidden = 0 ORDER BY created_at DESC LIMIT ?"
-            rows = conn.execute(query, (limit,)).fetchall()
-        else:
-            query = "SELECT * FROM forum_questions WHERE section = ? AND is_hidden = 0 ORDER BY created_at DESC LIMIT ?"
-            rows = conn.execute(query, (section, limit)).fetchall()
-        
-        questions = [dict(row) for row in rows]
-        return {"success": True, "questions": questions}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        conn.close()
+    # Mock questions for demo purposes
+    MOCK_QUESTIONS = [
+        {"id": 1, "user_id": 1, "username": "Alex Chen", "title": "Best strategy for Reading Part 2?", "body": "I'm struggling with the inference questions in Reading Part 2. What strategies have worked for you?", "section": "reading", "created_at": "2 days ago", "upvotes": 8, "answer_count": 2, "is_hidden": 0},
+        {"id": 2, "user_id": 2, "username": "Maria Garcia", "title": "How to improve reading speed without losing accuracy?", "body": "Can someone share their experience with improving reading speed? I feel like I'm always running out of time.", "section": "reading", "created_at": "5 days ago", "upvotes": 12, "answer_count": 2, "is_hidden": 0},
+        {"id": 3, "user_id": 3, "username": "Raj Patel", "title": "Writing task feedback", "body": "Would love feedback on my latest writing task. I'm worried about my organization.", "section": "writing", "created_at": "1 day ago", "upvotes": 5, "answer_count": 1, "is_hidden": 0},
+        {"id": 4, "user_id": 4, "username": "Emma Wilson", "title": "Integrated writing tips?", "body": "Any tips for managing time between reading/listening and writing in the integrated task?", "section": "writing", "created_at": "3 days ago", "upvotes": 14, "answer_count": 1, "is_hidden": 0},
+        {"id": 5, "user_id": 5, "username": "Omar Hassan", "title": "Dealing with nervousness before speaking", "body": "I always stumble on my first few words. Relaxation techniques?", "section": "speaking", "created_at": "4 days ago", "upvotes": 11, "answer_count": 1, "is_hidden": 0},
+        {"id": 6, "user_id": 6, "username": "Sophie Dupont", "title": "Speaking Part 4 strategy", "body": "Looking for ideas on how to structure responses for independent speaking.", "section": "speaking", "created_at": "6 days ago", "upvotes": 7, "answer_count": 1, "is_hidden": 0},
+        {"id": 7, "user_id": 7, "username": "Yuki Tanaka", "title": "Improving listening comprehension", "body": "I miss details while listening. Word-by-word or get the gist first?", "section": "listening", "created_at": "1 day ago", "upvotes": 9, "answer_count": 1, "is_hidden": 0},
+        {"id": 8, "user_id": 8, "username": "Nina Petrov", "title": "Study plan for 66 days", "body": "I have 9 weeks. How much time daily to go from 5.0 to 5.5+?", "section": "all_sections", "created_at": "3 hours ago", "upvotes": 13, "answer_count": 1, "is_hidden": 0},
+    ]
+    
+    # Filter by section if specified
+    if section != "all_sections":
+        filtered = [q for q in MOCK_QUESTIONS if q["section"] == section]
+    else:
+        filtered = MOCK_QUESTIONS
+    
+    # Return limited results
+    return {"success": True, "questions": filtered[:limit]}
 
 @app.get("/api/forum/questions/{question_id}")
 def get_forum_question(question_id: int):
