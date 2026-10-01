@@ -1,13 +1,15 @@
 name: Cron Jobs
 
+# Nurture emails are scheduled separately on Render (nurture-emails-daily),
+# so they are intentionally not triggered from here.
 on:
   schedule:
     - cron: '0 */8 * * *'
-    - cron: '0 9 * * *'
     - cron: '0 2 * * *'
 
 jobs:
   practice-reminders:
+    if: github.event.schedule == '0 */8 * * *'
     runs-on: ubuntu-latest
     steps:
       - name: Send practice reminders
@@ -16,16 +18,8 @@ jobs:
             -H "X-Cron-Secret: ${{ secrets.PRACTICE_REMINDER_CRON_SECRET }}" \
             -H "Content-Type: application/json"
 
-  nurture-emails:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send nurture emails
-        run: |
-          curl -fsS -X POST https://mrreadyprep.onrender.com/api/cron/nurture-emails \
-            -H "X-Cron-Secret: ${{ secrets.NURTURE_EMAIL_CRON_SECRET }}" \
-            -H "Content-Type: application/json"
-
   seo-check:
+    if: github.event.schedule == '0 2 * * *'
     runs-on: ubuntu-latest
     steps:
       - name: Run SEO check
