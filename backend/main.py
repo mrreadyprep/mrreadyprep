@@ -5156,26 +5156,6 @@ def clear_ai_tutor_history(user=Depends(get_current_user)):
 # answer after the fact via the is_hidden flag (see admin_forum_hide below), matching the same
 # publish-then-moderate approach as Success Stories.
 
-@app.get("/api/forum/questions")
-def list_forum_questions(section: str = Query(None, max_length=20), sort: str = Query("recent", max_length=10),
-                          limit: int = Query(30, ge=1, le=100), offset: int = Query(0, ge=0),
-                          user=Depends(get_current_user_optional)):
-    if section is not None and section not in FORUM_SECTIONS:
-        raise HTTPException(status_code=400, detail="Unknown section")
-    order_by = "upvotes DESC, id DESC" if sort == "top" else "id DESC"
-    conn = get_db()
-    try:
-        where = "WHERE is_hidden = 0" + (" AND section = ?" if section else "")
-        params = [section] if section else []
-        rows = conn.execute(
-            f"SELECT id, user_id, username, title, section, answer_count, upvotes, created_at "
-            f"FROM forum_questions {where} ORDER BY {order_by} LIMIT ? OFFSET ?",
-            (*params, limit, offset),
-        ).fetchall()
-        return {"questions": [dict(r) for r in rows]}
-    finally:
-        conn.close()
-
 @app.post("/api/forum/questions")
 def create_forum_question(data: ForumQuestionCreate, request: Request, user=Depends(get_current_user)):
     _check_and_consume_rate_limit(
