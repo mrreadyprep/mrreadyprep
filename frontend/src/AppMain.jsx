@@ -5146,7 +5146,7 @@ function AcademicDiscussionExercise({ item, index, onBack, onComplete, mockMode 
       contentStyle={{ display: 'flex', flexDirection: 'column' }}
     >
         {phase === 'writing' && timeUp && <TimeUpBanner />}
-        <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: isMobile ? '18px' : '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', flex: '1 1 auto' }}>
+        <div style={{ background: '#fff', border: '0.5px solid #e1e4ed', borderRadius: '12px', padding: isMobile ? '18px' : '36px 48px', width: '100%', boxSizing: 'border-box', display: 'flex', alignItems: 'flex-start', flexWrap: 'wrap', rowGap: '24px', flex: '1 1 auto' }}>
           <div style={{ flex: isMobile ? '1 1 100%' : '0.8 1 320px', minWidth: isMobile ? '100%' : '280px', paddingRight: isMobile ? '0' : '36px' }}>
             <div style={{ fontSize: '15px', color: '#1a1a1a', marginBottom: '10px' }}>Your professor is teaching a class on {item.subject}. Write a post responding to the professor's question.</div>
             <div style={{ fontSize: '15px', fontWeight: '700', color: '#1a1a1a', marginBottom: '8px' }}>In your response, you should do the following:</div>
