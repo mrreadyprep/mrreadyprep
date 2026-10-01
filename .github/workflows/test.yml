@@ -33,6 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [frontend, backend]
     if: always()
+    continue-on-error: true
     steps:
       - run: |
           echo "Test Report - $(date)" > report.txt
