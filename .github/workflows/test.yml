@@ -44,7 +44,8 @@ jobs:
           name: test-report
           path: report.txt
       - uses: dawidd6/action-send-mail@v3
-        if: always()
+        # Only email when a test job failed (a mail on every run exceeded Gmail's daily limit).
+        if: needs.frontend.result != 'success' || needs.backend.result != 'success'
         continue-on-error: true
         with:
           server_address: smtp.gmail.com
