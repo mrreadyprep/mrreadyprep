@@ -16,3 +16,5 @@ backend/results.db
 # Generated audio files are too large for a normal git repo (hundreds of MB). These are deployed
 # separately (Render persistent disk / object storage), not via git. See backend/AUDIO_DEPLOYMENT.md.
 backend/audio/
+
+.env.staging
