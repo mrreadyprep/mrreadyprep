@@ -11055,6 +11055,7 @@ function App({ justSignedUp }) {
   const [writingTarget, setWritingTarget] = useState(6.0)
   const [speakingTarget, setSpeakingTarget] = useState(6.0)
   const [examDate, setExamDate] = useState('')
+  const [currentPassword, setCurrentPassword] = useState('')
   const [newPassword, setNewPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [passwordError, setPasswordError] = useState('')
@@ -11967,7 +11968,7 @@ function App({ justSignedUp }) {
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-current-password">Current Password</label>
-                  <input id="settings-current-password" type="password" autoComplete="current-password" value="••••••••" readOnly style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', color: '#888', width: '100%', boxSizing: 'border-box' }} />
+                  <input id="settings-current-password" type="password" autoComplete="current-password" placeholder="Your current password" onChange={(e) => setCurrentPassword(e.target.value)} value={currentPassword} style={{ padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e1', fontSize: '13px', width: '100%', boxSizing: 'border-box', background: '#ffffff', color: '#333333', cursor: 'text' }} />
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                   <label style={{ fontWeight: '600', color: '#4a4d5f', fontSize: '12px' }} htmlFor="settings-new-password">New Password</label>
@@ -11985,6 +11986,7 @@ function App({ justSignedUp }) {
                     setPasswordSuccess('')
                     
                     // Validation
+                    if (!currentPassword) { setPasswordError('Enter your current password'); return }
                     if (!newPassword.trim()) { setPasswordError('New password is required'); return }
                     if (newPassword.length < 8) { setPasswordError('Password must be at least 8 characters'); return }
                     if (newPassword !== confirmPassword) { setPasswordError('Passwords do not match'); return }
@@ -11994,15 +11996,21 @@ function App({ justSignedUp }) {
                       const res = await apiFetch(`${BACKEND_URL}/api/auth/change-password`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ current_password: '', new_password: newPassword })
+                        body: JSON.stringify({ current_password: currentPassword, new_password: newPassword })
                       })
                       
+                      const result = await res.json().catch(() => ({}))
                       if (!res.ok) {
-                        const err = await res.json()
-                        throw new Error(err.detail || 'Failed to change password')
+                        throw new Error(typeof result.detail === 'string' ? result.detail : 'Failed to change password')
+                      }
+                      // The server invalidates every older session when the password changes and hands back
+                      // a fresh token for this one, so store it or the very next request would log us out.
+                      if (result.access_token) {
+                        try { localStorage.setItem(AUTH_TOKEN_KEY, result.access_token) } catch { /* ignore */ }
                       }
                       
                       setPasswordSuccess('Password changed successfully!')
+                      setCurrentPassword('')
                       setNewPassword('')
                       setConfirmPassword('')
                       showToast('Password changed successfully', 'success')
@@ -12013,8 +12021,8 @@ function App({ justSignedUp }) {
                       setChangingPassword(false)
                     }
                   }}
-                  disabled={changingPassword || !newPassword || !confirmPassword}
-                  style={{ backgroundColor: changingPassword || !newPassword || !confirmPassword ? '#e5e7eb' : '#2ac56c', color: changingPassword || !newPassword || !confirmPassword ? '#6b7280' : '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: changingPassword || !newPassword || !confirmPassword ? 'default' : 'pointer' }}>
+                  disabled={changingPassword || !currentPassword || !newPassword || !confirmPassword}
+                  style={{ backgroundColor: changingPassword || !currentPassword || !newPassword || !confirmPassword ? '#e5e7eb' : '#2ac56c', color: changingPassword || !currentPassword || !newPassword || !confirmPassword ? '#6b7280' : '#fff', border: 'none', padding: '11px', borderRadius: '8px', fontSize: '13px', fontWeight: '700', cursor: changingPassword || !currentPassword || !newPassword || !confirmPassword ? 'default' : 'pointer' }}>
                   {changingPassword ? 'Updating…' : 'Update Password'}
                 </button>
                 {passwordError && <div style={{ fontSize: '12px', color: '#e85555', marginTop: '8px' }}>❌ {passwordError}</div>}

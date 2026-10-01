@@ -3751,57 +3751,49 @@ def get_me(user=Depends(get_current_user)):
     return user_profile_dict(user)
 
 
-# ─── PASSWORD CHANGE & ONBOARDING ──────────────────────────────────────
+# ─── PASSWORD CHANGE ───────────────────────────────────────────────────
+
+CHANGE_PASSWORD_ATTEMPT_WINDOW_SECONDS = 15 * 60
+CHANGE_PASSWORD_ATTEMPT_MAX = 10
+_change_password_attempts: dict = collections.defaultdict(list)
+_ALL_RATE_LIMIT_STORES.append(_change_password_attempts)
+
+class ChangePasswordRequest(BaseModel):
+    current_password: str = Field(max_length=256)
+    new_password: str = Field(max_length=256)
 
 @app.post("/api/auth/change-password")
-def change_password(request_data, user=Depends(get_current_user)):
-    """Authenticated endpoint for users to change their password."""
-    current_password = request_data.get('current_password', '').strip() if isinstance(request_data, dict) else ''
-    new_password = request_data.get('new_password', '').strip() if isinstance(request_data, dict) else ''
-    
-    if not current_password:
+def change_password(data: ChangePasswordRequest, user=Depends(get_current_user)):
+    """Lets a signed-in student change their password. Requires the current password (so a stolen
+    session alone can't take over the account), rate-limited per user, and bumps token_version so
+    every other session/JWT issued before the change stops working. The response carries a fresh
+    token for the current session so the student isn't logged out of the device they changed it on."""
+    _check_and_consume_rate_limit(_change_password_attempts, str(user["id"]), CHANGE_PASSWORD_ATTEMPT_WINDOW_SECONDS, CHANGE_PASSWORD_ATTEMPT_MAX, "password change")
+    if not data.current_password:
         raise HTTPException(status_code=400, detail="Current password is required")
-    if not new_password:
-        raise HTTPException(status_code=400, detail="New password is required")
-    if len(new_password) < 8:
+    if len(data.new_password) < 8:
         raise HTTPException(status_code=400, detail="Password must be at least 8 characters")
-    if current_password == new_password:
-        raise HTTPException(status_code=400, detail="New password must be different from current")
-    
+    if data.new_password == data.current_password:
+        raise HTTPException(status_code=400, detail="New password must be different from your current password")
     conn = get_db()
     try:
-        user_record = conn.execute("SELECT password_hash FROM users WHERE id = ?", (user["id"],)).fetchone()
-        if not user_record:
-            raise HTTPException(status_code=404, detail="User not found")
-        
-        if not verify_password(current_password, user_record["password_hash"]):
-            raise HTTPException(status_code=401, detail="Current password is incorrect")
-        
-        new_password_hash = hash_password(new_password)
-        conn.execute("UPDATE users SET password_hash = ? WHERE id = ?", (new_password_hash, user["id"]))
+        row = conn.execute("SELECT password_hash, token_version FROM users WHERE id = ?", (user["id"],)).fetchone()
+        if not row or not row["password_hash"]:
+            raise HTTPException(status_code=400, detail="This account signs in with Google and has no password to change. Use \"Forgot password\" on the login screen to set one.")
+        # 400 (not 401) on purpose: the client treats a 401 as an expired session and logs the user out.
+        if not verify_password(data.current_password, row["password_hash"]):
+            raise HTTPException(status_code=400, detail="Current password is incorrect")
+        new_version = int(row["token_version"] or 0) + 1
+        conn.execute(
+            "UPDATE users SET password_hash = ?, token_version = ? WHERE id = ?",
+            (hash_password(data.new_password), new_version, user["id"]),
+        )
         conn.commit()
-        print(f"[password change] Password changed for user {user['id']}", flush=True)
-        return {"status": "success", "message": "Password changed successfully"}
-    except HTTPException:
-        raise
-    except Exception as e:
-        print(f"[password change] Error: {e}", flush=True)
-        raise HTTPException(status_code=500, detail="Failed to change password")
-    finally:
-        conn.close()
-
-
-@app.post("/api/user/onboarding-complete")
-def mark_onboarding_complete(user=Depends(get_current_user)):
-    """Mark onboarding as completed for the user."""
-    conn = get_db()
-    try:
-        conn.execute("UPDATE users SET onboarding_completed = 1 WHERE id = ?", (user["id"],))
-        conn.commit()
-        return {"status": "success", "message": "Onboarding marked as completed"}
-    except Exception as e:
-        print(f"[onboarding] Error: {e}", flush=True)
-        raise HTTPException(status_code=500, detail="Failed to update status")
+        return {
+            "status": "success",
+            "message": "Password changed successfully",
+            "access_token": create_access_token(user["id"], new_version),
+        }
     finally:
         conn.close()
 
