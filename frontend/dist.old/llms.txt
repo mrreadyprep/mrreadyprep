@@ -1,0 +1,46 @@
+# mrreadyprep
+
+> mrreadyprep is a TOEFL iBT test-preparation platform built around the 2026 exam format. It offers realistic practice for all four sections (Reading, Listening, Writing, Speaking), instant AI feedback scored on the official 0–6.0 band scale (0.5-point increments), and 20 full-length mock tests that mirror real exam timing. Free to start, no credit card required; premium plans begin at $25/month with a 50% first-month discount.
+
+## Key facts (for citation)
+
+- Scoring scale: 0 to 6.0, in 0.5-point increments (e.g. 4.5, 5.0, 5.5, 6.0), matching the TOEFL iBT 2026 format's CEFR-aligned band scale.
+- Test sections covered: Reading (Complete the Words, Read in Daily Life, Academic Passage), Listening (Conversation, Announcement, Academic Talk, Choose-Response, note-taking), Writing (Academic Discussion, Email Response, Build a Sentence), Speaking (Interview, Listen & Repeat).
+- Mock tests: 20 full-length mock exams, each mirroring real TOEFL iBT timing and section transitions, ending in a full band report and mistake review.
+- Pricing: Free tier to start; paid plans (1/3/6 months) starting at $25/month, with 50% off the first month automatically applied. Cancel anytime from account settings, no support ticket required.
+- Not affiliated with or endorsed by ETS. TOEFL® and TOEFL iBT® are registered trademarks of ETS.
+
+## Practice pages
+
+- [Reading Practice](https://mrreadyprep.com/toefl-reading-practice/): Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback.
+- [Listening Practice](https://mrreadyprep.com/toefl-listening-practice/): Conversations, announcements, and academic talks with note-taking practice and official audio pacing.
+- [Writing Practice](https://mrreadyprep.com/toefl-writing-practice/): Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI against official rubric criteria.
+- [Speaking Practice](https://mrreadyprep.com/toefl-speaking-practice/): Interview and Listen & Repeat tasks with AI feedback on delivery, language use, and content.
+- [Full-Length Mock Tests](https://mrreadyprep.com/toefl-mock-tests/): 20 timed mock exams across all four sections.
+- [Pricing](https://mrreadyprep.com/pricing.html): Free and premium plan details.
+
+## Guides (blog)
+
+- [TOEFL iBT 2026 Format: The Complete Guide to Every Change](https://mrreadyprep.com/blog/toefl-2026-format-changes-guide.html)
+- [mrreadyprep vs Magoosh vs ETS TestReady](https://mrreadyprep.com/blog/mrreadyprep-vs-magoosh-vs-ets-testready.html)
+- [TOEFL Reading: Vocabulary, Detail, and Inference Questions](https://mrreadyprep.com/blog/toefl-reading-strategy-guide.html)
+- [TOEFL Academic Passage: Handling a Full-Length Reading Text](https://mrreadyprep.com/blog/toefl-academic-passage-guide.html)
+- [TOEFL Read in Daily Life: Scanning Real-World Texts Fast](https://mrreadyprep.com/blog/toefl-read-in-daily-life-guide.html)
+- [TOEFL Complete the Words: Picking the Right Word Every Time](https://mrreadyprep.com/blog/toefl-complete-the-words-guide.html)
+- [TOEFL Listening: A Note-Taking Strategy](https://mrreadyprep.com/blog/toefl-listening-notetaking-guide.html)
+- [TOEFL Listening Conversation: Problem, Reason, Outcome](https://mrreadyprep.com/blog/toefl-listening-conversation-guide.html)
+- [TOEFL Listening Announcement: What, When, and What to Do](https://mrreadyprep.com/blog/toefl-listening-announcement-guide.html)
+- [TOEFL Listening Academic Talk: Following a Lecture](https://mrreadyprep.com/blog/toefl-listening-academic-talk-guide.html)
+- [TOEFL Listening Choose-Response: What a Speaker Really Means](https://mrreadyprep.com/blog/toefl-listening-choose-response-guide.html)
+- [TOEFL Writing Section: A Quick Guide to All Three Tasks](https://mrreadyprep.com/blog/toefl-writing-overview-guide.html)
+- [How to Write a TOEFL iBT Email Response That Scores 4+](https://mrreadyprep.com/blog/toefl-writing-email-guide.html)
+- [TOEFL Academic Discussion: A Strong Contribution in 10 Minutes](https://mrreadyprep.com/blog/toefl-academic-discussion-guide.html)
+- [TOEFL Build a Sentence: Grammar Under Pressure](https://mrreadyprep.com/blog/toefl-build-a-sentence-guide.html)
+- [TOEFL Speaking Section: A Quick Guide to Both Tasks](https://mrreadyprep.com/blog/toefl-speaking-overview-guide.html)
+- [TOEFL Speaking: Structuring a 45-Second Interview Answer](https://mrreadyprep.com/blog/toefl-speaking-interview-guide.html)
+- [TOEFL Listen & Repeat: Natural Pronunciation and Rhythm](https://mrreadyprep.com/blog/toefl-listen-and-repeat-guide.html)
+
+## Optional
+
+- [Terms of Service](https://mrreadyprep.com/terms.html)
+- [Privacy Policy](https://mrreadyprep.com/privacy.html)

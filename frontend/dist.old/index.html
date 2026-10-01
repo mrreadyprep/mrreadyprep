@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mrreadyprep — TOEFL® iBT Practice & Full Mock Tests</title>
+    <meta name="description" content="Practice for the TOEFL® iBT with realistic Reading, Listening, Speaking and Writing exercises and full-length mock tests. Free, instant feedback, track your progress." />
+    <link rel="canonical" href="https://mrreadyprep.com/" />
+
+    <!-- Core Web Vitals: warm up the DNS/TLS connection to the API origin before the JS bundle
+         even starts fetching from it -- ReviewsSection (below the fold, but still one of the
+         first fetches the app makes) and the auth flow both hit api.mrreadyprep.com immediately
+         on mount. Without this the browser only discovers that origin once it parses/executes
+         the bundle and issues the first fetch(), paying DNS+TCP+TLS setup cost on the critical
+         path of that request instead of in parallel with page load. -->
+    <link rel="preconnect" href="https://api.mrreadyprep.com" crossorigin />
+    <link rel="dns-prefetch" href="https://api.mrreadyprep.com" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="mrreadyprep" />
+    <meta property="og:title" content="mrreadyprep — TOEFL® iBT Practice & Full Mock Tests" />
+    <meta property="og:description" content="Practice for the TOEFL® iBT with realistic Reading, Listening, Speaking and Writing exercises and full-length mock tests. Free, instant feedback, track your progress." />
+    <meta property="og:url" content="https://mrreadyprep.com/" />
+    <meta property="og:image" content="https://mrreadyprep.com/og-image.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="mrreadyprep — TOEFL® iBT Practice & Full Mock Tests" />
+    <meta name="twitter:description" content="Practice for the TOEFL® iBT with realistic Reading, Listening, Speaking and Writing exercises and full-length mock tests." />
+    <meta name="twitter:image" content="https://mrreadyprep.com/og-image.png" />
+
+    <!-- Hreflang removed (2026-09-25): these claimed an "en"/"tr" alternate pair, but
+         https://mrreadyprep.com/tr/ was never built -- a live hreflang tag pointing at a 404 is
+         flagged by Search Console and can drag down how much Google trusts the rest of the
+         page's signals. Re-add a real hreflang block (en + tr, both resolving) once a Turkish
+         version of the site actually exists; a single-language site gets no benefit from
+         hreflang at all, so there's nothing to replace this with in the meantime. -->
+
+    <!-- Geo-targeting meta tag -->
+    <meta name="geo.placename" content="International" />
+    <meta name="geo.region" content="US" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "mrreadyprep",
+      "url": "https://mrreadyprep.com",
+      "logo": "https://mrreadyprep.com/favicon.svg",
+      "areaServed": {
+        "@type": "Worldwide",
+        "name": "International"
+      },
+      "availableLanguage": ["en"],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "Customer Service",
+        "email": "support@mrreadyprep.com",
+        "url": "https://mrreadyprep.com"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "mrreadyprep",
+      "applicationCategory": "EducationalApplication",
+      "operatingSystem": "Web",
+      "url": "https://mrreadyprep.com/",
+      "description": "TOEFL-style practice platform with realistic Reading, Listening, Writing and Speaking exercises, AI feedback aligned with TOEFL-style scoring criteria, and full-length mock tests.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "ratingCount": "18"
+      }
+    }
+    </script>
+    <!-- GEO: FAQPage schema mirrors the exact Q&A copy rendered in App.jsx's `faqs` array (the
+         accordion under "Frequently asked questions" on the landing page) -- this is the single
+         most valuable structured-data addition for AI answer engines (ChatGPT, Perplexity,
+         Google AI Overviews), since FAQPage is one of the few schema types they're documented to
+         pull direct answers/citations from. Keep this block in sync if App.jsx's faqs array
+         changes -- a mismatch between the schema and the visible page text is exactly what these
+         schemas are meant NOT to have. -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are the questions aligned with the latest 2026 TOEFL® iBT blueprint?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. mrreadyprep is built around the current test specifications, including Read in Daily Life, Complete the Words, Academic Discussion, and the updated Speaking task formats."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How does the AI scoring work, and what rubric does it use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Responses are graded on a 0 to 6.0 scale in 0.5 increments (e.g. 4.5, 5.0, 5.5, 6.0). Beyond the overall band, you get itemized feedback broken down by criteria like grammar, vocabulary, and topic development."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is included in the 20 Full-Length Mock Tests?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Each of the 20 mock exams mirrors real test timing and section transitions across Reading, Listening, Writing, and Speaking, and ends with a full band report plus a mistake review."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I cancel my subscription?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "From your account settings, in one click -- no email or support ticket needed. You keep full access until the end of your current billing period."
+          }
+        }
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://mrreadyprep.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Practice",
+          "item": "https://mrreadyprep.com/dashboard"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Mock Tests",
+          "item": "https://mrreadyprep.com/toefl-mock-tests/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "TOEFL Guides",
+          "item": "https://mrreadyprep.com/blog/"
+        }
+      ]
+    }
+    </script>
+
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      html { width: 100%; height: 100%; }
+      body { width: 100%; height: 100%; overflow: hidden; }
+      #root { width: 100%; height: 100%; display: flex; }
+    </style>
+    <script type="module" crossorigin src="/assets/index-VL_cFMzF.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-DbHLRfcN.css">
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- Static fallback links for crawlers/verifiers that fetch this page without executing
+         JavaScript (e.g. Paddle's website-verification check) -- the React app itself links to
+         these same pages from its footer/sidebar, but that only exists after the JS bundle runs. -->
+    <noscript>
+      <div style="padding:40px 24px 60px;max-width:720px;margin:0 auto;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a1a;line-height:1.6;">
+        <h1 style="font-size:24px;margin-bottom:10px;">Master the TOEFL iBT with Real Exam Simulations and Instant AI Scoring</h1>
+        <p style="margin-bottom:20px;color:#444;">Practice Reading, Listening, Writing, and Speaking with the real exam interface and timing. Get instant scores on a 0–6.0 scale, in 0.5-point increments, graded against official rubric criteria, with detailed feedback to help you reach your target. 20 full-length mock tests, free to start.</p>
+
+        <h2 style="font-size:17px;margin-bottom:10px;color:#701fa1;">Every section of the TOEFL iBT, covered</h2>
+        <ul style="margin:0 0 20px;padding-left:20px;color:#444;">
+          <li style="margin-bottom:6px;"><strong>Reading</strong> — Academic passages, Read in Daily Life, and Complete the Words drills with instant right/wrong feedback. <a href="/toefl-reading-practice/" style="color:#701fa1;">Reading Practice →</a></li>
+          <li style="margin-bottom:6px;"><strong>Listening</strong> — Conversations, announcements, and academic talks with note-taking practice and official audio pacing. <a href="/toefl-listening-practice/" style="color:#701fa1;">Listening Practice →</a></li>
+          <li style="margin-bottom:6px;"><strong>Writing</strong> — Academic Discussion, Email, and Build-a-Sentence tasks scored instantly by AI. <a href="/toefl-writing-practice/" style="color:#701fa1;">Writing Practice →</a></li>
+          <li style="margin-bottom:6px;"><strong>Speaking</strong> — Interview and Listen & Repeat tasks with AI feedback on delivery, language use, and content. <a href="/toefl-speaking-practice/" style="color:#701fa1;">Speaking Practice →</a></li>
+        </ul>
+
+        <h2 style="font-size:17px;margin-bottom:10px;color:#701fa1;">How it works</h2>
+        <ol style="margin:0 0 20px;padding-left:20px;color:#444;">
+          <li style="margin-bottom:6px;">Create a free account — no credit card required to get started.</li>
+          <li style="margin-bottom:6px;">Practice by skill or take a full mock test under real timing.</li>
+          <li style="margin-bottom:6px;">Get instant, AI-powered feedback the moment you finish.</li>
+        </ol>
+
+        <p style="margin-bottom:16px;color:#444;">Beyond the four core skills, mrreadyprep includes Adaptive Learning Paths, an AI Tutor Chat, a Community Forum, and streaks/badges/leaderboard to keep daily practice consistent. Free to start; premium plans from $25/month.</p>
+
+        <p style="margin-bottom:12px;">
+          <a href="/toefl-mock-tests/" style="color:#701fa1;">Full-Length Mock Tests</a> ·
+          <a href="/toefl-practice-tests/" style="color:#701fa1;">All Practice Tests</a> ·
+          <a href="/pricing.html" style="color:#701fa1;">Pricing</a> ·
+          <a href="/blog/" style="color:#701fa1;">TOEFL Guides</a>
+        </p>
+        <p>
+          <a href="/terms.html" style="color:#701fa1;">Terms of Service (includes refund policy)</a> ·
+          <a href="/privacy.html" style="color:#701fa1;">Privacy Policy</a>
+        </p>
+        <p style="margin-top:24px;font-size:11px;color:#9ca3af;">TOEFL® and TOEFL iBT® are registered trademarks of ETS. mrreadyprep is not affiliated with or endorsed by ETS.</p>
+      </div>
+    </noscript>
+  </body>
+</html>
