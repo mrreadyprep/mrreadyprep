@@ -6167,7 +6167,7 @@ def create_forum_answer(question_id: int, data: ForumAnswerCreate, request: Requ
 # ============================================================================
 
 @app.get("/api/leaderboard")
-def get_leaderboard(period: str = "weekly", limit: int = 100):
+def get_leaderboard(period: str = "weekly", limit: int = 240):
     """Get leaderboard with This Week and All Time data"""
     
     # Mock leaderboard data - 40 users for weekly, 240 for all-time
