@@ -1074,7 +1074,7 @@ function cancelSubscription() {
   return apiFetch(`${BACKEND_URL}/api/subscription/cancel`, { method: 'POST' }).then(res => res.json())
 }
 
-function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubscription, isAdmin }) {
+function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubscription, isAdmin, isOneTimePurchase, accessUntil }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [showCancelConfirm, setShowCancelConfirm] = useState(false)
@@ -1197,7 +1197,14 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
             {subscriptionStatus === 'PENDING' ? ' Your subscription is being activated.' : ''}
           </p>
           {error && <p style={{ color: '#d92d20', fontSize: '12px', marginBottom: '12px' }}>{error}</p>}
-          {hasBilledSubscription ? (
+          {isOneTimePurchase ? (
+            <p style={{ color: '#4a4d5f', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
+              {accessUntil && !isNaN(new Date(accessUntil).getTime())
+                ? <>Your access runs until <strong>{new Date(accessUntil).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</strong>.</>
+                : 'Your access is active.'}
+              {' '}This was a one-time payment: it will not renew and you will not be charged again.
+            </p>
+          ) : hasBilledSubscription ? (
             <button onClick={handleCancelSubscription} disabled={busy} style={{ background: '#11162d', color: '#fff', border: 'none', padding: '13px 24px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', width: '100%', opacity: busy ? 0.6 : 1 }}>
               {busy ? 'Canceling…' : 'Cancel subscription'}
             </button>
@@ -1258,7 +1265,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                 'AI feedback on all reading, listening, writing & speaking answers',
                 'Score history & detailed mistake review',
                 '🎯 Adaptive Learning, 🤖 AI Tutor, 💬 Community & 🏆 Gamification (free on every account)',
-                'Cancel anytime'
+                'One-time payment, no auto-renewal'
               ]
             },
             { 
@@ -1275,7 +1282,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                 'AI feedback on all reading, listening, writing & speaking answers',
                 'Score history & detailed mistake review',
                 '🎯 Adaptive Learning, 🤖 AI Tutor, 💬 Community & 🏆 Gamification (free on every account)',
-                'Cancel anytime'
+                'One-time payment, no auto-renewal'
               ]
             },
             { 
@@ -1291,7 +1298,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
                 'AI feedback on all reading, listening, writing & speaking answers',
                 'Score history & detailed mistake review',
                 '🎯 Adaptive Learning, 🤖 AI Tutor, 💬 Community & 🏆 Gamification (free on every account)',
-                'Cancel anytime'
+                'One-time payment, no auto-renewal'
               ]
             }
           ].map((plan, idx) => (
@@ -11495,8 +11502,8 @@ function App({ justSignedUp }) {
               <div style={{ background: 'linear-gradient(90deg, #701fa1, #9333ea)', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0, flexWrap: 'wrap', ...(isMobile ? { flexDirection: 'column', alignItems: 'flex-start' } : {}) }}>
                 <div style={{ fontSize: '22px' }} aria-hidden="true">👋</div>
                 <div style={{ flex: 1, minWidth: '200px' }}>
-                  <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>We miss having you!</div>
-                  <div style={{ fontSize: '11.5px', color: '#e9d5ff', marginTop: '2px' }}>Come back to Premium for $45/month -- use code COMEBACK60 at checkout for $20 your first month.</div>
+                  <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>Your Premium access has ended</div>
+                  <div style={{ fontSize: '11.5px', color: '#e9d5ff', marginTop: '2px' }}>Pick up where you left off -- plans start at $25, one-time payment, no auto-renewal.</div>
                 </div>
                 <button onClick={() => setCurrentTab('subscribe')} style={{ background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>View offer</button>
               </div>
@@ -11889,6 +11896,8 @@ function App({ justSignedUp }) {
             subscriptionStatus={userData.subscription_status}
             hasBilledSubscription={!!userData.has_billed_subscription}
             isAdmin={!!userData.is_admin}
+            isOneTimePurchase={!!userData.is_one_time_purchase}
+            accessUntil={userData.subscription_current_period_end}
           />
         )}
 

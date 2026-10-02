@@ -904,7 +904,7 @@ function LandingPage({ onGetStarted, onLogIn, onOpenAuth }) {
               {priceEstimate(plan.price) && (
                 <div style={{ fontSize: '11px', color: '#9ca3af', marginBottom: '14px' }}>{priceEstimate(plan.price)} · billed in USD</div>
               )}
-              <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7', flex: 1 }}>Full question bank, all 20 full-length mock tests, and AI-based scoring for Writing and Speaking. Cancel anytime.</div>
+              <div style={{ fontSize: '13px', color: '#616473', lineHeight: '1.7', flex: 1 }}>Full question bank, all 20 full-length mock tests, and AI-based scoring for Writing and Speaking. One-time payment, no auto-renewal.</div>
             </div>
           ))}
         </div>
@@ -1312,7 +1312,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
         <div style={{ backgroundColor: '#fff', borderRadius: '14px', padding: '32px 16px', marginTop: '24px', boxSizing: 'border-box', maxWidth: '100%', margin: '24px auto 0', width: '100%' }}>
           <div style={{ textAlign: 'center', marginBottom: '24px' }}>
             <div style={{ fontSize: '18px', fontWeight: '700', color: '#1a1a1a', marginBottom: '6px' }}>Plans after you sign up</div>
-            <div style={{ fontSize: '14px', color: '#9ca3af' }}>Create your free account above, then pick a plan. Cancel anytime.</div>
+            <div style={{ fontSize: '14px', color: '#9ca3af' }}>Create your free account above, then pick a plan. One-time payment, no auto-renewal.</div>
           </div>
           {/* Always a single stacked column, regardless of viewport width -- this whole screen lives
               inside a fixed 380px-wide card (see the wrapper div a few dozen lines up, used for the

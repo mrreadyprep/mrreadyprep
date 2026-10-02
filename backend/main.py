@@ -3008,6 +3008,11 @@ def user_profile_dict(user) -> dict:
         # /api/subscription/cancel with no polar_subscription_id on file just 400s, since there's
         # nothing on Polar's end to actually cancel.
         "has_billed_subscription": bool(user["polar_subscription_id"]),
+        # True when access came from a one-time Polar purchase (polar_subscription_id is the
+        # "order:<id>" marker written by _handle_polar_order_paid) rather than a recurring
+        # subscription -- there is nothing to cancel in that case, the access simply ends on
+        # subscription_current_period_end.
+        "is_one_time_purchase": str(user["polar_subscription_id"] or "").startswith("order:"),
         "subscription_current_period_end": (
             user["subscription_current_period_end"].isoformat()
             if isinstance(user["subscription_current_period_end"], datetime)
@@ -4072,8 +4077,12 @@ def create_checkout(request: CreateCheckoutRequest, user=Depends(get_current_use
         # (see is_lapsed_subscriber()/POLAR_COMEBACK_PRODUCT_ID above) instead of the regular one --
         # falls back to the regular product if the comeback product isn't configured, so this never
         # breaks checkout if that env var is left unset.
-        use_comeback_product = bool(POLAR_COMEBACK_PRODUCT_ID) and fresh_user is not None and is_lapsed_subscriber(fresh_user)
-        
+        # Disabled: the site now sells three one-time plans (1/3/6 Months) at fixed prices shown on
+        # the Subscribe screen, and a lapsed student must be able to buy whichever of those plans
+        # they pick. A single comeback product would silently override their choice (and fail
+        # outright if that product no longer exists on Polar).
+        use_comeback_product = False
+
         # Map duration to product ID
         if request.duration == "1 Month" and POLAR_PRODUCT_ID_1MONTH:
             product_id = POLAR_PRODUCT_ID_1MONTH
@@ -4160,6 +4169,10 @@ def cancel_subscription(user=Depends(get_current_user)):
     _check_and_consume_rate_limit(_cancel_subscription_attempts, str(user["id"]), CANCEL_SUBSCRIPTION_WINDOW_SECONDS, CANCEL_SUBSCRIPTION_MAX, "cancel")
     if not user["polar_subscription_id"]:
         raise HTTPException(status_code=400, detail="No active subscription on file")
+    if str(user["polar_subscription_id"]).startswith("order:"):
+        # One-time purchase (see _handle_polar_order_paid): no recurring subscription exists on
+        # Polar's side, so there is nothing to cancel and nothing will be charged again.
+        raise HTTPException(status_code=400, detail="Your plan is a one-time purchase, so there is nothing to cancel and you will not be charged again. Your access simply ends on its end date.")
     result = _polar_request("DELETE", f"/v1/subscriptions/{user['polar_subscription_id']}")
     # Same {"detail": ...}-shape error discriminator create_checkout() uses above -- see its comment.
     if isinstance(result, dict) and "detail" in result:
