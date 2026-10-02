@@ -1074,10 +1074,30 @@ function cancelSubscription() {
   return apiFetch(`${BACKEND_URL}/api/subscription/cancel`, { method: 'POST' }).then(res => res.json())
 }
 
+// The three one-time plans sold on the Subscribe screen. Prices here are display-only -- the real
+// price and product are always chosen server-side in create_checkout() from `duration`.
+const PLAN_FEATURES = [
+  'Unlimited access to all Reading, Listening, Writing and Speaking practices',
+  'All 20 Full Mock Tests (instead of just Test 1)',
+  'Unlimited "practice one section" random mock drills',
+  'Detailed progress analytics & score tracking',
+  'AI feedback on all reading, listening, writing & speaking answers',
+  'Score history & detailed mistake review',
+  '🎯 Adaptive Learning, 🤖 AI Tutor, 💬 Community & 🏆 Gamification (free on every account)',
+  'One-time payment, no auto-renewal'
+]
+const PLANS = [
+  { duration: '1 Month', months: 1, originalPrice: 50, price: 25 },
+  { duration: '3 Months', months: 3, originalPrice: 120, price: 60, isMostPopular: true },
+  { duration: '6 Months', months: 6, originalPrice: 200, price: 100 }
+]
+
 function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubscription, isAdmin, isOneTimePurchase, accessUntil }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [showCancelConfirm, setShowCancelConfirm] = useState(false)
+  const isMobile = useIsMobile()
+  const [selectedPlan, setSelectedPlan] = useState('3 Months')
   // "≈ local currency" line next to each USD price below, for visitors outside the US -- purely
   // informational, since Polar's checkout (triggered by the Subscribe button further down) is
   // always what actually charges the card, always in USD. See geoDetect.js for how this is
@@ -1241,7 +1261,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
   const isLapsed = !!hasBilledSubscription
   return (
     <div style={{ display: 'flex', justifyContent: 'center', padding: '24px 12px', width: '100%' }}>
-      <div style={{ width: '100%', maxWidth: 'none', background: '#fff', borderRadius: '0px', border: 'none', padding: '40px 60px' }}>
+      <div style={{ width: '100%', maxWidth: 'none', background: '#fff', borderRadius: '0px', border: 'none', padding: isMobile ? '20px 4px' : '40px 40px' }}>
         <div style={{ textAlign: 'center' }}>
           <div style={{ fontSize: '38px', marginBottom: '10px' }}>{isLapsed ? '👋' : '⭐'}</div>
           <h2 style={{ margin: '0 0 16px', fontSize: '24px', fontWeight: '700', color: '#1a1a1a' }}>
@@ -1249,143 +1269,101 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
           </h2>
         </div>
 
-        {/* 3-Column Pricing Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
-          {[
-            { 
-              duration: '1 Month', 
-              originalPrice: 50, 
-              price: 25, 
-              savings: null,
-              features: [
-                'Unlimited access to all Reading, Listening, Writing and Speaking practices',
-                'All 20 Full Mock Tests (instead of just Test 1)',
-                'Unlimited "practice one section" random mock drills',
-                'Detailed progress analytics & score tracking',
-                'AI feedback on all reading, listening, writing & speaking answers',
-                'Score history & detailed mistake review',
-                '🎯 Adaptive Learning, 🤖 AI Tutor, 💬 Community & 🏆 Gamification (free on every account)',
-                'One-time payment, no auto-renewal'
-              ]
-            },
-            { 
-              duration: '3 Months', 
-              originalPrice: 120, 
-              price: 60, 
-              savings: null, 
-              isMostPopular: true,
-              features: [
-                'Unlimited access to all Reading, Listening, Writing and Speaking practices',
-                'All 20 Full Mock Tests (instead of just Test 1)',
-                'Unlimited "practice one section" random mock drills',
-                'Detailed progress analytics & score tracking',
-                'AI feedback on all reading, listening, writing & speaking answers',
-                'Score history & detailed mistake review',
-                '🎯 Adaptive Learning, 🤖 AI Tutor, 💬 Community & 🏆 Gamification (free on every account)',
-                'One-time payment, no auto-renewal'
-              ]
-            },
-            { 
-              duration: '6 Months', 
-              originalPrice: 200, 
-              price: 100, 
-              savings: null,
-              features: [
-                'Unlimited access to all Reading, Listening, Writing and Speaking practices',
-                'All 20 Full Mock Tests (instead of just Test 1)',
-                'Unlimited "practice one section" random mock drills',
-                'Detailed progress analytics & score tracking',
-                'AI feedback on all reading, listening, writing & speaking answers',
-                'Score history & detailed mistake review',
-                '🎯 Adaptive Learning, 🤖 AI Tutor, 💬 Community & 🏆 Gamification (free on every account)',
-                'One-time payment, no auto-renewal'
-              ]
-            }
-          ].map((plan, idx) => (
-            <div key={idx} style={{
-              position: 'relative',
-              background: plan.isMostPopular ? '#f9f3fd' : '#fff',
-              border: plan.isMostPopular ? '2px solid #701fa1' : '1px solid #e1e4ed',
-              borderRadius: '12px',
-              padding: '20px 16px',
-              textAlign: 'center',
-              display: 'flex',
-              flexDirection: 'column',
-              transform: plan.isMostPopular ? 'scale(1.05)' : 'scale(1)',
-              transition: 'all 0.3s'
-            }}>
-              {plan.isMostPopular && (
-                <div style={{
-                  position: 'absolute',
-                  top: '-12px',
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  background: '#701fa1',
-                  color: '#fff',
-                  padding: '4px 12px',
-                  borderRadius: '16px',
-                  fontSize: '11px',
-                  fontWeight: '700',
-                  textTransform: 'uppercase'
+        {isMobile ? (
+          /* Phone: compact stacked plan rows, one shared feature list, one CTA that follows the selected plan. */
+          <div style={{ marginBottom: '16px' }}>
+            {PLANS.map(plan => {
+              const selected = selectedPlan === plan.duration
+              const perMonth = plan.months > 1 ? plan.price / plan.months : null
+              const save = perMonth ? Math.round((1 - perMonth / PLANS[0].price) * 100) : null
+              return (
+                <div key={plan.duration} role="button" onClick={() => setSelectedPlan(plan.duration)} style={{
+                  position: 'relative',
+                  border: selected ? '2px solid #701fa1' : '1px solid #e1e4ed',
+                  background: selected ? '#f9f3fd' : '#fff',
+                  borderRadius: '10px',
+                  padding: plan.isMostPopular ? '14px 12px 10px' : '10px 12px',
+                  marginBottom: '8px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  cursor: 'pointer'
                 }}>
-                  MOST POPULAR
+                  {plan.isMostPopular && (
+                    <div style={{ position: 'absolute', top: '-9px', left: '12px', background: '#701fa1', color: '#fff', fontSize: '9px', fontWeight: '700', padding: '2px 8px', borderRadius: '10px' }}>MOST POPULAR</div>
+                  )}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: '13px', fontWeight: '700', color: '#1a1a1a' }}>{plan.duration}</div>
+                    <div style={{ fontSize: '11px', color: '#6b7280' }}>{perMonth ? `$${perMonth.toFixed(2)} / month · save ${save}%` : 'Full access, all 20 mock tests'}</div>
+                    {priceEstimate(plan.price) && (
+                      <div style={{ fontSize: '10px', color: '#6b7280' }}>{priceEstimate(plan.price)} · billed in USD</div>
+                    )}
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <span style={{ fontSize: '11px', color: '#6b7280', textDecoration: 'line-through' }}>${plan.originalPrice}</span>{' '}
+                    <span style={{ fontSize: '18px', fontWeight: '800', color: '#701fa1' }}>${plan.price}</span>
+                  </div>
                 </div>
-              )}
-              <div style={{ fontSize: '14px', fontWeight: '600', color: '#666', marginBottom: '8px' }}>
-                {plan.duration}
-              </div>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', justifyContent: 'center', marginBottom: '4px' }}>
-                {plan.originalPrice && (
-                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#6b7280', textDecoration: 'line-through' }}>
-                    ${plan.originalPrice}
+              )
+            })}
+            <div style={{ background: '#f6f7fb', borderRadius: '10px', padding: '10px 12px', margin: '10px 0' }}>
+              <div style={{ fontSize: '11px', fontWeight: '700', marginBottom: '6px', color: '#1a1a1a' }}>Every plan includes</div>
+              {['All 20 Full Mock Tests', 'AI feedback on writing & speaking', 'Progress analytics & mistake review', 'Unlimited practice in every section', 'One-time payment, no auto-renewal'].map((f, i) => (
+                <div key={i} style={{ fontSize: '11.5px', color: '#374151', lineHeight: '1.6' }}><span style={{ color: '#2ac56c', fontWeight: '700' }}>✓</span> {f}</div>
+              ))}
+            </div>
+            <button onClick={() => handleSubscribe(selectedPlan)} disabled={busy} style={{ width: '100%', background: '#701fa1', color: '#fff', border: 'none', padding: '12px', borderRadius: '10px', fontSize: '14px', fontWeight: '700', cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.6 : 1 }}>
+              {busy ? 'Opening checkout…' : `Continue with ${selectedPlan}`}
+            </button>
+          </div>
+        ) : (
+          /* Desktop / tablet: 3-column pricing grid. */
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '24px' }}>
+            {PLANS.map(plan => (
+              <div key={plan.duration} style={{
+                position: 'relative',
+                background: plan.isMostPopular ? '#f9f3fd' : '#fff',
+                border: plan.isMostPopular ? '2px solid #701fa1' : '1px solid #e1e4ed',
+                borderRadius: '12px',
+                padding: '20px 16px',
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                transform: plan.isMostPopular ? 'scale(1.05)' : 'scale(1)',
+                transition: 'all 0.3s'
+              }}>
+                {plan.isMostPopular && (
+                  <div style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', background: '#701fa1', color: '#fff', padding: '4px 12px', borderRadius: '16px', fontSize: '11px', fontWeight: '700', textTransform: 'uppercase' }}>
+                    MOST POPULAR
                   </div>
                 )}
-                <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>
-                  ${plan.price}
+                <div style={{ fontSize: '14px', fontWeight: '600', color: '#666', marginBottom: '8px' }}>{plan.duration}</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: '8px', justifyContent: 'center', marginBottom: '4px' }}>
+                  <div style={{ fontSize: '18px', fontWeight: '600', color: '#6b7280', textDecoration: 'line-through' }}>${plan.originalPrice}</div>
+                  <div style={{ fontSize: '28px', fontWeight: '800', color: '#701fa1' }}>${plan.price}</div>
                 </div>
+                {plan.months > 1 && (
+                  <div style={{ color: '#666', fontSize: '12px', marginBottom: '4px' }}>${(plan.price / plan.months).toFixed(2)}/month</div>
+                )}
+                {priceEstimate(plan.price) && (
+                  <div style={{ color: '#6b7280', fontSize: '11px', marginBottom: '12px' }}>{priceEstimate(plan.price)} · billed in USD</div>
+                )}
+                <div style={{ flex: 1, textAlign: 'left', marginBottom: '12px' }}>
+                  {PLAN_FEATURES.map((feature, i) => (
+                    <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '12px', color: '#374151', marginBottom: '8px', lineHeight: '1.3' }}>
+                      <span style={{ color: '#2ac56c', fontWeight: '700', flexShrink: 0 }}>✓</span>
+                      <span>{feature}</span>
+                    </div>
+                  ))}
+                </div>
+                <button onClick={() => handleSubscribe(plan.duration)} disabled={busy} style={{ width: '100%', background: '#701fa1', color: '#fff', border: 'none', padding: '10px 12px', borderRadius: '8px', fontSize: '13px', fontWeight: '600', cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.6 : 1, marginTop: 'auto' }}>
+                  Choose Plan
+                </button>
               </div>
-              {plan.duration !== '1 Month' && (
-                <div style={{
-                  color: '#666',
-                  fontSize: '12px',
-                  marginBottom: '4px'
-                }}>
-                  ${(plan.price / parseInt(plan.duration)).toFixed(2)}/month
-                </div>
-              )}
-              {priceEstimate(plan.price) && (
-                <div style={{ color: '#6b7280', fontSize: '11px', marginBottom: '12px' }}>
-                  {priceEstimate(plan.price)} · billed in USD
-                </div>
-              )}
-
-              <div style={{ flex: 1, textAlign: 'left', marginBottom: '12px' }}>
-                {plan.features.map((feature, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', fontSize: '12px', color: '#374151', marginBottom: '8px', lineHeight: '1.3' }}>
-                    <span style={{ color: '#2ac56c', fontWeight: '700', flexShrink: 0 }}>✓</span>
-                    <span>{feature}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <button onClick={() => handleSubscribe(plan.duration)} disabled={busy} style={{
-                width: '100%',
-                background: '#701fa1',
-                color: '#fff',
-                border: 'none',
-                padding: '10px 12px',
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: '600',
-                cursor: busy ? 'default' : 'pointer',
-                opacity: busy ? 0.6 : 1,
-                marginTop: 'auto'
-              }}>
-                Choose Plan
-              </button>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
+        <div style={{ textAlign: 'center', fontSize: '11px', color: '#6b7280', margin: '0 0 12px' }}>🔒 Secure payment by Polar</div>
 
         {!POLAR_CHECKOUT_ENABLED && (
           <p style={{ color: '#6b7280', fontSize: '12px', textAlign: 'center', margin: '0 0 16px' }}>Payments aren't set up on this site yet -- check back soon.</p>
@@ -11009,6 +10987,17 @@ function App({ justSignedUp }) {
   }, [])
   const [resendingVerification, setResendingVerification] = useState(false)
   const [currentTab, setCurrentTab] = useState('dashboard')
+  // "Unlock all mock tests" banner shown on the dashboard to students who have never paid. Once
+  // dismissed it stays hidden on this device (a plain per-device convenience -- losing it just
+  // means the banner shows again, so reads/writes are wrapped in try/catch for browsers that
+  // block storage).
+  const [upgradeBannerDismissed, setUpgradeBannerDismissed] = useState(() => {
+    try { return localStorage.getItem('mrp_upgrade_banner_dismissed') === '1' } catch { return false }
+  })
+  const dismissUpgradeBanner = () => {
+    setUpgradeBannerDismissed(true)
+    try { localStorage.setItem('mrp_upgrade_banner_dismissed', '1') } catch { /* storage unavailable */ }
+  }
   // Landing on the Community tab (from any other tab) always shows the question list, never
   // wherever the student last drilled into -- only fires on an actual tab switch INTO 'forum',
   // not on the list->detail->list navigation that happens while already on this tab (that
@@ -11498,6 +11487,17 @@ function App({ justSignedUp }) {
                 SubscribeScreen's isLapsed for the same derivation). Placed above the streak/mock-
                 test row so it's the first thing a returning student sees on login, not buried
                 below the fold. */}
+            {!userData.has_premium && !userData.has_billed_subscription && !upgradeBannerDismissed && (
+              <div style={{ position: 'relative', background: 'linear-gradient(90deg, #701fa1, #9333ea)', borderRadius: '12px', padding: '14px 34px 14px 18px', display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0, flexWrap: 'wrap', ...(isMobile ? { flexDirection: 'column', alignItems: 'flex-start' } : {}) }}>
+                <div style={{ fontSize: '24px' }} aria-hidden="true">🎯</div>
+                <div style={{ flex: 1, minWidth: '200px' }}>
+                  <div style={{ fontSize: '13px', fontWeight: '700', color: '#fff' }}>Unlock all 20 Full Mock Tests + AI feedback</div>
+                  <div style={{ fontSize: '11.5px', color: '#e9d5ff', marginTop: '2px' }}>Free plan includes Mock Test 1 and the first exercise of every section. Plans start at $25 · one-time payment, no auto-renewal.</div>
+                </div>
+                <button onClick={() => setCurrentTab('subscribe')} style={{ background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>See plans</button>
+                <button onClick={dismissUpgradeBanner} aria-label="Dismiss" style={{ position: 'absolute', top: '6px', right: '8px', background: 'none', border: 'none', color: '#e9d5ff', fontSize: '14px', cursor: 'pointer', lineHeight: 1, padding: '4px' }}>✕</button>
+              </div>
+            )}
             {!userData.has_premium && userData.has_billed_subscription && (
               <div style={{ background: 'linear-gradient(90deg, #701fa1, #9333ea)', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', flexShrink: 0, flexWrap: 'wrap', ...(isMobile ? { flexDirection: 'column', alignItems: 'flex-start' } : {}) }}>
                 <div style={{ fontSize: '22px' }} aria-hidden="true">👋</div>
@@ -11532,13 +11532,16 @@ function App({ justSignedUp }) {
                   ))}
                 </div>
               </div>
-              <div style={{ background: userData.has_premium ? '#701fa1' : '#d1c4e0', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', minWidth: isMobile ? '0' : '240px', flexShrink: 0 }}>
+              {/* Mock Test 1 is free for everyone (FREE_FIXED_TEST_ID on the backend) -- every other
+                  test is locked inside FullMockTest itself and sends the student to the Subscribe
+                  screen, so this card is clickable for free students too instead of a dead end. */}
+              <div style={{ background: '#701fa1', borderRadius: '12px', padding: '14px 18px', display: 'flex', alignItems: 'center', gap: '14px', minWidth: isMobile ? '0' : '240px', flexShrink: 0 }}>
                 <div>
-                  <div style={{ fontSize: '10px', color: userData.has_premium ? '#d4a0f5' : '#c8b5d8', marginBottom: '2px' }}>Full mock test</div>
+                  <div style={{ fontSize: '10px', color: '#d4a0f5', marginBottom: '2px' }}>Full mock test</div>
                   <div style={{ fontSize: '13px', fontWeight: '600', color: '#fff' }}>All 4 sections · ~90 min</div>
-                  <div style={{ fontSize: '10px', color: userData.has_premium ? '#c084fc' : '#b8a0d4', marginTop: '3px' }}>{userData.last_mock_test_at ? `Last taken: ${timeAgo(userData.last_mock_test_at)}` : !userData.has_premium ? 'Premium required' : 'Not taken yet'}</div>
+                  <div style={{ fontSize: '10px', color: '#e9d5ff', marginTop: '3px' }}>{userData.last_mock_test_at ? `Last taken: ${timeAgo(userData.last_mock_test_at)}` : !userData.has_premium ? 'Test 1 is free · 19 more with Premium' : 'Not taken yet'}</div>
                 </div>
-                <button onClick={() => userData.has_premium ? setCurrentTab('mocktest') : null} disabled={!userData.has_premium} style={{ marginLeft: 'auto', background: userData.has_premium ? '#fff' : '#e8ddf7', color: userData.has_premium ? '#701fa1' : '#b8a0d4', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: userData.has_premium ? 'pointer' : 'default', whiteSpace: 'nowrap', flexShrink: 0, opacity: userData.has_premium ? 1 : 0.6 }}>{userData.has_premium ? 'Start test' : '🔒 Premium'}</button>
+                <button onClick={() => setCurrentTab('mocktest')} style={{ marginLeft: 'auto', background: '#fff', color: '#701fa1', border: 'none', padding: '8px 14px', borderRadius: '8px', fontSize: '12px', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap', flexShrink: 0 }}>{userData.has_premium ? 'Start test' : 'Try Test 1 free'}</button>
               </div>
             </div>
 
