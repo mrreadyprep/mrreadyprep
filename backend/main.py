@@ -4235,6 +4235,103 @@ def _verify_polar_webhook_signature(msg_id: str, timestamp: str, raw_body_text: 
             return True
     return False
 
+def _polar_order_duration_days(product_id, product_name):
+    """Maps a one-time Polar product to how many days of Premium it buys. Matched by product id
+    first (POLAR_PRODUCT_ID_1MONTH/3MONTH/6MONTH), then by product name as a fallback. Returns None
+    when the product is not recognized."""
+    for pid, days in ((POLAR_PRODUCT_ID_1MONTH, 30), (POLAR_PRODUCT_ID_3MONTH, 90), (POLAR_PRODUCT_ID_6MONTH, 180)):
+        if pid and product_id == pid:
+            return days
+    name = (product_name or "").lower()
+    if "6 month" in name:
+        return 180
+    if "3 month" in name:
+        return 90
+    if "1 month" in name:
+        return 30
+    return None
+
+async def _handle_polar_order_paid(event, ts_epoch):
+    """Our Polar products (1/3/6 Months) are ONE-TIME purchases, not recurring subscriptions, so
+    Polar never sends subscription.* events for them -- only order.created / order.paid. Without
+    this, a student could pay and never get Premium. On order.paid for a one-time order, grant
+    access for the purchased duration: subscription_status = ACTIVE and
+    subscription_current_period_end = now + duration (extended from the current end date if the
+    student still has time left). has_active_subscription() already lapses access automatically
+    once period_end passes. Orders that belong to a real subscription (subscription_id present) are
+    left to the subscription.* handler."""
+    data = event.get("data") or {}
+    order_id = data.get("id")
+    if not order_id:
+        return {"status": "ignored"}
+    if data.get("subscription_id") or data.get("subscription"):
+        return {"status": "ignored"}
+    if data.get("billing_reason") not in (None, "", "purchase"):
+        return {"status": "ignored"}
+
+    customer = data.get("customer") or {}
+    metadata = data.get("metadata") or {}
+    user_id = metadata.get("user_id") or customer.get("external_id")
+    customer_id = data.get("customer_id") or customer.get("id")
+    product = data.get("product") or {}
+    product_id = data.get("product_id") or product.get("id")
+    product_name = product.get("name")
+    if not user_id:
+        print(f"[polar webhook] order.paid with no external_customer_id/metadata.user_id -- order_id={order_id} customer_id={customer_id}. Cannot link to a user; premium was NOT granted.", flush=True)
+        raise HTTPException(status_code=400, detail="Missing external_customer_id/metadata.user_id")
+    try:
+        user_id_int = int(user_id)
+    except (TypeError, ValueError):
+        print(f"[polar webhook] order.paid with non-numeric user_id={user_id!r} -- order_id={order_id}. Premium was NOT granted.", flush=True)
+        raise HTTPException(status_code=400, detail="Invalid external_customer_id/metadata.user_id")
+
+    days = _polar_order_duration_days(product_id, product_name)
+    if days is None:
+        # A paying student must never be left locked out just because the product mapping is
+        # incomplete -- grant the shortest plan and log loudly so it can be corrected.
+        print(f"[polar webhook] order.paid for unrecognized product_id={product_id!r} name={product_name!r} (order_id={order_id}); granting 30 days by default.", flush=True)
+        days = 30
+
+    now = datetime.now(timezone.utc)
+    event_time_iso = datetime.fromtimestamp(ts_epoch, tz=timezone.utc).isoformat()
+
+    def _apply_order():
+        conn = get_db()
+        try:
+            conn.execute("CREATE TABLE IF NOT EXISTS polar_processed_orders (order_id TEXT PRIMARY KEY, user_id INTEGER, processed_at TEXT)")
+            if conn.execute("SELECT order_id FROM polar_processed_orders WHERE order_id = ?", (order_id,)).fetchone():
+                return "duplicate"
+            user = conn.execute(
+                "SELECT id, subscription_status, subscription_current_period_end FROM users WHERE id = ?",
+                (user_id_int,),
+            ).fetchone()
+            if user is None:
+                print(f"[polar webhook] order.paid: user_id={user_id_int} matched no user -- order_id={order_id}. Premium was NOT granted.", flush=True)
+                raise HTTPException(status_code=400, detail="external_customer_id/metadata.user_id did not match any user")
+            base = now
+            if (user["subscription_status"] or "") in ACTIVE_SUBSCRIPTION_STATUSES:
+                current_end = _parse_polar_ts(user["subscription_current_period_end"])
+                if current_end is not None and current_end > now:
+                    base = current_end
+            new_end = (base + timedelta(days=days)).isoformat()
+            conn.execute(
+                "UPDATE users SET polar_customer_id = COALESCE(?, polar_customer_id), polar_subscription_id = ?, "
+                "subscription_status = ?, subscription_current_period_end = ?, subscription_last_event_at = ? WHERE id = ?",
+                (customer_id, f"order:{order_id}", "ACTIVE", new_end, event_time_iso, user_id_int),
+            )
+            conn.execute(
+                "INSERT INTO polar_processed_orders (order_id, user_id, processed_at) VALUES (?, ?, ?)",
+                (order_id, user_id_int, now.isoformat()),
+            )
+            conn.commit()
+            return "granted"
+        finally:
+            conn.close()
+
+    result = await asyncio.to_thread(_apply_order)
+    print(f"[polar webhook] order.paid order_id={order_id} user_id={user_id_int} days={days} -> {result}", flush=True)
+    return {"status": "ok"}
+
 @app.post("/api/subscription/webhook")
 async def polar_webhook(request: Request):
     """Polar POSTs here (no Authorization header -- verified via the Standard Webhooks/Svix-style
@@ -4312,6 +4409,8 @@ async def polar_webhook(request: Request):
         raise HTTPException(status_code=400, detail="Invalid webhook payload")
 
     event_type = event.get("type", "")
+    if event_type == "order.paid":
+        return await _handle_polar_order_paid(event, ts_epoch)
     if event_type not in ("subscription.updated", "subscription.created"):
         return {"status": "ignored"}
 
