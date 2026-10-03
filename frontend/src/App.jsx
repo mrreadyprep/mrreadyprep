@@ -739,10 +739,10 @@ function LandingPage({ onGetStarted, onLogIn, onOpenAuth }) {
               <span style={{ fontSize: '24px' }} aria-hidden="true">🎉</span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
                 <span style={{ fontSize: isMobile ? '16px' : '18px', color: '#701fa1', fontWeight: '900', letterSpacing: '-0.3px' }}>
-                  50% OFF
+                  Plans
                 </span>
                 <span style={{ fontSize: isMobile ? '11px' : '12px', color: '#616473', fontWeight: '600' }}>
-                  Your first month
+                  Start at $25
                 </span>
               </div>
             </div>
@@ -1355,7 +1355,7 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
           </div>
 
           <div style={{ marginTop: '24px', backgroundColor: '#f0e8ff', border: '1px solid #d4c5e2', borderRadius: '8px', padding: '16px', textAlign: 'center' }}>
-            <div style={{ fontSize: '13px', color: '#6b5b95' }}>🎉 <strong style={{ color: '#701fa1', fontSize: '14px' }}>50% OFF</strong> automatically applied to your first month!</div>
+            <div style={{ fontSize: '13px', color: '#6b5b95' }}>💎 One-time payment plans: <strong style={{ color: '#701fa1', fontSize: '14px' }}>no auto-renewal</strong>, keep access forever!</div>
           </div>
         </div>
 
