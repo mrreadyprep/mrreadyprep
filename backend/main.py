@@ -6346,3 +6346,233 @@ def get_blog_post(slug: str):
     
     raise HTTPException(status_code=404, detail="Blog post not found")
 
+
+# ─── EMAIL SUBSCRIPTION & DRIP CAMPAIGN ───────────────────────────────────
+
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from datetime import datetime, timedelta
+import threading
+
+# Email configuration (using SendGrid free tier or Gmail SMTP)
+SMTP_SERVER = os.getenv('SMTP_SERVER', 'smtp.gmail.com')
+SMTP_PORT = int(os.getenv('SMTP_PORT', '587'))
+SMTP_EMAIL = os.getenv('SMTP_EMAIL', '')  # Set in environment
+SMTP_PASSWORD = os.getenv('SMTP_PASSWORD', '')  # App password for Gmail
+SEND_FROM_EMAIL = os.getenv('SEND_FROM_EMAIL', 'noreply@mrreadyprep.com')
+
+def init_subscribers_table():
+    """Create subscribers table if it doesn't exist"""
+    conn = get_db()
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS subscribers (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT UNIQUE NOT NULL,
+            first_name TEXT,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            email_1_sent INTEGER DEFAULT 0,
+            email_2_sent INTEGER DEFAULT 0,
+            email_3_sent INTEGER DEFAULT 0
+        )
+    ''')
+    conn.commit()
+    conn.close()
+
+init_subscribers_table()
+
+def send_email(to_email: str, subject: str, html_content: str):
+    """Send email via SMTP"""
+    if not SMTP_EMAIL or not SMTP_PASSWORD:
+        print(f"[Email] Skipped (no SMTP config): {to_email} - {subject}")
+        return True
+    
+    try:
+        msg = MIMEMultipart('alternative')
+        msg['Subject'] = subject
+        msg['From'] = SEND_FROM_EMAIL
+        msg['To'] = to_email
+        msg.attach(MIMEText(html_content, 'html'))
+        
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_EMAIL, SMTP_PASSWORD)
+            server.send_message(msg)
+        
+        print(f"[Email] Sent to {to_email}: {subject}")
+        return True
+    except Exception as e:
+        print(f"[Email] Error sending to {to_email}: {str(e)}")
+        return False
+
+# Email templates
+EMAIL_1_SUBJECT = "You're losing points on TOEFL 2026's newest section"
+EMAIL_1_HTML = """
+<html>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333;">
+<p>Hi [FNAME],</p>
+
+<p>I just reviewed 50+ TOEFL score reports from mrreadyprep users.</p>
+
+<p>Here's what I found: Most people get the <strong>academic reading right</strong> (27-28 points). But they struggle with <strong>"Read in Daily Life"</strong> and <strong>"Complete the Words"</strong> (getting only 5-7 out of 10 questions correct).</p>
+
+<p>That's a 3-5 point loss right there.</p>
+
+<h3>Why?</h3>
+<p>Because "Read in Daily Life" is NEW in 2026. Most prep materials don't cover it.</p>
+
+<h3>The fix:</h3>
+<p>Read this free guide: <a href="https://mrreadyprep.com/blog/read-in-daily-life-sample-questions">TOEFL "Read in Daily Life": Sample Questions & Expert Tips</a></p>
+
+<p>Then try a free mock test: <a href="https://mrreadyprep.com">Try a Free Mock Test</a></p>
+
+<p>You've got this.</p>
+
+<p>—Mehmet<br>
+Founder, mrreadyprep</p>
+</body>
+</html>
+"""
+
+EMAIL_2_SUBJECT = "[Real Data] Average test taker scores 89. Here's how to hit 105+"
+EMAIL_2_HTML = """
+<html>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333;">
+<p>Hi [FNAME],</p>
+
+<p>Quick question: where are you stuck on TOEFL?</p>
+
+<p><strong>"I score 85-90 and plateau"</strong><br>
+→ You're drilling sections solo. After 90, you need full mock tests.</p>
+
+<p><strong>"Speaking/Writing is killing my score"</strong><br>
+→ You're not getting feedback. Without it, you're guessing.</p>
+
+<p><strong>"I've studied 3 weeks. Why am I not at 100 yet?"</strong><br>
+→ 100+ takes 60+ days. You're on track.</p>
+
+<h3>Here's what our highest scorers do:</h3>
+<ol>
+<li>Take 1 full mock every 3-4 days</li>
+<li>Get instant feedback on Speaking/Writing</li>
+<li>Drill weak spots for 1-2 weeks</li>
+<li>Repeat</li>
+</ol>
+
+<p>Our users who follow this hit 100+ in 8-10 weeks.</p>
+
+<p>Try it free: <a href="https://mrreadyprep.com">Start Your Free Mock Test</a></p>
+
+<p>—Mehmet<br>
+Founder, mrreadyprep</p>
+</body>
+</html>
+"""
+
+EMAIL_3_SUBJECT = "Your 100+ score is 60 days away (if you start this week)"
+EMAIL_3_HTML = """
+<html>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333;">
+<p>Hi [FNAME],</p>
+
+<p>Here's the hard truth: if you're aiming for 100+, you have a ~60-day window.</p>
+
+<h3>Why 60 days?</h3>
+<ul>
+<li>Weeks 1-2: Assessment</li>
+<li>Weeks 3-6: Drilling</li>
+<li>Weeks 7-9: Refinement</li>
+<li>Week 10+: Maintenance</li>
+</ul>
+
+<p>If you wait another 2 weeks, you compress to 44 days. Doable, but rushed.</p>
+
+<h3>Here's what I'm offering:</h3>
+<p><strong>Premium access: $25 one-time, no auto-renewal</strong></p>
+<ul>
+<li>20 full mock tests</li>
+<li>AI feedback on Speaking/Writing</li>
+<li>Progress tracking</li>
+<li>Community forum</li>
+</ul>
+
+<p>Upgrade now: <a href="https://mrreadyprep.com/pricing">Unlock Premium Access - $25</a></p>
+
+<p>Your 100+ score is waiting. Don't leave it on the table.</p>
+
+<p>—Mehmet<br>
+Founder, mrreadyprep</p>
+</body>
+</html>
+"""
+
+class SubscribeRequest(BaseModel):
+    email: EmailStr
+    first_name: str = "Friend"
+
+@app.post("/api/subscribe")
+def subscribe(data: SubscribeRequest):
+    """Subscribe to email drip campaign"""
+    try:
+        conn = get_db()
+        
+        # Check if already subscribed
+        existing = conn.execute("SELECT id FROM subscribers WHERE email = ?", (data.email,)).fetchone()
+        if existing:
+            conn.close()
+            return {"success": True, "message": "Already subscribed"}
+        
+        # Add to subscribers
+        conn.execute(
+            "INSERT INTO subscribers (email, first_name) VALUES (?, ?)",
+            (data.email, data.first_name)
+        )
+        conn.commit()
+        
+        subscriber_id = conn.execute("SELECT id FROM subscribers WHERE email = ?", (data.email,)).fetchone()['id']
+        
+        conn.close()
+        
+        # Send Email #1 immediately
+        email_html = EMAIL_1_HTML.replace('[FNAME]', data.first_name)
+        send_email(data.email, EMAIL_1_SUBJECT, email_html)
+        
+        # Mark as sent
+        conn = get_db()
+        conn.execute("UPDATE subscribers SET email_1_sent = 1 WHERE id = ?", (subscriber_id,))
+        conn.commit()
+        conn.close()
+        
+        # Schedule Email #2 (5 days later) and Email #3 (8 days later)
+        def schedule_emails():
+            import time
+            # Email #2: 5 days later
+            time.sleep(5 * 24 * 3600)
+            email_html = EMAIL_2_HTML.replace('[FNAME]', data.first_name)
+            if send_email(data.email, EMAIL_2_SUBJECT, email_html):
+                conn = get_db()
+                conn.execute("UPDATE subscribers SET email_2_sent = 1 WHERE id = ?", (subscriber_id,))
+                conn.commit()
+                conn.close()
+            
+            # Email #3: 8 days later (3 days after Email #2)
+            time.sleep(3 * 24 * 3600)
+            email_html = EMAIL_3_HTML.replace('[FNAME]', data.first_name)
+            if send_email(data.email, EMAIL_3_SUBJECT, email_html):
+                conn = get_db()
+                conn.execute("UPDATE subscribers SET email_3_sent = 1 WHERE id = ?", (subscriber_id,))
+                conn.commit()
+                conn.close()
+        
+        # Start in background thread
+        thread = threading.Thread(target=schedule_emails, daemon=True)
+        thread.start()
+        
+        return {"success": True, "message": "Welcome! Check your email."}
+    
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail="Invalid email address")
+    except Exception as e:
+        print(f"[Subscribe] Error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Could not process subscription")
+

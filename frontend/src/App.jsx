@@ -14,6 +14,7 @@ import { trackSignup, trackPremiumConversion, trackTestCompletion } from './util
 const ReviewsSection = lazy(() => import('./components/ReviewsSection'))
 const BlogList = lazy(() => import('./pages/BlogList'))
 const BlogPost = lazy(() => import('./pages/BlogPost'))
+const SubscribeForm = lazy(() => import('./components/SubscribeForm'))
 
 // ─── In-progress answer drafts (solo practice only) ───────────────────────────
 // "Save & Exit" used to just exit immediately, discarding whatever the student had typed so
@@ -1301,7 +1302,22 @@ function AuthScreen({ onAuthSuccess, initialMode, onBack }) {
                   <a href="/privacy.html" target="_blank" rel="noopener noreferrer" style={{ color: '#701fa1' }}>Privacy Policy</a>.
                 </div>
               )}
-            </>
+            <section style={{ 
+            padding: '60px 20px', 
+            backgroundColor: '#0f1a3f', 
+            borderTop: '1px solid #1a2555',
+            marginTop: '60px'
+          }}>
+            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+              <h2 style={{ fontSize: '28px', fontWeight: 'bold', textAlign: 'center', marginBottom: '40px', color: '#fff' }}>
+                Stay updated on TOEFL 2026
+              </h2>
+              <Suspense fallback={<div />}>
+                <SubscribeForm />
+              </Suspense>
+            </div>
+          </section>
+          </>
           )}
         </div>
 
