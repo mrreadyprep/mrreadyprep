@@ -4171,10 +4171,9 @@ def cancel_subscription(user=Depends(get_current_user)):
         raise HTTPException(status_code=400, detail="No active subscription on file")
     is_one_time = str(user["polar_subscription_id"]).startswith("order:")
     if is_one_time:
-        # One-time purchase (see _handle_polar_order_paid): process refund request.
-        # Polar doesn't auto-refund; we mark it CANCELED and log for admin follow-up.
+        # One-time purchase (see _handle_polar_order_paid): cancel access only, no refund.
         order_id = str(user["polar_subscription_id"]).replace("order:", "")
-        print(f"[cancel_subscription] One-time purchase refund requested: user_id={user['id']}, order_id={order_id}", flush=True)
+        print(f"[cancel_subscription] One-time purchase canceled (no refund): user_id={user['id']}, order_id={order_id}", flush=True)
     if not is_one_time:
         result = _polar_request("DELETE", f"/v1/subscriptions/{user['polar_subscription_id']}")
         # Same {"detail": ...}-shape error discriminator create_checkout() uses above -- see its comment.
