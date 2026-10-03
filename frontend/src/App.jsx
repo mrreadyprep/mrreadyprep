@@ -12,6 +12,8 @@ import { trackSignup, trackPremiumConversion, trackTestCompletion } from './util
 // LandingPage below) so neither its code chunk nor its network calls happen until a visitor
 // actually scrolls near it, instead of racing the hero/above-the-fold content for bandwidth.
 const ReviewsSection = lazy(() => import('./components/ReviewsSection'))
+const BlogList = lazy(() => import('./pages/BlogList'))
+const BlogPost = lazy(() => import('./pages/BlogPost'))
 
 // ─── In-progress answer drafts (solo practice only) ───────────────────────────
 // "Save & Exit" used to just exit immediately, discarding whatever the student had typed so
@@ -1487,7 +1489,35 @@ function AuthGate() {
       <ToastHost />
       <CookieConsentBanner />
       {authState === 'checking' && <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />}
-      {authState === 'out' && (
+      // Check for blog routes
+  const isBlogList = window.location.pathname === '/blog'
+  const blogPostMatch = window.location.pathname.match(/^\/blog\/([^/]+)$/)
+  
+  if (isBlogList) {
+    return (
+      <>
+        <ToastHost />
+        <CookieConsentBanner />
+        <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />}>
+          <BlogList />
+        </Suspense>
+      </>
+    )
+  }
+  
+  if (blogPostMatch) {
+    return (
+      <>
+        <ToastHost />
+        <CookieConsentBanner />
+        <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#11162d' }} />}>
+          <BlogPost slug={blogPostMatch[1]} />
+        </Suspense>
+      </>
+    )
+  }
+  
+  {authState === 'out' && (
         showAuth
           ? <AuthScreen initialMode={authMode} onBack={() => setShowAuth(false)} onAuthSuccess={(user, isSignup) => { if (isSignup) setJustSignedUp(true); setAuthState('in') }} />
           : <LandingPage

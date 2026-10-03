@@ -6303,3 +6303,46 @@ def get_leaderboard(period: str = "weekly", limit: int = 240):
     
     return {"success": True, "leaderboard": leaderboard_with_ranks, "period": period}
 
+
+# Blog endpoints
+import json
+
+def _load_blog_posts():
+    """Load blog posts from JSON file"""
+    try:
+        blog_path = pathlib.Path(__file__).parent / "blog-posts.json"
+        with open(blog_path, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error loading blog posts: {e}")
+        return []
+
+@app.get("/api/blog")
+def get_blog_posts():
+    """Get list of all blog posts"""
+    posts = _load_blog_posts()
+    # Return only title, slug, excerpt, date, readTime (not full content)
+    return {
+        "success": True,
+        "posts": [
+            {
+                "slug": p["slug"],
+                "title": p["title"],
+                "excerpt": p["excerpt"],
+                "date": p["date"],
+                "readTime": p["readTime"]
+            }
+            for p in posts
+        ]
+    }
+
+@app.get("/api/blog/{slug}")
+def get_blog_post(slug: str):
+    """Get a specific blog post by slug"""
+    posts = _load_blog_posts()
+    for post in posts:
+        if post["slug"] == slug:
+            return {"success": True, "post": post}
+    
+    raise HTTPException(status_code=404, detail="Blog post not found")
+
