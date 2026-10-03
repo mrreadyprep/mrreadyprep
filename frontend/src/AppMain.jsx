@@ -1220,7 +1220,7 @@ function SubscribeScreen({ onBack, hasPremium, subscriptionStatus, hasBilledSubs
           {isOneTimePurchase ? (
             <p style={{ color: '#4a4d5f', fontSize: '13px', lineHeight: '1.6', margin: 0 }}>
               {accessUntil && !isNaN(new Date(accessUntil).getTime())
-                ? <>Your access runs until <strong>{new Date(accessUntil).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</strong>.</>
+                ? <>Your access runs until <strong>{new Date(accessUntil).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' })}</strong>.</>
                 : 'Your access is active.'}
               {' '}This was a one-time payment: it will not renew and you will not be charged again.
             </p>

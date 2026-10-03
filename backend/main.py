@@ -4169,15 +4169,18 @@ def cancel_subscription(user=Depends(get_current_user)):
     _check_and_consume_rate_limit(_cancel_subscription_attempts, str(user["id"]), CANCEL_SUBSCRIPTION_WINDOW_SECONDS, CANCEL_SUBSCRIPTION_MAX, "cancel")
     if not user["polar_subscription_id"]:
         raise HTTPException(status_code=400, detail="No active subscription on file")
-    if str(user["polar_subscription_id"]).startswith("order:"):
-        # One-time purchase (see _handle_polar_order_paid): no recurring subscription exists on
-        # Polar's side, so there is nothing to cancel and nothing will be charged again.
-        raise HTTPException(status_code=400, detail="Your plan is a one-time purchase, so there is nothing to cancel and you will not be charged again. Your access simply ends on its end date.")
-    result = _polar_request("DELETE", f"/v1/subscriptions/{user['polar_subscription_id']}")
-    # Same {"detail": ...}-shape error discriminator create_checkout() uses above -- see its comment.
-    if isinstance(result, dict) and "detail" in result:
-        detail = result["detail"]
-        raise HTTPException(status_code=400, detail=detail if isinstance(detail, str) else "Could not cancel subscription")
+    is_one_time = str(user["polar_subscription_id"]).startswith("order:")
+    if is_one_time:
+        # One-time purchase (see _handle_polar_order_paid): process refund request.
+        # Polar doesn't auto-refund; we mark it CANCELED and log for admin follow-up.
+        order_id = str(user["polar_subscription_id"]).replace("order:", "")
+        print(f"[cancel_subscription] One-time purchase refund requested: user_id={user['id']}, order_id={order_id}", flush=True)
+    if not is_one_time:
+        result = _polar_request("DELETE", f"/v1/subscriptions/{user['polar_subscription_id']}")
+        # Same {"detail": ...}-shape error discriminator create_checkout() uses above -- see its comment.
+        if isinstance(result, dict) and "detail" in result:
+            detail = result["detail"]
+            raise HTTPException(status_code=400, detail=detail if isinstance(detail, str) else "Could not cancel subscription")
     # Polar has already canceled the subscription by this point (the check above already ruled out
     # an error response) -- a transient failure in this local write must not surface as an error to
     # the student, who would otherwise see a confusing failure for an action that actually
